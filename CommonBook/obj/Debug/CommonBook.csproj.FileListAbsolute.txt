@@ -1,0 +1,15 @@
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\0Harmony.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\Mono.Cecil.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\Mono.Cecil.Mdb.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\Mono.Cecil.Pdb.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\Mono.Cecil.Rocks.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\MonoMod.RuntimeDetour.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\MonoMod.Utils.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\System.Core.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\obj\Debug\CommonBook.csproj.AssemblyReference.cache
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\obj\Debug\CommonBook.csproj.CoreCompileInputs.cache
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\obj\Debug\CommonBook.csproj.CopyComplete
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\CommonBook11232024023626.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\bin\Debug\CommonBook11232024023626.pdb
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\obj\Debug\CommonBook11232024023626.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\CommonBook\obj\Debug\CommonBook11232024023626.pdb
