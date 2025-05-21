@@ -29,26 +29,4 @@ namespace CommonBook
             this.harmony.UnpatchSelf();
         }
     }
-
-    [HarmonyPatch(typeof(P_Priest))]
-    class PrefixExample
-    {
-        [HarmonyPatch(nameof(P_Priest._Oracle))]
-
-        [HarmonyPrefix]
-        static bool CommonBook(P_Priest __instance)
-
-        {
-            bool flag = false;
-
-            foreach (BattleChar b in BattleSystem.instance.AllyTeam.AliveChars)
-            {
-                if (b.BuffReturn("B_Raphi_3", false) != null) {flag = true;}
-            }
-
-                if (flag == true)
-                    return false;
-                    else return true;
-        }
-    }
 }
