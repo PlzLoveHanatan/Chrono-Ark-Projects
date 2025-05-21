@@ -1,0 +1,538 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|d:\\steamlibrary\\steamapps\\common\\chrono ark\\mod\\mod projects\\raphi\\skill\\solsticestrike.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\solsticestrike.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|d:\\steamlibrary\\steamapps\\common\\chrono ark\\mod\\mod projects\\raphi\\skill\\refreshingrenewal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\refreshingrenewal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|d:\\steamlibrary\\steamapps\\common\\chrono ark\\mod\\mod projects\\raphi\\skill\\overwhelmingprayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\overwhelmingprayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|d:\\steamlibrary\\steamapps\\common\\chrono ark\\mod\\mod projects\\raphi\\skill\\l_fatefuldecision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\l_fatefuldecision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|d:\\steamlibrary\\steamapps\\common\\chrono ark\\mod\\mod projects\\raphi\\skill\\judgementdescent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\judgementdescent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|d:\\steamlibrary\\steamapps\\common\\chrono ark\\mod\\mod projects\\raphi\\skill\\heavenlyrenovation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\heavenlyrenovation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skill\\capriciousblessing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\capriciousblessing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skill\\blesseddescent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\blesseddescent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skill\\blessedascension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\blessedascension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skill\\angelicpurification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\angelicpurification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skill\\angelicguidance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\angelicguidance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skill\\angelicgamble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skill\\angelicgamble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\item_equip\\wingsofglory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:item_equip\\wingsofglory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\item_equip\\elysianedge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:item_equip\\elysianedge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skillextended\\ex_raphi_5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skillextended\\ex_raphi_5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skillextended\\ex_raphi_4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skillextended\\ex_raphi_4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skillextended\\ex_raphi_3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skillextended\\ex_raphi_3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skillextended\\ex_raphi_2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skillextended\\ex_raphi_2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_aggroincreased.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_aggroincreased.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_armorreduced.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_armorreduced.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_celestialconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_celestialconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_divinedaze.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_divinedaze.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_elysianedge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_elysianedge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_evasionincreased.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_evasionincreased.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_heavenlygrace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_heavenlygrace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_heavensembrace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_heavensembrace.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_heavenstouch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_heavenstouch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\character\\p_raphi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:character\\p_raphi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\skillextended\\ex_raphi_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:skillextended\\ex_raphi_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_heavenlywrath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_heavenlywrath.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\buff\\b_angelswhisper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{324758D3-024A-4C96-B2E3-7EB38F930657}|Raphi.csproj|solutionrelative:buff\\b_angelswhisper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SolsticeStrike.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\SolsticeStrike.cs",
+              "RelativeDocumentMoniker": "Skill\\SolsticeStrike.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\SolsticeStrike.cs",
+              "RelativeToolTip": "Skill\\SolsticeStrike.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAowC4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T06:06:00.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RefreshingRenewal.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\RefreshingRenewal.cs",
+              "RelativeDocumentMoniker": "Skill\\RefreshingRenewal.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\RefreshingRenewal.cs",
+              "RelativeToolTip": "Skill\\RefreshingRenewal.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T06:05:53.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OverwhelmingPrayer.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\OverwhelmingPrayer.cs",
+              "RelativeDocumentMoniker": "Skill\\OverwhelmingPrayer.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\OverwhelmingPrayer.cs",
+              "RelativeToolTip": "Skill\\OverwhelmingPrayer.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAAwEoAAABxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T06:05:40.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "L_FatefulDecision.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\L_FatefulDecision.cs",
+              "RelativeDocumentMoniker": "Skill\\L_FatefulDecision.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\L_FatefulDecision.cs",
+              "RelativeToolTip": "Skill\\L_FatefulDecision.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T06:05:31.178Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "JudgementDescent.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\JudgementDescent.cs",
+              "RelativeDocumentMoniker": "Skill\\JudgementDescent.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\JudgementDescent.cs",
+              "RelativeToolTip": "Skill\\JudgementDescent.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAgwDgAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T06:05:00.6Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "HeavenlyRenovation.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\HeavenlyRenovation.cs",
+              "RelativeDocumentMoniker": "Skill\\HeavenlyRenovation.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\HeavenlyRenovation.cs",
+              "RelativeToolTip": "Skill\\HeavenlyRenovation.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAowEgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T06:03:57.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CapriciousBlessing.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\CapriciousBlessing.cs",
+              "RelativeDocumentMoniker": "Skill\\CapriciousBlessing.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\CapriciousBlessing.cs",
+              "RelativeToolTip": "Skill\\CapriciousBlessing.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAnwHIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:57:22.135Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BlessedDescent.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\BlessedDescent.cs",
+              "RelativeDocumentMoniker": "Skill\\BlessedDescent.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\BlessedDescent.cs",
+              "RelativeToolTip": "Skill\\BlessedDescent.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAwwCkAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:57:08.908Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BlessedAscension.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\BlessedAscension.cs",
+              "RelativeDocumentMoniker": "Skill\\BlessedAscension.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\BlessedAscension.cs",
+              "RelativeToolTip": "Skill\\BlessedAscension.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:56:51.659Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AngelicPurification.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\AngelicPurification.cs",
+              "RelativeDocumentMoniker": "Skill\\AngelicPurification.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\AngelicPurification.cs",
+              "RelativeToolTip": "Skill\\AngelicPurification.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:55:31.095Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AngelicGuidance.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\AngelicGuidance.cs",
+              "RelativeDocumentMoniker": "Skill\\AngelicGuidance.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\AngelicGuidance.cs",
+              "RelativeToolTip": "Skill\\AngelicGuidance.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:55:18.734Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AngelicGamble.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\AngelicGamble.cs",
+              "RelativeDocumentMoniker": "Skill\\AngelicGamble.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Skill\\AngelicGamble.cs",
+              "RelativeToolTip": "Skill\\AngelicGamble.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAgwEcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:47:21.914Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "WingsofGlory.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Item_Equip\\WingsofGlory.cs",
+              "RelativeDocumentMoniker": "Item_Equip\\WingsofGlory.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Item_Equip\\WingsofGlory.cs",
+              "RelativeToolTip": "Item_Equip\\WingsofGlory.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:45:57.287Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ElysianEdge.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Item_Equip\\ElysianEdge.cs",
+              "RelativeDocumentMoniker": "Item_Equip\\ElysianEdge.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Item_Equip\\ElysianEdge.cs",
+              "RelativeToolTip": "Item_Equip\\ElysianEdge.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:45:40.863Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Ex_Raphi_5.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_5.cs",
+              "RelativeDocumentMoniker": "SkillExtended\\Ex_Raphi_5.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_5.cs",
+              "RelativeToolTip": "SkillExtended\\Ex_Raphi_5.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAgwCgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:45:16.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Ex_Raphi_4.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_4.cs",
+              "RelativeDocumentMoniker": "SkillExtended\\Ex_Raphi_4.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_4.cs",
+              "RelativeToolTip": "SkillExtended\\Ex_Raphi_4.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACAAAABlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:45:06.059Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Ex_Raphi_3.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_3.cs",
+              "RelativeDocumentMoniker": "SkillExtended\\Ex_Raphi_3.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_3.cs",
+              "RelativeToolTip": "SkillExtended\\Ex_Raphi_3.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:44:58.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "B_HeavensEmbrace.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavensEmbrace.cs",
+              "RelativeDocumentMoniker": "Buff\\B_HeavensEmbrace.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavensEmbrace.cs",
+              "RelativeToolTip": "Buff\\B_HeavensEmbrace.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:43:31.608Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "B_HeavensTouch.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavensTouch.cs",
+              "RelativeDocumentMoniker": "Buff\\B_HeavensTouch.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavensTouch.cs",
+              "RelativeToolTip": "Buff\\B_HeavensTouch.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:43:08.706Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "P_Raphi.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Character\\P_Raphi.cs",
+              "RelativeDocumentMoniker": "Character\\P_Raphi.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Character\\P_Raphi.cs",
+              "RelativeToolTip": "Character\\P_Raphi.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABwAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:42:42.352Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Ex_Raphi_2.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_2.cs",
+              "RelativeDocumentMoniker": "SkillExtended\\Ex_Raphi_2.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_2.cs",
+              "RelativeToolTip": "SkillExtended\\Ex_Raphi_2.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:42:01.266Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "B_HeavenlyWrath.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavenlyWrath.cs",
+              "RelativeDocumentMoniker": "Buff\\B_HeavenlyWrath.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavenlyWrath.cs",
+              "RelativeToolTip": "Buff\\B_HeavenlyWrath.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABwAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:33:36.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Ex_Raphi_1.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_1.cs",
+              "RelativeDocumentMoniker": "SkillExtended\\Ex_Raphi_1.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\SkillExtended\\Ex_Raphi_1.cs",
+              "RelativeToolTip": "SkillExtended\\Ex_Raphi_1.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:12:02.946Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "B_HeavenlyGrace.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavenlyGrace.cs",
+              "RelativeDocumentMoniker": "Buff\\B_HeavenlyGrace.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_HeavenlyGrace.cs",
+              "RelativeToolTip": "Buff\\B_HeavenlyGrace.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAowB8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:05:39.259Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Utils.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Utils.cs",
+              "RelativeDocumentMoniker": "Utils.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Utils.cs",
+              "RelativeToolTip": "Utils.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAIwC8AAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:05:57.216Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "B_EvasionIncreased.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_EvasionIncreased.cs",
+              "RelativeDocumentMoniker": "Buff\\B_EvasionIncreased.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_EvasionIncreased.cs",
+              "RelativeToolTip": "Buff\\B_EvasionIncreased.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:05:26.282Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "B_ElysianEdge.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_ElysianEdge.cs",
+              "RelativeDocumentMoniker": "Buff\\B_ElysianEdge.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_ElysianEdge.cs",
+              "RelativeToolTip": "Buff\\B_ElysianEdge.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:05:09.506Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "B_DivineDaze.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_DivineDaze.cs",
+              "RelativeDocumentMoniker": "Buff\\B_DivineDaze.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_DivineDaze.cs",
+              "RelativeToolTip": "Buff\\B_DivineDaze.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:04:54.839Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "B_CelestialConnection.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_CelestialConnection.cs",
+              "RelativeDocumentMoniker": "Buff\\B_CelestialConnection.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_CelestialConnection.cs",
+              "RelativeToolTip": "Buff\\B_CelestialConnection.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwFMAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:04:11.758Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "B_ArmorReduced.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_ArmorReduced.cs",
+              "RelativeDocumentMoniker": "Buff\\B_ArmorReduced.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_ArmorReduced.cs",
+              "RelativeToolTip": "Buff\\B_ArmorReduced.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:03:54.593Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "B_AggroIncreased.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_AggroIncreased.cs",
+              "RelativeDocumentMoniker": "Buff\\B_AggroIncreased.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_AggroIncreased.cs",
+              "RelativeToolTip": "Buff\\B_AggroIncreased.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:03:43.56Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "B_AngelsWhisper.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_AngelsWhisper.cs",
+              "RelativeDocumentMoniker": "Buff\\B_AngelsWhisper.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\Raphi\\Buff\\B_AngelsWhisper.cs",
+              "RelativeToolTip": "Buff\\B_AngelsWhisper.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAUwB8AAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-21T05:02:51.176Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
