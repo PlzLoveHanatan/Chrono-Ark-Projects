@@ -1,8 +1,0 @@
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\bin\Debug\System.Core.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\obj\Debug\Akari.csproj.AssemblyReference.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\obj\Debug\Akari.csproj.CoreCompileInputs.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\obj\Debug\Akari.csproj.Up2Date
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\bin\Debug\Akari05192025194814.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\bin\Debug\Akari05192025194814.pdb
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\obj\Debug\Akari05192025194814.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Akari\obj\Debug\Akari05192025194814.pdb
