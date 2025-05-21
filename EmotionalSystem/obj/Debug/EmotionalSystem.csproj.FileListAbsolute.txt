@@ -10,7 +10,7 @@ D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\bin
 D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\bin\Debug\MonoMod.Utils.dll
 D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\bin\Debug\System.Core.dll
 D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\obj\Debug\Emotiona.3FD02D1F.Up2Date
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\bin\Debug\EmotionalSystem05162025192753.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\bin\Debug\EmotionalSystem05162025192753.pdb
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\obj\Debug\EmotionalSystem05162025192753.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\obj\Debug\EmotionalSystem05162025192753.pdb
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\bin\Debug\EmotionalSystem05212025115920.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\bin\Debug\EmotionalSystem05212025115920.pdb
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\obj\Debug\EmotionalSystem05212025115920.dll
+D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\EmotionalSystem\obj\Debug\EmotionalSystem05212025115920.pdb

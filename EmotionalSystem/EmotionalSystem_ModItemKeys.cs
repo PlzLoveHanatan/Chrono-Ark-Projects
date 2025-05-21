@@ -23,7 +23,7 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_HistoryLv1_HappyMemories_0 = "B_Abnormality_HistoryLv1_HappyMemories_0";
 		/// <summary>
 		/// Matchlight
-		/// Gain <color=#B22222>Matchlight</color> and inflict 1 <color=#f8181c>Burn</color> on attack.
+		/// Gain <color=#B22222>Matchlight</color> (Max 5) and inflict 1 <color=#f8181c>Burn</color> on attack.
 		/// Increase the next skill's damage by &a% <color=#FF7C34>(20% x Matchlight)</color>.
 		/// Gain a <b>&b%</b> <color=#FF7C34>(10% x Matchlight)</color> chance to take non-lethal <color=purple>&c Pain damage</color> <color=#FF7C34>(20% Max HP x  Matchlight)</color>.
 		/// Current <color=#B22222>Matchlight</color> : &d.

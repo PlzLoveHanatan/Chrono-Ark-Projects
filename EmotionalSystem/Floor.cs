@@ -12,21 +12,7 @@ namespace EmotionalSystem
         {
             get
             {
-                Debug.Log($"[EmotionalSystem] Getting FloorInfo for floor: {Floor}");
                 var info = Floors[Floor];
-
-                Debug.Log($"[EmotionalSystem] Number of Abnormalities: {info.Abnomalities.Count}");
-                foreach (var abno in info.Abnomalities)
-                {
-                    Debug.Log($"[EmotionalSystem] Abnormality - Key: {abno.Name}, Type: {abno.Type}, Level: {abno.Level}");
-                }
-
-                Debug.Log($"[EmotionalSystem] Number of EGOs: {info.EGOs.Count}");
-                foreach (var ego in info.EGOs)
-                {
-                    Debug.Log($"[EmotionalSystem] EGO Skill: {ego}");
-                }
-
                 return info;
             }
         }

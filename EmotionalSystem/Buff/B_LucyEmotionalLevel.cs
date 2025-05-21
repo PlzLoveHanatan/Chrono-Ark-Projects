@@ -273,6 +273,7 @@ namespace EmotionalSystem
                 default:
                     break;
             }
+
             if (selectionList.Count == 0) yield break;
 
             var skillList = selectionList.Select(x => Skill.TempSkill(x.Name, BChar, BChar.MyTeam)).ToList();
@@ -284,16 +285,15 @@ namespace EmotionalSystem
         {
             if (Mybutton != null && Mybutton.Myskill != null)
             {
-                Skill selectedSkill = Mybutton.Myskill;
-                string skillKey = selectedSkill.MySkill.KeyID;
+                string selectedSkill = Mybutton.Myskill.MySkill.KeyID;
 
-                DynamicEGOList.RemoveAll(x => x == skillKey);
+                DynamicEGOList.RemoveAll(x => x == selectedSkill);
 
-                var skill = Skill.TempSkill(skillKey, this.BChar);
+                var skill = Skill.TempSkill(selectedSkill, this.BChar);
                 if (skill != null)
                 {
                     EGO_System.instance?.AddEGOSkill(skill);
-                    Utils.UnlockSkillPreview(skillKey);
+                    Utils.UnlockSkillPreview(selectedSkill);
                 }
             }
         }
@@ -302,36 +302,35 @@ namespace EmotionalSystem
         {
             if (Mybutton != null && Mybutton.Myskill != null)
             {
-                Skill selectedSkill = Mybutton.Myskill;
+                string selectedSkill = Mybutton.Myskill.MySkill.KeyID;
 
-                DynamicAbnormalityList.RemoveAll(x => x.Name == selectedSkill.MySkill.KeyID);
+                DynamicAbnormalityList.RemoveAll(x => x.Name == selectedSkill);
 
 
-                if (Mybutton.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Abnormality_HistoryLv2_WorkerBee_Neg
-                    || Mybutton.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Abnormality_HistoryLv3_BarrierofThorns_Pos)
+                if (selectedSkill == ModItemKeys.Skill_S_Abnormality_HistoryLv2_WorkerBee_Neg || selectedSkill == ModItemKeys.Skill_S_Abnormality_HistoryLv3_BarrierofThorns_Pos)
                 {
                     Mybutton.Myskill.isExcept = true;
                     BattleSystem.instance.StartCoroutine(BattleSystem.instance.ForceAction(Mybutton.Myskill, Mybutton.Myskill.Master, false, false, true, null));
-                    Utils.UnlockSkillPreview(selectedSkill.MySkill.KeyID);
+                    Utils.UnlockSkillPreview(selectedSkill);
                 }
-                else if (Mybutton.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_Music_Neg)
+                else if (selectedSkill == ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_Music_Neg)
                 {
                     Mybutton.Myskill.isExcept = true;
                     BattleSystem.instance.StartCoroutine(BattleSystem.instance.ForceAction(Mybutton.Myskill, Mybutton.Myskill.Master, false, false, true, null));
-                    Utils.UnlockSkillPreview(selectedSkill.MySkill.KeyID);
+                    Utils.UnlockSkillPreview(selectedSkill);
                 }
                 else
                 {
-
                     List<Skill> AllyAbnormality = new List<Skill>();
 
                     foreach (BattleAlly battleAlly in BattleSystem.instance.AllyList)
                     {
-                        Skill AbnoSkill = Skill.TempSkill(selectedSkill.MySkill.KeyID, battleAlly, this.BChar.MyTeam);
+                        Skill AbnoSkill = Skill.TempSkill(selectedSkill, battleAlly, this.BChar.MyTeam);
                         AbnoSkill.isExcept = true;
                         AllyAbnormality.Add(AbnoSkill);
                     }
-                    Utils.UnlockSkillPreview(selectedSkill.MySkill.KeyID);
+
+                    Utils.UnlockSkillPreview(selectedSkill);
                     BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(AllyAbnormality, new SkillButton.SkillClickDel(this.SelectTargetAbnoSkill),
                         ModLocalization.AbnoRecieve, false, false, true, false, true));
                 }
