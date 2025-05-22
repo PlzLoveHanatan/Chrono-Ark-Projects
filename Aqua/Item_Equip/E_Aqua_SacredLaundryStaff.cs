@@ -21,6 +21,7 @@ namespace Aqua
         public override void Init()
         {
             PlusPerStat.Heal = 20;
+            PlusPerStat.Damage = 20;
             PlusStat.hit = 10;
         }
         public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
