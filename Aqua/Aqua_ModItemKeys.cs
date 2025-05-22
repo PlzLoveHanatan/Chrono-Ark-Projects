@@ -61,7 +61,7 @@ namespace Aqua
 		/// </summary>
         public static string Item_Equip_E_Aqua_Hagoromo = "E_Aqua_Hagoromo";
 		/// <summary>
-		///  Sacred Laundry Staff
+		/// Sacred Laundry Staff
 		/// All attacks inflict "Drenched".
 		/// At the start of each turn remove "Drenched" from all allies.
 		/// <color=#919191>Not great for channeling magic, but fantastic for drying clothes.</color>

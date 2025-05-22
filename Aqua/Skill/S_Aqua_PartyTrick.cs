@@ -34,13 +34,13 @@ namespace Aqua
 
         private readonly List<string> AquaRandomSkillSelection = new List<string>
         {
-            ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty,
-            ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty,
-            ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick,
-            ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick,
+            //ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty,
+            //ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty,
+            //ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick,
+            //ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick,
             ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill,
-            ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant,
-            ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket,
+            //ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant,
+            //ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket,
         };
 
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
@@ -73,12 +73,13 @@ namespace Aqua
 
         private IEnumerator RandomSkillSelect(SkillButton Mybutton)
         {
+            string skillId = Mybutton.Myskill.MySkill.KeyID;
             var allies = BattleSystem.instance.AllyTeam.AliveChars;
             var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
             var allTargets = allies.Concat(enemies).ToList();
             var stun = GDEItemKeys.Buff_B_Common_Rest;
 
-            if (Mybutton?.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty)
             {
                 foreach (BattleChar ally in allies)
                 {
@@ -93,7 +94,7 @@ namespace Aqua
                 }
             }
 
-            if (Mybutton?.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty)
             {
                 foreach (BattleChar enemy in enemies)
                 {
@@ -101,7 +102,7 @@ namespace Aqua
                 }
             }
 
-            if (Mybutton?.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick)
             {
                 Vanish = false;
 
@@ -113,7 +114,7 @@ namespace Aqua
                 int result = DamageChange(dummySkill, dummyTarget, dummyDamage, ref dummyCri, false);
             }
 
-            if (Mybutton?.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick)
             {
                 int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, allTargets.Count);
                 BattleChar randomTarget = allTargets[randomIndex];
@@ -126,7 +127,7 @@ namespace Aqua
                 BChar.ParticleOut(Telekinesis, randomTarget);
             }
 
-            if (Mybutton?.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill)
             {
                 for (int i = 0; i < 2; i++)
                 {
@@ -142,12 +143,12 @@ namespace Aqua
                 }
             }
 
-            if (Mybutton?.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant)
             {
                 InventoryManager.Reward(InventoryManager.RewardKey(GDEItemKeys.Reward_R_GetPotion, false));
             }
 
-            if (Mybutton?.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket)
             {
                 int randomNum = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 6);
                 switch (randomNum)
