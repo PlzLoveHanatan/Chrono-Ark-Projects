@@ -21,7 +21,7 @@ namespace Aqua
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             List<GDESkillData> list = new List<GDESkillData>();
-            foreach (GDESkillData gdeskillData in PlayData.ALLSKILLLIST)
+            foreach (GDESkillData gdeskillData in PlayData.ALLSKILLLIST.Concat(PlayData.ALLRARESKILLLIST))
             {
                 if (gdeskillData.User != "" && gdeskillData.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && !gdeskillData.NoDrop && !gdeskillData.Lock)
                 {

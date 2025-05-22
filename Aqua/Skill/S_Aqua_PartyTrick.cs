@@ -34,13 +34,13 @@ namespace Aqua
 
         private readonly List<string> AquaRandomSkillSelection = new List<string>
         {
-            //ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty,
-            //ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty,
-            //ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick,
-            //ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick,
             ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill,
-            //ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant,
-            //ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket,
         };
 
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)

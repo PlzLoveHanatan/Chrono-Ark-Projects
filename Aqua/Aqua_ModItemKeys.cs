@@ -43,12 +43,15 @@ namespace Aqua
 		/// </summary>
         public static string Buff_B_Aqua_UnstablePosture = "B_Aqua_UnstablePosture";
 		/// <summary>
-		/// Damage Increased by 25%. When played gain "Dubious Blessing". 
-		/// <sprite name="비용1"><sprite name="이상"> Attack skill
+		/// Damage Increased by 25%. When played gain "Dubious Blessing".
+		/// <color=#919191>Dubious Blessing
+		/// Increase 1 random stat.</color>
+		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Aqua_DubiousBlessing = "Ex_Aqua_DubiousBlessing";
 		/// <summary>
-		/// When played cast "Nature's Beauty" to all allies.
+		/// When played cast "Nature's Beauty".
+		/// <color=#919191>Heal all allies by 5 and apply 5 barrier.</color>
 		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Aqua_NaturesBeauty = "Ex_Aqua_NaturesBeauty";
@@ -83,8 +86,8 @@ namespace Aqua
 		/// <summary>
 		/// Dubious Blessing
 		/// <color=#919191>Increase 1 random stat :
-		/// Attack Power +2
-		/// Healing Power +2
+		/// Attack Power +20%
+		/// Healing Power +20%
 		/// Defense +20%
 		/// Evade +20%
 		/// Critical +20%</color>
