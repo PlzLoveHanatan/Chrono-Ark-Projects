@@ -1,8 +1,0 @@
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\bin\Debug\System.Core.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\obj\Debug\Aqua.csproj.AssemblyReference.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\obj\Debug\Aqua.csproj.CoreCompileInputs.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\obj\Debug\Aqua.csproj.Up2Date
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\bin\Debug\Aqua05222025104727.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\bin\Debug\Aqua05222025104727.pdb
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\obj\Debug\Aqua05222025104727.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Aqua\obj\Debug\Aqua05222025104727.pdb
