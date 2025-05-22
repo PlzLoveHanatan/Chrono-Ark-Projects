@@ -168,8 +168,8 @@ namespace Aqua
 		/// Randomly activate one of the following 7 effects:  
 		/// 1. Heal all allies by 5 and apply 5 barrier.
 		/// 2. Apply Stun (<sprite=2>150%) to all enemies.
-		/// 3. Random enemy disappears. 
-		/// 4. Deal &a (equal 50% Aqua's Attack power) damage and apply "Unstable Posture" to a random target.
+		/// 3. Random enemy disappears (Deal <color=purple>40 Pain damage</color> to bosses instead).
+		/// 4. Deal <color=purple>20 Pain damage</color> and apply "Unstable Posture" to a random target.
 		/// 5. Apply 2 stacks of "Drenched" to all target's and "Type 100 Recovery Mode" to all allies.
 		/// 6. Gain random potion.
 		/// 7. Gain random book (Skill Book, Golden Skill Book, Mysterious Skill Book, Infinite Skill Book, Transcendent Tome).
@@ -201,7 +201,7 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick_PhantasmalBeauty = "S_Aqua_PartyTrick_PhantasmalBeauty";
 		/// <summary>
 		/// Telekinesis Trick
-		/// Deal &a (equal 50% Aqua's Attack power) damage and apply "Unstable Posture" to a random target.
+		/// Deal <color=purple>20 Pain damage</color> and apply "Unstable Posture" to a random target.
 		/// <color=#919191>Totally Controlled!</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_TelekinesisTrick = "S_Aqua_PartyTrick_TelekinesisTrick";
@@ -213,15 +213,15 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick_UnusualPlant = "S_Aqua_PartyTrick_UnusualPlant";
 		/// <summary>
 		/// Vanish Trick
-		/// Random enemy disappears.
+		/// Random enemy disappears (Deal <color=purple>40 Pain damage</color> to bosses instead).
 		/// <color=#919191>Aqua knows not where it goes nor can she return the object.</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_VanishTrick = "S_Aqua_PartyTrick_VanishTrick";
 		/// <summary>
 		/// Axis Cult Recruitment
-		/// Gain a 30% chance to recruit the enemy into the Axis Cult.
-		/// New followers will bring 400 gold and 4 soulstones.
-		/// <color=#919191>Join us! We have hot springs and emotional instability!</color>
+		/// Gain a 30% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill.
+		/// New followers bring 400 gold and 4 soulstones.
+		/// <color=#919191>Join us! We have hot springs... and emotional instability!</color>
 		/// </summary>
         public static string Skill_S_Aqua_Rare_AxisCultRecruitment = "S_Aqua_Rare_AxisCultRecruitment";
 		/// <summary>
