@@ -1,0 +1,246 @@
+using ChronoArkMod;
+namespace Aqua
+{
+    public static class ModItemKeys
+    {
+		/// <summary>
+		/// Aqua
+		/// Passive:
+		/// Every time Aqua takes damage, heal all allies by 2 HP.
+		/// <color=#919191>Her tears may be annoying, but surprisingly effective.</color>
+		/// </summary>
+        public static string Character_Aqua = "Aqua";
+		/// <summary>
+		/// Aqua Veil
+		/// </summary>
+        public static string Buff_B_Aqua_AquaVeil = "B_Aqua_AquaVeil";
+		/// <summary>
+		/// Crying Shame
+		/// </summary>
+        public static string Buff_B_Aqua_CryingShame = "B_Aqua_CryingShame";
+		/// <summary>
+		/// Drenched 
+		/// </summary>
+        public static string Buff_B_Aqua_Drenched = "B_Aqua_Drenched";
+		/// <summary>
+		/// Dubious Blessing
+		/// <color=#919191>You don't notice any changes, but you feel a slight discomfort.</color>
+		/// </summary>
+        public static string Buff_B_Aqua_DubiousBlessing = "B_Aqua_DubiousBlessing";
+		/// <summary>
+		/// Liquid Courage
+		/// Single Attacks gain a 20% chance to target a random character.
+		/// <color=#919191>Boldness in a bottle. Direction not included.</color>
+		/// </summary>
+        public static string Buff_B_Aqua_LiquidCourage = "B_Aqua_LiquidCourage";
+		/// <summary>
+		/// Type 100 Recovery Mode
+		/// <color=#919191>Drenched but refreshed. Don't question it.</color>
+		/// </summary>
+        public static string Buff_B_Aqua_Type100RecoveryMode = "B_Aqua_Type100RecoveryMode";
+		/// <summary>
+		/// Unstable Posture
+		/// </summary>
+        public static string Buff_B_Aqua_UnstablePosture = "B_Aqua_UnstablePosture";
+		/// <summary>
+		/// Damage Increased by 25%. When played gain "Dubious Blessing". 
+		/// <sprite name="비용1"><sprite name="이상"> Attack skill
+		/// </summary>
+        public static string SkillExtended_Ex_Aqua_DubiousBlessing = "Ex_Aqua_DubiousBlessing";
+		/// <summary>
+		/// When played cast "Nature's Beauty" to all allies.
+		/// <sprite name="비용1"><sprite name="이상">
+		/// </summary>
+        public static string SkillExtended_Ex_Aqua_NaturesBeauty = "Ex_Aqua_NaturesBeauty";
+        public static string SkillExtended_Ex_Aqua_PainDamage = "Ex_Aqua_PainDamage";
+		/// <summary>
+		/// Aqua's Hagoromo
+		/// Apply "Aqua Veil" to the attacker.
+		/// At the start of each turn cast a random "Party Trick".
+		/// <color=#919191>Makes you dodge better... or just confuse enemies with your fabulousness.</color>
+		/// </summary>
+        public static string Item_Equip_E_Aqua_Hagoromo = "E_Aqua_Hagoromo";
+		/// <summary>
+		///  Sacred Laundry Staff
+		/// All attacks inflict "Drenched".
+		/// At the start of each turn remove "Drenched" from all allies.
+		/// <color=#919191>Not great for channeling magic, but fantastic for drying clothes.</color>
+		/// </summary>
+        public static string Item_Equip_E_Aqua_SacredLaundryStaff = "E_Aqua_SacredLaundryStaff";
+		/// <summary>
+		/// Aqua Veil
+		/// <color=#919191>Attack Power -15%
+		/// Accuracy -15%
+		/// Max 2 stacks</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_AquaVeil = "KeyWord_AquaVeil";
+		/// <summary>
+		/// Drenched
+		/// <color=#919191>Receive damage +15%
+		/// Max 2 stacks</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Drenched = "KeyWord_Drenched";
+		/// <summary>
+		/// Dubious Blessing
+		/// <color=#919191>Increase 1 random stat :
+		/// Attack Power +2
+		/// Healing Power +2
+		/// Defense +20%
+		/// Evade +20%
+		/// Critical +20%</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_DubiousBlessing = "KeyWord_DubiousBlessing";
+		/// <summary>
+		/// Nature's Beauty
+		/// <color=#919191>Heal all allies by 5 and apply 5 barrier.</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_NaturesBeauty = "KeyWord_NaturesBeauty";
+		/// <summary>
+		/// Type 100 Recovery Mode
+		/// <color=#919191>Receive healing +30%</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Type100 = "KeyWord_Type100";
+		/// <summary>
+		/// Unstable Posture
+		/// <color=#919191>Armor -20%</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_UnstablePosture = "KeyWord_UnstablePosture";
+        public static string SkillEffect_SE_T_AxisCultRecruitment = "SE_T_AxisCultRecruitment";
+        public static string SkillEffect_SE_T_BlessingoftheAxisCult = "SE_T_BlessingoftheAxisCult";
+        public static string SkillEffect_SE_T_CreateWater = "SE_T_CreateWater";
+        public static string SkillEffect_SE_T_GoddessPrayer = "SE_T_GoddessPrayer";
+        public static string SkillEffect_SE_T_GodsBlow = "SE_T_GodsBlow";
+        public static string SkillEffect_SE_T_HealingWater = "SE_T_HealingWater";
+        public static string SkillEffect_SE_T_PartyDrunkard = "SE_T_PartyDrunkard";
+        public static string SkillEffect_SE_T_Resurrection = "SE_T_Resurrection";
+        public static string SkillEffect_SE_T_S_Aqua_AquaGradePurification = "SE_T_S_Aqua_AquaGradePurification";
+        public static string SkillEffect_SE_T_S_Aqua_BlessingoftheAxisCult = "SE_T_S_Aqua_BlessingoftheAxisCult";
+        public static string SkillEffect_SE_T_S_Aqua_FogofBlessings = "SE_T_S_Aqua_FogofBlessings";
+        public static string SkillEffect_SE_T_S_Aqua_OverflowingGrace = "SE_T_S_Aqua_OverflowingGrace";
+        public static string SkillEffect_SE_T_S_Aqua_PartyDrunkard = "SE_T_S_Aqua_PartyDrunkard";
+        public static string SkillEffect_SE_T_S_Aqua_PartyTrick_TelekinesisTrick = "SE_T_S_Aqua_PartyTrick_TelekinesisTrick";
+        public static string SkillEffect_SE_T_S_Aqua_Rare_AxisCultRecruitment = "SE_T_S_Aqua_Rare_AxisCultRecruitment";
+        public static string SkillEffect_SE_T_S_Aqua_Rare_GodsBlow = "SE_T_S_Aqua_Rare_GodsBlow";
+        public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment = "SE_T_S_Aqua_SplashofJudgment";
+        public static string SkillEffect_SE_T_S_Aqua_TorrentialTears = "SE_T_S_Aqua_TorrentialTears";
+        public static string SkillEffect_SE_T_TorrentialTears = "SE_T_TorrentialTears";
+        public static string SkillEffect_SE_T_TurnUndead = "SE_T_TurnUndead";
+		/// <summary>
+		/// Aqua-Grade Purification
+		/// If the target is an ally, they will be healed instead.
+		/// Remove all buffs/debuffs from target's.
+		/// </summary>
+        public static string Skill_S_Aqua_AquaGradePurification = "S_Aqua_AquaGradePurification";
+		/// <summary>
+		/// Blessing of the Axis Cult
+		/// </summary>
+        public static string Skill_S_Aqua_BlessingoftheAxisCult = "S_Aqua_BlessingoftheAxisCult";
+		/// <summary>
+		/// Divine Lottery
+		/// Cast a random investigator skill.
+		/// </summary>
+        public static string Skill_S_Aqua_DivineLottery = "S_Aqua_DivineLottery";
+        public static string Skill_S_Aqua_DummyHeal = "S_Aqua_DummyHeal";
+		/// <summary>
+		/// Fog of Blessings (and Mistakes)
+		/// Apply "Aqua Veil" to all enemies, gain 20% chance to apply "Aqua Veil" to allies.
+		/// </summary>
+        public static string Skill_S_Aqua_FogofBlessings = "S_Aqua_FogofBlessings";
+		/// <summary>
+		/// Goddess's Secret Weapon (Don't Tell Kazuma)
+		/// Draw 2 skill's and cast "Nature's Beauty" to all allies.
+		/// </summary>
+        public static string Skill_S_Aqua_LucyDraw = "S_Aqua_LucyDraw";
+		/// <summary>
+		/// Overflowing Grace of the Water Goddess
+		/// Gain 20% chance to heal all enemies.
+		/// </summary>
+        public static string Skill_S_Aqua_OverflowingGrace = "S_Aqua_OverflowingGrace";
+		/// <summary>
+		/// Party Drunkard
+		/// </summary>
+        public static string Skill_S_Aqua_PartyDrunkard = "S_Aqua_PartyDrunkard";
+		/// <summary>
+		/// Party Trick
+		/// Randomly activate one of the following 7 effects:  
+		/// 1. Heal all allies by 5 and apply 5 barrier.
+		/// 2. Apply Stun (<sprite=2>150%) to all enemies.
+		/// 3. Random enemy disappears. 
+		/// 4. Deal &a (equal 50% Aqua's Attack power) damage and apply "Unstable Posture" to a random target.
+		/// 5. Apply 2 stacks of "Drenched" to all target's and "Type 100 Recovery Mode" to all allies.
+		/// 6. Gain random potion.
+		/// 7. Gain random book (Skill Book, Golden Skill Book, Mysterious Skill Book, Infinite Skill Book, Transcendent Tome).
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick = "S_Aqua_PartyTrick";
+		/// <summary>
+		/// Certain kill party trick, the type 100 mist!
+		/// Apply 2 stacks of "Drenched" to all target's and "Type 100 Recovery Mode" to all allies.
+		/// <color=#919191>Once activated, it'd last for at least half a day before fading.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_Certainkill = "S_Aqua_PartyTrick_Certainkill";
+		/// <summary>
+		/// Minor pocket dimension
+		/// Gain random book (Skill Book, Golden Skill Book, Mysterious Skill Book, Skill Book - Healing 101, Infinite Skill Book, Transcendent Tome).
+		/// <color=#919191>She opened a rift to store snacks. Someone's forgotten tome fell out instead.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_Minorpocket = "S_Aqua_PartyTrick_Minorpocket";
+		/// <summary>
+		/// Nature's Beauty
+		/// Heal all allies by 5 and apply 5 barrier.
+		/// <color=#919191>Trust Me, I'm a Goddess!</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_NaturesBeauty = "S_Aqua_PartyTrick_NaturesBeauty";
+		/// <summary>
+		/// Phantasmal Beauty
+		/// Apply Stun (<sprite=2>150%) to all enemies.
+		/// <color=#919191>Behold, My Illusion!</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_PhantasmalBeauty = "S_Aqua_PartyTrick_PhantasmalBeauty";
+		/// <summary>
+		/// Telekinesis Trick
+		/// Deal &a (equal 50% Aqua's Attack power) damage and apply "Unstable Posture" to a random target.
+		/// <color=#919191>Totally Controlled!</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_TelekinesisTrick = "S_Aqua_PartyTrick_TelekinesisTrick";
+		/// <summary>
+		/// Unusual Plant
+		/// Gain random potion.
+		/// <color=#919191>Aqua tried to make flowers bloom. Something... drinkable sprouted instead.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_UnusualPlant = "S_Aqua_PartyTrick_UnusualPlant";
+		/// <summary>
+		/// Vanish Trick
+		/// Random enemy disappears.
+		/// <color=#919191>Aqua knows not where it goes nor can she return the object.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_VanishTrick = "S_Aqua_PartyTrick_VanishTrick";
+		/// <summary>
+		/// Axis Cult Recruitment
+		/// Gain a 30% chance to recruit the enemy into the Axis Cult.
+		/// New followers will bring 400 gold and 4 soulstones.
+		/// <color=#919191>Join us! We have hot springs and emotional instability!</color>
+		/// </summary>
+        public static string Skill_S_Aqua_Rare_AxisCultRecruitment = "S_Aqua_Rare_AxisCultRecruitment";
+		/// <summary>
+		/// God's Blow
+		/// Gain 50% chance to increase this skill damage by 400%.
+		/// <color=#919191>Aqua gathers all her divine might... and misses spectacularly half the time.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_Rare_GodsBlow = "S_Aqua_Rare_GodsBlow";
+		/// <summary>
+		/// Splash of Judgment
+		/// </summary>
+        public static string Skill_S_Aqua_SplashofJudgment = "S_Aqua_SplashofJudgment";
+		/// <summary>
+		/// Torrential Tears
+		/// Gain 20% chance to apply "Drenched" to allies.
+		/// </summary>
+        public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";
+
+    }
+
+    public static class ModLocalization
+    {
+
+    }
+}
