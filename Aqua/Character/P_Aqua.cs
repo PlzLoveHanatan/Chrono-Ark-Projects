@@ -56,14 +56,19 @@ namespace Aqua
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
             var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false);
-            var painSharing = GDEItemKeys.Buff_B_BloodyMist_ShareDamage;
-            var pmPainSharing = GDEItemKeys.Buff_B_ProgramMaster_LucyMain;
+
+            var ignoreKeys = new HashSet<string>
+            {
+                GDEItemKeys.Buff_B_BloodyMist_ShareDamage,
+                GDEItemKeys.Buff_B_ProgramMaster_LucyMain,
+                GDEItemKeys.Buff_B_S4_King_P2_Last
+            };
 
             if (BuffTaker == BChar && debuffs != null)
             {
                 foreach (var debuff in debuffs)
                 {
-                    if (debuff.BuffData.Key == painSharing || debuff.BuffData.Key == pmPainSharing) continue;
+                    if (ignoreKeys.Contains(debuff.BuffData.Key)) continue;
 
                     debuff.SelfDestroy();
                 }

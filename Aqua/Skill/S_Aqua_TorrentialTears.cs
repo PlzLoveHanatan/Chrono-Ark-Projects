@@ -29,7 +29,7 @@ namespace Aqua
                 foreach (var ally in BChar.MyTeam.AliveChars)
                 {
                     ally.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, BChar, false, 0, false, -1, false);
+                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
                 }
             }
 
@@ -44,17 +44,17 @@ namespace Aqua
         public IEnumerator AdditionalCast(BattleChar Target)
         {
 
-            yield return new WaitForSecondsRealtime(0.2f);
+            yield return new WaitForSecondsRealtime(0.3f);
 
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_TorrentialTears, BChar, BChar.MyTeam);
             skill.PlusHit = true;
             skill.FreeUse = true;
 
-            foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars)
-            {
-                enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
-                enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, BChar, false, 0, false, -1, false);
-            }
+            //foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars)
+            //{
+            //    enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
+            //    enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
+            //}
 
             bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 20);
 
@@ -63,7 +63,7 @@ namespace Aqua
                 foreach (var ally in BChar.MyTeam.AliveChars)
                 {
                     ally.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, BChar, false, 0, false, -1, false);
+                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
                 }
             }
 

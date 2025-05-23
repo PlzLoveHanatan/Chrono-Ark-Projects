@@ -46,19 +46,24 @@ namespace Aqua
 		/// </summary>
         public static string Buff_B_Aqua_UnstablePosture = "B_Aqua_UnstablePosture";
 		/// <summary>
-		/// Damage Increased by 25%. When played gain 'Dubious Blessing'.
-		/// <color=#919191>Dubious Blessing
-		/// Increase 1 random stat.</color>
+		/// When played cast 'Divine Lottery'
 		/// <sprite name="비용1"><sprite name="이상">
+		/// </summary>
+        public static string SkillExtended_Ex_Aqua_DivineLottery = "Ex_Aqua_DivineLottery";
+		/// <summary>
+		/// Damage Increased by 25%. When played gain 'Dubious Blessing'.
 		/// </summary>
         public static string SkillExtended_Ex_Aqua_DubiousBlessing = "Ex_Aqua_DubiousBlessing";
 		/// <summary>
 		/// When played cast 'Nature's Beauty'.
-		/// <color=#919191>Heal all allies by 5 and apply 5 barrier.</color>
-		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Aqua_NaturesBeauty = "Ex_Aqua_NaturesBeauty";
         public static string SkillExtended_Ex_Aqua_PainDamage = "Ex_Aqua_PainDamage";
+		/// <summary>
+		/// When played cast 'Party Trick'.
+		/// <sprite name="비용1"><sprite name="이상">
+		/// </summary>
+        public static string SkillExtended_Ex_Aqua_PartyTrick = "Ex_Aqua_PartyTrick";
 		/// <summary>
 		/// Aqua's Hagoromo
 		/// Apply "Aqua Veil" to the attacker.
@@ -143,7 +148,7 @@ namespace Aqua
         public static string Skill_S_Aqua_BlessingoftheAxisCult = "S_Aqua_BlessingoftheAxisCult";
 		/// <summary>
 		/// Divine Lottery
-		/// Cast a random investigator skill.
+		/// Cast a random skill.
 		/// </summary>
         public static string Skill_S_Aqua_DivineLottery = "S_Aqua_DivineLottery";
         public static string Skill_S_Aqua_DummyHeal = "S_Aqua_DummyHeal";
@@ -225,7 +230,7 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick_VanishTrick = "S_Aqua_PartyTrick_VanishTrick";
 		/// <summary>
 		/// Axis Cult Recruitment
-		/// Gain a 30% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill.
+		/// Gain a 30% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill from current fight.
 		/// New followers bring 400 gold and 4 soulstones.
 		/// <color=#919191>Join us! We have hot springs... and emotional instability!</color>
 		/// </summary>
@@ -238,15 +243,28 @@ namespace Aqua
         public static string Skill_S_Aqua_Rare_GodsBlow = "S_Aqua_Rare_GodsBlow";
 		/// <summary>
 		/// Splash of Judgment
+		/// Apply Taunt status on the target's.
+		/// If the target has 1 or more <color=#A3DFF7>Drenched</color>, cast this skill again with Сountdown 1.
 		/// </summary>
         public static string Skill_S_Aqua_SplashofJudgment = "S_Aqua_SplashofJudgment";
 		/// <summary>
 		/// Torrential Tears
 		/// Gain 50% chance to cast this skill again.
-		/// Gain 20% chance to apply <color=#A3DFF7>Drenched</color> and <color=#5F9EA0>Aqua Veil</color> to allies.
+		/// Gain 20% chance to apply <color=#A3DFF7>Drenched</color> and <color=#FF6B6B>Crying Shame</color> to allies.
 		/// <color=#919191>Kazumaaa, I wanna go hoooome!!</color>
 		/// </summary>
         public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";
+		/// <summary>
+		/// Splash of Judgment
+		/// </summary>
+        public static string Skill_S_Aqua_SplashofJudgment_0 = "S_Aqua_SplashofJudgment_0";
+        public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment_0 = "SE_T_S_Aqua_SplashofJudgment_0";
+		/// <summary>
+		/// Crying Shame
+		/// <color=#919191>Attack power -5%
+		/// Max 4 stacks</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_CryingShame = "KeyWord_CryingShame";
 
     }
 
