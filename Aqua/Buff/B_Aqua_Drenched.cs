@@ -20,7 +20,7 @@ namespace Aqua
     {
         public override void BuffStat()
         {
-            PlusStat.DMGTaken = 15 * StackNum;
+            PlusStat.DMGTaken = 10 * StackNum;
         }
     }
 }

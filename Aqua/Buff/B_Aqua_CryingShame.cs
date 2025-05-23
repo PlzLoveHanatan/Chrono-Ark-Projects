@@ -20,7 +20,7 @@ namespace Aqua
     {
         public override void BuffStat()
         {
-            PlusStat.def = -15 * StackNum;
+            PlusPerStat.Damage = -5 * StackNum;
         }
     }
 }

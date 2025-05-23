@@ -138,11 +138,12 @@ namespace Aqua
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill)
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     foreach (var target in allTargets)
                     {
                         target.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
+                        target.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, this.BChar, false, 0, false, -1, false);
 
                         if (target.Info.Ally)
                         {

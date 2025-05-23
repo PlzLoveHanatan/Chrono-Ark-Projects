@@ -6,7 +6,7 @@ namespace Aqua
 		/// <summary>
 		/// Aqua
 		/// Passive:
-		/// Every time Aqua takes damage, heal all allies by 2 HP.
+		/// Every time Aqua takes damage, heal all allies by 3 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
 		/// As a former Goddess, Aqua cannot be afflicted with any debuffs.
 		/// <color=#919191>- This passive is applied from level 1.
 		/// Her tears may be annoying, but surprisingly effective.
@@ -32,7 +32,7 @@ namespace Aqua
         public static string Buff_B_Aqua_DubiousBlessing = "B_Aqua_DubiousBlessing";
 		/// <summary>
 		/// Liquid Courage
-		/// Single Attacks gain a 20% chance to target a random character.
+		/// Single Attacks gain a 15% chance to target a random character.
 		/// <color=#919191>Boldness in a bottle. Direction not included.</color>
 		/// </summary>
         public static string Buff_B_Aqua_LiquidCourage = "B_Aqua_LiquidCourage";
@@ -46,14 +46,14 @@ namespace Aqua
 		/// </summary>
         public static string Buff_B_Aqua_UnstablePosture = "B_Aqua_UnstablePosture";
 		/// <summary>
-		/// Damage Increased by 25%. When played gain "Dubious Blessing".
+		/// Damage Increased by 25%. When played gain 'Dubious Blessing'.
 		/// <color=#919191>Dubious Blessing
 		/// Increase 1 random stat.</color>
 		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Aqua_DubiousBlessing = "Ex_Aqua_DubiousBlessing";
 		/// <summary>
-		/// When played cast "Nature's Beauty".
+		/// When played cast 'Nature's Beauty'.
 		/// <color=#919191>Heal all allies by 5 and apply 5 barrier.</color>
 		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
@@ -75,15 +75,14 @@ namespace Aqua
         public static string Item_Equip_E_Aqua_SacredLaundryStaff = "E_Aqua_SacredLaundryStaff";
 		/// <summary>
 		/// Aqua Veil
-		/// <color=#919191>Attack Power -15%
-		/// Accuracy -15%
+		/// <color=#919191>Accuracy -20%
 		/// Max 2 stacks</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_AquaVeil = "KeyWord_AquaVeil";
 		/// <summary>
 		/// Drenched
-		/// <color=#919191>Receive damage +15%
-		/// Max 2 stacks</color>
+		/// <color=#919191>Receive damage +10%
+		/// Max 3 stacks</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_Drenched = "KeyWord_Drenched";
 		/// <summary>
@@ -149,16 +148,18 @@ namespace Aqua
         public static string Skill_S_Aqua_DummyHeal = "S_Aqua_DummyHeal";
 		/// <summary>
 		/// Fog of Blessings (and Mistakes)
-		/// Apply "Aqua Veil" to all enemies, gain 20% chance to apply "Aqua Veil" to allies.
+		/// Apply <color=#5F9EA0>Aqua Veil</color> to all enemies.
+		/// Gain 20% chance to apply <color=#5F9EA0>Aqua Veil</color> to allies.
 		/// </summary>
         public static string Skill_S_Aqua_FogofBlessings = "S_Aqua_FogofBlessings";
 		/// <summary>
 		/// Goddess's Secret Weapon (Don't Tell Kazuma)
-		/// Draw 2 skill's and cast "Nature's Beauty" to all allies.
+		/// Draw 2 skill's and cast 'Nature's Beauty' to all allies.
 		/// </summary>
         public static string Skill_S_Aqua_LucyDraw = "S_Aqua_LucyDraw";
 		/// <summary>
 		/// Overflowing Grace of the Water Goddess
+		/// Apply <color=#A3DFF7>Drenched</color> to all allies and enemies.
 		/// Gain 20% chance to heal all enemies.
 		/// </summary>
         public static string Skill_S_Aqua_OverflowingGrace = "S_Aqua_OverflowingGrace";
@@ -169,19 +170,19 @@ namespace Aqua
 		/// <summary>
 		/// Party Trick
 		/// Randomly activate one of the following 7 effects:  
-		/// 1. Heal all allies by 5 and apply 5 barrier.
-		/// 2. Apply Stun (<sprite=2>150%) to all enemies.
-		/// 3. Random enemy disappears (Deal <color=purple>40 Pain damage</color> to bosses instead).
-		/// 4. Deal <color=purple>20 Pain damage</color> and apply "Unstable Posture" to a random target.
-		/// 5. Apply 2 stacks of "Drenched" to all target's and "Type 100 Recovery Mode" to all allies.
-		/// 6. Gain random potion.
-		/// 7. Gain random book (Skill Book, Golden Skill Book, Mysterious Skill Book, Infinite Skill Book, Transcendent Tome).
+		/// 1. Cast Nature's Beauty.
+		/// 2. Cast Phantasmal Beauty.
+		/// 3. Cast Vanish Trick.
+		/// 4. Cast Telekinesis Trick.
+		/// 5. Cast Certain Kill Party Trick, The Type 100 Mist!
+		/// 6. Cast Unusual Plant Growth Trick.
+		/// 7. Cast Minor pocket dimension.
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick = "S_Aqua_PartyTrick";
 		/// <summary>
 		/// Certain kill party trick, the type 100 mist!
-		/// Apply 2 stacks of "Drenched" to all target's and "Type 100 Recovery Mode" to all allies.
-		/// <color=#919191>Once activated, it'd last for at least half a day before fading.</color>
+		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 2 stacks of <color=#5F9EA0>Aqua Veil</color> to all allies and enemies and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
+		/// <color=#919191>Once activated, it would last for at least half a day before fading.</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_Certainkill = "S_Aqua_PartyTrick_Certainkill";
 		/// <summary>
@@ -204,7 +205,7 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick_PhantasmalBeauty = "S_Aqua_PartyTrick_PhantasmalBeauty";
 		/// <summary>
 		/// Telekinesis Trick
-		/// Deal <color=purple>20 Pain damage</color> and apply "Unstable Posture" to a random target.
+		/// Deal <color=purple>20 Pain damage</color> and apply 'Unstable Posture' to a random target.
 		/// <color=#919191>Totally Controlled!</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_TelekinesisTrick = "S_Aqua_PartyTrick_TelekinesisTrick";
@@ -239,7 +240,7 @@ namespace Aqua
         public static string Skill_S_Aqua_SplashofJudgment = "S_Aqua_SplashofJudgment";
 		/// <summary>
 		/// Torrential Tears
-		/// Gain 20% chance to apply "Drenched" to allies.
+		/// Gain 20% chance to apply <color=#A3DFF7>Drenched</color> and <color=#5F9EA0>Aqua Veil</color> to allies.
 		/// </summary>
         public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";
 

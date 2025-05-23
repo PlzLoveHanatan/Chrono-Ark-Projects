@@ -33,13 +33,21 @@ namespace Aqua
                 {
                     if (ally != BChar && ally != null)
                     {
-                        ally.Heal(BattleSystem.instance.DummyChar, 2f, false, true, null);
+                        ally.Heal(BattleSystem.instance.DummyChar, 3f, false, true, null);
 
                         Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, this.BChar, this.BChar.MyTeam);
                         healingParticle.PlusHit = true;
                         healingParticle.FreeUse = true;
 
                         this.BChar.ParticleOut(healingParticle, ally);
+                    }
+                }
+
+                foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
+                {
+                    if (enemy != null)
+                    {
+                        enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, this.BChar, false, 0, false, -1, false);
                     }
                 }
             }

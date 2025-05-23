@@ -24,12 +24,12 @@ namespace Aqua
         }
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 20);
+            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 15);
 
             if (neverLucky)
             {
                 var newTargets = BattleSystem.instance.AllyTeam.AliveChars
-                    .Where(a => a != null)
+                    .Where(a => a != null && a != BChar)
                     .Concat(BattleSystem.instance.EnemyList.Where(e => e != null))
                     .ToList();
 
