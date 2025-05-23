@@ -138,6 +138,7 @@ namespace Aqua
         public static string Skill_S_Aqua_AquaGradePurification = "S_Aqua_AquaGradePurification";
 		/// <summary>
 		/// Blessing of the Axis Cult
+		/// Cost is reduced by 1 if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_Aqua_BlessingoftheAxisCult = "S_Aqua_BlessingoftheAxisCult";
 		/// <summary>
@@ -165,6 +166,7 @@ namespace Aqua
         public static string Skill_S_Aqua_OverflowingGrace = "S_Aqua_OverflowingGrace";
 		/// <summary>
 		/// Party Drunkard
+		/// Cost is reduced by 1 if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_Aqua_PartyDrunkard = "S_Aqua_PartyDrunkard";
 		/// <summary>
