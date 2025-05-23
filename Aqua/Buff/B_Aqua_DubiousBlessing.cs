@@ -16,41 +16,46 @@ namespace Aqua
 	/// <summary>
 	/// Dubious Blessing
 	/// </summary>
-    public class B_Aqua_DubiousBlessing : Buff
+    public class B_Aqua_DubiousBlessing : Buff, IP_Awake
     {
-        private int AttackPower;
-        private int HealingPower;
-        private int Defense;
-        private int Evade;
-        private int Critical;
+        public int AttackPower = 0;
+        public int HealingPower = 0;
+        public int Defense = 0;
+        public int Evade = 0;
+        public int Critical = 0;
+        private bool FirstAwake;
+
+        public void Awake()
+        {
+            if (FirstAwake)
+            {
+                AttackPower = 0;
+                HealingPower = 0;
+                Defense = 0;
+                Critical = 0;
+                Evade = 0;
+                FirstAwake = false;
+            }
+        }
 
         public override void Init()
         {
-            AttackPower = 0;
-            HealingPower = 0;
-            Defense = 0;
-            Critical = 0;
-            Evade = 0;
+            List<Action> AquaBuffs = new List<Action>();
 
-            int randomNum = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 6);
-            switch (randomNum)
+            if (AttackPower != 20) AquaBuffs.Add(() => AttackPower = 20);
+            if (HealingPower != 20) AquaBuffs.Add(() => HealingPower = 20);
+            if (Defense != 20) AquaBuffs.Add(() => Defense = 20);
+            if (Evade != 20) AquaBuffs.Add(() => Evade = 20);
+            if (Critical != 20) AquaBuffs.Add(() => Critical = 20);
+
+            if (AquaBuffs.Count == 0)
             {
-                case 1:
-                    AttackPower = 20;
-                    break;
-                case 2:
-                    HealingPower = 20;
-                    break;
-                case 3:
-                    Defense = 20;
-                    break;
-                case 4:
-                    Evade = 20;
-                    break;
-                case 5:
-                    Critical = 20;
-                    break;
+                Debug.Log("All buffs already at 20. Nothing to add.");
+                return;
             }
+
+            int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, AquaBuffs.Count);
+            AquaBuffs[index].Invoke();
         }
 
         public override void BuffStat()
