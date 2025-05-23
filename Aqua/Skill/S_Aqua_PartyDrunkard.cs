@@ -19,14 +19,22 @@ namespace Aqua
 	/// </summary>
     public class S_Aqua_PartyDrunkard : Skill_Extended
     {
+        public override void Init()
+        {
+            base.Init();
+            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_1_Ex).Particle_Path;
+        }
+
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
-
             if (MySkill.BasicSkill)
             {
                 MySkill.APChange = -1;
+                base.SkillParticleOn();
+                return;
             }
+
+            base.SkillParticleOff();
         }
     }
 }

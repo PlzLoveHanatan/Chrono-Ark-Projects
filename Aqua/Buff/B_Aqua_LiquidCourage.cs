@@ -22,6 +22,10 @@ namespace Aqua
         {
             this.PlusPerStat.Damage = 25;
         }
+        public override bool UseSkillBuff(Skill Myskill)
+        {
+            return Myskill.IsDamage;
+        }
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
             bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 15);

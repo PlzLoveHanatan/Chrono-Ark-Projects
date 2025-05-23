@@ -75,8 +75,8 @@ namespace Aqua
         public static string Item_Equip_E_Aqua_SacredLaundryStaff = "E_Aqua_SacredLaundryStaff";
 		/// <summary>
 		/// Aqua Veil
-		/// <color=#919191>Accuracy -20%
-		/// Max 2 stacks</color>
+		/// <color=#919191>Accuracy -10%
+		/// Max 3 stacks</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_AquaVeil = "KeyWord_AquaVeil";
 		/// <summary>
@@ -242,7 +242,9 @@ namespace Aqua
         public static string Skill_S_Aqua_SplashofJudgment = "S_Aqua_SplashofJudgment";
 		/// <summary>
 		/// Torrential Tears
+		/// Gain 50% chance to cast this skill again.
 		/// Gain 20% chance to apply <color=#A3DFF7>Drenched</color> and <color=#5F9EA0>Aqua Veil</color> to allies.
+		/// <color=#919191>Kazumaaa, I wanna go hoooome!!</color>
 		/// </summary>
         public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";
 

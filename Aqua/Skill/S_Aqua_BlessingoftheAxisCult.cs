@@ -13,20 +13,28 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Aqua
 {
-	/// <summary>
-	/// Blessing of the Axis Cult
-	/// Cost is reduced by 1 if this skill is a fixed ability.
-	/// </summary>
+    /// <summary>
+    /// Blessing of the Axis Cult
+    /// Cost is reduced by 1 if this skill is a fixed ability.
+    /// </summary>
     public class S_Aqua_BlessingoftheAxisCult : Skill_Extended
     {
+        public override void Init()
+        {
+            base.Init();
+            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
+        }
+
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
-
             if (MySkill.BasicSkill)
             {
                 MySkill.APChange = -1;
+                base.SkillParticleOn();
+                return;
             }
+
+            base.SkillParticleOff();
         }
     }
 }
