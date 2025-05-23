@@ -23,7 +23,7 @@ namespace Aqua
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 100);
+            bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 30);
 
             if (alwaysLucky)
             {
