@@ -18,12 +18,13 @@ namespace Aqua
 	/// Aqua
 	/// Passive:
 	/// </summary>
-    public class P_Aqua : Passive_Char, IP_DamageTake
+    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter
     {
         public override void Init()
         {
             OnePassive = true;
         }
+
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
             if (Dmg >= 1)
@@ -40,6 +41,23 @@ namespace Aqua
 
                         this.BChar.ParticleOut(healingParticle, ally);
                     }
+                }
+            }
+        }
+
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false);
+            var painSharing = GDEItemKeys.Buff_B_BloodyMist_ShareDamage;
+            var pmPainSharing = GDEItemKeys.Buff_B_ProgramMaster_LucyMain;
+
+            if (BuffTaker == BChar && debuffs != null)
+            {
+                foreach (var debuff in debuffs)
+                {
+                    if (debuff.BuffData.Key == painSharing || debuff.BuffData.Key == pmPainSharing) continue;
+
+                    debuff.SelfDestroy();
                 }
             }
         }

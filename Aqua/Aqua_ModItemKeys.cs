@@ -7,7 +7,10 @@ namespace Aqua
 		/// Aqua
 		/// Passive:
 		/// Every time Aqua takes damage, heal all allies by 2 HP.
-		/// <color=#919191>Her tears may be annoying, but surprisingly effective.</color>
+		/// As a former Goddess, Aqua cannot be afflicted with any debuffs.
+		/// <color=#919191>- This passive is applied from level 1.
+		/// Her tears may be annoying, but surprisingly effective.
+		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
 		/// </summary>
         public static string Character_Aqua = "Aqua";
 		/// <summary>
