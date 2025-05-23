@@ -125,7 +125,7 @@ namespace Aqua
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick)
             {
                 int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
-                BattleChar randomTarget = allTargets[randomIndex];
+                BattleChar randomTarget = enemies[randomIndex];
 
                 randomTarget.BuffAdd(ModItemKeys.Buff_B_Aqua_UnstablePosture, this.BChar, false, 0, false, -1, false);
                 Skill Telekinesis = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick, this.BChar, this.BChar.MyTeam);

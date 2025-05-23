@@ -85,6 +85,12 @@ namespace Aqua
 		/// </summary>
         public static string SkillKeyword_KeyWord_AquaVeil = "KeyWord_AquaVeil";
 		/// <summary>
+		/// Crying Shame
+		/// <color=#919191>Attack power -5%
+		/// Max 4 stacks</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_CryingShame = "KeyWord_CryingShame";
+		/// <summary>
 		/// Drenched
 		/// <color=#919191>Receive damage +10%
 		/// Max 3 stacks</color>
@@ -132,6 +138,7 @@ namespace Aqua
         public static string SkillEffect_SE_T_S_Aqua_Rare_AxisCultRecruitment = "SE_T_S_Aqua_Rare_AxisCultRecruitment";
         public static string SkillEffect_SE_T_S_Aqua_Rare_GodsBlow = "SE_T_S_Aqua_Rare_GodsBlow";
         public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment = "SE_T_S_Aqua_SplashofJudgment";
+        public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment_0 = "SE_T_S_Aqua_SplashofJudgment_0";
         public static string SkillEffect_SE_T_S_Aqua_TorrentialTears = "SE_T_S_Aqua_TorrentialTears";
         public static string SkillEffect_SE_T_TorrentialTears = "SE_T_TorrentialTears";
         public static string SkillEffect_SE_T_TurnUndead = "SE_T_TurnUndead";
@@ -248,23 +255,16 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_SplashofJudgment = "S_Aqua_SplashofJudgment";
 		/// <summary>
+		/// Splash of Judgment
+		/// </summary>
+        public static string Skill_S_Aqua_SplashofJudgment_0 = "S_Aqua_SplashofJudgment_0";
+		/// <summary>
 		/// Torrential Tears
 		/// Gain 50% chance to cast this skill again.
 		/// Gain 20% chance to apply <color=#A3DFF7>Drenched</color> and <color=#FF6B6B>Crying Shame</color> to allies.
 		/// <color=#919191>Kazumaaa, I wanna go hoooome!!</color>
 		/// </summary>
         public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";
-		/// <summary>
-		/// Splash of Judgment
-		/// </summary>
-        public static string Skill_S_Aqua_SplashofJudgment_0 = "S_Aqua_SplashofJudgment_0";
-        public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment_0 = "SE_T_S_Aqua_SplashofJudgment_0";
-		/// <summary>
-		/// Crying Shame
-		/// <color=#919191>Attack power -5%
-		/// Max 4 stacks</color>
-		/// </summary>
-        public static string SkillKeyword_KeyWord_CryingShame = "KeyWord_CryingShame";
 
     }
 
