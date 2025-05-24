@@ -20,6 +20,11 @@ namespace Aqua
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+            {
+                Utils.PlaySound(MySkill.MySkill.KeyID);
+            }
+
             foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
             {
                 if (ally != null)

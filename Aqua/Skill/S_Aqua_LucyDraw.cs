@@ -21,20 +21,29 @@ namespace Aqua
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            var allies = BattleSystem.instance.AllyTeam.AliveChars;
+            var aliveAqua = allies.FirstOrDefault(c => c.Info.Name == ModItemKeys.Character_Aqua);
+
+            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && aliveAqua != null)
+            {
+                Utils.PlaySound(MySkill.MySkill.KeyID);
+            }
+
             BattleSystem.instance.AllyTeam.Draw(2);
 
-            var allies = BattleSystem.instance.AllyTeam.AliveChars;
-
-            foreach (var ally in allies)
+            if (aliveAqua != null)
             {
-                ally.Heal(BattleSystem.instance.DummyChar, 5f, false, true, null);
-                ally.BuffAdd("B_PopcornGirl_Lucy_1", BattleSystem.instance.AllyTeam.LucyChar, false, 0, false, -1, false);
+                foreach (var ally in allies)
+                {
+                    ally.Heal(BattleSystem.instance.DummyChar, 5f, false, true, null);
+                    ally.BuffAdd("B_PopcornGirl_Lucy_1", BattleSystem.instance.AllyTeam.LucyChar, false, 0, false, -1, false);
 
-                Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, this.BChar, this.BChar.MyTeam);
-                healingParticle.PlusHit = true;
-                healingParticle.FreeUse = true;
+                    Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, this.BChar, this.BChar.MyTeam);
+                    healingParticle.PlusHit = true;
+                    healingParticle.FreeUse = true;
 
-                this.BChar.ParticleOut(healingParticle, ally);
+                    this.BChar.ParticleOut(healingParticle, ally);
+                }
             }
         }
     }

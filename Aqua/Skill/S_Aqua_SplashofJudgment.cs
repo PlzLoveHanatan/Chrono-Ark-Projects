@@ -23,6 +23,11 @@ namespace Aqua
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+            {
+                Utils.PlaySound(MySkill.MySkill.KeyID);
+            }
+
             var target = Targets[0];
             var drenched = target.BuffReturn(ModItemKeys.Buff_B_Aqua_Drenched, false) as B_Aqua_Drenched;
 

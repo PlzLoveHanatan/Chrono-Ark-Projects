@@ -73,8 +73,8 @@ namespace Aqua
         public static string Item_Equip_E_Aqua_Hagoromo = "E_Aqua_Hagoromo";
 		/// <summary>
 		/// Sacred Laundry Staff
-		/// All attacks inflict "Drenched".
-		/// At the start of each turn remove "Drenched" from all allies.
+		/// All attacks inflict <color=#A3DFF7>Drenched</color>.
+		/// At the start of each turn remove <color=#A3DFF7>Drenched</color> from all allies.
 		/// <color=#919191>Not great for channeling magic, but fantastic for drying clothes.</color>
 		/// </summary>
         public static string Item_Equip_E_Aqua_SacredLaundryStaff = "E_Aqua_SacredLaundryStaff";
@@ -168,6 +168,7 @@ namespace Aqua
 		/// <summary>
 		/// Goddess's Secret Weapon (Don't Tell Kazuma)
 		/// Draw 2 skill's and cast 'Nature's Beauty' to all allies.
+		/// If Aqua is fainted, do not cast 'Nature's Beauty'.
 		/// </summary>
         public static string Skill_S_Aqua_LucyDraw = "S_Aqua_LucyDraw";
 		/// <summary>

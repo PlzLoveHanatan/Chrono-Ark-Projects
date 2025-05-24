@@ -13,10 +13,10 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Aqua
 {
-	/// <summary>
-	/// Party Drunkard
-	/// Cost is reduced by 1 if this skill is a fixed ability.
-	/// </summary>
+    /// <summary>
+    /// Party Drunkard
+    /// Cost is reduced by 1 if this skill is a fixed ability.
+    /// </summary>
     public class S_Aqua_PartyDrunkard : Skill_Extended
     {
         public override void Init()
@@ -35,6 +35,13 @@ namespace Aqua
             }
 
             base.SkillParticleOff();
+        }
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        {
+            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+            {
+                Utils.PlaySound(MySkill.MySkill.KeyID);
+            }
         }
     }
 }

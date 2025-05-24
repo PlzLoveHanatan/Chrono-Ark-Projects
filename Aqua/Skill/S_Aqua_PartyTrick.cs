@@ -67,6 +67,11 @@ namespace Aqua
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+            {
+                Utils.PlaySound(MySkill.MySkill.KeyID);
+            }
+
             List<string> aquaSkills = new List<string>();
             aquaSkills.AddRange(AquaRandomSkillSelection);
 
@@ -89,6 +94,11 @@ namespace Aqua
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty)
             {
+                if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+                {
+                    Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty);
+                }
+
                 foreach (BattleChar ally in allies)
                 {
                     ally.Heal(BattleSystem.instance.DummyChar, 5f, false, true, null);
@@ -104,6 +114,11 @@ namespace Aqua
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty)
             {
+                if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+                {
+                    Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty);
+                }
+
                 foreach (BattleChar enemy in enemies)
                 {
                     enemy.BuffAdd(stun, this.BChar, false, 150, false, -1, false);
@@ -112,6 +127,11 @@ namespace Aqua
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick)
             {
+                if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+                {
+                    Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick);
+                }
+
                 Vanish = false;
 
                 Skill dummySkill = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick, this.BChar, this.BChar.MyTeam);
@@ -124,6 +144,11 @@ namespace Aqua
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick)
             {
+                if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+                {
+                    Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick);
+                }
+
                 int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
                 BattleChar randomTarget = enemies[randomIndex];
 
@@ -138,6 +163,11 @@ namespace Aqua
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill)
             {
+                if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+                {
+                    Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill);
+                }
+
                 for (int i = 0; i < 3; i++)
                 {
                     foreach (var target in allTargets)
@@ -155,11 +185,21 @@ namespace Aqua
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant)
             {
+                if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+                {
+                    Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant);
+                }
+
                 InventoryManager.Reward(InventoryManager.RewardKey(GDEItemKeys.Reward_R_GetPotion, false));
             }
 
             if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket)
             {
+                if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+                {
+                    Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket);
+                }
+
                 int randomNum = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 6);
                 switch (randomNum)
                 {
