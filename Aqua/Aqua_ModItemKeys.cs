@@ -6,8 +6,9 @@ namespace Aqua
 		/// <summary>
 		/// Aqua
 		/// Passive:
-		/// Every time Aqua takes damage, heal all allies by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
-		/// As a former Goddess, Aqua cannot be afflicted with any debuffs.
+		/// Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
+		/// If Aqua takes damage 2 times in a turn apply <color=#A3DFF7>Drenched</color> to all allies and enemies, only activates once per turn.
+		/// Aqua cannot be afflicted with any debuffs.
 		/// <color=#919191>- This passive is applied from level 1.
 		/// Her tears may be annoying, but surprisingly effective.
 		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>

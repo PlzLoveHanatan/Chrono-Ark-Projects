@@ -18,11 +18,16 @@ namespace Aqua
 	/// Aqua
 	/// Passive:
 	/// </summary>
-    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter
+    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn
     {
+        private int AquaDamageTaken;
         public override void Init()
         {
             OnePassive = true;
+        }
+        public void Turn()
+        {
+            AquaDamageTaken = 0;
         }
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
@@ -48,6 +53,21 @@ namespace Aqua
                     if (enemy != null)
                     {
                         enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, this.BChar, false, 0, false, -1, false);
+                    }
+                }
+
+                if (AquaDamageTaken > 2) return;
+
+                AquaDamageTaken++;
+
+                if (AquaDamageTaken == 2)
+                {
+                    foreach (var target in BattleSystem.instance.AllyTeam.AliveChars.Concat(BattleSystem.instance.EnemyTeam.AliveChars_Vanish))
+                    {
+                        if (target != null)
+                        {
+                            target.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
+                        }
                     }
                 }
             }
