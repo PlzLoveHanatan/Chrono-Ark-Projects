@@ -6,7 +6,7 @@ namespace Aqua
 		/// <summary>
 		/// Aqua
 		/// Passive:
-		/// Every time Aqua takes damage, heal all allies by 3 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
+		/// Every time Aqua takes damage, heal all allies by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
 		/// As a former Goddess, Aqua cannot be afflicted with any debuffs.
 		/// <color=#919191>- This passive is applied from level 1.
 		/// Her tears may be annoying, but surprisingly effective.
@@ -239,7 +239,7 @@ namespace Aqua
 		/// <summary>
 		/// Axis Cult Recruitment
 		/// Gain a 30% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill from current fight.
-		/// New followers bring 400 gold and 4 soulstones.
+		/// New followers bring 200~400 gold and 1~2 soulstones.
 		/// <color=#919191>Join us! We have hot springs... and emotional instability!</color>
 		/// </summary>
         public static string Skill_S_Aqua_Rare_AxisCultRecruitment = "S_Aqua_Rare_AxisCultRecruitment";

@@ -33,7 +33,7 @@ namespace Aqua
                 {
                     if (ally != BChar && ally != null)
                     {
-                        ally.Heal(BattleSystem.instance.DummyChar, 3f, false, true, null);
+                        ally.Heal(BattleSystem.instance.DummyChar, 2f, false, true, null);
 
                         Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, this.BChar, this.BChar.MyTeam);
                         healingParticle.PlusHit = true;
@@ -61,7 +61,10 @@ namespace Aqua
             {
                 GDEItemKeys.Buff_B_BloodyMist_ShareDamage,
                 GDEItemKeys.Buff_B_ProgramMaster_LucyMain,
-                GDEItemKeys.Buff_B_S4_King_P2_Last
+                GDEItemKeys.Buff_B_S4_King_P2_Last,
+                GDEItemKeys.Buff_B_LBossFirst_Summons_CantHeal_Taget,
+                GDEItemKeys.Buff_B_LBossFirst_Summons_CC_Taget,
+
             };
 
             if (BuffTaker == BChar && debuffs != null)

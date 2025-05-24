@@ -32,8 +32,11 @@ namespace Aqua
 
             if (alwaysLucky)
             {
-                InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, 4));
-                InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, 400));
+                int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
+                int index2 = RandomManager.RandomInt(BattleRandom.PassiveItem, 200, 400);
+
+                InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, index));
+                InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, index2));
                 Recruitment = true;
 
                 MySkill.isExcept = true;
