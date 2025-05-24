@@ -84,7 +84,7 @@ namespace Aqua
                 GDEItemKeys.Buff_B_S4_King_P2_Last,
                 GDEItemKeys.Buff_B_LBossFirst_Summons_CantHeal_Taget,
                 GDEItemKeys.Buff_B_LBossFirst_Summons_CC_Taget,
-
+                GDEItemKeys.Buff_B_DorchiX_0_T,
             };
 
             if (BuffTaker == BChar && debuffs != null)
