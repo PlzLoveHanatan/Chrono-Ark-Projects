@@ -15,6 +15,7 @@ using ChronoArkMod.ModData;
 using HarmonyLib;
 using System.Diagnostics.Eventing.Reader;
 using static UnityEngine.Experimental.UIElements.EventDispatcher;
+using Mono.Cecil.Cil;
 namespace Aqua
 {
     public class Aqua_Plugin : ChronoArkPlugin
@@ -57,6 +58,9 @@ namespace Aqua
                 { "Today, I was praised by the Master again!", "Cri_0" },
                 { "Why does Estia get believed to be a God I'm a Goddess too, you know!", "Chest_0" },
                 { "Tonight's a festival! Let's party till morning with delicious sweets and sparkling drinks!", "Potion_0" },
+                { "Hey Megumi! Come here, come here! There's a strange fish over here!", "IdlingF_0" },
+                { "I'm not interested in mere humans. Don't worry! I'm a real Goddess!", "IdlingF_1" },
+                { "Kazuma! I'm tired! Piggyback me! Piggyback!", "IdlingF_2" },
             };
 
         [HarmonyPatch(typeof(PrintText))]
@@ -66,12 +70,13 @@ namespace Aqua
             [HarmonyPrefix]
             public static bool Prefix(PrintText __instance, string inText)
             {
-                if (BattleSystem.instance != null && Utils.AquaVoice)
+                if (Utils.AquaVoice)
                 {
                     foreach (var kvp in voiceLines)
                     {
                         if (inText.Contains(kvp.Key))
                         {
+                            MasterAudio.StopBus("SE");
                             MasterAudio.PlaySound(kvp.Value, 100f, null, 0f, null, null, false, false);
                         }
                     }
