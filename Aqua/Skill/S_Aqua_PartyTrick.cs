@@ -52,7 +52,9 @@ namespace Aqua
                 int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
                 BattleChar randomEnemy = enemies[randomIndex];
 
-                if (randomEnemy is BattleEnemy enemy && enemy.Boss)
+                if (randomEnemy is BattleEnemy enemy && enemy.Boss ||
+                    randomEnemy.Info.KeyData == GDEItemKeys.Enemy_TrialofStrength_Enemy ||
+                    randomEnemy.Info.KeyData == GDEItemKeys.Enemy_TrialofBrave_Enemy1)
                 {
                     randomEnemy.Damage(BChar, 40, false, true, false, 0, false, false, false);
                 }
@@ -149,12 +151,12 @@ namespace Aqua
                     Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick);
                 }
 
-                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
-                BattleChar randomTarget = enemies[randomIndex];
+                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, allTargets.Count);
+                BattleChar randomTarget = allTargets[randomIndex];
 
                 randomTarget.BuffAdd(ModItemKeys.Buff_B_Aqua_UnstablePosture, this.BChar, false, 0, false, -1, false);
                 Skill Telekinesis = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick, this.BChar, this.BChar.MyTeam);
-                randomTarget.Damage(BChar, 20, false, true, false, 0, false, false, false);
+                randomTarget.Damage(BChar, 10, false, true, false, 0, false, false, false);
                 Telekinesis.PlusHit = true;
                 Telekinesis.FreeUse = true;
 
@@ -200,24 +202,27 @@ namespace Aqua
                     Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket);
                 }
 
-                int randomNum = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 6);
-                switch (randomNum)
+                int roll = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, 101);
+
+                if (roll < 50)
                 {
-                    case 1:
-                        InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
-                        break;
-                    case 2:
-                        InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 1));
-                        break;
-                    case 3:
-                        InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 1));
-                        break;
-                    case 4:
-                        InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 1));
-                        break;
-                    case 5:
-                        InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy_Rare, 1));
-                        break;
+                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
+                }
+                else if (roll < 60)
+                {
+                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 1));
+                }
+                else if (roll < 85)
+                {
+                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 1));
+                }
+                else if (roll < 90)
+                {
+                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 1));
+                }
+                else
+                {
+                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy_Rare, 1));
                 }
             }
 

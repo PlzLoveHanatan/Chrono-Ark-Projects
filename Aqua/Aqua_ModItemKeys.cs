@@ -6,9 +6,8 @@ namespace Aqua
 		/// <summary>
 		/// Aqua
 		/// Passive:
-		/// Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
+		/// Aqua cannot be afflicted with any debuffs. Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
 		/// If Aqua takes damage 2 times in a turn apply <color=#A3DFF7>Drenched</color> to all allies and enemies, only activates once per turn.
-		/// Aqua cannot be afflicted with any debuffs.
 		/// <color=#919191>- This passive is applied from level 1.
 		/// Her tears may be annoying, but surprisingly effective.
 		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
@@ -67,8 +66,8 @@ namespace Aqua
         public static string SkillExtended_Ex_Aqua_PartyTrick = "Ex_Aqua_PartyTrick";
 		/// <summary>
 		/// Aqua's Hagoromo
-		/// Apply "Aqua Veil" to the attacker.
-		/// At the start of each turn cast a random "Party Trick".
+		/// Apply <color=#5F9EA0>Aqua Veil</color> to the attacker.
+		/// At the start of each turn cast a random <color=#FF0000>P</color><color=#FFA500>a</color><color=#FFFF00>r</color><color=#00FF00>t</color><color=#00FFFF>y</color> <color=#FF69B4>T</color><color=#800080>r</color><color=#FF1493>i</color><color=#00CED1>c</color><color=#FF8C00>k</color>.
 		/// <color=#919191>Makes you dodge better... or just confuse enemies with your fabulousness.</color>
 		/// </summary>
         public static string Item_Equip_E_Aqua_Hagoromo = "E_Aqua_Hagoromo";
@@ -81,7 +80,7 @@ namespace Aqua
         public static string Item_Equip_E_Aqua_SacredLaundryStaff = "E_Aqua_SacredLaundryStaff";
 		/// <summary>
 		/// Aqua Veil
-		/// <color=#919191>Accuracy -10%
+		/// <color=#919191>Accuracy -15%
 		/// Max 3 stacks</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_AquaVeil = "KeyWord_AquaVeil";
@@ -163,7 +162,7 @@ namespace Aqua
 		/// <summary>
 		/// Fog of Blessings (and Mistakes)
 		/// Apply <color=#5F9EA0>Aqua Veil</color> to all enemies.
-		/// Gain 20% chance to apply <color=#5F9EA0>Aqua Veil</color> to allies.
+		/// Gain 25% chance to apply <color=#5F9EA0>Aqua Veil</color> to allies.
 		/// </summary>
         public static string Skill_S_Aqua_FogofBlessings = "S_Aqua_FogofBlessings";
 		/// <summary>
@@ -197,13 +196,13 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick = "S_Aqua_PartyTrick";
 		/// <summary>
 		/// Certain kill party trick, the type 100 mist!
-		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 2 stacks of <color=#5F9EA0>Aqua Veil</color> to all allies and enemies and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
+		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 3 stacks of <color=#5F9EA0>Aqua Veil</color> to all allies and enemies and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
 		/// <color=#919191>Once activated, it would last for at least half a day before fading.</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_Certainkill = "S_Aqua_PartyTrick_Certainkill";
 		/// <summary>
 		/// Minor pocket dimension
-		/// Gain random book (Skill Book, Golden Skill Book, Mysterious Skill Book, Skill Book - Healing 101, Infinite Skill Book, Transcendent Tome).
+		/// Gain random book (Skill Book, Infinite Skill Book, Golden Skill Book, Mysterious Skill Book, Transcendent Tome).
 		/// <color=#919191>She opened a rift to store snacks. Someone's forgotten tome fell out instead.</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_Minorpocket = "S_Aqua_PartyTrick_Minorpocket";
@@ -221,7 +220,7 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick_PhantasmalBeauty = "S_Aqua_PartyTrick_PhantasmalBeauty";
 		/// <summary>
 		/// Telekinesis Trick
-		/// Deal <color=purple>20 Pain damage</color> and apply 'Unstable Posture' to a random target.
+		/// Deal <color=purple>10 Pain damage</color> and apply 'Unstable Posture' to a random target.
 		/// <color=#919191>Totally Controlled!</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_TelekinesisTrick = "S_Aqua_PartyTrick_TelekinesisTrick";
@@ -263,7 +262,7 @@ namespace Aqua
 		/// <summary>
 		/// Torrential Tears
 		/// Gain 50% chance to cast this skill again.
-		/// Gain 20% chance to apply <color=#A3DFF7>Drenched</color> and <color=#FF6B6B>Crying Shame</color> to allies.
+		/// Gain 25% chance to apply <color=#A3DFF7>Drenched</color> and <color=#FF6B6B>Crying Shame</color> to allies.
 		/// <color=#919191>Kazumaaa, I wanna go hoooome!!</color>
 		/// </summary>
         public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";

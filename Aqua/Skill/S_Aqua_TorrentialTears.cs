@@ -27,7 +27,7 @@ namespace Aqua
 
             var target = Targets[0];
 
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 20);
+            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 25);
 
             if (neverLucky)
             {

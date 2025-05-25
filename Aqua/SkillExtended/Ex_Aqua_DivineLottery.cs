@@ -24,7 +24,7 @@ namespace Aqua
             Skill divineLottery = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DivineLottery, this.BChar, this.BChar.MyTeam);
             divineLottery.FreeUse = true;
 
-            BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, divineLottery, false, false, false));
+            BattleSystem.DelayInputAfter(BattleSystem.instance.SkillRandomUseIenum(BChar, divineLottery, false, false, false));
         }
     }
 }

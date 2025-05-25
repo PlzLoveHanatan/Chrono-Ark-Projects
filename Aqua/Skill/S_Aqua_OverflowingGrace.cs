@@ -41,18 +41,17 @@ namespace Aqua
                 }
             }
 
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 20);
+            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 25);
 
             if (neverLucky)
             {
                 foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
                 {
-                    int enemyHeal = (int)(BChar.GetStat.reg * 0.75f);
+                    int enemyHeal = (int)(BChar.GetStat.reg * 0.65f);
 
                     enemy.Heal(BattleSystem.instance.DummyChar, enemyHeal, false, true, null);
 
                     Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, this.BChar, this.BChar.MyTeam);
-                    healingParticle.PlusHit = true;
                     healingParticle.FreeUse = true;
 
                     this.BChar.ParticleOut(healingParticle, enemy);

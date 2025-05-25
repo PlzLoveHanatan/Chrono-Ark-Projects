@@ -46,7 +46,7 @@ namespace Aqua
             {
                 { "I am the Divine Embodiment of the Aqua Axis faith and the Goddess who governs water!", "BattleStart_0" },
                 { "Pamper me more! Worship me! I'm a Goddess, after all!", "BattleStart_1" },
-                { "Who am I I can't tell you my name, but I'm a passing water Goddess!", "BattleStart_2" },
+                { "Who am I ? I can't tell you my name, but I'm a passing water Goddess!", "BattleStart_2" },
                 { "Kazuma-san, I'm bored! Pick me up high!", "IdlingB_0" },
                 { "Leave healing and support to me, the Archpriest!", "IdlingB_1" },
                 { "As a Goddess, I refuse to play such a ridiculous role!", "DeathA_0" },
@@ -61,6 +61,14 @@ namespace Aqua
                 { "Hey Megumi! Come here, come here! There's a strange fish over here!", "IdlingF_0" },
                 { "I'm not interested in mere humans. Don't worry! I'm a real Goddess!", "IdlingF_1" },
                 { "Kazuma! I'm tired! Piggyback me! Piggyback!", "IdlingF_2" },
+                { "Hey, is dinner ready yet I'm starving here...", "Heal_0" },
+                { "A Goddess is delicate — without a quiet room and a warm bed, she can't sleep!", "Heal_1" },
+                { "We should be grateful for our current life; there's no going back to straw beds anymore!", "Heal_2" },
+                { "When the soul commands, the true art is what you perform yourself!", "Curse" },
+                { "Sorry for purifying the hot spring water, but hey, I'm a Goddess—what can I do ?", "Pharos" },
+                { "Heheh, this is my special Goddess-made cake! How does it look Delicious, right ?", "Other_0" },
+                { "Beauty of nature~! After a quest, fizzy drinks really are the best!", "Other_1" },
+                { "Since you came to this world, I want you to make lots of fun memories!", "Master" },
             };
 
         [HarmonyPatch(typeof(PrintText))]

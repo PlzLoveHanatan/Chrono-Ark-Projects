@@ -48,11 +48,7 @@ namespace Aqua
             if (Evade != 20) AquaBuffs.Add(() => Evade = 20);
             if (Critical != 20) AquaBuffs.Add(() => Critical = 20);
 
-            if (AquaBuffs.Count == 0)
-            {
-                Debug.Log("All buffs already at 20. Nothing to add.");
-                return;
-            }
+            if (AquaBuffs.Count == 0) return;
 
             int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, AquaBuffs.Count);
             AquaBuffs[index].Invoke();

@@ -33,7 +33,7 @@ namespace Aqua
                 enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, this.BChar, false, 0, false, -1, false);
             }
 
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 20);
+            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 25);
 
             if (neverLucky)
             {

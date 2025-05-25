@@ -38,7 +38,10 @@ namespace Aqua
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
+            var aqua = ModItemKeys.Character_Aqua;
+            var target = Targets[0];
+
+            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == aqua && target.Info.Name != aqua)
             {
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }

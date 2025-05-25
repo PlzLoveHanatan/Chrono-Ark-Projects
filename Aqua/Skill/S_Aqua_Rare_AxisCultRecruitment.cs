@@ -14,9 +14,9 @@ using Debug = UnityEngine.Debug;
 using Spine;
 namespace Aqua
 {
-	/// <summary>
-	/// Axis Cult Recruitment
-	/// </summary>
+    /// <summary>
+    /// Axis Cult Recruitment
+    /// </summary>
     public class S_Aqua_Rare_AxisCultRecruitment : Skill_Extended, IP_DamageChange
     {
         private bool Recruitment = false;
@@ -45,7 +45,9 @@ namespace Aqua
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
         {
 
-            if (Recruitment && !Target.IsDead && Target is BattleEnemy enemy && enemy.Boss)
+            if (Recruitment && !Target.IsDead && Target is BattleEnemy enemy && enemy.Boss ||
+                Target.Info.KeyData == GDEItemKeys.Enemy_TrialofStrength_Enemy ||
+                Target.Info.KeyData == GDEItemKeys.Enemy_TrialofBrave_Enemy1)
             {
                 Target.Damage(BChar, 60, false, true, false, 0, false, false, false);
             }

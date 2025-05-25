@@ -27,7 +27,7 @@ namespace Aqua
             Skill partyTrick = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_PartyTrick, this.BChar, this.BChar.MyTeam);
             partyTrick.FreeUse = true;
 
-            BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, partyTrick, false, false, false));
+            BattleSystem.DelayInputAfter(BattleSystem.instance.SkillRandomUseIenum(BChar, partyTrick, false, false, false));
         }
     }
 }

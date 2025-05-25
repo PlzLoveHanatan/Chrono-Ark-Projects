@@ -33,7 +33,7 @@ namespace Aqua
             partyTrick.FreeUse = true;
 
             //BChar.ParticleOut(partyTrick, BChar);
-            BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, partyTrick, false, false, false));
+            BattleSystem.DelayInputAfter(BattleSystem.instance.SkillRandomUseIenum(BChar, partyTrick, false, false, false));
         }
 
         public void DamageChange_Hit_sumoperation(Skill SkillD, int Damage, ref bool Cri, bool View, ref int PlusDamage)
