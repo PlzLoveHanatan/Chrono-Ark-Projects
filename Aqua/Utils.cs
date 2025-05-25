@@ -117,12 +117,11 @@ namespace Aqua
             return result;
         }
 
-        public static void ImageResize(Image img, Vector2 size, Vector2 pos)
+        public static void ImageResize(Image img, Vector2 size)
         {
             img.rectTransform.anchorMin = new Vector2(0f, 1f);
             img.rectTransform.anchorMax = new Vector2(0f, 1f);
             img.rectTransform.sizeDelta = size;
-            img.rectTransform.transform.localPosition = pos;
         }
 
         public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)

@@ -10,7 +10,7 @@ namespace Aqua
 {
     public class Aqua_ChibiButton_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        private Aqua_ChibiButton Aqua;
+        private Aqua_ChibiButton AquaButton;
         public int Width = 210;
         public int TextSize = 20;
 
@@ -20,7 +20,7 @@ namespace Aqua
 
         public void Awake()
         {
-            Aqua = gameObject.GetComponent<Aqua_ChibiButton>();
+            AquaButton = gameObject.GetComponent<Aqua_ChibiButton>();
         }
 
         public string TooltipText
@@ -29,7 +29,7 @@ namespace Aqua
             {
                 Aqua_ChibiButton_Script chibiButtonScript = GetComponent<Aqua_ChibiButton_Script>();
 
-                if (Aqua != null && chibiButtonScript.interactable)
+                if (AquaButton != null && chibiButtonScript.interactable)
                 {
                     return Text_AquaPhrases;
 
@@ -43,7 +43,7 @@ namespace Aqua
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (Aqua != null)
+            if (AquaButton != null)
             {
                 var tooltip = ToolTipWindow.NewToolTip(transform, TooltipText, Width,
                     new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0.5f, 0.5f));
@@ -53,7 +53,7 @@ namespace Aqua
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (Aqua != null)
+            if (AquaButton != null)
             {
                 ToolTipWindow.ToolTipDestroy();
             }

@@ -14,11 +14,11 @@ using Debug = UnityEngine.Debug;
 using NLog.Targets;
 namespace Aqua
 {
-	/// <summary>
-	/// Aqua
-	/// Passive:
-	/// </summary>
-    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn
+    /// <summary>
+    /// Aqua
+    /// Passive:
+    /// </summary>
+    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_UIOnBefore
     {
         private int AquaDamageTaken;
         public override void Init()
@@ -97,6 +97,55 @@ namespace Aqua
                     debuff.SelfDestroy();
                 }
             }
+        }
+
+        public void BattleStartUIOnBefore(BattleSystem Ins)
+        {
+            if (Utils.MoreAquaVoice && BChar is BattleAlly aqua)
+            {
+                // Get the reference position above the character (usually top of the sprite or head)
+                Vector3 basePos = aqua.GetTopPos();
+
+                // Add an offset to place the icon slightly above or beside the character
+                Vector3 offset = new Vector3(0f, 0.6f, 0f); // Adjust as needed
+                Vector3 finalPos = basePos + offset;
+
+                // Create the icon button at the calculated position
+                createIconButton("Aqua_Chibi", aqua.transform, "AquaChibi.png",
+                    new Vector3(160f, 160f), // size of the button
+                    finalPos                 // final position in world space
+                );
+            }
+        }
+
+        private void createIconButton(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos)
+        {
+            // Create a new GameObject under the parent
+            GameObject aquaChibiButton = Utils.creatGameObject(name, parent);
+            if (aquaChibiButton == null) return;
+
+            aquaChibiButton.transform.SetParent(parent);
+
+            // Convert world position to local position relative to the parent
+            aquaChibiButton.transform.position = worldPos;
+
+            // Add and configure the Image component
+            Image image = aquaChibiButton.AddComponent<Image>();
+            Sprite sprite = Utils.getSprite(spriteNormal);
+            if (sprite == null) return;
+            image.sprite = sprite;
+
+            // Resize the image using utility function
+            Utils.ImageResize(image, size);
+
+            // Add button components
+            Aqua_ChibiButton aquaChibi = aquaChibiButton.AddComponent<Aqua_ChibiButton>();
+            aquaChibiButton.AddComponent<Aqua_ChibiButton_Script>();
+
+            // Save reference to singleton instance
+            Aqua_ChibiButton.instance = aquaChibi;
+
+            aquaChibiButton.SetActive(true);
         }
     }
 }
