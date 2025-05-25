@@ -14,49 +14,54 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 namespace Aqua
 {
-    public class Aqua_ModDefinition:ModDefinition
+    public class Aqua_ModDefinition : ModDefinition
     {
         public override Type ModItemKeysType => typeof(ModItemKeys);
-        /* //Example
-        [CustomGDE(nameof(GDEItemKeys.Character_Sizz),nameof(GDECharacterData.name))]
-        public string SizzName
+        public override List<object> BattleSystem_ModIReturn()
         {
-            get
+            var list = base.BattleSystem_ModIReturn();
+
+            list.Add(new ModIReturn());
+
+            return list;
+        }
+    }
+    public class ModIReturn : IP_BattleStart_UIOnBefore
+    {
+        public void BattleStartUIOnBefore(BattleSystem Ins)
+        {
+            if (Utils.MoreAquaVoice)
             {
-                return $"Sizz(New Name of {ModId})";
+                createIconButton("Aqua_Chibi",BattleSystem.instance.ActWindow.transform,"AquaChibi.png",
+                    new Vector2(160f, 160f),
+                    new Vector2(-441.9141f, -297.3823f)
+                );
             }
         }
-        [CustomGDE(nameof(GDEItemKeys.Skill_S_Sizz_2), "UseAp")]
-        [CustomGDE(nameof(GDEItemKeys.Skill_S_Sizz_1), "UseAp")]
-        public static int Sizz1AP(int oldap)
-        {
-            return oldap + 1;
-        }
-        [CustomGDE("S_Sizz_1", nameof(GDESkillData.Except))]
-        public static bool Sizz1Except = true;
-        */
-    }
-    /* //Example
-    public class ExampleSkill : CustomSkillGDE<Aqua_ModDefinition>
-    {
-        public override string Key()
-        {
-            return "ExampleSkill"; //it will override your "ExampleSkill" gdata in the mod editor
-        }
-        public override ModGDEInfo.LoadingType GetLoadingType()
-        {
-            return ModGDEInfo.LoadingType.Add; 
-        }
-        public override void SetValue()
-        {
-            PlusSkillView = ModKey<ExampleSkill>();//for ModDefinition gdata
-            User = GDEItemKeys.Character_Azar;//for gdata of orginial game
-            SkillExtended = new List<string> { typeof(ExampleSkill_SkillExtended).AssemblyQualifiedName };//for script
-            //Image_0 = assetInfo.ImageFromAsset("Your AssetBundle Path", "Path in Unity"); 
-        }
-        public class ExampleSkill_SkillExtended:Skill_Extended
-        {
 
+        private void createIconButton(string name, Transform trans, string spriteNormal, Vector2 size, Vector2 pos)
+        {
+            GameObject aquaChibiButtton = Utils.creatGameObject(name, trans);
+
+            if (aquaChibiButtton == null) return;
+            
+            aquaChibiButtton.transform.SetParent(trans);
+            aquaChibiButtton.transform.localPosition = pos;
+
+            Image image = aquaChibiButtton.AddComponent<Image>();
+            Sprite sprite = Utils.getSprite(spriteNormal);
+
+            if (sprite == null) return;
+
+            image.sprite = sprite;
+            Utils.ImageResize(image, size, pos);
+
+            Aqua_ChibiButton aquaChibi = aquaChibiButtton.AddComponent<Aqua_ChibiButton>();
+            aquaChibiButtton.AddComponent<Aqua_ChibiButton_Script>();
+
+            Aqua_ChibiButton.instance = aquaChibi;
+
+            aquaChibiButtton.SetActive(true);
         }
-    }*/
+    }
 }

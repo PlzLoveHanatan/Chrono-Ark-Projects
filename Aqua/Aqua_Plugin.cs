@@ -43,12 +43,12 @@ namespace Aqua
         }
 
         private static readonly Dictionary<string, string> voiceLines = new Dictionary<string, string>
-            {
+        {
                 { "I am the Divine Embodiment of the Aqua Axis faith and the Goddess who governs water!", "BattleStart_0" },
                 { "Pamper me more! Worship me! I'm a Goddess, after all!", "BattleStart_1" },
                 { "Who am I ? I can't tell you my name, but I'm a passing water Goddess!", "BattleStart_2" },
-                { "Kazuma-san, I'm bored! Pick me up high!", "IdlingB_0" },
-                { "Leave healing and support to me, the Archpriest!", "IdlingB_1" },
+                { "Leave healing and support to me, the Archpriest!", "IdlingB_0" },
+                { "Kazuma-san, I'm bored! Pick me up high!", "IdlingB_1" },
                 { "As a Goddess, I refuse to play such a ridiculous role!", "DeathA_0" },
                 { "Sometimes I just want to quietly drink sparkling drinks...", "DeathA_1" },
                 { "Hurry up and defeat the Demon Lord, and save this world somehow!", "DeathAlly_0" },
