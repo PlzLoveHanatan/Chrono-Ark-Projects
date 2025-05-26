@@ -101,9 +101,12 @@ namespace Aqua
             [HarmonyPrefix]
             public static void Prefix(int ItemNum, ItemBase Item)
             {
-                if (Item is Item_Equip equip && equip.IsCurse)
+                if (AquaInPlay())
                 {
-                    equip.Curse = new EquipCurse();
+                    if (Item is Item_Equip equip && equip.IsCurse)
+                    {
+                        equip.Curse = new EquipCurse();
+                    }
                 }
             }
         }
@@ -145,6 +148,8 @@ namespace Aqua
 
         private static bool AquaInPlay()
         {
+            if (!Utils.CleanseAllCurses) return false;
+
             foreach (var character in PlayData.TSavedata.Party)
             {
                 if (character.Name == ModItemKeys.Character_Aqua) return true;

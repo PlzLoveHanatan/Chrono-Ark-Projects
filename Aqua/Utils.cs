@@ -21,6 +21,9 @@ namespace Aqua
 
         public static bool MoreAquaVoice => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("More Aqua Voice").Value;
 
+        public static bool CleanseAllCurses => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Cleanse All Curses").Value;
+
+
         private static readonly Dictionary<string, string> AquaSkillsSounds = new Dictionary<string, string>
         { 
             { ModItemKeys.Skill_S_Aqua_AquaGradePurification, "AquaGradePurification" },
