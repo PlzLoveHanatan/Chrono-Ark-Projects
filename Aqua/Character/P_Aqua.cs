@@ -18,13 +18,49 @@ namespace Aqua
     /// Aqua
     /// Passive:
     /// </summary>
-    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_UIOnBefore
+    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_UIOnBefore, IP_BattleStart_Ones
     {
         private int AquaDamageTaken;
+        private bool AquaCurseRemoval;
+
         public override void Init()
         {
             OnePassive = true;
         }
+
+        public void BattleStart(BattleSystem Ins)
+        {
+            for (int i = 0; i < PlayData.TSavedata.LucySkills.Count; i++)
+            {
+                if (new GDESkillData(PlayData.TSavedata.LucySkills[i]).User == "LucyCurse")
+                {
+                    PlayData.TSavedata.LucySkills.RemoveAt(i);
+                    i--;
+                    AquaCurseRemoval = true;
+                }
+            }
+
+            var team = BattleSystem.instance.AllyTeam;
+            var deck = team.Skills.Concat(team.Skills_Deck).ToList();
+
+            for (int i = 0; i < deck.Count; i++)
+            {
+                var skill = deck[i];
+
+                if (skill?.MySkill != null && skill.MySkill.User == "LucyCurse")
+                {
+                    team.Skills.Remove(skill);
+                    team.Skills_Deck.Remove(skill);
+                }
+            }
+
+            if (AquaCurseRemoval && Utils.AquaVoice)
+            {
+                MasterAudio.StopBus("SE");
+                MasterAudio.PlaySound("Curse", 100f, null, 0f, null, null, false, false);
+            }
+        }
+
         public void Turn()
         {
             AquaDamageTaken = 0;

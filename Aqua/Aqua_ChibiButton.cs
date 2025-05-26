@@ -94,7 +94,7 @@ namespace Aqua
         {
             string randomSound = AquaVoiceLines[RandomManager.RandomInt(BattleRandom.PassiveItem, 0, AquaVoiceLines.Count)];
             MasterAudio.StopBus("SE");
-            MasterAudio.PlaySound(randomSound);
+            MasterAudio.PlaySound(randomSound, 100f);
         }
     }
 }

@@ -6,17 +6,13 @@ namespace Aqua
 		/// <summary>
 		/// Aqua
 		/// Passive:
-		/// Aqua cannot be afflicted with any debuffs. Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> (<sprite=0>100%) to all enemies.
+		/// Aqua cannot be afflicted with any debuffs and cleanses all curses. Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> (<sprite=0>100%) to all enemies.
 		/// If Aqua takes damage 2 times in a turn apply <color=#A3DFF7>Drenched</color> (<sprite=0>100%) to all allies and enemies, only activates once per turn.
 		/// <color=#919191>- This passive is applied from level 1.
 		/// Her tears may be annoying, but surprisingly effective.
 		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
 		/// </summary>
         public static string Character_Aqua = "Aqua";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Aqua_Nurse = "Aqua_Nurse";
         public static string Character_Skin_Aqua_Nurse_Skin = "Aqua_Nurse_Skin";
 		/// <summary>
 		/// Aqua Veil

@@ -93,5 +93,64 @@ namespace Aqua
                 return true;
             }
         }
+
+        [HarmonyPatch(typeof(CharEquipInven))]
+        [HarmonyPatch(nameof(CharEquipInven.AddNewItem))]
+        public class Curse_Equip_Patch
+        {
+            [HarmonyPrefix]
+            public static void Prefix(int ItemNum, ItemBase Item)
+            {
+                if (Item is Item_Equip equip && equip.IsCurse)
+                {
+                    equip.Curse = new EquipCurse();
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(EquipCurse))]
+        public static class EquipCursePatch
+        {
+            [HarmonyPrefix]
+            [HarmonyPatch(nameof(EquipCurse.NewCurse))]
+            public static bool NewCurse_Prefix(Item_Equip MainItem, string CurseKey, ref EquipCurse __result)
+            {
+                if (AquaInPlay())
+                {
+                    __result = new EquipCurse();
+                    __result.MyItem = MainItem;
+                    __result.Name = "Cleansed by Aqua-sama";
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(EquipCurse.RandomCurse))]
+        public static bool RandomCurse_Prefix(Item_Equip MainItem, ref EquipCurse __result)
+        {
+            if (AquaInPlay())
+            {
+                __result = new EquipCurse();
+                __result.MyItem = MainItem;
+                __result.Name = "Cleansed by Aqua-sama";
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool AquaInPlay()
+        {
+            foreach (var character in PlayData.TSavedata.Party)
+            {
+                if (character.Name == ModItemKeys.Character_Aqua) return true;
+            }
+
+            return false;
+        }
     }
 }
