@@ -30,6 +30,7 @@ namespace Aqua
             if (MySkill.BasicSkill)
             {
                 MySkill.APChange = -1;
+                MySkill.NotCount = true;
                 base.SkillParticleOn();
                 return;
             }

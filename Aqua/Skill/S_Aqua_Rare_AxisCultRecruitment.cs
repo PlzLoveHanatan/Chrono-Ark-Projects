@@ -33,7 +33,7 @@ namespace Aqua
             if (alwaysLucky)
             {
                 int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
-                int index2 = RandomManager.RandomInt(BattleRandom.PassiveItem, 200, 400);
+                int index2 = RandomManager.RandomInt(BattleRandom.PassiveItem, 100, 300);
 
                 InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, index));
                 InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, index2));

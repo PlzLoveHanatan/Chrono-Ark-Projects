@@ -107,12 +107,12 @@ namespace Aqua
                 Vector3 basePos = aqua.GetTopPos();
 
                 // Add an offset to place the icon slightly above or beside the character
-                Vector3 offset = new Vector3(0f, 0.6f, 0f); // Adjust as needed
+                Vector3 offset = new Vector3(1.4f, 0.70f, 0f); // Adjust as needed
                 Vector3 finalPos = basePos + offset;
 
                 // Create the icon button at the calculated position
                 createIconButton("Aqua_Chibi", aqua.transform, "AquaChibi.png",
-                    new Vector3(160f, 160f), // size of the button
+                    new Vector3(128f, 128f), // size of the button
                     finalPos                 // final position in world space
                 );
             }

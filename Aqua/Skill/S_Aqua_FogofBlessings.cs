@@ -26,21 +26,11 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            var enemies = BattleSystem.instance.EnemyTeam.AliveChars;
+            var targets = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(BattleSystem.instance.AllyTeam.AliveChars);
 
-            foreach (var enemy in enemies)
+            foreach (var target in targets)
             {
-                enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, this.BChar, false, 0, false, -1, false);
-            }
-
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 25);
-
-            if (neverLucky)
-            {
-                foreach (var ally in BChar.MyTeam.AliveChars)
-                {
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, this.BChar, false, 0, false, -1, false);
-                }
+                target.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, this.BChar, false, 0, false, -1, false);
             }
         }
     }

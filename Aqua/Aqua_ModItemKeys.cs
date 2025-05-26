@@ -6,8 +6,8 @@ namespace Aqua
 		/// <summary>
 		/// Aqua
 		/// Passive:
-		/// Aqua cannot be afflicted with any debuffs. Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> to all enemies.
-		/// If Aqua takes damage 2 times in a turn apply <color=#A3DFF7>Drenched</color> to all allies and enemies, only activates once per turn.
+		/// Aqua cannot be afflicted with any debuffs. Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> (<sprite=0>100%) to all enemies.
+		/// If Aqua takes damage 2 times in a turn apply <color=#A3DFF7>Drenched</color> (<sprite=0>100%) to all allies and enemies, only activates once per turn.
 		/// <color=#919191>- This passive is applied from level 1.
 		/// Her tears may be annoying, but surprisingly effective.
 		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
@@ -113,7 +113,9 @@ namespace Aqua
         public static string SkillKeyword_KeyWord_NaturesBeauty = "KeyWord_NaturesBeauty";
 		/// <summary>
 		/// Type 100 Recovery Mode
-		/// <color=#919191>Receive healing +30%</color>
+		/// <color=#919191>Receive healing +30%
+		/// Armor -30%
+		/// Active until the stage ends</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_Type100 = "KeyWord_Type100";
 		/// <summary>
@@ -150,7 +152,7 @@ namespace Aqua
         public static string Skill_S_Aqua_AquaGradePurification = "S_Aqua_AquaGradePurification";
 		/// <summary>
 		/// Blessing of the Axis Cult
-		/// Cost is reduced by 1 if this skill is a fixed ability.
+		/// Cost is reduced by 1 and gain 'Swiftness' if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_Aqua_BlessingoftheAxisCult = "S_Aqua_BlessingoftheAxisCult";
 		/// <summary>
@@ -161,8 +163,7 @@ namespace Aqua
         public static string Skill_S_Aqua_DummyHeal = "S_Aqua_DummyHeal";
 		/// <summary>
 		/// Fog of Blessings (and Mistakes)
-		/// Apply <color=#5F9EA0>Aqua Veil</color> to all enemies.
-		/// Gain 25% chance to apply <color=#5F9EA0>Aqua Veil</color> to allies.
+		/// Apply <color=#5F9EA0>Aqua Veil</color> to all allies and enemies.
 		/// </summary>
         public static string Skill_S_Aqua_FogofBlessings = "S_Aqua_FogofBlessings";
 		/// <summary>
@@ -174,7 +175,7 @@ namespace Aqua
 		/// <summary>
 		/// Overflowing Grace of the Water Goddess
 		/// Apply <color=#A3DFF7>Drenched</color> to all allies and enemies.
-		/// Gain 20% chance to heal all enemies.
+		/// Heal all enemies.
 		/// </summary>
         public static string Skill_S_Aqua_OverflowingGrace = "S_Aqua_OverflowingGrace";
 		/// <summary>
@@ -239,7 +240,7 @@ namespace Aqua
 		/// <summary>
 		/// Axis Cult Recruitment
 		/// Gain a 30% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill from current fight.
-		/// New followers bring 200~400 gold and 1~2 soulstones.
+		/// New followers bring 100~300 gold and 1~2 soulstones.
 		/// <color=#919191>Join us! We have hot springs... and emotional instability!</color>
 		/// </summary>
         public static string Skill_S_Aqua_Rare_AxisCultRecruitment = "S_Aqua_Rare_AxisCultRecruitment";
