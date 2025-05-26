@@ -13,6 +13,10 @@ namespace Aqua
 		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
 		/// </summary>
         public static string Character_Aqua = "Aqua";
+		/// <summary>
+		/// Passive:
+		/// </summary>
+        public static string Character_Aqua_Nurse = "Aqua_Nurse";
         public static string Character_Skin_Aqua_Nurse_Skin = "Aqua_Nurse_Skin";
 		/// <summary>
 		/// Aqua Veil
@@ -126,12 +130,8 @@ namespace Aqua
         public static string SkillKeyword_KeyWord_UnstablePosture = "KeyWord_UnstablePosture";
         public static string SkillEffect_SE_T_AxisCultRecruitment = "SE_T_AxisCultRecruitment";
         public static string SkillEffect_SE_T_BlessingoftheAxisCult = "SE_T_BlessingoftheAxisCult";
-        public static string SkillEffect_SE_T_CreateWater = "SE_T_CreateWater";
-        public static string SkillEffect_SE_T_GoddessPrayer = "SE_T_GoddessPrayer";
         public static string SkillEffect_SE_T_GodsBlow = "SE_T_GodsBlow";
-        public static string SkillEffect_SE_T_HealingWater = "SE_T_HealingWater";
         public static string SkillEffect_SE_T_PartyDrunkard = "SE_T_PartyDrunkard";
-        public static string SkillEffect_SE_T_Resurrection = "SE_T_Resurrection";
         public static string SkillEffect_SE_T_S_Aqua_AquaGradePurification = "SE_T_S_Aqua_AquaGradePurification";
         public static string SkillEffect_SE_T_S_Aqua_BlessingoftheAxisCult = "SE_T_S_Aqua_BlessingoftheAxisCult";
         public static string SkillEffect_SE_T_S_Aqua_FogofBlessings = "SE_T_S_Aqua_FogofBlessings";
@@ -144,7 +144,6 @@ namespace Aqua
         public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment_0 = "SE_T_S_Aqua_SplashofJudgment_0";
         public static string SkillEffect_SE_T_S_Aqua_TorrentialTears = "SE_T_S_Aqua_TorrentialTears";
         public static string SkillEffect_SE_T_TorrentialTears = "SE_T_TorrentialTears";
-        public static string SkillEffect_SE_T_TurnUndead = "SE_T_TurnUndead";
 		/// <summary>
 		/// Aqua-Grade Purification
 		/// If the target is an ally, they will be healed instead.
@@ -263,8 +262,8 @@ namespace Aqua
         public static string Skill_S_Aqua_SplashofJudgment_0 = "S_Aqua_SplashofJudgment_0";
 		/// <summary>
 		/// Torrential Tears
+		/// Apply <color=#A3DFF7>Drenched</color> and <color=#FF6B6B>Crying Shame</color> to allies.
 		/// Gain 50% chance to cast this skill again.
-		/// Gain 25% chance to apply <color=#A3DFF7>Drenched</color> and <color=#FF6B6B>Crying Shame</color> to allies.
 		/// <color=#919191>Kazumaaa, I wanna go hoooome!!</color>
 		/// </summary>
         public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";

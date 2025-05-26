@@ -21,7 +21,6 @@ namespace Aqua
         public override void BuffStat()
         {
             PlusStat.HEALTaken = 30;
-            PlusStat.def = -30;
         }
     }
 }

@@ -25,24 +25,19 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            var target = Targets[0];
+            var targets = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(BattleSystem.instance.AllyTeam.AliveChars);
 
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 25);
-
-            if (neverLucky)
+            foreach (var target in targets)
             {
-                foreach (var ally in BChar.MyTeam.AliveChars)
-                {
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
-                }
+                target.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
+                target.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
             }
 
             bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
 
             if (alwaysLucky)
             {
-                BattleSystem.DelayInput(AdditionalCast(target));
+                BattleSystem.DelayInput(AdditionalCast(Targets[0]));
             }
         }
 
@@ -55,21 +50,10 @@ namespace Aqua
             skill.PlusHit = true;
             skill.FreeUse = true;
 
-            //foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars)
-            //{
-            //    enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
-            //    enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
-            //}
-
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 20);
-
-            if (neverLucky)
+            foreach (var ally in BChar.MyTeam.AliveChars)
             {
-                foreach (var ally in BChar.MyTeam.AliveChars)
-                {
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
-                }
+                ally.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
+                ally.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
             }
 
             BChar.ParticleOut(MySkill, skill, Target);
