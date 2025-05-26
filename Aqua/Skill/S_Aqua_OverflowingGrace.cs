@@ -25,36 +25,22 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
-            {
-                if (ally != null)
-                {
-                    ally.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
-                }
-            }
+            var targets = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(BattleSystem.instance.AllyTeam.AliveChars);
 
-            foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
+            foreach (var target in targets)
             {
-                if (enemy != null)
-                {
-                    enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
-                }
-            }
+                target.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
 
-            bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 25);
-
-            if (neverLucky)
-            {
-                foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
+                if (target is BattleEnemy enemy)
                 {
-                    int enemyHeal = (int)(BChar.GetStat.reg * 0.65f);
+                    int enemyHeal = (int)(BChar.GetStat.reg * 0.85f);
 
                     enemy.Heal(BattleSystem.instance.DummyChar, enemyHeal, false, true, null);
 
-                    Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, this.BChar, this.BChar.MyTeam);
+                    Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, BChar, BChar.MyTeam);
                     healingParticle.FreeUse = true;
 
-                    this.BChar.ParticleOut(healingParticle, enemy);
+                    BChar.ParticleOut(healingParticle, enemy);
                 }
             }
         }
