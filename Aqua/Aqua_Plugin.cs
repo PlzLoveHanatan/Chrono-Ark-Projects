@@ -122,7 +122,7 @@ namespace Aqua
                 {
                     __result = new EquipCurse();
                     __result.MyItem = MainItem;
-                    __result.Name = "Cleansed by Aqua-sama";
+                    __result.Name = "Cleansed by Aqua-sama☆";
                     return false;
                 }
 
@@ -138,7 +138,7 @@ namespace Aqua
             {
                 __result = new EquipCurse();
                 __result.MyItem = MainItem;
-                __result.Name = "Cleansed by Aqua-sama";
+                __result.Name = "Cleansed by Aqua-Sama☆";
 
                 return false;
             }
