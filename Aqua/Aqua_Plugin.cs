@@ -18,6 +18,7 @@ using static UnityEngine.Experimental.UIElements.EventDispatcher;
 using Mono.Cecil.Cil;
 using System.Reflection;
 using System.Reflection.Emit;
+using EItem;
 namespace Aqua
 {
     public class Aqua_Plugin : ChronoArkPlugin
@@ -158,6 +159,17 @@ namespace Aqua
             }
 
             return true;
+        }
+
+        [HarmonyPatch(typeof(Misc))]
+        public static class Misc_IsFemale_Patch
+        {
+            [HarmonyPatch("IsFemale")]
+            [HarmonyPostfix]
+            public static void IsFemale_Postfix(ref bool __result, string Key)
+            {
+                __result = true;
+            }
         }
 
         private static bool AquaInPlay()
