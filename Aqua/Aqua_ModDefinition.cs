@@ -14,7 +14,7 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 namespace Aqua
 {
-    public class Raphi_ModDefinition : ModDefinition
+    public class Aqua_ModDefinition : ModDefinition
     {
         public override Type ModItemKeysType => typeof(ModItemKeys);
     }

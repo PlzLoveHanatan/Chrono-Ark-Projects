@@ -16,6 +16,8 @@ using HarmonyLib;
 using System.Diagnostics.Eventing.Reader;
 using static UnityEngine.Experimental.UIElements.EventDispatcher;
 using Mono.Cecil.Cil;
+using System.Reflection;
+using System.Reflection.Emit;
 namespace Aqua
 {
     public class Aqua_Plugin : ChronoArkPlugin
@@ -107,15 +109,27 @@ namespace Aqua
                     {
                         equip.Curse = new EquipCurse();
                     }
+
+                    List<string> blockedEnchantKeys = new List<string>
+                    {
+                        "En_Broken",
+                        "En_uncomfortable",
+                        "En_heavy"
+                    };
+
+                    if (Item is Item_Equip equip2 && equip2.Enchant != null && blockedEnchantKeys.Contains(equip2.Enchant.Key))
+                    {
+                        equip2.Enchant = new ItemEnchant();
+                    }
                 }
             }
         }
 
         [HarmonyPatch(typeof(EquipCurse))]
+        [HarmonyPatch(nameof(EquipCurse.NewCurse))]
         public static class EquipCursePatch
         {
             [HarmonyPrefix]
-            [HarmonyPatch(nameof(EquipCurse.NewCurse))]
             public static bool NewCurse_Prefix(Item_Equip MainItem, string CurseKey, ref EquipCurse __result)
             {
                 if (AquaInPlay())

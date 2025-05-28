@@ -13,10 +13,6 @@ namespace Aqua
 		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
 		/// </summary>
         public static string Character_Aqua = "Aqua";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Aqua_Fantastic_Days = "Aqua_Fantastic_Days";
         public static string Character_Skin_Aqua_Nurse_Skin = "Aqua_Nurse_Skin";
 		/// <summary>
 		/// Aqua Veil

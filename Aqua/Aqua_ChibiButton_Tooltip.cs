@@ -11,7 +11,7 @@ namespace Aqua
     public class Aqua_ChibiButton_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         private Aqua_ChibiButton AquaButton;
-        public int Width = 210;
+        public int Width = 200;
         public int TextSize = 20;
 
         // change these to translatable texts if available
@@ -46,7 +46,9 @@ namespace Aqua
             if (AquaButton != null)
             {
                 var tooltip = ToolTipWindow.NewToolTip(transform, TooltipText, Width,
-                    new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(0.5f, 0.5f));
+                    new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0f));
+                tooltip.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 40);
+
                 tooltip.GetComponent<ToolTipWindow>().Description.fontSize = TextSize;
             }
         }
