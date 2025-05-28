@@ -21,7 +21,7 @@ namespace Aqua
     public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_UIOnBefore, IP_BattleStart_Ones
     {
         private int AquaDamageTaken;
-        private bool AquaCurseRemoval;
+        private bool AquaCurseRemoval = false;
 
         public override void Init()
         {
@@ -32,13 +32,16 @@ namespace Aqua
         {
             for (int i = 0; i < PlayData.TSavedata.LucySkills.Count; i++)
             {
-                if (new GDESkillData(PlayData.TSavedata.LucySkills[i]).User == "LucyCurse")
+                var skillData = new GDESkillData(PlayData.TSavedata.LucySkills[i]);
+                if (skillData.User == "LucyCurse" || skillData.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy)
                 {
                     PlayData.TSavedata.LucySkills.RemoveAt(i);
                     i--;
                     AquaCurseRemoval = true;
                 }
             }
+
+            if (!AquaCurseRemoval) return;
 
             var team = BattleSystem.instance.AllyTeam;
             var deck = team.Skills.Concat(team.Skills_Deck).ToList();
@@ -47,7 +50,7 @@ namespace Aqua
             {
                 var skill = deck[i];
 
-                if (skill?.MySkill != null && skill.MySkill.User == "LucyCurse")
+                if (skill?.MySkill != null && skill.MySkill.User == "LucyCurse" || skill?.MySkill?.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy)
                 {
                     team.Skills.Remove(skill);
                     team.Skills_Deck.Remove(skill);
