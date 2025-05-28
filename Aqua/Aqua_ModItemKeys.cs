@@ -248,6 +248,7 @@ namespace Aqua
         public static string Skill_S_Aqua_Rare_GodsBlow = "S_Aqua_Rare_GodsBlow";
 		/// <summary>
 		/// Splash of Judgment
+		/// Gain 'Swiftness' if this skill is a fixed ability.
 		/// Apply Taunt status on the target's.
 		/// If the target has 1 or more <color=#A3DFF7>Drenched</color>, cast this skill again with Сountdown 1.
 		/// </summary>

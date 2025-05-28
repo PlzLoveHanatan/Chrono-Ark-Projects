@@ -54,6 +54,7 @@ namespace Aqua
                 { "Kazuma-san, I'm bored! Pick me up high!", "IdlingB_1" },
                 { "As a Goddess, I refuse to play such a ridiculous role!", "DeathA_0" },
                 { "Sometimes I just want to quietly drink sparkling drinks...", "DeathA_1" },
+                { "Uugh... It stinks... It stiiinks...", "DeathA_2" },
                 { "Hurry up and defeat the Demon Lord, and save this world somehow!", "DeathAlly_0" },
                 { "Leave it to me! I'll give you a God Smash!", "DeathAlly_1" },
                 { "Freshly caught prey, Aqua is here!", "Kill_0" },

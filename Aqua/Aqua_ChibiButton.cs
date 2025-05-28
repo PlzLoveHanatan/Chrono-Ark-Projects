@@ -43,6 +43,7 @@ namespace Aqua
             "IdlingB_1",
             "DeathA_0",
             "DeathA_1",
+            "DeathA_2",
             "DeathAlly_0",
             "DeathAlly_1",
             "Kill_0",

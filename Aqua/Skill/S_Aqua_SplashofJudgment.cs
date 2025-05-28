@@ -21,6 +21,23 @@ namespace Aqua
 	/// </summary>
     public class S_Aqua_SplashofJudgment : Skill_Extended
     {
+        public override void Init()
+        {
+            base.Init();
+            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
+        }
+
+        public override void FixedUpdate()
+        {
+            if (MySkill.BasicSkill)
+            {
+                MySkill.NotCount = true;
+                base.SkillParticleOn();
+                return;
+            }
+
+            base.SkillParticleOff();
+        }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
