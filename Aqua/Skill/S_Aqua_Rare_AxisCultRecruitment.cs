@@ -21,6 +21,11 @@ namespace Aqua
     {
         private bool Recruitment = false;
 
+        public override void Init()
+        {
+            OnePassive = true;
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
@@ -45,12 +50,16 @@ namespace Aqua
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
         {
 
-            if (Recruitment && !Target.IsDead && Target is BattleEnemy enemy && enemy.Boss ||
-                Target.Info.KeyData == GDEItemKeys.Enemy_TrialofStrength_Enemy ||
-                Target.Info.KeyData == GDEItemKeys.Enemy_TrialofBrave_Enemy1)
+            if (Recruitment && !Target.IsDead)
             {
-                Target.Damage(BChar, 60, false, true, false, 0, false, false, false);
+                if (Target is BattleEnemy enemy && enemy.Boss ||
+                    Target.Info.KeyData == GDEItemKeys.Enemy_TrialofStrength_Enemy ||
+                    Target.Info.KeyData == GDEItemKeys.Enemy_TrialofBrave_Enemy1)
+                {
+                    Target.Damage(BChar, 60, false, true, false, 0, false, false, false);
+                }
             }
+
             else if (Recruitment && !Target.IsDead)
             {
                 Target.HPToZero();
