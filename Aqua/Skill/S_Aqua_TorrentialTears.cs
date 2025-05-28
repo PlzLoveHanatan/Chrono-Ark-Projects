@@ -25,12 +25,10 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            var targets = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(BattleSystem.instance.AllyTeam.AliveChars);
-
-            foreach (var target in targets)
+            foreach (var ally in BChar.MyTeam.AliveChars)
             {
-                target.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
-                target.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
+                ally.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
+                ally.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
             }
 
             bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
