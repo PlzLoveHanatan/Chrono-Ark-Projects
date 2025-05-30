@@ -49,7 +49,7 @@ namespace Aqua
         {
             { "BattleStart_0", "I am the Divine Embodiment of the Aqua Axis faith and the Goddess who governs water!" },
             { "BattleStart_1", "Pamper me more! Worship me! I'm a Goddess, after all!" },
-            { "BattleStart_2", "Who am I? I can't tell you my name, but I'm a passing water Goddess!" },
+            { "BattleStart_2", "Who am I ? I can't tell you my name, but I'm a passing water Goddess!" },
             { "IdlingB_0", "Leave healing and support to me, the Archpriest!" },
             { "IdlingB_1", "Kazuma-san, I'm bored! Pick me up high!" },
             { "DeathA_0", "As a Goddess, I refuse to play such a ridiculous role!" },
@@ -69,7 +69,7 @@ namespace Aqua
             { "Heal_1", "A Goddess is delicate — without a quiet room and a warm bed, she can't sleep!" },
             { "Heal_2", "We should be grateful for our current life; there's no going back to straw beds anymore!" },
             { "Curse", "When the soul commands, the true art is what you perform yourself!" },
-            { "Pharos", "Sorry for purifying the hot spring water, but hey, I'm a Goddess—what can I do?" },
+            { "Pharos", "Sorry for purifying the hot spring water, but hey, I'm a Goddess—what can I do ?" },
             { "Other_0", "Heheh, this is my special Goddess-made cake! How does it look? Delicious, right?" },
             { "Other_1", "Beauty of nature~! After a quest, fizzy drinks really are the best!" },
             { "Master", "Since you came to this world, I want you to make lots of fun memories!" }
@@ -329,7 +329,7 @@ namespace Aqua
 
             foreach (var character in PlayData.TSavedata.Party)
             {
-                if (character.Name == ModItemKeys.Character_Aqua) return true;
+                if (character.KeyData == ModItemKeys.Character_Aqua) return true;
             }
 
             return false;
