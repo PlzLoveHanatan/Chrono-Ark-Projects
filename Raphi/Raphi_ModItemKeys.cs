@@ -11,10 +11,10 @@ namespace Raphi
         public static string VFXSkill_AngelicArmourSummer = "AngelicArmourSummer";
 		/// <summary>
 		/// Angelic Gamble
-		/// When played from hand, if you have another <color=#FF69B4>Angelic Gamble</color> in hand, discard it, cast this skill on the target, and draw 1 skill (Max 3).
+		/// When played from hand, if you have another <color=#FF69B4>Angelic Gamble</color> in hand, discard it, cast this skill on the target (Max 3).
 		/// If 1 Angelic Gambles are discarded, gain <color=#D2691E>Heaven's Touch</color>.
 		/// If 2 Angelic Gambles are discarded, gain <color=#7B68EE>Celestial Connection</color>.
-		/// Sheathe : Shuffle a random <color=#FF69B4>Angelic Gamble</color> from the discard pile back into your deck.
+		/// Sheathe : Shuffle a random <color=#FF69B4>Angelic Gamble</color> from the discard pile back into your deck and draw 1 skill.
 		/// </summary>
         public static string Skill_AngelicGamble = "AngelicGamble";
 		/// <summary>

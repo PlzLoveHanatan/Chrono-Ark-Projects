@@ -28,8 +28,8 @@ namespace Raphi
         public void CelestialConnection()
         {
             var buffKey = ModItemKeys.Buff_B_CelestialConnection;
-            var mia = ModItemKeys.Character_Raphi;
-            var target = BattleSystem.instance.AllyTeam.AliveChars.Find(c => c.Info.KeyData == mia && c.BuffReturn(buffKey, false) != null);
+            var raphi = ModItemKeys.Character_Raphi;
+            var target = BattleSystem.instance.AllyTeam.AliveChars.Find(c => c.Info.KeyData == raphi && c.BuffReturn(buffKey, false) != null);
             var celestialConnection = target.BuffReturn(buffKey, false) as B_CelestialConnection;
 
             if (celestialConnection != null)

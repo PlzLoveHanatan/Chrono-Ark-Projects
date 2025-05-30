@@ -40,6 +40,8 @@ namespace Raphi
                 BattleSystem.instance.AllyTeam.Skills_Deck.Add(targetSkill);
             }
 
+            BattleSystem.instance.AllyTeam.Draw();
+
             yield return null;
             yield break;
         }
@@ -78,7 +80,7 @@ namespace Raphi
             if (useCount >= 3) yield break;
 
             selectedSkill.Delete(false);
-            BattleSystem.instance.AllyTeam.Draw();
+            //BattleSystem.instance.AllyTeam.Draw();
 
             useCount++;
             DiscardCount++;

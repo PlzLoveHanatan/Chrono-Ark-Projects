@@ -17,8 +17,8 @@ namespace Raphi
     {
         public override void FixedUpdate()
         {
-            if (MySkill.IsNowCasting
-                && BChar.MyTeam.AliveChars.Find(a => a.BuffFind(ModItemKeys.Buff_B_HeavenlyGrace, false)) == null)
+            if (!MySkill.IsNowCasting
+                && BChar.MyTeam.AliveChars.Find(a => a.BuffFind(ModItemKeys.Buff_B_HeavenlyWrath, false)) == null)
             {
                 SelfDestroy();
             }
