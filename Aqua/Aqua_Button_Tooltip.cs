@@ -22,8 +22,8 @@ namespace Aqua
             { "English", "Click to let Aqua-sama bless you with her voice." },
             { "Korean", "클릭하면 아쿠아님의 목소리로 축복받을 수 있습니다." },
             { "Japanese", "" },
-            { "Chinese", "" },
-            { "Chinese-TW", "" }
+            { "Chinese", "点击以让阿库娅大人藉由她的圣言来祝福你" },
+            { "Chinese-TW", "點擊以讓阿克婭大人藉由她的聖言來祝福你" }
         };
 
         private static readonly Dictionary<string, string> AquaButtonTextsHotkey = new Dictionary<string, string>
@@ -31,8 +31,8 @@ namespace Aqua
             { "English", "Click or press [N] to let Aqua-sama bless you with her voice." },
             { "Korean", "클릭하거나 N키를 눌러 아쿠아님의 목소리로 축복을 받으세요." },
             { "Japanese", "" },
-            { "Chinese", "" },
-            { "Chinese-TW", "" }
+            { "Chinese", "点击或按下N键以让阿库娅大人藉由她的圣言来祝福你" },
+            { "Chinese-TW", "點擊或按下N鍵以讓阿克婭大人藉由她的聖言來祝福你" }
         };
 
         public void Awake()
