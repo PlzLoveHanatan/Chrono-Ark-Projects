@@ -22,7 +22,7 @@ namespace Aqua
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             var allies = BattleSystem.instance.AllyTeam.AliveChars;
-            var aliveAqua = allies.FirstOrDefault(c => c.Info.Name == ModItemKeys.Character_Aqua);
+            var aliveAqua = allies.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Aqua);
 
             if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && aliveAqua != null)
             {

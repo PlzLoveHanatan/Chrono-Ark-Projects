@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Aqua05282025133800</AssemblyName>
+    <AssemblyName>Aqua05302025115928</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,12 +405,12 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
   <ItemGroup>
+    <Compile Include="Aqua_Button.cs" />
+    <Compile Include="Aqua_Button_Script.cs" />
+    <Compile Include="Aqua_Button_Tooltip.cs" />
     <Compile Include="Aqua_Character.cs" />
-    <Compile Include="Aqua_ChibiButton.cs" />
-    <Compile Include="Aqua_ChibiButton_Script.cs" />
-    <Compile Include="Aqua_ChibiButton_Tooltip.cs" />
     <Compile Include="Aqua_Gift_Beer.cs" />
     <Compile Include="Aqua_Gift_Fishing_Rod.cs" />
     <Compile Include="Aqua_Gift_Normal.cs" />

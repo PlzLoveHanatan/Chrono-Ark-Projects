@@ -19,9 +19,11 @@ namespace Aqua
 
         public static bool AquaVoiceSkills => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Aqua Voice Skills").Value;
 
-        public static bool MoreAquaVoice => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("More Aqua Voice").Value;
+        public static bool AquaVoiceButton => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Aqua Voice Button").Value;
 
         public static bool CleanseAllCurses => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Cleanse All Curses").Value;
+
+        public static bool AquaVoiceButtonHotkey => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Aqua Voice Button Hotkey").Value;
 
 
         private static readonly Dictionary<string, string> AquaSkillsSounds = new Dictionary<string, string>

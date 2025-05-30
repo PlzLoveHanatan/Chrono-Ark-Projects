@@ -45,35 +45,67 @@ namespace Aqua
             }
         }
 
-        private static readonly Dictionary<string, string> voiceLines = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> AquaVoiceLinesEN = new Dictionary<string, string>
         {
-                { "I am the Divine Embodiment of the Aqua Axis faith and the Goddess who governs water!", "BattleStart_0" },
-                { "Pamper me more! Worship me! I'm a Goddess, after all!", "BattleStart_1" },
-                { "Who am I ? I can't tell you my name, but I'm a passing water Goddess!", "BattleStart_2" },
-                { "Leave healing and support to me, the Archpriest!", "IdlingB_0" },
-                { "Kazuma-san, I'm bored! Pick me up high!", "IdlingB_1" },
-                { "As a Goddess, I refuse to play such a ridiculous role!", "DeathA_0" },
-                { "Sometimes I just want to quietly drink sparkling drinks...", "DeathA_1" },
-                { "Uugh... It stinks... It stiiinks...", "DeathA_2" },
-                { "Hurry up and defeat the Demon Lord, and save this world somehow!", "DeathAlly_0" },
-                { "Leave it to me! I'll give you a God Smash!", "DeathAlly_1" },
-                { "Freshly caught prey, Aqua is here!", "Kill_0" },
-                { "I have to work hard and someday escape this stable life!", "Kill_1" },
-                { "Today, I was praised by the Master again!", "Cri_0" },
-                { "Why does Estia get believed to be a God I'm a Goddess too, you know!", "Chest_0" },
-                { "Tonight's a festival! Let's party till morning with delicious sweets and sparkling drinks!", "Potion_0" },
-                { "Hey Megumi! Come here, come here! There's a strange fish over here!", "IdlingF_0" },
-                { "I'm not interested in mere humans. Don't worry! I'm a real Goddess!", "IdlingF_1" },
-                { "Kazuma! I'm tired! Piggyback me! Piggyback!", "IdlingF_2" },
-                { "Hey, is dinner ready yet I'm starving here...", "Heal_0" },
-                { "A Goddess is delicate — without a quiet room and a warm bed, she can't sleep!", "Heal_1" },
-                { "We should be grateful for our current life; there's no going back to straw beds anymore!", "Heal_2" },
-                { "When the soul commands, the true art is what you perform yourself!", "Curse" },
-                { "Sorry for purifying the hot spring water, but hey, I'm a Goddess—what can I do ?", "Pharos" },
-                { "Heheh, this is my special Goddess-made cake! How does it look Delicious, right ?", "Other_0" },
-                { "Beauty of nature~! After a quest, fizzy drinks really are the best!", "Other_1" },
-                { "Since you came to this world, I want you to make lots of fun memories!", "Master" },
-            };
+            { "BattleStart_0", "I am the Divine Embodiment of the Aqua Axis faith and the Goddess who governs water!" },
+            { "BattleStart_1", "Pamper me more! Worship me! I'm a Goddess, after all!" },
+            { "BattleStart_2", "Who am I? I can't tell you my name, but I'm a passing water Goddess!" },
+            { "IdlingB_0", "Leave healing and support to me, the Archpriest!" },
+            { "IdlingB_1", "Kazuma-san, I'm bored! Pick me up high!" },
+            { "DeathA_0", "As a Goddess, I refuse to play such a ridiculous role!" },
+            { "DeathA_1", "Sometimes I just want to quietly drink sparkling drinks..." },
+            { "DeathA_2", "Uugh... It stinks... It stiiinks..." },
+            { "DeathAlly_0", "Hurry up and defeat the Demon Lord, and save this world somehow!" },
+            { "DeathAlly_1", "Leave it to me! I'll give you a God Smash!" },
+            { "Kill_0", "Freshly caught prey, Aqua is here!" },
+            { "Kill_1", "I have to work hard and someday escape this stable life!" },
+            { "Cri_0", "Today, I was praised by the Master again!" },
+            { "Chest_0", "Why does Estia get believed to be a God? I'm a Goddess too, you know!" },
+            { "Potion_0", "Tonight's a festival! Let's party till morning with delicious sweets and sparkling drinks!" },
+            { "IdlingF_0", "Hey Megumi! Come here, come here! There's a strange fish over here!" },
+            { "IdlingF_1", "I'm not interested in mere humans. Don't worry! I'm a real Goddess!" },
+            { "IdlingF_2", "Kazuma! I'm tired! Piggyback me! Piggyback!" },
+            { "Heal_0", "Hey, is dinner ready yet? I'm starving here..." },
+            { "Heal_1", "A Goddess is delicate — without a quiet room and a warm bed, she can't sleep!" },
+            { "Heal_2", "We should be grateful for our current life; there's no going back to straw beds anymore!" },
+            { "Curse", "When the soul commands, the true art is what you perform yourself!" },
+            { "Pharos", "Sorry for purifying the hot spring water, but hey, I'm a Goddess—what can I do?" },
+            { "Other_0", "Heheh, this is my special Goddess-made cake! How does it look? Delicious, right?" },
+            { "Other_1", "Beauty of nature~! After a quest, fizzy drinks really are the best!" },
+            { "Master", "Since you came to this world, I want you to make lots of fun memories!" }
+        };
+
+        private static readonly Dictionary<string, string> AquaVoiceLinesKR = new Dictionary<string, string>
+        {
+            { "BattleStart_0", "" },
+            { "BattleStart_1", "" },
+            { "BattleStart_2", "" },
+            { "IdlingB_0", "" },
+            { "IdlingB_1", "" },
+            { "DeathA_0", "" },
+            { "DeathA_1", "" },
+            { "DeathA_2", "" },
+            { "DeathAlly_0", "" },
+            { "DeathAlly_1", "" },
+            { "Kill_0", "" },
+            { "Kill_1", "" },
+            { "Cri_0", "" },
+            { "Chest_0", "" },
+            { "Potion_0", "" },
+            { "IdlingF_0", "" },
+            { "IdlingF_1", "" },
+            { "IdlingF_2", "" },
+            { "Heal_0", "" },
+            { "Heal_1", "" },
+            { "Heal_2", "" },
+            { "Curse", "" },
+            { "Pharos", "" },
+            { "Other_0", "" },
+            { "Other_1", "" },
+            { "Master", "" }
+        };
+
+
 
         [HarmonyPatch(typeof(PrintText))]
         [HarmonyPatch("TextInput")]
@@ -84,13 +116,44 @@ namespace Aqua
             {
                 if (Utils.AquaVoice)
                 {
-                    foreach (var kvp in voiceLines)
+                    string language = LocalizationManager.CurrentLanguage;
+
+                    switch (language)
                     {
-                        if (inText.Contains(kvp.Key))
-                        {
-                            MasterAudio.StopBus("SE");
-                            MasterAudio.PlaySound(kvp.Value, 100f, null, 0f, null, null, false, false);
-                        }
+                        //case "Korean":
+                        //    break;
+
+                        case "English":
+
+                            foreach (var kvp in AquaVoiceLinesEN)
+                            {
+                                if (inText.Contains(kvp.Value))
+                                {
+                                    MasterAudio.StopBus("SE");
+                                    MasterAudio.PlaySound(kvp.Key, 100f, null, 0f, null, null, false, false);
+                                }
+                            }
+                            break;
+
+                        //case "Japanese":
+                        //    break;
+
+                        //case "Chinese":
+                        //    break;
+
+                        //case "Chinese-TW":
+                        //    break;
+
+                        default:
+                            foreach (var kvp in AquaVoiceLinesEN)
+                            {
+                                if (inText.Contains(kvp.Value))
+                                {
+                                    MasterAudio.StopBus("SE");
+                                    MasterAudio.PlaySound(kvp.Key, 100f, null, 0f, null, null, false, false);
+                                }
+                            }
+                            break;
                     }
                 }
 

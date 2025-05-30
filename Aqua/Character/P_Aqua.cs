@@ -143,7 +143,7 @@ namespace Aqua
 
         public void BattleStartUIOnBefore(BattleSystem Ins)
         {
-            if (Utils.MoreAquaVoice && BChar is BattleAlly aqua)
+            if (Utils.AquaVoiceButton && BChar is BattleAlly aqua)
             {
                 Vector3 basePos = aqua.GetTopPos();
 
@@ -156,26 +156,26 @@ namespace Aqua
 
         private void createIconButton(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos)
         {
-            GameObject aquaChibiButton = Utils.creatGameObject(name, parent);
-            if (aquaChibiButton == null) return;
+            GameObject aquaButton = Utils.creatGameObject(name, parent);
+            if (aquaButton == null) return;
 
-            aquaChibiButton.transform.SetParent(parent);
+            aquaButton.transform.SetParent(parent);
 
-            aquaChibiButton.transform.position = worldPos;
+            aquaButton.transform.position = worldPos;
 
-            Image image = aquaChibiButton.AddComponent<Image>();
+            Image image = aquaButton.AddComponent<Image>();
             Sprite sprite = Utils.getSprite(spriteNormal);
             if (sprite == null) return;
             image.sprite = sprite;
 
             Utils.ImageResize(image, size);
 
-            Aqua_ChibiButton aquaChibi = aquaChibiButton.AddComponent<Aqua_ChibiButton>();
-            aquaChibiButton.AddComponent<Aqua_ChibiButton_Script>();
+            Aqua_Button button = aquaButton.AddComponent<Aqua_Button>();
+            aquaButton.AddComponent<Aqua_Button_Script>();
 
-            Aqua_ChibiButton.instance = aquaChibi;
+            Aqua_Button.instance = button;
 
-            aquaChibiButton.SetActive(true);
+            aquaButton.SetActive(true);
         }
     }
 }

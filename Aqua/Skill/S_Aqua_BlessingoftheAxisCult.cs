@@ -42,7 +42,7 @@ namespace Aqua
             var aqua = ModItemKeys.Character_Aqua;
             var target = Targets[0];
 
-            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == aqua && target.Info.Name != aqua)
+            if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.KeyData == aqua && target.Info.Name != aqua)
             {
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }

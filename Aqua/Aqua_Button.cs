@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace Aqua
 {
-    public class Aqua_ChibiButton : MonoBehaviour
+    public class Aqua_Button : MonoBehaviour
     {
-        public static Aqua_ChibiButton instance;
+        public static Aqua_Button instance;
 
         private static readonly List<string> AquaVoiceLines = new List<string>
         {
