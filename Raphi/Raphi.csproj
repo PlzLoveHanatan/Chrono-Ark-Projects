@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Raphi05212025090610</AssemblyName>
+    <AssemblyName>Raphi05302025150217</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -382,30 +382,9 @@
       <Private>False</Private>
     </Reference>
     <!-- Extra Reference Start-->
-    <Reference Include="0Harmony">
-      <HintPath>..\..\Raphiel\Assemblies\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>..\..\Raphiel\Assemblies\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\Raphiel\Assemblies\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\..\Raphiel\Assemblies\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\..\Raphiel\Assemblies\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\Raphiel\Assemblies\MonoMod.RuntimeDetour.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>..\..\Raphiel\Assemblies\MonoMod.Utils.dll</HintPath>
-    </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="FriendShip1.cs" />
     <Compile Include="FriendShip2.cs" />
@@ -418,14 +397,17 @@
     <Compile Include="ItemRaphi.cs" />
     <Compile Include="RaphiCharacter.cs" />
     <Compile Include="RaphiDialogue_Def.cs" />
+    <Compile Include="Raphi_Button.cs" />
+    <Compile Include="Raphi_Button_Script.cs" />
+    <Compile Include="Raphi_Button_Tooltip.cs" />
     <Compile Include="Raphi_ModDefinition.cs" />
     <Compile Include="Raphi_ModItemKeys.cs" />
-    <Compile Include="Sheathe.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Buff\B_AggroIncreased.cs" />
     <Compile Include="Buff\B_AngelsWhisper.cs" />
     <Compile Include="Buff\B_ArmorReduced.cs" />
     <Compile Include="Buff\B_CelestialConnection.cs" />
+    <Compile Include="Buff\B_CelestialConnection_0.cs" />
     <Compile Include="Buff\B_DivineDaze.cs" />
     <Compile Include="Buff\B_ElysianEdge.cs" />
     <Compile Include="Buff\B_EvasionIncreased.cs" />

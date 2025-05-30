@@ -13,17 +13,17 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Raphi
 {
-    /// <summary>
-    /// Celestial Connection
-    /// </summary>
-    public class B_CelestialConnection : Buff
+	/// <summary>
+	/// Celestial Connection
+	/// </summary>
+    public class B_CelestialConnection_0 : Buff
     {
         public override void BuffOneAwake()
         {
             base.BuffOneAwake();
-            BuffIcon.AddComponent<Button>().onClick.AddListener(RaphiCall);
+            BuffIcon.AddComponent<Button>().onClick.AddListener(AllyCall);
         }
-        public void RaphiCall()
+        public void AllyCall()
         {
             if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 

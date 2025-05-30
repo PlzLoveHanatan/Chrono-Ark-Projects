@@ -63,14 +63,24 @@ namespace Raphi
         public static string Buff_B_ArmorReduced = "B_ArmorReduced";
 		/// <summary>
 		/// Celestial Connection
-		/// Can be activated by left clicking (can't be activated if user is stunned), and choose from the following options:
-		/// - Discard the top skill in hand and restore Mana per cost of the discarded skill (Max 2)
-		/// or
-		/// - Discard bottom skill in hand and draw skills per cost of the discarded skill (Max 2).
-		/// <color=#737373>If you have 1 skill in hand, then always use the draw option.
-		/// If you have 0 skills in hand, consume 1 stack and draw 1 skill.</color>
+		/// Can be activated by left-clicking or pressing Hotkey 'C' (cannot be activated if stunned).
+		/// Choose one of the following options:
+		/// - Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
+		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).
+		/// <color=#737373>If you have only 1 skill in hand, you will always draw instead.
+		/// If you have 0 skills in hand, consume 1 stack to draw 1 skill.</color>
 		/// </summary>
         public static string Buff_B_CelestialConnection = "B_CelestialConnection";
+		/// <summary>
+		/// Celestial Blessing
+		/// Can be activated by left-clicking (cannot be activated if stunned).
+		/// Choose one of the following options:
+		/// - Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
+		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).
+		/// <color=#737373>If you have only 1 skill in hand, you will always draw instead.
+		/// If you have 0 skills in hand, consume 1 stack to draw 1 skill.</color>
+		/// </summary>
+        public static string Buff_B_CelestialConnection_0 = "B_CelestialConnection_0";
 		/// <summary>
 		/// Divine Daze
 		/// </summary>
@@ -92,7 +102,7 @@ namespace Raphi
 		/// <summary>
 		/// Heavenly Wrath
 		/// Apply "Sheathe : Cast this skill on random target" to all Attack skills.
-		/// <color=#919191>Except skill Thunder Burst - Ascension.</color>
+		/// <color=#919191>Except skill 'Thunder Burst - Ascension'.</color>
 		/// </summary>
         public static string Buff_B_HeavenlyWrath = "B_HeavenlyWrath";
 		/// <summary>
@@ -170,17 +180,18 @@ namespace Raphi
 		/// </summary>
         public static string SkillExtended_Ex_Raphi_1 = "Ex_Raphi_1";
 		/// <summary>
+		/// Heavenly Wrath
 		/// Sheathe : Cast this skill on random target.
 		/// </summary>
         public static string SkillExtended_Ex_Raphi_2 = "Ex_Raphi_2";
 		/// <summary>
-		/// When played, gain <color=#7B68EE>Celestial Connection.</color>
+		/// When played, gain <color=#C9A7F5>Celestial Blessing.</color>
 		/// <sprite name="비용1"><sprite name="이상">
 		/// <color=#919191>Some of Ilya's skills can't be enhanced.</color>
 		/// </summary>
         public static string SkillExtended_Ex_Raphi_3 = "Ex_Raphi_3";
 		/// <summary>
-		/// Sheathe : Cast this skill, gain <color=#7B68EE>Celestial Connection.</color>
+		/// Sheathe : Cast this skill, gain <color=#C9A7F5>Celestial Blessing.</color>
 		/// <sprite name="비용2"><sprite name="이하">
 		/// <color=#919191>Some of Ilya's skills can't be enhanced.</color>
 		/// </summary>
@@ -214,6 +225,18 @@ namespace Raphi
 		/// Sheathe : Restore 1 mana and draw 1 skill, prioritizing Attack skills.
 		/// </summary>
         public static string Skill_JudgementDescent = "JudgementDescent";
+		/// <summary>
+		/// Celestial Blessing
+		/// <color=#919191>- Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
+		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_CelestialBlessing = "KeyWord_CelestialBlessing";
+		/// <summary>
+		/// Celestial Connection
+		/// <color=#919191>- Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
+		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_CelestialConnection = "KeyWord_CelestialConnection";
 		/// <summary>
 		/// Fateful Decision
 		/// Draw 3 skills and select skill to discard.
@@ -254,10 +277,10 @@ namespace Raphi
 		/// Obtain 3 Celestial Potions.
 		/// When used, select one of the party member's skills to apply a unique skill upgrade.
 		/// At the start of each turn gain 1 stack (Max 3).
-		/// Can be activated by left clicking(can't be activated if user is stunned), and choose from the following options:
-		/// - Discard the top skill in hand and restore Mana per cost of the discarded skill (Max 2)
-		/// or
-		/// - Discard bottom skill in hand and draw skills per cost of the discarded skill (Max 2).
+		/// Can be activated by left-clicking or pressing Hotkey 'C' (cannot be activated if stunned).
+		/// Choose one of the following options:
+		/// - Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
+		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).
 		/// </summary>
         public static string Character_Raphi = "Raphi";
 		/// <summary>
@@ -271,13 +294,14 @@ namespace Raphi
         public static string Item_Consume_Raphi_Consume = "Raphi_Consume";
 		/// <summary>
 		/// Refreshing Renewal
-		/// Draw 1 additional skill next turn.
+		/// Draw 1 skill.
+		/// Gain 2 stacks of <color=#7B68EE>Celestial Connection</color>,
+		/// or 2 stacks of <color=#C9A7F5>Celestial Blessing</color> if cast by an ally.
 		/// </summary>
         public static string Skill_RefreshingRenewal = "RefreshingRenewal";
         public static string VFXSkill_RefreshingRenewalSummer = "RefreshingRenewalSummer";
         public static string SkillEffect_SE_S_R2HeavenlyGrace = "SE_S_R2HeavenlyGrace";
         public static string SkillEffect_SE_S_R3HeavenlyWrath = "SE_S_R3HeavenlyWrath";
-        public static string SkillEffect_SE_S_RefreshingRenewal = "SE_S_RefreshingRenewal";
         public static string SkillEffect_SE_S_S_Raphi_9 = "SE_S_S_Raphi_9";
         public static string SkillEffect_SE_S_S_Raphi_R1 = "SE_S_S_Raphi_R1";
         public static string SkillEffect_SE_S_S_Raphi_R2 = "SE_S_S_Raphi_R2";
@@ -342,9 +366,10 @@ namespace Raphi
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Select skill to discard.
-		/// Left is bottom skill, draw equal skill cost (Max 2).
-		/// Right is top skill, restore Mana equal skill cost (Max 2).
+		/// Select skill to discard. 
+		/// Left is bottom skill, restore Mana equal skill cost (Max 2).
+		/// Right is top skill, draw equal skill cost (Max 2).
+		/// <color=#737373>If you have only 1 skill in hand, you will always draw instead.</color>
 		/// Japanese:
 		/// Chinese:
 		/// 选择技能丢弃。

@@ -30,8 +30,7 @@ namespace Raphi
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            SkillUseSingle(SkillD, Targets);
-            BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+            BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Raphi
     /// <summary>
     /// Passive:
     /// </summary>
-    public class P_Raphi : Passive_Char, IP_LevelUp, IP_PlayerTurn
+    public class P_Raphi : Passive_Char, IP_LevelUp, IP_PlayerTurn, IP_BattleStart_UIOnBefore
     {
         public bool ItemTake;
 
@@ -45,6 +45,42 @@ namespace Raphi
             }
             yield return null;
             yield break;
+        }
+        public void BattleStartUIOnBefore(BattleSystem Ins)
+        {
+            if (Utils.RaphiButton && BChar is BattleAlly raphi)
+            {
+                Vector3 basePos = raphi.GetTopPos();
+
+                Vector3 offset = new Vector3(1.25f, 0.85f, 0f);
+                Vector3 finalPos = basePos + offset;
+
+                createIconButton("Raphi_Button", raphi.transform, "RaphiButton.png", new Vector3(128f, 128f), finalPos);
+            }
+        }
+
+        private void createIconButton(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos)
+        {
+            GameObject raphiButton = Utils.creatGameObject(name, parent);
+            if (raphiButton == null) return;
+
+            raphiButton.transform.SetParent(parent);
+
+            raphiButton.transform.position = worldPos;
+
+            Image image = raphiButton.AddComponent<Image>();
+            Sprite sprite = Utils.getSprite(spriteNormal);
+            if (sprite == null) return;
+            image.sprite = sprite;
+
+            Utils.ImageResize(image, size);
+
+            Raphi_Button button = raphiButton.AddComponent<Raphi_Button>();
+            raphiButton.AddComponent<Raphi_Button_Script>();
+
+            Raphi_Button.instance = button;
+
+            raphiButton.SetActive(true);
         }
     }
 }

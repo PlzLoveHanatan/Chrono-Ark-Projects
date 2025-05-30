@@ -21,7 +21,22 @@ namespace Raphi
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_AngelsWhisper, this.BChar, false, 0, false, -1, false);
+            BattleSystem.instance.AllyTeam.Draw();
+
+            if (BChar.Info.KeyData == ModItemKeys.Character_Raphi)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
+                }
+            }
         }
     }
 }

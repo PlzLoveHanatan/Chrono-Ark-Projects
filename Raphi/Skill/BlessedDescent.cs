@@ -24,6 +24,8 @@ namespace Raphi
     {
         public override void Init()
         {
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
+
             if (!SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "SummerRaphiel")) return;
             {
                 GDESkillData gdeskillData = new GDESkillData(MySkill.MySkill.KeyID);
@@ -33,6 +35,7 @@ namespace Raphi
                 MySkill.MySkill.PlusSkillView = ModItemKeys.Skill_BlessedAscensionSummer;
             }
         }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -40,8 +43,12 @@ namespace Raphi
             if (MySkill.BasicSkill)
             {
                 MySkill.APChange = -1;
+                base.SkillParticleOn();
+                return;
             }
+            base.SkillParticleOff();
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             base.SkillUseSingle(SkillD, Targets);

@@ -30,7 +30,7 @@ namespace Raphi
         {
             BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, MySkill, false, true, false));
             BattleSystem.DelayInputAfter(Del());
-            BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+            BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
         }
         public IEnumerator Del()
         {
