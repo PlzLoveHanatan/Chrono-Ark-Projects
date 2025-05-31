@@ -35,7 +35,7 @@ namespace Mia
                 }
             }
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
                 GDESkillData gdeskillData2 = list.Random(BChar.GetRandomClass().Main);
                 list.Remove(gdeskillData2);

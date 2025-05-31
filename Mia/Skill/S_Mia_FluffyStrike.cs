@@ -34,7 +34,11 @@ namespace Mia
             int index = skillsInHand.Count - 1;
             Skill bottomSkillInHand = skillsInHand[index];
 
-            if (!bottomSkillInHand.IsDamage) yield break;
+            if (!bottomSkillInHand.IsDamage)
+            {
+                bottomSkillInHand.Delete(false);
+                yield break;
+            }
 
             Skill cloneSkill = bottomSkillInHand.CloneSkill(true, null, null, true);
 

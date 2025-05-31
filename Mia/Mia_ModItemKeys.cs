@@ -43,10 +43,10 @@ namespace Mia
         public static string Buff_B_Mia_SavageImpulse = "B_Mia_SavageImpulse";
 		/// <summary>
 		/// Savage Rhythm
-		/// Current Sheathe : &a.
-		/// At 2 Sheathe, restore 1 Mana (once per turn).
-		/// At 4 Sheathe, if Mia is level 3 or higher, draw 1 Skill (once per turn).
-		/// If Mia is level 5 or higher, The 1st Sheathe activates twice (once per turn).
+		/// Current Discard : &a.
+		/// At 2 Discards, if Mia is level 2 or higher restore 1 Mana (once per turn).
+		/// At 4 Discards if Mia is level 3 or higher, draw 1 Skill (once per turn).
+		/// If Mia is level 5 or higher, the 1st Sheathe activates twice (once per turn).
 		/// </summary>
         public static string Buff_B_Mia_SheatheTriggers = "B_Mia_SheatheTriggers";
 		/// <summary>
@@ -89,12 +89,12 @@ namespace Mia
 		/// Choose one of the following options:
 		/// - Discard the top skill in hand and draw skills equal to the discarded skill's cost (Max 2).
 		/// Or discard the bottom skill in your and restore Mana equal to the discarded skill's cost (Max 2).
-		/// Lv.1: Gain 5% Attack Power whenever Sheathe activates (Max 25%). Lv.2: Draw 1 skill whenever Sheathe activates (once per turn). Lv.3: Restore 1 Mana whenever Sheathe activates (once per turn). Lv.4: Gain 10% Critical Chance whenever Sheathe activates (Max 50%). Lv.5: The 1st Sheathe activates twice (once per turn).
+		/// Lv.1: Gain 5% Attack Power whenever Discard occurs (Max 25%). Lv.2: Draw 1 skill whenever Discard occurs (once per turn). Lv.3: Restore 1 Mana whenever Discard occurs (once per turn). Lv.4: Gain 10% Critical Chance whenever Discard occurs (Max 50%). Lv.5: The 1st Sheathe effect occurs twice (once per turn).
 		/// </summary>
         public static string Character_Mia = "Mia";
 		/// <summary>
 		/// Instinct Tonic
-		/// This item can only be used once on each party member excluding Satanichia.
+		/// This item can only be used once on each party member excluding Mia.
 		/// When used, select one of the party member's skills to apply a unique skill upgrade:
 		/// When played, gain <color=#FF4E00>Instinct Surge</color>.
 		/// <color=#919191>Requirement : Skill with a mana cost of 1 or more.
@@ -145,7 +145,7 @@ namespace Mia
         public static string Skill_S_Mia_FluffyStrike = "S_Mia_FluffyStrike";
 		/// <summary>
 		/// Impulsive Harvest
-		/// Create 2 random attack skills in hand.
+		/// When played from hand, create random attack skill in hand.
 		/// Sheathe : Shuffle all your skills from the discard pile back into your deck, then draw 1 skill.
 		/// </summary>
         public static string Skill_S_Mia_ImpulsiveHarvest = "S_Mia_ImpulsiveHarvest";
@@ -178,7 +178,7 @@ namespace Mia
         public static string Skill_S_Mia_Rare_ChaoticHarvest = "S_Mia_Rare_ChaoticHarvest";
 		/// <summary>
 		/// Harvest Dance
-		/// Cast this skill on a random enemy, then draw this skill again and restore 1 Mana.
+		/// Sheathe : Cast this skill on a random enemy, then draw this skill again and restore 1 Mana.
 		/// </summary>
         public static string Skill_S_Mia_Rare_HarvestDance = "S_Mia_Rare_HarvestDance";
 		/// <summary>

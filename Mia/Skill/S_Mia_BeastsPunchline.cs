@@ -35,7 +35,11 @@ namespace Mia
 
             Skill topSkillInHand = skillsInHand[0];
 
-            if (!topSkillInHand.IsHeal) yield break;
+            if (!topSkillInHand.IsHeal) 
+            {
+                topSkillInHand.Delete(false);
+                yield break;
+            }
 
             Skill cloneSkill = topSkillInHand.CloneSkill(true, null, null, true);
 
