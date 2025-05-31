@@ -19,9 +19,15 @@ namespace Mia
 	/// </summary>
     public class S_Mia_PlayfulMasquerade : SkillExtedned_IlyaP
     {
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+        }
+
         public override void IlyaWaste()
         {
-            base.IlyaWaste();
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
             BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, MySkill, false, true, false));
             BattleSystem.DelayInputAfter(Del());
         }

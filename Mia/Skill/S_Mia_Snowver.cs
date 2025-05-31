@@ -70,11 +70,13 @@ namespace Mia
 
         public override bool SkillTargetSelectExcept(Skill ExceptSkill)
         {
-            return ExceptSkill.Master.IsLucyNoC || ExceptSkill.Enforce || ExceptSkill.Master.Info.KeyData == ModItemKeys.Character_Mia;
+            return /*ExceptSkill.Master.IsLucyNoC ||*/ ExceptSkill.Enforce || ExceptSkill.Master.Info.KeyData == ModItemKeys.Character_Mia;
         }
 
         public override void SkillTargetSingle(List<Skill> Targets)
         {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
             SkillSave = Targets[0];
             List<Skill> selectionList = new List<Skill>();
 

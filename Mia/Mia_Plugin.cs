@@ -80,6 +80,53 @@ namespace Mia
                     }
                 }
             }
+
+            private static readonly Dictionary<string, string> MiaVoiceLines = new Dictionary<string, string>
+            {
+                { "MiaBattleStart_0", ModLocalization.MiaBattleStart_0 },
+                { "MiaBattleStart_1", ModLocalization.MiaBattleStart_1 },
+                { "MiaChest", ModLocalization.MiaChest },
+                { "MiaCri", ModLocalization.MiaCri },
+                { "MiaCurse", ModLocalization.MiaCurse },
+                { "MiaHealed", ModLocalization.MiaHealed },
+                { "MiaIdleB_0", ModLocalization.MiaIdleB_0 },
+                { "MiaIdleB_1", ModLocalization.MiaIdleB_1 },
+                { "MiaIdleF", ModLocalization.MiaIdleF },
+                { "MiaKill", ModLocalization.MiaKill },
+                { "MiaMaster", ModLocalization.MiaMaster },
+                { "MiaOther_0", ModLocalization.MiaOther_0 },
+                { "MiaOther_1", ModLocalization.MiaOther_1 },
+                { "MiaOther_2", ModLocalization.MiaOther_2 },
+                { "MiaPharos_0", ModLocalization.MiaPharos_0 },
+                { "MiaPharos_1", ModLocalization.MiaPharos_1 },
+                { "MiaPharos_2", ModLocalization.MiaPharos_2 },
+                { "MiaPotion", ModLocalization.MiaPotion },
+                { "MiaDD", ModLocalization.MiaDD },
+                { "MiaDDAlly", ModLocalization.MiaDDAlly },
+            };
+
+            [HarmonyPatch(typeof(PrintText))]
+            [HarmonyPatch("TextInput")]
+            public class VoiceOn
+            {
+                [HarmonyPrefix]
+                public static bool Prefix(PrintText __instance, string inText)
+                {
+                    if (Utils.MiaVoice)
+                    {
+                        foreach (var kvp in MiaVoiceLines)
+                        {
+                            if (inText.Contains(kvp.Value))
+                            {
+                                MasterAudio.StopBus("SE");
+                                MasterAudio.PlaySound(kvp.Key, 100f, null, 0f, null, null, false, false);
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Mia
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
             new List<Skill>();
             List<GDESkillData> list = new List<GDESkillData>();
 

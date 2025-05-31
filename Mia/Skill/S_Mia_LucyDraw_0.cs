@@ -22,6 +22,14 @@ namespace Mia
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            var allies = BattleSystem.instance.AllyTeam.AliveChars;
+            var aliveMia = allies.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Mia);
+
+            if (aliveMia != null)
+            {
+                Utils.TryPlayMiaSound(MySkill, BChar);
+            }
+
             List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(s => s != MySkill).ToList();
 
             Skill skill = skillsInHand[0];

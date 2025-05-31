@@ -22,6 +22,10 @@ namespace Mia
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
+            BattleSystem.instance.AllyTeam.Draw();
+
             if (BChar.Info.Name == ModItemKeys.Character_Mia)
             {
                 for (int i = 0; i < 2; i++)

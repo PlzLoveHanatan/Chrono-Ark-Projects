@@ -188,18 +188,18 @@ namespace Mia
 		/// </summary>
         public static string Skill_S_Mia_Scrollfang = "S_Mia_Scrollfang";
 		/// <summary>
+		/// Snowver Paw-er!
+		/// Select one skill in your hand that is not upgraded (except Mia skills).
+		/// Choose one of two random Sheathe upgrade effects and apply it for this battle.
+		/// Draw 1 skill.
+		/// </summary>
+        public static string Skill_S_Mia_Snowver = "S_Mia_Snowver";
+		/// <summary>
 		/// Vortex Chores
 		/// When played from hand, if you have another <color=#FF69B4>Vortex Chores</color> in hand, discard it, cast this skill on the target (Max 3).
 		/// Sheathe : Shuffle a random <color=#FF69B4>Vortex Chores</color> from the discard pile back into your deck and draw 1 skill.
 		/// </summary>
         public static string Skill_S_Mia_VortexChores = "S_Mia_VortexChores";
-		/// <summary>
-		/// Snowver Paw-er!
-		/// Select one skill in your hand that is not upgraded (except Lucy and Mia skills).
-		/// Choose one of two random Sheathe upgrade effects and apply it for this battle.
-		/// Draw 1 skill.
-		/// </summary>
-        public static string Skill_S_Mia_Snowver = "S_Mia_Snowver";
 
     }
 
@@ -217,6 +217,24 @@ namespace Mia
 		/// Chinese-TW:
 		/// </summary>
         public static string Discard => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("Discard");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Amy, Miya, and Lord Squall are all amazing with instruments! Miya's in charge of dancing and cheering!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaBattleStart_0 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaBattleStart_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Meat is great, but Amy said you've gotta eat your veggies too.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaBattleStart_1 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaBattleStart_1");
 		/// <summary>
 		/// Korean:
 		/// English:
@@ -244,6 +262,168 @@ namespace Mia
 		/// Chinese-TW:
 		/// </summary>
         public static string MiaButton_2 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaButton_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Let's go treasure hunting with Miya! Mount the camel, and off we go!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaChest => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaChest");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// It's good manners to enjoy any kind of food deliciously!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaCri => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaCri");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Time to clean up! Let's do this, Keppal!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaCurse => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaCurse");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Miya's not sleepy yet. Tonight, no one's getting to sleep until morning...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaDD => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaDD");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// There are so many games I've never seen before! The outside world is so much fun!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaDDAlly => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaDDAlly");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Eating delicious food is its own kind of exercise!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaHealed => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaHealed");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Miya is a lancer, you know!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaIdleB_0 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaIdleB_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Miya is really strong! But using all that strength sure makes me hungry...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaIdleB_1 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaIdleB_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Compared to where Mia was born, Axel city is full of wonders!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaIdleF => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaIdleF");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I can think on my feet, defeat monsters, and this spear is just perfect for everything!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaKill => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaKill");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// The city has all kinds of delicious food.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaMaster => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaMaster");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Grilled squid by the sea is the best! I want Amy to try some too!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaOther_0 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaOther_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Haah! Phew! There's so much delicious food! Christmas really is an amazing day!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaOther_1 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaOther_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I decorated for Halloween with Amy! What do you think Cute, right
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaOther_2 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaOther_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Sleepovers mean pillow fights! Try to catch Miya's speedy pillow!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaPharos_0 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaPharos_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// When you're full, you get sleepy... Hope you have really sweet dreams!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaPharos_1 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaPharos_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Nikuman, Nikuman, I'm so happy! I'm going to eat it all myself!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaPharos_2 => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaPharos_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// That fruit looks delicious... but Miya prefers meat!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiaPotion => ModManager.getModInfo("Mia").localizationInfo.SystemLocalizationUpdate("MiaPotion");
 
     }
 }

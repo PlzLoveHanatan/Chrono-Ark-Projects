@@ -23,6 +23,8 @@ namespace Mia
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
             List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(skill => skill != MySkill).ToList();
 
             Index = skillsInHand.Count;

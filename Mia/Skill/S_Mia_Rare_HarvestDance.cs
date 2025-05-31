@@ -18,8 +18,15 @@ namespace Mia
 	/// </summary>
     public class S_Mia_Rare_HarvestDance : SkillExtedned_IlyaP
     {
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+        }
+
         public override void IlyaWaste()
         {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
             BattleSystem.instance.AllyTeam.AP += 1;
             BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, MySkill, false, true, false));
             BattleSystem.DelayInput(Draw());

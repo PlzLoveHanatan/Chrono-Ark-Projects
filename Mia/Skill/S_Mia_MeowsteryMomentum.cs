@@ -27,7 +27,7 @@ namespace Mia
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            base.SkillUseSingle(SkillD, Targets);
+            Utils.TryPlayMiaSound(MySkill, BChar);
 
             if (SkillD.FreeUse || SkillD.BasicSkill) return;
 
@@ -54,7 +54,8 @@ namespace Mia
 
         public override void IlyaWaste()
         {
-            //BattleSystem.instance.AllyTeam.Draw();
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
             BattleSystem.DelayInput(Draw());
         }
         public IEnumerator Draw()
