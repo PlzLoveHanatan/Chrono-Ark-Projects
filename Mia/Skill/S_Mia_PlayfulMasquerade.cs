@@ -21,6 +21,8 @@ namespace Mia
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            if (SkillD.FreeUse || SkillD.BasicSkill) return;
+
             Utils.TryPlayMiaSound(MySkill, BChar);
         }
 

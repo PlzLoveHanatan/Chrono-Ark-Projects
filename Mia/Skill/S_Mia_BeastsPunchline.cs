@@ -20,9 +20,9 @@ namespace Mia
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.TryPlayMiaSound(MySkill, BChar);
-
             if (SkillD.FreeUse || SkillD.BasicSkill) return;
+
+            Utils.TryPlayMiaSound(MySkill, BChar);
 
             BattleSystem.DelayInput(CastSkillOnEnemy());
         }
@@ -55,6 +55,8 @@ namespace Mia
 
         public override void IlyaWaste()
         {
+            Utils.TryPlayMiaSound(MySkill, BChar);
+
             BattleSystem.instance.AllyTeam.AP += 1;
             BattleSystem.DelayInput(Draw());
         }

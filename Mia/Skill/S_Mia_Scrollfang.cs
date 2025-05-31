@@ -22,9 +22,9 @@ namespace Mia
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.TryPlayMiaSound(MySkill, BChar);
-
             if (SkillD.FreeUse || SkillD.BasicSkill) return;
+
+            Utils.TryPlayMiaSound(MySkill, BChar);
 
             List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(s => s != MySkill).OrderByDescending(s => s.AP).ToList();
 

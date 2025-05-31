@@ -25,9 +25,11 @@ namespace Mia
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.TryPlayMiaSound(MySkill, BChar);
-
             SkillBasePlus.Target_BaseDMG = Utils.FestivalFang * 2;
+
+            if (SkillD.FreeUse || SkillD.BasicSkill) return;
+
+            Utils.TryPlayMiaSound(MySkill, BChar);
         }
 
         public override void IlyaWaste()
