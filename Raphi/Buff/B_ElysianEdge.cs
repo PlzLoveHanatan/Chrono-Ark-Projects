@@ -19,7 +19,7 @@ namespace Raphi
         {
             if (StackNum >= 2)
             {
-                BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+                BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
                 SelfDestroy();
             }
         }
