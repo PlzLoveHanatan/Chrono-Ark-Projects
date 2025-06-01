@@ -58,12 +58,12 @@ namespace Aqua
                 {
                     Target.Damage(BChar, 60, false, true, false, 0, false, false, false);
                 }
+                else
+                {
+                    Target.HPToZero();
+                }
             }
 
-            else if (Recruitment && !Target.IsDead)
-            {
-                Target.HPToZero();
-            }
             return Damage;
         }
     }
