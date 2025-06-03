@@ -31,13 +31,11 @@ namespace Mia
         {
             var buffKey = ModItemKeys.Buff_B_Mia_SavageImpulse;
             var mia = ModItemKeys.Character_Mia;
-            var target = BattleSystem.instance.AllyTeam.AliveChars.Find(c => c.Info.Name == mia && c.BuffReturn(buffKey, false) != null);
+            var target = BattleSystem.instance.AllyTeam.AliveChars.Find(c => c.Info.KeyData == mia && c.BuffReturn(buffKey, false) != null);
             var savageImpulse = target.BuffReturn(buffKey, false) as B_Mia_SavageImpulse;
 
             if (savageImpulse != null)
-            {
                 savageImpulse.MiaCall();
-            }
         }
     }
 }

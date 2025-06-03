@@ -14,10 +14,13 @@ using Debug = UnityEngine.Debug;
 namespace Mia
 {
 	/// <summary>
-	/// Burst of Flavor
+	/// Flur
 	/// </summary>
-    public class B_Mia_BurstofFlavor : Buff
+    public class B_Mia_Flur : Buff
     {
-
+        public override void BuffStat()
+        {
+            PlusStat.hit = -10 * StackNum;
+        }
     }
 }

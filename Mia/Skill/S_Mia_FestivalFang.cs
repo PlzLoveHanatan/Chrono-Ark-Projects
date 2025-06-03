@@ -27,9 +27,11 @@ namespace Mia
         {
             SkillBasePlus.Target_BaseDMG = Utils.FestivalFang * 2;
 
-            if (SkillD.FreeUse || SkillD.BasicSkill) return;
+            if (SkillD.FreeUse) return;
 
             Utils.TryPlayMiaSound(MySkill, BChar);
+
+            if (SkillD.BasicSkill) return;
         }
 
         public override void IlyaWaste()

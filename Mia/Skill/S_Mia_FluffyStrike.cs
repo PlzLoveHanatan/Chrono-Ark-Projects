@@ -18,9 +18,11 @@ namespace Mia
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
 
-            if (SkillD.FreeUse || SkillD.BasicSkill) return;
+            if (SkillD.FreeUse) return;
 
             Utils.TryPlayMiaSound(MySkill, BChar);
+
+            if (SkillD.BasicSkill) return;
 
             BattleSystem.DelayInput(CastSkillOnEnemy());
         }

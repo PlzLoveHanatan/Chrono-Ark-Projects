@@ -21,6 +21,7 @@ namespace Mia
         private int useCount = 0;
         private int DiscardCount = 0;
         private BattleChar TargetTemp;
+        private BattleChar SkillOwner;
 
         public override void IlyaWaste()
         {
@@ -51,6 +52,8 @@ namespace Mia
             if (SkillD.FreeUse || MySkill.BasicSkill) return;
 
             Utils.TryPlayMiaSound(MySkill, BChar);
+
+            SkillOwner = BChar;
 
             if (Targets.Count > 0)
             {
@@ -98,7 +101,15 @@ namespace Mia
             //}
             if (DiscardCount == 2)
             {
-                BChar.BuffAdd(ModItemKeys.Buff_B_Mia_SavageImpulse, BChar, false, 0, false, -1, false);
+                if (BChar.Info.KeyData == ModItemKeys.Character_Mia)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_Mia_SavageImpulse, BChar, false, 0, false, -1, false);
+                }
+
+                else
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_Mia_InstinctSurge, BChar, false, 0, false, -1, false);
+                }
             }
 
             BattleChar target;

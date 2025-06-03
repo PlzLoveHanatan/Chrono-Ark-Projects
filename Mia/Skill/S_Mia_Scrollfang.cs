@@ -20,11 +20,30 @@ namespace Mia
 	/// </summary>
     public class S_Mia_Scrollfang : SkillExtedned_IlyaP
     {
+        public override string DescExtended(string desc)
+        {
+            if (BattleSystem.instance != null)
+            {
+                List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(skill => skill != MySkill).ToList();
+
+                if (skillsInHand != null)
+                {
+                    return base.DescExtended(desc)
+                        .Replace("&a", ((int)(BChar.GetStat.atk * 0.4f) * skillsInHand.Count).ToString());
+                }
+            }
+
+            return base.DescExtended(desc)
+            .Replace("&a", ((int)(BChar.GetStat.atk * 0.4f)).ToString());
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (SkillD.FreeUse || SkillD.BasicSkill) return;
+            if (SkillD.FreeUse) return;
 
             Utils.TryPlayMiaSound(MySkill, BChar);
+
+            if (SkillD.BasicSkill) return;
 
             List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(s => s != MySkill).OrderByDescending(s => s.AP).ToList();
 
@@ -32,7 +51,7 @@ namespace Mia
 
             Skill highestManaSkillInHand = skillsInHand.FirstOrDefault();
 
-            PlusSkillPerFinal.Damage = highestManaSkillInHand.AP * 15;
+            SkillBasePlus.Target_BaseDMG = (int)(BChar.GetStat.atk * 0.4f) * highestManaSkillInHand.AP;
 
             highestManaSkillInHand.Delete(false);
         }

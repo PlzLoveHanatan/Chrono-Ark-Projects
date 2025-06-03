@@ -18,6 +18,23 @@ namespace Mia
 	/// </summary>
     public class S_Mia_MeowsteryMomentum : SkillExtedned_IlyaP
     {
+        public override string DescExtended(string desc)
+        {
+            if (BattleSystem.instance != null)
+            {
+                List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(skill => skill != MySkill).ToList();
+
+                if (skillsInHand != null)
+                {
+                    return base.DescExtended(desc)
+                        .Replace("&a", ((int)(BChar.GetStat.atk * 0.2f) * skillsInHand.Count).ToString());
+                }
+            }
+
+            return base.DescExtended(desc)
+            .Replace("&a", ((int)(BChar.GetStat.atk * 0.2f)).ToString());
+        }
+
         public override void FixedUpdate()
         {
             List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(skill => skill != MySkill).ToList();
@@ -27,28 +44,50 @@ namespace Mia
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (SkillD.FreeUse || SkillD.BasicSkill) return;
+            if (SkillD.FreeUse) return;
 
             Utils.TryPlayMiaSound(MySkill, BChar);
+
+            if (SkillD.BasicSkill) return;
 
             List<Skill> skillsInHand = BattleSystem.instance.AllyTeam.Skills.Where(skill => skill != MySkill).ToList();
 
             if (skillsInHand.Count <= 0) return;
 
-            int discardNum = Math.Min(4, skillsInHand.Count);
+            SkillBasePlus.Target_BaseDMG = (int)(BChar.GetStat.atk * 0.2f) * skillsInHand.Count;
 
-            List<Skill> randomDiscard = RandomManager.Random(skillsInHand, MySkill.Master.GetRandomClass().SkillSelect, discardNum);
-
-            PlusSkillPerFinal.Damage = discardNum * 15;
-
-            foreach (Skill skill in randomDiscard)
+            foreach (Skill skill in skillsInHand)
             {
                 skill.Delete(false);
             }
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < skillsInHand.Count / 6; i++)
+            {
+                BattleSystem.instance.AllyTeam.Draw();
+            }
+
+            if (skillsInHand.Count == 2 || skillsInHand.Count == 3)
             {
                 BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_Mia_DrawNextTurn, BChar, false, 0, false, -1, false);
+                return;
+            }
+            else if (skillsInHand.Count >= 4)
+            {
+                BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_Mia_DrawNextTurn, BChar, false, 0, false, -1, false);
+                BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_Mia_DrawNextTurn, BChar, false, 0, false, -1, false);
+            }
+
+            if (skillsInHand.Count >= 7)
+            {
+                if (BChar.Info.KeyData == ModItemKeys.Character_Mia)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_Mia_SavageImpulse, BChar, false, 0, false, -1, false);
+                }
+
+                else
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_Mia_InstinctSurge, BChar, false, 0, false, -1, false);
+                }
             }
         }
 

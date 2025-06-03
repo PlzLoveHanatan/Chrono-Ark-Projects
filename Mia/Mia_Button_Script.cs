@@ -106,14 +106,5 @@ namespace Mia
             Img.rectTransform.localScale = 1.1f * Vector3.one;
             Img.color = pressedColor;
         }
-
-        private void OnDisable()
-        {
-            if (Img != null)
-            {
-                Img.rectTransform.localScale = Vector3.one;
-                Img.color = disabledColor;
-            }
-        }
     }
 }

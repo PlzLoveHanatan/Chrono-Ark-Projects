@@ -21,9 +21,9 @@ namespace Mia
         public override void BuffOneAwake()
         {
             base.BuffOneAwake();
-            BuffIcon.AddComponent<Button>().onClick.AddListener(Call);
+            BuffIcon.AddComponent<Button>().onClick.AddListener(MiaAllyCall);
         }
-        public void Call()
+        public void MiaAllyCall()
         {
             if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 
@@ -66,17 +66,18 @@ namespace Mia
             int ap = Mathf.Min(myButton.Myskill.AP, 2);
             BattleSystem.DelayInput(DiscardSkill(myButton.Myskill));
 
-            if (index == 0)
-            {
-                BattleSystem.instance.AllyTeam.Draw(ap);
-            }
-            else if (index == skillInHand.Count - 1)
+            if (BattleSystem.instance.AllyTeam.Skills.Count == 0 || index == skillInHand.Count - 1)
             {
                 BattleSystem.instance.AllyTeam.AP += ap;
+            }
+            else if (index == 0)
+            {
+                BattleSystem.instance.AllyTeam.Draw(ap);
             }
 
             yield break;
         }
+
         public IEnumerator DiscardSkill(Skill selectSkill)
         {
             yield return BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true);

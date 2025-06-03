@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.Security.Principal;
 namespace Mia
 {
     /// <summary>
@@ -22,8 +23,10 @@ namespace Mia
 
         public override void Init()
         {
+            base.Init();
             OnePassive = true;
         }
+
         public void LevelUp()
         {
             FieldSystem.DelayInput(Delay());
@@ -37,12 +40,12 @@ namespace Mia
                 InventoryManager.Reward(ItemBase.GetItem(ModItemKeys.Item_Consume_Mia_InstinctTonic, 3));
             }
             yield return null;
-            yield break;
         }
+
 
         public void BattleStart(BattleSystem Ins)
         {
-            if (BChar.Info.LV >= 2)
+            if (MyChar.LV >= 2)
             {
                 BChar.BuffAdd(ModItemKeys.Buff_B_Mia_SheatheTriggers, BChar, false, 0, false, -1, false);
             }
@@ -52,7 +55,7 @@ namespace Mia
         {
             BChar.BuffAdd(ModItemKeys.Buff_B_Mia_SavageImpulse, BChar, false, 0, false, -1, false);
 
-            if (BChar.Info.LV >= 5)
+            if (MyChar.LV >= 6)
             {
                 BChar.BuffAdd(ModItemKeys.Buff_B_Mia_BurstofFlavor_0, BChar, false, 0, false, -1, false);
             }
@@ -66,12 +69,13 @@ namespace Mia
             {
                 BChar.BuffAdd(ModItemKeys.Buff_B_Mia_PredatoryDrive, BChar, false, 0, false, -1, false);
 
-                if (BChar.Info.LV >= 2 && sheathe?.StackNum >= 1)
+                if (MyChar.LV >= 3 && sheathe?.StackNum >= 1)
                 {
                     sheathe.MiaSheathe++;
+                    sheathe.Init();
                 }
 
-                if (BChar.Info.LV >= 4)
+                if (MyChar.LV >= 5)
                 {
                     BChar.BuffAdd(ModItemKeys.Buff_B_Mia_InstinctivePrecision, BChar, false, 0, false, -1, false);
                 }
@@ -84,10 +88,10 @@ namespace Mia
             {
                 Vector3 basePos = mia.GetTopPos();
 
-                Vector3 offset = new Vector3(1.25f, 0.85f, 0f);
+                Vector3 offset = new Vector3(1.28f, 0.6f, 0f);
                 Vector3 finalPos = basePos + offset;
 
-                createIconButton("Mia_Button", mia.transform, "MiaButton.png", new Vector3(139f, 144f), finalPos);
+                createIconButton("Mia_Button", mia.transform, "MiaButton.png", new Vector3(90f, 90f), finalPos);
             }
         }
 

@@ -43,7 +43,7 @@ namespace Mia
                     MiaMana = false;
                 }
 
-                if (MiaSheathe >= 4 && MiaDraw && BChar.Info.LV >= 3)
+                if (MiaSheathe >= 2 && MiaDraw && MyChar.LV >= 4)
                 {
                     BattleSystem.DelayInputAfter(MiaDrawHand());
                     MiaDraw = false;

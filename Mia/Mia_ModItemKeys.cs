@@ -14,6 +14,16 @@ namespace Mia
 		/// </summary>
         public static string Buff_B_Mia_DrawNextTurn = "B_Mia_DrawNextTurn";
 		/// <summary>
+		/// Pawtience
+		/// At 2 stacks, gain <color=#FF0070>Savage Impulse</color> (if buff owner Mia),
+		/// or <color=#FF4E00>Instinct Surge</color>.
+		/// </summary>
+        public static string Buff_B_Mia_E_Meowpiercer = "B_Mia_E_Meowpiercer";
+		/// <summary>
+		/// Flur
+		/// </summary>
+        public static string Buff_B_Mia_Flur = "B_Mia_Flur";
+		/// <summary>
 		/// Instinctive Precision
 		/// </summary>
         public static string Buff_B_Mia_InstinctivePrecision = "B_Mia_InstinctivePrecision";
@@ -27,6 +37,10 @@ namespace Mia
 		/// If you have 0 skills in hand, consume 1 stack to draw 1 skill.</color>
 		/// </summary>
         public static string Buff_B_Mia_InstinctSurge = "B_Mia_InstinctSurge";
+		/// <summary>
+		/// Pawcut 
+		/// </summary>
+        public static string Buff_B_Mia_Pawcut = "B_Mia_Pawcut";
 		/// <summary>
 		/// Predatory Drive
 		/// </summary>
@@ -43,10 +57,9 @@ namespace Mia
         public static string Buff_B_Mia_SavageImpulse = "B_Mia_SavageImpulse";
 		/// <summary>
 		/// Savage Rhythm
-		/// Current Discard : &a.
-		/// At 2 Discards, if Mia is level 2 or higher restore 1 Mana (once per turn).
-		/// At 4 Discards if Mia is level 3 or higher, draw 1 Skill (once per turn).
-		/// If Mia is level 5 or higher, the 1st Sheathe activates twice (once per turn).
+		/// Current Discard: &a
+		/// At 2 discards, if Mia is level 3 or higher, restore 1 Mana once per turn. If Mia is level 4 or higher, draw 1 skill once per turn.
+		/// If Mia is level 6, the first Sheathe effect triggers twice once per turn.
 		/// </summary>
         public static string Buff_B_Mia_SheatheTriggers = "B_Mia_SheatheTriggers";
 		/// <summary>
@@ -68,28 +81,34 @@ namespace Mia
 		/// </summary>
         public static string SkillExtended_Ex_Mia_PersistentHunt = "Ex_Mia_PersistentHunt";
 		/// <summary>
+		/// Meowpiercer
+		/// All attacks inflict 'Pawcut' (<sprite=1> Base 105%).
+		/// Whenever discard occurs gain 'Pawtience' (Max 4 per turn).
+		/// </summary>
+        public static string Item_Equip_E_Mia_Meowpiercer = "E_Mia_Meowpiercer";
+		/// <summary>
 		/// Instinct Surge
-		/// <color=#737373>- Discard the top skill in your hand and draw skills equal to the discarded skill's cost (Max 2).
-		/// - Discard the bottom skill in your hand and restore Mana equal to the discarded skill's cost (Max 2).</color>
+		/// <color=#737373>- Discard the top skill in your hand and draw skills (Max 2).
+		/// - Discard the bottom skill in your hand and restore Mana (Max 2).</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_InstinctSurge = "KeyWord_InstinctSurge";
 		/// <summary>
 		/// Savage Impulse
-		/// <color=#737373>- Discard the top skill in your hand and draw skills equal to the discarded skill's cost (Max 2).
-		/// - Discard the bottom skill in your hand and restore Mana equal to the discarded skill's cost (Max 2).</color>
+		/// <color=#737373>- Discard the top skill in your hand and draw skills (Max 2).
+		/// - Discard the bottom skill in your hand and restore Mana (Max 2).</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_SavageImpulse = "KeyWord_SavageImpulse";
 		/// <summary>
 		/// Mia
 		/// Passive:
 		/// Obtain 3 Instinct Tonic.
-		/// When used, select one of the party member's skills to apply a unique skill upgrade.
-		/// At the start of each turn gain 1 stack (Max 3).
-		/// Can be activated by left-clicking or pressing Hotkey 'V' (cannot be activated if stunned).
-		/// Choose one of the following options:
-		/// - Discard the top skill in hand and draw skills equal to the discarded skill's cost (Max 2).
-		/// Or discard the bottom skill in your and restore Mana equal to the discarded skill's cost (Max 2).
-		/// Lv.1: Gain 5% Attack Power whenever Discard occurs (Max 25%). Lv.2: Draw 1 skill whenever Discard occurs (once per turn). Lv.3: Restore 1 Mana whenever Discard occurs (once per turn). Lv.4: Gain 10% Critical Chance whenever Discard occurs (Max 50%). Lv.5: The 1st Sheathe effect occurs twice (once per turn).
+		/// When used, select one of the party members skills to apply a unique skill upgrade.
+		/// At the start of each turn, gain <color=#FF0070>Savage Impulse</color> (up to 3 stacks).
+		/// Level 2: Gain 5% Attack Power per discard (up to 25%).
+		/// Level 3: Restore 1 Mana once per turn when 2 discards occur.
+		/// Level 4: Draw 1 skill once per turn when 2 discards occur.
+		/// Level 5: Gain 10% Critical Chance per discard (up to 50%).
+		/// Level 6: The first Sheathe effect occurs twice once per turn.
 		/// </summary>
         public static string Character_Mia = "Mia";
 		/// <summary>
@@ -102,6 +121,7 @@ namespace Mia
 		/// </summary>
         public static string Item_Consume_Mia_InstinctTonic = "Mia_InstinctTonic";
         public static string SkillEffect_SE_S_S_Mia_BurstofFlavor = "SE_S_S_Mia_BurstofFlavor";
+        public static string SkillEffect_SE_Tick_B_Mia_Pawcut = "SE_Tick_B_Mia_Pawcut";
         public static string SkillEffect_SE_T_S_Mia_BeastsPunchline = "SE_T_S_Mia_BeastsPunchline";
         public static string SkillEffect_SE_T_S_Mia_FeralPrank = "SE_T_S_Mia_FeralPrank";
         public static string SkillEffect_SE_T_S_Mia_FestivalFang = "SE_T_S_Mia_FestivalFang";
@@ -162,7 +182,10 @@ namespace Mia
         public static string Skill_S_Mia_LucyDraw_1 = "S_Mia_LucyDraw_1";
 		/// <summary>
 		/// Meowstery Momentum
-		/// Cost reduced by 1 for each skill in hand. When played from hand, discard up to 4 skills, for each skill discarded increase this skill's damage by 15%. Draw 2 additional skills next turn.
+		/// Cost reduced by 1 for each skill in hand. When played from hand, discard all skills in hand and increase damage by &a.
+		/// For every 2 skills discarded, draw 1 additional skill next turn (Max 2).  
+		/// If at least 6 skills are discarded, draw 1 skill.  
+		/// If 7 skills are discarded, gain <color=#FF0070>Savage Impulse</color>, or <color=#FF4E00>Instinct Surge</color> if cast by an ally.
 		/// Sheathe : Draw this skill again.
 		/// </summary>
         public static string Skill_S_Mia_MeowsteryMomentum = "S_Mia_MeowsteryMomentum";
@@ -183,8 +206,8 @@ namespace Mia
         public static string Skill_S_Mia_Rare_HarvestDance = "S_Mia_Rare_HarvestDance";
 		/// <summary>
 		/// Scrollfang: Mia's Cut
-		/// When played from hand, discard the skill in your hand with the highest Mana cost, then increase this skill's damage by 15% of that cost.
-		/// Sheathe : Draw skills per cost of this skill (Max 2).
+		/// When played from hand, discard the skill in your hand with the highest Mana cost and increase damage by &a * that skill's cost.
+		/// Sheathe : Draw skills equal to this skill's cost (Max 2).
 		/// </summary>
         public static string Skill_S_Mia_Scrollfang = "S_Mia_Scrollfang";
 		/// <summary>
@@ -197,6 +220,7 @@ namespace Mia
 		/// <summary>
 		/// Vortex Chores
 		/// When played from hand, if you have another <color=#FF69B4>Vortex Chores</color> in hand, discard it, cast this skill on the target (Max 3).
+		/// If 2 Vortex Chores are discarded, gain <color=#FF0070>Savage Impulse</color>, or <color=#FF4E00>Instinct Surge</color> if cast by an ally.
 		/// Sheathe : Shuffle a random <color=#FF69B4>Vortex Chores</color> from the discard pile back into your deck and draw 1 skill.
 		/// </summary>
         public static string Skill_S_Mia_VortexChores = "S_Mia_VortexChores";
