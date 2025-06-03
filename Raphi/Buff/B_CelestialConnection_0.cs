@@ -21,9 +21,9 @@ namespace Raphi
         public override void BuffOneAwake()
         {
             base.BuffOneAwake();
-            BuffIcon.AddComponent<Button>().onClick.AddListener(AllyCall);
+            BuffIcon.AddComponent<Button>().onClick.AddListener(RaphiAllyCall);
         }
-        public void AllyCall()
+        public void RaphiAllyCall()
         {
             if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 

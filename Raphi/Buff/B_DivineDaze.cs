@@ -17,7 +17,7 @@ namespace Raphi
     {
         public override void BuffStat()
         {
-            PlusStat.hit = -10f * StackNum;
+            PlusStat.hit = -15f * StackNum;
         }
     }
 }

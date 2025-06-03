@@ -52,10 +52,10 @@ namespace Raphi
             {
                 Vector3 basePos = raphi.GetTopPos();
 
-                Vector3 offset = new Vector3(1.25f, 0.85f, 0f);
+                Vector3 offset = new Vector3(1.28f, 0.6f, 0f);
                 Vector3 finalPos = basePos + offset;
 
-                createIconButton("Raphi_Button", raphi.transform, "RaphiButton.png", new Vector3(128f, 128f), finalPos);
+                createIconButton("Raphi_Button", raphi.transform, "RaphiButton.png", new Vector3(90f, 90f), finalPos);
             }
         }
 

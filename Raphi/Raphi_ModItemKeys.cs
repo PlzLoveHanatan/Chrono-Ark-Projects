@@ -12,8 +12,7 @@ namespace Raphi
 		/// <summary>
 		/// Angelic Gamble
 		/// When played from hand, if you have another <color=#FF69B4>Angelic Gamble</color> in hand, discard it, cast this skill on the target (Max 3).
-		/// If 1 Angelic Gambles are discarded, gain <color=#D2691E>Heaven's Touch</color>.
-		/// If 2 Angelic Gambles are discarded, gain <color=#7B68EE>Celestial Connection</color>.
+		/// If 2 Angelic Gambles are discarded, gain <color=#7B68EE>Celestial Connection</color>, or <color=#C9A7F5>Celestial Blessing</color> if cast by an ally.
 		/// Sheathe : Shuffle a random <color=#FF69B4>Angelic Gamble</color> from the discard pile back into your deck and draw 1 skill.
 		/// </summary>
         public static string Skill_AngelicGamble = "AngelicGamble";
@@ -43,7 +42,7 @@ namespace Raphi
 		/// Blessed Descent
 		/// Cost is reduced by 1 if this skill is a fixed ability.
 		/// When played from hand, discard the bottom skill and restore Mana equal to its cost (Max 2).
-		/// Create "Blessed Ascension" in hand.  
+		/// Create 'Blessed Ascension' in hand.  
 		/// Sheathe : Restore 1 mana and draw 1 skill, prioritizing Healing skills.
 		/// </summary>
         public static string Skill_BlessedDescent = "BlessedDescent";
@@ -86,8 +85,9 @@ namespace Raphi
 		/// </summary>
         public static string Buff_B_DivineDaze = "B_DivineDaze";
 		/// <summary>
-		/// Elysian Edge
-		/// At 2 stacks gain <color=#7B68EE>Celestial Connection</color>.
+		/// Elysian Grace
+		/// At 2 stacks, gain <color=#7B68EE>Celestial Connection</color> (if buff owner Raphiel),
+		/// or <color=#C9A7F5>Celestial Blessing</color>.
 		/// </summary>
         public static string Buff_B_ElysianEdge = "B_ElysianEdge";
 		/// <summary>
@@ -96,19 +96,20 @@ namespace Raphi
         public static string Buff_B_EvasionIncreased = "B_EvasionIncreased";
 		/// <summary>
 		/// Heavenly Grace
-		/// Apply "Sheathe : Cast this skill on random target" to all Healing skills.
+		/// Apply 'Sheathe : Cast this skill on a random target' to all Healing skills.
 		/// </summary>
         public static string Buff_B_HeavenlyGrace = "B_HeavenlyGrace";
 		/// <summary>
 		/// Heavenly Wrath
-		/// Apply "Sheathe : Cast this skill on random target" to all Attack skills.
-		/// <color=#919191>Except skill 'Thunder Burst - Ascension'.</color>
+		/// Apply 'Sheathe : Cast this skill on a random target' to all Attack skills.
+		/// <color=#919191>Excludes Ilya's skill 
+		/// 'Thunder Burst - Ascension'.</color>
 		/// </summary>
         public static string Buff_B_HeavenlyWrath = "B_HeavenlyWrath";
 		/// <summary>
 		/// Heaven's Embrace
 		/// Whenever you cast your own skill, gain &a Barrier.
-		/// <color=#919191>Based on the Healing Power of "Heaven's Embrace's" owner.</color>
+		/// <color=#919191>Based on the Healing Power of the owner of 'Heaven's Embrace'.</color>
 		/// </summary>
         public static string Buff_B_HeavensEmbrace = "B_HeavensEmbrace";
 		/// <summary>
@@ -121,7 +122,7 @@ namespace Raphi
 		/// Sheathe : Randomly activate one of the following 5 effects:  
 		/// 1. Draw skills equal to the cost of this skill (Max 2).  
 		/// 2. Restore Mana equal to the cost of this skill (Max 2).  
-		/// 3. Heal all allies and gain <color=#7B68EE>Celestial Connection</color>.  
+		/// 3. Heal all allies and gain <color=#7B68EE>Celestial Connection</color> (if skill owner Raphiel), or <color=#C9A7F5>Celestial Blessing</color>.
 		/// 4. Heal all allies and apply 1 stack of <color=#D2691E>Heaven's Touch</color> to all allies.  
 		/// 5. Create a party barrier (&a) equal to 1.5x user's Healing Power. 
 		/// </summary>
@@ -136,7 +137,7 @@ namespace Raphi
 		/// </summary>
         public static string Skill_CapriciousBlessingSummer_2 = "CapriciousBlessingSummer_2";
 		/// <summary>
-		/// Heal all allies and gain Celestial Connection
+		/// Heal all allies and gain Celestial Connection or Celestial Blessing
 		/// </summary>
         public static string Skill_CapriciousBlessingSummer_3 = "CapriciousBlessingSummer_3";
 		/// <summary>
@@ -156,7 +157,7 @@ namespace Raphi
 		/// </summary>
         public static string Skill_CapriciousBlessing_2 = "CapriciousBlessing_2";
 		/// <summary>
-		/// Heal all allies and gain Celestial Connection
+		/// Heal all allies and gain Celestial Connection or Celestial Blessing
 		/// </summary>
         public static string Skill_CapriciousBlessing_3 = "CapriciousBlessing_3";
 		/// <summary>
@@ -169,19 +170,18 @@ namespace Raphi
         public static string Skill_CapriciousBlessing_5 = "CapriciousBlessing_5";
 		/// <summary>
 		/// Elysian Edge
-		/// Whenever the wearer plays 2 skills from hand, gain <color=#7B68EE>Celestial Connection</color>.
-		/// Only activates twice per turn.
+		/// Whenever the wearer plays a skill, gain 'Elysian Grace' buff (Max 4 per turn).
 		/// <color=#919191>Forged in the light of the celestial realm, this blade grants divine power to those deemed worthy.</color>
 		/// </summary>
         public static string Item_Equip_ElysianEdge = "ElysianEdge";
 		/// <summary>
 		/// Heavenly Grace
-		/// Sheathe : Cast this skill on random target.
+		/// Sheathe : Cast this skill on a random target.
 		/// </summary>
         public static string SkillExtended_Ex_Raphi_1 = "Ex_Raphi_1";
 		/// <summary>
 		/// Heavenly Wrath
-		/// Sheathe : Cast this skill on random target.
+		/// Sheathe : Cast this skill on a random target.
 		/// </summary>
         public static string SkillExtended_Ex_Raphi_2 = "Ex_Raphi_2";
 		/// <summary>
@@ -221,22 +221,28 @@ namespace Raphi
 		/// <summary>
 		/// Judgement Descent
 		/// When played from hand, discard the bottom skill and draw skills equal to its cost (Max 2).
-		/// Create "Judgement Ascension" in hand.  
+		/// Create 'Judgement Ascension' in hand.  
 		/// Sheathe : Restore 1 mana and draw 1 skill, prioritizing Attack skills.
 		/// </summary>
         public static string Skill_JudgementDescent = "JudgementDescent";
 		/// <summary>
 		/// Celestial Blessing
-		/// <color=#919191>- Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
-		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).</color>
+		/// <color=#919191>- Discard the top skill in hand and restore Mana (Max 2).
+		/// Or discard bottom skill in hand and draw skills (Max 2).</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_CelestialBlessing = "KeyWord_CelestialBlessing";
 		/// <summary>
 		/// Celestial Connection
-		/// <color=#919191>- Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
-		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).</color>
+		/// <color=#919191>- Discard the top skill in hand and restore Mana (Max 2).
+		/// Or discard bottom skill in hand and draw skills (Max 2).</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_CelestialConnection = "KeyWord_CelestialConnection";
+		/// <summary>
+		/// Heaven's Touch
+		/// <color=#919191>Critical Hit Chance +5%
+		/// Critical Damage +10%</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_HeavensTouch = "KeyWord_HeavensTouch";
 		/// <summary>
 		/// Fateful Decision
 		/// Draw 3 skills and select skill to discard.
@@ -252,7 +258,8 @@ namespace Raphi
         public static string VFXSkill_OverwhelmingPrayerSummer = "OverwhelmingPrayerSummer";
 		/// <summary>
 		/// Heaven's Embrace
-		/// Spend 3 <color=#7B68EE>Celestial Connection</color> to gain an additional "Heaven's Embrace" buff.
+		/// Spend 3 <color=#7B68EE>Celestial Connection</color> to gain an additional 
+		/// 'Heaven's Embrace' buff.
 		/// </summary>
         public static string Skill_R1HeavensEmbrace = "R1HeavensEmbrace";
 		/// <summary>
@@ -276,11 +283,7 @@ namespace Raphi
 		/// Passive:
 		/// Obtain 3 Celestial Potions.
 		/// When used, select one of the party member's skills to apply a unique skill upgrade.
-		/// At the start of each turn gain 1 stack (Max 3).
-		/// Can be activated by left-clicking or pressing Hotkey 'C' (cannot be activated if stunned).
-		/// Choose one of the following options:
-		/// - Discard the top skill in hand and restore Mana per cost of the discarded skill's (Max 2).
-		/// Or discard bottom skill in hand and draw skills per cost of the discarded skill's (Max 2).
+		/// At the start of each turn, gain <color=#7B68EE>Celestial Connection</color> (up to 3 stacks).
 		/// </summary>
         public static string Character_Raphi = "Raphi";
 		/// <summary>

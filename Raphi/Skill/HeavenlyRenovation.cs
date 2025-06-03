@@ -72,7 +72,7 @@ namespace Raphi
                 BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_AngelsWhisper, BChar, false, 0, false, -1, false);
             }
 
-            if (skillList.Count >= 8)
+            if (skillList.Count >= 7)
             {
                 BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
             }

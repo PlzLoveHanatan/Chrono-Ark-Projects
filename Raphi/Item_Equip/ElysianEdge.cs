@@ -35,7 +35,7 @@ namespace Raphi
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            if (SkillD.Master == BChar && !SkillD.BasicSkill && !SkillD.FreeUse && skillUsesThisTurn < 4)
+            if (SkillD.Master == BChar && !SkillD.FreeUse && skillUsesThisTurn < 4)
             {
                 skillUsesThisTurn++;
 

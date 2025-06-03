@@ -24,6 +24,7 @@ namespace Raphi
         public override void Init()
         {
             base.Init();
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_1_Ex).Particle_Path;
             UseNum = 0;
         }
         public override void HandInit()
@@ -39,6 +40,13 @@ namespace Raphi
         public override void FixedUpdate()
         {
             APChange = -UseNum;
+
+            if (MySkill.BasicSkill)
+            {
+                base.SkillParticleOn();
+                return;
+            }
+            base.SkillParticleOff();
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {

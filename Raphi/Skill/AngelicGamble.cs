@@ -89,13 +89,23 @@ namespace Raphi
             newSkill.PlusHit = true;
             newSkill.FreeUse = true;
 
-            if (DiscardCount == 1)
-            {
-                BChar.BuffAdd(ModItemKeys.Buff_B_HeavensTouch, BChar, false, 0, false, -1, false);
-            }
+            //if (DiscardCount == 1)
+            //{
+            //    BChar.BuffAdd(ModItemKeys.Buff_B_HeavensTouch, BChar, false, 0, false, -1, false);
+            //}
+
             if (DiscardCount == 2)
             {
-                BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+
+                if (BChar.Info.KeyData == ModItemKeys.Character_Raphi)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+                }
+
+                else
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
+                }
             }
 
             BattleChar target;

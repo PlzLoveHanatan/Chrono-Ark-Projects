@@ -17,10 +17,19 @@ namespace Raphi
     {
         public override void Init()
         {
-            if (StackNum >= 2)
+            if (BattleSystem.instance != null)
             {
-                BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
-                SelfDestroy();
+                if (StackNum >= 2 && BChar.Info.KeyData == ModItemKeys.Character_Raphi)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+                    SelfDestroy();
+                }
+
+                else if (StackNum >= 2)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
+                    SelfDestroy();
+                }
             }
         }
     }

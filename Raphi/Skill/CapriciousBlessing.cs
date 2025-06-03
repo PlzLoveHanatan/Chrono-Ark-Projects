@@ -26,11 +26,11 @@ namespace Raphi
     {
         private readonly List<string> normalSkills = new List<string>
         {
-            ModItemKeys.Skill_CapriciousBlessing_1,
-            ModItemKeys.Skill_CapriciousBlessing_2,
+            //ModItemKeys.Skill_CapriciousBlessing_1,
+            //ModItemKeys.Skill_CapriciousBlessing_2,
             ModItemKeys.Skill_CapriciousBlessing_3,
-            ModItemKeys.Skill_CapriciousBlessing_4,
-            ModItemKeys.Skill_CapriciousBlessing_5
+            //ModItemKeys.Skill_CapriciousBlessing_4,
+            //ModItemKeys.Skill_CapriciousBlessing_5
         };
 
         private readonly List<string> summerSkills = new List<string>
@@ -111,7 +111,16 @@ namespace Raphi
                 skill.PlusHit = true;
                 skill.FreeUse = true;
                 BChar.ParticleOut(skill, BattleSystem.instance.AllyTeam.AliveChars);
-                BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+
+                if (BChar.Info.KeyData == ModItemKeys.Character_Raphi)
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection, BChar, false, 0, false, -1, false);
+                }
+
+                else
+                {
+                    BChar.BuffAdd(ModItemKeys.Buff_B_CelestialConnection_0, BChar, false, 0, false, -1, false);
+                }
             }
 
             if (funnyButton == ModItemKeys.Skill_CapriciousBlessing_4 || funnyButton == ModItemKeys.Skill_CapriciousBlessingSummer_4)

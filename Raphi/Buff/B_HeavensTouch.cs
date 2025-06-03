@@ -20,8 +20,8 @@ namespace Raphi
     {
         public override void BuffStat()
         {
-            PlusStat.cri = 5f * StackNum;
-            PlusPerStat.Damage = 11 * StackNum;
+            PlusStat.cri = 5 * StackNum;
+            PlusStat.PlusCriDmg = 10 * StackNum;
         }
     }
 }
