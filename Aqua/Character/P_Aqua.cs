@@ -117,6 +117,8 @@ namespace Aqua
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
+            if (!Utils.CleanseAllDebuffs) return;
+
             var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false);
 
             var ignoreKeys = new HashSet<string>

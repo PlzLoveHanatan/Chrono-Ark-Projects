@@ -25,6 +25,8 @@ namespace Aqua
 
         public static bool AquaVoiceButtonHotkey => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Aqua Voice Button Hotkey").Value;
 
+        public static bool CleanseAllDebuffs => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Cleanse All Debuffs").Value;
+
 
         private static readonly Dictionary<string, string> AquaSkillsSounds = new Dictionary<string, string>
         { 
