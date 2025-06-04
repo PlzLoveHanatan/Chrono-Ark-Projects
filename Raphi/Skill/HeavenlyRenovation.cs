@@ -56,7 +56,7 @@ namespace Raphi
 
             SkillBasePlus.Target_BaseHeal = (int)(BChar.GetStat.reg * 0.2f) * skillList.Count;
 
-            for (int i = 0; i < skillList.Count / 6; i++)
+            for (int i = 0; i < skillList.Count / 5; i++)
             {
                 BattleSystem.instance.AllyTeam.Draw();
             }

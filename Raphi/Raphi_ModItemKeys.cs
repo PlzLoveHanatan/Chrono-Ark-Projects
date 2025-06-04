@@ -86,7 +86,7 @@ namespace Raphi
         public static string Buff_B_DivineDaze = "B_DivineDaze";
 		/// <summary>
 		/// Elysian Grace
-		/// At 2 stacks, gain <color=#7B68EE>Celestial Connection</color> (if buff owner Raphiel),
+		/// At 2 stacks, gain <color=#7B68EE>Celestial Connection</color> (if buff owner is Raphiel),
 		/// or <color=#C9A7F5>Celestial Blessing</color>.
 		/// </summary>
         public static string Buff_B_ElysianEdge = "B_ElysianEdge";
@@ -122,7 +122,7 @@ namespace Raphi
 		/// Sheathe : Randomly activate one of the following 5 effects:  
 		/// 1. Draw skills equal to the cost of this skill (Max 2).  
 		/// 2. Restore Mana equal to the cost of this skill (Max 2).  
-		/// 3. Heal all allies and gain <color=#7B68EE>Celestial Connection</color> (if skill owner Raphiel), or <color=#C9A7F5>Celestial Blessing</color>.
+		/// 3. Heal all allies and gain <color=#7B68EE>Celestial Connection</color> (if skill owner is Raphiel), or <color=#C9A7F5>Celestial Blessing</color>.
 		/// 4. Heal all allies and apply 1 stack of <color=#D2691E>Heaven's Touch</color> to all allies.  
 		/// 5. Create a party barrier (&a) equal to 1.5x user's Healing Power. 
 		/// </summary>
@@ -171,7 +171,8 @@ namespace Raphi
 		/// <summary>
 		/// Elysian Edge
 		/// Whenever the wearer plays a skill, gain 'Elysian Grace' buff (Max 4 per turn).
-		/// <color=#919191>Forged in the light of the celestial realm, this blade grants divine power to those deemed worthy.</color>
+		/// <color=#919191>Elysian Grace - At 2 stacks, gain <color=#7B68EE>Celestial Connection</color> (if buff owner is Raphiel),
+		/// or <color=#C9A7F5>Celestial Blessing</color>.</color>
 		/// </summary>
         public static string Item_Equip_ElysianEdge = "ElysianEdge";
 		/// <summary>
@@ -207,7 +208,7 @@ namespace Raphi
 		/// When played from hand, discard all skills in hand and increase healing by &a.
 		/// For every 2 skills discarded, draw 1 additional skill next turn (Max 2).  
 		/// If at least 6 skills are discarded, draw 1 skill.  
-		/// If 8 skills are discarded, gain <color=#7B68EE>Celestial Connection</color>.
+		/// If 7 skills are discarded, gain <color=#7B68EE>Celestial Connection</color>.
 		/// Sheathe : Heal all allies by &b.
 		/// </summary>
         public static string Skill_HeavenlyRenovation = "HeavenlyRenovation";
