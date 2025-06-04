@@ -24,7 +24,7 @@ namespace Raphi
 
             foreach (var skill in allySkills)
             {
-                if (skill != null && skill.IsDamage && skill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Raphi_2) == null)
+                if (skill != null && skill.IsDamage && skill.ExtendedFind<Ex_Raphi_2>() == null)
                 {
                     Utils.AddExHeavenlyWrath(skill);
                 }

@@ -118,7 +118,7 @@ namespace Raphi
         public static string Buff_B_HeavensTouch = "B_HeavensTouch";
 		/// <summary>
 		/// Capricious Blessing
-		/// When played from hand, discard a random skill and draw 2 additional skills next turn.  
+		/// When played from hand, discard a random skill and draw 2 additional skills next turn (Max 2).  
 		/// Sheathe : Randomly activate one of the following 5 effects:  
 		/// 1. Draw skills equal to the cost of this skill (Max 2).  
 		/// 2. Restore Mana equal to the cost of this skill (Max 2).  
@@ -207,7 +207,7 @@ namespace Raphi
 		/// Heavenly Renovation
 		/// When played from hand, discard all skills in hand and increase healing by &a.
 		/// For every 2 skills discarded, draw 1 additional skill next turn (Max 2).  
-		/// If at least 6 skills are discarded, draw 1 skill.  
+		/// If at least 5 skills are discarded, draw 1 skill.  
 		/// If 7 skills are discarded, gain <color=#7B68EE>Celestial Connection</color>.
 		/// Sheathe : Heal all allies by &b.
 		/// </summary>

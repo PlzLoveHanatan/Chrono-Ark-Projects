@@ -24,7 +24,7 @@ namespace Raphi
 
             foreach (var skill in allySkills)
             {
-                if (skill != null && skill.IsHeal && skill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Raphi_1) == null)
+                if (skill != null && skill.IsHeal && skill.ExtendedFind<Ex_Raphi_1>() == null)
                 {
                     Utils.AddExHeavenlyGrace(skill);
                 }

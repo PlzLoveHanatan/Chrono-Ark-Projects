@@ -21,7 +21,7 @@ namespace Raphi
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             base.SkillUseSingle(SkillD, Targets);
-            BattleSystem.DelayInput(DrawAndDiscard());
+            BattleSystem.DelayInputAfter(DrawAndDiscard());
         }
 
         public IEnumerator DrawAndDiscard()
