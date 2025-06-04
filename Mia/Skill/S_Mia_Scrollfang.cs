@@ -29,12 +29,12 @@ namespace Mia
                 if (skillsInHand != null)
                 {
                     return base.DescExtended(desc)
-                        .Replace("&a", ((int)(BChar.GetStat.atk * 0.4f) * skillsInHand.Count).ToString());
+                        .Replace("&a", ((int)(BChar.GetStat.atk * 0.3f)).ToString());
                 }
             }
 
             return base.DescExtended(desc)
-            .Replace("&a", ((int)(BChar.GetStat.atk * 0.4f)).ToString());
+            .Replace("&a", ((int)(BChar.GetStat.atk * 0.3f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -51,7 +51,7 @@ namespace Mia
 
             Skill highestManaSkillInHand = skillsInHand.FirstOrDefault();
 
-            SkillBasePlus.Target_BaseDMG = (int)(BChar.GetStat.atk * 0.4f) * highestManaSkillInHand.AP;
+            SkillBasePlus.Target_BaseDMG = (int)(BChar.GetStat.atk * 0.3f) * highestManaSkillInHand.AP;
 
             highestManaSkillInHand.Delete(false);
         }

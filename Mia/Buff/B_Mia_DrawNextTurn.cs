@@ -15,6 +15,10 @@ namespace Mia
 {
     public class B_Mia_DrawNextTurn : Buff, IP_DrawNumChange, IP_PlayerTurn_1
     {
+        public override string DescExtended()
+        {
+            return base.DescExtended().Replace("&a", StackNum.ToString());
+        }
         public void DrawNumChange(int DrawNum, out int OutNum)
         {
             OutNum = DrawNum + StackNum;

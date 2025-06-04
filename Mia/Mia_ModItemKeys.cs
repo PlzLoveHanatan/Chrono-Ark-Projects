@@ -11,11 +11,12 @@ namespace Mia
         public static string Buff_B_Mia_BurstofFlavor_0 = "B_Mia_BurstofFlavor_0";
 		/// <summary>
 		/// Additional Draw
+		/// Draw &a additional skill(s) next turn.
 		/// </summary>
         public static string Buff_B_Mia_DrawNextTurn = "B_Mia_DrawNextTurn";
 		/// <summary>
 		/// Pawtience
-		/// At 2 stacks, gain <color=#FF0070>Savage Impulse</color> (if buff owner Mia),
+		/// At 2 stacks, gain <color=#FF0070>Savage Impulse</color> (if buff owner is Mia),
 		/// or <color=#FF4E00>Instinct Surge</color>.
 		/// </summary>
         public static string Buff_B_Mia_E_Meowpiercer = "B_Mia_E_Meowpiercer";
@@ -82,8 +83,11 @@ namespace Mia
         public static string SkillExtended_Ex_Mia_PersistentHunt = "Ex_Mia_PersistentHunt";
 		/// <summary>
 		/// Meowpiercer
-		/// All attacks inflict 'Pawcut' (<sprite=1> Base 105%).
-		/// Whenever discard occurs gain 'Pawtience' (Max 4 per turn).
+		/// All attacks inflict 'Pawcut'.
+		/// Whenever a discard occurs, gain 'Pawtience' (Max 4 per turn).
+		/// <color=#919191>Pawcut – Base chance: <sprite=1> 105%
+		/// Pawtience - At 2 stacks, gain <color=#FF0070>Savage Impulse</color> (if buff owner is Mia),
+		/// or <color=#FF4E00>Instinct Surge</color>. </color>
 		/// </summary>
         public static string Item_Equip_E_Mia_Meowpiercer = "E_Mia_Meowpiercer";
 		/// <summary>
@@ -104,10 +108,10 @@ namespace Mia
 		/// Obtain 3 Instinct Tonic.
 		/// When used, select one of the party members skills to apply a unique skill upgrade.
 		/// At the start of each turn, gain <color=#FF0070>Savage Impulse</color> (up to 3 stacks).
-		/// Level 2: Gain 5% Attack Power per discard (up to 25%).
+		/// Level 2: Gain 3% Attack Power per discard (up to 15%).
 		/// Level 3: Restore 1 Mana once per turn when 2 discards occur.
 		/// Level 4: Draw 1 skill once per turn when 2 discards occur.
-		/// Level 5: Gain 10% Critical Chance per discard (up to 50%).
+		/// Level 5: Gain 5% Critical Chance per discard (up to 25%).
 		/// Level 6: The first Sheathe effect occurs twice once per turn.
 		/// </summary>
         public static string Character_Mia = "Mia";

@@ -17,7 +17,7 @@ namespace Mia
     {
         public override void BuffStat()
         {
-            PlusStat.cri = 10 * StackNum;
+            PlusStat.cri = 5 * StackNum;
         }
     }
 }

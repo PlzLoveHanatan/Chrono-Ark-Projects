@@ -61,7 +61,7 @@ namespace Mia
                 skill.Delete(false);
             }
 
-            for (int i = 0; i < skillsInHand.Count / 6; i++)
+            for (int i = 0; i < skillsInHand.Count / 5; i++)
             {
                 BattleSystem.instance.AllyTeam.Draw();
             }

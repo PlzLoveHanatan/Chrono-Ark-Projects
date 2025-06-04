@@ -20,7 +20,7 @@ namespace Mia
     {
         public override void BuffStat()
         {
-            PlusPerStat.Damage = 5 * StackNum;
+            PlusPerStat.Damage = 3 * StackNum;
         }
     }
 }
