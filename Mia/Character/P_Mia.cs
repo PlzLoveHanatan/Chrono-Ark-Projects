@@ -53,7 +53,14 @@ namespace Mia
 
         public void Turn()
         {
+            var miaSheathe = ModItemKeys.Buff_B_Mia_SheatheTriggers;
+
             BChar.BuffAdd(ModItemKeys.Buff_B_Mia_SavageImpulse, BChar, false, 0, false, -1, false);
+
+            if (MyChar.LV >= 2 && BChar.BuffReturn(miaSheathe, false) == null)
+            {
+                BChar.BuffAdd(miaSheathe, BChar, false, 0, false, -1, false);
+            }
 
             if (MyChar.LV >= 6)
             {

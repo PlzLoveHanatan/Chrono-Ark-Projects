@@ -11,7 +11,7 @@ namespace Mia
         public static string Buff_B_Mia_BurstofFlavor_0 = "B_Mia_BurstofFlavor_0";
 		/// <summary>
 		/// Additional Draw
-		/// Draw &a additional skill(s) next turn.
+		/// At the start of next turn, draw &a additional skill(s).
 		/// </summary>
         public static string Buff_B_Mia_DrawNextTurn = "B_Mia_DrawNextTurn";
 		/// <summary>
