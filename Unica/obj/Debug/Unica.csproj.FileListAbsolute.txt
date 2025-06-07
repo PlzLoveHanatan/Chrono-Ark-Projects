@@ -1,8 +1,0 @@
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\bin\Debug\System.Core.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\obj\Debug\Unica.csproj.AssemblyReference.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\obj\Debug\Unica.csproj.CoreCompileInputs.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\obj\Debug\Unica.csproj.Up2Date
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\bin\Debug\Unica02272025213327.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\bin\Debug\Unica02272025213327.pdb
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\obj\Debug\Unica02272025213327.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Unica\obj\Debug\Unica02272025213327.pdb
