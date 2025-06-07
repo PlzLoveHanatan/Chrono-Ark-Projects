@@ -1,8 +1,0 @@
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\obj\Debug\Satanichia.csproj.AssemblyReference.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\obj\Debug\Satanichia.csproj.CoreCompileInputs.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\bin\Debug\System.Core.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\obj\Debug\Satanichia.csproj.Up2Date
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\bin\Debug\Satanichia05212025204613.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\bin\Debug\Satanichia05212025204613.pdb
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\obj\Debug\Satanichia05212025204613.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\Satanichia\obj\Debug\Satanichia05212025204613.pdb
