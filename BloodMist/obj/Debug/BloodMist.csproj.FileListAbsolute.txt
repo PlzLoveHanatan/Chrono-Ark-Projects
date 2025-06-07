@@ -1,8 +1,0 @@
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\bin\Debug\System.Core.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\obj\Debug\BloodMist.csproj.AssemblyReference.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\obj\Debug\BloodMist.csproj.CoreCompileInputs.cache
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\obj\Debug\BloodMist.csproj.Up2Date
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\bin\Debug\BloodMist03102025205422.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\bin\Debug\BloodMist03102025205422.pdb
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\obj\Debug\BloodMist03102025205422.dll
-D:\SteamLibrary\steamapps\common\Chrono Ark\Mod\Mod Projects\BloodMist\obj\Debug\BloodMist03102025205422.pdb
