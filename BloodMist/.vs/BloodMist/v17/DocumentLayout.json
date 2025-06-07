@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\BloodMist\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E7B8963B-6851-412C-B828-083A5498E29C}|BloodMist.csproj|d:\\steamlibrary\\steamapps\\common\\chrono ark\\mod\\mod projects\\bloodmist\\skill\\s_transcendence_main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7B8963B-6851-412C-B828-083A5498E29C}|BloodMist.csproj|solutionrelative:skill\\s_transcendence_main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "S_Transcendence_Main.cs",
+              "DocumentMoniker": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\BloodMist\\Skill\\S_Transcendence_Main.cs",
+              "RelativeDocumentMoniker": "Skill\\S_Transcendence_Main.cs",
+              "ToolTip": "D:\\SteamLibrary\\steamapps\\common\\Chrono Ark\\Mod\\Mod Projects\\BloodMist\\Skill\\S_Transcendence_Main.cs",
+              "RelativeToolTip": "Skill\\S_Transcendence_Main.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAArwCcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-10T17:36:34.785Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

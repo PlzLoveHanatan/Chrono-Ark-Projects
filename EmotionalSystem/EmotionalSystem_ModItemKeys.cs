@@ -224,7 +224,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_MusicalAddiction = "B_Abnormality_TechnologicalLv2_MusicalAddiction";
 		/// <summary>
-		/// Recharge
+		/// <color=#3CB371> Recharge</color>
 		/// Gain 1 Attack Power for this turn, whenever this character is restores HP (Max 3).
 		/// Restore 1 Mana if this character defeats an enemy. Only activates once per turn.
 		/// </summary>

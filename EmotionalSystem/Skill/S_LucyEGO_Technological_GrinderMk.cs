@@ -37,7 +37,6 @@ namespace EmotionalSystem
                     if (target.IsDead)
                     {
                         BattleSystem.instance.AllyTeam.AP += 1;
-                        BattleSystem.instance.AllyTeam.Draw();
                     }
                 }
             }

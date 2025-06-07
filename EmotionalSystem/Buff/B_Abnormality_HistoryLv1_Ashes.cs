@@ -27,7 +27,7 @@ namespace EmotionalSystem
         }
         public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
         {
-            if (SP.SkillData.IsDamage && SP.SkillData.Master == this.BChar && !SP.SkillData.PlusHit
+            if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar && !SP.SkillData.PlusHit
                 && hit != null && !hit.Info.Ally && !hit.Dummy)
             {
                 MasterAudio.PlaySound("Ashes", 100f, null, 0f, null, null, false, false);
