@@ -22,6 +22,12 @@ namespace XiaoLOR
 {
     public class XiaoLOR_Plugin : ChronoArkPlugin
     {
+        public const string modname = "XiaoLOR";
+
+        public const string version = "1.0";
+
+        public const string author = "Midana";
+        
         Harmony harmony = new Harmony("XiaoLOR");
 
         public override void Dispose()
