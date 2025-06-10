@@ -62,7 +62,7 @@ namespace XiaoLOR
 
         //    if (BChar.BuffReturn(buff, false) == null)
         //    {
-        //        BChar.BuffAdd(buff, this.BChar, false, 0, false, -1, false);
+        //        BChar.BuffAdd(buff, BChar, false, 0, false, -1, false);
         //    }
         //    else
         //    {
@@ -76,11 +76,11 @@ namespace XiaoLOR
             {
                 foreach (BattleEnemy battleEnemy in BattleSystem.instance.EnemyList)
                 {
-                    Utils.ApplyBurn(battleEnemy, this.BChar, 2);
+                    Utils.ApplyBurn(battleEnemy, BChar, 2);
 
                     if (BChar.EmotionLevel() >= 2)
                     {
-                        Utils.ApplyBurn(battleEnemy, this.BChar);
+                        Utils.ApplyBurn(battleEnemy, BChar);
                     }
                 }
             }
@@ -102,14 +102,14 @@ namespace XiaoLOR
 
         //public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
         //{
-        //    if (BChar.EmotionLevel() >= 1 && SP.SkillData.IsDamage && SP.SkillData.Master == this.BChar && !SP.SkillData.PlusHit
+        //    if (BChar.EmotionLevel() >= 1 && SP.SkillData.IsDamage && SP.SkillData.Master == BChar && !SP.SkillData.PlusHit
         //        && hit != null && !hit.Info.Ally && !hit.Dummy)
         //    {
-        //        Utils.ApplyBurn(hit, this.BChar);
+        //        Utils.ApplyBurn(hit, BChar);
 
         //        if (BChar.EmotionLevel() >= 5)
         //        {
-        //            Utils.ApplyBurn(hit, this.BChar);
+        //            Utils.ApplyBurn(hit, BChar);
         //        }
         //    }
         //}
@@ -122,12 +122,12 @@ namespace XiaoLOR
                 {
                     if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
                     {
-                        Utils.ApplyBurn(target, this.BChar);
+                        Utils.ApplyBurn(target, BChar);
                     }
 
                     if (BChar.EmotionLevel() >= 5)
                     {
-                        Utils.ApplyBurn(target, this.BChar);
+                        Utils.ApplyBurn(target, BChar);
                     }
                 }
             }
@@ -179,13 +179,13 @@ namespace XiaoLOR
                 MasterAudio.PlaySound("IronLotus", 100f, null, 0f, null, null, false, false);
             }
 
-            if (charEmotion.BChar == this.BChar && charEmotion.Level + 1 == 4)
+            if (charEmotion.BChar == BChar && charEmotion.Level + 1 == 4)
             {
                 MasterAudio.PlaySound("Roar", 100f, null, 0f, null, null, false, false);
-                BChar.BuffAdd(ModItemKeys.Buff_B_XiaoLOR_FuriousFireRendingtheSkies, this.BChar, false, 0, false, -1, false);
+                BChar.BuffAdd(ModItemKeys.Buff_B_XiaoLOR_FuriousFireRendingtheSkies, BChar, false, 0, false, -1, false);
             }
 
-            if (charEmotion.BChar == this.BChar && charEmotion.Level + 1 == 2)
+            if (charEmotion.BChar == BChar && charEmotion.Level + 1 == 2)
             {
                 var egoKeys = new[]
                 {
@@ -197,7 +197,7 @@ namespace XiaoLOR
 
                 foreach (var key in egoKeys)
                 {
-                    var skill = Skill.TempSkill(key, this.BChar);
+                    var skill = Skill.TempSkill(key, BChar);
                     if (skill != null)
                     {
                         EGO_System.instance?.AddEGOSkill(skill);
@@ -206,7 +206,7 @@ namespace XiaoLOR
                 }
 
                 MasterAudio.PlaySound("RoarEmotionalLevel", 100f, null, 0f, null, null, false, false);
-                BattleSystem.DelayInput(this.ChangeFix());
+                BattleSystem.DelayInput(ChangeFix());
             }
         }
         public IEnumerator ChangeFix()
@@ -218,7 +218,7 @@ namespace XiaoLOR
 
             var team = BattleSystem.instance.AllyTeam;
 
-            var fixedSkill = (this.BChar as BattleAlly)?.MyBasicSkill?.buttonData;
+            var fixedSkill = (BChar as BattleAlly)?.MyBasicSkill?.buttonData;
 
             if (fixedSkill?.MySkill != null && P_XiaoLOR.SkillsList.TryGetValue(fixedSkill.MySkill.KeyID, out var newSkillID2))
             {
