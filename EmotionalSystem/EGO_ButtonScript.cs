@@ -72,6 +72,18 @@ namespace EmotionalSystem
                     }
                 }
             }
+
+            if (interactable && BattleSystem.instance.ActWindow.CanAnyMove && Utils.EGOButtonHotkey && Input.GetKeyDown(KeyCode.S))
+            {
+                if (EGO.egoActive)
+                {
+                    EGO.SwitchToNormal();
+                }
+                else
+                {
+                    EGO.SwitchToEGO();
+                }
+            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)

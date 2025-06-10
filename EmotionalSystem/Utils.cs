@@ -17,7 +17,9 @@ namespace EmotionalSystem
 {
     public static class Utils
     {
-        public static bool UseParticle => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("UseParticle").Value;
+        public static bool UseParticle => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("Use Particle").Value;
+
+        public static bool EGOButtonHotkey => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("EGO Button Hotkey").Value;
 
         public static GameObject EmotionTrajectoryPos;
         public static GameObject EmotionTrajectoryNeg;

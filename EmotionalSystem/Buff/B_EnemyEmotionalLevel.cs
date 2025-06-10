@@ -21,7 +21,7 @@ namespace EmotionalSystem
 {
     public class B_EnemyEmotionalLevel : Buff, IP_Awake, IP_DamageTake, IP_DealDamage, IP_Heal_User, IP_EmotionLvUpBefore, IP_PlayerTurn, IP_SomeOneDead, IP_SkillUse_User
     {
-        public static bool EnemyEmotionOn => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("EnemyEmotionOn").Value;
+        public static bool EnemyEmotionOn => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("Enemy Emotion On").Value;
 
         public CharEmotion Emotion;
 
@@ -152,7 +152,7 @@ namespace EmotionalSystem
                         break;
                     case 5:
                         int RestoreHP = (int)(BChar.GetStat.maxhp * 0.2f);
-                        int healAmount = Mathf.Min(50, RestoreHP);
+                        int healAmount = Mathf.Min(30, RestoreHP);
                         var buff = BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
                         (buff as B_EnemyEmotionalLevel_Light).eternal = true;
                         BChar.Heal(BattleSystem.instance.DummyChar, healAmount, false, true, null);

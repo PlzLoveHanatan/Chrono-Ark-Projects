@@ -701,7 +701,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_MusicalAddiction_Neg = "S_Abnormality_TechnologicalLv2_MusicalAddiction_Neg";
 		/// <summary>
-		/// Recharge
+		/// <color=#3CB371>Recharge</color>
 		/// <color=#919191>However, the limbs were equipped with sharp instruments instead of cleaning supplies.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_Recharge_Pos = "S_Abnormality_TechnologicalLv2_Recharge_Pos";
@@ -862,6 +862,51 @@ namespace EmotionalSystem
 		/// <summary>
 		/// Korean:
 		/// English:
+		/// No E.G.O. skills are available.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EGO_NoEGO => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_NoEGO");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Press to switch to E.G.O. skills.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EGO_SwitchEGO => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchEGO");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Press to switch to E.G.O. skills or press [S].
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EGO_SwitchEGOHotkey => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchEGOHotkey");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Press to switch back to your hand.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EGO_SwitchHand => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchHand");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Press to switch back to your hand or press [S].
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EGO_SwitchHandHotkey => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchHandHotkey");
+		/// <summary>
+		/// Korean:
+		/// English:
 		/// Can be used after
 		/// Japanese:
 		/// Chinese:
@@ -886,24 +931,6 @@ namespace EmotionalSystem
 		/// Chinese-TW:
 		/// </summary>
         public static string EgoOnce => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoOnce");
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Removed after attack.
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string LighBuff => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("LighBuff");
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Removed for this turn.
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string LighBuff_0 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("LighBuff_0");
 
     }
 }
