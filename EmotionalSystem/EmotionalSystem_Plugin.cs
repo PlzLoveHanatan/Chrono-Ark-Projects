@@ -20,6 +20,12 @@ namespace EmotionalSystem
 {
     public class EmotionalSystem_Plugin : ChronoArkPlugin
     {
+        public const string modname = "EmotionalSystem";
+
+        public const string version = "1.0";
+
+        public const string author = "Midana";
+
         [HarmonyPatch(typeof(BattleSystem), nameof(BattleSystem.EnemyTurn))]
         public class EndTurnPatch
         {

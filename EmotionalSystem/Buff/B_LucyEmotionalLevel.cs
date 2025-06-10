@@ -306,7 +306,6 @@ namespace EmotionalSystem
 
                 DynamicAbnormalityList.RemoveAll(x => x.Name == selectedSkill);
 
-
                 if (selectedSkill == ModItemKeys.Skill_S_Abnormality_HistoryLv2_WorkerBee_Neg || selectedSkill == ModItemKeys.Skill_S_Abnormality_HistoryLv3_BarrierofThorns_Pos)
                 {
                     Mybutton.Myskill.isExcept = true;

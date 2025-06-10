@@ -326,7 +326,7 @@ namespace EmotionalSystem
 		/// <summary>
 		/// Light
 		/// Attack damage increases by &a%.
-		/// Removed after attack.
+		/// &b.
 		/// </summary>
         public static string Buff_B_EnemyEmotionalLevel_Light = "B_EnemyEmotionalLevel_Light";
 		/// <summary>
@@ -886,6 +886,24 @@ namespace EmotionalSystem
 		/// Chinese-TW:
 		/// </summary>
         public static string EgoOnce => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoOnce");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Removed after attack.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string LighBuff => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("LighBuff");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Removed for this turn.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string LighBuff_0 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("LighBuff_0");
 
     }
 }

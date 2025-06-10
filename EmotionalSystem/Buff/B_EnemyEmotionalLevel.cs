@@ -79,6 +79,7 @@ namespace EmotionalSystem
         {
             EmotionsPerTurn = true;
         }
+
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
             if (SkillD.Master == BChar && SkillD.IsDamage && EmotionsPerTurn)
@@ -90,8 +91,6 @@ namespace EmotionalSystem
                 BChar.GetNegEmotion();
             }
         }
-
-
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
@@ -142,14 +141,9 @@ namespace EmotionalSystem
             {
                 switch (nextLevel)
                 {
-                    case 1:
-                        //    BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Dice, BChar);
-                        //    BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
-                        break;
                     case 2:
                         EmotionsPerTurn = false;
-                        break;
-                    case 3:
+                        BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
                         break;
                     case 4:
                         BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Dice, BChar);

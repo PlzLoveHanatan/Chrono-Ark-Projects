@@ -70,7 +70,7 @@ namespace EmotionalSystem
             { GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
             { GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
             { GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Stress, ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment} },
-            { GDEItemKeys.Enemy_Boss_Golem, new List<string> {  } },
+            { GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment } },
             { GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> {   } },
             { GDEItemKeys.Enemy_MBoss2_0, new List<string> { } },
             { GDEItemKeys.Enemy_S2_Joker, new List<string> { } },

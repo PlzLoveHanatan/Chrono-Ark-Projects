@@ -11,16 +11,17 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.ServiceModel.Configuration;
 namespace EmotionalSystem
 {
-	/// <summary>
-	/// Light
-	/// Attack damage or heal amount increases by &a.
-	/// Last until the next attack or heal.
-	/// </summary>
+    /// <summary>
+    /// Light
+    /// Attack damage or heal amount increases by &a.
+    /// Last until the next attack or heal.
+    /// </summary>
     public class B_EnemyEmotionalLevel_Light : Buff, IP_DamageChange
     {
-		public bool eternal = false;
+        public bool eternal = false;
 
         public const float ratio = 30;
 
