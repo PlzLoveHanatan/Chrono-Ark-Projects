@@ -29,8 +29,9 @@ namespace XiaoLOR
     /// XiaoLOR
     /// Passive:
     /// </summary>
-    public class P_XiaoLOR : Passive_Char, IP_PlayerTurn, IP_EmotionLvUpBefore, IP_Draw, IP_SkillUse_BasicSkill, IP_DamageChange_sumoperation, IP_SkillUse_User, IP_BattleEndRewardChange
+    public class P_XiaoLOR : Passive_Char, IP_PlayerTurn, IP_EmotionLvUpBefore, IP_Draw, IP_SkillUse_BasicSkill, IP_DamageChange_sumoperation, IP_SkillUse_User, IP_BattleEndRewardChange, IP_BattleStart_Ones
     {
+        private bool LastFight;
         public static readonly Dictionary<string, string> SkillsList = new Dictionary<string, string>
         {
             { ModItemKeys.Skill_S_XiaoLORLv1_FrontalAssault, ModItemKeys.Skill_S_XiaoLORLv2_SinglePointStab },
@@ -52,23 +53,20 @@ namespace XiaoLOR
         }
         public override void FixedUpdate()
         {
-            PlusStat.DeadImmune = MyChar.LV * 5 - 5; /*Math.Min(15, MyChar.LV * 5);*/
+            PlusStat.DeadImmune = MyChar.LV * 5 - 5;
         }
-
-        //public void BattleStart(BattleSystem Ins)
-        //{
-        //    var buff = ModItemKeys.Buff_B_XiaoLOR_Faint;
-        //    var buffStat = BChar.BuffReturn(buff, false) as B_XiaoLOR_Faint;
-
-        //    if (BChar.BuffReturn(buff, false) == null)
-        //    {
-        //        BChar.BuffAdd(buff, BChar, false, 0, false, -1, false);
-        //    }
-        //    else
-        //    {
-        //        buffStat.BuffStat();
-        //    }
-        //}
+        public void BattleStart(BattleSystem Ins)
+        {        
+            if (PlayData.BattleQueue == GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
+            {
+                LastFight = true;
+                MasterAudio.StopBus("BGM");
+                //MasterAudio.StopBus("BattleBGM");
+                MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
+                MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, null, false, false);
+                MasterAudio.PlaySound("IronLotus", 100f, null, 0f, null, null, false, false);
+            }
+        }
 
         public void Turn()
         {
@@ -99,20 +97,6 @@ namespace XiaoLOR
                 //MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, completionCallback, true, true);
             }
         }
-
-        //public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-        //{
-        //    if (BChar.EmotionLevel() >= 1 && SP.SkillData.IsDamage && SP.SkillData.Master == BChar && !SP.SkillData.PlusHit
-        //        && hit != null && !hit.Info.Ally && !hit.Dummy)
-        //    {
-        //        Utils.ApplyBurn(hit, BChar);
-
-        //        if (BChar.EmotionLevel() >= 5)
-        //        {
-        //            Utils.ApplyBurn(hit, BChar);
-        //        }
-        //    }
-        //}
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
@@ -161,16 +145,7 @@ namespace XiaoLOR
         // Note: this is before level up
         public void EmotionLvUp(CharEmotion charEmotion, int nextLevel)
         {
-            
-            if (PlayData.BattleQueue == GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
-            {
-                MasterAudio.StopBus("BGM");
-                //MasterAudio.StopBus("BattleBGM");
-                MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
-                MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, null, false, false);
-                MasterAudio.PlaySound("IronLotus", 100f, null, 0f, null, null, false, false);
-            }
-            else if (charEmotion.BChar == BChar && charEmotion.Level + 1 == 4 && XiaoUtils.IronLotusSong)
+            if (charEmotion.BChar == BChar && charEmotion.Level + 1 == 4 && XiaoUtils.IronLotusSong && !LastFight)
             {
                 MasterAudio.StopBus("BGM");
                 //MasterAudio.StopBus("BattleBGM");
@@ -262,6 +237,6 @@ namespace XiaoLOR
             }
 
             yield break;
-        }
+        }       
     }
 }

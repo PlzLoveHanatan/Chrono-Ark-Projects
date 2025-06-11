@@ -17,6 +17,8 @@ using EmotionalSystem;
 using System.Diagnostics.Eventing.Reader;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace XiaoLOR
 {
@@ -27,7 +29,7 @@ namespace XiaoLOR
         public const string version = "1.0";
 
         public const string author = "Midana";
-        
+
         Harmony harmony = new Harmony("XiaoLOR");
 
         public override void Dispose()
@@ -49,6 +51,17 @@ namespace XiaoLOR
                 Debug.Log("XiaoLOR: Patch Catch: " + e.ToString());
             }
         }
+        public static bool XiaoInParty()
+        {
+            foreach (var character in PlayData.TSavedata.Party)
+            {
+                if (character.KeyData == ModItemKeys.Character_XiaoLOR)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         [HarmonyPatch(typeof(BattleSystem))]
         [HarmonyPatch(nameof(BattleSystem.CustomBGM))]
@@ -57,54 +70,21 @@ namespace XiaoLOR
             [HarmonyPostfix]
             private static void Postfix()
             {
+                Debug.Log("[BGMPatch] Called BattleSystem.CustomBGM postfix");
+
+                if (!XiaoInParty() && !XiaoUtils.IronLotusSong)
+                {
+                    Debug.Log("[BGMPatch] Xiao is not in party and IronLotusSong is false — skipping.");
+                    return;
+                }
+
                 if (PlayData.BattleQueue == GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
                 {
+                    Debug.Log("[BGMPatch] Stopping default boss music due to IronLotusSong override.");
                     MasterAudio.StopAllOfSound("ProgramMaster_Boss_Theme_Phase1_(Intro)");
                     MasterAudio.StopAllOfSound("ProgramMaster_Boss_Theme_Phase1_(Loop)");
                     MasterAudio.StopAllOfSound("Challenge_Loop");
                 }
-            }
-        }
-
-        [HarmonyPatch(typeof(P_ProgramMaster))]
-        public class MoreBGMPatch
-        {
-            [HarmonyPatch(nameof(P_ProgramMaster.Phase2Start))]
-            [HarmonyPrefix]
-            private static bool Prefix(P_ProgramMaster __instance)
-            {
-                BattleSystem.DelayInput(BattleSystem.instance.ForceAction(
-                        Skill.TempSkill(GDEItemKeys.Skill_S_ProgramMaster2_Main, __instance.BChar, null),
-                        BattleSystem.instance.AllyTeam.AliveChars[0],
-                        false, false, false, null));
-
-                return false;
-            }
-
-            private static readonly FieldInfo selectTargetField = AccessTools.Field(typeof(P_ProgramMaster), "SelectTarget");
-
-            [HarmonyPatch(nameof(P_ProgramMaster.Select))]
-            [HarmonyPrefix]
-            public static bool Prefix(P_ProgramMaster __instance, SkillButton Mybutton)
-            {
-                selectTargetField.SetValue(__instance, Mybutton.Myskill.Master);
-
-                return false;
-            }
-        }
-
-        [HarmonyPatch(typeof(P_ProgramMaster_2nd))]
-        [HarmonyPatch(nameof(P_ProgramMaster_2nd.Init))]
-        class MoreMoreBGMPatch
-        {
-            static bool Prefix(P_ProgramMaster_2nd __instance)
-            {
-                var baseInit = typeof(Buff).GetMethod("Init", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
-                baseInit?.Invoke(__instance, null);
-
-                __instance.main = ((__instance.BChar as BattleEnemy).Ai as AI_ProgramMaster2);
-
-                return false;
             }
         }
     }
