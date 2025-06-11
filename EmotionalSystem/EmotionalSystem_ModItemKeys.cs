@@ -326,7 +326,7 @@ namespace EmotionalSystem
 		/// <summary>
 		/// Light
 		/// Attack damage increases by &a%.
-		/// &b.
+		/// Removed after attack.
 		/// </summary>
         public static string Buff_B_EnemyEmotionalLevel_Light = "B_EnemyEmotionalLevel_Light";
 		/// <summary>
@@ -772,7 +772,7 @@ namespace EmotionalSystem
 		/// <summary>
 		/// <color=#ffc500>Grinder Mk. 5-2</color>
 		/// Inflict 10 <color=red>Bleed</color>.
-		/// If this skill defeat an enemy, restore 1 Mana and Draw 1 skill.
+		/// If this skill defeat an enemy restore 1 Mana.
 		/// </summary>
         public static string Skill_S_LucyEGO_Technological_GrinderMk = "S_LucyEGO_Technological_GrinderMk";
 		/// <summary>

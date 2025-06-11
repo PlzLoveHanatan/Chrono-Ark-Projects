@@ -17,7 +17,7 @@ namespace EmotionalSystem
             }
         }
 
-        public static FloorCode Floor => (FloorCode)ModManager.getModInfo("EmotionalSystem").GetSetting<DropdownSetting>("LibraryFloor").Value;
+        public static FloorCode Floor => (FloorCode)ModManager.getModInfo("EmotionalSystem").GetSetting<DropdownSetting>("Library Floor").Value;
 
         public static Dictionary<FloorCode, FloorInfo> Floors = new Dictionary<FloorCode, FloorInfo>
         {

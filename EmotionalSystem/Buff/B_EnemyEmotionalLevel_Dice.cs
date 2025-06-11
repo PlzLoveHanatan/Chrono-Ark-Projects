@@ -61,7 +61,7 @@ namespace EmotionalSystem
                 }
                 else if (enemy.Boss)
                 { // predefined action for undefined bosses (likely mod bosses)
-                    skill = Skill.TempSkill(ModItemKeys.Skill_S_Abnormality_HistoryLv1_Ashes_Pos, BChar, BChar.MyTeam);
+                    skill = Skill.TempSkill(GDEItemKeys.Skill_S_Shotgun_1, BChar, BChar.MyTeam);
                 }
                 else
                 { // random action for undefined regular enemies
