@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -11,11 +11,12 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.IO;
 namespace Aqua
 {
-	/// <summary>
-	/// Aqua-Grade Purification
-	/// </summary>
+    /// <summary>
+    /// Aqua-Grade Purification
+    /// </summary>
     public class S_Aqua_AquaGradePurification : Skill_Extended, IP_ChangeDamageState
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)

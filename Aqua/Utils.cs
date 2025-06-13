@@ -91,12 +91,22 @@ namespace Aqua
             string path2 = ModManager.getModInfo("Aqua").assetInfo.ImageFromFile(path);
             AddressableLoadManager.LoadAsyncAction(path2, AddressableLoadManager.ManageType.None, collback);
         }
+
         public static T GetAssets<T>(string path, string assetBundlePatch = null) where T : UnityEngine.Object
         {
             var mod = ModManager.getModInfo("Aqua");
             if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
             var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
             return AddressableLoadManager.LoadAddressableAsset<T>(address);
+        }
+
+        public static T GetAssetsAsync<T>(string path, string assetBundlePatch = null,
+            AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage) where T : UnityEngine.Object
+        {
+            var mod = ModManager.getModInfo("Aqua");
+            if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
+            var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
+            return AddressableLoadManager.LoadAsyncCompletion<T>(address, type);
         }
         public static GameObject creatGameObject(string name, Transform parent)
         {

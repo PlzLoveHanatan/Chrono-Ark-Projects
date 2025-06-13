@@ -22,10 +22,22 @@ namespace Aqua
     public class S_Aqua_PartyTrick : Skill_Extended, IP_DamageChange
     {
         private bool Vanish = true;
+
+
         public override void Init()
         {
             OnePassive = true;
+
+            if (!SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_H")) return;
+            {
+                GDESkillData gdeskillData = new GDESkillData(MySkill.MySkill.KeyID);
+
+                MySkill.Init(gdeskillData, BChar, BChar.MyTeam);
+
+                MySkill.MySkill.PlusSkillView = ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_H;
+            }
         }
+
 
         public override string DescExtended(string desc)
         {
@@ -41,6 +53,17 @@ namespace Aqua
             ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill,
             ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant,
             ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket,
+        };
+        
+        private readonly List<string> AquaRandomSkillSelectionH = new List<string>
+        {
+            ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_H,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty_H,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick_H,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick_H,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill_H,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant_H,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket_H,
         };
 
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
@@ -74,11 +97,22 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            List<string> aquaSkills = new List<string>();
-            aquaSkills.AddRange(AquaRandomSkillSelection);
+            if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_H"))
+            {
+                List<string> aquaSkillsH = new List<string>();
+                aquaSkillsH.AddRange(AquaRandomSkillSelectionH);
 
-            Skill randomSkil = Skill.TempSkill(aquaSkills.Random(this.BChar.GetRandomClass().Main), this.MySkill.Master, this.MySkill.Master.MyTeam);
-            BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { randomSkil }, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+                Skill randomSkil = Skill.TempSkill(aquaSkillsH.Random(this.BChar.GetRandomClass().Main), this.MySkill.Master, this.MySkill.Master.MyTeam);
+                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { randomSkil }, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+            }
+            else
+            {
+                List<string> aquaSkills = new List<string>();
+                aquaSkills.AddRange(AquaRandomSkillSelection);
+
+                Skill randomSkil = Skill.TempSkill(aquaSkills.Random(this.BChar.GetRandomClass().Main), this.MySkill.Master, this.MySkill.Master.MyTeam);
+                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { randomSkil }, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+            }
         }
 
         public void Selection(SkillButton Mybutton)
@@ -94,7 +128,7 @@ namespace Aqua
             var allTargets = allies.Concat(enemies).ToList();
             var stun = GDEItemKeys.Buff_B_Common_Rest;
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_H)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -114,7 +148,7 @@ namespace Aqua
                 }
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty_H)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -127,7 +161,7 @@ namespace Aqua
                 }
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick_H)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -144,7 +178,7 @@ namespace Aqua
                 int result = DamageChange(dummySkill, dummyTarget, dummyDamage, ref dummyCri, false);
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick_H)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -163,7 +197,7 @@ namespace Aqua
                 BChar.ParticleOut(Telekinesis, randomTarget);
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill_H)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -185,7 +219,7 @@ namespace Aqua
                 }
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant_H)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -195,7 +229,7 @@ namespace Aqua
                 InventoryManager.Reward(InventoryManager.RewardKey(GDEItemKeys.Reward_R_GetPotion, false));
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket)
+            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket_H)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
