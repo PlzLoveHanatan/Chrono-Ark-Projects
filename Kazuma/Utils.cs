@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
@@ -9,8 +10,11 @@ namespace Kazuma
 {
     public static class Utils
     {
-        public static readonly HashSet<string> FemaleEnemy = new HashSet<string>
+        public static int Luck;
+
+        public static readonly List<string> FemaleEnemy = new List<string>
         {
+            GDEItemKeys.Enemy_Sandbag,
             GDEItemKeys.Enemy_S1_Pharos_Healer,
             GDEItemKeys.Enemy_S1_Maid,
             GDEItemKeys.Enemy_S1_LittleMaid,

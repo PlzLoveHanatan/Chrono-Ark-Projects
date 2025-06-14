@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Kazuma06112025181508</AssemblyName>
+    <AssemblyName>Kazuma06142025145721</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,14 +405,17 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Kazuma_ModDefinition.cs" />
     <Compile Include="Kazuma_ModItemKeys.cs" />
     <Compile Include="Kazuma_Plugin.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="Buff\B_Kazuma_Luck.cs" />
     <Compile Include="Character\P_Kazuma.cs" />
+    <Compile Include="Item_Consume\Item_Kazuma_Panties_01_Standart.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="Skill\S_Kazuma_Steal.cs" />
     <Compile Include="Skill\S_Kazuma_Test.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
