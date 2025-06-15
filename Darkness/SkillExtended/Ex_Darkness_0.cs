@@ -13,11 +13,12 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Darkness
 {
-	/// <summary>
-	/// Clumsy Slash
-	/// </summary>
-    public class S_Darkness_ClumsySlash : Skill_Extended
+    public class Ex_Darkness_0 : Skill_Extended
     {
+        public override string DescExtended(string desc)
+        {
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp)).ToString());
+        }
         public override void Init()
         {
             base.Init();
@@ -27,24 +28,23 @@ namespace Darkness
 
         public override void FixedUpdate()
         {
-            if (MySkill.BasicSkill)
-            {
-                MySkill.APChange = -1;
-            }
             if (BChar.BarrierHP >= 20)
             {
-                MySkill.MySkill.NODOD = true;
+                MySkill.APChange = -1;
                 base.SkillParticleOn();
-                
+
                 return;
             }
 
             base.SkillParticleOff();
         }
+        public override bool CanSkillEnforce(Skill MainSkill)
+        {
+            return MainSkill.AP >= 2;
+        }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash, BChar, BChar.MyTeam);
-            BattleSystem.instance.AllyTeam.Add(skill, true);
+            BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp);
         }
     }
 }

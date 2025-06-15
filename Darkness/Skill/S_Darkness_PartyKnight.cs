@@ -20,12 +20,12 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", (BChar.GetStat.maxhp / 3).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.3f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            int barrierHP = (int)(BChar.GetStat.maxhp / 3);
+            int barrierHP = (int)(BChar.GetStat.maxhp * 0.3f);
             Targets[0].BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
 
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_PartyKnight, this.BChar, this.BChar.MyTeam);

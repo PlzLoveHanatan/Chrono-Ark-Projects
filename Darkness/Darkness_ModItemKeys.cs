@@ -77,6 +77,11 @@ namespace Darkness
 		/// </summary>
         public static string Character_Darkness = "Darkness";
 		/// <summary>
+		/// Cost reduced by 1 if you have 20 or more barrier remaining. Create a party barrier (&a) equal <color=#FF7C34>(Max HP)</color>.
+		/// <sprite name="비용2"><sprite name="이하">
+		/// </summary>
+        public static string SkillExtended_Ex_Darkness_0 = "Ex_Darkness_0";
+		/// <summary>
 		/// Busty Taunt
 		/// <color=#919191>Can only target Darkness.
 		/// Removed when this character attacks Darkness.</color>
@@ -112,13 +117,15 @@ namespace Darkness
         public static string SkillEffect_SE_T_S_Darkness_SideSlash = "SE_T_S_Darkness_SideSlash";
 		/// <summary>
 		/// Clumsy Slash
+		/// Cost reduced by 1 if this skill is fixed ability.
+		/// This skill always lands if you have 20 or more barrier remaining.
 		/// Create 'Side Slash' in your hand.
 		/// </summary>
         public static string Skill_S_Darkness_ClumsySlash = "S_Darkness_ClumsySlash";
 		/// <summary>
 		/// Crusader Domination
 		/// This skill always lands against targets with a Weakening<sprite=0> debuff.
-		/// If you have 20 or more barrier remaining, apply an additional Destroy Weapon debuff, apply 'Hit Me Harder' to all target's.
+		/// If you have 20 or more barrier remaining, apply an additional Destroy Weapon debuff and 'Hit Me Harder' to all target's.
 		/// </summary>
         public static string Skill_S_Darkness_CrusaderDomination = "S_Darkness_CrusaderDomination";
 		/// <summary>
@@ -146,7 +153,7 @@ namespace Darkness
         public static string Skill_S_Darkness_LastStand = "S_Darkness_LastStand";
 		/// <summary>
 		/// Battle Prep
-		/// Draw 3 skills and create a party barrier (&a) equal <color=#FF7C34>(Darkness Max HP / 2)</color>.
+		/// Draw 3 skills and create a party barrier (&a) equal <color=#FF7C34>(Darkness Max HP *0.5)</color>.
 		/// If Darkness is fainted, do not create barrier.
 		/// </summary>
         public static string Skill_S_Darkness_LucyDraw = "S_Darkness_LucyDraw";
@@ -158,7 +165,7 @@ namespace Darkness
         public static string Skill_S_Darkness_MasochistsCourage = "S_Darkness_MasochistsCourage";
 		/// <summary>
 		/// Party Knight
-		/// Apply &a barrier <color=#FF7C34>(Max HP / 3)</color> and remove 1 random debuff.
+		/// Apply &a barrier <color=#FF7C34>(Max HP * 0.3)</color> and remove 1 random debuff.
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Darkness_PartyKnight = "S_Darkness_PartyKnight";
@@ -182,17 +189,23 @@ namespace Darkness
         public static string Skill_S_Darkness_Rare_UnbreakableWill = "S_Darkness_Rare_UnbreakableWill";
 		/// <summary>
 		/// Shield of Faith
-		/// Create a party barrier (&a) equal user's Maximum Health and apply 'Busty Taunt' to all enemies.
+		/// Create a party barrier (&a) equal <color=#FF7C34>(Max HP * 0.6)</color> and apply 'Busty Taunt' to all enemies.
 		/// </summary>
         public static string Skill_S_Darkness_ShieldofFaith = "S_Darkness_ShieldofFaith";
 		/// <summary>
 		/// Side Slash
+		/// This skill always lands if you have 20 or more barrier remaining.
 		/// </summary>
         public static string Skill_S_Darkness_SideSlash = "S_Darkness_SideSlash";
 		/// <summary>
 		/// Stubborn Knight (KonoSuba Edition)
 		/// </summary>
         public static string Buff_S_Darkness_StubbornKnight = "S_Darkness_StubbornKnight";
+		/// <summary>
+		/// If you have 20 or more barrier recast this skill.
+		/// <sprite name="비용2"><sprite name="이하">
+		/// </summary>
+        public static string SkillExtended_Ex_Darkness_1 = "Ex_Darkness_1";
 
     }
 

@@ -20,7 +20,7 @@ namespace Darkness
     {
         public override string DescExtended()
         {
-            return base.DescExtended().Replace("&a", (BChar.GetStat.maxhp * 0.7f).ToString());
+            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.maxhp * 0.7f)).ToString());
         }
 
         public void Turn()

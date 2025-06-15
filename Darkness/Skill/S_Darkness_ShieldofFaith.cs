@@ -21,11 +21,11 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", BChar.GetStat.maxhp.ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.6f)).ToString());
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            BChar.MyTeam.partybarrier.BarrierHP += BChar.GetStat.maxhp;
+            BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.6f);
 
             foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
             {

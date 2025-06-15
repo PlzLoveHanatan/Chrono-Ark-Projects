@@ -14,20 +14,21 @@ using Debug = UnityEngine.Debug;
 namespace Darkness
 {
 	/// <summary>
-	/// Clumsy Slash
+	/// Side Slash
+	/// This skill always lands if you have 20 or more barrier remaining.
 	/// </summary>
-    public class S_Darkness_ClumsySlash : Skill_Extended
+    public class S_Darkness_SideSlash : Skill_Extended
     {
         public override void Init()
         {
             base.Init();
-            OnePassive = true;
             this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
         }
 
         public override void FixedUpdate()
         {
-            if (MySkill.BasicSkill)
+            OnePassive = true;
+            if (MySkill.MySkill.Basic)
             {
                 MySkill.APChange = -1;
             }
@@ -35,16 +36,11 @@ namespace Darkness
             {
                 MySkill.MySkill.NODOD = true;
                 base.SkillParticleOn();
-                
+
                 return;
             }
 
             base.SkillParticleOff();
-        }
-        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-        {
-            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash, BChar, BChar.MyTeam);
-            BattleSystem.instance.AllyTeam.Add(skill, true);
         }
     }
 }

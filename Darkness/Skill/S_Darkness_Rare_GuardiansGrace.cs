@@ -26,7 +26,7 @@ namespace Darkness
         public override void Init()
         {
             base.Init();
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
         }
 
         public override void FixedUpdate()

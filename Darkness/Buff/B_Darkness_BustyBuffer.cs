@@ -12,6 +12,7 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using System.Threading;
+using System.Security.Cryptography;
 namespace Darkness
 {
     /// <summary>
@@ -21,7 +22,7 @@ namespace Darkness
     {
         public override string DescExtended()
         {
-            return base.DescExtended().Replace("&a", (base.Usestate_L.GetStat.maxhp * 0.25f).ToString()).ToString();
+            return base.DescExtended().Replace("&a", ((int)(Usestate_F.GetStat.maxhp * 0.25f)).ToString());
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)

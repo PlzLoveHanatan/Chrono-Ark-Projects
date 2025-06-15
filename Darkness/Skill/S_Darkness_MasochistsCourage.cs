@@ -21,7 +21,7 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", (BChar.GetStat.maxhp * 0.3f).ToString()).Replace("&b", (BChar.GetStat.maxhp * 0.4f).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.3)).ToString()).Replace("&b", ((int)(BChar.GetStat.maxhp * 0.4)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
