@@ -14,23 +14,23 @@ using Debug = UnityEngine.Debug;
 namespace Darkness
 {
 	/// <summary>
-	/// Side Slash
-	/// This skill always lands if you have 20 or more barrier remaining.
+	/// Knight's Resolve
+	/// Cost reduced by 1 if this skill is a fixed ability.
 	/// </summary>
-    public class S_Darkness_SideSlash : Skill_Extended
+    public class S_Darkness_KnightsResolve : Skill_Extended
     {
         public override void Init()
         {
             base.Init();
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            OnePassive = true;
+            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
         }
 
         public override void FixedUpdate()
         {
-            OnePassive = true;
-            if (BChar.BarrierHP >= 15)
+            if (MySkill.BasicSkill)
             {
-                MySkill.MySkill.NODOD = true;
+                MySkill.APChange = -1;
                 base.SkillParticleOn();
 
                 return;

@@ -19,18 +19,45 @@ namespace Darkness
         public override void Init()
         {
             base.Init();
-            this.OnePassive = true;
+            OnePassive = true;
+            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
         }
+
+        public override void FixedUpdate()
+        {
+            if (BChar.BarrierHP >= 15)
+            {
+                base.SkillParticleOn();
+                return;
+            }
+            base.SkillParticleOff();
+        }
+
         public override bool CanSkillEnforce(Skill MainSkill)
         {
             return MainSkill.AP >= 2;
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (BChar.BarrierHP >= 20 && SkillD.Master == BChar)
+            if (BChar.BarrierHP >= 15 && SkillD.Master == BChar)
             {
-                BattleSystem.DelayInputAfter(BattleSystem.instance.SkillRandomUseIenum(SkillD.Master, SkillD.CloneSkill(true, SkillD.Master, null, false), false, false, false));
+                Skill cloneSkill = MySkill.CloneSkill(true, null, null, true);
+                BattleSystem.DelayInputAfter(AdditionalAttack(cloneSkill, Targets[0]));
             }
+        }
+
+        public IEnumerator AdditionalAttack(Skill AttackSkill, BattleChar Target)
+        {
+            yield return new WaitForSeconds(0.2f);
+            bool AdditionalHit = true;
+            if (Target.IsDead || !AdditionalHit) yield break;
+
+            BChar.ParticleOut(AttackSkill, Target);
+
+            AdditionalHit = false;
+
+            yield break;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Darkness
     /// </summary>
     public class B_Darkness_Armorgasm : Buff, IP_DamageTake
     {
+        private int StatGain;
         public override void Init()
         {
             if (BChar.Info.LV >= 2)
@@ -26,8 +27,9 @@ namespace Darkness
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
-            if (Dmg > 0)
+            if (Dmg > 0 && StatGain < 5)
             {
+                StatGain++;
                 PlusStat.def += 5;
                 PlusStat.DeadImmune += 5;
             }

@@ -22,13 +22,13 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            var allies = BattleSystem.instance.AllyTeam.AliveChars;
-            var aliveDarkness = allies.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Darkness);
-            if (BattleSystem.instance != null)
+            foreach (var character in PlayData.TSavedata.Party)
             {
-                return base.DescExtended(desc).Replace("&a", ((int)(aliveDarkness.GetStat.maxhp * 0.5f)).ToString());
+                if (character.KeyData == ModItemKeys.Character_Darkness)
+                {
+                    return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
+                }
             }
-            else
                 return base.DescExtended(desc).Replace("&a", 0.ToString());
         }
 

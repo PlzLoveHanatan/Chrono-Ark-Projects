@@ -27,7 +27,7 @@ namespace Darkness
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (BChar.BarrierHP >= 20)
+            if (BChar.BarrierHP >= 15)
             {
                 base.SkillParticleOn();
                 return;
@@ -41,12 +41,15 @@ namespace Darkness
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (BChar.BarrierHP >= 20)
+            if (BChar.BarrierHP >= 15)
             {
                 foreach (var b in Targets)
                 {
                     if (!b.Info.Ally)
+                    {
                         b.BuffAdd(ModItemKeys.Buff_B_Darkness_HitMeHarder, BChar, false, 0, false, -1, false);
+                        b.BuffAdd(ModItemKeys.Buff_B_Darkness_TrialofWeakness, BChar, false, 0, false, -1, false);
+                    }
                 }
             }
         }

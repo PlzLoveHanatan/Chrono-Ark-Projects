@@ -20,7 +20,7 @@ namespace Darkness
     {
         public override string DescExtended()
         {
-            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.maxhp * 0.7f)).ToString());
+            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
         }
 
         public void Turn()
@@ -29,7 +29,7 @@ namespace Darkness
             {
                 for (int i = 0; i < StackNum; i++)
                 {
-                    BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.7f);
+                    BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.5f);
                 }
             } 
         }

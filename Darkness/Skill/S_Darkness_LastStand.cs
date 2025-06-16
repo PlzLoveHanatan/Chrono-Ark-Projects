@@ -46,10 +46,16 @@ namespace Darkness
             {
                 Barrierhp += battleAlly.BarrierHP;
             }
-            if (Barrierhp >= 1)
+            if (Barrierhp >= 15)
             {
                 MySkill.MySkill.NODOD = true;
-                SkillBaseFinal.Target_BaseDMG += (int)(Barrierhp * 0.5f);
+                MySkill.MySkill.IgnoreTaunt = true;
+                SkillBaseFinal.Target_BaseDMG += (int)(Barrierhp * 0.2f);
+                return;
+            }
+            else
+            {
+                SkillBaseFinal.Target_BaseDMG += (int)(Barrierhp * 0.2f);
             }
         }
     }

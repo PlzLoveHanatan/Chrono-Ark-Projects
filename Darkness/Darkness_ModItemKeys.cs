@@ -5,7 +5,7 @@ namespace Darkness
     {
 		/// <summary>
 		/// Armorgasm ♡
-		/// When taking damage, gain +5% Armor and +5% Faint Resist.
+		/// When taking damage, gain +5% Armor and +5% Faint Resist (up to 25).
 		/// </summary>
         public static string Buff_B_Darkness_Armorgasm = "B_Darkness_Armorgasm";
 		/// <summary>
@@ -34,7 +34,7 @@ namespace Darkness
         public static string Buff_B_Darkness_DarknessProtection = "B_Darkness_DarknessProtection";
 		/// <summary>
 		/// Delightful Defense ♡
-		/// At the start of each turn create a party barrier equal &a <color=#FF7C34>(Max HP * 0.7)</color>.
+		/// At the start of each turn create a party barrier equal &a <color=#FF7C34>(Max HP * 0.5)</color>.
 		/// </summary>
         public static string Buff_B_Darkness_DelightfulDefense = "B_Darkness_DelightfulDefense";
 		/// <summary>
@@ -50,13 +50,14 @@ namespace Darkness
         public static string Buff_B_Darkness_HitMeHarder = "B_Darkness_HitMeHarder";
 		/// <summary>
 		/// Hurt Me More, Please ♡
-		/// Whenever an enemy targets an ally, attack <b>before the enemy</b> and deal &a damage to them.
+		/// When attacked, counterattack for &a equal <color=#FF7C34>(Attack Power * 0.6)</color>.
 		/// </summary>
         public static string Buff_B_Darkness_HurtMeMorePlease = "B_Darkness_HurtMeMorePlease";
 		/// <summary>
 		/// Iron Maiden Mode
 		/// All incoming damage reduced by 50%.
 		/// At the start of the turn apply 'Busty Taunt' to all enemies.
+		/// <color=#919191>You can activate this buff by left-clicking to reveal options that help you better control the fight. Especially handy during the Reaper fight.</color>
 		/// </summary>
         public static string Buff_B_Darkness_IronMaidenMode = "B_Darkness_IronMaidenMode";
 		/// <summary>
@@ -70,17 +71,23 @@ namespace Darkness
 		/// Level 1 : When taking damage Gain +5% Defense and +5% Faint Resist.
 		/// Level 2 : Aggro increased.
 		/// Level 3 : All incoming damage is reduced by 15%.
-		/// Level 4 : At the start of each turn gain barrier <color=#FF7C34>(Max HP / 3)</color>.
+		/// Level 4: At the start of each turn gain barrier <color=#FF7C34>(Max HP * 0.2)</color>.
 		/// Level 5 : At the start of each turn remove 1 random debuff and apply it to all enemies.
 		/// Level 6 : All incoming damage reduced by 30%.
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Darkness = "Darkness";
 		/// <summary>
-		/// Cost reduced by 1 if you have 20 or more barrier remaining. Create a party barrier (&a) equal <color=#FF7C34>(Max HP)</color>.
+		/// Cost reduced by 1 if you have 15 or more barrier remaining. Create a party barrier
+		/// equal <color=#FF7C34>(Max HP)</color>.
 		/// <sprite name="비용2"><sprite name="이하">
 		/// </summary>
         public static string SkillExtended_Ex_Darkness_0 = "Ex_Darkness_0";
+		/// <summary>
+		/// If you have 15 or more barrier remaining recast this skill.
+		/// <sprite name="비용2"><sprite name="이하">
+		/// </summary>
+        public static string SkillExtended_Ex_Darkness_1 = "Ex_Darkness_1";
 		/// <summary>
 		/// Busty Taunt
 		/// <color=#919191>Can only target Darkness.
@@ -95,8 +102,8 @@ namespace Darkness
         public static string SkillKeyword_KeyWord_DarknessProtection = "KeyWord_DarknessProtection";
 		/// <summary>
 		/// Hit Me Harder
-		/// <color=#919191>Taunted by &target
-		/// Removed when you attack the target.</color>
+		/// <color=#919191>Taunted by user
+		/// Removed when you attack the user.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_HitMeHarder = "KeyWord_HitMeHarder";
         public static string SkillEffect_SE_S_S_Darkness_Decoy = "SE_S_S_Darkness_Decoy";
@@ -118,14 +125,14 @@ namespace Darkness
 		/// <summary>
 		/// Clumsy Slash
 		/// Cost reduced by 1 if this skill is fixed ability.
-		/// This skill always lands if you have 20 or more barrier remaining.
+		/// This skill always lands if you have 15 or more barrier remaining.
 		/// Create 'Side Slash' in your hand.
 		/// </summary>
         public static string Skill_S_Darkness_ClumsySlash = "S_Darkness_ClumsySlash";
 		/// <summary>
 		/// Crusader Domination
 		/// This skill always lands against targets with a Weakening<sprite=0> debuff.
-		/// If you have 20 or more barrier remaining, apply an additional Destroy Weapon debuff and 'Hit Me Harder' to all target's.
+		/// If you have 15 or more barrier remaining, apply an additional 'Trial of Weakness' debuff and 'Hit Me Harder' to all target's.
 		/// </summary>
         public static string Skill_S_Darkness_CrusaderDomination = "S_Darkness_CrusaderDomination";
 		/// <summary>
@@ -135,6 +142,7 @@ namespace Darkness
         public static string Skill_S_Darkness_DummyHeal = "S_Darkness_DummyHeal";
 		/// <summary>
 		/// Hero's Parry
+		/// Gain &a barrier <color=#FF7C34>(Max HP * 0.4)</color>. 
 		/// Apply 'Darkness Protection' to all allies.
 		/// </summary>
         public static string Skill_S_Darkness_HerosParry = "S_Darkness_HerosParry";
@@ -144,16 +152,18 @@ namespace Darkness
         public static string Skill_S_Darkness_HerosParry_0 = "S_Darkness_HerosParry_0";
 		/// <summary>
 		/// Knight's Resolve
+		/// Cost reduced by 1 if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_Darkness_KnightsResolve = "S_Darkness_KnightsResolve";
 		/// <summary>
 		/// Last Stand
-		/// This skill always lands if you have barrier remaining. Deal additional damage based on 50% of all ally barriers.
+		/// This skill always lands if you have 15 barrier remaining and gain 'Ignore Taunt'.
+		/// Deal additional damage based on 20% of all ally barriers. 
 		/// </summary>
         public static string Skill_S_Darkness_LastStand = "S_Darkness_LastStand";
 		/// <summary>
 		/// Battle Prep
-		/// Draw 3 skills and create a party barrier (&a) equal <color=#FF7C34>(Darkness Max HP *0.5)</color>.
+		/// Draw 3 skills and create a party barrier (&a) equal <color=#FF7C34>(Darkness Max HP * 0.5)</color>.
 		/// If Darkness is fainted, do not create barrier.
 		/// </summary>
         public static string Skill_S_Darkness_LucyDraw = "S_Darkness_LucyDraw";
@@ -171,14 +181,14 @@ namespace Darkness
         public static string Skill_S_Darkness_PartyKnight = "S_Darkness_PartyKnight";
 		/// <summary>
 		/// Guardian's Grace
-		/// If you have 20 or more Barrier, gain guaranteed Critical.
-		/// If the Barrier is 40 or more, also reduce this skill's Cost by 1.
+		/// If you have 15 or more Barrier remaining, gain guaranteed Critical.
+		/// If the Barrier is 30 or more, also reduce this skill's Cost by 1.
 		/// Deal &a additional damage for each stack of buff on self.
 		/// </summary>
         public static string Skill_S_Darkness_Rare_GuardiansGrace = "S_Darkness_Rare_GuardiansGrace";
 		/// <summary>
 		/// Iron Maiden's Embrace
-		/// When used create a party barrier equal &a <color=#FF7C34>(Max HP * 0.7)</color>.
+		/// When used create a party barrier equal &a <color=#FF7C34>(Max HP * 0.5)</color>.
 		/// </summary>
         public static string Skill_S_Darkness_Rare_IronMaidensEmbrace = "S_Darkness_Rare_IronMaidensEmbrace";
 		/// <summary>
@@ -188,29 +198,56 @@ namespace Darkness
 		/// </summary>
         public static string Skill_S_Darkness_Rare_UnbreakableWill = "S_Darkness_Rare_UnbreakableWill";
 		/// <summary>
+		/// Exit Iron Maiden Mode
+		/// Remove 'Iron Maiden Mode' buff.
+		/// </summary>
+        public static string Skill_S_Darkness_Rare_UnbreakableWill_0 = "S_Darkness_Rare_UnbreakableWill_0";
+		/// <summary>
+		/// Remove Apply Taunt
+		/// At the start of the turn DO NOT APPLY 'Busty Taunt' to all enemies.
+		/// This option can be changed without restrictions.
+		/// </summary>
+        public static string Skill_S_Darkness_Rare_UnbreakableWill_1 = "S_Darkness_Rare_UnbreakableWill_1";
+		/// <summary>
+		/// Apply Taunt
+		/// At the start of the turn apply 'Busty Taunt' to all enemies.
+		/// This option can be changed without restrictions.
+		/// </summary>
+        public static string Skill_S_Darkness_Rare_UnbreakableWill_2 = "S_Darkness_Rare_UnbreakableWill_2";
+		/// <summary>
+		/// Remove current Taunt
+		/// Remove current 'Busty Taunt' from all enemies.
+		/// Can only be used once.
+		/// </summary>
+        public static string Skill_S_Darkness_Rare_UnbreakableWill_3 = "S_Darkness_Rare_UnbreakableWill_3";
+		/// <summary>
 		/// Shield of Faith
 		/// Create a party barrier (&a) equal <color=#FF7C34>(Max HP * 0.6)</color> and apply 'Busty Taunt' to all enemies.
 		/// </summary>
         public static string Skill_S_Darkness_ShieldofFaith = "S_Darkness_ShieldofFaith";
 		/// <summary>
 		/// Side Slash
-		/// This skill always lands if you have 20 or more barrier remaining.
+		/// This skill always lands if you have 15 or more barrier remaining.
 		/// </summary>
         public static string Skill_S_Darkness_SideSlash = "S_Darkness_SideSlash";
 		/// <summary>
 		/// Stubborn Knight (KonoSuba Edition)
 		/// </summary>
         public static string Buff_S_Darkness_StubbornKnight = "S_Darkness_StubbornKnight";
-		/// <summary>
-		/// If you have 20 or more barrier recast this skill.
-		/// <sprite name="비용2"><sprite name="이하">
-		/// </summary>
-        public static string SkillExtended_Ex_Darkness_1 = "Ex_Darkness_1";
 
     }
 
     public static class ModLocalization
     {
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Hurt Me More, Please ♡
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string HurtMe => ModManager.getModInfo("Darkness").localizationInfo.SystemLocalizationUpdate("HurtMe");
 
     }
 }

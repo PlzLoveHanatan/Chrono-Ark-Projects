@@ -18,8 +18,14 @@ namespace Darkness
     /// </summary>
     public class S_Darkness_HerosParry : Skill_Extended
     {
+        public override string DescExtended(string desc)
+        {
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.4f)).ToString());
+        }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            int barrierHP = (int)(BChar.GetStat.maxhp * 0.4f);
+            BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
             foreach (var a in BChar.MyTeam.AliveChars)
             {
                 if (a != null && a != BChar)

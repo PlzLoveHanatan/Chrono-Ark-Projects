@@ -20,7 +20,7 @@ namespace Darkness
     {
         public override void BuffStat()
         {
-            PlusPerStat.Damage = -25 * StackNum;
+            PlusPerStat.Damage = -15 * StackNum;
         }
     }
 }

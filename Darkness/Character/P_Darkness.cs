@@ -20,10 +20,6 @@ namespace Darkness
     /// </summary>
     public class P_Darkness : Passive_Char, IP_PlayerTurn, IP_DamageTakeChange
     {
-        public override string DescExtended(string desc)
-        {
-            return base.DescExtended(desc).Replace("&a", (BChar.GetStat.maxhp * 0.3f).ToString());
-        }
         public override void Init()
         {
             OnePassive = true;
@@ -44,7 +40,7 @@ namespace Darkness
 
             if (MyChar.LV >= 4)
             {
-                int barrierHP = (int)(BChar.GetStat.maxhp * 0.3f);
+                int barrierHP = (int)(BChar.GetStat.maxhp * 0.2f);
                 BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
             }
 

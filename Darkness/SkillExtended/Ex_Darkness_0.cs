@@ -28,7 +28,7 @@ namespace Darkness
 
         public override void FixedUpdate()
         {
-            if (BChar.BarrierHP >= 20)
+            if (BChar.BarrierHP >= 15)
             {
                 MySkill.APChange = -1;
                 base.SkillParticleOn();

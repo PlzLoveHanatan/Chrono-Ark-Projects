@@ -31,7 +31,7 @@ namespace Darkness
             {
                 MySkill.APChange = -1;
             }
-            if (BChar.BarrierHP >= 20)
+            if (BChar.BarrierHP >= 15)
             {
                 MySkill.MySkill.NODOD = true;
                 base.SkillParticleOn();
