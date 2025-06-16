@@ -12,6 +12,7 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using Spine;
+using System.Threading;
 namespace Darkness
 {
     /// <summary>
@@ -20,8 +21,15 @@ namespace Darkness
     /// </summary>
     public class S_Darkness_LastStand : Skill_Extended
     {
+        private int Barrier;
+        public override string DescExtended(string desc)
+        {
+            return base.DescExtended(desc).Replace("&a", Barrier.ToString());
+        }
+
         public override void Init()
         {
+            OnePassive = true;
             base.Init();
             this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
         }
@@ -29,7 +37,29 @@ namespace Darkness
         public override void FixedUpdate()
         {
             OnePassive = true;
-            if (BChar.BarrierHP >= 1)
+            int Barrierhp = 0;
+
+            foreach (BattleAlly battleAlly in BChar.MyTeam.AliveChars)
+            {
+                Barrierhp += battleAlly.BarrierHP;
+            }
+
+            if (Barrierhp >= 15)
+            {
+                Barrier = (int)(Barrierhp * 0.3f);
+            }
+
+            else if (Barrierhp >= 1)
+            {
+                Barrier = (int)(Barrierhp * 0.3f);
+            }
+            else
+            {
+                Barrier = 0;
+            }
+
+
+            if (BChar.BarrierHP >= 15)
             {
                 base.SkillParticleOn();
                 return;
@@ -37,6 +67,7 @@ namespace Darkness
 
             base.SkillParticleOff();
         }
+
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
@@ -46,16 +77,24 @@ namespace Darkness
             {
                 Barrierhp += battleAlly.BarrierHP;
             }
+
             if (Barrierhp >= 15)
             {
                 MySkill.MySkill.NODOD = true;
                 MySkill.MySkill.IgnoreTaunt = true;
-                SkillBaseFinal.Target_BaseDMG += (int)(Barrierhp * 0.2f);
+                SkillBaseFinal.Target_BaseDMG += (int)(Barrierhp * 0.3f);
                 return;
             }
+
+            else if (Barrierhp >= 1)
+            {
+                MySkill.MySkill.NODOD = true;
+                SkillBasePlus.Target_BaseDMG += (int)(Barrierhp * 0.3f);
+            }
+
             else
             {
-                SkillBaseFinal.Target_BaseDMG += (int)(Barrierhp * 0.2f);
+                SkillBasePlus.Target_BaseDMG = 0;
             }
         }
     }

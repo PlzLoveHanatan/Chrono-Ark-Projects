@@ -38,13 +38,13 @@ namespace Darkness
                 BChar.BuffAdd(buff, BChar, false, 0, false, -1, false);
             }
 
-            if (MyChar.LV >= 4)
+            if (MyChar.LV >= 5)
             {
-                int barrierHP = (int)(BChar.GetStat.maxhp * 0.2f);
+                int barrierHP = (int)(BChar.GetStat.maxhp * 0.15f);
                 BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
             }
 
-            if (MyChar.LV >= 5)
+            if (MyChar.LV >= 4)
             {
                 var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).Random(BChar.GetRandomClass().Main, 1);
                 var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;

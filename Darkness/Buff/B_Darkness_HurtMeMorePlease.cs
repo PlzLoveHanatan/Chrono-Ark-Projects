@@ -20,6 +20,13 @@ namespace Darkness
     /// </summary>
     public class B_Darkness_HurtMeMorePlease : Buff/*, IP_TargetedAlly*/, IP_DamageChange_Hit_sumoperation, IP_Dodge
     {
+        public override void FixedUpdate()
+        {
+            if (BChar.Info.KeyData != ModItemKeys.Character_Darkness)
+            {
+                SelfDestroy();
+            }
+        }
         public override string DescExtended()
         {
             return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.atk * 0.6f)).ToString());

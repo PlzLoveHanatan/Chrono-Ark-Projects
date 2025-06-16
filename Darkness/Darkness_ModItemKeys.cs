@@ -71,15 +71,15 @@ namespace Darkness
 		/// Level 1 : When taking damage Gain +5% Defense and +5% Faint Resist.
 		/// Level 2 : Aggro increased.
 		/// Level 3 : All incoming damage is reduced by 15%.
-		/// Level 4: At the start of each turn gain barrier <color=#FF7C34>(Max HP * 0.2)</color>.
-		/// Level 5 : At the start of each turn remove 1 random debuff and apply it to all enemies.
+		/// Level 4 : At the start of each turn remove 1 random debuff and apply it to a random enemy.
+		/// Level 5 : At the start of each turn gain barrier <color=#FF7C34>(Max HP * 0.15)</color>.
 		/// Level 6 : All incoming damage reduced by 30%.
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Darkness = "Darkness";
 		/// <summary>
 		/// Cost reduced by 1 if you have 15 or more barrier remaining. Create a party barrier
-		/// equal <color=#FF7C34>(Max HP)</color>.
+		/// equal <color=#FF7C34>(Max HP * 0.5)</color>.
 		/// <sprite name="비용2"><sprite name="이하">
 		/// </summary>
         public static string SkillExtended_Ex_Darkness_0 = "Ex_Darkness_0";
@@ -158,12 +158,12 @@ namespace Darkness
 		/// <summary>
 		/// Last Stand
 		/// This skill always lands if you have 15 barrier remaining and gain 'Ignore Taunt'.
-		/// Deal additional damage based on 20% of all ally barriers. 
+		/// Deal additional &a damage equals <color=#FF7C34>(All allies barriers * 0.3)</color>.
 		/// </summary>
         public static string Skill_S_Darkness_LastStand = "S_Darkness_LastStand";
 		/// <summary>
 		/// Battle Prep
-		/// Draw 3 skills and create a party barrier (&a) equal <color=#FF7C34>(Darkness Max HP * 0.5)</color>.
+		/// Draw 3 skills and create a party barrier equal <color=#FF7C34>(Darkness Max HP * 0.5)</color>.
 		/// If Darkness is fainted, do not create barrier.
 		/// </summary>
         public static string Skill_S_Darkness_LucyDraw = "S_Darkness_LucyDraw";
@@ -175,7 +175,7 @@ namespace Darkness
         public static string Skill_S_Darkness_MasochistsCourage = "S_Darkness_MasochistsCourage";
 		/// <summary>
 		/// Party Knight
-		/// Apply &a barrier <color=#FF7C34>(Max HP * 0.3)</color> and remove 1 random debuff.
+		/// Apply &a barrier <color=#FF7C34>(Max HP * 0.2)</color> and remove 1 random debuff.
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Darkness_PartyKnight = "S_Darkness_PartyKnight";

@@ -20,18 +20,6 @@ namespace Darkness
     /// </summary>
     public class S_Darkness_LucyDraw : Skill_Extended
     {
-        public override string DescExtended(string desc)
-        {
-            foreach (var character in PlayData.TSavedata.Party)
-            {
-                if (character.KeyData == ModItemKeys.Character_Darkness)
-                {
-                    return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
-                }
-            }
-                return base.DescExtended(desc).Replace("&a", 0.ToString());
-        }
-
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             var allies = BattleSystem.instance.AllyTeam.AliveChars;
