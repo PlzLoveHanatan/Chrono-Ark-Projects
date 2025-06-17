@@ -21,8 +21,28 @@ namespace Darkness
         private int StatGain;
         public override void Init()
         {
-            if (BChar.Info.LV >= 2)
-                PlusStat.AggroPer = 40;
+            switch (BChar.Info.LV)
+            {
+                case 1: PlusStat.AggroPer = 10;
+                    break;
+                case 2:
+                    PlusStat.AggroPer = 20;
+                    break;
+                case 3:
+                    PlusStat.AggroPer = 30;
+                    break;
+                case 4:
+                    PlusStat.AggroPer = 40;
+                    break;
+                case 5:
+                    PlusStat.AggroPer = 50;
+                    break;
+                case 6:
+                    PlusStat.AggroPer = 60;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)

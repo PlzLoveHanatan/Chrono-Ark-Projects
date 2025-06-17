@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Darkness06162025122420</AssemblyName>
+    <AssemblyName>Darkness06172025223704</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -381,14 +381,36 @@
       <Private>False</Private>
     </Reference>
     <!-- Extra Reference Start-->
+    <Reference Include="0Harmony">
+      <HintPath>..\..\Darkness\Assemblies\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\Darkness\Assemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\..\Darkness\Assemblies\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\..\Darkness\Assemblies\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\..\Darkness\Assemblies\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>..\..\Darkness\Assemblies\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>..\..\Darkness\Assemblies\MonoMod.Utils.dll</HintPath>
+    </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Darkness_ModDefinition.cs" />
     <Compile Include="Darkness_ModItemKeys.cs" />
     <Compile Include="Darkness_Plugin.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="Buff\B_Darkness_Armorgasm.cs" />
     <Compile Include="Buff\B_Darkness_BustyBuffer.cs" />
     <Compile Include="Buff\B_Darkness_BustyTaunt.cs" />

@@ -20,6 +20,8 @@ namespace Darkness
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+
             var allies = BattleSystem.instance.AllyTeam.AliveChars;
             var lucyAlly = BattleSystem.instance.AllyTeam.LucyAlly;
 

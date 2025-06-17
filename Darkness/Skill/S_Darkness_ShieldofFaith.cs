@@ -25,11 +25,13 @@ namespace Darkness
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+
             BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.6f);
 
             foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
             {
-                e.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 0, false, -1, false);
+                e.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 999, false, -1, false);
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Darkness
         public override void Init()
         {
             PlusStat.DeadImmune = 100;
-            PlusStat.Strength = true;
+            PlusStat.AggroPer = 100;
         }
         public void HPChange(BattleChar Char, bool Healed)
         {

@@ -38,15 +38,15 @@ namespace Darkness
                 BChar.BuffAdd(buff, BChar, false, 0, false, -1, false);
             }
 
-            if (MyChar.LV >= 5)
+            if (MyChar.LV >= 3)
             {
-                int barrierHP = (int)(BChar.GetStat.maxhp * 0.15f);
-                BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
+                int barrierHP = (int)(BChar.GetStat.maxhp * 0.2f);
+                BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight_0, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
             }
 
             if (MyChar.LV >= 4)
             {
-                var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).Random(BChar.GetRandomClass().Main, 1);
+                var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 1);
                 var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
                 int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
                 BattleChar randomTarget = enemies[randomIndex];
@@ -59,12 +59,12 @@ namespace Darkness
         }
         public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
         {
-            if (MyChar.LV >= 3)
+            if (MyChar.LV >= 2)
             {
                 if (!Preview && Dmg >= 1)
                 {
-                    if (MyChar.LV >= 6)
-                        Dmg = (int)(Dmg * 0.55f);
+                    if (MyChar.LV >= 5)
+                        Dmg = (int)(Dmg * 0.4f);
 
                     else
                         Dmg = (int)(Dmg * 0.85f);

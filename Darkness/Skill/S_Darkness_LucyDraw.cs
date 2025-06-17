@@ -29,6 +29,7 @@ namespace Darkness
 
             if (aliveDarkness != null)
             {
+                Utils.TryPlayDarknessSound(SkillD, BChar);
                 BChar.MyTeam.partybarrier.BarrierHP += (int)(aliveDarkness.GetStat.maxhp * 0.5f);
             }
         }

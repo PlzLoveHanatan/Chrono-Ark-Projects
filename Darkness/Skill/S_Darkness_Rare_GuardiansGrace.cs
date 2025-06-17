@@ -32,10 +32,10 @@ namespace Darkness
         public override void FixedUpdate()
         {
             OnePassive = true;
-            if (BChar.BarrierHP >= 20)
+            if (BChar.BarrierHP >= 15)
             {
                 base.SkillParticleOn();
-                if (BChar.BarrierHP >= 40)
+                if (BChar.BarrierHP >= 30)
                 {
                     MySkill.APChange = -1;
                 }
@@ -47,6 +47,8 @@ namespace Darkness
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+
             List<Buff> buffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, false, false);
             int num = 0;
             foreach (Buff buff in buffs)

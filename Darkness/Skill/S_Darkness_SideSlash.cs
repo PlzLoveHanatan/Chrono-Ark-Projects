@@ -19,6 +19,7 @@ namespace Darkness
 	/// </summary>
     public class S_Darkness_SideSlash : Skill_Extended
     {
+        private bool DarknessAttackMisses;
         public override void Init()
         {
             base.Init();
@@ -37,6 +38,32 @@ namespace Darkness
             }
 
             base.SkillParticleOff();
+        }
+        public override void AttackEffectSingle(BattleChar hit, SkillParticle SP, int DMG, int Heal)
+        {
+            DarknessAttackMisses = true;
+        }
+
+        private IEnumerator Miss()
+        {
+            if (DarknessAttackMisses) yield break;
+            Utils.PlayDarknessBattleDialogue2(MySkill, BChar);
+
+            yield return null;
+        }
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        {
+            DarknessAttackMisses = false;
+            BattleSystem.DelayInput(Miss());
+
+            if (BChar.BarrierHP >= 15)
+            {
+                Utils.PlayDarknessBattleDialogue(MySkill, BChar);
+            }
+            else if (!DarknessAttackMisses)
+            {
+                Utils.TryPlayDarknessSound(SkillD, BChar);
+            }
         }
     }
 }

@@ -9,20 +9,20 @@ namespace Darkness
 		/// </summary>
         public static string Buff_B_Darkness_Armorgasm = "B_Darkness_Armorgasm";
 		/// <summary>
-		/// Busty Buffer
+		/// Busty ♡ Buffer
 		/// Gain &a barrier when you cast your own skill.
 		/// Consumes 1 stack when played.
 		/// <color=#919191>Barrier amount equals <color=#FF7C34>(Max HP * 0.25)</color> of the owner of 'Knight's Resolve'.</color>
 		/// </summary>
         public static string Buff_B_Darkness_BustyBuffer = "B_Darkness_BustyBuffer";
 		/// <summary>
-		/// Busty Taunt
+		/// Busty ♡ Taunt
 		/// Can only target &target.
 		/// Removed when this character attacks &target.
 		/// </summary>
         public static string Buff_B_Darkness_BustyTaunt = "B_Darkness_BustyTaunt";
 		/// <summary>
-		/// Darkness Ecstasy
+		/// Darkness ♡ Ecstasy
 		/// All incoming damage is reduced by 15%.
 		/// </summary>
         public static string Buff_B_Darkness_DarknessEcstasy = "B_Darkness_DarknessEcstasy";
@@ -33,28 +33,29 @@ namespace Darkness
 		/// </summary>
         public static string Buff_B_Darkness_DarknessProtection = "B_Darkness_DarknessProtection";
 		/// <summary>
-		/// Delightful Defense ♡
+		/// Delightful ♡ Defense
 		/// At the start of each turn create a party barrier equal &a <color=#FF7C34>(Max HP * 0.5)</color>.
 		/// </summary>
         public static string Buff_B_Darkness_DelightfulDefense = "B_Darkness_DelightfulDefense";
 		/// <summary>
-		/// Ecstatic Endurance
+		/// Ecstatic ♡ Endurance
 		/// Health cannot fall below current 0.
 		/// </summary>
         public static string Buff_B_Darkness_EcstaticEndurance = "B_Darkness_EcstaticEndurance";
 		/// <summary>
-		/// Hit Me Harder
+		/// Hit Me Harder ♡
 		/// Taunted by &target
 		/// Removed when you attack the target.
 		/// </summary>
         public static string Buff_B_Darkness_HitMeHarder = "B_Darkness_HitMeHarder";
 		/// <summary>
-		/// Hurt Me More, Please ♡
+		/// Hurt Me More ♡ Please ♡
 		/// When attacked, counterattack for &a equal <color=#FF7C34>(Attack Power * 0.6)</color>.
+		/// <color=#919191>Only Darkness can have this buff.</color>
 		/// </summary>
         public static string Buff_B_Darkness_HurtMeMorePlease = "B_Darkness_HurtMeMorePlease";
 		/// <summary>
-		/// Iron Maiden Mode
+		/// Iron Maiden Mode ♡
 		/// All incoming damage reduced by 50%.
 		/// At the start of the turn apply 'Busty Taunt' to all enemies.
 		/// <color=#919191>You can activate this buff by left-clicking to reveal options that help you better control the fight. Especially handy during the Reaper fight.</color>
@@ -67,29 +68,21 @@ namespace Darkness
 		/// <summary>
 		/// Darkness
 		/// Passive:
-		/// Increase Faint Resist by 10 for each Darkness Level.
-		/// Level 1 : When taking damage Gain +5% Defense and +5% Faint Resist.
-		/// Level 2 : Aggro increased.
-		/// Level 3 : All incoming damage is reduced by 15%.
-		/// Level 4 : At the start of each turn remove 1 random debuff and apply it to a random enemy.
-		/// Level 5 : At the start of each turn gain barrier <color=#FF7C34>(Max HP * 0.15)</color>.
-		/// Level 6 : All incoming damage reduced by 30%.
-		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Darkness = "Darkness";
 		/// <summary>
 		/// Cost reduced by 1 if you have 15 or more barrier remaining. Create a party barrier
 		/// equal <color=#FF7C34>(Max HP * 0.5)</color>.
-		/// <sprite name="비용2"><sprite name="이하">
+		/// <sprite name="비용2"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Darkness_0 = "Ex_Darkness_0";
 		/// <summary>
 		/// If you have 15 or more barrier remaining recast this skill.
-		/// <sprite name="비용2"><sprite name="이하">
+		/// <sprite name="비용2"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Darkness_1 = "Ex_Darkness_1";
 		/// <summary>
-		/// Busty Taunt
+		/// Busty Taunt ♡
 		/// <color=#919191>Can only target Darkness.
 		/// Removed when this character attacks Darkness.</color>
 		/// </summary>
@@ -101,7 +94,7 @@ namespace Darkness
 		/// </summary>
         public static string SkillKeyword_KeyWord_DarknessProtection = "KeyWord_DarknessProtection";
 		/// <summary>
-		/// Hit Me Harder
+		/// Hit Me Harder ♡
 		/// <color=#919191>Taunted by user
 		/// Removed when you attack the user.</color>
 		/// </summary>
@@ -132,7 +125,7 @@ namespace Darkness
 		/// <summary>
 		/// Crusader Domination
 		/// This skill always lands against targets with a Weakening<sprite=0> debuff.
-		/// If you have 15 or more barrier remaining, apply an additional 'Trial of Weakness' debuff and 'Hit Me Harder' to all target's.
+		/// If you have 15 or more barrier remaining, apply an additional 'Trial of Weakness' debuff and <color=#FF69B4>Hit Me Harder ♡</color> to all target's.
 		/// </summary>
         public static string Skill_S_Darkness_CrusaderDomination = "S_Darkness_CrusaderDomination";
 		/// <summary>
@@ -168,9 +161,9 @@ namespace Darkness
 		/// </summary>
         public static string Skill_S_Darkness_LucyDraw = "S_Darkness_LucyDraw";
 		/// <summary>
-		/// Masochist's Courage
+		/// Masochist's ♡ Courage
 		/// Take <color=purple>&a Pain Damage</color> <color=#FF7C34>(Max HP * 0.3)</color> and heal all allies by that amount.
-		/// If your Health is below 50%, apply 'Hit me Harder' to all enemies and gain &b Barrier <color=#FF7C34>(Max HP * 0.4)</color>.
+		/// If your Health is below 50%, apply <color=#FF69B4>Hit Me Harder ♡</color> to all enemies and gain &b Barrier <color=#FF7C34>(Max HP * 0.4)</color>.
 		/// </summary>
         public static string Skill_S_Darkness_MasochistsCourage = "S_Darkness_MasochistsCourage";
 		/// <summary>
@@ -193,7 +186,7 @@ namespace Darkness
         public static string Skill_S_Darkness_Rare_IronMaidensEmbrace = "S_Darkness_Rare_IronMaidensEmbrace";
 		/// <summary>
 		/// Unbreakable Will
-		/// When used apply 'Busty Taunt' to all enemies.
+		/// When used apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
 		/// All ally buffs remain 2 extra turn. Debuffs remain 2 turn less.
 		/// </summary>
         public static string Skill_S_Darkness_Rare_UnbreakableWill = "S_Darkness_Rare_UnbreakableWill";
@@ -222,7 +215,7 @@ namespace Darkness
         public static string Skill_S_Darkness_Rare_UnbreakableWill_3 = "S_Darkness_Rare_UnbreakableWill_3";
 		/// <summary>
 		/// Shield of Faith
-		/// Create a party barrier (&a) equal <color=#FF7C34>(Max HP * 0.6)</color> and apply 'Busty Taunt' to all enemies.
+		/// Create a party barrier (&a) equal <color=#FF7C34>(Max HP * 0.6)</color> and apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
 		/// </summary>
         public static string Skill_S_Darkness_ShieldofFaith = "S_Darkness_ShieldofFaith";
 		/// <summary>
@@ -234,6 +227,10 @@ namespace Darkness
 		/// Stubborn Knight (KonoSuba Edition)
 		/// </summary>
         public static string Buff_S_Darkness_StubbornKnight = "S_Darkness_StubbornKnight";
+		/// <summary>
+		/// Stubborn Knight (Darkness Edition)
+		/// </summary>
+        public static string Buff_S_Darkness_StubbornKnight_0 = "S_Darkness_StubbornKnight_0";
 
     }
 
@@ -241,10 +238,49 @@ namespace Darkness
     {
 		/// <summary>
 		/// Korean:
+		/// 내 공격이 적중하고 있어! 진짜로 맞고 있다고!
+		/// English:
+		/// My attacks are landing! They're actually landing!
+		/// Japanese:
+		/// 私の攻撃が当たってる！本当に当たってる！
+		/// Chinese:
+		/// 我的攻击打中了！真的打中了！
+		/// Chinese-TW:
+		/// </summary>
+        public static string DarknessAttackLands_0 => ModManager.getModInfo("Darkness").localizationInfo.SystemLocalizationUpdate("DarknessAttackLands_0");
+		/// <summary>
+		/// Korean:
+		/// 아이즈의 검술 훈련은 정말 대단해! 적중의 쾌감에 중독되기 시작했어!
+		/// English:
+		/// Aiz's sword training is amazing! I'm starting to get addicted to the thrill of landing hits!
+		/// Japanese:
+		/// アイズの剣の訓練はすごいよ！攻撃が当たるスリルにハマりそう！
+		/// Chinese:
+		/// 艾丝的剑术训练太厉害了！我已经开始迷上击中敌人的快感了！
+		/// Chinese-TW:
+		/// </summary>
+        public static string DarknessAttackLands_1 => ModManager.getModInfo("Darkness").localizationInfo.SystemLocalizationUpdate("DarknessAttackLands_1");
+		/// <summary>
+		/// Korean:
+		/// 힘과 체력에는 자신이 있는데, 너무 서툴러서 공격이 전혀 맞질 않아...
+		/// English:
+		/// I'm confident in my strength and endurance, but I'm so clumsy my attacks never land...
+		/// Japanese:
+		/// 体力と持久力には自信があるけど、不器用すぎて攻撃が全然当たらない…
+		/// Chinese:
+		/// 我对自己的力量和耐力很有自信，但太笨拙了，攻击总是打不中……
+		/// Chinese-TW:
+		/// </summary>
+        public static string DarknessAttackMisses => ModManager.getModInfo("Darkness").localizationInfo.SystemLocalizationUpdate("DarknessAttackMisses");
+		/// <summary>
+		/// Korean:
+		/// 더 괴롭혀줘, 제발 ♡
 		/// English:
 		/// Hurt Me More, Please ♡
 		/// Japanese:
+		/// もっと痛めつけて、お願い ♡
 		/// Chinese:
+		/// 请再多伤我一点吧，拜托了 ♡
 		/// Chinese-TW:
 		/// </summary>
         public static string HurtMe => ModManager.getModInfo("Darkness").localizationInfo.SystemLocalizationUpdate("HurtMe");

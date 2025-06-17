@@ -44,14 +44,9 @@ namespace Darkness
                 Barrierhp += battleAlly.BarrierHP;
             }
 
-            if (Barrierhp >= 15)
+            if (Barrierhp >= 1)
             {
-                Barrier = (int)(Barrierhp * 0.3f);
-            }
-
-            else if (Barrierhp >= 1)
-            {
-                Barrier = (int)(Barrierhp * 0.3f);
+                Barrier = (int)(Barrierhp * 0.4f);
             }
             else
             {
@@ -71,6 +66,8 @@ namespace Darkness
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+
             int Barrierhp = 0;
 
             foreach (BattleAlly battleAlly in BChar.MyTeam.AliveChars)
@@ -78,18 +75,10 @@ namespace Darkness
                 Barrierhp += battleAlly.BarrierHP;
             }
 
-            if (Barrierhp >= 15)
+            if (Barrierhp >= 1)
             {
                 MySkill.MySkill.NODOD = true;
-                MySkill.MySkill.IgnoreTaunt = true;
-                SkillBaseFinal.Target_BaseDMG += (int)(Barrierhp * 0.3f);
-                return;
-            }
-
-            else if (Barrierhp >= 1)
-            {
-                MySkill.MySkill.NODOD = true;
-                SkillBasePlus.Target_BaseDMG += (int)(Barrierhp * 0.3f);
+                SkillBasePlus.Target_BaseDMG += (int)(Barrierhp * 0.4f);
             }
 
             else

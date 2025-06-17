@@ -41,6 +41,8 @@ namespace Darkness
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+
             if (BChar.BarrierHP >= 15)
             {
                 foreach (var b in Targets)

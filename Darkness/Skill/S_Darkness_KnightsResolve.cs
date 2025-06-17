@@ -13,10 +13,10 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Darkness
 {
-	/// <summary>
-	/// Knight's Resolve
-	/// Cost reduced by 1 if this skill is a fixed ability.
-	/// </summary>
+    /// <summary>
+    /// Knight's Resolve
+    /// Cost reduced by 1 if this skill is a fixed ability.
+    /// </summary>
     public class S_Darkness_KnightsResolve : Skill_Extended
     {
         public override void Init()
@@ -37,6 +37,10 @@ namespace Darkness
             }
 
             base.SkillParticleOff();
+        }
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
         }
     }
 }

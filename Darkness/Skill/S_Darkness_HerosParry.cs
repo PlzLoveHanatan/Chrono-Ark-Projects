@@ -24,6 +24,8 @@ namespace Darkness
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+
             int barrierHP = (int)(BChar.GetStat.maxhp * 0.4f);
             BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
             foreach (var a in BChar.MyTeam.AliveChars)

@@ -26,6 +26,8 @@ namespace Darkness
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+
             int masochistsCourage = (int)(BChar.GetStat.maxhp * 0.3f);
             int barrierValue = (int)(BChar.GetStat.maxhp * 0.4f);
             bool applyBuff = BChar.HP <= barrierValue;
@@ -50,7 +52,7 @@ namespace Darkness
                 BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
                 foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
                 {
-                    e.BuffAdd(ModItemKeys.Buff_B_Darkness_HitMeHarder, BChar, false, 0, false, -1, false);
+                    e.BuffAdd(ModItemKeys.Buff_B_Darkness_HitMeHarder, BChar, false, 999, false, -1, false);
                 }
             }
         }
