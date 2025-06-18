@@ -16,16 +16,26 @@ namespace Darkness
 	/// <summary>
 	/// Darkness Ecstasy
 	/// </summary>
-    public class B_Darkness_DarknessEcstasy : Buff, IP_DamageTakeChange
+    public class B_Darkness_DarknessEcstasy : Buff, IP_DamageTakeChange, IP_DamageTake
     {
+        private int Damage;
         public override void Init()
         {
             base.Init();
-            PlusStat.AggroPer = 35;
+            PlusStat.AggroPer = 70;
+        }
+        public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
+        {
+            if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)
+            {
+                BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(this.BChar.GetRandomClass().Main).Damage(this.BChar, Damage / 2, false, true, false, 0, false, false, false);
+            }
         }
 
         public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
         {
+            Damage = Dmg;
+
             if (!Preview && Dmg >= 1)
             {
                 Dmg = (int)(Dmg * 0.85f);

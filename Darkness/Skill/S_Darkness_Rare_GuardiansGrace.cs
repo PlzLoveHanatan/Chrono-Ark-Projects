@@ -21,7 +21,7 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.3f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f)).ToString());
         }
         public override void Init()
         {
@@ -35,7 +35,7 @@ namespace Darkness
             if (BChar.BarrierHP >= 15)
             {
                 base.SkillParticleOn();
-                if (BChar.BarrierHP >= 30)
+                if (BChar.BarrierHP >= 25)
                 {
                     MySkill.APChange = -1;
                 }
@@ -55,12 +55,12 @@ namespace Darkness
             {
                 num += buff.StackNum;
             }
-            this.SkillBasePlus.Target_BaseDMG = (int)(num * (this.BChar.GetStat.atk * 0.3f));
+            this.SkillBasePlus.Target_BaseDMG = (int)(num * (this.BChar.GetStat.atk * 0.4f));
         }
 
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
         {
-            if (BChar.BarrierHP >= 20)
+            if (BChar.BarrierHP >= 15)
             {
                 Cri = true;
             }

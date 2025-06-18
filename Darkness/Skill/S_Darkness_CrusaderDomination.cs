@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using NLog.Targets;
 namespace Darkness
 {
     /// <summary>
@@ -36,24 +37,21 @@ namespace Darkness
         }
         public override bool TargetHit(BattleChar Target)
         {
-            return Target.GetBuffs(BattleChar.GETBUFFTYPE.DEBUFF, false, false).Count != 0;
+            return Target.GetBuffs(BattleChar.GETBUFFTYPE.CC, false, false).Count != 0;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.TryPlayDarknessSound(SkillD, BChar);
+            var target = Targets[0];
 
-            if (BChar.BarrierHP >= 15)
-            {
-                foreach (var b in Targets)
-                {
-                    if (!b.Info.Ally)
-                    {
-                        b.BuffAdd(ModItemKeys.Buff_B_Darkness_HitMeHarder, BChar, false, 0, false, -1, false);
-                        b.BuffAdd(ModItemKeys.Buff_B_Darkness_TrialofWeakness, BChar, false, 0, false, -1, false);
-                    }
-                }
-            }
+            if (!target.Info.Ally)
+                if (BChar.BarrierHP >= 15)
+                    target.BuffAdd(ModItemKeys.Buff_B_Darkness_TrialofWeakness, BChar, false, 999, false, -1, false);
+
+            if (BChar.BarrierHP >= 25)
+                target.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 999, false, -1, false);
+
         }
     }
 }

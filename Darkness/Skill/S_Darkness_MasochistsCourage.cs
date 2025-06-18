@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.Threading;
 namespace Darkness
 {
     /// <summary>
@@ -26,7 +27,7 @@ namespace Darkness
         }
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.8f)).ToString()).Replace("&b", ((int)(BChar.GetStat.maxhp * 0.2f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.6f)).ToString()).Replace("&b", ((int)(BChar.GetStat.maxhp * 0.2f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -34,19 +35,19 @@ namespace Darkness
             Utils.TryPlayDarknessSound(SkillD, BChar);
 
             var nonLethalDamage = GDEItemKeys.Buff_B_Momori_P_NoDead;
-            int masochistsCourage = (int)(BChar.GetStat.maxhp * 0.8f);
-            int barrierValue = (int)(BChar.GetStat.maxhp * 0.4f);
+            int masochistsCourage = (int)(BChar.GetStat.maxhp * 0.6f);
+            int barrierValue = (int)(BChar.GetStat.maxhp * 0.6f);
             bool applyBuff = BChar.HP <= barrierValue;
 
             BChar.BuffAdd(nonLethalDamage, BChar, false, 0, false, -1, false);
             BChar.Damage(BChar, masochistsCourage, false, true, false, 0, false, false, false);
-            BChar.MyTeam.partybarrier.BarrierHP += barrierValue;
+            BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
             BChar.BuffRemove(nonLethalDamage, false);
 
             if (applyBuff)
             {
-                BChar.BuffAdd(ModItemKeys.Buff_B_Darkness_DarknessEcstasy, BChar, false, 0, false, -1, false);
-                BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.2f);
+                BChar.BuffAdd(ModItemKeys.Buff_B_Darkness_HurtMeMorePlease, BChar, false, 0, false, -1, false);
+                BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += (int)(BChar.GetStat.maxhp * 0.2f);
             }
         }
     }

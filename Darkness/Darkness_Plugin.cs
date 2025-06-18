@@ -58,12 +58,14 @@ namespace Darkness
             [HarmonyPostfix]
             public static void Postfix(ref int __result)
             {
-                if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null || !Utils.DarknessMoreEnemies)
+                int enemies = (int)(Utils.DarknessMoreEnemies);
+
+                if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null || enemies == 0)
                     return;
 
                 if (DarknessInParty())
                 {
-                    __result += 1;
+                    __result += enemies;;
                 }
             }
         }

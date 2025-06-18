@@ -16,8 +16,13 @@ namespace Darkness
     /// <summary>
     /// Busty Taunt
     /// </summary>
-    public class B_Darkness_BustyTaunt : B_Taunt, IP_Awake, IP_SkillUse_User
+    public class B_Darkness_BustyTaunt : B_Taunt, IP_Awake, IP_SkillUse_User, IP_PlayerTurn
     {
+        public void Turn()
+        {
+            SelfStackDestroy();
+        }
+
         public override void Init()
         {
             base.Init();
@@ -31,8 +36,6 @@ namespace Darkness
                 Targets.Clear();
                 Targets.Add(base.Usestate_L);
             }
-
-            base.SkillUse(SkillD, Targets);
         }
     }
 }

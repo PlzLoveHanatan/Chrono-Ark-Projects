@@ -122,7 +122,7 @@ namespace Darkness
         public override void Init()
         {
             base.Init();
-            PlusStat.AggroPer = 50;
+            PlusStat.AggroPer = 100;
         }
 
         public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
@@ -140,11 +140,12 @@ namespace Darkness
 
         public void Turn()
         {
-            if (!RemoveTaunt) return;
-
-            foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
+            if (!RemoveTaunt)
             {
-                e.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 999, false, -1, false);
+                foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
+                {
+                    e.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 999, false, -1, false);
+                }
             }
         }
     }

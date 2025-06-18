@@ -21,13 +21,13 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.6f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.TryPlayDarknessSound(SkillD, BChar);
 
-            BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.6f);
+            BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.5f);
 
             foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
             {

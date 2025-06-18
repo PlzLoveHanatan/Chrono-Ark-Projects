@@ -18,12 +18,13 @@ namespace Darkness
 		/// <summary>
 		/// Busty ♡ Taunt
 		/// Can only target &target.
-		/// Removed when this character attacks &target.
+		/// Removed 1 stack at the start of the next turn.
 		/// </summary>
         public static string Buff_B_Darkness_BustyTaunt = "B_Darkness_BustyTaunt";
 		/// <summary>
 		/// Darkness ♡ Ecstasy
 		/// All incoming damage is reduced by 15%.
+		/// Reflect half of damage received onto a random enemy.
 		/// </summary>
         public static string Buff_B_Darkness_DarknessEcstasy = "B_Darkness_DarknessEcstasy";
 		/// <summary>
@@ -72,7 +73,7 @@ namespace Darkness
 		/// Level 1 : When taking damage Gain +5% Defense and +5% Faint Resist.
 		/// Level 2 : All incoming damage is reduced by 15%.
 		/// Level 3 : At the start of each turn gain barrier <color=#FF7C34>(Max HP * 0.2)</color>.
-		/// Level 4 : At the start of each turn remove 1 random debuff and apply it to all enemies.
+		/// Level 4 : At the start of each turn remove 1 random debuff and apply it to a random enemy.
 		/// Level 5 : All incoming damage reduced by 30%.
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
@@ -90,10 +91,15 @@ namespace Darkness
         public static string SkillExtended_Ex_Darkness_1 = "Ex_Darkness_1";
 		/// <summary>
 		/// Busty ♡ Taunt
-		/// <color=#919191>Can only target Darkness.
-		/// Removed when this character attacks Darkness.</color>
+		/// <color=#919191>Can only target user.
+		/// Removed 1 stack at the start of the next turn.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_BustyTaunt = "KeyWord_BustyTaunt";
+		/// <summary>
+		/// Darkness ♡ Ecstasy
+		/// <color=#919191>All incoming damage is reduced by 15%.</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_DarknessEcstasy = "KeyWord_DarknessEcstasy";
 		/// <summary>
 		/// Darkness Protection
 		/// <color=#919191>Darkness will receive attacks for this character.
@@ -106,8 +112,15 @@ namespace Darkness
 		/// Removed when you attack the user.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_HitMeHarder = "KeyWord_HitMeHarder";
+		/// <summary>
+		/// Hurt Me More ♡ Please ♡
+		/// <color=#919191>When attacked, counterattack for <color=#FF7C34>(Attack Power * 0.6)</color>.
+		/// <color=#919191>Only Darkness can have this buff.</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_HurtMeMore = "KeyWord_HurtMeMore";
         public static string SkillEffect_SE_S_S_Darkness_Decoy = "SE_S_S_Darkness_Decoy";
         public static string SkillEffect_SE_S_S_Darkness_HerosParry = "SE_S_S_Darkness_HerosParry";
+        public static string SkillEffect_SE_S_S_Darkness_LastStand = "SE_S_S_Darkness_LastStand";
         public static string SkillEffect_SE_S_S_Darkness_MasochistsCourage = "SE_S_S_Darkness_MasochistsCourage";
         public static string SkillEffect_SE_S_S_Darkness_PartyKnight = "SE_S_S_Darkness_PartyKnight";
         public static string SkillEffect_SE_S_S_Darkness_Rare_IronMaidensEmbrace = "SE_S_S_Darkness_Rare_IronMaidensEmbrace";
@@ -118,7 +131,6 @@ namespace Darkness
         public static string SkillEffect_SE_T_S_Darkness_Decoy = "SE_T_S_Darkness_Decoy";
         public static string SkillEffect_SE_T_S_Darkness_HerosParry_0 = "SE_T_S_Darkness_HerosParry_0";
         public static string SkillEffect_SE_T_S_Darkness_KnightsResolve = "SE_T_S_Darkness_KnightsResolve";
-        public static string SkillEffect_SE_T_S_Darkness_LastStand = "SE_T_S_Darkness_LastStand";
         public static string SkillEffect_SE_T_S_Darkness_PartyKnight = "SE_T_S_Darkness_PartyKnight";
         public static string SkillEffect_SE_T_S_Darkness_Rare_GuardiansGrace = "SE_T_S_Darkness_Rare_GuardiansGrace";
         public static string SkillEffect_SE_T_S_Darkness_SideSlash = "SE_T_S_Darkness_SideSlash";
@@ -131,8 +143,9 @@ namespace Darkness
         public static string Skill_S_Darkness_ClumsySlash = "S_Darkness_ClumsySlash";
 		/// <summary>
 		/// Crusader Domination
-		/// This skill always lands against targets with a Weakening<sprite=0> debuff.
-		/// If you have 15 or more barrier remaining, apply an additional 'Trial of Weakness' debuff and <color=#FF69B4>Hit Me Harder ♡</color> to all target's.
+		/// This skill always lands against targets with a CC <sprite=2> debuff.
+		/// If you have 15 or more Barrier remaining, apply an additional 'Trial of Weakness' debuff.
+		/// If the Barrier is 25 or more, apply additional <color=#FF1493>Busty ♡ Taunt</color> to the target's.
 		/// </summary>
         public static string Skill_S_Darkness_CrusaderDomination = "S_Darkness_CrusaderDomination";
 		/// <summary>
@@ -157,8 +170,7 @@ namespace Darkness
         public static string Skill_S_Darkness_KnightsResolve = "S_Darkness_KnightsResolve";
 		/// <summary>
 		/// Last Stand
-		/// This skill always lands if you have 15 barrier remaining.
-		/// Deal additional &a damage equals <color=#FF7C34>(All allies barriers * 0.4)</color>.
+		/// Apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
 		/// </summary>
         public static string Skill_S_Darkness_LastStand = "S_Darkness_LastStand";
 		/// <summary>
@@ -169,8 +181,8 @@ namespace Darkness
         public static string Skill_S_Darkness_LucyDraw = "S_Darkness_LucyDraw";
 		/// <summary>
 		/// Masochist's ♡ Courage
-		/// Take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Max HP * 0.8)</color> and create a party barrier by half that amount.
-		/// If your Health is below 50%, gain <color=#C71585>Darkness ♡ Ecstasy</color> buff and create additional &b party barrier <color=#FF7C34>(Max HP * 0.2)</color>.
+		/// Take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Max HP * 0.6)</color> and gain barrier by that amount.
+		/// If your Health is below 50% gain <color=#C71585>Hurt Me More ♡</color> buff and create additional &b party barrier <color=#FF7C34>(Max HP * 0.2)</color>.
 		/// </summary>
         public static string Skill_S_Darkness_MasochistsCourage = "S_Darkness_MasochistsCourage";
 		/// <summary>
@@ -182,7 +194,7 @@ namespace Darkness
 		/// <summary>
 		/// Guardian's Grace
 		/// If you have 15 or more Barrier remaining, gain guaranteed Critical.
-		/// If the Barrier is 30 or more, also reduce this skill's Cost by 1.
+		/// If the Barrier is 25 or more, also reduce this skill's Cost by 1.
 		/// Deal &a additional damage for each stack of buff on self.
 		/// </summary>
         public static string Skill_S_Darkness_Rare_GuardiansGrace = "S_Darkness_Rare_GuardiansGrace";
@@ -222,7 +234,7 @@ namespace Darkness
         public static string Skill_S_Darkness_Rare_UnbreakableWill_3 = "S_Darkness_Rare_UnbreakableWill_3";
 		/// <summary>
 		/// Shield of Faith
-		/// Create a party barrier (&a) equal <color=#FF7C34>(Max HP * 0.6)</color> and apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
+		/// Create a party barrier (&a) equal <color=#FF7C34>(Max HP * 0.5)</color> and apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
 		/// </summary>
         public static string Skill_S_Darkness_ShieldofFaith = "S_Darkness_ShieldofFaith";
 		/// <summary>
@@ -238,17 +250,6 @@ namespace Darkness
 		/// Stubborn Knight (Darkness Edition)
 		/// </summary>
         public static string Buff_S_Darkness_StubbornKnight_0 = "S_Darkness_StubbornKnight_0";
-		/// <summary>
-		/// Hurt Me More ♡ Please ♡
-		/// <color=#919191>When attacked, counterattack for <color=#FF7C34>(Attack Power * 0.6)</color>.
-		/// <color=#919191>Only Darkness can have this buff.</color>
-		/// </summary>
-        public static string SkillKeyword_KeyWord_HurtMeMore = "KeyWord_HurtMeMore";
-		/// <summary>
-		/// Darkness ♡ Ecstasy
-		/// <color=#919191>All incoming damage is reduced by 15%.</color>
-		/// </summary>
-        public static string SkillKeyword_KeyWord_DarknessEcstasy = "KeyWord_DarknessEcstasy";
 
     }
 
