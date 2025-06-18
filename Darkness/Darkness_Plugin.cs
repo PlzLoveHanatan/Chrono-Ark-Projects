@@ -58,12 +58,11 @@ namespace Darkness
             [HarmonyPostfix]
             public static void Postfix(ref int __result)
             {
-                if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null)
+                if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null || !Utils.DarknessMoreEnemies)
                     return;
 
                 if (DarknessInParty())
                 {
-                    Debug.Log($"[DarknessPatch] Darkness в партии! Увеличиваем врагов с {__result} до {__result + 1}");
                     __result += 1;
                 }
             }
@@ -178,12 +177,6 @@ namespace Darkness
         };
 
 
-        public static void PlayDarknessVoiceLines(string inText, string language)
-        {
-            
-        }
-
-
         [HarmonyPatch(typeof(PrintText))]
         [HarmonyPatch(nameof(PrintText.TextInput))]
         public class VoiceOn
@@ -193,68 +186,50 @@ namespace Darkness
             {
                 if (!Utils.DarknessVoice)
                 {
-                    Debug.Log("[DarknessVoice] Звуки отключены (Utils.DarknessVoice == false)");
                     return true;
                 }
 
                 string language = LocalizationManager.CurrentLanguage;
-                Debug.Log($"[DarknessVoice] Текущий язык: {language}");
-
                 Dictionary<string, string> selectedDict;
 
                 switch (language)
                 {
                     case "Korean":
                         selectedDict = DarknessVoiceLinesKR;
-                        Debug.Log("[DarknessVoice] Используется словарь: Korean");
                         break;
                     case "English":
                         selectedDict = DarknessVoiceLinesEN;
-                        Debug.Log("[DarknessVoice] Используется словарь: English");
                         break;
                     case "Japanese":
                         selectedDict = DarknessVoiceLinesJP;
-                        Debug.Log("[DarknessVoice] Используется словарь: Japanese");
                         break;
                     case "Chinese":
                         selectedDict = DarknessVoiceLinesCN;
-                        Debug.Log("[DarknessVoice] Используется словарь: Chinese");
                         break;
                     default:
                         selectedDict = DarknessVoiceLinesEN;
-                        Debug.Log("[DarknessVoice] Язык не распознан, используется словарь: English (по умолчанию)");
                         break;
                 }
-
-                bool found = false;
 
                 foreach (var kvp in selectedDict)
                 {
                     if (inText.Contains(kvp.Value))
                     {
-                        found = true;
-                        Debug.Log($"[DarknessVoice] Найдено совпадение: \"{kvp.Value}\" в тексте \"{inText}\". Воспроизводится звук: {kvp.Key}");
-
                         MasterAudio.StopBus("SE");
                         var result = MasterAudio.PlaySound(kvp.Key, 100f, null, 0f, null, null, false, false);
 
+                        // Проверка, если нужно, можно оставить или удалить
                         if (result.ActingVariation == null)
                         {
-                            Debug.LogWarning($"[DarknessVoice] Не удалось воспроизвести звук: {kvp.Key}. ActingVariation == null");
+                            // Можно добавить fallback или silently игнорировать
                         }
 
-                        // break; // Можно раскомментировать, если нужно остановиться на первом совпадении
+                        // break; // Оставь раскомментированным, если хочешь воспроизводить только первый найденный
                     }
-                }
-
-                if (!found)
-                {
-                    Debug.Log($"[DarknessVoice] Не найдено совпадений для текста: \"{inText}\"");
                 }
 
                 return true;
             }
         }
-
     }
 }

@@ -59,12 +59,16 @@ namespace Darkness
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             DarknessAttackMisses = false;
-            BattleSystem.DelayInput(Miss());
+
+            if (Utils.DarknessVoiceDialogue)
+            {
+                BattleSystem.DelayInput(Miss());
+            }
 
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash, BChar, BChar.MyTeam);
             BattleSystem.instance.AllyTeam.Add(skill, true);
 
-            if (BChar.BarrierHP >= 15)
+            if (BChar.BarrierHP >= 15 && Utils.DarknessVoiceDialogue)
             {
                 Utils.PlayDarknessBattleDialogue(MySkill, BChar);
             }

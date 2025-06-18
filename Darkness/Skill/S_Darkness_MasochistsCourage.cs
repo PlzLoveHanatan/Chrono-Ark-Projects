@@ -19,41 +19,34 @@ namespace Darkness
     /// </summary>
     public class S_Darkness_MasochistsCourage : Skill_Extended
     {
+        public override void Init()
+        {
+            OnePassive = true;
+            base.Init();
+        }
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.3)).ToString()).Replace("&b", ((int)(BChar.GetStat.maxhp * 0.4)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.8f)).ToString()).Replace("&b", ((int)(BChar.GetStat.maxhp * 0.2f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.TryPlayDarknessSound(SkillD, BChar);
 
-            int masochistsCourage = (int)(BChar.GetStat.maxhp * 0.3f);
+            var nonLethalDamage = GDEItemKeys.Buff_B_Momori_P_NoDead;
+            int masochistsCourage = (int)(BChar.GetStat.maxhp * 0.8f);
             int barrierValue = (int)(BChar.GetStat.maxhp * 0.4f);
             bool applyBuff = BChar.HP <= barrierValue;
 
+            BChar.BuffAdd(nonLethalDamage, BChar, false, 0, false, -1, false);
             BChar.Damage(BChar, masochistsCourage, false, true, false, 0, false, false, false);
-            foreach (var b in BChar.MyTeam.AliveChars)
-            {
-                if (b != null && b != BChar)
-                {
-                    b.Heal(BChar, masochistsCourage, false, false, null);
-
-                    Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_DummyHeal, BChar, BChar.MyTeam);
-                    healingParticle.PlusHit = true;
-                    healingParticle.FreeUse = true;
-
-                    BChar.ParticleOut(healingParticle, b);
-                }
-            }
+            BChar.MyTeam.partybarrier.BarrierHP += barrierValue;
+            BChar.BuffRemove(nonLethalDamage, false);
 
             if (applyBuff)
             {
-                BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
-                foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
-                {
-                    e.BuffAdd(ModItemKeys.Buff_B_Darkness_HitMeHarder, BChar, false, 999, false, -1, false);
-                }
+                BChar.BuffAdd(ModItemKeys.Buff_B_Darkness_DarknessEcstasy, BChar, false, 0, false, -1, false);
+                BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.2f);
             }
         }
     }

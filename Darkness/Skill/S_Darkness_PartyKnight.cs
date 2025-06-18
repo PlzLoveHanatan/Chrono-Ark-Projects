@@ -20,7 +20,7 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.15f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.2f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -35,8 +35,7 @@ namespace Darkness
             skill.AutoDelete = 1;
             skill.isExcept = true;
 
-            var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).Random(BChar.GetRandomClass().Main, 1);
-            var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
+            var debuffs = Targets[0].GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 1);
             foreach (var b in debuffs)
             {
                 b.SelfDestroy();

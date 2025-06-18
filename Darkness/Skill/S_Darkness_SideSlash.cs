@@ -54,9 +54,13 @@ namespace Darkness
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             DarknessAttackMisses = false;
-            BattleSystem.DelayInput(Miss());
 
-            if (BChar.BarrierHP >= 15)
+            if (Utils.DarknessVoiceDialogue)
+            {
+                BattleSystem.DelayInput(Miss());
+            }
+
+            if (BChar.BarrierHP >= 15 && Utils.DarknessVoiceDialogue)
             {
                 Utils.PlayDarknessBattleDialogue(MySkill, BChar);
             }

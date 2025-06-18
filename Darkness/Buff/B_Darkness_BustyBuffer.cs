@@ -22,12 +22,12 @@ namespace Darkness
     {
         public override string DescExtended()
         {
-            return base.DescExtended().Replace("&a", ((int)(Usestate_F.GetStat.maxhp * 0.25f)).ToString());
+            return base.DescExtended().Replace("&a", ((int)(Usestate_F.GetStat.maxhp * 0.2f)).ToString());
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            int barrierHP = (int)(base.Usestate_L.GetStat.maxhp * 0.25f);
+            int barrierHP = (int)(base.Usestate_L.GetStat.maxhp * 0.2f);
             BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
             if (SkillD.FreeUse) return;
             base.SelfStackDestroy();

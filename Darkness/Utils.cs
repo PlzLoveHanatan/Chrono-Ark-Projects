@@ -12,8 +12,11 @@ namespace Darkness
     public static class Utils
     {
         public static bool DarknessVoiceSkills => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Darkness Voice Skills").Value;
-
         public static bool DarknessVoice => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Darkness Voice").Value;
+        public static bool DarknessVoiceDialogue => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Darkness Voice Dialogue").Value;
+
+        public static bool DarknessMoreEnemies => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Darkness More Enemies").Value;
+
 
         private static readonly Dictionary<string, string> DarknessSkillSounds = new Dictionary<string, string>
         {
