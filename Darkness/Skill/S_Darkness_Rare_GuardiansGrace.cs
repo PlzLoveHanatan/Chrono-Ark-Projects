@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.Web.UI.WebControls;
 namespace Darkness
 {
 	/// <summary>

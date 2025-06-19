@@ -56,15 +56,27 @@ namespace Darkness
                     b.SelfDestroy();
                 }
             }
+
+            var hurtMeMore = ModItemKeys.Buff_B_Darkness_HurtMeMorePlease;
+            var hurtMeMoreReturn = BChar.BuffReturn(hurtMeMore, false);
+
+            if (MyChar.LV >= 6 && hurtMeMoreReturn == null)
+                BChar.BuffAdd(hurtMeMore, BChar, false, 0, false, -1, false);
         }
         public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
         {
             if (MyChar.LV >= 2)
             {
+                var darknessEcstasy = ModItemKeys.Buff_B_Darkness_HurtMeMorePlease;
+                var darknessEcstasyReturn = BChar.BuffReturn(darknessEcstasy, false) as B_Darkness_DarknessEcstasy;
+
+                if (darknessEcstasyReturn != null)
+                    darknessEcstasyReturn.Damage = Dmg;
+
                 if (!Preview && Dmg >= 1)
                 {
                     if (MyChar.LV >= 5)
-                        Dmg = (int)(Dmg * 0.4f);
+                        Dmg = (int)(Dmg * 0.55f);
 
                     else
                         Dmg = (int)(Dmg * 0.85f);

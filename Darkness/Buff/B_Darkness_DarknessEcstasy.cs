@@ -18,7 +18,8 @@ namespace Darkness
 	/// </summary>
     public class B_Darkness_DarknessEcstasy : Buff, IP_DamageTakeChange, IP_DamageTake
     {
-        private int Damage;
+        public int Damage;
+
         public override void Init()
         {
             base.Init();
@@ -34,8 +35,6 @@ namespace Darkness
 
         public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
         {
-            Damage = Dmg;
-
             if (!Preview && Dmg >= 1)
             {
                 Dmg = (int)(Dmg * 0.85f);

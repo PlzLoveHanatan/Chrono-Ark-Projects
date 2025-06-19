@@ -28,16 +28,16 @@ namespace Darkness
 
         public override void FixedUpdate()
         {
+            base.FixedUpdate();
             if (MySkill.BasicSkill)
             {
-                MySkill.APChange = -1;
+                this.MySkill.APChange = -1;
                 base.SkillParticleOn();
-
                 return;
             }
-
             base.SkillParticleOff();
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.TryPlayDarknessSound(SkillD, BChar);

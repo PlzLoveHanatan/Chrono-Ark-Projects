@@ -70,14 +70,31 @@ namespace Darkness
 		/// Darkness
 		/// Passive:
 		/// Increase Aggro and Faint Resist by 10 for each Darkness Level ♡
-		/// Level 1 : When taking damage Gain +5% Defense and +5% Faint Resist.
+		/// Level 1 : When taking damage Gain +5% Defense and +5% Faint Resist (up to 25%).
 		/// Level 2 : All incoming damage is reduced by 15%.
-		/// Level 3 : At the start of each turn gain barrier <color=#FF7C34>(Max HP * 0.2)</color>.
-		/// Level 4 : At the start of each turn remove 1 random debuff and apply it to a random enemy.
+		/// Level 3 : At the start of each turn, gain barrier <color=#FF7C34>(Max HP * 0.2)</color>.
+		/// Level 4 : At the start of each turn, remove 1 random debuff and apply it to a random enemy.
 		/// Level 5 : All incoming damage reduced by 30%.
+		/// Level 6 : At the start of each turn, gain <color=#C71585>Hurt Me More ♡</color> buff.
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Darkness = "Darkness";
+        public static string Character_Skin_Darkness_LewdKnight = "Darkness_LewdKnight";
+		/// <summary>
+		/// Passive:
+		/// </summary>
+        public static string Character_Darkness_NoArmor = "Darkness_NoArmor";
+		/// <summary>
+		/// Pleasure Piercer ♡
+		/// All attacks inflict <color=#DC143C>Hit Me Harder ♡</color> (base 105% <sprite=2> ) debuff.
+		/// Your attacks will always land if you have 15 or more barrier remaining.
+		/// </summary>
+        public static string Item_Equip_Equip_Darkness_PleasurePiercer = "Equip_Darkness_PleasurePiercer";
+		/// <summary>
+		/// Punishment Plate ♡
+		/// At the start of each turn, gain <color=#C71585>Hurt Me More ♡</color> buff if the owner is Darkness.
+		/// </summary>
+        public static string Item_Equip_Equip_Darkness_PunishmentPlate = "Equip_Darkness_PunishmentPlate";
 		/// <summary>
 		/// Cost reduced by 1 if you have 15 or more barrier remaining. Create a party barrier
 		/// equal <color=#FF7C34>(Max HP * 0.5)</color>.
@@ -133,6 +150,7 @@ namespace Darkness
         public static string SkillEffect_SE_T_S_Darkness_KnightsResolve = "SE_T_S_Darkness_KnightsResolve";
         public static string SkillEffect_SE_T_S_Darkness_PartyKnight = "SE_T_S_Darkness_PartyKnight";
         public static string SkillEffect_SE_T_S_Darkness_Rare_GuardiansGrace = "SE_T_S_Darkness_Rare_GuardiansGrace";
+        public static string SkillEffect_SE_T_S_Darkness_Rare_GuardiansGrace_0 = "SE_T_S_Darkness_Rare_GuardiansGrace_0";
         public static string SkillEffect_SE_T_S_Darkness_SideSlash = "SE_T_S_Darkness_SideSlash";
 		/// <summary>
 		/// Clumsy Slash
