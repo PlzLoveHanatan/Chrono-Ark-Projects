@@ -20,14 +20,14 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.2f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.3f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.TryPlayDarknessSound(SkillD, BChar);
 
-            int barrierHP = (int)(BChar.GetStat.maxhp * 0.2f);
+            int barrierHP = (int)(BChar.GetStat.maxhp * 0.3f);
             Targets[0].BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
 
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_PartyKnight, this.BChar, this.BChar.MyTeam);

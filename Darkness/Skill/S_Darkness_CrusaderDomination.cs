@@ -25,6 +25,7 @@ namespace Darkness
             base.Init();
             this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
         }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();

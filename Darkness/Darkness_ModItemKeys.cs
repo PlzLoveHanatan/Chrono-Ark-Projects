@@ -81,10 +81,6 @@ namespace Darkness
         public static string Character_Darkness = "Darkness";
         public static string Character_Skin_Darkness_LewdKnight = "Darkness_LewdKnight";
 		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Darkness_NoArmor = "Darkness_NoArmor";
-		/// <summary>
 		/// Pleasure Piercer ♡
 		/// All attacks inflict <color=#DC143C>Hit Me Harder ♡</color> (base 105% <sprite=2> ) debuff.
 		/// Your attacks will always land if you have 15 or more barrier remaining.
@@ -151,6 +147,7 @@ namespace Darkness
         public static string SkillEffect_SE_T_S_Darkness_PartyKnight = "SE_T_S_Darkness_PartyKnight";
         public static string SkillEffect_SE_T_S_Darkness_Rare_GuardiansGrace = "SE_T_S_Darkness_Rare_GuardiansGrace";
         public static string SkillEffect_SE_T_S_Darkness_Rare_GuardiansGrace_0 = "SE_T_S_Darkness_Rare_GuardiansGrace_0";
+        public static string SkillEffect_SE_T_S_Darkness_ShieldofFaith = "SE_T_S_Darkness_ShieldofFaith";
         public static string SkillEffect_SE_T_S_Darkness_SideSlash = "SE_T_S_Darkness_SideSlash";
 		/// <summary>
 		/// Clumsy Slash
@@ -205,7 +202,7 @@ namespace Darkness
         public static string Skill_S_Darkness_MasochistsCourage = "S_Darkness_MasochistsCourage";
 		/// <summary>
 		/// Party Knight
-		/// Apply &a barrier <color=#FF7C34>(Max HP * 0.2)</color> and remove 1 random debuff.
+		/// Apply &a barrier <color=#FF7C34>(Max HP * 0.3)</color> and remove 1 random debuff.
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Darkness_PartyKnight = "S_Darkness_PartyKnight";
@@ -252,7 +249,9 @@ namespace Darkness
         public static string Skill_S_Darkness_Rare_UnbreakableWill_3 = "S_Darkness_Rare_UnbreakableWill_3";
 		/// <summary>
 		/// Shield of Faith
-		/// Create a party barrier (&a) equal <color=#FF7C34>(Max HP * 0.5)</color> and apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
+		/// Deal additional (&a) damage <color=#FF7C34>(All allies barriers * 0.5)</color>.
+		/// This skill always lands if you have 15 or more barrier remaining.
+		/// If the Barrier is 25 or more, apply additional <color=#FF1493>Busty ♡ Taunt</color> to the target's.
 		/// </summary>
         public static string Skill_S_Darkness_ShieldofFaith = "S_Darkness_ShieldofFaith";
 		/// <summary>
