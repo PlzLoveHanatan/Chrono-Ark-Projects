@@ -67,7 +67,7 @@ namespace Darkness
 		/// </summary>
         public static string Buff_B_Darkness_TrialofWeakness = "B_Darkness_TrialofWeakness";
 		/// <summary>
-		/// Darkness
+		/// Darkness ♡
 		/// Passive:
 		/// Increase Aggro and Faint Resist by 10 for each Darkness Level ♡
 		/// Level 1 : When taking damage Gain +5% Defense and +5% Faint Resist (up to 25%).
@@ -79,7 +79,11 @@ namespace Darkness
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Darkness = "Darkness";
-        public static string Character_Skin_Darkness_LewdKnight = "Darkness_LewdKnight";
+		/// <summary>
+		/// Passive:
+		/// </summary>
+        public static string Character_Darkness_Normal = "Darkness_Normal";
+        public static string Character_Skin_Darkness_NormalKnight = "Darkness_NormalKnight";
 		/// <summary>
 		/// Pleasure Piercer ♡
 		/// All attacks inflict <color=#DC143C>Hit Me Harder ♡</color> (base 105% <sprite=2> ) debuff.
@@ -156,6 +160,7 @@ namespace Darkness
 		/// Create 'Side Slash' in your hand.
 		/// </summary>
         public static string Skill_S_Darkness_ClumsySlash = "S_Darkness_ClumsySlash";
+        public static string VFXSkill_S_Darkness_ClumsySlash_N = "S_Darkness_ClumsySlash_N";
 		/// <summary>
 		/// Crusader Domination
 		/// This skill always lands against targets with a CC <sprite=2> debuff.
@@ -163,13 +168,15 @@ namespace Darkness
 		/// If the Barrier is 25 or more, apply additional <color=#FF1493>Busty ♡ Taunt</color> to the target's.
 		/// </summary>
         public static string Skill_S_Darkness_CrusaderDomination = "S_Darkness_CrusaderDomination";
+        public static string VFXSkill_S_Darkness_CrusaderDomination_N = "S_Darkness_CrusaderDomination_N";
 		/// <summary>
 		/// Decoy
 		/// </summary>
         public static string Skill_S_Darkness_Decoy = "S_Darkness_Decoy";
+        public static string VFXSkill_S_Darkness_Decoy_N = "S_Darkness_Decoy_N";
         public static string Skill_S_Darkness_DummyHeal = "S_Darkness_DummyHeal";
 		/// <summary>
-		/// Hero's Parry
+		/// Hero's ♡ Parry
 		/// Gain &a barrier <color=#FF7C34>(Max HP * 0.4)</color>. 
 		/// Apply <color=#6A5ACD>Darkness Protection</color> to all allies.
 		/// </summary>
@@ -178,34 +185,40 @@ namespace Darkness
 		/// I Live to Suffer ♡
 		/// </summary>
         public static string Skill_S_Darkness_HerosParry_0 = "S_Darkness_HerosParry_0";
+        public static string VFXSkill_S_Darkness_HerosParry_N = "S_Darkness_HerosParry_N";
 		/// <summary>
 		/// Knight's Resolve
 		/// Cost reduced by 1 if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_Darkness_KnightsResolve = "S_Darkness_KnightsResolve";
+        public static string VFXSkill_S_Darkness_KnightsResolve_N = "S_Darkness_KnightsResolve_N";
 		/// <summary>
-		/// Last Stand
+		/// Last Stand ♡
 		/// Apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
 		/// </summary>
         public static string Skill_S_Darkness_LastStand = "S_Darkness_LastStand";
+        public static string VFXSkill_S_Darkness_LastStand_N = "S_Darkness_LastStand_N";
 		/// <summary>
-		/// Battle Prep
+		/// Battle Preparation ♡
 		/// Draw 3 skills and create a party barrier equal <color=#FF7C34>(Darkness Max HP * 0.5)</color>.
 		/// If Darkness is fainted, do not create barrier.
 		/// </summary>
         public static string Skill_S_Darkness_LucyDraw = "S_Darkness_LucyDraw";
+        public static string VFXSkill_S_Darkness_LucyDraw_N = "S_Darkness_LucyDraw_N";
 		/// <summary>
 		/// Masochist's ♡ Courage
 		/// Take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Max HP * 0.6)</color> and gain barrier by that amount.
 		/// If your Health is below 50% gain <color=#C71585>Hurt Me More ♡</color> buff and create additional &b party barrier <color=#FF7C34>(Max HP * 0.2)</color>.
 		/// </summary>
         public static string Skill_S_Darkness_MasochistsCourage = "S_Darkness_MasochistsCourage";
+        public static string VFXSkill_S_Darkness_MasochistsCourage_N = "S_Darkness_MasochistsCourage_N";
 		/// <summary>
 		/// Party Knight
 		/// Apply &a barrier <color=#FF7C34>(Max HP * 0.3)</color> and remove 1 random debuff.
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Darkness_PartyKnight = "S_Darkness_PartyKnight";
+        public static string VFXSkill_S_Darkness_PartyKnight_N = "S_Darkness_PartyKnight_N";
 		/// <summary>
 		/// Guardian's Grace
 		/// If you have 15 or more Barrier remaining, gain guaranteed Critical.
@@ -213,11 +226,13 @@ namespace Darkness
 		/// Deal &a additional damage for each stack of buff on self.
 		/// </summary>
         public static string Skill_S_Darkness_Rare_GuardiansGrace = "S_Darkness_Rare_GuardiansGrace";
+        public static string VFXSkill_S_Darkness_Rare_GuardiansGrace_N = "S_Darkness_Rare_GuardiansGrace_N";
 		/// <summary>
-		/// Iron Maiden's Embrace
+		/// Iron Maiden's Embrace ♡
 		/// When used create a party barrier equal &a <color=#FF7C34>(Max HP * 0.5)</color>.
 		/// </summary>
         public static string Skill_S_Darkness_Rare_IronMaidensEmbrace = "S_Darkness_Rare_IronMaidensEmbrace";
+        public static string VFXSkill_S_Darkness_Rare_IronMaidensEmbrace_N = "S_Darkness_Rare_IronMaidensEmbrace_N";
 		/// <summary>
 		/// Unbreakable Will
 		/// When used apply <color=#FF1493>Busty ♡ Taunt</color> to all enemies.
@@ -247,18 +262,21 @@ namespace Darkness
 		/// Can only be used once.
 		/// </summary>
         public static string Skill_S_Darkness_Rare_UnbreakableWill_3 = "S_Darkness_Rare_UnbreakableWill_3";
+        public static string VFXSkill_S_Darkness_Rare_UnbreakableWill_N = "S_Darkness_Rare_UnbreakableWill_N";
 		/// <summary>
-		/// Shield of Faith
+		/// Shield of Faith ♡
 		/// Deal additional (&a) damage <color=#FF7C34>(All allies barriers * 0.5)</color>.
 		/// This skill always lands if you have 15 or more barrier remaining.
 		/// If the Barrier is 25 or more, apply additional <color=#FF1493>Busty ♡ Taunt</color> to the target's.
 		/// </summary>
         public static string Skill_S_Darkness_ShieldofFaith = "S_Darkness_ShieldofFaith";
+        public static string VFXSkill_S_Darkness_ShieldofFaith_N = "S_Darkness_ShieldofFaith_N";
 		/// <summary>
 		/// Side Slash
 		/// This skill always lands if you have 15 or more barrier remaining.
 		/// </summary>
         public static string Skill_S_Darkness_SideSlash = "S_Darkness_SideSlash";
+        public static string VFXSkill_S_Darkness_SideSlash_N = "S_Darkness_SideSlash_N";
 		/// <summary>
 		/// Stubborn Knight (KonoSuba Edition)
 		/// </summary>

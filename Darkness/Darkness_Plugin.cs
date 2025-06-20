@@ -15,6 +15,7 @@ using ChronoArkMod.ModData;
 using HarmonyLib;
 using System.Reflection.Emit;
 using Dialogical;
+using UnityEngine.Experimental.UIElements;
 namespace Darkness
 {
     public class Darkness_Plugin : ChronoArkPlugin
@@ -52,25 +53,40 @@ namespace Darkness
             return false;
         }
 
-        [HarmonyPatch(typeof(GDEStageData), "get_EnemyNum")]
-        public static class DarknessEnemyPatch
+        [HarmonyPatch]
+        public class Patches
         {
-            [HarmonyPostfix]
-            public static void Postfix(ref int __result)
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(CharacterSkinData), "GetIllustChangePath")]
+            [HarmonyPatch(typeof(CharacterSkinData), "GetVFXChangePath")]
+            public static void IllustChangePrefix(ref string charKey, string skillKey)
             {
-                int enemies = (int)(Utils.DarknessMoreEnemies);
-
-                if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null || enemies == 0)
-                    return;
-
-                if (DarknessInParty())
+                GDESkillData gdeskillData = new GDESkillData(skillKey);
+                if (gdeskillData != null && !string.IsNullOrEmpty(gdeskillData.LucyPartyDraw))
                 {
-                    __result += enemies;;
+                    charKey = gdeskillData.LucyPartyDraw;
                 }
             }
-        }
 
-        private static readonly Dictionary<string, string> DarknessVoiceLinesKR = new Dictionary<string, string>
+            [HarmonyPatch(typeof(GDEStageData), "get_EnemyNum")]
+            public static class DarknessEnemyPatch
+            {
+                [HarmonyPostfix]
+                public static void Postfix(ref int __result)
+                {
+                    int enemies = (int)(Utils.DarknessMoreEnemies);
+
+                    if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null || enemies == 0)
+                        return;
+
+                    if (DarknessInParty())
+                    {
+                        __result += enemies;
+                    }
+                }
+            }
+
+            private static readonly Dictionary<string, string> DarknessVoiceLinesKR = new Dictionary<string, string>
         {
             { "DarknessAttackLands_0", "내 공격이 적중하고 있어! 진짜로 맞고 있다고!"},
             { "DarknessAttackLands_1", "아이즈의 검술 훈련은 정말 대단해! 적중의 쾌감에 중독되기 시작했어!"},
@@ -97,7 +113,7 @@ namespace Darkness
             { "DarknessDeathDoorAlly", "고통이 무서워? 나는 아니야 — 고통은 내가 가장 좋아하는 것 중 하나라고!"},
         };
 
-        private static readonly Dictionary<string, string> DarknessVoiceLinesEN = new Dictionary<string, string>
+            private static readonly Dictionary<string, string> DarknessVoiceLinesEN = new Dictionary<string, string>
         {
             { "DarknessAttackLands_0", "My attacks are landing! They're actually landing!"},
             { "DarknessAttackLands_1", "Aiz's sword training is amazing! I'm starting to get addicted to the thrill of landing hits!"},
@@ -124,7 +140,7 @@ namespace Darkness
             { "DarknessDeathDoorAlly", "Afraid of pain? Me? No — pain's one of my favorite things!"},
         };
 
-        private static readonly Dictionary<string, string> DarknessVoiceLinesJP = new Dictionary<string, string>
+            private static readonly Dictionary<string, string> DarknessVoiceLinesJP = new Dictionary<string, string>
         {
             { "DarknessAttackLands_0", "私の攻撃が当たってる！本当に当たってる！" },
             { "DarknessAttackLands_1", "アイズの剣の訓練はすごいよ！攻撃が当たるスリルにハマりそう！" },
@@ -151,7 +167,7 @@ namespace Darkness
             { "DarknessDeathDoorAlly", "痛みが怖い？私？いいえ、痛みは私の好きなものの一つです！"},
         };
 
-        private static readonly Dictionary<string, string> DarknessVoiceLinesCN = new Dictionary<string, string>
+            private static readonly Dictionary<string, string> DarknessVoiceLinesCN = new Dictionary<string, string>
         {
             { "DarknessAttackLands_0", "我的攻击打中了！真的打中了！"},
             { "DarknessAttackLands_1", "艾丝的剑术训练太厉害了！我已经开始迷上击中敌人的快感了！" },
@@ -179,58 +195,59 @@ namespace Darkness
         };
 
 
-        [HarmonyPatch(typeof(PrintText))]
-        [HarmonyPatch(nameof(PrintText.TextInput))]
-        public class VoiceOn
-        {
-            [HarmonyPrefix]
-            public static bool Prefix(PrintText __instance, string inText)
+            [HarmonyPatch(typeof(PrintText))]
+            [HarmonyPatch(nameof(PrintText.TextInput))]
+            public class VoiceOn
             {
-                if (!Utils.DarknessVoice)
+                [HarmonyPrefix]
+                public static bool Prefix(PrintText __instance, string inText)
                 {
+                    if (!Utils.DarknessVoice)
+                    {
+                        return true;
+                    }
+
+                    string language = LocalizationManager.CurrentLanguage;
+                    Dictionary<string, string> selectedDict;
+
+                    switch (language)
+                    {
+                        case "Korean":
+                            selectedDict = DarknessVoiceLinesKR;
+                            break;
+                        case "English":
+                            selectedDict = DarknessVoiceLinesEN;
+                            break;
+                        case "Japanese":
+                            selectedDict = DarknessVoiceLinesJP;
+                            break;
+                        case "Chinese":
+                            selectedDict = DarknessVoiceLinesCN;
+                            break;
+                        default:
+                            selectedDict = DarknessVoiceLinesEN;
+                            break;
+                    }
+
+                    foreach (var kvp in selectedDict)
+                    {
+                        if (inText.Contains(kvp.Value))
+                        {
+                            MasterAudio.StopBus("SE");
+                            var result = MasterAudio.PlaySound(kvp.Key, 100f, null, 0f, null, null, false, false);
+
+                            // Проверка, если нужно, можно оставить или удалить
+                            if (result.ActingVariation == null)
+                            {
+                                // Можно добавить fallback или silently игнорировать
+                            }
+
+                            // break; // Оставь раскомментированным, если хочешь воспроизводить только первый найденный
+                        }
+                    }
+
                     return true;
                 }
-
-                string language = LocalizationManager.CurrentLanguage;
-                Dictionary<string, string> selectedDict;
-
-                switch (language)
-                {
-                    case "Korean":
-                        selectedDict = DarknessVoiceLinesKR;
-                        break;
-                    case "English":
-                        selectedDict = DarknessVoiceLinesEN;
-                        break;
-                    case "Japanese":
-                        selectedDict = DarknessVoiceLinesJP;
-                        break;
-                    case "Chinese":
-                        selectedDict = DarknessVoiceLinesCN;
-                        break;
-                    default:
-                        selectedDict = DarknessVoiceLinesEN;
-                        break;
-                }
-
-                foreach (var kvp in selectedDict)
-                {
-                    if (inText.Contains(kvp.Value))
-                    {
-                        MasterAudio.StopBus("SE");
-                        var result = MasterAudio.PlaySound(kvp.Key, 100f, null, 0f, null, null, false, false);
-
-                        // Проверка, если нужно, можно оставить или удалить
-                        if (result.ActingVariation == null)
-                        {
-                            // Можно добавить fallback или silently игнорировать
-                        }
-
-                        // break; // Оставь раскомментированным, если хочешь воспроизводить только первый найденный
-                    }
-                }
-
-                return true;
             }
         }
     }

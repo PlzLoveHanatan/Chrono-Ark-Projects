@@ -14,9 +14,8 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 namespace Darkness
 {
-    public class Darkness_ModDefinition:ModDefinition
+    public class Darkness_ModDefinition : ModDefinition
     {
-        public override Type ModItemKeysType => typeof(ModItemKeys);
         /* //Example
         [CustomGDE(nameof(GDEItemKeys.Character_Sizz),nameof(GDECharacterData.name))]
         public string SizzName
