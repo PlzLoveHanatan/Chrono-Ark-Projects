@@ -208,7 +208,7 @@ namespace Darkness
 		/// <summary>
 		/// Masochist's ♡ Courage
 		/// Take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Max HP * 0.6)</color> and gain barrier by that amount.
-		/// If your Health is below 50% gain <color=#C71585>Hurt Me More ♡</color> buff and create additional &b party barrier <color=#FF7C34>(Max HP * 0.2)</color>.
+		/// If your Health is below 50% gain <color=#C71585>Hurt Me More ♡</color> buff and gain additional &b barrier <color=#FF7C34>(Max HP * 0.2)</color>.
 		/// </summary>
         public static string Skill_S_Darkness_MasochistsCourage = "S_Darkness_MasochistsCourage";
         public static string VFXSkill_S_Darkness_MasochistsCourage_N = "S_Darkness_MasochistsCourage_N";
@@ -308,7 +308,7 @@ namespace Darkness
 		/// English:
 		/// Aiz's sword training is amazing! I'm starting to get addicted to the thrill of landing hits!
 		/// Japanese:
-		/// アイズの剣の訓練はすごいよ！攻撃が当たるスリルにハマりそう！
+		/// アイズの剣の指導は素晴らしい!攻撃が当たる快感に目覚めてしまいそうだ!
 		/// Chinese:
 		/// 艾丝的剑术训练太厉害了！我已经开始迷上击中敌人的快感了！
 		/// Chinese-TW:
@@ -320,7 +320,7 @@ namespace Darkness
 		/// English:
 		/// I'm confident in my strength and endurance, but I'm so clumsy my attacks never land...
 		/// Japanese:
-		/// 体力と持久力には自信があるけど、不器用すぎて攻撃が全然当たらない…
+		/// 力と耐久力には自信があるのだが不器用で攻撃が全く当たらないのだ
 		/// Chinese:
 		/// 我对自己的力量和耐力很有自信，但太笨拙了，攻击总是打不中……
 		/// Chinese-TW:

@@ -57,11 +57,12 @@ namespace Darkness
         public class Patches
         {
             [HarmonyPrefix]
-            [HarmonyPatch(typeof(CharacterSkinData), "GetIllustChangePath")]
-            [HarmonyPatch(typeof(CharacterSkinData), "GetVFXChangePath")]
+            [HarmonyPatch(typeof(CharacterSkinData), nameof(CharacterSkinData.GetIllustChangePath))]
+            [HarmonyPatch(typeof(CharacterSkinData), nameof(CharacterSkinData.GetVFXSkillData))]
+            [HarmonyPatch(typeof(CharacterSkinData), nameof(CharacterSkinData.GetVFXChangePath))]
             public static void IllustChangePrefix(ref string charKey, string skillKey)
             {
-                GDESkillData gdeskillData = new GDESkillData(skillKey);
+                var gdeskillData = new GDESkillData(skillKey);
                 if (gdeskillData != null && !string.IsNullOrEmpty(gdeskillData.LucyPartyDraw))
                 {
                     charKey = gdeskillData.LucyPartyDraw;
@@ -147,24 +148,24 @@ namespace Darkness
             { "DarknessAttackMisses", "体力と持久力には自信があるけど、不器用すぎて攻撃が全然当たらない…"},
             { "DarknessBattleStart_0", "聖騎士として、最後まで使命を果たさねばならない。"},
             { "DarknessBattleStart_1", "ためらうな！必要なら敵と一緒に俺を攻撃しろ！"},
-            { "DarknessBattleStart_2", "代役でも遠慮せずにどんどん指示してくれ！"},
-            { "DarknessChest", "防具なしでこんな一撃を受けたら……まあいい！それでも冒険に行こう！"},
-            { "DarknessCrit", "た、たとえ部隊名でも関係ないから…ララティナって呼ばないでよ！"},
+            { "DarknessBattleStart_2", "パーティーの足を引っ張るようなことがあれば強めに罵ってくれ!"},
+            { "DarknessChest", "鎧がないこの状態で、もし重い一撃をくらったら…よし!クエストに行こう!"},
+            { "DarknessCrit", "い、いくらユニット名でもラルティーナと呼ばないでくれ!"},
             { "DarknessCurse", "クルセイダーは寒さになんて屈しない。むしろ歓迎するわ！"},
-            { "DarknessHealed", "ちょ、ちょっと！それ引っ張らないで！今すぐやめてよ！"},
-            { "DarknessIdleBattle_0", "タワーシールドか…頼もしいけど、なんでこんなにイライラするのよ！"},
-            { "DarknessIdleBattle_1", "パーティーの盾になって魔王軍に捕まるなんて…うぅ、想像しただけで！"},
-            { "DarknessIdleBattle_2", "観客がみんな私を見てる…うぅっ！"},
-            { "DarknessIdleField_0", "わ、わ、わ、私だって女の子なんだから！硬いとか怪力とか言われると…傷つくんだからね！"},
-            { "DarknessIdleField_1", "ふふふふふ…何をしてるかって？見てわからない？日課の編み物だよ。"},
-            { "DarknessKill", "相手が誰であろうと、私の使命は変わらない。かかってこい――私は壁だ！"},
-            { "DarknessMaster", "なんという締めつけの強さ！さすがはクラーケン、期待以上だ！"},
-            { "DarknessPharos_0", "今は軽装だが、私はまだ十字軍だ。さあ、全力の一撃を食らえ！"},
-            { "DarknessPharos_1", "私は最後の瞬間まで抵抗する。邪魔をするな！"},
-            { "DarknessPharos_2", "昔から、女騎士が魔王の手で辱めを受けるのが運命だった。"},
-            { "DarknessPotion", "こういう静かな飲み方も…たまには悪くないね。"},
-            { "DarknessDeathDoor", "たとえこの身体が砕けても、私は決して悪に屈しない！"},
-            { "DarknessDeathDoorAlly", "痛みが怖い？私？いいえ、痛みは私の好きなものの一つです！"},
+            { "DarknessHealed", "ちょ、引っ張るな!や、やめ、やめろー!"},
+            { "DarknessIdleBattle_0", "大盾か…確かに頼もしいが…なんだこのもどかしさは…"},
+            { "DarknessIdleBattle_1", "皆の盾となり魔王軍に捕まった私は、くっ、想像しただけで!"},
+            { "DarknessIdleBattle_2", "大勢の観客の視線が私に注がれて…くぅ!"},   
+            { "DarknessIdleField_0", "わ、わ、わ、わたしだって女だ!堅いだの、怪力だの言われたら、傷つくのだぞ!"},
+            { "DarknessIdleField_1", "ふっふっふっふっふっふっふっふっ…何をしているかって?見ればわかるだろう…日課の編み物だ…"},
+            { "DarknessKill", "誰が相手でも私の使命に変わりはない さあ来い私が壁だ!"},
+            { "DarknessMaster", "なんという締め付け! さすがはクラーケン! 期待以上だ!"},
+            { "DarknessPharos_0", "今は軽装だが私は来るせいだ さあ遠慮なく重い一撃よ"},
+            { "DarknessPharos_1", "ギリギリギリまで抵抗してみるから邪魔はしないでくれ!"},
+            { "DarknessPharos_2", "むかしから魔王にエロい目にあわされるのは、女騎士の役目と相場はきまっている。"},
+            { "DarknessPotion", "たまにはこんな風に静かに飲むのも悪くないな。"},
+            { "DarknessDeathDoor", "たとえこの身が砕けようとも、決して悪に屈指はしない!"},
+            { "DarknessDeathDoorAlly", "痛いのは嫌か? だと?むしろ大好物だ!"},
         };
 
             private static readonly Dictionary<string, string> DarknessVoiceLinesCN = new Dictionary<string, string>

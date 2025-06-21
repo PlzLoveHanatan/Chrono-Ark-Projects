@@ -42,18 +42,17 @@ namespace Darkness
             {
                 Barrierhp += battleAlly.BarrierHP;
             }
-            if (Barrierhp >= 15)
+            if (Barrierhp >= 1)
             {
                 SkillBasePlus.Target_BaseDMG = (int)(Barrierhp * 0.5f);
-                base.SkillParticleOn();
+
+                if (BChar.BarrierHP >= 15)
+                {
+                    base.SkillParticleOn();
+                }
                 return;
             }
-            else if (Barrierhp >= 1)
-            {
-                SkillBasePlus.Target_BaseDMG = (int)(Barrierhp * 0.5f);
-                return;
-            }
-            
+
             SkillBasePlus.Target_BaseDMG = 0;
             base.SkillParticleOff();
         }
