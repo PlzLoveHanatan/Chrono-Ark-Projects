@@ -79,10 +79,6 @@ namespace Darkness
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Darkness = "Darkness";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Darkness_Normal = "Darkness_Normal";
         public static string Character_Skin_Darkness_NormalKnight = "Darkness_NormalKnight";
 		/// <summary>
 		/// Pleasure Piercer ♡
@@ -308,7 +304,7 @@ namespace Darkness
 		/// English:
 		/// Aiz's sword training is amazing! I'm starting to get addicted to the thrill of landing hits!
 		/// Japanese:
-		/// アイズの剣の指導は素晴らしい!攻撃が当たる快感に目覚めてしまいそうだ!
+		/// アイズの剣の訓練はすごいよ！攻撃が当たるスリルにハマりそう！
 		/// Chinese:
 		/// 艾丝的剑术训练太厉害了！我已经开始迷上击中敌人的快感了！
 		/// Chinese-TW:
@@ -320,7 +316,7 @@ namespace Darkness
 		/// English:
 		/// I'm confident in my strength and endurance, but I'm so clumsy my attacks never land...
 		/// Japanese:
-		/// 力と耐久力には自信があるのだが不器用で攻撃が全く当たらないのだ
+		/// 体力と持久力には自信があるけど、不器用すぎて攻撃が全然当たらない…
 		/// Chinese:
 		/// 我对自己的力量和耐力很有自信，但太笨拙了，攻击总是打不中……
 		/// Chinese-TW:

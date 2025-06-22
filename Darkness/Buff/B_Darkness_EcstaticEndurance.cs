@@ -16,7 +16,7 @@ namespace Darkness
 	/// <summary>
 	/// Ecstatic Endurance
 	/// </summary>
-    public class B_Darkness_EcstaticEndurance : Buff, IP_HPChange
+    public class B_Darkness_EcstaticEndurance : Buff, IP_HPChange, IP_Awake
     {
         public override void Init()
         {

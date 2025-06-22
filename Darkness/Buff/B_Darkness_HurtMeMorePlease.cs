@@ -18,15 +18,8 @@ namespace Darkness
     /// <summary>
     /// Hurt Me More, Please ♡
     /// </summary>
-    public class B_Darkness_HurtMeMorePlease : Buff/*, IP_TargetedAlly*/, IP_DamageChange_Hit_sumoperation, IP_Dodge
+    public class B_Darkness_HurtMeMorePlease : Buff, IP_DamageChange_Hit_sumoperation, IP_Dodge, IP_BuffAddAfter
     {
-        public override void FixedUpdate()
-        {
-            if (BChar.Info.KeyData != ModItemKeys.Character_Darkness)
-            {
-                SelfDestroy();
-            }
-        }
         public override string DescExtended()
         {
             return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.atk * 0.6f)).ToString());
@@ -70,28 +63,12 @@ namespace Darkness
             yield break;
         }
 
-        //public IEnumerator Targeted(BattleChar Attacker, List<BattleChar> SaveTargets, Skill skill)
-        //{
-        //    using (List<BattleChar>.Enumerator enumerator2 = SaveTargets.GetEnumerator())
-        //    {
-        //        while (enumerator2.MoveNext())
-        //        {
-        //            if (enumerator2.Current.Info.Ally)
-        //            {
-        //                Skill skill2 = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_HerosParry_0, base.Usestate_L, base.Usestate_L.MyTeam);
-        //                skill2.PlusHit = true;
-        //                skill2.FreeUse = true;
-        //                this.BChar.ParticleOut(skill2, Attacker);
-        //                var text = ModLocalization.HurtMe;
-        //                BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(BChar, text));
-        //                EffectView.TextOutSimple(this.BChar, this.BuffData.Name);
-        //                yield return new WaitForSeconds(0.1f);
-        //                break;
-        //            }
-        //        }
-        //    }
-        //    List<BattleChar>.Enumerator enumerator = default(List<BattleChar>.Enumerator);
-        //    yield break;
-        //}
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            if (BuffTaker.Info.KeyData != ModItemKeys.Character_Darkness && addedbuff.BuffData.Key == ModItemKeys.Buff_B_Darkness_HurtMeMorePlease)
+            {
+                SelfDestroy();
+            }
+        }
     }
 }

@@ -11,11 +11,12 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using NLog.Targets;
 namespace Darkness
 {
-	/// <summary>
-	/// Clumsy Slash
-	/// </summary>
+    /// <summary>
+    /// Clumsy Slash
+    /// </summary>
     public class S_Darkness_ClumsySlash : Skill_Extended
     {
         private bool DarknessAttackMisses;
@@ -36,7 +37,7 @@ namespace Darkness
             {
                 MySkill.MySkill.NODOD = true;
                 base.SkillParticleOn();
-                
+
                 return;
             }
 
