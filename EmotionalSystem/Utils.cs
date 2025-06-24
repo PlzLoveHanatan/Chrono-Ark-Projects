@@ -12,6 +12,7 @@ using EmotionSystem;
 using ChronoArkMod.ModData.Settings;
 using EmotionalSystem;
 using GameDataEditor;
+using HarmonyLib;
 
 namespace EmotionalSystem
 {
@@ -20,6 +21,10 @@ namespace EmotionalSystem
         public static bool UseParticle => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("Use Particle").Value;
 
         public static bool EGOButtonHotkey => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("EGO Button Hotkey").Value;
+
+        public static bool EmotionalSystemTutorial => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("Tutorial").Value;
+
+        public static bool Tutorial;
 
         public static GameObject EmotionTrajectoryPos;
         public static GameObject EmotionTrajectoryNeg;
@@ -104,6 +109,7 @@ namespace EmotionalSystem
             var mod = ModManager.getModInfo("EmotionalSystem");
             if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
             var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
+            Debug.Log($"[EmotionalSystem] Getting asset address: {address}");
             return AddressableLoadManager.LoadAddressableAsset<T>(address);
         }
 
@@ -116,18 +122,6 @@ namespace EmotionalSystem
             gameObject.layer = 8;
             return gameObject;
         }
-
-        //public static string getTranslation(string key)
-        //{
-        //    try
-        //    {
-        //        return ModManager.getModInfo("RandomCharacter").localizationInfo.SyetemLocalizationUpdate("RandomCharacter/UI/" + key);
-        //    }
-        //    catch
-        //    {
-        //    }
-        //    return key;
-        //}
 
         public static GameObject GetChildByName(GameObject obj, string name)
         {
@@ -151,8 +145,8 @@ namespace EmotionalSystem
             img.rectTransform.anchorMax = new Vector2(0f, 1f);
             img.rectTransform.sizeDelta = size;
             img.rectTransform.transform.localPosition = pos;
-        }
 
+        }
         public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)
         {
             txt.rectTransform.anchorMin = new Vector2(0f, 1f);
@@ -377,6 +371,47 @@ namespace EmotionalSystem
             {
                 SaveManager.NowData.unlockList.SkillPreView.Add(key);
             }
+        }
+        public static T GetField<T>(this object obj, string fieldName)
+        {
+            return Traverse.Create(obj).Field<T>(fieldName).Value;
+        }
+
+        public static void SetField<T>(this object obj, string fieldName, T value)
+        {
+            Traverse.Create(obj).Field<T>(fieldName).Value = value;
+        }
+        public static string GetTranslation(this string key)
+        {
+            try
+            {
+                return ModManager.getModInfo(EmotionalSystem_Plugin.modname).localizationInfo.
+                    SystemLocalizationUpdate(EmotionalSystem_Plugin.modname + "/" + key);
+            }
+            catch
+            {
+            }
+            return key;
+        }
+        public static void FitRectTransformToTarget(RectTransform toFit, RectTransform target, Vector3 localPositionOffset)
+        {
+            if (toFit == null || target == null)
+            {
+                Debug.LogWarning("RectTransform is null!");
+                return;
+            }
+
+            // Stretch across the parent (full width and height)
+            toFit.anchorMin = new Vector2(0f, 0f);
+            toFit.anchorMax = new Vector2(1f, 1f);
+            toFit.pivot = target.pivot;
+
+            // Add padding of 20 pixels on all sides
+            toFit.offsetMin = new Vector2(10f, 80f);   // Left and bottom
+            toFit.offsetMax = new Vector2(-10f, -35f); // Right and top
+
+            // Additional manual offset (if you want to move the image further)
+            toFit.localPosition += localPositionOffset;
         }
     }
 }

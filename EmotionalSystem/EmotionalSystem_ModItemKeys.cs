@@ -554,6 +554,7 @@ namespace EmotionalSystem
         public static string SkillEffect_SE_T_S_Boss_Witch_Curse_0 = "SE_T_S_Boss_Witch_Curse_0";
         public static string SkillEffect_SE_T_S_Buff_MirrorAdjustment = "SE_T_S_Buff_MirrorAdjustment";
         public static string SkillEffect_SE_T_S_Buff_Unity = "SE_T_S_Buff_Unity";
+        public static string SkillEffect_SE_T_S_EmotionalSystem_RevengeStrike = "SE_T_S_EmotionalSystem_RevengeStrike";
         public static string SkillEffect_SE_T_S_LucyEGO_History_FourthMatchFlame = "SE_T_S_LucyEGO_History_FourthMatchFlame";
         public static string SkillEffect_SE_T_S_LucyEGO_History_GreenStem = "SE_T_S_LucyEGO_History_GreenStem";
         public static string SkillEffect_SE_T_S_LucyEGO_History_Hornet = "SE_T_S_LucyEGO_History_Hornet";
@@ -743,6 +744,11 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Buff_Unity = "S_Buff_Unity";
 		/// <summary>
+		/// Revenge Strike
+		/// Deal additional damage (Max &a, based on current stage) equal to damage taken this turn.
+		/// </summary>
+        public static string Skill_S_EmotionalSystem_RevengeStrike = "S_EmotionalSystem_RevengeStrike";
+		/// <summary>
 		/// <color=#ffc500>Fourth Match Flame</color>
 		/// Inflict 10 <color=#f8181c>Burn</color>.
 		/// If facing 1 enemy, inflict 5 additional <color=#f8181c>Burn</color>. 
@@ -931,6 +937,51 @@ namespace EmotionalSystem
 		/// Chinese-TW:
 		/// </summary>
         public static string EgoOnce => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoOnce");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Introduce the Emotional System from Library of Ruina.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionalSystemEmotionalSystemTutorial_0 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// During battles, you can obtain two types of Emotional Coins: Positive and Negative.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionalSystemEmotionalSystemTutorial_1 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// By collecting Emotional Coins and raising your Emotional Level, you will gain benefits.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionalSystemEmotionalSystemTutorial_2 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// EGO skill can be accessed through this button near your hand.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionalSystemEmotionalSystemTutorial_3 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_3");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// You can obtain EGO skills when average emotion level reaches 3 and above.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionalSystemEmotionalSystemTutorial_4 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_4");
 
     }
 }

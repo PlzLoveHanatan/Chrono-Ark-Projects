@@ -23,7 +23,7 @@ namespace EmotionalSystem
     /// </summary>
     public class B_EnemyEmotionalLevel_Dice : Buff, IP_EnemyNewTurn
     {
-        private Dictionary<string, List<string>> BossActions = new Dictionary<string, List<string>>()
+        private readonly Dictionary<string, List<string>> BossActions = new Dictionary<string, List<string>>()
         {
             { GDEItemKeys.Enemy_MBoss_0, new List<string> { GDEItemKeys.Skill_S_MBoss_0, GDEItemKeys.Skill_S_MBoss_1, GDEItemKeys.Skill_S_MBoss_2 } },
             { GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { GDEItemKeys.Skill_S_Armor_0, GDEItemKeys.Skill_S_Armor_2, GDEItemKeys.Skill_S_Armor_3 } },
@@ -53,6 +53,7 @@ namespace EmotionalSystem
             if (BChar is BattleEnemy enemy)
             {
                 Skill skill;
+
                 if (BossActions.ContainsKey(BChar.Info.KeyData))
                 { // predefined action for original game's enemies
                     var actions = BossActions[BChar.Info.KeyData];
@@ -61,7 +62,7 @@ namespace EmotionalSystem
                 }
                 else if (enemy.Boss)
                 { // predefined action for undefined bosses (likely mod bosses)
-                    skill = Skill.TempSkill(GDEItemKeys.Skill_S_Shotgun_1, BChar, BChar.MyTeam);
+                    skill = Skill.TempSkill(ModItemKeys.Skill_S_EmotionalSystem_RevengeStrike, BChar, BChar.MyTeam);
                 }
                 else
                 { // random action for undefined regular enemies

@@ -16,6 +16,7 @@ using HarmonyLib;
 using EmotionalSystem;
 using System.Diagnostics.Eventing.Reader;
 using static System.Net.Mime.MediaTypeNames;
+using ChronoArkMod.ModData.Settings;
 namespace EmotionalSystem
 {
     public class EmotionalSystem_Plugin : ChronoArkPlugin
@@ -24,7 +25,9 @@ namespace EmotionalSystem
 
         public const string version = "1.0";
 
-        public const string author = "Midana";
+        public const string author = "Midana && surprise4u";
+
+        public static ModInfo ThisMod => ModManager.getModInfo(modname);
 
         [HarmonyPatch(typeof(BattleSystem), nameof(BattleSystem.EnemyTurn))]
         public class EndTurnPatch
