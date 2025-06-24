@@ -15,6 +15,7 @@ using ChronoArkMod.ModData;
 using UnityEngine.Events;
 using UnityEngine.U2D.SpriteShapeClipperLib;
 using UnityEngine.Diagnostics;
+
 namespace XiaoLOR
 {
     public class XiaoLOR_ModDefinition : ModDefinition

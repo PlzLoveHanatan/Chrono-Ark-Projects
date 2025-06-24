@@ -32,6 +32,7 @@ namespace XiaoLOR
     public class P_XiaoLOR : Passive_Char, IP_PlayerTurn, IP_EmotionLvUpBefore, IP_Draw, IP_SkillUse_BasicSkill, IP_DamageChange_sumoperation, IP_SkillUse_User, IP_BattleEndRewardChange, IP_BattleStart_Ones
     {
         private bool LastFight;
+
         public static readonly Dictionary<string, string> SkillsList = new Dictionary<string, string>
         {
             { ModItemKeys.Skill_S_XiaoLORLv1_FrontalAssault, ModItemKeys.Skill_S_XiaoLORLv2_SinglePointStab },
@@ -53,7 +54,7 @@ namespace XiaoLOR
         }
         public override void FixedUpdate()
         {
-            PlusStat.DeadImmune = MyChar.LV * 5 - 5;
+            PlusStat.DeadImmune = MyChar.LV * 5;
         }
         public void BattleStart(BattleSystem Ins)
         {        

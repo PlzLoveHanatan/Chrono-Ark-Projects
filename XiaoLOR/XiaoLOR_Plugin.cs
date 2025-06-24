@@ -32,6 +32,8 @@ namespace XiaoLOR
 
         Harmony harmony = new Harmony("XiaoLOR");
 
+        public static ModInfo ThisMod => ModManager.getModInfo(modname);
+
         public override void Dispose()
         {
             if (harmony != null)
@@ -70,13 +72,7 @@ namespace XiaoLOR
             [HarmonyPostfix]
             private static void Postfix()
             {
-                Debug.Log("[BGMPatch] Called BattleSystem.CustomBGM postfix");
-
-                if (!XiaoInParty() && !XiaoUtils.IronLotusSong)
-                {
-                    Debug.Log("[BGMPatch] Xiao is not in party and IronLotusSong is false — skipping.");
-                    return;
-                }
+                if (!XiaoInParty() && !XiaoUtils.IronLotusSong) return;
 
                 if (PlayData.BattleQueue == GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
                 {
@@ -86,6 +82,6 @@ namespace XiaoLOR
                     MasterAudio.StopAllOfSound("Challenge_Loop");
                 }
             }
-        }
+        }        
     }
 }
