@@ -42,9 +42,8 @@ namespace EmotionalSystem
 
         public List<Abnormality> DynamicAbnormalitiesList = new List<Abnormality>();
 
-        public static List<Abnormality> Abnormalities = new List<Abnormality>
+        private static readonly List<Abnormality> Abnormalities = new List<Abnormality>
         {
-
             new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, AbnoType.Neg, 0),
             new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment, AbnoType.Neg, 0),
             new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Shelter, AbnoType.Pos, 0),
@@ -53,7 +52,6 @@ namespace EmotionalSystem
             new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Unity, AbnoType.Pos, 0),
             new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment, AbnoType.Pos, 0),
             new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_YouMustBeHappy, AbnoType.Neg, 0)
-
 
             //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Strengthen, AbnoType.Pos, 0),
             //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Stress, AbnoType.Neg, 0),
@@ -65,7 +63,7 @@ namespace EmotionalSystem
             //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_YouMustBeHappy, AbnoType.Pos, 0),
             //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, AbnoType.Neg, 0)
         };
-        private static Dictionary<string, List<string>> BannedAbnormalities = new Dictionary<string, List<string>>()
+        private static readonly Dictionary<string, List<string>> BannedAbnormalitiesBosses = new Dictionary<string, List<string>>()
         {
             { GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
             { GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
@@ -88,6 +86,15 @@ namespace EmotionalSystem
             { GDEItemKeys.Enemy_LBossFirst, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
             { GDEItemKeys.Enemy_S4_King_0, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
             { GDEItemKeys.Enemy_ProgramMaster, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
+        };
+
+        private static readonly Dictionary<string, List<string>> BannedAbnormalitiesEnemies = new Dictionary<string, List<string>>()
+        {
+            { GDEItemKeys.Enemy_S2_Ballon, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter} },
+            { GDEItemKeys.Enemy_S2_BoomBalloon, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter} },
+            { GDEItemKeys.Enemy_S2_HealBallon, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter} },
+            { GDEItemKeys.Enemy_S4_King_minion_0, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter} },
+            { GDEItemKeys.Enemy_S4_King_minion_1, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter} }
         };
 
         public int EmotionalLevel
@@ -199,23 +206,39 @@ namespace EmotionalSystem
             }
             else
             {
+                // Удаляем боссов
                 characters.RemoveAll(bc => bc is BattleEnemy enemy && enemy.Boss);
+
+                // Проверяем обычных врагов
                 foreach (var enemy in characters)
                 {
                     foreach (var abno in DynamicAbnormalitiesList)
                     {
-                        if (!IsBanned(enemy, abno.Name)) list.Add(abno);
+                        if (!IsBanned(enemy, abno.Name) && !IsBannedForEnemy(enemy, abno.Name))
+                        {
+                            list.Add(abno);
+                        }
                     }
                 }
             }
+
             return list.ToList();
         }
 
         public static bool IsBanned(BattleChar bc, string abnoName)
         {
-            if (BannedAbnormalities.ContainsKey(bc.Info.KeyData))
+            if (BannedAbnormalitiesBosses.ContainsKey(bc.Info.KeyData))
             {
-                return BannedAbnormalities[bc.Info.KeyData].Contains(abnoName);
+                return BannedAbnormalitiesBosses[bc.Info.KeyData].Contains(abnoName);
+            }
+            return false;
+        }
+
+        public static bool IsBannedForEnemy(BattleChar bc, string abnoName)
+        {
+            if (BannedAbnormalitiesEnemies.ContainsKey(bc.Info.KeyData))
+            {
+                return BannedAbnormalitiesEnemies[bc.Info.KeyData].Contains(abnoName);
             }
             return false;
         }
