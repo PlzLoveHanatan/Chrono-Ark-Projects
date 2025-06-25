@@ -49,20 +49,9 @@ namespace XiaoLOR
                 }
 
                 BattleSystem.DelayInput(this.SecondCast(Targets));
-
-
-                //if (BattleSystem.instance.EnemyCastSkills.Count == 0) return;
-
-                //var targetSkill = BattleSystem.instance.EnemyCastSkills
-                //    .FirstOrDefault(skill => skill.Usestate == target);
-
-                //if (targetSkill != null)
-                //{
-                //    BattleSystem.instance.EnemyCastSkills.Remove(targetSkill);
-                //    BattleSystem.instance.ActWindow.CastingWasteFixed(targetSkill);
-                //}
             }
         }
+
         public IEnumerator SecondCast(List<BattleChar> Targets)
         {
             yield return new WaitForSecondsRealtime(0.5f);

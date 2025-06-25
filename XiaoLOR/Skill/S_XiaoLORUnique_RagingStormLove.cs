@@ -43,7 +43,7 @@ namespace XiaoLOR
                     .ToList();
 
                 for (int i = 0; i < Math.Min(2, targetSkills.Count); i++)
-                {
+                {   
                     var skill = targetSkills[i];
                     BattleSystem.instance.EnemyCastSkills.Remove(skill);
                     BattleSystem.instance.ActWindow.CastingWasteFixed(skill);
