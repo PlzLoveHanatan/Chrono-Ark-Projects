@@ -26,6 +26,7 @@ namespace EmotionalSystem
         public CharEmotion Emotion;
 
         private bool EmotionsPerTurn;
+        private int EmotionsGainThisTurn;
 
         public static List<int> CoinsToLevelUp = new List<int> { 3, 3, 5, 7, 9 };
 
@@ -44,6 +45,7 @@ namespace EmotionalSystem
         public void Awake()
         {
             EmotionsPerTurn = true;
+            EmotionsGainThisTurn = 0;
 
             Emotion = BChar.UI.transform.GetChild(0)?.GetComponentInChildren<CharEmotion>();
             if (Emotion != null) return;
@@ -77,6 +79,7 @@ namespace EmotionalSystem
 
         public void Turn()
         {
+            EmotionsGainThisTurn = 0;
             EmotionsPerTurn = true;
         }
 
@@ -133,44 +136,44 @@ namespace EmotionalSystem
                 BattleSystem.instance.Reward.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, randomNum));
             }
         }
+
+
         
 
         public void EmotionLvUp(CharEmotion charEmotion, int nextLevel)
         {
-            if (charEmotion.BChar == BChar)
+            if (charEmotion.BChar != BChar)
+                return;
+
+            EmotionsGainThisTurn++;
+
+            switch (nextLevel)
             {
-                switch (nextLevel)
-                {
-                    case 2:
-                        EmotionsPerTurn = false;
-                        BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
-                        break;
-                    case 4:
-                        BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Dice, BChar);
-                        BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
-                        EmotionsPerTurn = false;
-                        break;
-                    case 5:
-                        int RestoreHP = (int)(BChar.GetStat.maxhp * 0.2f);
-                        int healAmount = Mathf.Min(30, RestoreHP);
-                        var buff = BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
-                        (buff as B_EnemyEmotionalLevel_Light).eternal = true;
-                        BChar.Heal(BattleSystem.instance.DummyChar, healAmount, false, true, null);
+                case 2:
+                    BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
+                    break;
 
+                case 4:
+                    BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Dice, BChar);
+                    BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
+                    break;
 
-                        //var buffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).Random(BChar.GetRandomClass().Main, 3);
+                case 5:
+                    int RestoreHP = (int)(BChar.GetStat.maxhp * 0.2f);
+                    int healAmount = Mathf.Min(30, RestoreHP);
+                    var buff = BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
+                    (buff as B_EnemyEmotionalLevel_Light).eternal = true;
+                    BChar.Heal(BattleSystem.instance.DummyChar, healAmount, false, true, null);
+                    break;
 
-                        //foreach (var funnybuff in buffs)
-                        //{
-                        //    funnybuff.SelfDestroy();
-                        //}
+                default:
+                    BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
+                    break;
+            }
 
-                        break;
-                    default:
-                        BChar.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel_Light, BChar);
-                        //EmotionsPerTurn = false;
-                        break;
-                }
+            if (EmotionsGainThisTurn >= 2)
+            {
+                EmotionsPerTurn = false;
             }
         }
     }

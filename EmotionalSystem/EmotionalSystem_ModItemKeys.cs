@@ -266,6 +266,11 @@ namespace EmotionalSystem
 		/// When this character performs an action, they take <color=purple>&b Pain damage</color> and subtract 1/3rd of the <color=red>Bleed</color> stacks. (Rounds down).
 		/// </summary>
         public static string Buff_B_EmotionalSystem_Bleed = "B_EmotionalSystem_Bleed";
+		/// <summary>
+		/// Colorless Depth
+		/// Removed when this character increases their Emotional Level.
+		/// </summary>
+        public static string Buff_B_EmotionalSystem_ColorlessDepth = "B_EmotionalSystem_ColorlessDepth";
         public static string Buff_B_EmotionalSystem_Draw = "B_EmotionalSystem_Draw";
         public static string Buff_B_EmotionalSystem_ManaReduction = "B_EmotionalSystem_ManaReduction";
 		/// <summary>
@@ -554,6 +559,7 @@ namespace EmotionalSystem
         public static string SkillEffect_SE_T_S_Boss_Witch_Curse_0 = "SE_T_S_Boss_Witch_Curse_0";
         public static string SkillEffect_SE_T_S_Buff_MirrorAdjustment = "SE_T_S_Buff_MirrorAdjustment";
         public static string SkillEffect_SE_T_S_Buff_Unity = "SE_T_S_Buff_Unity";
+        public static string SkillEffect_SE_T_S_EmotionalSystem_EmotionBurst = "SE_T_S_EmotionalSystem_EmotionBurst";
         public static string SkillEffect_SE_T_S_EmotionalSystem_RevengeStrike = "SE_T_S_EmotionalSystem_RevengeStrike";
         public static string SkillEffect_SE_T_S_LucyEGO_History_FourthMatchFlame = "SE_T_S_LucyEGO_History_FourthMatchFlame";
         public static string SkillEffect_SE_T_S_LucyEGO_History_GreenStem = "SE_T_S_LucyEGO_History_GreenStem";
@@ -743,6 +749,13 @@ namespace EmotionalSystem
 		/// Unity
 		/// </summary>
         public static string Skill_S_Buff_Unity = "S_Buff_Unity";
+		/// <summary>
+		/// Emotion Burst
+		/// Deal additional &a damage based on the current stage.
+		/// This skill always targets characters with the lowest Emotional Level.
+		/// Characters with Emotional Level 5 or higher are immune to the 'Colorless Depth' debuff.
+		/// </summary>
+        public static string Skill_S_EmotionalSystem_EmotionBurst = "S_EmotionalSystem_EmotionBurst";
 		/// <summary>
 		/// Revenge Strike
 		/// Deal additional damage (Max &a, based on current stage) equal to damage taken this turn.
