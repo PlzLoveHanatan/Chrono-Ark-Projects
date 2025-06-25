@@ -268,7 +268,8 @@ namespace EmotionalSystem
         public static string Buff_B_EmotionalSystem_Bleed = "B_EmotionalSystem_Bleed";
 		/// <summary>
 		/// Colorless Depth
-		/// Removed when this character increases their Emotional Level.
+		/// Removed when emotional level increases.
+		/// Characters with Emotional Level 5 are immune to this debuff.
 		/// </summary>
         public static string Buff_B_EmotionalSystem_ColorlessDepth = "B_EmotionalSystem_ColorlessDepth";
         public static string Buff_B_EmotionalSystem_Draw = "B_EmotionalSystem_Draw";
@@ -751,9 +752,7 @@ namespace EmotionalSystem
         public static string Skill_S_Buff_Unity = "S_Buff_Unity";
 		/// <summary>
 		/// Emotion Burst
-		/// Deal additional &a damage based on the current stage.
-		/// This skill always targets characters with the lowest Emotional Level.
-		/// Characters with Emotional Level 5 or higher are immune to the 'Colorless Depth' debuff.
+		/// All targets with the lowest Emotional Level share &a (based on current stage) damage.
 		/// </summary>
         public static string Skill_S_EmotionalSystem_EmotionBurst = "S_EmotionalSystem_EmotionBurst";
 		/// <summary>

@@ -16,37 +16,46 @@ namespace EmotionalSystem
     /// <summary>
     /// Emotion Burst
     /// </summary>
-    public class S_EmotionalSystem_EmotionBurst : Skill_Extended
+    public class S_EmotionalSystem_EmotionBurst : Skill_Extended, IP_TargetAI
     {
-        private int PlusDamage;
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", PlusDamage.ToString());
+            return base.DescExtended(desc).Replace("&a", Damage.ToString());
         }
         public override void Init()
         {
-            switch (PlayData.TSavedata.StageNum)
-            {
-                case 1: PlusDamage = 10; break;
-                case 2: PlusDamage = 15; break;
-                case 3: PlusDamage = 20; break;
-                case 4: PlusDamage = 25; break;
-                case 5: PlusDamage = 30; break;
-                default: PlusDamage = 10; break;
-            }
+            base.Init();
+            EnemyTargetAIOnly = true;
+            IsDamage = true;
         }
+
+        private int Damage => 10 + (PlayData.TSavedata.StageNum * 3);
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            SkillBasePlus.Target_BaseDMG += PlusDamage;
-
             var aliveAllies = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != null).ToList();
 
             int emotionalLevel = aliveAllies.Min(x => x.EmotionLevel());
 
             var lowestEmotionAllies = aliveAllies.Where(x => x.EmotionLevel() == emotionalLevel);
+
+            int count = lowestEmotionAllies.Count();
+
+            SkillBasePlus.Target_BaseDMG += Damage / count;
+
             Targets.Clear();
             Targets.AddRange(lowestEmotionAllies);
+        }
+
+        public List<BattleChar> TargetAI(BattleEnemy MyBchar)
+        {
+            var aliveAllies = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != null).ToList();
+
+            int emotionalLevel = aliveAllies.Min(x => x.EmotionLevel());
+
+            var lowestEmotionAllies = aliveAllies.Where(x => x.EmotionLevel() == emotionalLevel);
+
+            return lowestEmotionAllies.ToList();
         }
     }
 }

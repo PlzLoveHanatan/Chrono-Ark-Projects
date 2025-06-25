@@ -17,7 +17,7 @@ namespace EmotionalSystem
     /// <summary>
     /// Colorless Depth
     /// </summary>
-    public class B_EmotionalSystem_ColorlessDepth : Buff, IP_EmotionLvUpBefore
+    public class B_EmotionalSystem_ColorlessDepth : Buff, IP_EmotionLvUpBefore, IP_Awake
     {
         public void EmotionLvUp(CharEmotion charEmotion, int nextLevel)
         {
@@ -25,18 +25,23 @@ namespace EmotionalSystem
                 SelfDestroy();
         }
 
+
         public override void Init()
         {
             PlusPerStat.Damage = -20;
             PlusPerStat.Heal = -20;
-            if (BChar.EmotionLevel() >= 5)
-                SelfDestroy();
         }
 
         public override void BuffStat()
         {
             PlusPerStat.Damage = -20 * StackNum;
             PlusPerStat.Heal = -20 * StackNum;
+        }
+
+        public void Awake()
+        {
+            if (BChar.EmotionLevel() >= 5)
+                SelfDestroy();
         }
     }
 }

@@ -38,7 +38,7 @@ namespace EmotionalSystem
 
             float allyMissingHP = (float)allyWithMalice.HP / allyWithMalice.GetStat.maxhp;
 
-            this.PlusStat.DMGTaken = 10f + (1f - allyMissingHP) * 20; // min 10 & 30% max
+            this.PlusStat.DMGTaken = Math.Min(30, 10f + (1f - allyMissingHP) * 20); // min 10 & 30% max
         }
     }
 }
