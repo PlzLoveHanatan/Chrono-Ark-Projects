@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>XiaoLOR06252025233220</AssemblyName>
+    <AssemblyName>XiaoLOR06292025212818</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -413,7 +413,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                    <!-- Compile ItemGroup Start-->
+                                                                                      <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="XiaoLORCharacter.cs" />
     <Compile Include="XiaoLOR_Gift_Pan.cs" />

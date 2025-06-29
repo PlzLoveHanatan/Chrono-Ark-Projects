@@ -57,15 +57,11 @@ namespace XiaoLOR
             PlusStat.DeadImmune = MyChar.LV * 5;
         }
         public void BattleStart(BattleSystem Ins)
-        {        
-            if (PlayData.BattleQueue == GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
+        {
+            if (PlayData.BattleQueue != GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
             {
                 LastFight = true;
-                MasterAudio.StopBus("BGM");
-                //MasterAudio.StopBus("BattleBGM");
-                MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
-                MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, null, false, false);
-                MasterAudio.PlaySound("IronLotus", 100f, null, 0f, null, null, false, false);
+                XiaoUtils.XiaoSongStart();
             }
         }
 
@@ -86,17 +82,8 @@ namespace XiaoLOR
         }
         public void BattleEndRewardChange()
         {
-            if (XiaoUtils.IronLotusSong)
-            {
-                MasterAudio.StopBus("BGM");
-                MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
-
-                //Action completionCallback = delegate ()
-                //{
-                //    MasterAudio.StopBus("BattleBGM");
-                //};
-                //MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, completionCallback, true, true);
-            }
+            if (XiaoUtils.IronLotusSong || XiaoUtils.IronLotusSongKeyIngredient)
+                BattleSystem.DelayInputAfter(XiaoUtils.XiaoSongEnd());
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
@@ -146,15 +133,9 @@ namespace XiaoLOR
         // Note: this is before level up
         public void EmotionLvUp(CharEmotion charEmotion, int nextLevel)
         {
-            if (charEmotion.BChar == BChar && charEmotion.Level + 1 == 4 && XiaoUtils.IronLotusSong && !LastFight)
-            {
-                MasterAudio.StopBus("BGM");
-                //MasterAudio.StopBus("BattleBGM");
-                MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
-                MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, null, false, false);
-                MasterAudio.PlaySound("IronLotus", 100f, null, 0f, null, null, false, false);
-            }
-
+            if (charEmotion.BChar == BChar && charEmotion.Level + 1 == 4 && !LastFight)
+                XiaoUtils.XiaoSongStart();
+            
             if (charEmotion.BChar == BChar && charEmotion.Level + 1 == 4)
             {
                 MasterAudio.PlaySound("Roar", 100f, null, 0f, null, null, false, false);

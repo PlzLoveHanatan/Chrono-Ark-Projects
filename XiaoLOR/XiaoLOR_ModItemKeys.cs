@@ -18,7 +18,7 @@ namespace XiaoLOR
         public static string Buff_B_XiaoLORUnique_ForminStorm = "B_XiaoLORUnique_ForminStorm";
 		/// <summary>
 		/// A Fighter that Never Retreats
-		/// All attacks inflict 1 <color=#f8181c>Burn</color> (Max 5).
+		/// Attacks inflict 1 <color=#f8181c>Burn</color> (Max 5).
 		/// When attacked, inflict 1 <color=#f8181c>Burn</color> to the attacker.
 		/// At Emotional Level 3 or higher inflict 1 additional <color=#f8181c>Burn</color>. 
 		/// </summary>
@@ -114,6 +114,13 @@ namespace XiaoLOR
 		/// <color=#919191>The lotus that bloomed on the ashes of chaos. She burned the garden to save a single flower.</color>
 		/// </summary>
         public static string Item_Equip_Item_XiaoLOR_YànLiánZhuāng = "Item_XiaoLOR_YànLiánZhuāng";
+		/// <summary>
+		/// A Fighter that Never Retreats
+		/// <color=#919191> Attacks inflict 1 <color=#f8181c>Burn</color> (Max 5).
+		/// When attacked, inflict 1 <color=#f8181c>Burn</color> to the attacker.
+		/// At Emotional Level 3 or higher inflict 1 additional <color=#f8181c>Burn</color>.</color> 
+		/// </summary>
+        public static string SkillKeyword_KeyWord_AFighterthatNeverRetreats = "KeyWord_AFighterthatNeverRetreats";
 		/// <summary>
 		/// Burn
 		/// At the end of the turn, take <color=purple>X Pain damage</color> and subtract 1/3rd of the <color=#f8181c>Burn</color> stack. (Rounds down).
@@ -227,7 +234,7 @@ namespace XiaoLOR
 		/// <summary>
 		/// Tāo Tiè
 		/// Inflict 8 <color=#f8181c>Burn</color>.
-		/// At Emotional Level 4 or higher, the enemy takes <color=purple>Pain damage</color> equal to their <color=#f8181c>Burn</color>.
+		/// At Emotional Level 4 or higher, the enemy takes <color=purple>Pain damage</color> equal to their current <color=#f8181c>Burn</color> damage per turn.
 		/// <color=#919191>Tāo Tiè's insatiable hunger devours all before it, a relentless force of greed that consumes everything in its path.</color>
 		/// </summary>
         public static string Skill_S_XiaoLOREGO_TāoTiè = "S_XiaoLOREGO_TāoTiè";
@@ -412,9 +419,7 @@ namespace XiaoLOR
 		/// <summary>
 		/// Coordinated Assault
 		/// While this skill is counting, all allies gain 15% Attack Power and Armor, and Healing Gauge Protection.
-		/// All allies' attacks inflict 1 <color=#f8181c>Burn</color> (Max 5).
-		/// When an ally is attacked, the attacker receives 1 <color=#f8181c>Burn</color>.
-		/// At Emotional Level 3 or higher inflict 1 additional <color=#f8181c>Burn</color>. 
+		/// Apply 'A Fighter that Never Retreats' to all allies.
 		/// </summary>
         public static string Skill_S_XiaoLOR_CoordinatedAssault = "S_XiaoLOR_CoordinatedAssault";
 		/// <summary>
@@ -438,51 +443,6 @@ namespace XiaoLOR
 
     public static class ModLocalization
     {
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Select character to receive Abnormality Page.
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string AbnoRecieve => ModManager.getModInfo("XiaoLOR").localizationInfo.SystemLocalizationUpdate("AbnoRecieve");
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Select Abnormality Page to apply.
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string AbnoSelect => ModManager.getModInfo("XiaoLOR").localizationInfo.SystemLocalizationUpdate("AbnoSelect");
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Lucy reaches her breakdown. Choose an E.G.O. to possess.
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string EGOSelect => ModManager.getModInfo("XiaoLOR").localizationInfo.SystemLocalizationUpdate("EGOSelect");
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Select the E.G.O. to unleash.
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string EGOSelect2 => ModManager.getModInfo("XiaoLOR").localizationInfo.SystemLocalizationUpdate("EGOSelect2");
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Select the skill to cast.
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string XiaoLOREGOSelect => ModManager.getModInfo("XiaoLOR").localizationInfo.SystemLocalizationUpdate("XiaoLOREGOSelect");
 
     }
 }
