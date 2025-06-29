@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -11,37 +11,24 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using NLog.Targets;
 namespace Darkness
 {
-    /// <summary>
-    /// Clumsy Slash
-    /// </summary>
-    public class S_Darkness_ClumsySlash : Skill_Extended
+	/// <summary>
+	/// Side Slash
+	/// This skill always lands if you have 15 or more barrier remaining.
+	/// </summary>
+    public class S_Darkness_SideSlash_0 : Skill_Extended
     {
         private bool DarknessAttackMisses;
         public override void Init()
         {
             base.Init();
-            OnePassive = true;
             this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
-
-            if (!SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Darkness_NormalKnight")) return;
-            {
-                GDESkillData gdeskillData = new GDESkillData(MySkill.MySkill.KeyID);
-
-                MySkill.Init(gdeskillData, BChar, BChar.MyTeam);
-
-                MySkill.MySkill.PlusSkillView = ModItemKeys.Skill_S_Darkness_SideSlash_0;
-            }
         }
 
         public override void FixedUpdate()
         {
-            if (MySkill.BasicSkill)
-            {
-                MySkill.APChange = -1;
-            }
+            OnePassive = true;
             if (BChar.BarrierHP >= 15)
             {
                 MySkill.MySkill.NODOD = true;
@@ -68,14 +55,6 @@ namespace Darkness
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             DarknessAttackMisses = false;
-            Skill skill;
-
-            if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Darkness_NormalKnight"))
-                skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash_0, BChar, BChar.MyTeam);
-            else
-                skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash, BChar, BChar.MyTeam);
-
-            BattleSystem.instance.AllyTeam.Add(skill, true);
 
             if (Utils.DarknessVoiceDialogue)
             {
