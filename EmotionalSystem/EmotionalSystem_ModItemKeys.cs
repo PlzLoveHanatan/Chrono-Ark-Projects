@@ -852,146 +852,210 @@ namespace EmotionalSystem
     {
 		/// <summary>
 		/// Korean:
+		/// 이상 페이지를 받을 캐릭터를 선택하세요.
 		/// English:
 		/// Select character to receive Abnormality Page.
 		/// Japanese:
+		/// アノマリーページを受け取るキャラクターを選択してください。
 		/// Chinese:
+		/// 选择要获得此书页效果的角色。
 		/// Chinese-TW:
+		/// 選擇要獲得此書頁效果的角色。
 		/// </summary>
         public static string AbnoRecieve => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("AbnoRecieve");
 		/// <summary>
 		/// Korean:
+		/// 이상 페이지를 선택하세요.
 		/// English:
 		/// Select Abnormality Page.
 		/// Japanese:
+		/// アノマリーページを選択してください。
 		/// Chinese:
+		/// 选择异想体书页。
 		/// Chinese-TW:
+		/// 選擇異想體書頁。
 		/// </summary>
         public static string AbnoSelect => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("AbnoSelect");
 		/// <summary>
 		/// Korean:
+		/// 루시가 한계점에 도달했습니다. 소유할 E.G.O.를 선택하세요.
 		/// English:
 		/// Lucy reaches her breakdown. Choose an E.G.O. to possess.
 		/// Japanese:
+		/// ルーシーが限界に達しました。所持するE.G.O.を選んでください。
 		/// Chinese:
+		/// 露西感受到了什么变化……选择即将显现的E.G.O.吧。
 		/// Chinese-TW:
+		/// 露西感受到了什麼變化……選擇即將顯現的E.G.O.吧。
 		/// </summary>
         public static string EGOSelect => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGOSelect");
 		/// <summary>
 		/// Korean:
+		/// 사용 가능한 E.G.O. 스킬이 없습니다.
 		/// English:
 		/// No E.G.O. skills are available.
 		/// Japanese:
+		/// 使用可能なE.G.O.スキルはありません。
 		/// Chinese:
+		/// 目前没有可使用的E.G.O.技能。
 		/// Chinese-TW:
+		/// 目前沒有可使用的E.G.O.技能。
 		/// </summary>
         public static string EGO_NoEGO => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_NoEGO");
 		/// <summary>
 		/// Korean:
+		/// E.G.O. 스킬로 전환하려면 누르세요.
 		/// English:
 		/// Press to switch to E.G.O. skills.
 		/// Japanese:
+		/// E.G.O.スキルに切り替えるには押してください。
 		/// Chinese:
+		/// 按此按钮以切换至E.G.O.技能栏
 		/// Chinese-TW:
+		/// 按此按鈕以切換至E.G.O.技能欄
 		/// </summary>
         public static string EGO_SwitchEGO => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchEGO");
 		/// <summary>
 		/// Korean:
+		/// E.G.O. 스킬로 전환하려면 누르거나 [S]를 누르세요.
 		/// English:
 		/// Press to switch to E.G.O. skills or press [S].
 		/// Japanese:
+		/// E.G.O.スキルに切り替えるには押すか、[S]を押してください。
 		/// Chinese:
+		/// 按此按钮或快捷键 S 以切换至E.G.O.技能栏
 		/// Chinese-TW:
+		/// 按此按鈕或快捷鍵 S 以切換至E.G.O.技能欄
 		/// </summary>
         public static string EGO_SwitchEGOHotkey => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchEGOHotkey");
 		/// <summary>
 		/// Korean:
+		/// 손으로 돌아가려면 누르세요.
 		/// English:
 		/// Press to switch back to your hand.
 		/// Japanese:
+		/// 手札に戻るには押してください。
 		/// Chinese:
+		/// 按此按钮以切换至原本的手中技能栏
 		/// Chinese-TW:
+		/// 按此按鈕以切換至原本的手中技能欄
 		/// </summary>
         public static string EGO_SwitchHand => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchHand");
 		/// <summary>
 		/// Korean:
+		/// 손으로 돌아가려면 누르거나 [S]를 누르세요.
 		/// English:
 		/// Press to switch back to your hand or press [S].
 		/// Japanese:
+		/// 手札に戻るには押すか、[S]を押してください。
 		/// Chinese:
+		/// 按此按钮或快捷键 S 以切换至原本的手中技能栏
 		/// Chinese-TW:
+		/// 按此按鈕或快捷鍵 S 以切換至原本的手中技能欄
 		/// </summary>
         public static string EGO_SwitchHandHotkey => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchHandHotkey");
 		/// <summary>
 		/// Korean:
+		/// 턴 이후에 사용할 수 있습니다.
 		/// English:
 		/// Can be used after
 		/// Japanese:
+		/// ターン後に使用可能。
 		/// Chinese:
+		/// 可于
 		/// Chinese-TW:
+		/// 可於
 		/// </summary>
         public static string EgoCountdown => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoCountdown");
 		/// <summary>
 		/// Korean:
+		/// 턴.
 		/// English:
 		/// turn(s).
 		/// Japanese:
+		/// ターン。
 		/// Chinese:
+		/// 回合后再度使用。
 		/// Chinese-TW:
+		/// 回合後再度使用。
 		/// </summary>
         public static string EgoCountdown_0 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoCountdown_0");
 		/// <summary>
 		/// Korean:
+		/// 한 번만 사용할 수 있습니다.
 		/// English:
 		/// Can only be used once.
 		/// Japanese:
+		/// 一度だけ使用可能。
 		/// Chinese:
+		/// 只能使用一次。
 		/// Chinese-TW:
+		/// 只能使用一次。
 		/// </summary>
         public static string EgoOnce => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoOnce");
 		/// <summary>
 		/// Korean:
+		/// Library of Ruina의 감정 시스템 소개
 		/// English:
 		/// Introduce the Emotional System from Library of Ruina.
 		/// Japanese:
+		/// Library of Ruinaの感情システムを紹介
 		/// Chinese:
+		/// 向您介绍引用自《Library of Ruina（废墟图书馆）》的「情感系统」。
 		/// Chinese-TW:
+		/// 向您介紹引用自《Library of Ruina（廢墟圖書館）》的「情感系統」。
 		/// </summary>
         public static string EmotionalSystemEmotionalSystemTutorial_0 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_0");
 		/// <summary>
 		/// Korean:
+		/// 전투 중에 두 가지 종류의 감정 코인(긍정, 부정)을 얻을 수 있습니다.
 		/// English:
 		/// During battles, you can obtain two types of Emotional Coins: Positive and Negative.
 		/// Japanese:
+		/// 戦闘中、ポジティブとネガティブの2種類の感情コインを獲得できます。
 		/// Chinese:
+		/// 战斗中，您将取得「正面」或「负面」的「情感点数」。
 		/// Chinese-TW:
+		/// 戰鬥中，您將取得「正面」或「負面」的「情感點數」。
 		/// </summary>
         public static string EmotionalSystemEmotionalSystemTutorial_1 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_1");
 		/// <summary>
 		/// Korean:
+		/// 감정 코인을 모으고 감정 레벨을 올리면 이점을 얻습니다.
 		/// English:
 		/// By collecting Emotional Coins and raising your Emotional Level, you will gain benefits.
 		/// Japanese:
+		/// 感情コインを集め、感情レベルを上げることで恩恵を受けられます。
 		/// Chinese:
+		/// 藉由情感点数，您的「情感等级」将会提升，并从中获得增益。
 		/// Chinese-TW:
+		/// 藉由情感點數，您的「情感等級」將會提升，並從中獲得增益。
 		/// </summary>
         public static string EmotionalSystemEmotionalSystemTutorial_2 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_2");
 		/// <summary>
 		/// Korean:
+		/// EGO 스킬은 손 근처의 이 버튼을 통해 접근할 수 있습니다.
 		/// English:
 		/// EGO skill can be accessed through this button near your hand.
 		/// Japanese:
+		/// EGOスキルは手札の近くにあるこのボタンからアクセス可能です。
 		/// Chinese:
+		/// E.G.O.技能将透过这个按钮储存。
 		/// Chinese-TW:
+		/// E.G.O.技能將透過這個按鈕儲存。
 		/// </summary>
         public static string EmotionalSystemEmotionalSystemTutorial_3 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_3");
 		/// <summary>
 		/// Korean:
+		/// 평균 감정 레벨이 3 이상일 때 EGO 스킬을 얻을 수 있습니다.
 		/// English:
 		/// You can obtain EGO skills when average emotion level reaches 3 and above.
 		/// Japanese:
+		/// 平均感情レベルが3以上になるとEGOスキルを獲得できます。
 		/// Chinese:
+		/// 队伍平均情感等级达到 3 级以上，您便能获得E.G.O.技能。
 		/// Chinese-TW:
+		/// 隊伍平均情感等級達到 3 級以上，您便能獲得E.G.O.技能。
 		/// </summary>
         public static string EmotionalSystemEmotionalSystemTutorial_4 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EmotionalSystem/EmotionalSystemTutorial_4");
 

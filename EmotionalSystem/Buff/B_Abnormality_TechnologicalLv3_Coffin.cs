@@ -35,6 +35,15 @@ namespace EmotionalSystem
         }
         public void Turn()
         {
+            var jie = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(x => x.Info.KeyData == ModItemKeys.YourCharacterName);
+            {
+                if (jie != null)
+                {
+                    Skill skill = Skill.TempSkill(YourSkill, jie, BChar.MyTeam);
+                    BattleSystem.instance.AllyTeam.Add(skill, true);
+                }
+            }
+
             OncePerTurn = true;
         }
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
