@@ -149,6 +149,7 @@ namespace Darkness
         public static string SkillEffect_SE_T_S_Darkness_Rare_GuardiansGrace_0 = "SE_T_S_Darkness_Rare_GuardiansGrace_0";
         public static string SkillEffect_SE_T_S_Darkness_ShieldofFaith = "SE_T_S_Darkness_ShieldofFaith";
         public static string SkillEffect_SE_T_S_Darkness_SideSlash = "SE_T_S_Darkness_SideSlash";
+        public static string SkillEffect_SE_T_S_Darkness_SideSlash_0 = "SE_T_S_Darkness_SideSlash_0";
 		/// <summary>
 		/// Clumsy Slash
 		/// Cost reduced by 1 if this skill is fixed ability.
@@ -272,6 +273,11 @@ namespace Darkness
 		/// This skill always lands if you have 15 or more barrier remaining.
 		/// </summary>
         public static string Skill_S_Darkness_SideSlash = "S_Darkness_SideSlash";
+		/// <summary>
+		/// Side Slash
+		/// This skill always lands if you have 15 or more barrier remaining.
+		/// </summary>
+        public static string Skill_S_Darkness_SideSlash_0 = "S_Darkness_SideSlash_0";
         public static string VFXSkill_S_Darkness_SideSlash_N = "S_Darkness_SideSlash_N";
 		/// <summary>
 		/// Stubborn Knight (KonoSuba Edition)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChronoArkMod.ModData.Settings;
 using ChronoArkMod;
 using DarkTonic.MasterAudio;
+using static System.Windows.Forms.LinkLabel;
 
 namespace Darkness
 {
@@ -14,7 +15,15 @@ namespace Darkness
         public static bool DarknessVoiceSkills => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Voice Skills").Value;
         public static bool DarknessVoice => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Voice").Value;
         public static bool DarknessVoiceDialogue => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Voice Dialogue").Value;
-        public static float DarknessMoreEnemies => ModManager.getModInfo("Darkness").GetSetting<SliderSetting>("Additional enemies").Value;
+        //public static float DarknessMoreEnemies => ModManager.getModInfo("Darkness").GetSetting<SliderSetting>("Additional enemies").Value;
+
+        public static float DarknessMoreEnemies
+        {
+            get
+            {
+                return ModManager.getModInfo("Darkness").GetSetting<SliderSetting>("Additional enemies").Value;
+            }
+        }
 
 
 
@@ -73,7 +82,6 @@ namespace Darkness
 
             PlayDarknessSound(skill.MySkill.KeyID);
         }
-
 
         public static void PlayDarknessBattleDialogue(Skill skill, BattleChar bChar)
         {

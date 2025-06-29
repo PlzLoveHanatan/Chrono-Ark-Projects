@@ -23,7 +23,7 @@ namespace Darkness
         public override void Init()
         {
             base.Init();
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path; 
         }
 
         public override void FixedUpdate()
@@ -51,22 +51,21 @@ namespace Darkness
 
             yield return null;
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             DarknessAttackMisses = false;
 
             if (Utils.DarknessVoiceDialogue)
             {
-                BattleSystem.DelayInput(Miss());
-            }
+                if (BChar.BarrierHP >= 15)
+                    Utils.PlayDarknessBattleDialogue(MySkill, BChar);
 
-            if (BChar.BarrierHP >= 15 && Utils.DarknessVoiceDialogue)
-            {
-                Utils.PlayDarknessBattleDialogue(MySkill, BChar);
-            }
-            else if (!DarknessAttackMisses)
-            {
-                Utils.TryPlayDarknessSound(SkillD, BChar);
+                else if (DarknessAttackMisses)
+                    Utils.TryPlayDarknessSound(SkillD, BChar);
+
+                else
+                    BattleSystem.DelayInput(Miss());
             }
         }
     }

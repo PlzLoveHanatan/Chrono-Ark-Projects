@@ -25,6 +25,15 @@ namespace Darkness
             base.Init();
             OnePassive = true;
             this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+
+            if (!SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Darkness_NormalKnight")) return;
+            {
+                GDESkillData gdeskillData = new GDESkillData(MySkill.MySkill.KeyID);
+
+                MySkill.Init(gdeskillData, BChar, BChar.MyTeam);
+
+                MySkill.MySkill.PlusSkillView = ModItemKeys.Skill_S_Darkness_SideSlash_0;
+            }
         }
 
         public override void FixedUpdate()
@@ -56,26 +65,23 @@ namespace Darkness
             yield return null;
         }
 
-
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             DarknessAttackMisses = false;
 
-            if (Utils.DarknessVoiceDialogue)
-            {
-                BattleSystem.DelayInput(Miss());
-            }
-
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash, BChar, BChar.MyTeam);
             BattleSystem.instance.AllyTeam.Add(skill, true);
 
-            if (BChar.BarrierHP >= 15 && Utils.DarknessVoiceDialogue)
+            if (Utils.DarknessVoiceDialogue)
             {
-                Utils.PlayDarknessBattleDialogue(MySkill, BChar);
-            }
-            else if (!DarknessAttackMisses)
-            {
-                Utils.TryPlayDarknessSound(SkillD, BChar);
+                if (BChar.BarrierHP >= 15)
+                    Utils.PlayDarknessBattleDialogue(MySkill, BChar);
+
+                else if (DarknessAttackMisses)
+                    Utils.TryPlayDarknessSound(SkillD, BChar);
+
+                else
+                    BattleSystem.DelayInput(Miss());
             }
         }
     }
