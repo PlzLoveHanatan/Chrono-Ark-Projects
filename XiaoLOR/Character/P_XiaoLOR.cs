@@ -58,7 +58,7 @@ namespace XiaoLOR
         }
         public void BattleStart(BattleSystem Ins)
         {
-            if (PlayData.BattleQueue != GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
+            if (PlayData.BattleQueue == GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
             {
                 LastFight = true;
                 XiaoUtils.XiaoSongStart();
