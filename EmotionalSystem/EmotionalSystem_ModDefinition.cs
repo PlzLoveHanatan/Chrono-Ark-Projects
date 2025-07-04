@@ -38,9 +38,9 @@ namespace EmotionalSystem
         {
             public void BattleStart(BattleSystem Ins)
             {
-                if (Utils.EmotionalSystemTutorial && !Utils.Tutorial)
+                if (Utils.EmotionalSystemTutorial)
                 {
-                    Utils.Tutorial = true;
+                    Utils.EmotionalSystemTutorial = false;
                     InitTutorial("Assets/ModAssets/EmotionalSystemTutorial.asset");
                 }
 
@@ -60,18 +60,26 @@ namespace EmotionalSystem
                     return;
                 }
 
-                var obj = UIManager.InstantiateActiveAddressable(
-                    UIManager.inst.AR_TutorialUI,
-                    AddressableLoadManager.ManageType.Stage
-                ).GetComponent<TutorialObject>();
-
+                var obj = UIManager.InstantiateActiveAddressable(UIManager.inst.AR_TutorialUI, AddressableLoadManager.ManageType.Stage).GetComponent<TutorialObject>();
                 obj.transform.Find("Window").localPosition += new Vector3(0, 100, 0);
-
-                var windowRect = obj.transform.Find("Window").GetComponent<RectTransform>();
-                var videoImageRect = obj.transform.Find("Window/VideoImage").GetComponent<RectTransform>();
-                Utils.FitRectTransformToTarget(videoImageRect, windowRect, new Vector3());
+                obj.transform.Find("Window/VideoImage").localPosition += new Vector3(0, 60, 0);
+                obj.transform.Find("Window/TextPos").localPosition += new Vector3(0, 120, 0);
                 obj.gameObject.AddComponent<TutorialLocalizer>().Init(obj);
                 obj.Init(tutorial);
+
+
+                //var obj = UIManager.InstantiateActiveAddressable(
+                //    UIManager.inst.AR_TutorialUI,
+                //    AddressableLoadManager.ManageType.Stage
+                //).GetComponent<TutorialObject>();
+
+                //obj.transform.Find("Window").localPosition += new Vector3(0, 100, 0);
+
+                //var windowRect = obj.transform.Find("Window").GetComponent<RectTransform>();
+                //var videoImageRect = obj.transform.Find("Window/VideoImage").GetComponent<RectTransform>();
+                //Utils.FitRectTransformToTarget(videoImageRect, windowRect, new Vector3());
+                //obj.gameObject.AddComponent<TutorialLocalizer>().Init(obj);
+                //obj.Init(tutorial);
             }
 
             public void BattleStartUIOnBefore(BattleSystem Ins)

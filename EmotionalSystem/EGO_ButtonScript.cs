@@ -1,4 +1,5 @@
-﻿using EmotionalSystem;
+﻿using System.Diagnostics.Contracts;
+using EmotionalSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -30,8 +31,15 @@ namespace EmotionalSystem
         public EGO_System EGO;
         public bool interactable;
 
+        public float rotationAmplitude = 10f;
+        public float rotationFrequency = 2f;
+        private float initialRotationZ;
+        public bool RotationOn;
+
         public void Awake()
         {
+            initialRotationZ = transform.eulerAngles.z;
+
             Utils.getSpriteAsync(SpriteOffPath, delegate (AsyncOperationHandle handle)
             {
                 SpriteOff = (Sprite)handle.Result;
@@ -58,36 +66,51 @@ namespace EmotionalSystem
                     Img.sprite = SpriteActive;
                     interactable = true;
                 }
+                else if (EGO.hasEGOSkill)
+                {
+                    Img.sprite = SpriteOn;
+                    interactable = true;
+                }
                 else
                 {
-                    if (EGO.hasEGOSkill)
+                    Img.sprite = SpriteOff;
+                    interactable = false;
+                }
+
+                if (RotationOn)
+                {
+                    float angle = Mathf.Sin(Time.time * rotationFrequency * Mathf.PI * 2) * rotationAmplitude;
+                    transform.rotation = Quaternion.Euler(0f, 0f, initialRotationZ + angle);
+                }
+
+                if (interactable && BattleSystem.instance.ActWindow.CanAnyMove && Utils.EGOButtonHotkey && Input.GetKeyDown(KeyCode.S))
+                {
+                    if (EGO.egoActive)
                     {
-                        Img.sprite = SpriteOn;
-                        interactable = true;
+                        EGO.SwitchToNormal();
                     }
                     else
                     {
-                        Img.sprite = SpriteOff;
-                        interactable = false;
+                        EGO.SwitchToEGO();
                     }
-                }
-            }
-
-            if (interactable && BattleSystem.instance.ActWindow.CanAnyMove && Utils.EGOButtonHotkey && Input.GetKeyDown(KeyCode.S))
-            {
-                if (EGO.egoActive)
-                {
-                    EGO.SwitchToNormal();
-                }
-                else
-                {
-                    EGO.SwitchToEGO();
                 }
             }
         }
 
+        public void StartRotation()
+        {
+            RotationOn = true;
+        }
+
+        public void ResetRotation()
+        {
+            RotationOn = false;
+            transform.rotation = Quaternion.Euler(0f, 0f, initialRotationZ);
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
+            ResetRotation();
             if (!interactable || !BattleSystem.instance.ActWindow.CanAnyMove) return;
             Img.rectTransform.localScale = 1.1f * Vector3.one;
             Img.color = new Color(1f, 1f, 1f, 0.8f);
@@ -124,6 +147,5 @@ namespace EmotionalSystem
             Img.rectTransform.localScale = 1.1f * Vector3.one;
             Img.color = new Color(1f, 1f, 1f, 0.8f);
         }
-
     }
 }

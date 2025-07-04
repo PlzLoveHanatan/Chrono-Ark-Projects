@@ -17,7 +17,7 @@ namespace EmotionalSystem
     /// <summary>
     /// Energy Conversion
     /// </summary>
-    public class B_EnemyAbnormality_EnergyConversion : Buff, IP_DamageTake
+    public class B_EnemyAbnormality_EnergyConversion : Buff, IP_DamageTake, IP_BuffObject_Updata
     {
         public override string DescExtended()
         {
@@ -52,6 +52,12 @@ namespace EmotionalSystem
             {
                 Threshold = 1;
             }
+        }
+
+        public void BuffObject_Updata(BuffObject obj)
+        {
+            string num = Threshold.ToString();
+            obj.StackText.text = num;
         }
 
 

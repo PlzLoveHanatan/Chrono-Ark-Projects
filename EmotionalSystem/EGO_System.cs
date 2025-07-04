@@ -27,6 +27,8 @@ namespace EmotionalSystem
         {
             instance = this;
         }
+
+
         public void OnDestroy()
         {
             if (instance == this)
@@ -34,23 +36,23 @@ namespace EmotionalSystem
                 instance = null;
             }
         }
+
         public void TurnUpdate()
         {
             foreach (var skill in dynamicAvailableEGOskills)
             {
                 var ex = skill.ExtendedFind<Ex_EmotionalSystem_EGO>();
-                if (ex != null && ex.NowCountdown > 0)
-                {
-                    ex.NowCountdown--;
-                }
+                ex?.TurnUpdate();
             }
         }
 
         public void AddEGOSkill(Skill skill)
         {
-            //skill.ExtendedAdd(ModItemKeys.SkillExtended_Ex_EmotionalSystem_EGO);
+            // skill.ExtendedAdd(ModItemKeys.SkillExtended_Ex_EmotionalSystem_EGO);
             dynamicAvailableEGOskills.Add(skill);
+            GetComponent<EGO_ButtonScript>()?.StartRotation();
         }
+
         public void RemoveEGOSkill(Skill skill)
         {
             dynamicAvailableEGOskills.Remove(skill);
@@ -58,6 +60,7 @@ namespace EmotionalSystem
 
         public void SwitchToEGO()
         {
+            GetComponent<EGO_ButtonScript>()?.ResetRotation();
             var team = BattleSystem.instance.AllyTeam;
 
             Hand.Clear();
@@ -95,6 +98,7 @@ namespace EmotionalSystem
 
         public void SwitchToNormal()
         {
+            GetComponent<EGO_ButtonScript>()?.ResetRotation();
             var team = BattleSystem.instance.AllyTeam;
 
             for (int j = team.Skills.Count - 1; j >= 0; j--)

@@ -320,7 +320,6 @@ namespace EmotionalSystem
         public static string Buff_B_EnemyAbnormality_Unity = "B_EnemyAbnormality_Unity";
 		/// <summary>
 		/// You Must Be Happy
-		/// All incoming damage is reduced by 15%.
 		/// </summary>
         public static string Buff_B_EnemyAbnormality_YouMustBeHappy = "B_EnemyAbnormality_YouMustBeHappy";
         public static string Buff_B_EnemyEmotionalLevel = "B_EnemyEmotionalLevel";
@@ -356,6 +355,10 @@ namespace EmotionalSystem
 		/// At the end of the turn, take <color=purple>&b Pain damage</color> and subtract 1/3rd of the <color=#f8181c>Burn</color> stack. (Rounds down).
 		/// </summary>
         public static string Buff_B_Xiao_Burn = "B_Xiao_Burn";
+		/// <summary>
+		/// E.G.O. Cooldown
+		/// </summary>
+        public static string SkillExtended_Ex_EmotionalSystem_CoolDown = "Ex_EmotionalSystem_CoolDown";
 		/// <summary>
 		/// Emotional Level 5
 		/// At 2 stacks, draw 1 skill
@@ -956,30 +959,17 @@ namespace EmotionalSystem
         public static string EGO_SwitchHandHotkey => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchHandHotkey");
 		/// <summary>
 		/// Korean:
-		/// 턴 이후에 사용할 수 있습니다.
+		/// &a턴 후 다시 사용 가능합니다.
 		/// English:
-		/// Can be used after
+		/// Can be used after &a turn(s).
 		/// Japanese:
-		/// ターン後に使用可能。
+		/// &aターン後に再使用可能。
 		/// Chinese:
-		/// 可于
+		/// 可于&a回合后再度使用。
 		/// Chinese-TW:
-		/// 可於
+		/// 可於&a回合後再度使用。
 		/// </summary>
         public static string EgoCountdown => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoCountdown");
-		/// <summary>
-		/// Korean:
-		/// 턴.
-		/// English:
-		/// turn(s).
-		/// Japanese:
-		/// ターン。
-		/// Chinese:
-		/// 回合后再度使用。
-		/// Chinese-TW:
-		/// 回合後再度使用。
-		/// </summary>
-        public static string EgoCountdown_0 => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoCountdown_0");
 		/// <summary>
 		/// Korean:
 		/// 한 번만 사용할 수 있습니다.

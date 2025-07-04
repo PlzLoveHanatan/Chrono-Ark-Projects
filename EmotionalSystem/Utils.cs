@@ -22,9 +22,21 @@ namespace EmotionalSystem
 
         public static bool EGOButtonHotkey => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("EGO Button Hotkey").Value;
 
-        public static bool EmotionalSystemTutorial => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("Tutorial").Value;
+        //public static bool EmotionalSystemTutorial => ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("Tutorial").Value;
 
-        public static bool Tutorial;
+        public static bool EmotionalSystemTutorial
+        {
+            get
+            {
+                return ModManager.getModInfo("EmotionalSystem").GetSetting<ToggleSetting>("Tutorial").Value;
+            }
+            set
+            {
+                var mod = ModManager.getModInfo("EmotionalSystem");
+                mod.GetSetting<ToggleSetting>("Tutorial").Value = value;
+                mod.SaveSetting();
+            }
+        }
 
         public static GameObject EmotionTrajectoryPos;
         public static GameObject EmotionTrajectoryNeg;
@@ -52,14 +64,9 @@ namespace EmotionalSystem
 
         public static void GiveEmotionsToChar(BattleChar character, int amount, Vector3? source = null)
         {
-            var buff = character.BuffReturn(ModItemKeys.Buff_B_EmotionalLevel, false) as B_EmotionalLevel;
-
-            if (buff.EmotionsPerTurn == true)
+            for (int i = 0; i < amount; i++)
             {
-                for (int i = 0; i < amount; i++)
-                {
-                    character.GetRandomEmotion(source);
-                }
+                character.GetRandomEmotion(source);
             }
         }
 
@@ -109,7 +116,7 @@ namespace EmotionalSystem
             var mod = ModManager.getModInfo("EmotionalSystem");
             if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
             var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
-            Debug.Log($"[EmotionalSystem] Getting asset address: {address}");
+            //Debug.Log($"[EmotionalSystem] Getting asset address: {address}");
             return AddressableLoadManager.LoadAddressableAsset<T>(address);
         }
 
@@ -145,8 +152,8 @@ namespace EmotionalSystem
             img.rectTransform.anchorMax = new Vector2(0f, 1f);
             img.rectTransform.sizeDelta = size;
             img.rectTransform.transform.localPosition = pos;
-
         }
+
         public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)
         {
             txt.rectTransform.anchorMin = new Vector2(0f, 1f);

@@ -44,30 +44,23 @@ namespace EmotionalSystem
 
         private static readonly List<Abnormality> Abnormalities = new List<Abnormality>
         {
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, AbnoType.Neg, 0),
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment, AbnoType.Neg, 0),
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Shelter, AbnoType.Pos, 0),
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Strengthen, AbnoType.Pos, 0),
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Stress, AbnoType.Neg, 0),
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Unity, AbnoType.Pos, 0),
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment, AbnoType.Pos, 0),
-            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_YouMustBeHappy, AbnoType.Neg, 0)
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, AbnoType.Neg, 0), // Lose mana
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment, AbnoType.Neg, 0), // CounterAttack
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Shelter, AbnoType.Pos, 0), // Survive 1 Hp
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Strengthen, AbnoType.Pos, 0), // Debuff Resist + Def +15%
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Stress, AbnoType.Neg, 0), // Damage + Debuff Success +15%
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Unity, AbnoType.Pos, 0), // Heal All allies
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment, AbnoType.Pos, 0), // Cri + CriDMG +15%
+            new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_YouMustBeHappy, AbnoType.Neg, 0) // All damage Reduction +15%
 
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Strengthen, AbnoType.Pos, 0),
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Stress, AbnoType.Neg, 0),
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Unity, AbnoType.Pos, 0),
             //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Despair, AbnoType.Neg, 0),
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_Stress, AbnoType.Neg, 0),
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment, AbnoType.Neg, 0),
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment, AbnoType.Pos, 0),
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_YouMustBeHappy, AbnoType.Pos, 0),
-            //new Abnormality(ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, AbnoType.Neg, 0)
         };
+
         private static readonly Dictionary<string, List<string>> BannedAbnormalitiesBosses = new Dictionary<string, List<string>>()
         {
-            { GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
-            { GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
-            { GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Stress, ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment} },
+            { GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter, ModItemKeys.Buff_B_EnemyAbnormality_Unity } },
+            { GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_EnergyConversion, ModItemKeys.Buff_B_EnemyAbnormality_Shelter, ModItemKeys.Buff_B_EnemyAbnormality_Unity } },
+            { GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Stress, ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment, ModItemKeys.Buff_B_EnemyAbnormality_Unity } },
             { GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment } },
             { GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> {   } },
             { GDEItemKeys.Enemy_MBoss2_0, new List<string> { } },
@@ -78,9 +71,9 @@ namespace EmotionalSystem
             { GDEItemKeys.Enemy_S2_MainBoss_1_1, new List<string> { } },
             { GDEItemKeys.Enemy_S2_BombClownBoss, new List<string> { } },
             { GDEItemKeys.Enemy_MBoss2_1, new List<string> { } },
-            { GDEItemKeys.Enemy_SR_GunManBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },
-            { GDEItemKeys.Enemy_S3_Boss_Pope, new List<string> { } },
-            { GDEItemKeys.Enemy_S3_Boss_TheLight, new List<string> { } },
+            { GDEItemKeys.Enemy_SR_GunManBoss, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter, ModItemKeys.Buff_B_EnemyAbnormality_Unity } },
+            { GDEItemKeys.Enemy_S3_Boss_Pope, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_BehaviorAdjustment } },
+            { GDEItemKeys.Enemy_S3_Boss_TheLight, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Unity } },
             { GDEItemKeys.Enemy_S3_Boss_Reaper, new List<string> { } },
             { GDEItemKeys.Enemy_S3_FanaticBoss, new List<string> { } },
             { GDEItemKeys.Enemy_LBossFirst, new List<string> { ModItemKeys.Buff_B_EnemyAbnormality_Shelter } },

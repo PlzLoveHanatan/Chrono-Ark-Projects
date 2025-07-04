@@ -12,6 +12,7 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using EmotionalSystem;
+using UnityEngine.Video;
 namespace EmotionalSystem
 {
     public class Ex_EmotionalSystem_EGO : Skill_Extended
@@ -36,10 +37,38 @@ namespace EmotionalSystem
             }
             return true;
         }
+
+        public void TurnUpdate()
+        {
+            if (NowCountdown > 0)
+            {
+                NowCountdown--;
+                BattleSystem.DelayInput(ExUpdate());
+            }
+        }
+
+        public IEnumerator ExUpdate()
+        {
+            if (NowCountdown == 0) yield break;
+
+            var exFind = MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_EmotionalSystem_CoolDown) as Ex_EmotionalSystem_CoolDown;
+            if (exFind == null)
+            {
+                var ex = MySkill.ExtendedAdd(ModItemKeys.SkillExtended_Ex_EmotionalSystem_CoolDown) as Ex_EmotionalSystem_CoolDown;
+                ex.MainEx = this;
+                //ex.CoolDownUpdate();
+            }
+
+            yield return null;
+            //else
+            //{
+            //    exFind.CoolDownUpdate();
+            //}
+        }
+
         public override string DescExtended(string desc)
         {
             return CountdownText + "" + base.DescExtended(desc);
-
         }
 
         public string CountdownText
@@ -52,13 +81,12 @@ namespace EmotionalSystem
                 {
                     return ModLocalization.EgoOnce + "\n";
                 }
-                if (NowCountdown > 0)
+                else if (NowCountdown > 0)
                 {
-                    text = ModLocalization.EgoCountdown + " &a ".Replace("&a", NowCountdown.ToString()) + ModLocalization.EgoCountdown_0 + "\n";
-
+                    text = ModLocalization.EgoCountdown.Replace("&a", NowCountdown.ToString()) + "\n";
+                    //text = ModLocalization.EgoCountdown + " &a ".Replace("&a", NowCountdown.ToString()) + ModLocalization.EgoCountdown_0 + "\n";
                     return text;
                 }
-
                 return text;
             }
         }
@@ -91,8 +119,11 @@ namespace EmotionalSystem
             else
             {
                 NowCountdown = Countdown;
+
+                BattleSystem.DelayInput(ExUpdate());
             }
         }
+
         public override void SkillUseHand(BattleChar Target)
         {
             UseEGO();

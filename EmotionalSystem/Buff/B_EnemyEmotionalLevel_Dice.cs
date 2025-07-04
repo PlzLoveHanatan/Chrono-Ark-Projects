@@ -46,6 +46,7 @@ namespace EmotionalSystem
             { GDEItemKeys.Enemy_LBossFirst, new List<string> { GDEItemKeys.Skill_S_LBossFirst_0, GDEItemKeys.Skill_S_LBossFirst_2, GDEItemKeys.Skill_S_LBossFirst_3 } },
             { GDEItemKeys.Enemy_S4_King_0, new List<string> { GDEItemKeys.Skill_S_S4_King_P1_1, GDEItemKeys.Skill_S_S4_King_P1_2, GDEItemKeys.Skill_S_S4_King_P2_0, GDEItemKeys.Skill_S_S4_King_P2_1 } },
             { GDEItemKeys.Enemy_ProgramMaster, new List<string> { GDEItemKeys.Skill_S_ProgramMaster_0, GDEItemKeys.Skill_S_ProgramMaster_1 } },
+            { GDEItemKeys.Enemy_ProgramMaster_0, new List<string> { GDEItemKeys.Skill_S_ProgramMaster_0_Bomb } },
         };
 
         public void EnemyNewTurn()
