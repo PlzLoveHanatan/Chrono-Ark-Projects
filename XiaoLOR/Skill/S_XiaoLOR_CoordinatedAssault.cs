@@ -33,9 +33,26 @@ namespace XiaoLOR
         }
         public void SkillCastingQuit(CastingSkill ThisSkill)
         {
-            foreach (BattleChar battleChar in BattleSystem.instance.AllyTeam.AliveChars)
+            BattleSystem.DelayInputAfter(BuffRemove(ThisSkill));
+        }
+
+        public IEnumerator BuffRemove(CastingSkill ThisSkill)
+        {
+            var castList = BattleSystem.instance.CastSkills.ToList();
+            castList.AddRange(BattleSystem.instance.SaveSkill);
+            castList = castList.FindAll(cs => cs != ThisSkill && cs.skill.MySkill.KeyID == ModItemKeys.Skill_S_XiaoLOR_CoordinatedAssault);
+
+            if (castList.Any())
             {
-                battleChar.BuffRemove(ModItemKeys.Buff_B_XiaoLOR_AFighterthatNeverRetreats, true);
+                yield break;
+            }
+            else
+            {
+                foreach (BattleChar battleChar in BattleSystem.instance.AllyTeam.AliveChars)
+                {
+                    battleChar.BuffRemove(ModItemKeys.Buff_B_XiaoLOR_AFighterthatNeverRetreats);
+                }
+                yield break;
             }
         }
     }
