@@ -16,8 +16,14 @@ namespace SuperHero
     /// <summary>
     /// Second Act
     /// </summary>
-    public class B_SuperHero_SecondAct : Buff, IP_PlayerTurn
+    public class B_SuperHero_SecondAct : Buff, IP_PlayerTurn, IP_Awake
     {
+        public void Awake()
+        {
+            if (BChar.Info.Passive is P_SuperHero superHero)
+                superHero.SecondAct = true;
+        }
+
         public void Turn()
         {
             var team = BattleSystem.instance.AllyTeam;

@@ -20,8 +20,8 @@ namespace SuperHero
     {
         public override void BuffStat()
         {
-            PlusPerStat.Damage = 10 * StackNum;
-            PlusStat.def = 10 * StackNum;
+            PlusPerStat.Damage = -10 * StackNum;
+            PlusStat.def = -10 * StackNum;
         }
     }
 }

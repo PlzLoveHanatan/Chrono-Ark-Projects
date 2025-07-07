@@ -14,11 +14,18 @@ using Debug = UnityEngine.Debug;
 using UnityEngine.Video;
 namespace SuperHero
 {
-	/// <summary>
-	/// Erase the Mobs
-	/// </summary>
-    public class S_SuperHero_ErasetheMobs : Skill_Extended
+    /// <summary>
+    /// Erase the Mobs
+    /// </summary>
+    public class S_SuperHero_ErasetheMobs : Skill_Extended, IP_SkillUse_Target
     {
+        public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+        {
+            var buff = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) as B_SuperHero_HeroComplex;
+            if (buff != null)
+                buff.JusticeDamage = DMG;
+        }
+
         public override void Init()
         {
             OnePassive = true;
@@ -26,6 +33,7 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+
             foreach (var target in Targets)
             {
                 if (target is BattleEnemy enemy)

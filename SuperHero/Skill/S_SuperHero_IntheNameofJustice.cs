@@ -20,14 +20,24 @@ namespace SuperHero
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_IntheNameofJustice, this.BChar, this.BChar.MyTeam);
+            BattleSystem.instance.AllyTeam.Add(skill, true);
+            skill.AutoDelete = 1;
+            skill.isExcept = true;
+
             var target = Targets[0];
-            if (target.IsDead)
-            {
-                Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_IntheNameofJustice, BChar, BChar.MyTeam);
-                skill.isExcept = true;
-                skill.AutoDelete = 2;
-                BattleSystem.instance.AllyTeam.Add(skill, true);
-            }
+
+            BattleSystem.DelayInput(RestoreMana(target));
+
+        }
+
+        public IEnumerator RestoreMana(BattleChar target)
+        {
+            if (!target.IsDead) yield break;
+
+            BattleSystem.instance.AllyTeam.AP += 2;
+
+            yield return null;
         }
     }
 }

@@ -17,11 +17,31 @@ namespace SuperHero
 	/// <summary>
 	/// EGO Surge
 	/// </summary>
-    public class B_SuperHero_EGOSurge : Buff
+    public class B_SuperHero_EGOSurge : Buff, IP_DealDamage, IP_BuffAddAfter
     {
         public override void BuffStat()
         {
             PlusPerStat.Damage = 15 * StackNum;
+        }
+
+        public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
+        {
+            if (Damage >= 1)
+            {
+                BChar.Heal(BChar, (int)(Damage * 0.15f), false, false, null);
+            }
+        }
+
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            var buff = ModItemKeys.Buff_B_SuperHero_EGOSurge;
+            if (addedbuff.BuffData.Key == buff)
+            {
+                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
+                {
+                    BuffTaker.BuffRemove(buff);
+                }
+            }
         }
     }
 }

@@ -16,8 +16,14 @@ namespace SuperHero
     /// <summary>
     /// Relentless Recovery
     /// </summary>
-    public class B_SuperHero_RelentlessRecovery : Buff, IP_PlayerTurn
+    public class B_SuperHero_RelentlessRecovery : Buff, IP_PlayerTurn, IP_Awake
     {
+        public void Awake()
+        {
+            if (BChar.Info.Passive is P_SuperHero superHero)
+                superHero.Relentless = true;
+        }
+
         public void Turn()
         {
             var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 2);

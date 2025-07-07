@@ -13,8 +13,15 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace SuperHero
 {
-    public class S_SuperHero_WorldIsMine : Skill_Extended
+    public class S_SuperHero_WorldIsMine : Skill_Extended, IP_SkillUse_Target
     {
+        public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+        {
+            var buff = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) as B_SuperHero_HeroComplex;
+            if (buff != null)
+                buff.JusticeDamage = DMG;
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             foreach (var target in Targets)

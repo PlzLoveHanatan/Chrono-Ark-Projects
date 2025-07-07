@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>SuperHero06282025224143</AssemblyName>
+    <AssemblyName>SuperHero07072025235241</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -381,10 +381,31 @@
       <Private>False</Private>
     </Reference>
     <!-- Extra Reference Start-->
+    <Reference Include="0Harmony">
+      <HintPath>..\..\SuperHero\Assemblies\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\SuperHero\Assemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\..\SuperHero\Assemblies\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\..\SuperHero\Assemblies\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\..\SuperHero\Assemblies\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>..\..\SuperHero\Assemblies\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>..\..\SuperHero\Assemblies\MonoMod.Utils.dll</HintPath>
+    </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="SuperHero_ModDefinition.cs" />
     <Compile Include="SuperHero_ModItemKeys.cs" />
@@ -392,6 +413,7 @@
     <Compile Include="Utils.cs" />
     <Compile Include="Buff\B_SuperHero_BlindingGlory.cs" />
     <Compile Include="Buff\B_SuperHero_EGOSurge.cs" />
+    <Compile Include="Buff\B_SuperHero_GloryofJustice.cs" />
     <Compile Include="Buff\B_SuperHero_HeroComplex.cs" />
     <Compile Include="Buff\B_SuperHero_HeroPresence.cs" />
     <Compile Include="Buff\B_SuperHero_HerosSpotlight.cs" />
@@ -402,9 +424,12 @@
     <Compile Include="Buff\B_SuperHero_SecondAct.cs" />
     <Compile Include="Character\P_SuperHero.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="Skill\S_SuperHero_ApotheosisofJustice.cs" />
+    <Compile Include="Skill\S_SuperHero_BloodstainedDress.cs" />
     <Compile Include="Skill\S_SuperHero_ErasetheMobs.cs" />
     <Compile Include="Skill\S_SuperHero_IntheNameofJustice.cs" />
     <Compile Include="Skill\S_SuperHero_LimitBreak.cs" />
+    <Compile Include="Skill\S_SuperHero_LucyDraw.cs" />
     <Compile Include="Skill\S_SuperHero_OverflowingwithLight.cs" />
     <Compile Include="Skill\S_SuperHero_TheApplauseNeverEnds.cs" />
     <Compile Include="Skill\S_SuperHero_UnwantedSuccessStory.cs" />

@@ -8,12 +8,25 @@ namespace SuperHero
 		/// </summary>
         public static string Buff_B_SuperHero_BlindingGlory = "B_SuperHero_BlindingGlory";
 		/// <summary>
+		/// Ego Shield
+		/// </summary>
+        public static string Buff_B_SuperHero_EgoShield = "B_SuperHero_EgoShield";
+		/// <summary>
 		/// EGO Surge
+		/// Only Super Hero can have this buff.
+		/// Heal 15% of all damage dealt.
 		/// </summary>
         public static string Buff_B_SuperHero_EGOSurge = "B_SuperHero_EGOSurge";
 		/// <summary>
+		/// Glory of Justice
+		/// When attacked, counterattack for &a equal <color=#FF7C34>(Attack Power * 0.5)</color>.
+		/// Gain 20% chance to attack an ally.
+		/// </summary>
+        public static string Buff_B_SuperHero_GloryofJustice = "B_SuperHero_GloryofJustice";
+		/// <summary>
 		/// Hero Complex
-		/// Increase all stats by 3% for each buff stack. Gain &a chance <color=#FF7C34>(5% * StackNum)</color> to target an ally.
+		/// Only Super Hero can have this buff.
+		/// Increase all stats by 3% for each buff stack. Gain &a% chance <color=#FF7C34>(3% * StackNum)</color> to target an ally.
 		/// </summary>
         public static string Buff_B_SuperHero_HeroComplex = "B_SuperHero_HeroComplex";
 		/// <summary>
@@ -27,10 +40,6 @@ namespace SuperHero
 		/// Removed when this character attacks &target.
 		/// </summary>
         public static string Buff_B_SuperHero_HerosSpotlight = "B_SuperHero_HerosSpotlight";
-		/// <summary>
-		/// Immortal Hero
-		/// </summary>
-        public static string Buff_B_SuperHero_ImmortalHero = "B_SuperHero_ImmortalHero";
 		/// <summary>
 		/// Mark of Justice
 		/// </summary>
@@ -55,6 +64,11 @@ namespace SuperHero
 		/// </summary>
         public static string Buff_B_SuperHero_ScarletRemnant = "B_SuperHero_ScarletRemnant";
 		/// <summary>
+		/// Second Act
+		/// At the start of each turn draw 1 skill and Restore 1 Mana.
+		/// </summary>
+        public static string Buff_B_SuperHero_SecondAct = "B_SuperHero_SecondAct";
+		/// <summary>
 		/// Blinding Glory
 		/// <color=#919191>Accuracy -30%
 		/// Evasion -30%
@@ -64,7 +78,8 @@ namespace SuperHero
         public static string SkillKeyword_KeyWord_BlindingGlory = "KeyWord_BlindingGlory";
 		/// <summary>
 		/// Hero Complex
-		/// <color=#919191>Increase all stats by 3% for each buff stack. Gain &a chance <color=#FF7C34>(5% * StackNum)</color> to target an ally.</color>
+		/// <color=#919191>Increase all stats by 3% for each buff stack. Gain X chance <color=#FF7C34>(3% * StackNum)</color> to target an ally.
+		/// Max 20 Stacks</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_HeroComplex = "KeyWord_HeroComplex";
 		/// <summary>
@@ -72,24 +87,50 @@ namespace SuperHero
 		/// <color=#919191>Cannot take action.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_HeroPresence = "KeyWord_HeroPresence";
+		/// <summary>
+		/// Hero's Spotlight
+		/// <color=#919191>Can only target Super Hero.
+		/// Removed when this character attacks Super Hero.</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_HerosSpotlight = "KeyWord_HerosSpotlight";
+        public static string SkillEffect_SE_S_S_SuperHero_ApotheosisofJustice = "SE_S_S_SuperHero_ApotheosisofJustice";
         public static string SkillEffect_SE_S_S_SuperHero_BloodstainedDress = "SE_S_S_SuperHero_BloodstainedDress";
+        public static string SkillEffect_SE_S_S_SuperHero_ErasetheMobs = "SE_S_S_SuperHero_ErasetheMobs";
+        public static string SkillEffect_SE_S_S_SuperHero_IntheNameofJustice = "SE_S_S_SuperHero_IntheNameofJustice";
+        public static string SkillEffect_SE_S_S_SuperHero_IntheNameofJustice_0 = "SE_S_S_SuperHero_IntheNameofJustice_0";
+        public static string SkillEffect_SE_S_S_SuperHero_LimitBreak = "SE_S_S_SuperHero_LimitBreak";
+        public static string SkillEffect_SE_S_S_SuperHero_OverflowingwithLight = "SE_S_S_SuperHero_OverflowingwithLight";
         public static string SkillEffect_SE_S_S_SuperHero_TheApplauseNeverEnds = "SE_S_S_SuperHero_TheApplauseNeverEnds";
+        public static string SkillEffect_SE_S_S_SuperHero_UnwantedSuccessStory = "SE_S_S_SuperHero_UnwantedSuccessStory";
+        public static string SkillEffect_SE_S_S_SuperHero_WorldIsMine = "SE_S_S_SuperHero_WorldIsMine";
         public static string SkillEffect_SE_Tick_B_SuperHero_ScarletRemnant = "SE_Tick_B_SuperHero_ScarletRemnant";
         public static string SkillEffect_SE_T_SuperHero_WorldIsMine = "SE_T_SuperHero_WorldIsMine";
         public static string SkillEffect_SE_T_S_SuperHero_BloodstainedDress = "SE_T_S_SuperHero_BloodstainedDress";
         public static string SkillEffect_SE_T_S_SuperHero_ErasetheMobs = "SE_T_S_SuperHero_ErasetheMobs";
         public static string SkillEffect_SE_T_S_SuperHero_IntheNameofJustice = "SE_T_S_SuperHero_IntheNameofJustice";
+        public static string SkillEffect_SE_T_S_SuperHero_IntheNameofJustice_0 = "SE_T_S_SuperHero_IntheNameofJustice_0";
+        public static string SkillEffect_SE_T_S_SuperHero_JusticeGlory = "SE_T_S_SuperHero_JusticeGlory";
         public static string SkillEffect_SE_T_S_SuperHero_UnwantedSuccessStory = "SE_T_S_SuperHero_UnwantedSuccessStory";
         public static string SkillEffect_SE_T_S_SuperHero_WorldIsMine = "SE_T_S_SuperHero_WorldIsMine";
 		/// <summary>
 		/// Super Hero
 		/// Passive:
+		/// Gain 1 Attack Power when killing an enemy for <b>this run</b>.
+		/// Gain <color=#FFD700>Hero Complex</color> whenever playing non-Сlass attack skills.
+		/// At the start of each turn, create 0-Cost 'In the Name of Justice' in hand, gain 'Hero Reprisal' and <color=#FFD700>Hero Complex</color> (up to 20).
 		/// </summary>
         public static string Character_SuperHero = "SuperHero";
 		/// <summary>
+		/// Apotheosis of Justice
+		/// Only Super Hero can use this skill.
+		/// </summary>
+        public static string Skill_S_SuperHero_ApotheosisofJustice = "S_SuperHero_ApotheosisofJustice";
+		/// <summary>
 		/// Bloodstained Dress
+		/// Apply 'Scarlet Remnant' to all allies.
 		/// </summary>
         public static string Skill_S_SuperHero_BloodstainedDress = "S_SuperHero_BloodstainedDress";
+        public static string Skill_S_SuperHero_DummyHeal = "S_SuperHero_DummyHeal";
 		/// <summary>
 		/// Erase the Mobs
 		/// If the target's health is below 40% (20% for bosses), <b>reduce the target's health to 0</b>.
@@ -98,8 +139,38 @@ namespace SuperHero
         public static string Skill_S_SuperHero_ErasetheMobs = "S_SuperHero_ErasetheMobs";
 		/// <summary>
 		/// In the Name of Justice
+		/// This skill can be played repeatedly during this turn.
+		/// If this skill defeat an enemy restore 2 Mana.
 		/// </summary>
         public static string Skill_S_SuperHero_IntheNameofJustice = "S_SuperHero_IntheNameofJustice";
+		/// <summary>
+		/// In the Name of Justice
+		/// </summary>
+        public static string Skill_S_SuperHero_IntheNameofJustice_0 = "S_SuperHero_IntheNameofJustice_0";
+		/// <summary>
+		/// Justice Glory
+		/// </summary>
+        public static string Skill_S_SuperHero_JusticeGlory = "S_SuperHero_JusticeGlory";
+		/// <summary>
+		/// Limit Break
+		/// Only Super Hero can use this skill.
+		/// Remove all debbufs.
+		/// All buffs remain 2 extra turn.
+		/// </summary>
+        public static string Skill_S_SuperHero_LimitBreak = "S_SuperHero_LimitBreak";
+		/// <summary>
+		/// Glorious Draw
+		/// Move this skill to the top of the deck when a battle starts.
+		/// Draw 3 skills, gain 4 <color=#FFD700>Hero Complex</color> to SuperHero.
+		/// If SuperHero is fainted, draw 1 skill, then exclude this skill from current fight.
+		/// </summary>
+        public static string Skill_S_SuperHero_LucyDraw = "S_SuperHero_LucyDraw";
+		/// <summary>
+		/// Overflowing with Light 
+		/// Only Super Hero can use this skill.
+		/// Remove overload from Lucy, restore 2 mana and draw 2 skills.
+		/// </summary>
+        public static string Skill_S_SuperHero_OverflowingwithLight = "S_SuperHero_OverflowingwithLight";
 		/// <summary>
 		/// The Applause Never Ends
 		/// Only Super Hero can use this skill.
@@ -108,7 +179,7 @@ namespace SuperHero
         public static string Skill_S_SuperHero_TheApplauseNeverEnds = "S_SuperHero_TheApplauseNeverEnds";
 		/// <summary>
 		/// Unwanted Success Story
-		/// Target a random ally.
+		/// This skill always target an enemy and random ally.
 		/// </summary>
         public static string Skill_S_SuperHero_UnwantedSuccessStory = "S_SuperHero_UnwantedSuccessStory";
 		/// <summary>
@@ -116,36 +187,6 @@ namespace SuperHero
 		/// Apply 'Blinding Glory' and 'Hero Presence' to all enemies and 'Hero Presence' to all allies.
 		/// </summary>
         public static string Skill_S_SuperHero_WorldIsMine = "S_SuperHero_WorldIsMine";
-		/// <summary>
-		/// Ego Shield
-		/// </summary>
-        public static string Buff_B_SuperHero_EgoShield = "B_SuperHero_EgoShield";
-		/// <summary>
-		/// Hero's Spotlight
-		/// <color=#919191>Can only target Super Hero.
-		/// Removed when this character attacks Super Hero.</color>
-		/// </summary>
-        public static string SkillKeyword_KeyWord_HerosSpotlight = "KeyWord_HerosSpotlight";
-        public static string Skill_S_SuperHero_DummyHeal = "S_SuperHero_DummyHeal";
-		/// <summary>
-		/// Limit Break
-		/// Only Super Hero can use this skill.
-		/// Remove all debbufs.
-		/// </summary>
-        public static string Skill_S_SuperHero_LimitBreak = "S_SuperHero_LimitBreak";
-        public static string SkillEffect_SE_S_S_SuperHero_LimitBreak = "SE_S_S_SuperHero_LimitBreak";
-		/// <summary>
-		/// Second Act
-		/// At the start of each turn draw 1 skill and Restore 1 Mana.
-		/// </summary>
-        public static string Buff_B_SuperHero_SecondAct = "B_SuperHero_SecondAct";
-		/// <summary>
-		/// Overflowing with Light 
-		/// Only Super Hero can use this skill.
-		/// Remove overload from Lucy, restore 2 mana and draw 2 skills
-		/// </summary>
-        public static string Skill_S_SuperHero_OverflowingwithLight = "S_SuperHero_OverflowingwithLight";
-        public static string SkillEffect_SE_S_S_SuperHero_OverflowingwithLight = "SE_S_S_SuperHero_OverflowingwithLight";
 
     }
 

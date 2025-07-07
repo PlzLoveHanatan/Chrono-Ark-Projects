@@ -19,6 +19,16 @@ namespace SuperHero
     /// </summary>
     public class S_SuperHero_LimitBreak : Skill_Extended
     {
+        public override void Init()
+        {
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.SkillParticleOn();
+        }
+
         public override bool Terms()
         {
             if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)
@@ -33,6 +43,20 @@ namespace SuperHero
             foreach (var debuff in debuffs)
             {
                 debuff.SelfDestroy();
+            }
+
+            foreach (var buff in BChar.Buffs)
+            {
+                if (buff.BuffData.LifeTime != 0f)
+                {
+                    foreach (StackBuff stackBuff in buff.StackInfo)
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            stackBuff.RemainTime++;
+                        }
+                    }
+                }
             }
         }
     }

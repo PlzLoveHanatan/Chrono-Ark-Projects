@@ -24,6 +24,17 @@ namespace SuperHero
         {
             return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
         }
+        public override void Init()
+        {
+            OnePassive = true;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.SkillParticleOn();
+        }
+
         public override bool Terms()
         {
             if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)

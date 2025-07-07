@@ -13,10 +13,11 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace SuperHero
 {
-    /// <summary>
-    /// Overflowing with Light 
-    /// </summary>
-    public class S_SuperHero_OverflowingwithLight : Skill_Extended
+	/// <summary>
+	/// Apotheosis of Justice
+	/// Only Super Hero can use this skill.
+	/// </summary>
+    public class S_SuperHero_ApotheosisofJustice : Skill_Extended
     {
         public override void Init()
         {
@@ -33,15 +34,6 @@ namespace SuperHero
                 return true;
 
             return false;
-        }
-
-        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-        {
-            var team = BattleSystem.instance.AllyTeam;
-            team.Draw(2);
-            team.AP += 2;
-            
-            team.LucyChar.Overload = 0;
         }
     }
 }
