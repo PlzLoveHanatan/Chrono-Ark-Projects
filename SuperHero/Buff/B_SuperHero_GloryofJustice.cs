@@ -30,18 +30,23 @@ namespace SuperHero
         {
             if (Damage > 0)
             {
-                JusticeStrike();
+                //JusticeStrike();
 
                 Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_JusticeGlory, BChar, BChar.MyTeam);
                 skill.FreeUse = true;
                 skill.PlusHit = true;
 
-                if (AllyTarget)
-                {
-                    SkillD.Master = BattleChar;
-                }
+                //if (AllyTarget)
+                //{
+                //    SkillD.Master = BattleChar;
 
-                BattleSystem.DelayInput(Wait());
+                if (SkillD.Master.Info.KeyData == ModItemKeys.Character_SuperHero)
+                {
+                    return;
+                }
+            
+
+            BattleSystem.DelayInput(Wait());
                 BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, SkillD.Master, false, false, true, null));
                 EffectView.TextOutSimple(BChar, BuffData.Name);
             }
@@ -51,15 +56,19 @@ namespace SuperHero
         {
             if (Char == BChar)
             {
-                JusticeStrike();
+                //JusticeStrike();
 
                 Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_JusticeGlory, BChar, BChar.MyTeam);
                 skill.FreeUse = true;
                 skill.PlusHit = true;
 
-                if (AllyTarget)
+                //if (AllyTarget)
+                //{
+                //    SP.UseStatus = BattleChar;
+
+                if (SP.UseStatus.Info.KeyData == ModItemKeys.Character_SuperHero)
                 {
-                    SP.UseStatus = BattleChar;
+                    return;
                 }
 
                 BattleSystem.DelayInput(Wait());

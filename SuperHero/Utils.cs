@@ -10,6 +10,8 @@ namespace SuperHero
     {
         public static int Attack;
 
+        public static bool ItemTake;
+
         public static readonly List<string> HeroAttacks = new List<string>
         {
             ModItemKeys.Skill_S_SuperHero_ErasetheMobs,

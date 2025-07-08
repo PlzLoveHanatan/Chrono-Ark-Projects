@@ -18,7 +18,7 @@ namespace SuperHero
 	/// <summary>
 	/// Plot Armor
 	/// </summary>
-    public class B_SuperHero_PlotArmor : Buff, IP_DamageTakeChange, IP_PlayerTurn, IP_Awake
+    public class B_SuperHero_PlotArmor : Buff, IP_DamageTakeChange, IP_PlayerTurn, IP_Awake, IP_BuffAddAfter
     {
         public override string DescExtended()
         {
@@ -66,6 +66,17 @@ namespace SuperHero
                 healingParticle.FreeUse = true;
 
                 BChar.ParticleOut(healingParticle, BChar);
+            }
+        }
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            var buff = ModItemKeys.Buff_B_SuperHero_PlotArmor;
+            if (addedbuff.BuffData.Key == buff)
+            {
+                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
+                {
+                    BuffTaker.BuffRemove(buff, true);
+                }
             }
         }
     }

@@ -32,6 +32,7 @@ namespace SuperHero
         public void BattleStart(BattleSystem Ins)
         {
             BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_GloryofJustice, BChar, false, 0, false, -1, false);
+            BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_IntheNameofJustice, BChar, false, 0, false, -1, false);
             PlotArmor = false;
             Relentless = false;
             SecondAct = false;
@@ -56,12 +57,14 @@ namespace SuperHero
             var buff3 = ModItemKeys.Buff_B_SuperHero_PlotArmor;
             var buff4 = ModItemKeys.Buff_B_SuperHero_GloryofJustice;
             var buff5 = ModItemKeys.Buff_B_SuperHero_HeroComplex;
+            var buff6 = ModItemKeys.Buff_B_SuperHero_IntheNameofJustice;
 
             BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0, BChar, BChar.MyTeam);
-            skill.isExcept = true;
-            skill.AutoDelete = 2;
             BattleSystem.instance.AllyTeam.Add(skill, true);
+
+            if (BChar.BuffReturn(buff6) == null)
+                BChar.BuffAdd(buff6, BChar, false, 0, false, -1, false);
 
             if (BChar.BuffReturn(buff5) == null)
                 BChar.BuffAdd(buff5, BChar, false, Complex, false, -1, false);

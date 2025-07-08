@@ -24,7 +24,7 @@ namespace SuperHero
 
         public override string DescExtended()
         {
-            return base.DescExtended().Replace("&a", ((int)(HeroComplex * 3)).ToString());
+            return base.DescExtended().Replace("&a", ((int)(StackNum * 3)).ToString());
         }
         public override void Init()
         {
@@ -35,6 +35,7 @@ namespace SuperHero
         {
             int increaseStats = StackNum * 3;
             PlusStat.maxhp = increaseStats;
+            PlusStat.atk = increaseStats;
             PlusPerStat.Damage = increaseStats;
             PlusStat.cri = increaseStats;
             PlusStat.dod = increaseStats;
@@ -49,9 +50,11 @@ namespace SuperHero
             PlusStat.HIT_DOT = increaseStats;
             PlusStat.HEALTaken = increaseStats;
             PlusStat.DeadImmune = increaseStats;
-            PlusStat.PlusCriDmg = -increaseStats;
+            PlusStat.PlusCriDmg = increaseStats;
+            PlusStat.CRIGetDMG = -increaseStats;
             PlusStat.DMGTaken = - increaseStats;
             PlusStat.HEALTaken = increaseStats;
+            PlusStat.Penetration = increaseStats;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
@@ -68,14 +71,14 @@ namespace SuperHero
                         superHero.Complex = HeroComplex;
                 }
                 else
-                    BuffTaker.BuffRemove(buff);
+                    BuffTaker.BuffRemove(buff, true);
             }
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
             var superHero = ModItemKeys.Character_SuperHero;
-            bool whoopsie = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, HeroComplex * 3);
+            bool whoopsie = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, StackNum * 3);
             var newTargets = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != superHero).ToList();
             int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, newTargets.Count);
             var randomTarget = newTargets[index];

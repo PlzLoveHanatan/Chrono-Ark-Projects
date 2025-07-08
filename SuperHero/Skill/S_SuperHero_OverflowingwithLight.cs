@@ -42,6 +42,7 @@ namespace SuperHero
             team.AP += 2;
             
             team.LucyChar.Overload = 0;
+            BChar.Overload = 0;
         }
     }
 }

@@ -11,32 +11,29 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.Runtime.InteropServices.WindowsRuntime;
 namespace SuperHero
 {
-    /// <summary>
-    /// Second Act
-    /// </summary>
-    public class B_SuperHero_SecondAct : Buff, IP_PlayerTurn, IP_Awake, IP_BuffAddAfter
+	/// <summary>
+	/// Barrier of Light ☆
+	/// </summary>
+    public class B_Ex_SuperHero_BarrierofLight : Buff, IP_DamageTake, IP_BuffAddAfter
     {
-        public void Awake()
+        public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
-            if (BChar.Info.Passive is P_SuperHero superHero)
-                superHero.SecondAct = true;
-        }
-
-        public void Turn()
-        {
-            var team = BattleSystem.instance.AllyTeam;
-            team.Draw();
-            team.AP += 1;
+            if (User.Info.KeyData == ModItemKeys.Character_SuperHero)
+            {
+                resist = true;
+                SelfStackDestroy();
+            }
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_SecondAct;
+            var buff = ModItemKeys.Buff_B_SuperHero_MarkofJustice;
             if (addedbuff.BuffData.Key == buff)
             {
-                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
+                if (BuffTaker == BChar)
                 {
                     BuffTaker.BuffRemove(buff, true);
                 }

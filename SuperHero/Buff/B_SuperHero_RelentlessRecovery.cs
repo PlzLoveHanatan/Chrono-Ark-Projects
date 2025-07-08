@@ -16,8 +16,13 @@ namespace SuperHero
     /// <summary>
     /// Relentless Recovery
     /// </summary>
-    public class B_SuperHero_RelentlessRecovery : Buff, IP_PlayerTurn, IP_Awake
+    public class B_SuperHero_RelentlessRecovery : Buff, IP_PlayerTurn, IP_Awake, IP_BuffAddAfter
     {
+        public override string DescExtended()
+        {
+            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
+        }
+
         public void Awake()
         {
             if (BChar.Info.Passive is P_SuperHero superHero)
@@ -26,10 +31,25 @@ namespace SuperHero
 
         public void Turn()
         {
+            int barrierValue = (int)(BChar.GetStat.maxhp * 0.5f);
+            BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_EgoShield, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
+
             var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 2);
             foreach (var debuff in debuffs)
             {
                 debuff.SelfDestroy();
+            }
+        }
+
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            var buff = ModItemKeys.Buff_B_SuperHero_RelentlessRecovery;
+            if (addedbuff.BuffData.Key == buff)
+            {
+                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
+                {
+                    BuffTaker.BuffRemove(buff, true);
+                }
             }
         }
     }

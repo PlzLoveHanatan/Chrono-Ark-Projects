@@ -13,24 +13,24 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace SuperHero
 {
-    public class S_SuperHero_WorldIsMine : Skill_Extended, IP_SkillUse_Target
+    public class S_SuperHero_WorldIsMine : Skill_Extended
     {
-        public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-        {
-            var buff = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) as B_SuperHero_HeroComplex;
-            if (buff != null)
-                buff.JusticeDamage = DMG;
-        }
-
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             foreach (var target in Targets)
             {
                 if (target is BattleEnemy enemy)
+                {
                     enemy.BuffAdd(ModItemKeys.Buff_B_SuperHero_BlindingGlory, BChar, false, 0, false, -1, false);
-
-                if (target is BattleAlly ally && ally.Info.KeyData != ModItemKeys.Character_SuperHero)
-                    ally.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroPresence, BChar, false, 0, false, -1, false);
+                    enemy.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroPresence, BChar, false, 0, false, -1, false);
+                }
+            }
+            foreach (var target in BattleSystem.instance.AllyTeam.AliveChars)
+            {
+                if (target.Info.KeyData != ModItemKeys.Character_SuperHero)
+                {
+                    target.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroPresence, BChar, false, 0, false, -1, false);
+                }
             }
         }
     }

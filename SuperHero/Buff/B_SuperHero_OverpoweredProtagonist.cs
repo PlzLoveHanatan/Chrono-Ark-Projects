@@ -16,7 +16,7 @@ namespace SuperHero
 	/// <summary>
 	/// Overpowered Protagonist
 	/// </summary>
-    public class B_SuperHero_OverpoweredProtagonist : Buff, IP_HPChange, IP_Awake
+    public class B_SuperHero_OverpoweredProtagonist : Buff, IP_HPChange, IP_Awake, IP_BuffAddAfter
     {
         public override void Init()
         {
@@ -39,6 +39,17 @@ namespace SuperHero
             if (BChar.HP <= 0)
             {
                 BChar.HP = 1;
+            }
+        }
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            var buff = ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist;
+            if (addedbuff.BuffData.Key == buff)
+            {
+                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
+                {
+                    BuffTaker.BuffRemove(buff, true);
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using HarmonyLib;
+using TileTypes;
 namespace SuperHero
 {
     public class SuperHero_Plugin : ChronoArkPlugin
@@ -60,6 +61,43 @@ namespace SuperHero
                 {
                     return false;
                 }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(FieldSystem), "StageStart")]
+        public static class StagePatch
+        {
+            [HarmonyPostfix]
+            public static void StageStartPostfix()
+            {
+                if (SuperHeroInParty() && PlayData.TSavedata.StageNum == 0 && !Utils.ItemTake)
+                {
+                    PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
+                    PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
+                    Utils.ItemTake = true;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(CharEquipInven), nameof(CharEquipInven.OnDropSlot))]
+        [HarmonyPatch(new Type[] { typeof(ItemBase) })]
+        public static class EquipPatch
+        {
+            public static bool Prefix(CharEquipInven __instance, ItemBase inputitem, ref bool __result)
+            {
+                var bc = __instance.Info.KeyData;
+
+                Debug.Log($"[EquipPatch] Checking drop: item={inputitem.itemkey}, char={bc}");
+
+                if (inputitem.itemkey == ModItemKeys.Item_Equip_E_SuperHero_JusticeSword && bc != ModItemKeys.Character_SuperHero
+                    || (inputitem.itemkey == ModItemKeys.Item_Equip_E_SuperHero_LightArmor && bc == ModItemKeys.Character_SuperHero))
+                {
+                    Debug.Log("[EquipPatch] Justice Sword blocked drop (not SuperHero).");
+                    __result = true;
+                    return false;
+                }
+
                 return true;
             }
         }

@@ -4,28 +4,38 @@ namespace SuperHero
     public static class ModItemKeys
     {
 		/// <summary>
+		/// Barrier of Light ☆
+		/// When attacked by <color=#FFA500>Super Hero</color>, block <color=#FF4500>Mark of Justice</color>, reduce incoming damage to 0 and remove 1 stack.
+		/// </summary>
+        public static string Buff_B_Ex_SuperHero_BarrierofLight = "B_Ex_SuperHero_BarrierofLight";
+		/// <summary>
+		/// Light ☆ Armor
+		/// Blocks <color=#FF4500>Mark of Justice</color>.
+		/// </summary>
+        public static string Buff_B_E_SuperHero_LightArmor = "B_E_SuperHero_LightArmor";
+		/// <summary>
 		/// Blinding Glory
 		/// </summary>
         public static string Buff_B_SuperHero_BlindingGlory = "B_SuperHero_BlindingGlory";
 		/// <summary>
 		/// Ego Shield
+		/// Only <color=#FFA500>Super Hero</color> can have this barrier.
 		/// </summary>
         public static string Buff_B_SuperHero_EgoShield = "B_SuperHero_EgoShield";
 		/// <summary>
 		/// EGO Surge
-		/// Only Super Hero can have this buff.
+		/// Only <color=#FFA500>Super Hero</color> can have this buff.
 		/// Heal 15% of all damage dealt.
 		/// </summary>
         public static string Buff_B_SuperHero_EGOSurge = "B_SuperHero_EGOSurge";
 		/// <summary>
-		/// Glory of Justice
+		/// Glory of Justice ☆
 		/// When attacked, counterattack for &a equal <color=#FF7C34>(Attack Power * 0.5)</color>.
-		/// Gain 20% chance to attack an ally.
 		/// </summary>
         public static string Buff_B_SuperHero_GloryofJustice = "B_SuperHero_GloryofJustice";
 		/// <summary>
-		/// Hero Complex
-		/// Only Super Hero can have this buff.
+		/// Hero Complex ☆
+		/// Only <color=#FFA500>Super Hero</color> can have this buff.
 		/// Increase all stats by 3% for each buff stack. Gain &a% chance <color=#FF7C34>(3% * StackNum)</color> to target an ally.
 		/// </summary>
         public static string Buff_B_SuperHero_HeroComplex = "B_SuperHero_HeroComplex";
@@ -46,17 +56,19 @@ namespace SuperHero
         public static string Buff_B_SuperHero_MarkofJustice = "B_SuperHero_MarkofJustice";
 		/// <summary>
 		/// Overpowered Protagonist
+		/// Only <color=#FFA500>Super Hero</color> can have this buff.
 		/// HP cannot drop below 0.
 		/// </summary>
         public static string Buff_B_SuperHero_OverpoweredProtagonist = "B_SuperHero_OverpoweredProtagonist";
 		/// <summary>
 		/// Plot Armor
-		/// All incoming damage is reduced by 15%. Every turn restore &a HP <color=#FF7C34>(Hero Complex StackNum * 5%)</color>.
+		/// All incoming damage is reduced by 15%. Every turn restore &a HP <color=#FF7C34>(Hero Complex StackNum * 3%)</color>.
 		/// </summary>
         public static string Buff_B_SuperHero_PlotArmor = "B_SuperHero_PlotArmor";
 		/// <summary>
 		/// Relentless Recovery
-		/// At the start of each turn remove 2 random debuffs.
+		/// Only <color=#FFA500>Super Hero</color> can have this buff.
+		/// At the start of each turn remove 2 random debuffs and gain &a barrier <color=#FF7C34>(Max HP * 0.5)</color>. 
 		/// </summary>
         public static string Buff_B_SuperHero_RelentlessRecovery = "B_SuperHero_RelentlessRecovery";
 		/// <summary>
@@ -64,10 +76,34 @@ namespace SuperHero
 		/// </summary>
         public static string Buff_B_SuperHero_ScarletRemnant = "B_SuperHero_ScarletRemnant";
 		/// <summary>
+		/// Scarlet Remnant
+		/// </summary>
+        public static string Buff_B_SuperHero_ScarletRemnant_0 = "B_SuperHero_ScarletRemnant_0";
+		/// <summary>
 		/// Second Act
-		/// At the start of each turn draw 1 skill and Restore 1 Mana.
+		/// Only <color=#FFA500>Super Hero</color> can have this buff.
+		/// At the start of each turn draw 1 additional skill and Restore 1 Mana.
 		/// </summary>
         public static string Buff_B_SuperHero_SecondAct = "B_SuperHero_SecondAct";
+		/// <summary>
+		/// When cast, <color=#FFA500>Super Hero</color> gains 4 <color=#FFD700>Hero Complex</color> and gain a buff that reduces the next two received damage from <color=#FFA500>Super Hero</color> to 0.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_SuperHero_BarrierofLight = "Ex_SuperHero_BarrierofLight";
+		/// <summary>
+		/// Justice ☆ Sword
+		/// Attacks increase max Stack of <color=#FF4500>Mark of Justice</color> by 1.
+		/// <color=red>Can only be equipped by</color> <color=#FFA500>Super Hero</color>.
+		/// <color=#919191>Justice ☆ is served!</color>
+		/// </summary>
+        public static string Item_Equip_E_SuperHero_JusticeSword = "E_SuperHero_JusticeSword";
+		/// <summary>
+		/// Light ☆ Armor
+		/// When attacked by <color=#FFA500>Super Hero</color>, reflect damage received onto a random enemy and reduce incoming damage to 0.
+		/// <color=red>Cannot equipped by</color> <color=#FFA500>Super Hero</color>.
+		/// <color=#919191>Justice ☆ always finds its villain.</color>
+		/// </summary>
+        public static string Item_Equip_E_SuperHero_LightArmor = "E_SuperHero_LightArmor";
 		/// <summary>
 		/// Blinding Glory
 		/// <color=#919191>Accuracy -30%
@@ -104,6 +140,7 @@ namespace SuperHero
         public static string SkillEffect_SE_S_S_SuperHero_UnwantedSuccessStory = "SE_S_S_SuperHero_UnwantedSuccessStory";
         public static string SkillEffect_SE_S_S_SuperHero_WorldIsMine = "SE_S_S_SuperHero_WorldIsMine";
         public static string SkillEffect_SE_Tick_B_SuperHero_ScarletRemnant = "SE_Tick_B_SuperHero_ScarletRemnant";
+        public static string SkillEffect_SE_Tick_B_SuperHero_ScarletRemnant_0 = "SE_Tick_B_SuperHero_ScarletRemnant_0";
         public static string SkillEffect_SE_T_SuperHero_WorldIsMine = "SE_T_SuperHero_WorldIsMine";
         public static string SkillEffect_SE_T_S_SuperHero_BloodstainedDress = "SE_T_S_SuperHero_BloodstainedDress";
         public static string SkillEffect_SE_T_S_SuperHero_ErasetheMobs = "SE_T_S_SuperHero_ErasetheMobs";
@@ -118,63 +155,76 @@ namespace SuperHero
 		/// Gain 1 Attack Power when killing an enemy for <b>this run</b>.
 		/// Gain <color=#FFD700>Hero Complex</color> whenever playing non-Сlass attack skills.
 		/// At the start of each turn, create 0-Cost 'In the Name of Justice' in hand, gain 'Hero Reprisal' and <color=#FFD700>Hero Complex</color> (up to 20).
+		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_SuperHero = "SuperHero";
 		/// <summary>
+		/// Skin
+		/// Passive:
+		/// </summary>
+        public static string Character_SuperHero_0 = "SuperHero_0";
+		/// <summary>
+		/// Passive:
+		/// </summary>
+        public static string Character_SuperHero_1 = "SuperHero_1";
+        public static string Character_Skin_SuperHero_HeroOfJustice = "SuperHero_HeroOfJustice";
+        public static string Character_Skin_SuperHero_LightOfHope = "SuperHero_LightOfHope";
+		/// <summary>
 		/// Apotheosis of Justice
-		/// Only Super Hero can use this skill.
+		/// Only <color=#FFA500>Super Hero</color> can use this skill.
 		/// </summary>
         public static string Skill_S_SuperHero_ApotheosisofJustice = "S_SuperHero_ApotheosisofJustice";
 		/// <summary>
 		/// Bloodstained Dress
-		/// Apply 'Scarlet Remnant' to all allies.
+		/// Apply 1 turn <color=#DC143C>Scarlet Remnant</color> to all allies.
 		/// </summary>
         public static string Skill_S_SuperHero_BloodstainedDress = "S_SuperHero_BloodstainedDress";
         public static string Skill_S_SuperHero_DummyHeal = "S_SuperHero_DummyHeal";
 		/// <summary>
 		/// Erase the Mobs
 		/// If the target's health is below 40% (20% for bosses), <b>reduce the target's health to 0</b>.
-		/// Otherwise gain 3 'Hero Complex'.
+		/// Otherwise gain 3 <color=#FFD700>Hero Complex</color>.
 		/// </summary>
         public static string Skill_S_SuperHero_ErasetheMobs = "S_SuperHero_ErasetheMobs";
 		/// <summary>
-		/// In the Name of Justice
+		/// In the Name of Justice ☆
 		/// This skill can be played repeatedly during this turn.
 		/// If this skill defeat an enemy restore 2 Mana.
 		/// </summary>
         public static string Skill_S_SuperHero_IntheNameofJustice = "S_SuperHero_IntheNameofJustice";
 		/// <summary>
-		/// In the Name of Justice
+		/// In the Name of Justice ☆
+		/// Draw 1 skill if this skill Exchanged or Discarded.
 		/// </summary>
         public static string Skill_S_SuperHero_IntheNameofJustice_0 = "S_SuperHero_IntheNameofJustice_0";
 		/// <summary>
-		/// Justice Glory
+		/// Justice ☆ Glory
 		/// </summary>
         public static string Skill_S_SuperHero_JusticeGlory = "S_SuperHero_JusticeGlory";
 		/// <summary>
 		/// Limit Break
-		/// Only Super Hero can use this skill.
+		/// Only <color=#FFA500>Super Hero</color> can use this skill.
 		/// Remove all debbufs.
 		/// All buffs remain 2 extra turn.
 		/// </summary>
         public static string Skill_S_SuperHero_LimitBreak = "S_SuperHero_LimitBreak";
 		/// <summary>
-		/// Glorious Draw
+		/// Glorious ☆ Entrance
 		/// Move this skill to the top of the deck when a battle starts.
-		/// Draw 3 skills, gain 4 <color=#FFD700>Hero Complex</color> to SuperHero.
-		/// If SuperHero is fainted, draw 1 skill, then exclude this skill from current fight.
+		/// Draw 3 skills. <color=#FFA500>Super Hero</color> gains 4 <color=#FFD700>Hero Complex</color>.
+		/// If <color=#FFA500>Super Hero</color> is fainted, draw 1 skill, then exclude this skill from current fight.
 		/// </summary>
         public static string Skill_S_SuperHero_LucyDraw = "S_SuperHero_LucyDraw";
 		/// <summary>
 		/// Overflowing with Light 
-		/// Only Super Hero can use this skill.
-		/// Remove overload from Lucy, restore 2 mana and draw 2 skills.
+		/// Only <color=#FFA500>Super Hero</color> can use this skill.
+		/// Remove overload from Lucy and self, restore 2 mana and draw 2 skills.
 		/// </summary>
         public static string Skill_S_SuperHero_OverflowingwithLight = "S_SuperHero_OverflowingwithLight";
 		/// <summary>
 		/// The Applause Never Ends
-		/// Only Super Hero can use this skill.
-		/// Apply 'Hero's Spotlight' to all enemies and gain &a Barrier <color=#FF7C34>(Max HP * 0.5)</color>.
+		/// Only <color=#FFA500>Super Hero</color> can use this skill.
+		/// Apply <color=#50C878>Hero's Spotlight</color> to all enemies and gain &a Barrier <color=#FF7C34>(Max HP * 0.5)</color>.
 		/// </summary>
         public static string Skill_S_SuperHero_TheApplauseNeverEnds = "S_SuperHero_TheApplauseNeverEnds";
 		/// <summary>
@@ -184,9 +234,10 @@ namespace SuperHero
         public static string Skill_S_SuperHero_UnwantedSuccessStory = "S_SuperHero_UnwantedSuccessStory";
 		/// <summary>
 		/// World Is Mine
-		/// Apply 'Blinding Glory' and 'Hero Presence' to all enemies and 'Hero Presence' to all allies.
+		/// Apply <color=#FFFF66>Blinding Glory</color> and <color=#1E90FF>Hero Presence</color> to all enemies and 'Hero Presence' to all allies.
 		/// </summary>
         public static string Skill_S_SuperHero_WorldIsMine = "S_SuperHero_WorldIsMine";
+        public static string Buff_B_SuperHero_IntheNameofJustice = "B_SuperHero_IntheNameofJustice";
 
     }
 

@@ -13,30 +13,17 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace SuperHero
 {
-    /// <summary>
-    /// Second Act
-    /// </summary>
-    public class B_SuperHero_SecondAct : Buff, IP_PlayerTurn, IP_Awake, IP_BuffAddAfter
+	/// <summary>
+	/// Light ☆ Armor
+	/// </summary>
+    public class B_E_SuperHero_LightArmor : Buff, IP_BuffAddAfter
     {
-        public void Awake()
-        {
-            if (BChar.Info.Passive is P_SuperHero superHero)
-                superHero.SecondAct = true;
-        }
-
-        public void Turn()
-        {
-            var team = BattleSystem.instance.AllyTeam;
-            team.Draw();
-            team.AP += 1;
-        }
-
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_SecondAct;
+            var buff = ModItemKeys.Buff_B_SuperHero_MarkofJustice;
             if (addedbuff.BuffData.Key == buff)
             {
-                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
+                if (BuffTaker == BChar)
                 {
                     BuffTaker.BuffRemove(buff, true);
                 }

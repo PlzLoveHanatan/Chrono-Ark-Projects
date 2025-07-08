@@ -24,7 +24,7 @@ namespace SuperHero
             foreach (var target in BattleSystem.instance.AllyTeam.AliveChars)
             {
                 if (target.Info.KeyData != ModItemKeys.Character_SuperHero)
-                    target.BuffAdd(ModItemKeys.Buff_B_SuperHero_ScarletRemnant, BChar, false, 0, false, -1, false);
+                    target.BuffAdd(ModItemKeys.Buff_B_SuperHero_ScarletRemnant_0, BChar, false, 0, false, -1, false);
             }
         }
     }
