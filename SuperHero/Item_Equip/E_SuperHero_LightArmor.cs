@@ -18,6 +18,19 @@ namespace SuperHero
     /// </summary>
     public class E_SuperHero_LightArmor : EquipBase, IP_DamageTake, IP_PlayerTurn, IP_BattleStart_Ones
     {
+        public void Enchent()
+        {
+            MyItem.Enchant.CurseEnchant = false;
+        }
+
+        public override void Init()
+        {
+            if (MyItem != null)
+            {
+                MyItem.Curse = new EquipCurse();
+                MyItem._Isidentify = true;
+            }
+        }
         public void BattleStart(BattleSystem Ins)
         {
             var buff = ModItemKeys.Buff_B_E_SuperHero_LightArmor;
@@ -26,7 +39,9 @@ namespace SuperHero
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
-            if (User.Info.KeyData == ModItemKeys.Character_SuperHero)
+            var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
+            var complex = User.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
+            if (User.Info.KeyData == ModItemKeys.Character_SuperHero && complex.StackNum < 25)
             {
                 int damage = 0;
                 damage = Dmg;
@@ -34,7 +49,7 @@ namespace SuperHero
 
                 if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)
                 {
-                    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage, false, true, false, 0, false, false, false);
+                    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage, false, false, false, 0, false, false, false);
                 }
             }
         }

@@ -17,21 +17,25 @@ namespace SuperHero
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            foreach (var target in Targets)
-            {
-                if (target is BattleEnemy enemy)
-                {
-                    enemy.BuffAdd(ModItemKeys.Buff_B_SuperHero_BlindingGlory, BChar, false, 0, false, -1, false);
-                    enemy.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroPresence, BChar, false, 0, false, -1, false);
-                }
-            }
-            foreach (var target in BattleSystem.instance.AllyTeam.AliveChars)
-            {
-                if (target.Info.KeyData != ModItemKeys.Character_SuperHero)
-                {
-                    target.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroPresence, BChar, false, 0, false, -1, false);
-                }
-            }
+            //var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
+            //var buff2 = BChar.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
+            //if (buff2 != null)
+            //{
+            //    buff2.JusticeDamage = (int)(BChar.GetStat.atk * 0.9f);
+            //}
+
+            //foreach (var target in BattleSystem.instance.AllyTeam.AliveChars)
+            //{
+            //    if (target.Info.KeyData != ModItemKeys.Character_SuperHero)
+            //    {
+            //        target.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroPresence, BChar, false, 0, false, -1, false);
+            //    }
+            //}'
+            var superHero = ModItemKeys.Character_SuperHero;
+            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
+            var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(allies);
+            Targets.Clear();
+            Targets.AddRange(enemies);
         }
     }
 }

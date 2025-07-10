@@ -13,15 +13,15 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace SuperHero
 {
-    /// <summary>
-    /// <color=#FF00FF>In the Name of Justice ☆</color>
-    /// Draw 1 skill if this skill Exchanged or Discarded.
-    /// </summary>
-    public class S_SuperHero_IntheNameofJustice_0 : Skill_Extended
+	/// <summary>
+	/// Only <color=#FFA500>Super Hero</color> can use this skill.
+	/// Draw 1 skill if this skill Exchanged or Discarded.
+	/// </summary>
+    public class S_SuperHero_IntheNameofJustice_1 : Skill_Extended
     {
         public override void Init()
         {
-            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
         }
 
         public override void FixedUpdate()

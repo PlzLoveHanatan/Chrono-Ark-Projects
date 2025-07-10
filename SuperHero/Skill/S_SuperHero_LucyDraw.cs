@@ -39,7 +39,7 @@ namespace SuperHero
 
                 BattleSystem.instance.AllyTeam.Draw(3);
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     aliveHero.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
                 }

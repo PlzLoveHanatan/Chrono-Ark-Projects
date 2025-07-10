@@ -11,18 +11,19 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using MonoMod.ModInterop;
 namespace SuperHero
 {
-	/// <summary>
-	/// Apotheosis of Justice
-	/// Only Super Hero can use this skill.
-	/// </summary>
-    public class S_SuperHero_ApotheosisofJustice : Skill_Extended, IP_SkillUse_User_After
+    /// <summary>
+    /// <color=#8B00FF>Justice ☆ Finale</color>
+    /// </summary>
+    public class S_SuperHero_JusticeFinale : Skill_Extended
     {
         public override void Init()
         {
             OnePassive = true;
-            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            CanUseStun = true;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
         }
 
         public override void FixedUpdate()
@@ -40,27 +41,17 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
+
             var superHero = ModItemKeys.Character_SuperHero;
             var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
             var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(allies);
             foreach (var target in enemies)
             {
-                target.BuffAdd(ModItemKeys.Buff_B_SuperHero_HerosSpotlight, BChar, false, 999, false, -1, false);
-            }
-        }
-
-        public void SkillUseAfter(Skill SkillD)
-        {
-            var superHero = ModItemKeys.Character_SuperHero;
-            var buff = ModItemKeys.Buff_B_SuperHero_HerosSpotlight;
-            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
-            var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(allies);
-
-            foreach (var target in enemies)
-            {
-                if (target?.BuffReturn(buff, false) == null)
+                target.HPToZero();
+                if (!target.IsDead)
                 {
-                    target.BuffAdd(buff, BChar, false, 999, false, -1, false);
+                    target.Dead(false, false);
                 }
             }
         }

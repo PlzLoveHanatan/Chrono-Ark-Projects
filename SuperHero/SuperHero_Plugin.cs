@@ -71,14 +71,71 @@ namespace SuperHero
             [HarmonyPostfix]
             public static void StageStartPostfix()
             {
-                if (SuperHeroInParty() && PlayData.TSavedata.StageNum == 0 && !Utils.ItemTake)
+                if (SuperHeroInParty())
                 {
-                    PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
-                    PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
-                    Utils.ItemTake = true;
+                    if (PlayData.TSavedata.StageNum == 0 && !Utils.ItemTake)
+                    {
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
+                        Utils.ItemTake = true;
+                    }
+                    if (PlayData.TSavedata.StageNum >= 1 && !IsCamp)
+                    {
+                        Utils.JusticeSword++;
+                    }
                 }
             }
         }
+
+
+        public static bool IsCamp
+        {
+            get
+            {
+                StageSystem instance = StageSystem.instance;
+                string key = instance?.StageData?.Key;
+                return IsCampKey(key);
+            }
+        }
+
+        public static bool IsCampKey(string key)
+        {
+            return key == GDEItemKeys.Stage_Stage_Camp ||
+                   key == GDEItemKeys.Stage_Stage2_Camp ||
+                   key == GDEItemKeys.Stage_Stage3_Camp;
+        }
+
+        [HarmonyPatch(typeof(CharEquipInven))]
+        [HarmonyPatch(nameof(CharEquipInven.AddNewItem))]
+        public class Curse_Equip_Patch
+        {
+            [HarmonyPrefix]
+            public static void Prefix(int ItemNum, ItemBase Item)
+            {
+                if (SuperHeroInParty())
+                {
+                    var heroSword = ModItemKeys.Item_Equip_E_SuperHero_JusticeSword;
+                    var heroArmor = ModItemKeys.Item_Equip_E_SuperHero_LightArmor;
+
+                    List<string> blockedEnchantKeys = new List<string>
+                    {
+                        "En_Broken",
+                        "En_uncomfortable",
+                        "En_heavy"
+                    };
+
+                    if (Item is Item_Equip equip && equip.Enchant != null)
+                    {
+                        if ((equip.MyData.Key == heroSword || equip.MyData.Key == heroArmor) &&
+                            blockedEnchantKeys.Contains(equip.Enchant.Key))
+                        {
+                            equip.Enchant = new ItemEnchant();
+                        }
+                    }
+                }
+            }
+        }
+
 
         [HarmonyPatch(typeof(CharEquipInven), nameof(CharEquipInven.OnDropSlot))]
         [HarmonyPatch(new Type[] { typeof(ItemBase) })]
@@ -88,12 +145,9 @@ namespace SuperHero
             {
                 var bc = __instance.Info.KeyData;
 
-                Debug.Log($"[EquipPatch] Checking drop: item={inputitem.itemkey}, char={bc}");
-
                 if (inputitem.itemkey == ModItemKeys.Item_Equip_E_SuperHero_JusticeSword && bc != ModItemKeys.Character_SuperHero
                     || (inputitem.itemkey == ModItemKeys.Item_Equip_E_SuperHero_LightArmor && bc == ModItemKeys.Character_SuperHero))
                 {
-                    Debug.Log("[EquipPatch] Justice Sword blocked drop (not SuperHero).");
                     __result = true;
                     return false;
                 }

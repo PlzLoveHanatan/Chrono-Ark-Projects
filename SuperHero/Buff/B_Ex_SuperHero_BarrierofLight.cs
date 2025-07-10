@@ -21,9 +21,18 @@ namespace SuperHero
     {
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
+            var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
+            var complex = User.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
             if (User.Info.KeyData == ModItemKeys.Character_SuperHero)
             {
+                int damage = 0;
+                damage = Dmg;
                 resist = true;
+
+                if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)
+                {
+                    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage, false, false, false, 0, false, false, false);
+                }
                 SelfStackDestroy();
             }
         }

@@ -22,7 +22,7 @@ namespace SuperHero
         {
             PlusStat.hit = -30 * StackNum;
             PlusStat.dod = -30 * StackNum;
-            PlusStat.DMGTaken = 15;
+            PlusStat.DMGTaken = 15 * StackNum;
         }
     }
 }

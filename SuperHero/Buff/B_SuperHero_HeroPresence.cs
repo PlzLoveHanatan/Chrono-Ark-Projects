@@ -17,30 +17,40 @@ namespace SuperHero
 	/// Hero Presence
 	/// Cannot take action.
 	/// </summary>
-    public class B_SuperHero_HeroPresence : Buff, IP_Discard
+    public class B_SuperHero_HeroPresence : Buff, IP_Awake
     {
+        private int StunDuration;
         public override string DescExtended()
         {
+            int turnsLeft = Mathf.Max(0, 2 - StunDuration);
+            int turnsLeftEnemy = Mathf.Max(0, 1 - StunDuration);
+            if (turnsLeft == 0)
+                return base.DescExtended();
+
+            string value = turnsLeft.ToString();
+            string valueEnemy = turnsLeftEnemy.ToString();
             if (!this.View && this.BChar != null && this.BChar.Info.Ally)
             {
-                return base.DescExtended() + "\n" + string.Format(ScriptLocalization.UI_Battle_Buff.RestBuffDesc, this.BChar.Info.Name);
+                return base.DescExtended() + "\n" + string.Format(ModLocalization.SuperHero_Stun, this.BChar.Info.Name).Replace("&a", value);
+            }
+            if (!this.View && this.BChar != null && !this.BChar.Info.Ally)
+            {
+                return base.DescExtended() + "\n" + string.Format(ModLocalization.SuperHero_Stun_Enemy).Replace("&a", valueEnemy);
             }
             return base.DescExtended();
         }
 
         public override void TurnUpdate()
         {
-            if (!this.BChar.Info.Ally)
+            StunDuration++;
+            if (StunDuration >= 1 && !BChar.Info.Ally)
             {
-                this.Destr();
-                return;
+                Destr();
             }
-            if (!this.flag)
+            else if (StunDuration >= 2)
             {
-                this.flag = true;
-                return;
+                Destr();
             }
-            this.Destr();
         }
 
         public void Destr()
@@ -60,14 +70,9 @@ namespace SuperHero
             this.NoShowTimeNum_Tooltip = true;
         }
 
-        public void Discard(bool Click, Skill skill, bool HandFullWaste)
+        public void Awake()
         {
-            if (skill.Master == this.BChar)
-            {
-                this.Destr();
-            }
+            StunDuration = 0;
         }
-
-        public bool flag;
     }
 }

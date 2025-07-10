@@ -27,8 +27,8 @@ namespace SuperHero
         public void Turn()
         {
             var team = BattleSystem.instance.AllyTeam;
-            team.Draw();
-            team.AP += 1;
+            team.Draw(2);
+            team.AP += 2;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)

@@ -20,10 +20,7 @@ namespace SuperHero
     {
         public override void Init()
         {
-            PlusStat.hit = 50;
-            PlusStat.cri = 50;
-            PlusStat.PlusCriDmg = 50;
-            PlusStat.HitMaximum = true;
+            PlusStat.atk = 5;
         }
 
         public void HPChange(BattleChar Char, bool Healed)
@@ -36,6 +33,9 @@ namespace SuperHero
 
         public void Awake()
         {
+            if (BChar.Info.Passive is P_SuperHero superHero)
+                superHero.OverPowered = true;
+
             if (BChar.HP <= 0)
             {
                 BChar.HP = 1;

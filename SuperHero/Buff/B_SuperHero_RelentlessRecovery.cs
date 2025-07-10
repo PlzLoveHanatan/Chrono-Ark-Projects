@@ -20,7 +20,7 @@ namespace SuperHero
     {
         public override string DescExtended()
         {
-            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
+            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.maxhp * 0.4f)).ToString());
         }
 
         public void Awake()
@@ -31,10 +31,10 @@ namespace SuperHero
 
         public void Turn()
         {
-            int barrierValue = (int)(BChar.GetStat.maxhp * 0.5f);
+            int barrierValue = (int)(BChar.GetStat.maxhp * 0.4f);
             BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_EgoShield, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
 
-            var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 2);
+            var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 3);
             foreach (var debuff in debuffs)
             {
                 debuff.SelfDestroy();

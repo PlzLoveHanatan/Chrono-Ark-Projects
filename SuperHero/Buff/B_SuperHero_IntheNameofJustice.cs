@@ -23,7 +23,10 @@ namespace SuperHero
 
         public void Discard(bool Click, Skill skill, bool HandFullWaste)
         {
-            if (skill.MySkill.KeyID == ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0)
+            var justice = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0;
+            var justice1 = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1;
+
+            if (skill.MySkill.KeyID == justice || skill.MySkill.KeyID ==justice1)
             {
                 if (!HandFullWaste)
                 {

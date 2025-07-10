@@ -25,7 +25,7 @@ namespace SuperHero
             var complex = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false);
             if (BattleSystem.instance != null && complex != null)
             {
-                return base.DescExtended().Replace("&a", ((int)(complex.StackNum * 3)).ToString());
+                return base.DescExtended().Replace("&a", ((int)(complex.StackNum * 4)).ToString());
             }
             return base.DescExtended().Replace("&a", 0.ToString());
         }
@@ -59,7 +59,7 @@ namespace SuperHero
             var complex = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false);
             if (complex != null)
             {
-                BChar.Heal(BattleSystem.instance.DummyChar, (int)(complex.StackNum * 3f), false, true, null);
+                BChar.Heal(BattleSystem.instance.DummyChar, (int)(complex.StackNum * 4f), false, true, null);
 
                 Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_DummyHeal, BChar, BChar.MyTeam);
                 healingParticle.PlusHit = true;

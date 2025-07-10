@@ -17,15 +17,8 @@ namespace SuperHero
     /// <summary>
     /// Erase the Mobs
     /// </summary>
-    public class S_SuperHero_ErasetheMobs : Skill_Extended, IP_SkillUse_Target
+    public class S_SuperHero_ErasetheMobs : Skill_Extended
     {
-        public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-        {
-            var buff = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) as B_SuperHero_HeroComplex;
-            if (buff != null)
-                buff.JusticeDamage = DMG;
-        }
-
         public override void Init()
         {
             OnePassive = true;
@@ -33,6 +26,12 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
+            var buff2 = BChar.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
+            if (buff2 != null)
+            {
+                buff2.JusticeDamage = (int)(BChar.GetStat.atk * 1.1f);
+            }
 
             foreach (var target in Targets)
             {
