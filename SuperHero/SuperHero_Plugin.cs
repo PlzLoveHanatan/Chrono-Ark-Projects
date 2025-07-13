@@ -51,19 +51,19 @@ namespace SuperHero
             return false;
         }
 
-        [HarmonyPatch(typeof(B_ProgramMaster_LucyMain))]
-        [HarmonyPatch(nameof(B_ProgramMaster_LucyMain.BuffOneAwake))]
-        public static class PainSharingPatch
-        {
-            static bool Prefix(B_ProgramMaster_LucyMain __instance)
-            {
-                if (SuperHeroInParty())
-                {
-                    return false;
-                }
-                return true;
-            }
-        }
+        //[HarmonyPatch(typeof(B_ProgramMaster_LucyMain))]
+        //[HarmonyPatch(nameof(B_ProgramMaster_LucyMain.BuffOneAwake))]
+        //public static class PainSharingPatch
+        //{
+        //    static bool Prefix(B_ProgramMaster_LucyMain __instance)
+        //    {
+        //        if (SuperHeroInParty())
+        //        {
+        //            return false;
+        //        }
+        //        return true;
+        //    }
+        //}
 
         [HarmonyPatch(typeof(FieldSystem), "StageStart")]
         public static class StagePatch
@@ -73,15 +73,27 @@ namespace SuperHero
             {
                 if (SuperHeroInParty())
                 {
-                    if (PlayData.TSavedata.StageNum == 0 && !Utils.ItemTake)
-                    {
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
-                        Utils.ItemTake = true;
-                    }
                     if (PlayData.TSavedata.StageNum >= 1 && !IsCamp)
                     {
                         Utils.JusticeSword++;
+                    }
+                    if (PlayData.TSavedata.StageNum >= 0)
+                    {
+                        //if (Utils.Timer && !Utils.FirstTimer)
+                        //{
+                        //    GlobalTimerManager.Instance?.DestroySelfAndUI();
+                        //    var TimerObj = new GameObject("GlobalTimerManager");
+                        //    TimerObj.AddComponent<GlobalTimerManager>();
+                        //    GlobalTimerManager.Instance?.ResetTimer();
+                        //    GlobalTimerManager.Instance?.StartTimer();
+                        //    Utils.FirstTimer = true;
+                        //}
+                        if (!Utils.ItemTake)
+                        {
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
+                            Utils.ItemTake = true;
+                        }
                     }
                 }
             }
@@ -136,6 +148,106 @@ namespace SuperHero
             }
         }
 
+        [HarmonyPatch(typeof(TrueEndCreditUI))]
+        [HarmonyPatch(nameof(TrueEndCreditUI.Start))]
+        public class TimerPatch
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                GlobalTimerManager.Instance?.PauseTimer();
+            }
+        }
+
+        [HarmonyPatch(typeof(TrueEndCreditUI))]
+        [HarmonyPatch("Update")]
+        public class TrueEndCreditUI_UpdatePatch
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    GlobalTimerManager.Instance?.PauseTimer();
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(MainOptionMenu))]
+        [HarmonyPatch("Start")]
+        public class MainOptionMenu_MainOptionMenu
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                GlobalTimerManager.Instance?.DestroySelfAndUI();
+            }
+        }
+
+        [HarmonyPatch(typeof(PauseWindow))]
+        [HarmonyPatch("Restart")]
+        public class TimerPatch_Restart
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                GlobalTimerManager.Instance?.ResetTimer();
+            }
+        }
+
+        [HarmonyPatch(typeof(PauseWindow))]
+        [HarmonyPatch("ReturnToMain")]
+        public class TimerPatch_ReturnToMain
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                GlobalTimerManager.SaveCurrentTime();
+                string time = GlobalTimerManager.GetSavedTime();
+                Debug.Log("Saved timer time: " + time);
+            }
+        }
+
+        [HarmonyPatch(typeof(PauseWindow))]
+        [HarmonyPatch("Continue")]
+        public class TimerPatch_Continue
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                if (GlobalTimerManager.Instance != null)
+                {
+                    var TimerObj = new GameObject("GlobalTimerManager");
+                    TimerObj.AddComponent<GlobalTimerManager>();
+                    GlobalTimerManager.Instance?.StartTimer();
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(PauseWindow))]
+        [HarmonyPatch("QuitGame")]
+        public class TimerPatch_QuitGame
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                GlobalTimerManager.SaveCurrentTime();
+                string time = GlobalTimerManager.GetSavedTime();
+                Debug.Log("Saved timer time: " + time);
+                GlobalTimerManager.Instance?.StopTimer();
+            }
+        }
+
+        [HarmonyPatch(typeof(ResultUI))]
+        [HarmonyPatch("ContinueClick")]
+        public class TimerPatch_ResultUI
+        {
+            [HarmonyPrefix]
+            public static void Prefix()
+            {
+                GlobalTimerManager.Instance?.DestroySelfAndUI();
+            }
+        }
 
         [HarmonyPatch(typeof(CharEquipInven), nameof(CharEquipInven.OnDropSlot))]
         [HarmonyPatch(new Type[] { typeof(ItemBase) })]

@@ -13,39 +13,23 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace SuperHero
 {
-	/// <summary>
-	/// Overpowered Protagonist
-	/// </summary>
-    public class B_SuperHero_OverpoweredProtagonist : Buff, IP_HPChange, IP_Awake, IP_BuffAddAfter
+    public class B_SuperHero_JusticeAscension : Buff, IP_BuffAddAfter, IP_Awake
     {
         public override void Init()
         {
-            PlusStat.atk = 10;
-            PlusStat.PlusCriDmg = 50;
-        }
-
-        public void HPChange(BattleChar Char, bool Healed)
-        {
-            if (BChar.HP <= 0)
-            {
-                BChar.HP = 1;
-            }
+            PlusStat.atk = 5;
+            PlusStat.PlusCriDmg = 25;
         }
 
         public void Awake()
         {
             if (BChar.Info.Passive is P_SuperHero superHero)
-                superHero.OverPowered = true;
-
-            if (BChar.HP <= 0)
-            {
-                BChar.HP = 1;
-            }
+                superHero.JusticeHero = true;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist;
+            var buff = ModItemKeys.Buff_B_SuperHero_JusticeAscension;
             if (addedbuff.BuffData.Key == buff)
             {
                 if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)

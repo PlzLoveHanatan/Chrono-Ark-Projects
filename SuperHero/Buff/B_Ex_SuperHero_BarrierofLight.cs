@@ -31,7 +31,7 @@ namespace SuperHero
 
                 if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)
                 {
-                    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage, false, false, false, 0, false, false, false);
+                    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage / 2, false, false, false, 0, false, false, false);
                 }
                 SelfStackDestroy();
             }

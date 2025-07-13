@@ -37,9 +37,9 @@ namespace SuperHero
             {
                 if (target is BattleEnemy enemy)
                 {
-                    if (enemy.Boss && enemy.HP <= enemy.GetStat.maxhp * 0.2f)
+                    if (enemy.Boss && enemy.HP <= enemy.GetStat.maxhp * 0.25f)
                         enemy.HPToZero();
-                    else if (enemy.HP <= enemy.GetStat.maxhp * 0.4f)
+                    else if (enemy.HP <= enemy.GetStat.maxhp * 0.5f)
                         enemy.HPToZero();
                 }
                 else

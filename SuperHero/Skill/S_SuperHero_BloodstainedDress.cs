@@ -33,7 +33,15 @@ namespace SuperHero
             var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null & x.Info.KeyData != superHero).ToList();
             int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, allies.Count);
             var randomTarget = allies[index];
-            randomTarget.BuffAdd(ModItemKeys.Buff_B_SuperHero_ScarletRemnant_0, BChar, false, 0, false, -1, false);
+            if (BChar.Info.Passive is P_SuperHero Hero)
+            {
+                if (Hero != null && Hero.SuperHeroPassive) return;
+
+                else
+                {
+                    randomTarget.BuffAdd(ModItemKeys.Buff_B_SuperHero_ScarletRemnant_0, BChar, false, 0, false, -1, false);
+                }
+            }
         }
     }
 }

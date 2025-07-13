@@ -22,17 +22,17 @@ namespace SuperHero
         public override void Init()
         {
             OnePassive = true;
-            PlusPerStat.Damage = -10;
-            PlusStat.def = -10;
+            PlusPerStat.Damage = -5;
+            PlusStat.def = -5;
         }
 
         public override void BuffStat()
         {
-            PlusPerStat.Damage = -10 * StackNum;
-            PlusStat.def = -10 * StackNum;
+            PlusPerStat.Damage = -5 * StackNum;
+            PlusStat.def = -5 * StackNum;
             BuffData.MaxStack = MarkStacks + 5;
-            Debug.Log($"Current Max Stacks are {BuffData.MaxStack}");
         }
+
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
             var buff = ModItemKeys.Buff_B_SuperHero_MarkofJustice;

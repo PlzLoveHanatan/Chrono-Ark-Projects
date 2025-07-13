@@ -11,13 +11,33 @@ using UnityEngine.Experimental.U2D;
 using static ChronoArkMod.ModEditor.Console.ConsoleManager;
 using UnityEngine.UI;
 using TMPro;
+using ChronoArkMod.ModData.Settings;
+using GameDataEditor;
+using DarkTonic.MasterAudio;
+using System.Collections;
 
 namespace SuperHero
 {
     public static class Utils
     {
+        public static bool Timer => ModManager.getModInfo("SuperHero").GetSetting<ToggleSetting>("Timer").Value;
+        public static bool Music => ModManager.getModInfo("SuperHero").GetSetting<ToggleSetting>("Music").Value;
+
+        public static bool FirstTimer;
+
+        public static void TimerCheck()
+        {
+            if (Timer)
+            {
+                var mod = ModManager.getModInfo("SuperHero");
+                mod.GetSetting<ToggleSetting>("Timer").Value = false;
+                mod.SaveSetting();
+            }
+        }
+
         public static int Attack;
         public static int JusticeSword;
+        public static bool TimerOn;
 
         public static bool ItemTake;
 
@@ -38,6 +58,119 @@ namespace SuperHero
             ModItemKeys.Skill_S_SuperHero_JusticePatience,
             ModItemKeys.Skill_S_SuperHero_JusticeFinale,
         };
+
+        public static readonly List<string> PainSharingAlly = new List<string>
+        {
+            GDEItemKeys.Buff_B_BloodyMist_ShareDamage_Ally,
+            GDEItemKeys.Buff_B_ProgramMaster_LucyMain_Ally,
+        };
+
+        public static readonly List<string> PainSharingLucy = new List<string>
+        {
+            GDEItemKeys.Buff_B_BloodyMist_ShareDamage,
+            GDEItemKeys.Buff_B_ProgramMaster_LucyMain,
+        };
+
+        private static readonly Dictionary<string, string> HeroMusic = new Dictionary<string, string>
+        {
+            { ModItemKeys.Skill_S_SuperHero_Rare_ApotheosisofJustice, "HappyEnd" },
+            { ModItemKeys.Skill_S_SuperHero_Rare_JusticeHero, "Halcyon" },
+            { ModItemKeys.Skill_S_SuperHero_Rare_JusticeDarkestHour, "Parousia" },
+
+        };
+
+        public static void PlaySong(string skill)
+        {
+            if (!Utils.Music) return;
+
+            if (!HeroMusic.TryGetValue(skill, out string baseSound)) return;
+
+            string soundToPlay = baseSound;
+
+            MasterAudio.StopBus("BGM"); 
+            //MasterAudio.StopBus("BattleBGM");
+            MasterAudio.FadeBusToVolume("BGM", 0f, 0.5f, null, false, false);
+            MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, null, false, false);
+            MasterAudio.PlaySound(soundToPlay, 100f, null, 0f, null, null, false, false);
+        }
+        public static IEnumerator StopSong()
+        {
+            yield return new WaitForFixedUpdate();
+            MasterAudio.StopBus("BGM");
+            MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
+
+            yield return null;
+
+            //Action completionCallback = delegate ()
+            //{
+            //    MasterAudio.StopBus("BattleBGM");
+            //};
+            //MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, completionCallback, true, true);
+        }
+
+        public static void RemovePainSharingBuffsFromAllAllies()
+        {
+            foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
+            {
+                if (ally == null) continue;
+
+                foreach (var buffKey in PainSharingAlly)
+                {
+                    var buff = ally.BuffReturn(buffKey, false) as Buff;
+                    if (buff != null)
+                    {
+                        buff.SelfDestroy();
+                    }
+                }
+            }
+        }
+
+        public static void RemovePainSharingBuffsFromLucy()
+        {
+            var lucy = BattleSystem.instance.AllyTeam.LucyAlly;
+            if (lucy == null) return;
+
+            foreach (var buffKey in PainSharingLucy)
+            {
+                var buff = lucy.BuffReturn(buffKey, false) as Buff;
+                if (buff != null)
+                {
+                    buff.SelfDestroy();
+                }
+            }
+        }
+
+        public static void ForceKill(BattleAlly ally)
+        {
+            if (ally == null || ally.IsDead) return;
+
+            if (ally.HP <= 1)
+            {
+                ally.Dead(false, false);
+                if (!ally.IsDead && ally.HP >= 0)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        ally.HPToZero();
+                        ally.Dead(false, false);
+                    }
+                }
+            }
+        }
+
+        public static void ForceKill(BattleChar ally)
+        {
+            if (ally == null || ally.IsDead) return;
+
+            ally.HPToZero();
+            ally.Dead(false, false);
+
+            if (!ally.IsDead)
+            {
+                ally.HPToZero();
+                ally.Dead(false, false);
+            }
+        }
 
         public static void getSprite(string path, Image img)
         {

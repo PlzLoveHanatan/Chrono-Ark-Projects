@@ -37,9 +37,9 @@ namespace SuperHero
 
                 aliveHero.ParticleOut(healingParticle, aliveHero);
 
-                BattleSystem.instance.AllyTeam.Draw(3);
+                BattleSystem.instance.AllyTeam.Draw(2);
 
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     aliveHero.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
                 }

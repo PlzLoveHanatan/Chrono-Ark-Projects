@@ -5,7 +5,7 @@ namespace SuperHero
     {
 		/// <summary>
 		/// Barrier of Light ☆
-		/// When attacked by <color=#FFA500>Super Hero</color> or <color=#FF00FF>Super Villain</color>, block <color=#FF4500>Mark of Justice</color>, reflect the damage received onto a random enemy and reduce the damage taken to 0 and remove 1 stack.
+		/// When attacked by <color=#FFA500>Super Hero</color> or <color=#FF00FF>Super Villain</color>, block <color=#FF4500>Mark of Justice</color>, reflect the half damage received onto a random enemy and reduce the damage taken to 0 and remove 1 stack.
 		/// </summary>
         public static string Buff_B_Ex_SuperHero_BarrierofLight = "B_Ex_SuperHero_BarrierofLight";
 		/// <summary>
@@ -54,6 +54,17 @@ namespace SuperHero
         public static string Buff_B_SuperHero_HerosSpotlight = "B_SuperHero_HerosSpotlight";
         public static string Buff_B_SuperHero_IntheNameofJustice = "B_SuperHero_IntheNameofJustice";
 		/// <summary>
+		/// Justice Ascension
+		/// Only <color=#FF00FF>Super Villain</color> can have this buff.
+		/// </summary>
+        public static string Buff_B_SuperHero_JusticeAscension = "B_SuperHero_JusticeAscension";
+		/// <summary>
+		/// Justice Hero
+		/// Only <color=#1E90FF>Super Hero</color> can have this buff.
+		/// <color=#1E90FF>Super Hero</color> cannot become a <color=#FF00FF>Super Villain</color> and attack allies.
+		/// </summary>
+        public static string Buff_B_SuperHero_JusticeHero = "B_SuperHero_JusticeHero";
+		/// <summary>
 		/// Mark of Justice
 		/// </summary>
         public static string Buff_B_SuperHero_MarkofJustice = "B_SuperHero_MarkofJustice";
@@ -90,6 +101,11 @@ namespace SuperHero
 		/// </summary>
         public static string Buff_B_SuperHero_SecondAct = "B_SuperHero_SecondAct";
 		/// <summary>
+		/// Test
+		/// Can be activated by left-clicking (cannot be activated if stunned) and select from options.
+		/// </summary>
+        public static string Buff_B_SuperHero_Test = "B_SuperHero_Test";
+		/// <summary>
 		/// When cast, <color=#FFA500>Super Hero</color> gains 4 <color=#FFD700>Hero Complex</color> and gains a buff that reflects damage received onto a random enemy and reduces the next two instances of damage taken from <color=#FFA500>Super Hero</color> to 0.
 		/// Can only activate once per battle.
 		/// </summary>
@@ -100,12 +116,13 @@ namespace SuperHero
 		/// Attacks that inflict <color=#FF4500>Mark of Justice</color> apply 1 additional stack and increase its max stack by 1.
 		/// This equipment cannot be cursed.
 		/// <color=red>Can only be equipped by</color> <color=#FFA500>Super Hero</color>.
-		/// <color=#919191>Justice ☆ is served!</color>
+		/// <color=#919191>Justice ☆ is served!
+		/// This item gains +1 Attack Power for every cleared stage.</color>
 		/// </summary>
         public static string Item_Equip_E_SuperHero_JusticeSword = "E_SuperHero_JusticeSword";
 		/// <summary>
 		/// Light ☆ Armor
-		/// When attacked by <color=#FFA500>Super Hero</color>, reflect the damage received onto a random enemy and reduce the damage taken to 0, unless <color=#FFA500>Super Hero</color> becomes a <color=#FF00FF>Super Villain</color>.
+		/// When attacked by <color=#FFA500>Super Hero</color>, reduce the damage taken to 0, unless <color=#FFA500>Super Hero</color> becomes a <color=#FF00FF>Super Villain</color>.
 		/// This equipment cannot be cursed.
 		/// <color=red>Cannot be equipped by</color> <color=#FFA500>Super Hero</color>.
 		/// <color=#919191><color=#FF00FF>Justice ☆</color> always finds its villain.</color>
@@ -121,7 +138,7 @@ namespace SuperHero
         public static string SkillKeyword_KeyWord_BlindingGlory = "KeyWord_BlindingGlory";
 		/// <summary>
 		/// Hero Complex
-		/// <color=#919191>Increase all stats by 3% for each buff stack. Gain X chance <color=#FF7C34>(3% * StackNum)</color> to target an ally.
+		/// <color=#919191>Increase all stats by 4% for each buff stack. Gain X chance <color=#FF7C34>(4% * StackNum)</color> to target an ally.
 		/// Max 20 Stacks</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_HeroComplex = "KeyWord_HeroComplex";
@@ -136,6 +153,14 @@ namespace SuperHero
 		/// Removed when this character attacks Super Hero.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_HerosSpotlight = "KeyWord_HerosSpotlight";
+		/// <summary>
+		/// Justice Hero
+		/// <color=#919191><color=#1E90FF>Super Hero</color> cannot become a <color=#FF00FF>Super Villain</color> and attack allies.
+		/// Attack Power +5
+		/// Critical Damage +25%
+		/// Max 1 Stack</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_JusticeHero = "KeyWord_JusticeHero";
         public static string SkillEffect_SE_S_S_SuperHero_ApotheosisofJustice = "SE_S_S_SuperHero_ApotheosisofJustice";
         public static string SkillEffect_SE_S_S_SuperHero_BloodstainedDress = "SE_S_S_SuperHero_BloodstainedDress";
         public static string SkillEffect_SE_S_S_SuperHero_ErasetheMobs = "SE_S_S_SuperHero_ErasetheMobs";
@@ -146,6 +171,9 @@ namespace SuperHero
         public static string SkillEffect_SE_S_S_SuperHero_JusticePatience = "SE_S_S_SuperHero_JusticePatience";
         public static string SkillEffect_SE_S_S_SuperHero_LimitBreak = "SE_S_S_SuperHero_LimitBreak";
         public static string SkillEffect_SE_S_S_SuperHero_OverflowingwithLight = "SE_S_S_SuperHero_OverflowingwithLight";
+        public static string SkillEffect_SE_S_S_SuperHero_Rare_ApotheosisofJustice = "SE_S_S_SuperHero_Rare_ApotheosisofJustice";
+        public static string SkillEffect_SE_S_S_SuperHero_Rare_JusticeDarkestHour = "SE_S_S_SuperHero_Rare_JusticeDarkestHour";
+        public static string SkillEffect_SE_S_S_SuperHero_Rare_JusticeHero = "SE_S_S_SuperHero_Rare_JusticeHero";
         public static string SkillEffect_SE_S_S_SuperHero_TheApplauseNeverEnds = "SE_S_S_SuperHero_TheApplauseNeverEnds";
         public static string SkillEffect_SE_S_S_SuperHero_UnwantedSuccessStory = "SE_S_S_SuperHero_UnwantedSuccessStory";
         public static string SkillEffect_SE_S_S_SuperHero_WorldIsMine = "SE_S_S_SuperHero_WorldIsMine";
@@ -185,21 +213,15 @@ namespace SuperHero
         public static string Character_Skin_SuperHero_HeroOfJustice = "SuperHero_HeroOfJustice";
         public static string Character_Skin_SuperHero_LightOfHope = "SuperHero_LightOfHope";
 		/// <summary>
-		/// Apotheosis of Justice
-		/// Only <color=#FFA500>Super Hero</color> can use this skill.
-		/// Apply <color=#50C878>Hero's Spotlight</color> to all enemies and allies.
-		/// </summary>
-        public static string Skill_S_SuperHero_ApotheosisofJustice = "S_SuperHero_ApotheosisofJustice";
-		/// <summary>
 		/// Bloodstained Dress
-		/// Cost reduced by 1 if this a fixed ability.
+		/// Cost reduced by 1 if this is a fixed ability.
 		/// Apply 1 turn <color=#DC143C>Scarlet Remnant</color> to a random ally.
 		/// </summary>
         public static string Skill_S_SuperHero_BloodstainedDress = "S_SuperHero_BloodstainedDress";
         public static string Skill_S_SuperHero_DummyHeal = "S_SuperHero_DummyHeal";
 		/// <summary>
 		/// Erase the Mobs
-		/// If the target's health is below 40% (20% for bosses), <b>reduce the target's health to 0</b>.
+		/// If the target's health is below 50% (25% for bosses), <b>reduce the target's health to 0</b>.
 		/// Otherwise gain 3 <color=#FFD700>Hero Complex</color>.
 		/// </summary>
         public static string Skill_S_SuperHero_ErasetheMobs = "S_SuperHero_ErasetheMobs";
@@ -223,7 +245,7 @@ namespace SuperHero
         public static string Skill_S_SuperHero_IntheNameofJustice_1 = "S_SuperHero_IntheNameofJustice_1";
 		/// <summary>
 		/// <color=#FF00FF>Justice ☆ Finale</color>
-		/// Only <color=#FFA500>Super Hero</color> can use this skill.
+		/// Only <color=#FF00FF>Super Villain</color> can use this skill.
 		/// This skill can be cast even if you are stunned.
 		/// <b>Kill all allies and enemies.</b>
 		/// <color=#FFD700>Justice ☆ demands sacrifice.</color>
@@ -239,24 +261,24 @@ namespace SuperHero
         public static string Skill_S_SuperHero_JusticeGlory_0 = "S_SuperHero_JusticeGlory_0";
 		/// <summary>
 		/// <color=#FF00FF>Justice ☆ Patience</color>
-		/// Only <color=#FFA500>Super Hero</color> can use this skill.
+		/// Only <color=#FF00FF>Super Villain</color> can use this skill.
 		/// Remove all buffs/debuffs from the target, except <color=#FF4500>Mark of Justice</color>.
 		/// This skill can be played repeatedly during this turn.
 		/// This skill can be cast even if you are stunned.
-		/// Remove 1 random debuff from <color=#FFA500>Super Hero</color>.
+		/// Remove 1 random debuff from <color=#FF00FF>Super Villain</color>.
 		/// </summary>
         public static string Skill_S_SuperHero_JusticePatience = "S_SuperHero_JusticePatience";
 		/// <summary>
 		/// <color=#00BFFF>Limit Break ☆</color>
 		/// Only <color=#FFA500>Super Hero</color> can use this skill.
-		/// Remove all debbufs.
+		/// Remove all debuffs.
 		/// All buffs remain 2 extra turn.
 		/// </summary>
         public static string Skill_S_SuperHero_LimitBreak = "S_SuperHero_LimitBreak";
 		/// <summary>
 		/// <color=#FFD700>Glorious ☆ Entrance</color>
 		/// Move this skill to the top of the deck when a battle starts.
-		/// Draw 3 skills. <color=#FFA500>Super Hero</color> gains 3 <color=#FFD700>Hero Complex</color>.
+		/// Draw 2 skills. <color=#FFA500>Super Hero</color> gains 2 <color=#FFD700>Hero Complex</color>.
 		/// If <color=#FFA500>Super Hero</color> is fainted, draw 1 skill, then exclude this skill from current fight.
 		/// </summary>
         public static string Skill_S_SuperHero_LucyDraw = "S_SuperHero_LucyDraw";
@@ -266,6 +288,28 @@ namespace SuperHero
 		/// Remove overload from Lucy and self, restore 2 mana and draw 2 skills.
 		/// </summary>
         public static string Skill_S_SuperHero_OverflowingwithLight = "S_SuperHero_OverflowingwithLight";
+		/// <summary>
+		/// <color=#FFD700>Apotheosis of Justice ☆</color>
+		/// Only <color=#FFA500>Super Hero</color> can use this skill.
+		/// Apply <color=#50C878>Hero's Spotlight</color> to all enemies and allies.
+		/// </summary>
+        public static string Skill_S_SuperHero_Rare_ApotheosisofJustice = "S_SuperHero_Rare_ApotheosisofJustice";
+		/// <summary>
+		/// <color=#9400D3>Justice ☆ Darkest Hour</color>
+		/// Only <color=#FFA500>Super Hero</color> can use this skill.
+		/// <b>Kill all allies</b>.
+		/// <color=#FFA500>Super Hero</color> gain Max <color=#FFD700>Hero Complex</color> and become a <color=#FF00FF>Super Villain</color>.
+		/// <color=#919191><color=#FF00FF>Justice ☆</color> always win.</color>
+		/// </summary>
+        public static string Skill_S_SuperHero_Rare_JusticeDarkestHour = "S_SuperHero_Rare_JusticeDarkestHour";
+		/// <summary>
+		/// <color=#1E90FF>Justice Hero ☆</color>
+		/// Only <color=#FFA500>Super Hero</color> can use this skill.
+		/// Remove <color=#FF4500>Mark of Justice</color> from all allies.
+		/// <color=#919191>This world needs a <color=#1E90FF>Hero ☆</color></color>
+		/// </summary>
+        public static string Skill_S_SuperHero_Rare_JusticeHero = "S_SuperHero_Rare_JusticeHero";
+        public static string Skill_S_SuperHero_TestSkill = "S_SuperHero_TestSkill";
 		/// <summary>
 		/// <color=#00BFFF>Applause Never Ends ☆</color>
 		/// Only <color=#FFA500>Super Hero</color> can use this skill.

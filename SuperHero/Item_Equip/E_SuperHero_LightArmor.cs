@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.Runtime.InteropServices.WindowsRuntime;
 namespace SuperHero
 {
     /// <summary>
@@ -25,6 +26,7 @@ namespace SuperHero
 
         public override void Init()
         {
+            OnePassive = true;
             if (MyItem != null)
             {
                 MyItem.Curse = new EquipCurse();
@@ -41,16 +43,17 @@ namespace SuperHero
         {
             var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
             var complex = User.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
-            if (User.Info.KeyData == ModItemKeys.Character_SuperHero && complex.StackNum < 25)
+            if (User.Info.KeyData == ModItemKeys.Character_SuperHero && complex.StackNum < 25 && Dmg > 1)
             {
-                int damage = 0;
-                damage = Dmg;
-                resist = true;
+                //int damage = 0;
+                //damage = Dmg;
+                Dmg = 0;
+                resist = true;                
 
-                if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)
-                {
-                    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage, false, false, false, 0, false, false, false);
-                }
+                //if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)
+                //{
+                //    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage / 2, false, false, false, 0, false, false, false);
+                //}
             }
         }
 

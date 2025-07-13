@@ -11,18 +11,20 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using MonoMod.ModInterop;
 namespace SuperHero
 {
     /// <summary>
-    /// <color=#8B00FF>Justice ☆ Finale</color>
+    /// <color=#9400D3>Justice ☆ Darkest Hour</color>
+    /// Only <color=#FFA500>Super Hero</color> can use this skill.
+    /// <b>Kill all allies</b> except <color=#FFA500>Super Hero</color>.
+    /// <color=#FFA500>Super Hero</color> gain Max <color=#FFD700>Hero Complex</color> and become a <color=#FF00FF>Super Villain</color>.
+    /// <color=#919191><color=#FF00FF>Justice ☆</color> always win.</color>
     /// </summary>
-    public class S_SuperHero_JusticeFinale : Skill_Extended
+    public class S_SuperHero_Rare_JusticeDarkestHour : Skill_Extended
     {
         public override void Init()
         {
             OnePassive = true;
-            CanUseStun = true;
             SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
         }
 
@@ -41,21 +43,26 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
-
+            Utils.PlaySong(MySkill.MySkill.KeyID);
             var superHero = ModItemKeys.Character_SuperHero;
+            var heroComplex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
+            var hero = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(x => x != null && x.Info.KeyData == superHero);
             var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
-            var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(allies);
-            foreach (var target in enemies)
+            if (superHero != null)
             {
-                target.HPToZero();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 25; i++)
                 {
-                    if (!target.IsDead)
-                    {
-                        target.Dead(false, false);
-                    }
+                    hero.BuffAdd(heroComplex, BChar, false, 0, false, -1, false);
                 }
+                foreach (var target in allies)
+                {
+                    Utils.ForceKill(target);
+                }
+            }
+            else
+            {
+                BattleSystem.instance.AllyTeam.Draw();
+                MySkill.isExcept = true;
             }
         }
     }

@@ -13,6 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine.Experimental.UIElements.StyleEnums;
+using Steamworks;
 namespace SuperHero
 {
     /// <summary>
@@ -20,6 +21,7 @@ namespace SuperHero
     /// </summary>
     public class B_SuperHero_GloryofJustice : Buff, IP_Hit, IP_Dodge
     {
+        public bool SuperHeroGlory;
         public override string DescExtended()
         {
             int attack = (int)(BChar.GetStat.atk * 0.4f);
@@ -28,8 +30,14 @@ namespace SuperHero
             int index = 0;
             if (BattleSystem.instance != null && heroComplex != null)
             {
-                index = heroComplex.StackNum * 4;
-                return base.DescExtended().Replace("&a", attack.ToString()).Replace("&b", index.ToString());
+                if (SuperHeroGlory)
+                {
+                    return base.DescExtended().Replace("&a", attack.ToString()).Replace("&b", 0.ToString());
+                }
+                else
+                {
+                    return base.DescExtended().Replace("&a", attack.ToString()).Replace("&b", (StackNum * 4).ToString());
+                }
             }
             return base.DescExtended().Replace("&a", attack.ToString()).Replace("&b", index.ToString());
         }
@@ -46,7 +54,7 @@ namespace SuperHero
                 var newTarget = SP.UseStatus;
                 var justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory;
 
-                if (heroComplex != null && heroComplex.StackNum >= 25)
+                if (heroComplex != null && heroComplex.StackNum >= 25 && !SuperHeroGlory)
                 {
                     justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory_0;
                 }
@@ -55,9 +63,14 @@ namespace SuperHero
                 skill.FreeUse = true;
                 skill.PlusHit = true;
 
-                if (AllyTarget())
+                if (AllyTarget() && !SuperHeroGlory)
                 {
                     newTarget = JusticeStrike();
+                    if (StackNum >= 25)
+                    {
+                        Utils.ForceKill(newTarget);
+                    }
+                    
                     if (newTarget.Info.KeyData == ModItemKeys.Character_SuperHero)
                     {
                         return;
@@ -86,7 +99,7 @@ namespace SuperHero
                 var newTarget = SP.UseStatus;
                 var justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory;
 
-                if (heroComplex != null && heroComplex.StackNum >= 25)
+                if (heroComplex != null && heroComplex.StackNum >= 25 && !SuperHeroGlory)
                 {
                     justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory_0;
                 }
@@ -95,9 +108,14 @@ namespace SuperHero
                 skill.FreeUse = true;
                 skill.PlusHit = true;
 
-                if (AllyTarget())
+                if (AllyTarget() && !SuperHeroGlory)
                 {
                     newTarget = JusticeStrike();
+
+                    if (StackNum >= 25)
+                    {
+                        Utils.ForceKill(newTarget);
+                    }
                     if (newTarget.Info.KeyData == ModItemKeys.Character_SuperHero)
                     {
                         return;

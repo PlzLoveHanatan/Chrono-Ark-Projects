@@ -7,18 +7,34 @@ using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
 namespace SuperHero
 {
-    public static class SuperHero_Villian
+    public static class SuperHero_FaceChange
     {
-        public static void BattleImageChange(BattleChar superHero)
+        public static void ChooseFace(BattleChar superHero, bool isVillain)
+        {
+            string faceFileName;
+            if (isVillain)
+            {
+                faceFileName = "SuperVillainBattleFace.png";
+            }
+            else
+            {
+                faceFileName = "SuperHeroBattleFace.png";
+            }
+
+            string facePath = "BattleFace/" + faceFileName;
+
+            BattleImageChange(superHero, facePath);
+        }
+
+        public static void BattleImageChange(BattleChar superHero, string faceRelativePath)
         {
             try
             {
                 ModInfo modInfo = ModManager.getModInfo("SuperHero");
+                string facePath = modInfo.assetInfo.ImageFromFile(faceRelativePath);
 
-                string facePath = modInfo.assetInfo.ImageFromFile("SuperVillian/SuperVillianBattleFace.png");
                 superHero.Info.GetData.face_Path = facePath;
 
                 //string faceOriginCharPath = "Assets/ModAssets/HeroFaceOriginChar.prefab";
@@ -34,8 +50,6 @@ namespace SuperHero
                 {
                     AddressableLoadManager.LoadAsyncAction(facePath, AddressableLoadManager.ManageType.Character, imageComponent);
                 }
-
-
             }
             catch (Exception e)
             {
