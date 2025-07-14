@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>SuperHero07132025201958</AssemblyName>
+    <AssemblyName>SuperHero07142025113647</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,7 +405,7 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="GlobalTimerManager.cs" />
     <Compile Include="SuperHero_FaceChange.cs" />
@@ -432,7 +432,6 @@
     <Compile Include="Buff\B_SuperHero_PlotArmor.cs" />
     <Compile Include="Buff\B_SuperHero_RelentlessRecovery.cs" />
     <Compile Include="Buff\B_SuperHero_SecondAct.cs" />
-    <Compile Include="Buff\B_SuperHero_Test.cs" />
     <Compile Include="Character\P_SuperHero.cs" />
     <Compile Include="Item_Equip\E_SuperHero_JusticeSword.cs" />
     <Compile Include="Item_Equip\E_SuperHero_LightArmor.cs" />
@@ -452,7 +451,6 @@
     <Compile Include="Skill\S_SuperHero_Rare_ApotheosisofJustice.cs" />
     <Compile Include="Skill\S_SuperHero_Rare_JusticeDarkestHour.cs" />
     <Compile Include="Skill\S_SuperHero_Rare_JusticeHero.cs" />
-    <Compile Include="Skill\S_SuperHero_TestSkill.cs" />
     <Compile Include="Skill\S_SuperHero_TheApplauseNeverEnds.cs" />
     <Compile Include="Skill\S_SuperHero_UnwantedSuccessStory.cs" />
     <Compile Include="Skill\S_SuperHero_WorldIsMine.cs" />

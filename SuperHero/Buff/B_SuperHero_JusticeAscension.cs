@@ -24,7 +24,7 @@ namespace SuperHero
         public void Awake()
         {
             if (BChar.Info.Passive is P_SuperHero superHero)
-                superHero.JusticeHero = true;
+                superHero.JusticeAscention = true;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)

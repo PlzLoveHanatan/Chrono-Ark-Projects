@@ -77,7 +77,13 @@ namespace SuperHero
                     {
                         Utils.JusticeSword++;
                     }
-                    if (PlayData.TSavedata.StageNum >= 0)
+                    if (PlayData.TSavedata.StageNum >= 1 && !Utils.ItemTake)
+                    {
+                        Utils.ItemTake = true;
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
+                    }
+                    else if (PlayData.TSavedata.StageNum == 0)
                     {
                         //if (Utils.Timer && !Utils.FirstTimer)
                         //{
@@ -88,12 +94,11 @@ namespace SuperHero
                         //    GlobalTimerManager.Instance?.StartTimer();
                         //    Utils.FirstTimer = true;
                         //}
-                        if (!Utils.ItemTake)
-                        {
-                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
-                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
-                            Utils.ItemTake = true;
-                        }
+
+
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
+                        Utils.ItemTake = true;
                     }
                 }
             }
@@ -191,6 +196,7 @@ namespace SuperHero
             [HarmonyPrefix]
             public static void Prefix()
             {
+                Utils.ItemTake = true;
                 GlobalTimerManager.Instance?.ResetTimer();
             }
         }

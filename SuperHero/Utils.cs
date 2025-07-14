@@ -87,7 +87,7 @@ namespace SuperHero
 
             string soundToPlay = baseSound;
 
-            MasterAudio.StopBus("BGM"); 
+            MasterAudio.StopBus("BGM");
             //MasterAudio.StopBus("BattleBGM");
             MasterAudio.FadeBusToVolume("BGM", 0f, 0.5f, null, false, false);
             MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, null, false, false);
@@ -149,12 +149,13 @@ namespace SuperHero
                 ally.Dead(false, false);
                 if (!ally.IsDead && ally.HP >= 0)
                 {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        ally.HPToZero();
-                        ally.Dead(false, false);
-                    }
+                    ally.HPToZero();
+                    ally.Dead(false, false);
                 }
+            }
+            else
+            {
+                ally.HPToZero();
             }
         }
 

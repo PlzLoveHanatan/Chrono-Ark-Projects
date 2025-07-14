@@ -101,11 +101,6 @@ namespace SuperHero
 		/// </summary>
         public static string Buff_B_SuperHero_SecondAct = "B_SuperHero_SecondAct";
 		/// <summary>
-		/// Test
-		/// Can be activated by left-clicking (cannot be activated if stunned) and select from options.
-		/// </summary>
-        public static string Buff_B_SuperHero_Test = "B_SuperHero_Test";
-		/// <summary>
 		/// When cast, <color=#FFA500>Super Hero</color> gains 4 <color=#FFD700>Hero Complex</color> and gains a buff that reflects damage received onto a random enemy and reduces the next two instances of damage taken from <color=#FFA500>Super Hero</color> to 0.
 		/// Can only activate once per battle.
 		/// </summary>
@@ -201,15 +196,6 @@ namespace SuperHero
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_SuperHero = "SuperHero";
-		/// <summary>
-		/// Skin
-		/// Passive:
-		/// </summary>
-        public static string Character_SuperHero_0 = "SuperHero_0";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_SuperHero_1 = "SuperHero_1";
         public static string Character_Skin_SuperHero_HeroOfJustice = "SuperHero_HeroOfJustice";
         public static string Character_Skin_SuperHero_LightOfHope = "SuperHero_LightOfHope";
 		/// <summary>
@@ -309,7 +295,6 @@ namespace SuperHero
 		/// <color=#919191>This world needs a <color=#1E90FF>Hero ☆</color></color>
 		/// </summary>
         public static string Skill_S_SuperHero_Rare_JusticeHero = "S_SuperHero_Rare_JusticeHero";
-        public static string Skill_S_SuperHero_TestSkill = "S_SuperHero_TestSkill";
 		/// <summary>
 		/// <color=#00BFFF>Applause Never Ends ☆</color>
 		/// Only <color=#FFA500>Super Hero</color> can use this skill.
