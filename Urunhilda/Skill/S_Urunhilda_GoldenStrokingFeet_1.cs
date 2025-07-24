@@ -21,12 +21,12 @@ namespace Urunhilda
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
-            //bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
-            //if (alwaysLucky)
-            //{
-            //    Utils.AddBuff(BChar, ModItemKeys.Buff_B_Urunhilda_RuttingInstinct, 1);
-            //}
+            BChar.Heal(BattleSystem.instance.DummyChar, 2, false, true, null);
+
+            Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Urunhilda_DummyHeal, BChar, BChar.MyTeam);
+            healingParticle.PlusHit = true;
+            healingParticle.FreeUse = true;
+            BChar.ParticleOut(healingParticle, BChar);
         }
     }
 }

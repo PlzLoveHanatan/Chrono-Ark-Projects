@@ -89,6 +89,12 @@ namespace Urunhilda
         {
             if (BuffTaker is BattleAlly ally)
             {
+                if (ally.Info == null || string.IsNullOrEmpty(ally.Info.KeyData))
+                {
+                    Debug.LogWarning("[ReverseDebuffs] BuffTaker Info or KeyData is null, skipping.");
+                    return;
+                }
+
                 var data = new GDECharacterData(ally.Info.KeyData);
 
                 if (data.Gender == 0) // Male
@@ -125,6 +131,12 @@ namespace Urunhilda
             }
             else if (BuffTaker is BattleAlly ally)
             {
+                if (ally.Info == null || string.IsNullOrEmpty(ally.Info.KeyData))
+                {
+                    Debug.LogWarning("[ReverseBuffs] BuffTaker Info or KeyData is null, skipping.");
+                    return;
+                }
+
                 var data = new GDECharacterData(ally.Info.KeyData);
 
                 if (data.Gender != 0)
@@ -140,6 +152,7 @@ namespace Urunhilda
                 }
             }
         }
+
         public static void ForceMPUpgrade()
         {
             PlayData.TSavedata.SoulUpgrade.AP++; // Also increase next Mana upgrade

@@ -4,10 +4,6 @@ namespace Urunhilda
     public static class ModItemKeys
     {
 		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Bondage = "Bondage";
-		/// <summary>
 		/// Beastkin Instinct
 		/// Allows <b>single-target</b> healing skills to be cast on an enemy.
 		/// Upon casting, deal damage equal to healing amount.
@@ -122,6 +118,7 @@ namespace Urunhilda
 		/// Rutting Instinct
 		/// <color=#919191>Attack Power +1
 		/// Healing Power +1
+		/// For every stack of buff or debuff applied onto a target, gain a &a% chance <color=#FF7C34>(StackNum * 5)</color> to apply an additional stack of the same buff or debuff.
 		/// Max 5 stacks </color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_RuttingInstinct = "KeyWord_RuttingInstinct";
@@ -198,7 +195,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_BeatskinFluffyTease_1 = "S_Urunhilda_BeatskinFluffyTease_1";
 		/// <summary>
 		/// Beatskin Fluffy Squeeze
-		/// OverHeal self by 3.
+		/// OverHeal self by 4.
 		/// </summary>
         public static string Skill_S_Urunhilda_BeatskinFluffyTease_2 = "S_Urunhilda_BeatskinFluffyTease_2";
 		/// <summary>
@@ -208,7 +205,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_BeatskinLustfulHand_0 = "S_Urunhilda_BeatskinLustfulHand_0";
 		/// <summary>
 		/// Beatskin Lustful Release
-		/// OverHeal self by 3.
+		/// OverHeal self by 2.
 		/// </summary>
         public static string Skill_S_Urunhilda_BeatskinLustfulHand_1 = "S_Urunhilda_BeatskinLustfulHand_1";
         public static string Skill_S_Urunhilda_DummyHeal = "S_Urunhilda_DummyHeal";
@@ -219,7 +216,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_GoldenRide_0 = "S_Urunhilda_GoldenRide_0";
 		/// <summary>
 		/// Golden Climax
-		/// OverHeal self by 3.
+		/// OverHeal self by 2.
 		/// </summary>
         public static string Skill_S_Urunhilda_GoldenRide_1 = "S_Urunhilda_GoldenRide_1";
 		/// <summary>
@@ -229,6 +226,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_GoldenStrokingFeet_0 = "S_Urunhilda_GoldenStrokingFeet_0";
 		/// <summary>
 		/// Golden Ecstasy Feet
+		/// OverHeal self by 2.
 		/// </summary>
         public static string Skill_S_Urunhilda_GoldenStrokingFeet_1 = "S_Urunhilda_GoldenStrokingFeet_1";
 		/// <summary>
@@ -243,7 +241,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_GoldenTwistedPleasure_1 = "S_Urunhilda_GoldenTwistedPleasure_1";
 		/// <summary>
 		/// Golden Twisted Climax
-		/// OverHeal self by 3.
+		/// OverHeal self by 4.
 		/// </summary>
         public static string Skill_S_Urunhilda_GoldenTwistedPleasure_2 = "S_Urunhilda_GoldenTwistedPleasure_2";
 		/// <summary>
@@ -251,7 +249,8 @@ namespace Urunhilda
 		/// Randomly activate one of 4 effects below.
 		/// 1. Draw 2 skills and create random 0-Cost <color=#FFC300>Golden Beastkin</color> skill in hand.
 		/// 2. Draw 2 skills and create random 0-Cost <color=#d78fe9>Succubus</color> skill in hand.	
-		/// 3. Draw 3 skills, OveraHeal all allies by 6 and apply 'Lustful Desire' + 'Ecstasy Rush' to all Male allies.
+		/// 3. Draw 3 skills, OverHeal all allies by 6 and apply <color=#FF4081>Lustful Desire</color> and <color=#FF4081>Ecstasy Rush</color> to all Male allies.
+		/// Urunhilda obtain <color=#FF1493>Rutting Instinct</color>.
 		/// 4. Draw 3 skills, increase relic bar by 1 and obtain 500 Gold.
 		/// </summary>
         public static string Skill_S_Urunhilda_LucyDraw_0 = "S_Urunhilda_LucyDraw_0";
@@ -267,7 +266,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_LucyDraw_2 = "S_Urunhilda_LucyDraw_2";
 		/// <summary>
 		/// <color=#FF1493>Rutting Instinct</color>
-		/// Draw 3 skills, OverHeal all allies by 6 and apply <color=#FF4081>Lustful Desire</color> and <color=#FF4081>Ecstasy Rush</color> to all Male allies.
+		/// Draw 3 skills, OverHeal all allies by 3 and apply <color=#FF4081>Lustful Desire</color> and <color=#FF4081>Ecstasy Rush</color> to all Male allies.
 		/// Urunhilda obtain <color=#FF1493>Rutting Instinct</color>.
 		/// </summary>
         public static string Skill_S_Urunhilda_LucyDraw_3 = "S_Urunhilda_LucyDraw_3";
@@ -278,6 +277,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_LucyDraw_4 = "S_Urunhilda_LucyDraw_4";
 		/// <summary>
 		/// Golden Beastking Rapture
+		/// OverHeal self by 3. 
 		/// If this skill defeat an enemy increase relic bar by 1 and obtain 500 Gold, then exclude this skill from current fight.
 		/// </summary>
         public static string Skill_S_Urunhilda_Rare_GoldenBeastkingRapture = "S_Urunhilda_Rare_GoldenBeastkingRapture";
@@ -293,7 +293,6 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_Rare_LustfulRush_1 = "S_Urunhilda_Rare_LustfulRush_1";
 		/// <summary>
 		/// Gentle Violence
-		/// OveHeal all allies by 6.
 		/// </summary>
         public static string Skill_S_Urunhilda_Rare_LustfulRush_2 = "S_Urunhilda_Rare_LustfulRush_2";
 		/// <summary>
@@ -314,7 +313,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_SuccubusDrillingFeet_1 = "S_Urunhilda_SuccubusDrillingFeet_1";
 		/// <summary>
 		/// Succubus Squeezing Feet
-		/// OverHeal self by 3.
+		/// OverHeal self by 4.
 		/// </summary>
         public static string Skill_S_Urunhilda_SuccubusDrillingFeet_2 = "S_Urunhilda_SuccubusDrillingFeet_2";
 		/// <summary>
@@ -329,7 +328,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_SuccubusDrillingHand_1 = "S_Urunhilda_SuccubusDrillingHand_1";
 		/// <summary>
 		/// Succubus Squeezing Hand
-		/// OverHeal self by 3.
+		/// OverHeal self by 4.
 		/// </summary>
         public static string Skill_S_Urunhilda_SuccubusDrillingHand_2 = "S_Urunhilda_SuccubusDrillingHand_2";
 		/// <summary>
@@ -344,7 +343,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_SuccubusRidingPussy_1 = "S_Urunhilda_SuccubusRidingPussy_1";
 		/// <summary>
 		/// Succubus Milking Pussy
-		/// OverHeal self by 3.
+		/// OverHeal self by 4.
 		/// </summary>
         public static string Skill_S_Urunhilda_SuccubusRidingPussy_2 = "S_Urunhilda_SuccubusRidingPussy_2";
 		/// <summary>
@@ -358,6 +357,9 @@ namespace Urunhilda
 		/// </summary>
         public static string Character_Urunhilda = "Urunhilda";
         public static string Character_Skin_Urunhilda_Bondage = "Urunhilda_Bondage";
+        public static string Character_Skin_Urunhilda_Engagement = "Urunhilda_Engagement";
+        public static string Character_Skin_Urunhilda_Invisible = "Urunhilda_Invisible";
+        public static string Character_Skin_Urunhilda_Maternity = "Urunhilda_Maternity";
 
     }
 
@@ -372,6 +374,258 @@ namespace Urunhilda
 		/// Chinese-TW:
 		/// </summary>
         public static string AllyTakesDamage => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("AllyTakesDamage");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// When you touch me, I gradually start to feel good.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_BI_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// You can touch me more.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_BI_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// You're so... naughty...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_BI_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Ah, n-no, don't rub my nipples like that! Hah, hah, hah, hah...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_BI_3 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_3");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Did you come to see me? Feeling lonely, were you?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_BS_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Good morning. So, what's your plan for today?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_BS_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// What brings you here at this hour?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_BS_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Do you want to see the fruits of my madness? Geez, you're such a perv.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Chest_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Chest_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Huh? I'm going out of my way to do this for you, and that's how you talk to me?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Chest_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Chest_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Who exactly do you think you're talking to?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Cri_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Cri_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I never said you could touch me this much, you know!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Cri_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Cri_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// H-Hey, wait a second!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Curse_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Curse_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Ugh, fine. I'll let you get away with this much, so just finish it quickly, okay?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Curse_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Curse_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I might not really dislike your situation.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_DeathDoorAlly => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoorAlly");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// What are you planning to do to me...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_DeathDoor_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoor_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Why are you touching me?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_DeathDoor_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoor_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I'll become your favorite partner, so teach me various things.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_FI_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// What will you do for me today?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_FI_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Tch, fine. I guess we'll just do it, won't we?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_FI_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Ugh... it feels good... I... already...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Healed_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Healed_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Nngh... H-Hey, touch me more gently, will you!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Healed_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Healed_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I-I-I-I-I-I-I... I can't... I-I'm c-coming!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Kill_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Kill_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// W-why are you making me do something so embarrassing...?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Kill_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Kill_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// You're so noisy, just stop asking, idiot, go away already!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Master => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Master");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Another trial, huh? Geez. So what are you trying to make me do this time?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Pharos_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I don't need you to tell me! Leave me alone, you perverted freak!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Pharos_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Nngh... Do I... really... have to do this...?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Pharos_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// More...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Urunhilda_Potion => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Potion");
 
     }
 }

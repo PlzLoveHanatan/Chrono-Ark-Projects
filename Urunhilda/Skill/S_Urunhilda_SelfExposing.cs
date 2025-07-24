@@ -29,7 +29,6 @@ namespace Urunhilda
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
             string urunhilda = ModItemKeys.Character_Urunhilda;
             string rutting = ModItemKeys.Buff_B_Urunhilda_RuttingInstinct;
             var ruttingInstincts = BChar.BuffReturn(rutting, false) as B_Urunhilda_RuttingInstinct;

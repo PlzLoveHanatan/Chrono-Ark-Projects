@@ -21,21 +21,7 @@ namespace Urunhilda
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
 
-            foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
-            {
-                if (ally != null)
-                {
-                    ally.Heal(BattleSystem.instance.DummyChar, 6f, false, true, null);
-
-                    Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Urunhilda_DummyHeal, this.BChar, this.BChar.MyTeam);
-                    healingParticle.PlusHit = true;
-                    healingParticle.FreeUse = true;
-
-                    BChar.ParticleOut(healingParticle, ally);
-                }
-            }
         }
     }
 }

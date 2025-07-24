@@ -66,28 +66,57 @@ namespace Urunhilda
             string urunhilda = ModItemKeys.Character_Urunhilda;
 
             var maleTargets = BattleSystem.instance.AllyTeam.AliveChars
-                .Where(x => x != null && x.Info.KeyData != urunhilda && new GDECharacterData(x.Info.KeyData).Gender == 0).ToList();
+                .Where(x => x != null && x.Info.KeyData != urunhilda && new GDECharacterData(x.Info.KeyData).Gender == 0)
+                .ToList();
 
-            if (Targets.Contains(BChar) && maleTargets.Count > 0 && SkillD.IsDamage && SkillD.Master.Info.KeyData != urunhilda)
+            if (!Targets.Contains(BChar) || maleTargets.Count == 0 || !SkillD.IsDamage || SkillD.Master.Info.KeyData == urunhilda)
+                return;
+            var BattleChar = BChar;
+
+            Targets.Clear();
+
+            bool isAOE = SkillD.TargetTypeKey == GDEItemKeys.s_targettype_all || SkillD.TargetTypeKey == GDEItemKeys.s_targettype_all_enemy;
+
+            if (isAOE)
             {
-                var randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, maleTargets.Count);
-                var randomMale = maleTargets[randomIndex];
+                var aoeTargets = BattleSystem.instance.AllyTeam.AliveChars
+                    .Where(x => x != null && x.Info.KeyData != urunhilda)
+                    .ToList();
 
-                Targets.Clear();
-                Targets.Add(randomMale);
-                string text = ModLocalization.AllyTakesDamage;
-                var position = randomMale.GetTopPos();
-                BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(position, text));
+                Targets.AddRange(aoeTargets);
 
-                randomMale.Heal(BattleSystem.instance.DummyChar, 3, false, true, null);
-
-                Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Urunhilda_DummyHeal, BChar, BChar.MyTeam);
-                healingParticle.PlusHit = true;
-                healingParticle.FreeUse = true;
-
-                randomMale.ParticleOut(healingParticle, randomMale);
+                foreach (var male in maleTargets)
+                {
+                    HealAndParticle(male);
+                    BattleChar = male;
+                }
             }
+            else
+            {
+                var randomMale = maleTargets[RandomManager.RandomInt(BattleRandom.PassiveItem, 0, maleTargets.Count)];
+                Targets.Add(randomMale);
+                HealAndParticle(randomMale);
+                BattleChar = randomMale;
+            }
+
+            var position = BattleChar.GetTopPos();
+            string text = ModLocalization.AllyTakesDamage;
+            BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(position, text));
         }
+
+        private void HealAndParticle(BattleChar target)
+        {
+            target.Heal(BattleSystem.instance.DummyChar, 3, false, true, null);
+
+            Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Urunhilda_DummyHeal, BChar, BChar.MyTeam);
+            healingParticle.PlusHit = true;
+            healingParticle.FreeUse = true;
+
+            target.ParticleOut(healingParticle, target);
+        }
+
+
+
 
         public void Turn()
         {

@@ -20,7 +20,6 @@ namespace Urunhilda
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
             Utils.CreateSkill(ModItemKeys.Skill_S_Urunhilda_GoldenTwistedPleasure_1, BChar);
         }
     }

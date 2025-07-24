@@ -28,7 +28,7 @@ namespace Urunhilda
             string buff = ModItemKeys.Buff_B_Urunhilda_MilkedDry_0;
             string debuff = ModItemKeys.Buff_B_Urunhilda_MilkedDry_1;
 
-            Utils.ReverseBuffs(BChar, BuffTaker, buff, debuff);
+            Utils.ReverseBuffs(BuffUser, BuffTaker, buff, debuff);
         }
     }
 }

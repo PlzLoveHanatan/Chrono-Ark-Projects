@@ -21,7 +21,6 @@ namespace Urunhilda
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
             Utils.CreateSkill(ModItemKeys.Skill_S_Urunhilda_Rare_LustfulRush_2, BChar);
         }
     }

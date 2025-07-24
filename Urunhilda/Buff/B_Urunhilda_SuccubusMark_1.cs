@@ -29,7 +29,7 @@ namespace Urunhilda
             string debuff = ModItemKeys.Buff_B_Urunhilda_SuccubusMark_1;
             string buff = ModItemKeys.Buff_B_Urunhilda_SuccubusMark_0;
 
-            Utils.ReverseDebuffs(BChar, BuffTaker, debuff, buff);
+            Utils.ReverseDebuffs(BuffUser, BuffTaker, debuff, buff);
         }
 
         public void Turn()

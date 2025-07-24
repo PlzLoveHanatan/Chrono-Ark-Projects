@@ -20,7 +20,7 @@ namespace Urunhilda
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            BChar.Heal(BattleSystem.instance.DummyChar, 3, false, true, null);
+            BChar.Heal(BattleSystem.instance.DummyChar, 4, false, true, null);
 
             Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Urunhilda_DummyHeal, BChar, BChar.MyTeam);
             healingParticle.PlusHit = true;
