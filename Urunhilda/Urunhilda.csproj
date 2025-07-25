@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Urunhilda07242025133045</AssemblyName>
+    <AssemblyName>Urunhilda07252025233751</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,7 +405,7 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Urunhilda_Items.cs" />
     <Compile Include="Urunhilda_ModDefinition.cs" />
@@ -431,6 +431,8 @@
     <Compile Include="Item_Consume\C_Urunhilda_Book_2.cs" />
     <Compile Include="Item_Consume\C_Urunhilda_RecoverinD.cs" />
     <Compile Include="Item_Consume\C_Urunhilda_RecoverinRed.cs" />
+    <Compile Include="Item_Equip\E_Urunhilda_BeastkinBrush.cs" />
+    <Compile Include="Item_Equip\E_Urunhilda_GoldenOathRing.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Skill\S_Urunhilda_BeatskinFluffyTease_0.cs" />
     <Compile Include="Skill\S_Urunhilda_BeatskinFluffyTease_1.cs" />
@@ -462,6 +464,7 @@
     <Compile Include="SkillExtended\Ex_Urunhilda_RuttingInstinct_0.cs" />
     <Compile Include="SkillExtended\Ex_Urunhilda_RuttingInstinct_1.cs" />
     <Compile Include="SkillExtended\Ex_Urunhilda_Synergy_0.cs" />
+    <Compile Include="SkillExtended\Ex_Urunhilda_Synergy_1.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

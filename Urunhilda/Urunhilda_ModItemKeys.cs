@@ -96,9 +96,26 @@ namespace Urunhilda
 		/// </summary>
         public static string SkillExtended_Ex_Urunhilda_RuttingInstinct_1 = "Ex_Urunhilda_RuttingInstinct_1";
 		/// <summary>
-		/// If this skill defeat an enemy increase relic bar by 1 and obtain 250 Gold, then exclude this skill from current fight.
+		/// If this skill defeat an enemy expand your Relic inventory by 1 and obtain 250 Gold, then exclude this skill from current fight.
 		/// </summary>
         public static string SkillExtended_Ex_Urunhilda_Synergy_0 = "Ex_Urunhilda_Synergy_0";
+		/// <summary>
+		/// When played, select one:
+		/// - Spend 250 Gold to recast this skill
+		/// - Gain 250 Gold
+		/// - Spend 500 Gold to obtain random relic
+		/// </summary>
+        public static string SkillExtended_Ex_Urunhilda_Synergy_1 = "Ex_Urunhilda_Synergy_1";
+		/// <summary>
+		/// Beastkin Brush
+		/// Gain 7% Attack Power (Max 70%) for each stack of buff.
+		/// </summary>
+        public static string Item_Equip_E_Urunhilda_BeastkinBrush = "E_Urunhilda_BeastkinBrush";
+		/// <summary>
+		/// Golden Oath Ring
+		/// For every stack of buff or debuff applied onto a target, apply an additional stack of the same buff or debuff.
+		/// </summary>
+        public static string Item_Equip_E_Urunhilda_GoldenOathRing = "E_Urunhilda_GoldenOathRing";
 		/// <summary>
 		/// Ecstasy Rush
 		/// <color=#919191>Critical Damage +5%
@@ -122,7 +139,7 @@ namespace Urunhilda
 		/// Max 5 stacks </color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_RuttingInstinct = "KeyWord_RuttingInstinct";
-        public static string CharRole_Role_Mage = "Role_Mage";
+        public static string CharRole_Role_GoldenBeastkin = "Role_GoldenBeastkin";
         public static string SkillEffect_SE_S_S_Urunhilda_BeatskinFluffyTease_1 = "SE_S_S_Urunhilda_BeatskinFluffyTease_1";
         public static string SkillEffect_SE_S_S_Urunhilda_BeatskinFluffyTease_2 = "SE_S_S_Urunhilda_BeatskinFluffyTease_2";
         public static string SkillEffect_SE_S_S_Urunhilda_BeatskinLustfulHand_1 = "SE_S_S_Urunhilda_BeatskinLustfulHand_1";
@@ -183,6 +200,21 @@ namespace Urunhilda
         public static string SkillEffect_SE_T_S_Urunhilda_VelvetEmbrace_0 = "SE_T_S_Urunhilda_VelvetEmbrace_0";
         public static string SkillEffect_SE_T_S_Urunhilda_VelvetEmbrace_1 = "SE_T_S_Urunhilda_VelvetEmbrace_1";
         public static string SkillEffect_SE_T_S_Urunhilda_VelvetEmbrace_2 = "SE_T_S_Urunhilda_VelvetEmbrace_2";
+		/// <summary>
+		/// Hazuki Business
+		/// Spend 250 Gold to recast this skill.
+		/// </summary>
+        public static string Skill_S_Ex_Urunhilda_Synergy_0 = "S_Ex_Urunhilda_Synergy_0";
+		/// <summary>
+		/// Hazuki Part-Time Job
+		/// Gain 250 Gold.
+		/// </summary>
+        public static string Skill_S_Ex_Urunhilda_Synergy_1 = "S_Ex_Urunhilda_Synergy_1";
+		/// <summary>
+		/// Play with Urunhilda
+		/// Spend 500 Gold to obtain random relic.
+		/// </summary>
+        public static string Skill_S_Ex_Urunhilda_Synergy_2 = "S_Ex_Urunhilda_Synergy_2";
 		/// <summary>
 		/// Beatskin Fluffy Tease
 		/// Create a <color=#FFC300>Beatskin Fluffy Caress</color> skill in hand.
@@ -246,7 +278,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_GoldenTwistedPleasure_2 = "S_Urunhilda_GoldenTwistedPleasure_2";
 		/// <summary>
 		/// Golden Beastkin Fortune
-		/// Randomly activate one of 4 effects below.
+		/// Randomly activate one of 4 effects below:
 		/// 1. Draw 2 skills and create random 0-Cost <color=#FFC300>Golden Beastkin</color> skill in hand.
 		/// 2. Draw 2 skills and create random 0-Cost <color=#d78fe9>Succubus</color> skill in hand.	
 		/// 3. Draw 3 skills, OverHeal all allies by 6 and apply <color=#FF4081>Lustful Desire</color> and <color=#FF4081>Ecstasy Rush</color> to all Male allies.
@@ -278,7 +310,7 @@ namespace Urunhilda
 		/// <summary>
 		/// Golden Beastking Rapture
 		/// OverHeal self by 3. 
-		/// If this skill defeat an enemy increase relic bar by 1 and obtain 500 Gold, then exclude this skill from current fight.
+		/// If this skill defeat an enemy expand your Relic inventory by 1 and obtain 500 Gold, then exclude this skill from current fight.
 		/// </summary>
         public static string Skill_S_Urunhilda_Rare_GoldenBeastkingRapture = "S_Urunhilda_Rare_GoldenBeastkingRapture";
 		/// <summary>
@@ -303,7 +335,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_SelfExposing = "S_Urunhilda_SelfExposing";
 		/// <summary>
 		/// Succubus Drilling Feet
-		/// Create a <color=#d78fe9>Succubus Caress Hand</color> in hand.
+		/// Create a <color=#d78fe9>Succubus Caress Feet</color> in hand.
 		/// </summary>
         public static string Skill_S_Urunhilda_SuccubusDrillingFeet_0 = "S_Urunhilda_SuccubusDrillingFeet_0";
 		/// <summary>
@@ -349,11 +381,12 @@ namespace Urunhilda
 		/// <summary>
 		/// Urunhilda
 		/// Passive:
-		/// Every level up gain 500 gold, relic pouch and increase relic bar slot by 1.
-		/// At the end of the battle, increase money by 10%.
+		/// Every level up gain 500 gold, relic pouch and expand your Relic inventory by 1.
+		/// At the end of the battle, obtain Gold equal to 10% of the Gold you have.
 		/// When attacked, a random Male ally takes the damage instead of Urunhilda and is OverHealed by 3.
 		/// Urunhilda applies her buffs as debuffs to enemies and debuffs as buffs to allies.
 		/// Obtain <color=#FF1493>Rutting Instinct</color> during fights.
+		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Urunhilda = "Urunhilda";
         public static string Character_Skin_Urunhilda_Bondage = "Urunhilda_Bondage";
@@ -371,6 +404,7 @@ namespace Urunhilda
 		/// Careful Lady Urunhilda.
 		/// Japanese:
 		/// Chinese:
+		/// 小心！乌伦希尔妲小姐！
 		/// Chinese-TW:
 		/// </summary>
         public static string AllyTakesDamage => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("AllyTakesDamage");
@@ -380,6 +414,7 @@ namespace Urunhilda
 		/// When you touch me, I gradually start to feel good.
 		/// Japanese:
 		/// Chinese:
+		/// 每当你触碰我，我都会更加愉悦。
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_BI_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_0");
@@ -389,6 +424,7 @@ namespace Urunhilda
 		/// You can touch me more.
 		/// Japanese:
 		/// Chinese:
+		/// 再多摸摸我......
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_BI_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_1");
@@ -398,6 +434,7 @@ namespace Urunhilda
 		/// You're so... naughty...
 		/// Japanese:
 		/// Chinese:
+		/// 你真是...太调皮了...
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_BI_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_2");
@@ -407,6 +444,7 @@ namespace Urunhilda
 		/// Ah, n-no, don't rub my nipples like that! Hah, hah, hah, hah...
 		/// Japanese:
 		/// Chinese:
+		/// 啊，不-不要，不要那樣揉我的乳頭！哈，哈，哈，哈....
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_BI_3 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_3");
@@ -416,6 +454,7 @@ namespace Urunhilda
 		/// Did you come to see me? Feeling lonely, were you?
 		/// Japanese:
 		/// Chinese:
+		/// 你是来看我的吗？感到寂寞了吗？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_BS_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_0");
@@ -425,6 +464,7 @@ namespace Urunhilda
 		/// Good morning. So, what's your plan for today?
 		/// Japanese:
 		/// Chinese:
+		/// 早上好，今天有什么计划？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_BS_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_1");
@@ -434,6 +474,7 @@ namespace Urunhilda
 		/// What brings you here at this hour?
 		/// Japanese:
 		/// Chinese:
+		/// 来找我做什么呢？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_BS_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_2");
@@ -443,6 +484,7 @@ namespace Urunhilda
 		/// Do you want to see the fruits of my madness? Geez, you're such a perv.
 		/// Japanese:
 		/// Chinese:
+		/// 你想看我疯狂的成果吗？天哪，真是个变态。
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Chest_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Chest_0");
@@ -452,6 +494,7 @@ namespace Urunhilda
 		/// Huh? I'm going out of my way to do this for you, and that's how you talk to me?
 		/// Japanese:
 		/// Chinese:
+		/// 哈？我特地为你做这个，你就这样跟我说话？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Chest_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Chest_1");
@@ -461,6 +504,7 @@ namespace Urunhilda
 		/// Who exactly do you think you're talking to?
 		/// Japanese:
 		/// Chinese:
+		/// 你以为你在跟谁说话？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Cri_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Cri_0");
@@ -470,6 +514,7 @@ namespace Urunhilda
 		/// I never said you could touch me this much, you know!
 		/// Japanese:
 		/// Chinese:
+		/// 我可没说过你可以再碰我！
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Cri_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Cri_1");
@@ -479,6 +524,7 @@ namespace Urunhilda
 		/// H-Hey, wait a second!
 		/// Japanese:
 		/// Chinese:
+		/// 等-等等！
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Curse_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Curse_0");
@@ -488,6 +534,7 @@ namespace Urunhilda
 		/// Ugh, fine. I'll let you get away with this much, so just finish it quickly, okay?
 		/// Japanese:
 		/// Chinese:
+		/// 好吧。我会让你做到这样的，所以快点结束，好吗？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Curse_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Curse_1");
@@ -497,6 +544,7 @@ namespace Urunhilda
 		/// I might not really dislike your situation.
 		/// Japanese:
 		/// Chinese:
+		/// 我可能并不是真的讨厌你。
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_DeathDoorAlly => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoorAlly");
@@ -506,6 +554,7 @@ namespace Urunhilda
 		/// What are you planning to do to me...
 		/// Japanese:
 		/// Chinese:
+		/// 你打算对我做什么...
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_DeathDoor_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoor_0");
@@ -515,6 +564,7 @@ namespace Urunhilda
 		/// Why are you touching me?
 		/// Japanese:
 		/// Chinese:
+		/// 为什么摸我？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_DeathDoor_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoor_1");
@@ -524,6 +574,7 @@ namespace Urunhilda
 		/// I'll become your favorite partner, so teach me various things.
 		/// Japanese:
 		/// Chinese:
+		/// 我会成为你最喜欢的搭档，所以教我各种事情吧。
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_FI_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_0");
@@ -533,6 +584,7 @@ namespace Urunhilda
 		/// What will you do for me today?
 		/// Japanese:
 		/// Chinese:
+		/// 今天你会为我做什么？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_FI_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_1");
@@ -542,6 +594,7 @@ namespace Urunhilda
 		/// Tch, fine. I guess we'll just do it, won't we?
 		/// Japanese:
 		/// Chinese:
+		/// 啧，好吧。我想我们直接做吧！
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_FI_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_2");
@@ -551,6 +604,7 @@ namespace Urunhilda
 		/// Ugh... it feels good... I... already...
 		/// Japanese:
 		/// Chinese:
+		/// 呃...感觉好舒服...我...已经...
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Healed_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Healed_0");
@@ -560,6 +614,7 @@ namespace Urunhilda
 		/// Nngh... H-Hey, touch me more gently, will you!
 		/// Japanese:
 		/// Chinese:
+		/// 唔...嘿-嘿，再温柔地摸摸我，好吗。
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Healed_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Healed_1");
@@ -569,6 +624,7 @@ namespace Urunhilda
 		/// I-I-I-I-I-I-I... I can't... I-I'm c-coming!
 		/// Japanese:
 		/// Chinese:
+		/// 我-我-我...我不能...我-我去了！
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Kill_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Kill_0");
@@ -578,6 +634,7 @@ namespace Urunhilda
 		/// W-why are you making me do something so embarrassing...?
 		/// Japanese:
 		/// Chinese:
+		/// 为-为什么你要让我做这么尴尬的事情...？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Kill_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Kill_1");
@@ -587,6 +644,7 @@ namespace Urunhilda
 		/// You're so noisy, just stop asking, idiot, go away already!
 		/// Japanese:
 		/// Chinese:
+		/// 你好吵，别问了，白痴，快滚开！
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Master => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Master");
@@ -596,6 +654,7 @@ namespace Urunhilda
 		/// Another trial, huh? Geez. So what are you trying to make me do this time?
 		/// Japanese:
 		/// Chinese:
+		/// 又是试炼，嗯...那么这次你想让我做什么？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Pharos_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_0");
@@ -605,6 +664,7 @@ namespace Urunhilda
 		/// I don't need you to tell me! Leave me alone, you perverted freak!
 		/// Japanese:
 		/// Chinese:
+		/// 我不需要你告诉我！离我远点，你这个变态！
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Pharos_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_1");
@@ -614,6 +674,7 @@ namespace Urunhilda
 		/// Nngh... Do I... really... have to do this...?
 		/// Japanese:
 		/// Chinese:
+		/// 唔...我真的...必须做这个...？
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Pharos_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_2");
@@ -623,6 +684,7 @@ namespace Urunhilda
 		/// More...
 		/// Japanese:
 		/// Chinese:
+		/// 我还要更多...
 		/// Chinese-TW:
 		/// </summary>
         public static string Urunhilda_Potion => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Potion");

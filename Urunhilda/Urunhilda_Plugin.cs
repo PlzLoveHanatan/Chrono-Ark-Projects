@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -175,6 +175,38 @@ namespace Urunhilda
             { "Urunhilda_DeathDoorAlly", "I might not really dislike your situation."},
         };
 
+        private static readonly Dictionary<string, string> UrunhildaVoiceLinesCN = new Dictionary<string, string>
+        {
+            { "Urunhilda_BS_0", "你是来看我的吗？感到寂寞了吗？"},
+            { "Urunhilda_BS_1", "早上好，今天有什么计划？"},
+            { "Urunhilda_BS_2", "来找我做什么呢？"},
+            { "Urunhilda_Chest_0", "你想看我疯狂的成果吗？天哪，真是个变态。"},
+            { "Urunhilda_Chest_1", "哈？我特地为你做这个，你就这样跟我说话？"},
+            { "Urunhilda_Cri_0", "你以为你在跟谁说话？"},
+            { "Urunhilda_Cri_1", "我可没说过你可以再碰我！"},
+            { "Urunhilda_Curse_0", "等-等等！"},
+            { "Urunhilda_Curse_1", "好吧。我会让你做到这样的，所以快点结束，好吗？"},
+            { "Urunhilda_Healed_0", "呃...感觉好舒服...我...已经..."},
+            { "Urunhilda_Healed_1", "唔...嘿-嘿，再温柔地摸摸我，好吗。"},
+            { "Urunhilda_BI_0", "每当你触碰我，我都会更加愉悦。"},
+            { "Urunhilda_BI_1", "再多摸摸我......"},
+            { "Urunhilda_BI_2", "你真是...太调皮了..."},
+            { "Urunhilda_BI_3", "啊，不-不要，不要那樣揉我的乳頭！哈，哈，哈，哈...."},
+            { "Urunhilda_FI_0", "我会成为你最喜欢的搭档，所以教我各种事情吧。"},
+            { "Urunhilda_FI_1", "今天你会为我做什么？"},
+            { "Urunhilda_FI_2", "啧，好吧。我想我们直接做吧！"},
+            { "Urunhilda_Kill_0", "我-我-我...我不能...我-我去了！"},
+            { "Urunhilda_Kill_1", "为-为什么你要让我做这么尴尬的事情...？"},
+            { "Urunhilda_Master", "你好吵，别问了，白痴，快滚开！"},
+            { "Urunhilda_Pharos_0", "又是试炼，嗯...那么这次你想让我做什么？"},
+            { "Urunhilda_Pharos_1", "我不需要你告诉我！离我远点，你这个变态！"},
+            { "Urunhilda_Pharos_2", "唔...我真的...必须做这个...？"},
+            { "Urunhilda_Potion", "我还要更多..."},
+            { "Urunhilda_DeathDoor_0", "你打算对我做什么..."},
+            { "Urunhilda_DeathDoor_1", "为什么摸我？"},
+            { "Urunhilda_DeathDoorAlly", "我可能并不是真的讨厌你。"},
+        };
+
         [HarmonyPatch(typeof(PrintText))]
         [HarmonyPatch(nameof(PrintText.TextInput))]
         public class VoiceOn
@@ -182,10 +214,10 @@ namespace Urunhilda
             [HarmonyPrefix]
             public static bool Prefix(PrintText __instance, string inText)
             {
-                //if (!Utils.UrunhildaVoice)
-                //{
-                //    return true;
-                //}
+                if (!Utils.UrunhildaVoice)
+                {
+                    return true;
+                }
 
                 string language = LocalizationManager.CurrentLanguage;
                 Dictionary<string, string> selectedDict;
@@ -201,9 +233,9 @@ namespace Urunhilda
                     //case "Japanese":
                     //    selectedDict = UrunhildaVoiceLinesJP;
                     //    break;
-                    //case "Chinese":
-                    //    selectedDict = UrunhildaVoiceLinesCN;
-                    //    break;
+                    case "Chinese":
+                        selectedDict = UrunhildaVoiceLinesCN;
+                        break;
                     default:
                         selectedDict = UrunhildaVoiceLinesEN;
                         break;

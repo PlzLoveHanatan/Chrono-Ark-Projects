@@ -87,7 +87,7 @@ namespace Urunhilda
 
                 foreach (var male in maleTargets)
                 {
-                    HealAndParticle(male);
+                    BattleSystem.DelayInput(HealAndParticle(male));
                     BattleChar = male;
                 }
             }
@@ -95,7 +95,7 @@ namespace Urunhilda
             {
                 var randomMale = maleTargets[RandomManager.RandomInt(BattleRandom.PassiveItem, 0, maleTargets.Count)];
                 Targets.Add(randomMale);
-                HealAndParticle(randomMale);
+                BattleSystem.DelayInput(HealAndParticle(randomMale));
                 BattleChar = randomMale;
             }
 
@@ -104,8 +104,9 @@ namespace Urunhilda
             BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(position, text));
         }
 
-        private void HealAndParticle(BattleChar target)
+        private IEnumerator HealAndParticle(BattleChar target)
         {
+            yield return new WaitForFixedUpdate();
             target.Heal(BattleSystem.instance.DummyChar, 3, false, true, null);
 
             Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Urunhilda_DummyHeal, BChar, BChar.MyTeam);
@@ -113,6 +114,7 @@ namespace Urunhilda
             healingParticle.FreeUse = true;
 
             target.ParticleOut(healingParticle, target);
+            yield return null;
         }
 
 

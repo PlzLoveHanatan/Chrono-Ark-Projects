@@ -21,7 +21,7 @@ namespace Urunhilda
     public static class Utils
     {
         public static bool RewardTake;
-
+        public static bool UrunhildaVoice => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Voice").Value;
         public static void UrunhildaFirstReward()
         {
             PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, 500));
