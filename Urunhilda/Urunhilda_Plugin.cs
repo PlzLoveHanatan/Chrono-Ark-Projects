@@ -81,13 +81,13 @@ namespace Urunhilda
             [HarmonyPostfix]
             public static void Postfix(ref int __result)
             {
+                int events = (int)(Utils.MoreEvents);
+
+                if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null || events == 0)
+                    return;
+
                 if (UrunhildaInParty())
                 {
-                    int events = 1;
-
-                    if (PlayData.TSavedata == null || PlayData.TSavedata.Party == null || events == 0)
-                        return;
-
                     __result += events;
                 }
             }
@@ -102,7 +102,7 @@ namespace Urunhilda
             [HarmonyPostfix]
             public static void NewItems(FieldStore __instance)
             {
-                if (UrunhildaInParty())
+                if (UrunhildaInParty() && UrunhildaNewShops())
                 {
                     switch (Stage)
                     {
@@ -143,6 +143,20 @@ namespace Urunhilda
                 }
             }
         }
+
+        public static bool UrunhildaNewShops()
+        {
+            try
+            {
+                return Utils.MoreItemsInShop;
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"Items" + e.ToString());
+                return false;
+            }
+        }
+
         private static readonly Dictionary<string, string> UrunhildaVoiceLinesEN = new Dictionary<string, string>
         {
             { "Urunhilda_BS_0", "Did you come to see me? Feeling lonely, were you?"},

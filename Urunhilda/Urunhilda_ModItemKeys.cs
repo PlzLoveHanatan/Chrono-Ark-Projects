@@ -120,6 +120,7 @@ namespace Urunhilda
 		/// Ecstasy Rush
 		/// <color=#919191>Critical Damage +5%
 		/// Receiving Critical Damage -5%
+		/// Max 20 stacks
 		/// </summary>
         public static string SkillKeyword_KeyWord_EcstasyRush = "KeyWord_EcstasyRush";
 		/// <summary>
@@ -281,9 +282,9 @@ namespace Urunhilda
 		/// Randomly activate one of 4 effects below:
 		/// 1. Draw 2 skills and create random 0-Cost <color=#FFC300>Golden Beastkin</color> skill in hand.
 		/// 2. Draw 2 skills and create random 0-Cost <color=#d78fe9>Succubus</color> skill in hand.	
-		/// 3. Draw 3 skills, OverHeal all allies by 6 and apply <color=#FF4081>Lustful Desire</color> and <color=#FF4081>Ecstasy Rush</color> to all Male allies.
+		/// 3. Draw 3 skills, OverHeal all allies by 3 and apply <color=#FF4081>Lustful Desire</color> and <color=#FF4081>Ecstasy Rush</color> to all Male allies.
 		/// Urunhilda obtain <color=#FF1493>Rutting Instinct</color>.
-		/// 4. Draw 3 skills, increase relic bar by 1 and obtain 500 Gold.
+		/// 4. Draw 3 skills, expand your Relic inventory by 1 and obtain 500 Gold.
 		/// </summary>
         public static string Skill_S_Urunhilda_LucyDraw_0 = "S_Urunhilda_LucyDraw_0";
 		/// <summary>
@@ -304,7 +305,7 @@ namespace Urunhilda
         public static string Skill_S_Urunhilda_LucyDraw_3 = "S_Urunhilda_LucyDraw_3";
 		/// <summary>
 		/// <color=#FFC300>Golden Luck</color>
-		/// Draw 3 skills, increase relic bar by 1 and obtain 500 Gold.
+		/// Draw 3 skills, expand your Relic inventory by 1 and obtain 500 Gold.
 		/// </summary>
         public static string Skill_S_Urunhilda_LucyDraw_4 = "S_Urunhilda_LucyDraw_4";
 		/// <summary>

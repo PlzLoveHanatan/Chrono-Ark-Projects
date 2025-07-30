@@ -22,14 +22,22 @@ namespace Urunhilda
     {
         public static bool RewardTake;
         public static bool UrunhildaVoice => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Voice").Value;
+        public static bool MonetaryLuckOn => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Monetary Luck On").Value;
+        public static bool MoreItemsInShop => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("More Items In Shop").Value;
+        public static float MoreEvents => ModManager.getModInfo("Urunhilda").GetSetting<SliderSetting>("More Events").Value;
+
         public static void UrunhildaFirstReward()
         {
+            if (!MonetaryLuckOn) return;
+
             PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, 500));
             PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Consume_ArtifactPouch, 1));
         }
 
         public static void UrunhildaReward(int num)
         {
+            if (!MonetaryLuckOn) return;
+
             for (int i = 0; i < num; i++)
             {
                 InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, 500));
@@ -89,7 +97,7 @@ namespace Urunhilda
         {
             if (BuffTaker is BattleAlly ally)
             {
-                if (ally.Info == null || string.IsNullOrEmpty(ally.Info.KeyData))
+                if (ally.Info.KeyData == null || string.IsNullOrEmpty(ally.Info.KeyData))
                 {
                     Debug.LogWarning("[ReverseDebuffs] BuffTaker Info or KeyData is null, skipping.");
                     return;
@@ -131,7 +139,7 @@ namespace Urunhilda
             }
             else if (BuffTaker is BattleAlly ally)
             {
-                if (ally.Info == null || string.IsNullOrEmpty(ally.Info.KeyData))
+                if (ally.Info.KeyData == null || string.IsNullOrEmpty(ally.Info.KeyData))
                 {
                     Debug.LogWarning("[ReverseBuffs] BuffTaker Info or KeyData is null, skipping.");
                     return;

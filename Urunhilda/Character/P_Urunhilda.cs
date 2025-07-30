@@ -30,8 +30,11 @@ namespace Urunhilda
 
         public void BattleEndRewardChange()
         {
-            int stack = (int)(PlayData.Gold * 0.1f);
-            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, stack));
+            if (Utils.MonetaryLuckOn)
+            {
+                int stack = (int)(PlayData.Gold * 0.1f);
+                PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, stack));
+            }
         }
 
         public void BattleStart(BattleSystem Ins)
@@ -101,8 +104,23 @@ namespace Urunhilda
 
             var position = BattleChar.GetTopPos();
             string text = ModLocalization.AllyTakesDamage;
-            BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(position, text));
+
+            BChar.StartCoroutine(ShowSkillText(position, text));
+            //BattleText.InstBattleTextAlly_Co(position, text);
+            //BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(position, text));
         }
+
+        public IEnumerator ShowSkillText(Vector3 position, string text)
+        {
+            var topText = BattleText.CustomText(position, text);
+            yield return new WaitForSecondsRealtime(2f);
+
+            if (topText != null)
+            {
+                topText.End();
+            }
+        }
+
 
         private IEnumerator HealAndParticle(BattleChar target)
         {
@@ -116,8 +134,6 @@ namespace Urunhilda
             target.ParticleOut(healingParticle, target);
             yield return null;
         }
-
-
 
 
         public void Turn()
