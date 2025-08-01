@@ -19,6 +19,7 @@ namespace Urunhilda
         {
             base.Init();
             NoClone = true;
+            IgnoreTaunt = true;
             if (MySkill.MySkill.Target.Key == GDEItemKeys.s_targettype_ally)
             {
                 MySkill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_onetarget);

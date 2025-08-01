@@ -25,6 +25,7 @@ namespace Urunhilda
         {
             base.Init();
             NoClone = true;
+            IgnoreTaunt = true;
             HandInit();
         }
 

@@ -7,6 +7,7 @@ namespace Urunhilda
 		/// Beastkin Instinct
 		/// Allows <b>single-target</b> healing skills to be cast on an enemy.
 		/// Upon casting, deal damage equal to healing amount.
+		/// Gain Ignore Taunt on all healing skills.
 		/// </summary>
         public static string Buff_B_Urunhilda_BeastkinInstinct = "B_Urunhilda_BeastkinInstinct";
 		/// <summary>
@@ -22,6 +23,7 @@ namespace Urunhilda
 		/// Gentle Violence
 		/// Allows <b>single-target</b> damage skills to be cast on an ally.
 		/// Upon casting, heal ally equal to damage amount.
+		/// Gain Ignore Taunt on all damage skills.
 		/// </summary>
         public static string Buff_B_Urunhilda_GentleViolence = "B_Urunhilda_GentleViolence";
 		/// <summary>
@@ -61,8 +63,8 @@ namespace Urunhilda
 		/// </summary>
         public static string Buff_B_Urunhilda_SuccubusMark_1 = "B_Urunhilda_SuccubusMark_1";
 		/// <summary>
-		/// Secret Manual of Taiming
-		/// View all Rare Skills in game and learn one.
+		/// Secret Manual of Taming
+		/// View all Investigators' Rare Skills in game and learn one.
 		/// </summary>
         public static string Item_Consume_C_Urunhilda_Book_0 = "C_Urunhilda_Book_0";
 		/// <summary>
@@ -217,27 +219,27 @@ namespace Urunhilda
 		/// </summary>
         public static string Skill_S_Ex_Urunhilda_Synergy_2 = "S_Ex_Urunhilda_Synergy_2";
 		/// <summary>
-		/// Beatskin Fluffy Tease
-		/// Create a <color=#FFC300>Beatskin Fluffy Caress</color> skill in hand.
+		/// Beastkin Fluffy Tease
+		/// Create a <color=#FFC300>Beastkin Fluffy Caress</color> skill in hand.
 		/// </summary>
         public static string Skill_S_Urunhilda_BeatskinFluffyTease_0 = "S_Urunhilda_BeatskinFluffyTease_0";
 		/// <summary>
-		/// Beatskin Fluffy Caress
-		/// Create a <color=#FFC300>Beatskin Fluffy Squeeze</color> skill in hand.
+		/// Beastkin Fluffy Caress
+		/// Create a <color=#FFC300>Beastkin Fluffy Squeeze</color> skill in hand.
 		/// </summary>
         public static string Skill_S_Urunhilda_BeatskinFluffyTease_1 = "S_Urunhilda_BeatskinFluffyTease_1";
 		/// <summary>
-		/// Beatskin Fluffy Squeeze
+		/// Beastkin Fluffy Squeeze
 		/// OverHeal self by 4.
 		/// </summary>
         public static string Skill_S_Urunhilda_BeatskinFluffyTease_2 = "S_Urunhilda_BeatskinFluffyTease_2";
 		/// <summary>
-		/// Beatskin Lustful Hand
+		/// Beastkin Lustful Hand
 		/// Create a <color=#FFC300>Beastkin Lustful Release</color> in hand.
 		/// </summary>
         public static string Skill_S_Urunhilda_BeatskinLustfulHand_0 = "S_Urunhilda_BeatskinLustfulHand_0";
 		/// <summary>
-		/// Beatskin Lustful Release
+		/// Beastkin Lustful Release
 		/// OverHeal self by 2.
 		/// </summary>
         public static string Skill_S_Urunhilda_BeatskinLustfulHand_1 = "S_Urunhilda_BeatskinLustfulHand_1";
@@ -309,7 +311,7 @@ namespace Urunhilda
 		/// </summary>
         public static string Skill_S_Urunhilda_LucyDraw_4 = "S_Urunhilda_LucyDraw_4";
 		/// <summary>
-		/// Golden Beastking Rapture
+		/// Golden Beastkin Rapture
 		/// OverHeal self by 3. 
 		/// If this skill defeat an enemy expand your Relic inventory by 1 and obtain 500 Gold, then exclude this skill from current fight.
 		/// </summary>

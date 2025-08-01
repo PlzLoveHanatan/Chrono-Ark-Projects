@@ -72,13 +72,16 @@ namespace Urunhilda
                 .Where(x => x != null && x.Info.KeyData != urunhilda && new GDECharacterData(x.Info.KeyData).Gender == 0)
                 .ToList();
 
+
             if (!Targets.Contains(BChar) || maleTargets.Count == 0 || !SkillD.IsDamage || SkillD.Master.Info.KeyData == urunhilda)
                 return;
+
             var BattleChar = BChar;
 
             Targets.Clear();
 
-            bool isAOE = SkillD.TargetTypeKey == GDEItemKeys.s_targettype_all || SkillD.TargetTypeKey == GDEItemKeys.s_targettype_all_enemy;
+            bool isAOE = SkillD.TargetTypeKey == GDEItemKeys.s_targettype_all || SkillD.TargetTypeKey == GDEItemKeys.s_targettype_all_enemy || SkillD.TargetTypeKey == GDEItemKeys.s_targettype_enemy_PlusRandom ||
+                SkillD.TargetTypeKey == GDEItemKeys.s_targettype_all_other;
 
             if (isAOE)
             {
