@@ -16,6 +16,7 @@ using GameDataEditor;
 using DarkTonic.MasterAudio;
 using System.Collections;
 using static TMPro.SpriteAssetUtilities.TexturePacker;
+using System.Runtime.InteropServices.WindowsRuntime;
 namespace Xao
 {
     public static class Utils
@@ -45,6 +46,10 @@ namespace Xao
             HentaiText_6,
             HentaiText_7,
             HentaiText_8,
+            Combo_0,
+            Combo_1,
+            Combo_2,
+            Combo_3,
         };
 
         public static readonly Dictionary<SpriteType, string> SpritePaths = new Dictionary<SpriteType, string>()
@@ -68,27 +73,32 @@ namespace Xao
             { SpriteType.HentaiText_6, "Visual/Text/H_text_3_L.png" },
             { SpriteType.HentaiText_7, "Visual/Text/H_text_3_M.png" },
             { SpriteType.HentaiText_8, "Visual/Text/H_text_3_S.png" },
+            { SpriteType.Combo_0, "Visual/Combo/Combo_0.png" },
+            { SpriteType.Combo_1, "Visual/Combo/Combo_1.png" },
+            { SpriteType.Combo_2, "Visual/Combo/Combo_2.png" },
+            { SpriteType.Combo_3, "Visual/Combo/Combo_3.png" },
         };
 
         public static readonly List<Vector3> TextPositions = new List<Vector3>
         {
-            new Vector3(1f, 1f, 0f),
-            new Vector3(0.5f, 0.5f, 0f),
-            new Vector3(1.5f, 1.5f, 0f),
-            new Vector3(0f, 0.2f, 0f),
+            new Vector3(0.4f, -0.4f, 0f),
+            new Vector3(-0.6f, -0.6f, 0f),
+            new Vector3(-1.7f, -0.7f, 0f),
+            new Vector3(0.2f, -0.8f, 0f),
+            new Vector3(1.1f, -0.1f, 0f),
         };
 
         public static readonly List<string> TextPromt = new List<string>
         {
-            "Visual/H_text_1_L.png",
-            "Visual/H_text_1_M.png",
-            "Visual/H_text_1_S.png",
-            "Visual/H_text_2_L.png",
-            "Visual/H_text_2_M.png",
-            "Visual/H_text_2_S.png",
-            "Visual/H_text_3_L.png",
-            "Visual/H_text_3_M.png",
-            "Visual/H_text_3_S.png",
+            "Visual/Text/H_text_1_L.png",
+            "Visual/Text/H_text_1_M.png",
+            "Visual/Text/H_text_1_S.png",
+            "Visual/Text/H_text_2_L.png",
+            "Visual/Text/H_text_2_M.png",
+            "Visual/Text/H_text_2_S.png",
+            "Visual/Text/H_text_3_L.png",
+            "Visual/Text/H_text_3_M.png",
+            "Visual/Text/H_text_3_S.png",
         };
 
         public static readonly Dictionary<SpriteType, Vector3> ChibiPosition = new Dictionary<SpriteType, Vector3>
@@ -101,6 +111,14 @@ namespace Xao
             { SpriteType.Chibi_NormalBlush, new Vector3(0f, 0.95f) },
             { SpriteType.Chibi_TakingDamage_0, new Vector3(-0.2f, 0.95f) },
             { SpriteType.Chibi_TakingDamage_1, new Vector3(-0.2f, 0.95f) },
+        };
+
+        public static readonly Dictionary<SpriteType, Vector3> ComboPosition = new Dictionary<SpriteType, Vector3>
+        {
+            { SpriteType.Combo_0, new Vector3(2f, 2f) },
+            { SpriteType.Combo_1, new Vector3(0f, 0.95f) },
+            { SpriteType.Combo_2, new Vector3(0f, 0.95f) },
+            { SpriteType.Combo_3, new Vector3(0f, 0.95f) },
         };
 
         public static readonly Dictionary<string, string> HeartsPath = new Dictionary<string, string>
@@ -140,6 +158,14 @@ namespace Xao
             "Chibi_TakingDamage_1",
         };
 
+        public static readonly List<string> ComboNames = new List<string>
+        {
+            "Combo_0",
+            "Combo_1",
+            "Combo_2",
+            "Combo_3",
+        };
+
         public static readonly List<string> Hearts = new List<string>
         {
             "HeartGrey_0",
@@ -159,9 +185,27 @@ namespace Xao
             { ModItemKeys.Skill_S_Xao_CowGirl_0, ModItemKeys.Skill_S_Xao_CowGirl_Love_0},
             { ModItemKeys.Skill_S_Xao_CowGirl_1, ModItemKeys.Skill_S_Xao_CowGirl_Love_1},
             { ModItemKeys.Skill_S_Xao_CowGirl_2, ModItemKeys.Skill_S_Xao_CowGirl_Love_2},
+            { ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_0, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0},
+            { ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_1, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_1},
+            { ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_2, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_2},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_0, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_1, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_1},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_2, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_2},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_3, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_3},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_0, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_1, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_1},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_2, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_2},
+            { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_0, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0},
+            { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_1, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_1},
+            { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_2, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_2},
+            { ModItemKeys.Skill_S_Xao_MikoExperiencePussy_0, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0},
+            { ModItemKeys.Skill_S_Xao_MikoExperiencePussy_1, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_1},
+            { ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_2},
+            { ModItemKeys.Skill_S_Xao_MikoExperiencePussy_3, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_3},
+            { ModItemKeys.Skill_S_Xao_SwimsuitDay_0, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0},
+            { ModItemKeys.Skill_S_Xao_SwimsuitDay_1, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1},
+            { ModItemKeys.Skill_S_Xao_SwimsuitDay_2, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2},
         };
-
-
 
         private static int LastTextPositionIndex = -1;
         private static int LastTextPromptIndex = -1;
@@ -190,6 +234,14 @@ namespace Xao
             newSkill.AP = mana;
             BattleSystem.instance.AllyTeam.Add(newSkill, true);
             return newSkill;
+        }
+        public static void AddBuff(BattleChar bchar, string buffKey, int num = 1)
+        {
+            for (int i = 0; i < num; i++)
+            {
+                if (bchar == null || buffKey.IsNullOrEmpty()) return;
+                bchar.BuffAdd(buffKey, bchar, false, 0, false, -1, false);
+            }
         }
 
         public static void getSprite(string path, Image img)
@@ -235,13 +287,14 @@ namespace Xao
             var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
             return AddressableLoadManager.LoadAsyncCompletion<T>(address, type);
         }
+
         public static GameObject CreatGameObject(string name, Transform parent)
         {
-            Transform existing = parent.Find(name);
-            if (existing != null)
-            {
-                UnityEngine.Object.Destroy(existing.gameObject); // удаляем старый, если есть
-            }
+            //Transform existing = parent.Find(name);
+            //if (existing != null)
+            //{
+            //    UnityEngine.Object.Destroy(existing.gameObject); // удаляем старый, если есть
+            //}
 
             GameObject gameObject = new GameObject(name);
             gameObject.SetActive(false);
@@ -273,6 +326,13 @@ namespace Xao
             img.rectTransform.anchorMax = new Vector2(0f, 1f);
             img.rectTransform.sizeDelta = size;
         }
+        public static void ImageResize(Image img, Vector2 size, Vector2 pos)
+        {
+            img.rectTransform.anchorMin = new Vector2(0f, 1f);
+            img.rectTransform.anchorMax = new Vector2(0f, 1f);
+            img.rectTransform.sizeDelta = size;
+            img.rectTransform.transform.localPosition = pos;
+        }
 
         public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)
         {
@@ -286,7 +346,7 @@ namespace Xao
             txt.alignment = TextAlignmentOptions.Left;
         }
 
-        public static GameObject CreateIcon(BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true)
+        public static GameObject CreateIcon(BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true, bool isRecast = false)
         {
             if (name == null || sprite == null)
             {
@@ -295,43 +355,80 @@ namespace Xao
 
             Debug.Log($"[CreateIcon] Creating icon: {name} at {offset} with sprite: {sprite}");
             Vector3 basePos = bchar.GetTopPos();
-            return CreateIconUi(name, bchar.transform, sprite, size, basePos + offset, isSibling);
+            return CreateIconUi(name, bchar.transform, sprite, size, basePos + offset, isSibling, isRecast);
         }
 
-        public static GameObject CreateIconUi(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos, bool isSibling = true)
+        public static GameObject CreateIcon(string name, string sprite, Vector3 offset, Vector3 size, Transform parent, bool isSibling = true, bool isRecast = false)
+        {
+            if (name == null || sprite == null || parent == null)
+            {
+                return null;
+            }
+            return CreateIconUi(name, parent, sprite, size, offset, isSibling, isRecast);
+        }
+
+        public static GameObject CreateIconUi(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos, bool isSibling = true, bool isRecast = false)
         {
             GameObject iconObject = Utils.CreatGameObject(name, parent);
             if (iconObject == null) return null;
 
             iconObject.transform.position = worldPos;
 
-            Image oldImage = iconObject.GetComponent<Image>();
-            if (oldImage != null)
-                UnityEngine.Object.Destroy(oldImage);
+            //Image oldImage = iconObject.GetComponent<Image>();
+            //if (oldImage != null)
+            //{
+            //    UnityEngine.Object.Destroy(oldImage);
+            //}
 
             Image image = iconObject.AddComponent<Image>();
+            if (image == null) return null;
+
             Sprite sprite = Utils.getSprite(spriteNormal);
-            if (sprite == null) return null;
+            if (sprite == null)
+            {
+                Debug.LogError($"[CreateIconUi] Sprite not found: {spriteNormal}");
+                return null;
+            }
+
             image.sprite = sprite;
+            image.raycastTarget = isRecast;
 
             Utils.ImageResize(image, size);
 
-            // Прозрачность по желанию:
-            // var color = image.color;
-            // color.a = 0.5f;
-            // image.color = color;
-
-            // Отключение блокировки кликов:
-            image.raycastTarget = false;
-
             iconObject.SetActive(true);
+
             if (isSibling)
             {
-                // Отправляем объект на задний план
                 iconObject.transform.SetAsFirstSibling();
             }
 
             return iconObject;
+        }
+
+
+        public static GameObject CreateComboButton(string name, Transform trans, string spriteNormal, Vector2 size, Vector2 pos)
+        {
+            GameObject newObject = Utils.CreatGameObject(name, trans);
+            if (newObject == null)
+            {
+                return null;
+            }
+
+            newObject.transform.SetParent(trans);
+            newObject.transform.localPosition = pos;
+
+            Image image = newObject.AddComponent<Image>();
+            Sprite sprite = Utils.getSprite(spriteNormal);
+            if (sprite == null)
+            {
+                return null;
+            }
+
+            image.sprite = sprite;
+            Utils.ImageResize(image, size, pos);
+            newObject.SetActive(true);
+            
+            return newObject;
         }
 
         public static GameObject ReplaceChibiIcon(string chibiName, BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true)
@@ -370,7 +467,7 @@ namespace Xao
             }
         }
 
-        public static T AddScript<T>(GameObject go) where T : Component
+        public static T AddComponent<T>(GameObject go) where T : Component
         {
             return go.AddComponent<T>();
         }
@@ -418,10 +515,13 @@ namespace Xao
         {
             if (TextPositions.Count == 0)
             {
+                Debug.LogWarning("GetRandomTextPosition: TextPositions list is empty.");
                 return Vector3.zero;
             }
+
             if (TextPositions.Count == 1)
             {
+                Debug.Log("GetRandomTextPosition: Only one position available: " + TextPositions[0]);
                 return TextPositions[0];
             }
 
@@ -432,16 +532,24 @@ namespace Xao
             } while (index == LastTextPositionIndex);
 
             LastTextPositionIndex = index;
+
+            Debug.Log("GetRandomTextPosition: Selected index " + index + " => " + TextPositions[index]);
             return TextPositions[index];
         }
 
         public static string GetRandomText()
         {
             if (TextPromt.Count == 0)
+            {
+                Debug.LogWarning("GetRandomText: TextPromt list is empty.");
                 return "";
+            }
 
             if (TextPromt.Count == 1)
+            {
+                Debug.Log("GetRandomText: Only one prompt available: " + TextPromt[0]);
                 return TextPromt[0];
+            }
 
             int index;
             do
@@ -450,6 +558,8 @@ namespace Xao
             } while (index == LastTextPromptIndex);
 
             LastTextPromptIndex = index;
+
+            Debug.Log("GetRandomText: Selected index " + index + " => " + TextPromt[index]);
             return TextPromt[index];
         }
 
@@ -470,30 +580,58 @@ namespace Xao
             }
         }
 
-        public static void StartBounce(GameObject obj)
+        public static void ChibiStartAnimation(GameObject obj, bool isBounce)
         {
             if (obj != null)
             {
-                Xao_Script_Chibi_BounceFadeOut script = obj.GetComponent<Xao_Script_Chibi_BounceFadeOut>();
-                if (script == null)
+                Xao_Chibi_Animations script = obj.GetComponent<Xao_Chibi_Animations>() ?? obj.AddComponent<Xao_Chibi_Animations>();
+
+                if (isBounce)
                 {
-                    script = obj.AddComponent<Xao_Script_Chibi_BounceFadeOut>();
+                    script?.StartBounce();
                 }
-                script.StartBounce();
+                else
+                {
+                    script?.StartSpin();
+                }
             }
         }
-        public static void StartSpin(GameObject obj)
+
+        public static void StartComboPopOut(GameObject obj)
         {
             if (obj != null)
             {
-                Xao_Script_Chibi_SpinFadeOut script = obj.GetComponent<Xao_Script_Chibi_SpinFadeOut>();
-                if (script == null)
-                {
-                    script = obj.AddComponent<Xao_Script_Chibi_SpinFadeOut>();
-                }
-                script.StartSpinAndFadeOut();
+                Xao_Combo_Animations script = obj.GetComponent<Xao_Combo_Animations>() ?? obj.AddComponent<Xao_Combo_Animations>();
+                script?.PlayPopIn();
             }
         }
+
+        public static void StartHeartsPopOut(GameObject obj)
+        {
+            if (obj != null)
+            {
+                Xao_Hearts_Animations script = obj.GetComponent<Xao_Hearts_Animations>() ?? obj.AddComponent<Xao_Hearts_Animations>();
+                script.PlayPopIn = true;
+            }
+        }
+
+        public static void StartHeartsGreyPopOut(GameObject obj)
+        {
+            if (obj != null)
+            {
+                Xao_Hearts_Animations script = obj.GetComponent<Xao_Hearts_Animations>() ?? obj.AddComponent<Xao_Hearts_Animations>();
+                script.PlayGreyIn = true;
+            }
+        }
+        public static void StartTextPopOut(GameObject obj)
+        {
+            if (obj != null)
+            {
+                Xao_Text_Animations script = obj.GetComponent<Xao_Text_Animations>() ?? obj.AddComponent<Xao_Text_Animations>();
+                script?.StartScaleUp();
+            }
+        }
+
         public static void SkillChange(this Skill changeFrom, Skill changeTo, bool keepID = true, bool keepExtended = true)
         {
             if (changeFrom.MyButton != null)
@@ -552,9 +690,7 @@ namespace Xao
             {
                 changeFrom.CharinfoSkilldata.SKillExtended = changeTo.CharinfoSkilldata.SKillExtended;
             }
-
             BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
-
         }
     }
 }

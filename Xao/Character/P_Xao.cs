@@ -18,13 +18,14 @@ namespace Xao
     /// Xao
     /// Passive:
     /// </summary>
-    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After
+    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn
     {
         private GameObject chibi;
         private Vector3 size = new Vector3(235f, 235f);
         private string chibiName = "Chibi_Normal";
         private Utils.SpriteType chibiPath = Utils.SpriteType.Chibi_Idle; // Значение по умолчанию
         private Utils.SpriteType chibiPosition = Utils.SpriteType.Chibi_Idle;
+        public bool SkillChange;
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
@@ -69,6 +70,8 @@ namespace Xao
         {
             if (SkillD.Master == BChar)
             {
+                Xao_Combo.ComboChange(1);
+
                 if (Utils.HentaiSkills.Contains(SkillD.MySkill.KeyID))
                 {
                     SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush);
@@ -119,7 +122,7 @@ namespace Xao
             if (DeadChar == BChar)
             {
                 Utils.DestroyObjects(Utils.ChibiNames);
-                Xao_Visual_Hearts.DestroyAndNullifyAll();
+                Xao_Hearts.DestroyAndNullifyAll();
             }
         }
 
@@ -131,17 +134,29 @@ namespace Xao
 
             if (chibi != null)
             {
-                int randomNum = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
-
-                if (randomNum == 1)
-                {
-                    Utils.StartBounce(chibi);
-                }
-                else
-                {
-                    Utils.StartSpin(chibi);
-                }
+                bool isBounceAnimation = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3) == 1;
+                Utils.ChibiStartAnimation(chibi, isBounceAnimation);
             }
+        }
+
+        public IEnumerator Draw(Skill Drawskill, bool NotDraw)
+        {
+            if (Drawskill?.MySkill == null && !SkillChange) yield break;
+
+            if (Utils.XaoSkillList.TryGetValue(Drawskill.MySkill.KeyID, out var newSkillID))
+            {
+                var newSkill = Skill.TempSkill(newSkillID, Drawskill.Master, Drawskill.Master.MyTeam);
+                Drawskill.SkillChange(newSkill);
+            }
+            yield break;
+        }
+
+        public void Turn()
+        {
+            var text = Utils.CreateIcon(BChar, "Text", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
+            Utils.StartTextPopOut(text);
+            Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection, 1);
+            Xao_Hearts.HeartsCheck(BChar, 1);
         }
     }
 }

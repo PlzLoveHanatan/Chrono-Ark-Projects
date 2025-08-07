@@ -26,13 +26,12 @@ namespace Xao
             //    Utils.StartRotation(chibi);
             //}
 
-            Xao_Visual_Hearts.HeartsCheck(BChar, 1);
+            Xao_Hearts.HeartsCheck(BChar, 3);
 
             var icon = Utils.CreateIcon(BChar, "Text_0", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false);
             if (icon != null)
             {
                 Debug.Log($"Icon Created");
-                StartFlicking(icon);
             }
             else
             {
@@ -49,25 +48,11 @@ namespace Xao
             if (icon != null)
             {
                 Debug.Log($"Icon Created");
-                StartFlicking(icon);
             }
             else
             {
                 Debug.Log($"Icon Not Created");
             }
-        }
-
-        private void StartFlicking(GameObject obj)
-        {
-            if (obj != null)
-            {
-                Xao_Script flicker = obj.GetComponent<Xao_Script>();
-                if (flicker == null)
-                {
-                    flicker = obj.AddComponent<Xao_Script>();
-                }
-                flicker.StartScaleUp();
-            }
-        }      
+        }             
     }
 }

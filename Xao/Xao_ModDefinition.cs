@@ -14,6 +14,7 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using static Mono.Security.X509.X520;
 using static Xao.Utils;
+using System.Drawing;
 namespace Xao
 {
     public class Xao_ModDefinition : ModDefinition
@@ -31,7 +32,7 @@ namespace Xao
 
     public class ModIReturn : IP_BattleStart_Ones
     {
-        private static Dictionary<Utils.SpriteType, Sprite> Sprites = new Dictionary<Utils.SpriteType, Sprite>();
+        private static readonly Dictionary<Utils.SpriteType, Sprite> Sprites = new Dictionary<Utils.SpriteType, Sprite>();
 
         private bool FirstAwake;
 
@@ -51,28 +52,28 @@ namespace Xao
             try
             {
                 string xao = ModItemKeys.Character_Xao;
+                string combo = ModItemKeys.Buff_B_Xao_Combo;
                 var aliveXao = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(x => x != null && x.Info.KeyData == xao);
                 if (aliveXao != null)
                 {
+                    Utils.AddBuff(aliveXao, combo);
                     var chibiIdle = Utils.CreateIcon(aliveXao, "Chibi_Idle", Utils.SpritePaths[Utils.SpriteType.Chibi_Idle], Utils.ChibiPosition[Utils.SpriteType.Chibi_Idle], new Vector3(235f, 235f));
-                    if (chibiIdle != null)
-                    {
-                        Debug.Log($"Chibi Created");
-                    }
-                    else
-                    {
-                        Debug.Log($"Chibi is not Created");
-                    }
+                    Xao_Combo.Combo_0 = Utils.CreateComboButton("Combo_0", BattleSystem.instance.ActWindow.transform, Utils.SpritePaths[Utils.SpriteType.Combo_0], new Vector2(110f, 110f), new Vector2(-749.7802f, -438.8362f));
+                    Utils.AddComponent<Xao_Combo_Tooltip>(Xao_Combo.Combo_0);
+                    //var combo2 = Utils.CreateIcon(aliveXao, "Combo_0",Utils.SpritePaths[Utils.SpriteType.Combo_0],Utils.ComboPosition[Utils.SpriteType.Combo_0],new Vector3(100f, 100f));
 
-                    Xao_Visual_Hearts.CreateHearts(aliveXao);
-                    Xao_Visual_Hearts.SavedStackNum = 0;
+                    Xao_Hearts.CreateHearts(aliveXao);
+                    Xao_Hearts.SavedStackNum = 0;
+                    Xao_Combo.CurrentCombo = 0;
                 }
+                
             }
             catch (Exception e)
             {
                 Debug.Log($"Battle Start Error" + e.ToString());
             }
         }
+
 
         public static void LoadAllSprites()
         {

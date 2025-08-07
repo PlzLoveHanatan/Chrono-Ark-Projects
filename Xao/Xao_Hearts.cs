@@ -6,10 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Experimental.U2D;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 
 namespace Xao
 {
-    public class Xao_Visual_Hearts : MonoBehaviour
+    public class Xao_Hearts : MonoBehaviour
     {
         public static GameObject HeartGrey_0, HeartGrey_1, HeartGrey_2;
         public static GameObject HeartNormal_0, HeartNormal_1, HeartNormal_2;
@@ -27,6 +31,9 @@ namespace Xao
         {
             GameObject[] normalHearts = { HeartNormal_0, HeartNormal_1, HeartNormal_2 };
             GameObject[] greyHearts = { HeartGrey_0, HeartGrey_1, HeartGrey_2 };
+            string buffKey = ModItemKeys.Buff_B_Xao_Affection;
+            string xao = ModItemKeys.Character_Xao;
+            var aliveXao = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c.Info.KeyData == xao);
 
             for (int i = 0; i < 3; i++)
             {
@@ -38,9 +45,10 @@ namespace Xao
                     }
                     if (normalHearts[i] == null)
                     {
-                        normalHearts[i] = Utils.CreateIcon(bchar, $"HeartNormal_{i}", Utils.HeartsPath[$"HeartNormal_{i}"], Utils.HeartsPosition[$"HeartNormal_{i}"], new Vector3(90f, 90f), false);
-                        var effect = normalHearts[i].AddComponent<Xao_Visual_Hearts_Script>();
-                        effect.PlayPopIn = true;
+                        normalHearts[i] = Utils.CreateIcon(bchar, $"HeartNormal_{i}", Utils.HeartsPath[$"HeartNormal_{i}"], Utils.HeartsPosition[$"HeartNormal_{i}"], new Vector3(90f, 90f), false, true);
+                        Utils.StartHeartsPopOut(normalHearts[i]);
+                        Utils.AddComponent<Xao_Hearts_Script>(normalHearts[i]);
+                        Utils.AddComponent<Xao_Hearts_Tooltip>(normalHearts[i]);
                     }
                 }
                 else // Эти должны быть серыми
@@ -52,8 +60,7 @@ namespace Xao
                     if (greyHearts[i] == null)
                     {
                         greyHearts[i] = Utils.CreateIcon(bchar, $"HeartGrey_{i}", Utils.HeartsPath[$"HeartGrey_{i}"], Utils.HeartsPosition[$"HeartGrey_{i}"], new Vector3(90f, 90f), false);
-                        var effect = greyHearts[i].AddComponent<Xao_Visual_Hearts_Script>();
-                        effect.PlayGreyIn = true;
+                        Utils.StartHeartsGreyPopOut(normalHearts[i]);
                     }
                 }
             }

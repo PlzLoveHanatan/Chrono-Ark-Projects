@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Xao
 {
-    public class Xao_Visual_Hearts_Script : MonoBehaviour
+    public class Xao_Hearts_Animations : MonoBehaviour
     {
         public bool PlayPopIn = false;
         public bool PlayFadeOut = false;
@@ -32,7 +32,9 @@ namespace Xao
             initialScale = transform.localScale;
             cg = GetComponent<CanvasGroup>();
             if (cg == null)
+            {
                 cg = gameObject.AddComponent<CanvasGroup>();
+            }
         }
 
         public void OnEnable()

@@ -13,15 +13,15 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    /// <summary>
-    /// Test Decrease
-    /// </summary>
-    public class S_Xao_Test_0 : Skill_Extended
+	/// <summary>
+	/// Miko Experience Pussy ♡♡
+	/// Create a <color=#d78fe9>Miko Experience Pussy ♡♡♡</color> in hand.
+	/// </summary>
+    public class S_Xao_MikoExperiencePussy_2 : Skill_Extended
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Xao_Hearts.HeartsCheck(BChar, -1);
-            Xao_Combo.ComboChange(1);
+            Utils.CreateSkill(ModItemKeys.Skill_S_Xao_MikoExperiencePussy_3, BChar, true, true, 2, 1);
         }
     }
 }
