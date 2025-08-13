@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Xao08072025110441</AssemblyName>
+    <AssemblyName>Xao08132025205624</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,7 +405,7 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Utils.cs" />
     <Compile Include="Xao_Chibi_Animations.cs" />
@@ -422,6 +422,8 @@
     <Compile Include="Xao_Text_Animations.cs" />
     <Compile Include="Buff\B_Xao_Affection.cs" />
     <Compile Include="Buff\B_Xao_Combo.cs" />
+    <Compile Include="Buff\B_Xao_Mod_1.cs" />
+    <Compile Include="Buff\B_Xao_PantyDominance.cs" />
     <Compile Include="Character\P_Xao.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_0.cs" />
@@ -438,6 +440,7 @@
     <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_1.cs" />
     <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_Love_0.cs" />
     <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_Love_1.cs" />
+    <Compile Include="Skill\S_Xao_LucyDraw_0.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_0.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_1.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_2.cs" />
@@ -466,8 +469,7 @@
     <Compile Include="Skill\S_Xao_SwimsuitDay_1.cs" />
     <Compile Include="Skill\S_Xao_SwimsuitDay_Love_0.cs" />
     <Compile Include="Skill\S_Xao_SwimsuitDay_Love_1.cs" />
-    <Compile Include="Skill\S_Xao_Test.cs" />
-    <Compile Include="Skill\S_Xao_Test_0.cs" />
+    <Compile Include="SkillExtended\Ex_Xao_PantyDominance.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

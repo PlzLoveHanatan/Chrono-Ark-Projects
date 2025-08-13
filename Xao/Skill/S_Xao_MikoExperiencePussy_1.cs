@@ -21,7 +21,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.CreateSkill(ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2, BChar, true, true, 2, 1);
+            Utils.CreateSkill(ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2, BChar);
         }
     }
 }

@@ -18,8 +18,28 @@ namespace Xao
         {
             get
             {
-                string combo = Xao_Combo.CurrentCombo >= 4 ? ModLocalization.Combo_1.Replace("&a", Xao_Combo.CurrentCombo.ToString()) : ModLocalization.Combo_0.Replace("&a", Xao_Combo.CurrentCombo.ToString());
-                return combo;
+                string text;
+
+                if (Xao_Combo.CurrentCombo >= 4)
+                {
+                    if (Xao_Combo.SaveComboBetweenTurns)
+                    {
+                        text = ModLocalization.Combo_3.Replace("&a", Xao_Combo.CurrentCombo.ToString());
+                    }
+                    else
+                    {
+                        text = ModLocalization.Combo_1.Replace("&a", Xao_Combo.CurrentCombo.ToString());
+                    }
+                }
+                else if (Xao_Combo.SaveComboBetweenTurns)
+                {
+                    text = ModLocalization.Combo_2.Replace("&a", Xao_Combo.CurrentCombo.ToString());
+                }
+                else
+                {
+                    text = ModLocalization.Combo_0.Replace("&a", Xao_Combo.CurrentCombo.ToString());
+                }
+                return text;
             }
         }
 
@@ -36,21 +56,26 @@ namespace Xao
                 var desc = tipWindow.Description;
 
                 desc.fontSize = TextSize;
-
                 desc.alignment = TextAlignmentOptions.Center;
-
                 desc.enableWordWrapping = true;
-
                 desc.margin = Vector4.zero;
-                //desc.margin = new Vector4(5, 5, 5, 5);
 
-                float maxWidth = 300f;
-                Vector2 preferredValues = desc.GetPreferredValues(TooltipText, maxWidth, 1000f);
+                // Фиксируем ширину
+                float fixedWidth = Width;
 
-                tooltip.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, preferredValues.x);
-                tooltip.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, preferredValues.y);
+                // Получаем высоту текста при фиксированной ширине
+                Vector2 preferredValues = desc.GetPreferredValues(TooltipText, fixedWidth, 1000f);
+
+                var rect = tooltip.GetComponent<RectTransform>();
+
+                // Устанавливаем фиксированную ширину (ширина не меняется)
+                rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, fixedWidth);
+
+                // Устанавливаем высоту по вычисленному значению
+                rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, preferredValues.y);
             }
         }
+
 
         public void OnPointerExit(PointerEventData eventData)
         {

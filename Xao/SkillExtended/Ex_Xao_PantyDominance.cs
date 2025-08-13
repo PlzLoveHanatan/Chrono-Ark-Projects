@@ -13,15 +13,15 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    /// <summary>
-    /// Test Decrease
-    /// </summary>
-    public class S_Xao_Test_0 : Skill_Extended
+	/// <summary>
+	/// Panty Dominance
+	/// </summary>
+    public class Ex_Xao_PantyDominance : BuffSkillExHand
     {
-        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        public override void Init()
         {
-            Xao_Hearts.HeartsCheck(BChar, -1);
-            Xao_Combo.ComboChange(1);
+            base.Init();
+            APChange = -1;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Xao
     {
         public static GameObject Combo_0, Combo_1, Combo_2, Combo_3;
         public static int CurrentCombo = 0;
+        public static bool SaveComboBetweenTurns = false;
 
         public static void ComboChange(int comboChange = 1, bool resetCombo = false, bool isNewTurn = false)
         {

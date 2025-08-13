@@ -13,14 +13,17 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-	/// <summary>
-	/// Magical Girl Pussy
-	/// </summary>
-    public class S_Xao_MagicalGirlPussy_0 : Skill_Extended
+    /// <summary>
+    /// Horny Mod
+    /// At the start of each turn obtain <sprite name="Xao_Heart">.
+    /// </summary>
+    public class B_Xao_Mod_1 : Buff, IP_PlayerTurn
     {
-        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        public void Turn()
         {
-            Utils.CreateSkill(ModItemKeys.Skill_S_Xao_MagicalGirlPussy_1, BChar);
+            string affection = ModItemKeys.Buff_B_Xao_Affection;
+            Utils.AddBuff(BChar, affection);
+            Xao_Hearts.HeartsCheck(BChar, 1);
         }
     }
 }

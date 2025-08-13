@@ -12,20 +12,22 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using Spine.Unity.Examples;
+using System.Web.Compilation;
 namespace Xao
 {
     /// <summary>
     /// Xao
     /// Passive:
     /// </summary>
-    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn
+    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn, IP_SkillUse_BasicSkill
     {
         private GameObject chibi;
         private Vector3 size = new Vector3(235f, 235f);
         private string chibiName = "Chibi_Normal";
         private Utils.SpriteType chibiPath = Utils.SpriteType.Chibi_Idle; // Значение по умолчанию
         private Utils.SpriteType chibiPosition = Utils.SpriteType.Chibi_Idle;
-        public bool SkillChange;
+        public bool HentaiForm;
+        public bool FirstUse;
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
@@ -65,20 +67,43 @@ namespace Xao
         {
             OnePassive = true;
         }
+        public void SkillUseAfter(Skill SkillD)
+        {
+            if (SkillD.Master == BChar)
+            {
+                if (BChar.Overload > 1)
+                {
+                    BChar.Overload = 0;
+                }
+            }
+        }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
             if (SkillD.Master == BChar)
             {
+                if (SkillD.NotCount)
+                {
+                    if (BChar.Overload >= 1)
+                    {
+                        BChar.Overload = 0;
+                    }
+                    else
+                    {
+                        BChar.Overload = 1;
+                    }
+                }
+
                 Xao_Combo.ComboChange(1);
 
                 if (Utils.HentaiSkills.Contains(SkillD.MySkill.KeyID))
                 {
-                    SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush);
+                    Utils.PopHentaiText(BChar);
                 }
-                else if (SkillD.IsDamage)
+
+                if (SkillD.IsDamage)
                 {
-                    int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 4);
+                    int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 5);
 
                     switch (randomIndex)
                     {
@@ -90,6 +115,9 @@ namespace Xao
                             break;
                         case 3:
                             SetChibi("Chibi_AttackExtra_1", Utils.SpriteType.Chibi_AttackExtra_1);
+                            break;
+                        case 4:
+                            SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush);
                             break;
                     }
                 }
@@ -109,11 +137,17 @@ namespace Xao
             }
         }
 
-        public void SkillUseAfter(Skill SkillD)
+        public void SkillUseBasicSkill(Skill skill)
         {
-            if (BChar.Overload >= 2)
+            if (skill.Master == BChar)
             {
-                BChar.Overload = 0;
+                IEnumerator FixedSkillFix()
+                {
+                    yield return new WaitForEndOfFrame();
+                    (BChar as BattleAlly)?.MyBasicSkill.SkillInput(BChar.BattleBasicskillRefill);
+                    yield break;
+                }
+                BattleSystem.instance.StartCoroutine(FixedSkillFix());
             }
         }
 
@@ -139,9 +173,46 @@ namespace Xao
             }
         }
 
+        public IEnumerator ChangeFix()
+        {
+            yield return null;
+            var team = BattleSystem.instance.AllyTeam;
+            var fixedSkill = (BChar as BattleAlly)?.MyBasicSkill?.buttonData;
+
+            if (fixedSkill?.MySkill != null && Utils.XaoSkillList.TryGetValue(fixedSkill.MySkill.KeyID, out var newSkillID2))
+            {
+                var newSkill = Skill.TempSkill(newSkillID2, fixedSkill.Master, fixedSkill.Master.MyTeam);
+                Skill refillSkill = newSkill.CloneSkill();
+                (BChar as BattleAlly).MyBasicSkill.SkillInput(refillSkill);
+                (BChar as BattleAlly).BattleBasicskillRefill = refillSkill;
+                (BChar as BattleAlly).BasicSkill = refillSkill;
+                int ind = BChar.MyTeam.Chars.IndexOf(BChar);
+                if (ind >= 0)
+                {
+                    BChar.MyTeam.Skills_Basic[ind] = refillSkill;
+                }
+            }
+
+            var allSkillsToChange = team.Skills
+                .Concat(team.Skills_Deck)
+                .Concat(team.Skills_UsedDeck)
+                .Where(skill => skill?.MySkill != null && Utils.XaoSkillList.ContainsKey(skill.MySkill.KeyID))
+                .ToList();
+
+            foreach (Skill skill in allSkillsToChange)
+            {
+                if (Utils.XaoSkillList.TryGetValue(skill.MySkill.KeyID, out var newSkillID))
+                {
+                    var newSkill = Skill.TempSkill(newSkillID, skill.Master, skill.Master.MyTeam);
+                    skill.SkillChange(newSkill);
+                }
+            }
+            yield break;
+        }
+
         public IEnumerator Draw(Skill Drawskill, bool NotDraw)
         {
-            if (Drawskill?.MySkill == null && !SkillChange) yield break;
+            if (!HentaiForm) yield break;
 
             if (Utils.XaoSkillList.TryGetValue(Drawskill.MySkill.KeyID, out var newSkillID))
             {
@@ -153,10 +224,12 @@ namespace Xao
 
         public void Turn()
         {
-            var text = Utils.CreateIcon(BChar, "Text", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
-            Utils.StartTextPopOut(text);
-            Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection, 1);
-            Xao_Hearts.HeartsCheck(BChar, 1);
+            if (HentaiForm)
+            {
+                Utils.PopHentaiText(BChar);
+                //Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection, 1);
+                //Xao_Hearts.HeartsCheck(BChar, 1);
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.CreateSkill(ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1, BChar, true, true, 2, 1);
+            
         }
     }
 }

@@ -23,12 +23,15 @@ namespace Xao
         public static void HeartsCheck(BattleChar bchar, int stackChange = 0)
         {
             SavedStackNum += stackChange;
+
             SavedStackNum = Mathf.Clamp(SavedStackNum, 0, 3);
             UpdateHearts(bchar, SavedStackNum);
         }
 
         public static void UpdateHearts(BattleChar bchar, int stackNum)
         {
+            if (stackNum > 3) return;
+
             GameObject[] normalHearts = { HeartNormal_0, HeartNormal_1, HeartNormal_2 };
             GameObject[] greyHearts = { HeartGrey_0, HeartGrey_1, HeartGrey_2 };
             string buffKey = ModItemKeys.Buff_B_Xao_Affection;

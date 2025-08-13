@@ -26,8 +26,19 @@ namespace Xao
 
         public void Turn()
         {
-            Xao_Combo.CurrentCombo = 0;
-            Xao_Combo.ComboChange(0, true, true);
+            if (!Xao_Combo.SaveComboBetweenTurns)
+            {
+                Xao_Combo.CurrentCombo = 0;
+                Xao_Combo.ComboChange(0, true, true);
+            }
+            else
+            {
+                Xao_Combo.SaveComboBetweenTurns = false;
+                if (Xao_Combo.CurrentCombo >= 4)
+                {
+                    Xao_Combo.IncreaseXaoAP(Utils.Xao.Info);
+                }
+            }
         }
     }
 }

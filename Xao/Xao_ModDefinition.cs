@@ -53,20 +53,25 @@ namespace Xao
             {
                 string xao = ModItemKeys.Character_Xao;
                 string combo = ModItemKeys.Buff_B_Xao_Combo;
+                string affection = ModItemKeys.Buff_B_Xao_Affection;
+                string normalMod = ModItemKeys.Buff_B_Xao_Mod_0;
                 var aliveXao = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(x => x != null && x.Info.KeyData == xao);
                 if (aliveXao != null)
                 {
                     Utils.AddBuff(aliveXao, combo);
-                    var chibiIdle = Utils.CreateIcon(aliveXao, "Chibi_Idle", Utils.SpritePaths[Utils.SpriteType.Chibi_Idle], Utils.ChibiPosition[Utils.SpriteType.Chibi_Idle], new Vector3(235f, 235f));
+                    Utils.AddBuff(aliveXao, normalMod);
+                    GameObject chibiIdle = Utils.CreateIcon(aliveXao, "Chibi_Idle", Utils.SpritePaths[Utils.SpriteType.Chibi_Idle], Utils.ChibiPosition[Utils.SpriteType.Chibi_Idle], new Vector3(235f, 235f));
                     Xao_Combo.Combo_0 = Utils.CreateComboButton("Combo_0", BattleSystem.instance.ActWindow.transform, Utils.SpritePaths[Utils.SpriteType.Combo_0], new Vector2(110f, 110f), new Vector2(-749.7802f, -438.8362f));
                     Utils.AddComponent<Xao_Combo_Tooltip>(Xao_Combo.Combo_0);
+                    //GameObject randomHentaitext = Utils.CreateIcon(Utils.Xao, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
+                    //Utils.StartTextPopOut(randomHentaitext);
                     //var combo2 = Utils.CreateIcon(aliveXao, "Combo_0",Utils.SpritePaths[Utils.SpriteType.Combo_0],Utils.ComboPosition[Utils.SpriteType.Combo_0],new Vector3(100f, 100f));
 
+                    //Utils.AddBuff(aliveXao, affection);
                     Xao_Hearts.CreateHearts(aliveXao);
                     Xao_Hearts.SavedStackNum = 0;
                     Xao_Combo.CurrentCombo = 0;
                 }
-                
             }
             catch (Exception e)
             {

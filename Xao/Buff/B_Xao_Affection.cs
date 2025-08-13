@@ -16,7 +16,7 @@ namespace Xao
     /// <summary>
     /// Affection
     /// </summary>
-    public class B_Xao_Affection : Buff, IP_BuffAddAfter
+    public class B_Xao_Affection : Buff, IP_BuffAddAfter, IP_Awake
     {
         public bool FirstTransform;
 
@@ -86,56 +86,38 @@ namespace Xao
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_Xao_Affection;
-            var xao = ModItemKeys.Character_Xao;
-
-            if (BuffTaker.Info.KeyData == xao && addedbuff.BuffData.Key == buff && addedbuff.StackNum >= 3 && !FirstTransform)
+            string buff = ModItemKeys.Buff_B_Xao_Affection;
+            string xao = ModItemKeys.Character_Xao;
+            string normalMod = ModItemKeys.Buff_B_Xao_Mod_0;
+            string hornyMod = ModItemKeys.Buff_B_Xao_Mod_1;
+            if (BuffTaker.Info.KeyData == xao && addedbuff == this)
             {
-                ChangeFix();
-                FirstTransform = true;
+                Xao_Hearts.HeartsCheck(BChar, 1);
+                GameObject randomHentaitext = Utils.CreateIcon(Utils.Xao, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
+                Utils.StartTextPopOut(randomHentaitext);
 
-                if (BChar.Info.Passive is P_Xao passive)
+                if (StackNum >= 3 && !FirstTransform)
                 {
-                    passive.SkillChange = true;
+                    if (BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Mod_0, false) != null)
+                    {
+                        BChar.BuffRemove(normalMod);
+                        Utils.AddBuff(BChar, hornyMod);
+                    }
+
+                    BChar.Overload = 0;
+                    FirstTransform = true;
+                    if (BChar.Info.Passive is P_Xao passive)
+                    {
+                        passive.HentaiForm = true;
+                        BattleSystem.DelayInput(passive.ChangeFix());
+                    }
                 }
             }
         }
 
-        public IEnumerator ChangeFix()
+        public void Awake()
         {
-            yield return null;
-            var team = BattleSystem.instance.AllyTeam;
-            var fixedSkill = (BChar as BattleAlly)?.MyBasicSkill?.buttonData;
 
-            if (fixedSkill?.MySkill != null && Utils.XaoSkillList.TryGetValue(fixedSkill.MySkill.KeyID, out var newSkillID2))
-            {
-                var newSkill = Skill.TempSkill(newSkillID2, fixedSkill.Master, fixedSkill.Master.MyTeam);
-                Skill refillSkill = newSkill.CloneSkill();
-                (BChar as BattleAlly).MyBasicSkill.SkillInput(refillSkill);
-                (BChar as BattleAlly).BattleBasicskillRefill = refillSkill;
-                (BChar as BattleAlly).BasicSkill = refillSkill;
-                int ind = BChar.MyTeam.Chars.IndexOf(BChar);
-                if (ind >= 0)
-                {
-                    BChar.MyTeam.Skills_Basic[ind] = refillSkill;
-                }
-            }
-
-            var allSkillsToChange = team.Skills
-                .Concat(team.Skills_Deck)
-                .Concat(team.Skills_UsedDeck)
-                .Where(skill => skill?.MySkill != null && Utils.XaoSkillList.ContainsKey(skill.MySkill.KeyID))
-                .ToList();
-
-            foreach (Skill skill in allSkillsToChange)
-            {
-                if (Utils.XaoSkillList.TryGetValue(skill.MySkill.KeyID, out var newSkillID))
-                {
-                    var newSkill = Skill.TempSkill(newSkillID, skill.Master, skill.Master.MyTeam);
-                    skill.SkillChange(newSkill);
-                }
-            }
-            yield break;
         }
     }
 }

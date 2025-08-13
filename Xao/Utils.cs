@@ -21,6 +21,9 @@ namespace Xao
 {
     public static class Utils
     {
+        public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
+        public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
+
         public enum SpriteType
         {
             Chibi_Idle,
@@ -143,7 +146,67 @@ namespace Xao
 
         public static readonly List<string> HentaiSkills = new List<string>
         {
-            ModItemKeys.Skill_S_Xao_Test,
+            ModItemKeys.Skill_S_Xao_BikiniTime_0,
+            ModItemKeys.Skill_S_Xao_BikiniTime_1,
+            ModItemKeys.Skill_S_Xao_BikiniTime_2,
+            ModItemKeys.Skill_S_Xao_BikiniTime_3,
+            ModItemKeys.Skill_S_Xao_BikiniTime_Love_0,
+            ModItemKeys.Skill_S_Xao_BikiniTime_Love_1,
+            ModItemKeys.Skill_S_Xao_BikiniTime_Love_2,
+            ModItemKeys.Skill_S_Xao_BikiniTime_Love_3,
+
+            ModItemKeys.Skill_S_Xao_CowGirl_0,
+            ModItemKeys.Skill_S_Xao_CowGirl_1,
+            ModItemKeys.Skill_S_Xao_CowGirl_2,
+            ModItemKeys.Skill_S_Xao_CowGirl_Love_0,
+            ModItemKeys.Skill_S_Xao_CowGirl_Love_1,
+            ModItemKeys.Skill_S_Xao_CowGirl_Love_2,
+
+            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_0,
+            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_1,
+            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_2,
+            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0,
+            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_1,
+            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_2,
+
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_0,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_1,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_2,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_3,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_1,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_2,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_3,
+
+            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_0,
+            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_1,
+            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_2,
+            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0,
+            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_1,
+            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_2,
+
+            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_0,
+            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_1,
+            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_2,
+            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0,
+            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_1,
+            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_2,
+
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_0,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_1,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_3,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_1,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_2,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_3,
+
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_0,
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_1,
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_2,
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0,
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1,
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2
         };
 
         public static readonly List<string> ChibiNames = new List<string>
@@ -630,6 +693,12 @@ namespace Xao
                 Xao_Text_Animations script = obj.GetComponent<Xao_Text_Animations>() ?? obj.AddComponent<Xao_Text_Animations>();
                 script?.StartScaleUp();
             }
+        }
+
+        public static void PopHentaiText(BattleChar bchar)
+        {
+            GameObject randomHentaitext = Utils.CreateIcon(bchar, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
+            Utils.StartTextPopOut(randomHentaitext);
         }
 
         public static void SkillChange(this Skill changeFrom, Skill changeTo, bool keepID = true, bool keepExtended = true)

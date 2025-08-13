@@ -4,9 +4,9 @@ namespace Xao
     public static class ModItemKeys
     {
 		/// <summary>
-		/// Affection
+		/// Affection <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
-		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if use is stunned.</color>
+		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection = "B_Xao_Affection";
 		/// <summary>
@@ -16,34 +16,90 @@ namespace Xao
 		/// If you gain 4 or more Combo during a turn, permanently increase Attack Power by 1 for this <b>playthrough</b>.
 		/// </summary>
         public static string Buff_B_Xao_Combo = "B_Xao_Combo";
+		/// <summary>
+		/// Normal Mod
+		/// Just Visual Buff
+		/// </summary>
+        public static string Buff_B_Xao_Mod_0 = "B_Xao_Mod_0";
+		/// <summary>
+		/// Horny Mod
+		/// At the start of each turn obtain <sprite name="Xao_Heart">.
+		/// </summary>
+        public static string Buff_B_Xao_Mod_1 = "B_Xao_Mod_1";
+		/// <summary>
+		/// Panty Dominance
+		/// Next skill will cost 1 less.
+		/// </summary>
+        public static string Buff_B_Xao_PantyDominance = "B_Xao_PantyDominance";
+		/// <summary>
+		/// Panty Dominance
+		/// Next skill will cost 1 less.
+		/// </summary>
+        public static string SkillExtended_Ex_Xao_PantyDominance = "Ex_Xao_PantyDominance";
+		/// <summary>
+		/// <color=#87CEFA>Combo</color>
+		/// <color=#919191>If you gain 4 or more Combo during a turn, permanently increase Attack Power by 1 for this <b>playthrough</b>.</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Combo = "KeyWord_Combo";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_0 = "SE_S_S_Xao_BikiniTime_0";
+        public static string SkillEffect_SE_S_S_Xao_BikiniTime_3 = "SE_S_S_Xao_BikiniTime_3";
+        public static string SkillEffect_SE_S_S_Xao_BikiniTime_Love_3 = "SE_S_S_Xao_BikiniTime_Love_3";
+        public static string SkillEffect_SE_S_S_Xao_CowGirl_2 = "SE_S_S_Xao_CowGirl_2";
+        public static string SkillEffect_SE_S_S_Xao_CowGirl_Love_2 = "SE_S_S_Xao_CowGirl_Love_2";
+        public static string SkillEffect_SE_S_S_Xao_ExperienceMaidFootjob_2 = "SE_S_S_Xao_ExperienceMaidFootjob_2";
+        public static string SkillEffect_SE_S_S_Xao_ExperienceMaidFootjob_Love_2 = "SE_S_S_Xao_ExperienceMaidFootjob_Love_2";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_3 = "SE_S_S_Xao_MagicalGirlPussy_3";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_3 = "SE_S_S_Xao_MagicalGirlPussy_Love_3";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_3 = "SE_S_S_Xao_MagicalGirlThighjob_3";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_3 = "SE_S_S_Xao_MagicalGirlThighjob_Love_3";
+        public static string SkillEffect_SE_S_S_Xao_MaidPanties_0 = "SE_S_S_Xao_MaidPanties_0";
+        public static string SkillEffect_SE_S_S_Xao_MaidPanties_1 = "SE_S_S_Xao_MaidPanties_1";
+        public static string SkillEffect_SE_S_S_Xao_MaidPanties_2 = "SE_S_S_Xao_MaidPanties_2";
+        public static string SkillEffect_SE_S_S_Xao_MikoExperienceAnal_2 = "SE_S_S_Xao_MikoExperienceAnal_2";
+        public static string SkillEffect_SE_S_S_Xao_MikoExperienceAnal_Love_2 = "SE_S_S_Xao_MikoExperienceAnal_Love_2";
+        public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_3 = "SE_S_S_Xao_MikoExperiencePussy_3";
+        public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_Love_3 = "SE_S_S_Xao_MikoExperiencePussy_Love_3";
+        public static string SkillEffect_SE_S_S_Xao_SwimsuitDay_2 = "SE_S_S_Xao_SwimsuitDay_2";
+        public static string SkillEffect_SE_S_S_Xao_SwimsuitDay_Love_2 = "SE_S_S_Xao_SwimsuitDay_Love_2";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_0 = "SE_T_S_Xao_BikiniTime_0";
+        public static string SkillEffect_SE_T_S_Xao_BikiniTime_1 = "SE_T_S_Xao_BikiniTime_1";
+        public static string SkillEffect_SE_T_S_Xao_BikiniTime_2 = "SE_T_S_Xao_BikiniTime_2";
+        public static string SkillEffect_SE_T_S_Xao_BikiniTime_3 = "SE_T_S_Xao_BikiniTime_3";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_Love_0 = "SE_T_S_Xao_BikiniTime_Love_0";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_Love_1 = "SE_T_S_Xao_BikiniTime_Love_1";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_Love_2 = "SE_T_S_Xao_BikiniTime_Love_2";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_Love_3 = "SE_T_S_Xao_BikiniTime_Love_3";
         public static string SkillEffect_SE_T_S_Xao_CowGirl_0 = "SE_T_S_Xao_CowGirl_0";
         public static string SkillEffect_SE_T_S_Xao_CowGirl_1 = "SE_T_S_Xao_CowGirl_1";
+        public static string SkillEffect_SE_T_S_Xao_CowGirl_2 = "SE_T_S_Xao_CowGirl_2";
         public static string SkillEffect_SE_T_S_Xao_CowGirl_Love_0 = "SE_T_S_Xao_CowGirl_Love_0";
+        public static string SkillEffect_SE_T_S_Xao_CowGirl_Love_1 = "SE_T_S_Xao_CowGirl_Love_1";
+        public static string SkillEffect_SE_T_S_Xao_CowGirl_Love_2 = "SE_T_S_Xao_CowGirl_Love_2";
         public static string SkillEffect_SE_T_S_Xao_ExperienceMaidFootjob_0 = "SE_T_S_Xao_ExperienceMaidFootjob_0";
         public static string SkillEffect_SE_T_S_Xao_ExperienceMaidFootjob_1 = "SE_T_S_Xao_ExperienceMaidFootjob_1";
+        public static string SkillEffect_SE_T_S_Xao_ExperienceMaidFootjob_2 = "SE_T_S_Xao_ExperienceMaidFootjob_2";
         public static string SkillEffect_SE_T_S_Xao_ExperienceMaidFootjob_Love_0 = "SE_T_S_Xao_ExperienceMaidFootjob_Love_0";
+        public static string SkillEffect_SE_T_S_Xao_ExperienceMaidFootjob_Love_1 = "SE_T_S_Xao_ExperienceMaidFootjob_Love_1";
         public static string SkillEffect_SE_T_S_Xao_ExperienceMaidFootjob_Love_2 = "SE_T_S_Xao_ExperienceMaidFootjob_Love_2";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_0 = "SE_T_S_Xao_MagicalGirlPussy_0";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_1 = "SE_T_S_Xao_MagicalGirlPussy_1";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_2 = "SE_T_S_Xao_MagicalGirlPussy_2";
+        public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_3 = "SE_T_S_Xao_MagicalGirlPussy_3";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_Love_0 = "SE_T_S_Xao_MagicalGirlPussy_Love_0";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_Love_1 = "SE_T_S_Xao_MagicalGirlPussy_Love_1";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_Love_2 = "SE_T_S_Xao_MagicalGirlPussy_Love_2";
+        public static string SkillEffect_SE_T_S_Xao_MagicalGirlPussy_Love_3 = "SE_T_S_Xao_MagicalGirlPussy_Love_3";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_0 = "SE_T_S_Xao_MagicalGirlThighjob_0";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_1 = "SE_T_S_Xao_MagicalGirlThighjob_1";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_2 = "SE_T_S_Xao_MagicalGirlThighjob_2";
+        public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_3 = "SE_T_S_Xao_MagicalGirlThighjob_3";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_Love_0 = "SE_T_S_Xao_MagicalGirlThighjob_Love_0";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_Love_1 = "SE_T_S_Xao_MagicalGirlThighjob_Love_1";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_Love_2 = "SE_T_S_Xao_MagicalGirlThighjob_Love_2";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_Love_3 = "SE_T_S_Xao_MagicalGirlThighjob_Love_3";
         public static string SkillEffect_SE_T_S_Xao_MaidPanties_0 = "SE_T_S_Xao_MaidPanties_0";
         public static string SkillEffect_SE_T_S_Xao_MaidPanties_1 = "SE_T_S_Xao_MaidPanties_1";
+        public static string SkillEffect_SE_T_S_Xao_MaidPanties_2 = "SE_T_S_Xao_MaidPanties_2";
         public static string SkillEffect_SE_T_S_Xao_MikoExperienceAnal_0 = "SE_T_S_Xao_MikoExperienceAnal_0";
         public static string SkillEffect_SE_T_S_Xao_MikoExperienceAnal_1 = "SE_T_S_Xao_MikoExperienceAnal_1";
         public static string SkillEffect_SE_T_S_Xao_MikoExperienceAnal_2 = "SE_T_S_Xao_MikoExperienceAnal_2";
@@ -60,6 +116,7 @@ namespace Xao
         public static string SkillEffect_SE_T_S_Xao_MikoExperiencePussy_Love_3 = "SE_T_S_Xao_MikoExperiencePussy_Love_3";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_0 = "SE_T_S_Xao_SwimsuitDay_0";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_1 = "SE_T_S_Xao_SwimsuitDay_1";
+        public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_2 = "SE_T_S_Xao_SwimsuitDay_2";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_Love_0 = "SE_T_S_Xao_SwimsuitDay_Love_0";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_Love_1 = "SE_T_S_Xao_SwimsuitDay_Love_1";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_Love_2 = "SE_T_S_Xao_SwimsuitDay_Love_2";
@@ -161,6 +218,24 @@ namespace Xao
 		/// Experience Maid Footjob Pleasure ♥♥
 		/// </summary>
         public static string Skill_S_Xao_ExperienceMaidFootjob_Love_2 = "S_Xao_ExperienceMaidFootjob_Love_2";
+		/// <summary>
+		/// Draw
+		/// Draw 2 skills and choose one:
+		/// - Increase <color=#87CEFA>Combo</color> by 1 and gain 1 <sprite name="Xao_Heart">.
+		/// - Or draw 1 additional skill and keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// If Xao is fainted, draw 1 skill, then exclude this skill from the current fight.
+		/// </summary>
+        public static string Skill_S_Xao_LucyDraw_0 = "S_Xao_LucyDraw_0";
+		/// <summary>
+		/// Some Name
+		/// Increase <color=#87CEFA>Combo</color> by 1 and gain 1 <sprite name="Xao_Heart">.
+		/// </summary>
+        public static string Skill_S_Xao_LucyDraw_1 = "S_Xao_LucyDraw_1";
+		/// <summary>
+		/// Some Name 2
+		/// Draw 1 additional skill and keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// </summary>
+        public static string Skill_S_Xao_LucyDraw_2 = "S_Xao_LucyDraw_2";
 		/// <summary>
 		/// Magical Girl Pussy
 		/// Create a <color=#d78fe9>Magical Girl Pussy ♡</color> in hand.
@@ -346,16 +421,11 @@ namespace Xao
 		/// </summary>
         public static string Skill_S_Xao_SwimsuitDay_Love_2 = "S_Xao_SwimsuitDay_Love_2";
 		/// <summary>
-		/// Test Increase
-		/// </summary>
-        public static string Skill_S_Xao_Test = "S_Xao_Test";
-		/// <summary>
-		/// Test Decrease
-		/// </summary>
-        public static string Skill_S_Xao_Test_0 = "S_Xao_Test_0";
-		/// <summary>
 		/// Xao
 		/// Passive:
+		/// Xao can never have more than 2 Overload.
+		/// Each time she uses any skill, she alternates between gaining +1 Overload and losing -1 Overload.
+		/// The first time Xao obtains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload and transforms all of her skills into their <color=#d78fe9>Pleasure</color> versions.
 		/// </summary>
         public static string Character_Xao = "Xao";
 
@@ -391,6 +461,27 @@ namespace Xao
 		/// Chinese-TW:
 		/// </summary>
         public static string Combo_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current Combo is &a.
+		/// Combo will not reset at the start of the next turn.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// We did it !
+		/// Current Combo is &a.
+		/// Combo will not reset at the start of the next turn.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_3 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_3");
 
     }
 }
