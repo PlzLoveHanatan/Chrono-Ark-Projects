@@ -71,6 +71,8 @@ namespace Xao
                     Xao_Hearts.CreateHearts(aliveXao);
                     Xao_Hearts.SavedStackNum = 0;
                     Xao_Combo.CurrentCombo = 0;
+                    Utils.RareNum = 0;
+                    Utils.RareBuffAwake = false;
                 }
             }
             catch (Exception e)

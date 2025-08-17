@@ -17,10 +17,16 @@ using DarkTonic.MasterAudio;
 using System.Collections;
 using static TMPro.SpriteAssetUtilities.TexturePacker;
 using System.Runtime.InteropServices.WindowsRuntime;
+using static CharacterDocument;
+using System.Web;
 namespace Xao
 {
     public static class Utils
     {
+        public static int RareNum;
+
+        public static bool RareBuffAwake;
+
         public static bool ItemTake;
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
@@ -241,7 +247,7 @@ namespace Xao
         };
 
         public static readonly Dictionary<string, string> XaoSkillList = new Dictionary<string, string>
-        {   
+        {
             { ModItemKeys.Skill_S_Xao_BikiniTime_0, ModItemKeys.Skill_S_Xao_BikiniTime_Love_0},
             { ModItemKeys.Skill_S_Xao_BikiniTime_1, ModItemKeys.Skill_S_Xao_BikiniTime_Love_1},
             { ModItemKeys.Skill_S_Xao_BikiniTime_2, ModItemKeys.Skill_S_Xao_BikiniTime_Love_2},
@@ -491,7 +497,7 @@ namespace Xao
             image.sprite = sprite;
             Utils.ImageResize(image, size, pos);
             newObject.SetActive(true);
-            
+
             return newObject;
         }
 
@@ -767,6 +773,85 @@ namespace Xao
             if (bchar != !Utils.Xao && new GDECharacterData(bchar.Info.KeyData).Gender == 1)
             {
                 Utils.PopHentaiText(bchar);
+            }
+        }
+
+        public static void RareSimpleExchange(BattleChar bchar)
+        {
+            if (!RareBuffAwake)
+            {
+                AddBuff(bchar, ModItemKeys.Buff_B_Xao_S_SimpleExchange);
+                RareBuffAwake = true;
+            }
+
+            int mana = (RareNum % 2 == 0) ? 0 : 1;
+            bool glitch = (RareNum % 2 != 0) && RareNum <= 7;
+
+            if (RareNum % 2 != 0)
+            {
+                AddBuff(bchar, ModItemKeys.Buff_B_Xao_Affection);
+            }
+
+            string skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0;
+            switch (RareNum)
+            {
+                case 1:
+                case 2:
+                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1;
+                    break;
+                case 3:
+                case 4:
+                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2;
+                    break;
+                case 5:
+                case 6:
+                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3;
+                    break;
+            }
+            if (RareNum >= 7)
+            {
+                skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4;
+            }
+            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana);
+
+            if (skill != null)
+            {
+                BattleSystem.DelayInput(IncreaseNumForRare(skill, skillKey, glitch));
+            }
+        }
+
+        private static IEnumerator IncreaseNumForRare(Skill skill, string skillKey, bool isGlitch = false)
+        {
+            yield return null;
+
+            if (isGlitch)
+            {
+                GlitchEffect(skill);
+            }
+
+            RareNum++;
+            
+            string baseName = new GDESkillData(skillKey).Name;
+            skill.MySkill.Name = $"{baseName} - {RareNum}";
+            skill.MySkill.Description = RareDescription;
+            skill.MyButton?.InputData(skill, null, false);
+        }
+
+
+        public static void GlitchEffect(this Skill changeFrom)
+        {
+            if (changeFrom.MyButton != null)
+            {
+                UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
+                UnityEngine.Object.Destroy(obj, 0.5f);
+            }
+        }
+        public static string RareDescription
+        {
+            get
+            {
+                var text = ModLocalization.RareDescription ?? "";
+                return text;
             }
         }
     }

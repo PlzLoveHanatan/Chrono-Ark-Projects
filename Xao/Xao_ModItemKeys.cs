@@ -37,7 +37,7 @@ namespace Xao
         public static string Buff_B_Xao_Mod_0 = "B_Xao_Mod_0";
 		/// <summary>
 		/// Horny Mod
-		/// At the start of each turn obtain <sprite name="Xao_Heart">.
+		/// At the start of each turn gain 1 <sprite name="Xao_Heart">.
 		/// </summary>
         public static string Buff_B_Xao_Mod_1 = "B_Xao_Mod_1";
 		/// <summary>
@@ -45,6 +45,7 @@ namespace Xao
 		/// Next skill will cost 1 less.
 		/// </summary>
         public static string Buff_B_Xao_PantyDominance = "B_Xao_PantyDominance";
+        public static string Buff_B_Xao_S_SimpleExchange = "B_Xao_S_SimpleExchange";
 		/// <summary>
 		/// Love Egg
 		/// At the start of each turn obtain <sprite name="Xao_Heart">.
@@ -73,6 +74,7 @@ namespace Xao
 		/// Next skill will cost 1 less.
 		/// </summary>
         public static string SkillExtended_Ex_Xao_PantyDominance = "Ex_Xao_PantyDominance";
+        public static string SkillExtended_Ex_Xao_Rare = "Ex_Xao_Rare";
 		/// <summary>
 		/// <color=#87CEFA>Combo</color>
 		/// <color=#919191>If you gain 4 or more Combo during a turn, permanently increase Attack Power by 1 for this <b>playthrough</b>.</color>
@@ -155,6 +157,11 @@ namespace Xao
         public static string SkillEffect_SE_T_S_Xao_MikoExperiencePussy_Love_1 = "SE_T_S_Xao_MikoExperiencePussy_Love_1";
         public static string SkillEffect_SE_T_S_Xao_MikoExperiencePussy_Love_2 = "SE_T_S_Xao_MikoExperiencePussy_Love_2";
         public static string SkillEffect_SE_T_S_Xao_MikoExperiencePussy_Love_3 = "SE_T_S_Xao_MikoExperiencePussy_Love_3";
+        public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_0 = "SE_T_S_Xao_Rare_SimpleExchange_0";
+        public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_1 = "SE_T_S_Xao_Rare_SimpleExchange_1";
+        public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_2 = "SE_T_S_Xao_Rare_SimpleExchange_2";
+        public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_3 = "SE_T_S_Xao_Rare_SimpleExchange_3";
+        public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_4 = "SE_T_S_Xao_Rare_SimpleExchange_4";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_0 = "SE_T_S_Xao_SwimsuitDay_0";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_1 = "SE_T_S_Xao_SwimsuitDay_1";
         public static string SkillEffect_SE_T_S_Xao_SwimsuitDay_2 = "SE_T_S_Xao_SwimsuitDay_2";
@@ -434,6 +441,28 @@ namespace Xao
 		/// </summary>
         public static string Skill_S_Xao_MikoExperiencePussy_Love_3 = "S_Xao_MikoExperiencePussy_Love_3";
 		/// <summary>
+		/// Simple Exchange ♡
+		/// This skill can be played repeatedly during this turn.
+		/// Even-numbered skills cost 1 Mana. Odd-numbered skills cost 0 Mana and grant 1 <sprite name="Xao_Heart">. 
+		/// </summary>
+        public static string Skill_S_Xao_Rare_SimpleExchange_0 = "S_Xao_Rare_SimpleExchange_0";
+		/// <summary>
+		/// Simple Exchange ♡♡
+		/// </summary>
+        public static string Skill_S_Xao_Rare_SimpleExchange_1 = "S_Xao_Rare_SimpleExchange_1";
+		/// <summary>
+		/// Simple Exchange ♥
+		/// </summary>
+        public static string Skill_S_Xao_Rare_SimpleExchange_2 = "S_Xao_Rare_SimpleExchange_2";
+		/// <summary>
+		/// Simple Exchange ♥♥
+		/// </summary>
+        public static string Skill_S_Xao_Rare_SimpleExchange_3 = "S_Xao_Rare_SimpleExchange_3";
+		/// <summary>
+		/// Simple Exchange ♥♥
+		/// </summary>
+        public static string Skill_S_Xao_Rare_SimpleExchange_4 = "S_Xao_Rare_SimpleExchange_4";
+		/// <summary>
 		/// Swimsuit Day
 		/// Create a <color=#d78fe9>Swimsuit Day ♡</color> in hand.
 		/// </summary>
@@ -524,6 +553,16 @@ namespace Xao
 		/// Chinese-TW:
 		/// </summary>
         public static string Combo_3 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_3");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// This skill can be played repeatedly during this turn.
+		/// Even-numbered skills cost 1 Mana. Odd-numbered skills cost 0 Mana and grant 1 <sprite name="Xao_Heart">. 
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string RareDescription => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("RareDescription");
 
     }
 }
