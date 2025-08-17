@@ -6,14 +6,28 @@ namespace Xao
 		/// <summary>
 		/// Affection <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
+		/// Increase Evade + Critical Chance by 3% for each <sprite name="Xao_Heart"> you have.
 		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection = "B_Xao_Affection";
 		/// <summary>
+		/// Affection <sprite name="Xao_Heart">
+		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
+		/// Increase Evade + Critical Chance by 3% for each <sprite name="Xao_Heart"> you have.
+		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
+		/// </summary>
+        public static string Buff_B_Xao_Affection_Ally = "B_Xao_Affection_Ally";
+		/// <summary>
+		/// Affection <sprite name="Xao_Heart">
+		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
+		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
+		/// </summary>
+        public static string Buff_B_Xao_Affection_Ally_Synergy = "B_Xao_Affection_Ally_Synergy";
+		/// <summary>
 		/// Combo
-		/// Current Combo: &a
-		/// At the start of each turn, reset Combo to 0.
-		/// If you gain 4 or more Combo during a turn, permanently increase Attack Power by 1 for this <b>playthrough</b>.
+		/// Current <color=#87CEFA>Combo</color>: &a
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// If you gain 4 or more <color=#87CEFA>Combo</color> during a turn, permanently increase Attack Power by 1 for this <b>playthrough</b>.
 		/// </summary>
         public static string Buff_B_Xao_Combo = "B_Xao_Combo";
 		/// <summary>
@@ -32,6 +46,29 @@ namespace Xao
 		/// </summary>
         public static string Buff_B_Xao_PantyDominance = "B_Xao_PantyDominance";
 		/// <summary>
+		/// Love Egg
+		/// At the start of each turn obtain <sprite name="Xao_Heart">.
+		/// <color=#919191>Can be equipped on any ally.</color>
+		/// </summary>
+        public static string Item_Equip_Equip_Xao_LoveEgg = "Equip_Xao_LoveEgg";
+		/// <summary>
+		/// Magic Wand
+		/// Whenever playing skill increase <color=#87CEFA>Combo</color> by 1.
+		/// </summary>
+        public static string Item_Equip_Equip_Xao_MagicWand = "Equip_Xao_MagicWand";
+		/// <summary>
+		/// When played, increase <color=#87CEFA>Combo</color> by 1 and, if <color=#87CEFA>Combo</color> is 4 or more, permanently increase one stat of the ally based on their Role.
+		/// <color=#1681F3FF>Attack Role : Attack Power +1
+		/// Defense Role : Armor +3%
+		/// Support Role : Healing Power +1</color>
+		/// </summary>
+        public static string SkillExtended_Ex_Xao_0 = "Ex_Xao_0";
+		/// <summary>
+		/// When played increase <color=#87CEFA>Combo</color> by 1 and gain 1 <sprite name="Xao_Heart">.
+		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// </summary>
+        public static string SkillExtended_Ex_Xao_1 = "Ex_Xao_1";
+		/// <summary>
 		/// Panty Dominance
 		/// Next skill will cost 1 less.
 		/// </summary>
@@ -41,6 +78,10 @@ namespace Xao
 		/// <color=#919191>If you gain 4 or more Combo during a turn, permanently increase Attack Power by 1 for this <b>playthrough</b>.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_Combo = "KeyWord_Combo";
+		/// <summary>
+		/// Test
+		/// </summary>
+        public static string Item_Passive_Re_Xao_test = "Re_Xao_test";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_0 = "SE_S_S_Xao_BikiniTime_0";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_3 = "SE_S_S_Xao_BikiniTime_3";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_Love_3 = "SE_S_S_Xao_BikiniTime_Love_3";
@@ -221,14 +262,14 @@ namespace Xao
 		/// <summary>
 		/// Draw
 		/// Draw 2 skills and choose one:
-		/// - Increase <color=#87CEFA>Combo</color> by 1 and gain 1 <sprite name="Xao_Heart">.
+		/// - Increase <color=#87CEFA>Combo</color> by 1 and Xao gains 1 <sprite name="Xao_Heart">.
 		/// - Or draw 1 additional skill and keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// If Xao is fainted, draw 1 skill, then exclude this skill from the current fight.
 		/// </summary>
         public static string Skill_S_Xao_LucyDraw_0 = "S_Xao_LucyDraw_0";
 		/// <summary>
 		/// Some Name
-		/// Increase <color=#87CEFA>Combo</color> by 1 and gain 1 <sprite name="Xao_Heart">.
+		/// Increase <color=#87CEFA>Combo</color> by 1 and Xao gain 1 <sprite name="Xao_Heart">.
 		/// </summary>
         public static string Skill_S_Xao_LucyDraw_1 = "S_Xao_LucyDraw_1";
 		/// <summary>
@@ -423,9 +464,10 @@ namespace Xao
 		/// <summary>
 		/// Xao
 		/// Passive:
-		/// Xao can never have more than 2 Overload.
-		/// Each time she uses any skill, she alternates between gaining +1 Overload and losing -1 Overload.
-		/// The first time Xao obtains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload and transforms all of her skills into their <color=#d78fe9>Pleasure</color> versions.
+		/// Xao can never exceed 2 Overload.
+		/// Each time she uses a skill, she alternates between gaining +1 Overload and losing -1 Overload.
+		/// The first time Xao gains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload and transforms all of her skills into their <color=#d78fe9>Pleasure</color> versions.
+		/// While in <color=#d78fe9>Pleasure</color>, Xao gains 1 <sprite name="Xao_Heart"> at the start of each turn.
 		/// </summary>
         public static string Character_Xao = "Xao";
 

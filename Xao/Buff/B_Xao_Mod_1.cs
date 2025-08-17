@@ -23,7 +23,6 @@ namespace Xao
         {
             string affection = ModItemKeys.Buff_B_Xao_Affection;
             Utils.AddBuff(BChar, affection);
-            Xao_Hearts.HeartsCheck(BChar, 1);
         }
     }
 }

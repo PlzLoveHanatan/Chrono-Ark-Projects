@@ -16,10 +16,8 @@ namespace Xao
     /// <summary>
     /// Affection
     /// </summary>
-    public class B_Xao_Affection : Buff, IP_BuffAddAfter, IP_Awake
+    public class B_Xao_Affection_Ally_Synergy : Buff, IP_BuffAddAfter
     {
-        public bool FirstTransform;
-
         private List<Skill> DynamicList = new List<Skill>();
 
         private readonly List<string> ChoiceSkill = new List<string>
@@ -30,10 +28,10 @@ namespace Xao
         public override void BuffOneAwake()
         {
             base.BuffOneAwake();
-            BuffIcon.AddComponent<Button>().onClick.AddListener(XaoCall);
+            BuffIcon.AddComponent<Button>().onClick.AddListener(AllyCallSynergy);
         }
 
-        public void XaoCall()
+        public void AllyCallSynergy()
         {
             if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 
@@ -76,8 +74,13 @@ namespace Xao
             {
                 BChar.Overload = 0;
                 SelfStackDestroy();
-                Xao_Hearts.HeartsCheck(BChar, -1);
-                Utils.PopHentaiText(BChar);
+                Xao_Hearts.HeartsCheckAllySynergy(BChar, -1);
+                Xao_Hearts.DestroyHeartAllySynergy();
+
+                if (new GDECharacterData(BChar.Info.KeyData).Gender == 1)
+                {
+                    Utils.PopHentaiText(BChar);
+                }
             }
             else
             {
@@ -93,38 +96,10 @@ namespace Xao
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            string buff = ModItemKeys.Buff_B_Xao_Affection;
-            string xao = ModItemKeys.Character_Xao;
-            string normalMod = ModItemKeys.Buff_B_Xao_Mod_0;
-            string hornyMod = ModItemKeys.Buff_B_Xao_Mod_1;
-            if (BuffTaker.Info.KeyData == xao && addedbuff == this)
+            if (BuffTaker == BChar.Info.Ally && addedbuff == this)
             {
-                Xao_Hearts.HeartsCheck(BChar, 1);
-                GameObject randomHentaitext = Utils.CreateIcon(Utils.Xao, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
-                Utils.StartTextPopOut(randomHentaitext);
-
-                if (StackNum >= 3 && !FirstTransform)
-                {
-                    if (BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Mod_0, false) != null)
-                    {
-                        BChar.BuffRemove(normalMod);
-                        Utils.AddBuff(BChar, hornyMod);
-                    }
-
-                    BChar.Overload = 0;
-                    FirstTransform = true;
-                    if (BChar.Info.Passive is P_Xao passive)
-                    {
-                        passive.HentaiForm = true;
-                        BattleSystem.DelayInput(passive.ChangeFix());
-                    }
-                }
+                Xao_Hearts.HeartsCheckAllySynergy(BChar, 1);
             }
-        }
-
-        public void Awake()
-        {
-
         }
     }
 }

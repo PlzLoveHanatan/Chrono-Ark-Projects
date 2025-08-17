@@ -19,7 +19,7 @@ namespace Xao
     /// Xao
     /// Passive:
     /// </summary>
-    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn, IP_SkillUse_BasicSkill
+    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn, IP_SkillUse_BasicSkill, IP_SkillUseHand_Team, IP_SkillUseHand_Basic_Team
     {
         private GameObject chibi;
         private Vector3 size = new Vector3(235f, 235f);
@@ -67,6 +67,7 @@ namespace Xao
         {
             OnePassive = true;
         }
+
         public void SkillUseAfter(Skill SkillD)
         {
             if (SkillD.Master == BChar)
@@ -229,6 +230,26 @@ namespace Xao
                 Utils.PopHentaiText(BChar);
                 //Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection, 1);
                 //Xao_Hearts.HeartsCheck(BChar, 1);
+            }
+        }
+
+        public void SKillUseHand_Team(Skill skill)
+        {
+            BattleSystem.DelayInputAfter(OverloadCheck());
+        }
+
+        public void SKillUseHand_Basic_Team(Skill skill)
+        {
+            BattleSystem.DelayInputAfter(OverloadCheck());
+        }
+
+        public IEnumerator OverloadCheck()
+        {
+            yield return null;
+
+            if (Utils.Xao.Overload > 1)
+            {
+                Utils.Xao.Overload = 0;
             }
         }
     }

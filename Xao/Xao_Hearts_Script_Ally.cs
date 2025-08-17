@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace Xao
 {
-    public class Xao_Hearts_Script : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerClickHandler
+    public class Xao_Hearts_Script_Ally : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerClickHandler
     {
         public Image Img;
         public bool interactable = true;
@@ -32,17 +32,7 @@ namespace Xao
 
         public void Update()
         {
-            var allies = BattleSystem.instance.AllyTeam.AliveChars;
-            var aliveXao = allies.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Xao);
-            //var buffKey = ModItemKeys.Buff_B_Xao_Affection;
-            //var buff = aliveXao?.BuffReturn(buffKey, false);
-
-            //if (aliveXao == null && this != null)
-            //{
-            //    Destroy(this);
-            //}
-
-            interactable = aliveXao != null && Img != null/* && buff != null*/;
+            interactable = Img != null;
 
             if (!interactable && wasInteractable)
             {
@@ -87,16 +77,15 @@ namespace Xao
 
             Img.rectTransform.localScale = 1.1f * Vector3.one;
             Img.color = pressedColor;
-            RemoveOverload();
+            RemoveOverloadAlly();
         }
 
-        public void RemoveOverload()
+        public void RemoveOverloadAlly()
         {
-            string buffKey = ModItemKeys.Buff_B_Xao_Affection;
-            string xao = ModItemKeys.Character_Xao;
-            var aliveXao = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c.Info.KeyData == xao && c.BuffReturn(buffKey, false) != null);
-            var affection = aliveXao.BuffReturn(buffKey, false) as B_Xao_Affection;
-            affection?.XaoCall();
+            string buffKey = ModItemKeys.Buff_B_Xao_Affection_Ally;
+            var aliveAlly = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c?.BuffReturn(buffKey, false) != null);
+            var affectionAlly = aliveAlly.BuffReturn(buffKey, false) as B_Xao_Affection_Ally;
+            affectionAlly?.AllyCall();
         }
     }
 }

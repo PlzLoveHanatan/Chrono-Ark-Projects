@@ -21,6 +21,7 @@ namespace Xao
 {
     public static class Utils
     {
+        public static bool ItemTake;
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
 
@@ -760,6 +761,13 @@ namespace Xao
                 changeFrom.CharinfoSkilldata.SKillExtended = changeTo.CharinfoSkilldata.SKillExtended;
             }
             BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
+        }
+        public static void AllyHentaiText(BattleChar bchar)
+        {
+            if (bchar != !Utils.Xao && new GDECharacterData(bchar.Info.KeyData).Gender == 1)
+            {
+                Utils.PopHentaiText(bchar);
+            }
         }
     }
 }

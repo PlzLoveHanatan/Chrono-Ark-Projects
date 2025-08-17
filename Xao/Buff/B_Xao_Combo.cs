@@ -15,11 +15,11 @@ namespace Xao
 {
     public class B_Xao_Combo : Buff, IP_PlayerTurn
     {
-        public override string DescExtended()
+        public override string DescExtended(string desc)
         {
             if (BattleSystem.instance != null)
             {
-                return base.DescExtended().Replace("&a", Xao_Combo.CurrentCombo.ToString());
+                return base.DescExtended(desc).Replace("&a", Xao_Combo.CurrentCombo.ToString());
             }
             return base.DescExtended().Replace("&a", 0.ToString());
         }

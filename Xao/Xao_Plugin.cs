@@ -14,6 +14,7 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using Steamworks;
 using HarmonyLib;
+using TileTypes;
 namespace Xao
 {
     public class Xao_Plugin : ChronoArkPlugin
@@ -40,14 +41,50 @@ namespace Xao
             }
         }
 
-        [HarmonyPatch(typeof(CharacterSkinData), "SteamDLCCheck")]
-        public static class DLC_Patch
+        public static bool XaoInParty()
         {
-            [HarmonyPrefix]
-            public static bool Prefix(ref bool __result, uint dlcKey)
+            foreach (var character in PlayData.TSavedata.Party)
             {
-                __result = true;
-                return false;
+                if (character.KeyData == ModItemKeys.Character_Xao)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        [HarmonyPatch(typeof(FieldSystem), "StageStart")]
+        public static class StagePatch
+        {
+            [HarmonyPostfix]
+            public static void StageStartPostfix()
+            {
+                if (XaoInParty())
+                {
+                    if (PlayData.TSavedata.StageNum >= 1 && !Utils.ItemTake)
+                    {
+                        Utils.ItemTake = true;
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_Equip_Xao_LoveEgg, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_Equip_Xao_MagicWand, 1));
+                    }
+                    else if (PlayData.TSavedata.StageNum == 0)
+                    {
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_Equip_Xao_LoveEgg, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_Equip_Xao_MagicWand, 1));
+                        Utils.ItemTake = true;
+                    }
+                }
+            }
+
+            [HarmonyPatch(typeof(CharacterSkinData), "SteamDLCCheck")]
+            public static class DLC_Patch
+            {
+                [HarmonyPrefix]
+                public static bool Prefix(ref bool __result, uint dlcKey)
+                {
+                    __result = true;
+                    return false;
+                }
             }
         }
     }
