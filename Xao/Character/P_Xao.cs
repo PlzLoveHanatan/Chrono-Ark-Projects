@@ -235,12 +235,16 @@ namespace Xao
 
         public void SKillUseHand_Team(Skill skill)
         {
-            BattleSystem.DelayInputAfter(OverloadCheck());
+            if (skill.Master == BChar) return;
+
+            BattleSystem.DelayInput(OverloadCheck());
         }
 
         public void SKillUseHand_Basic_Team(Skill skill)
         {
-            BattleSystem.DelayInputAfter(OverloadCheck());
+            if (skill.Master == BChar) return;
+
+            BattleSystem.DelayInput(OverloadCheck());
         }
 
         public IEnumerator OverloadCheck()

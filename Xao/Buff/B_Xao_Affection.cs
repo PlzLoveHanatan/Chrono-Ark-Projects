@@ -100,11 +100,22 @@ namespace Xao
             if (BuffTaker.Info.KeyData == xao && addedbuff == this)
             {
                 Xao_Hearts.HeartsCheck(BChar, 1);
-                GameObject randomHentaitext = Utils.CreateIcon(Utils.Xao, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
-                Utils.StartTextPopOut(randomHentaitext);
+                Utils.PopHentaiText(BChar);
 
                 if (StackNum >= 3 && !FirstTransform)
                 {
+                    string characterPrefix = ModItemKeys.Character_Xao;
+                    SkinData firstSkin = SaveManager.NowData.EnableSkins.FirstOrDefault(v => v.skinKey.StartsWith(characterPrefix));
+
+                    if (!string.IsNullOrEmpty(firstSkin.skinKey))
+                    {
+                        Xao_Face_Change.ChooseFace(BChar, firstSkin.skinKey);
+                    }
+                    else
+                    {
+                        Xao_Face_Change.ChooseFace(BChar, ModItemKeys.Character_Xao);
+                    }
+
                     if (BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Mod_0, false) != null)
                     {
                         BChar.BuffRemove(normalMod);

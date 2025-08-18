@@ -47,12 +47,12 @@ namespace Xao
                 //Xao_Hearts.HeartsCheck(Utils.Xao, 1);
                 Xao_Combo.ComboChange(1);
                 Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection);
-                Utils.PopHentaiText(Utils.Xao);
             }
             else
             {
                 Utils.AllyTeam.Draw();
                 Xao_Combo.SaveComboBetweenTurns = true;
+                Utils.PopHentaiText(Utils.Xao);
             }
         }
     }

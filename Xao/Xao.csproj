@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Xao08182025113418</AssemblyName>
+    <AssemblyName>Xao08182025172733</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,13 +405,14 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Utils.cs" />
     <Compile Include="Xao_Chibi_Animations.cs" />
     <Compile Include="Xao_Combo.cs" />
     <Compile Include="Xao_Combo_Animations.cs" />
     <Compile Include="Xao_Combo_Tooltip.cs" />
+    <Compile Include="Xao_Face_Change.cs" />
     <Compile Include="Xao_Hearts.cs" />
     <Compile Include="Xao_Hearts_Animations.cs" />
     <Compile Include="Xao_Hearts_Script.cs" />
@@ -433,6 +434,7 @@
     <Compile Include="Item_Equip\Equip_Xao_LoveEgg.cs" />
     <Compile Include="Item_Equip\Equip_Xao_MagicWand.cs" />
     <Compile Include="Item_Passive\Re_Xao_test.cs" />
+    <Compile Include="Item_Passive\Re_Xao_test_0.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_0.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_1.cs" />

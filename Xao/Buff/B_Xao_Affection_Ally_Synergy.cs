@@ -76,11 +76,7 @@ namespace Xao
                 SelfStackDestroy();
                 Xao_Hearts.HeartsCheckAllySynergy(BChar, -1);
                 Xao_Hearts.DestroyHeartAllySynergy();
-
-                if (new GDECharacterData(BChar.Info.KeyData).Gender == 1)
-                {
-                    Utils.PopHentaiText(BChar);
-                }
+                Utils.AllyHentaiText(BChar);
             }
             else
             {

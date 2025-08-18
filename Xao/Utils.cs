@@ -60,6 +60,18 @@ namespace Xao
             Combo_1,
             Combo_2,
             Combo_3,
+            XaoFace_BandagePanties,
+            XaoFace_BandagePantiesW,
+            XaoFace_BandAids,
+            XaoFace_Bikini,
+            XaoFace_BlackMaidPantyhose,
+            XaoFace_CuteLaceBow,
+            XaoFace_Kaiju,
+            XaoFace_MagicalTeen,
+            XaoFace_Maid,
+            XaoFace_Miko,
+            XaoFace_Swimsuit,
+            XaoFace_WhiteMaidPantyhose,
         };
 
         public static readonly Dictionary<SpriteType, string> SpritePaths = new Dictionary<SpriteType, string>()
@@ -87,6 +99,18 @@ namespace Xao
             { SpriteType.Combo_1, "Visual/Combo/Combo_1.png" },
             { SpriteType.Combo_2, "Visual/Combo/Combo_2.png" },
             { SpriteType.Combo_3, "Visual/Combo/Combo_3.png" },
+            { SpriteType.XaoFace_BandagePanties, "Visual/Faces/BandagePanties.png" },
+            { SpriteType.XaoFace_BandagePantiesW, "Visual/Faces/BandagePantiesW.png" },
+            { SpriteType.XaoFace_BandAids , "Visual/Faces/BandAids.png" },
+            { SpriteType.XaoFace_Bikini , "Visual/Faces/Bikini.png" },
+            { SpriteType.XaoFace_BlackMaidPantyhose , "Visual/Faces/BlackMaidPantyhose.png" },
+            { SpriteType.XaoFace_CuteLaceBow , "Visual/Faces/CuteLaceBow.png" },
+            { SpriteType.XaoFace_Kaiju , "Visual/Faces/Kaiju.png" },
+            { SpriteType.XaoFace_MagicalTeen , "Visual/Faces/MagicalTeen.png" },
+            { SpriteType.XaoFace_Maid , "Visual/Faces/Maid.png" },
+            { SpriteType.XaoFace_Miko , "Visual/Faces/Miko.png" },
+            { SpriteType.XaoFace_Swimsuit , "Visual/Faces/Swimsuit.png" },
+            { SpriteType.XaoFace_WhiteMaidPantyhose , "Visual/Faces/WhiteMaidPantyhose.png" },
         };
 
         public static readonly List<Vector3> TextPositions = new List<Vector3>
@@ -109,6 +133,22 @@ namespace Xao
             "Visual/Text/H_text_3_L.png",
             "Visual/Text/H_text_3_M.png",
             "Visual/Text/H_text_3_S.png",
+        };
+
+        public static readonly Dictionary<string, SpriteType> SkinKeyToSpriteType = new Dictionary<string, SpriteType>
+        {
+            { ModItemKeys.Character_Skin_Xao_Bandage_Panties, SpriteType.XaoFace_BandagePanties },
+            { ModItemKeys.Character_Skin_Xao_Bandage_Panties_W, SpriteType.XaoFace_BandagePantiesW },
+            { ModItemKeys.Character_Skin_Xao_Band_Aids, SpriteType.XaoFace_BandAids },
+            { ModItemKeys.Character_Skin_Xao_Bikini, SpriteType.XaoFace_Bikini },
+            { ModItemKeys.Character_Skin_Xao_Black_Maid_Pantyhose, SpriteType.XaoFace_BlackMaidPantyhose },
+            { ModItemKeys.Character_Skin_Xao_Cute_Lace_Bow, SpriteType.XaoFace_CuteLaceBow },
+            { ModItemKeys.Character_Xao, SpriteType.XaoFace_Kaiju },
+            { ModItemKeys.Character_Skin_Xao_Magical_Teen, SpriteType.XaoFace_MagicalTeen },
+            { ModItemKeys.Character_Skin_Xao_Maid, SpriteType.XaoFace_Maid },
+            { ModItemKeys.Character_Skin_Xao_Miko, SpriteType.XaoFace_Miko },
+            { ModItemKeys.Character_Skin_Xao_Swimsuit, SpriteType.XaoFace_Swimsuit },
+            { ModItemKeys.Character_Skin_Xao_White_Maid_Pantyhose, SpriteType.XaoFace_WhiteMaidPantyhose },
         };
 
         public static readonly Dictionary<SpriteType, Vector3> ChibiPosition = new Dictionary<SpriteType, Vector3>
@@ -776,9 +816,9 @@ namespace Xao
         }
         public static void AllyHentaiText(BattleChar bchar)
         {
-            if (bchar != !Utils.Xao && new GDECharacterData(bchar.Info.KeyData).Gender == 1)
+            if (bchar != Xao && new GDECharacterData(bchar.Info.KeyData).Gender == 1)
             {
-                Utils.PopHentaiText(bchar);
+                PopHentaiText(bchar);
             }
         }
 
@@ -858,6 +898,35 @@ namespace Xao
             {
                 var text = ModLocalization.RareDescription ?? "";
                 return text;
+            }
+        }
+
+        public static class SkillCache
+        {
+            public static List<GDESkillData> CachedSkills;
+
+            public static void Init()
+            {
+                if (CachedSkills != null) return; // Уже инициализировано
+
+                CachedSkills = new List<GDESkillData>();
+
+                foreach (var gdeskillData in PlayData.ALLSKILLLIST)
+                {
+                    if (string.IsNullOrEmpty(gdeskillData.User)) continue;
+                    if (gdeskillData.Category.Key == GDEItemKeys.SkillCategory_LucySkill) continue;
+                    if (gdeskillData.Category.Key == GDEItemKeys.SkillCategory_DefultSkill) continue;
+                    if (gdeskillData.NoDrop || gdeskillData.Lock) continue;
+                    if (gdeskillData.KeyID == GDEItemKeys.Skill_S_Phoenix_6) continue;
+
+                    var gdecharacterData = new GDECharacterData(gdeskillData.User);
+                    if (gdecharacterData != null && Misc.IsUseableCharacter(gdecharacterData.Key))
+                    {
+                        CachedSkills.Add(gdeskillData);
+                    }
+                }
+
+                Debug.Log($"[SkillCache] Cached {CachedSkills.Count} usable skills");
             }
         }
     }

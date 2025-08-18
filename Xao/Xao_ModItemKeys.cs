@@ -84,6 +84,10 @@ namespace Xao
 		/// Test
 		/// </summary>
         public static string Item_Passive_Re_Xao_test = "Re_Xao_test";
+		/// <summary>
+		/// Magic Lamp Test
+		/// </summary>
+        public static string Item_Passive_Re_Xao_test_0 = "Re_Xao_test_0";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_0 = "SE_S_S_Xao_BikiniTime_0";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_3 = "SE_S_S_Xao_BikiniTime_3";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_Love_3 = "SE_S_S_Xao_BikiniTime_Love_3";
@@ -499,65 +503,17 @@ namespace Xao
 		/// While in <color=#d78fe9>Pleasure</color>, Xao gains 1 <sprite name="Xao_Heart"> (up to 3) at the start of each turn.
 		/// </summary>
         public static string Character_Xao = "Xao";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_XaoMaid = "XaoMaid";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_XaoMiko = "XaoMiko";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_XaoNaked = "XaoNaked";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_XaoSwimsuit = "XaoSwimsuit";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_BandagePanties = "Xao_BandagePanties";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_BandagePantiesw = "Xao_BandagePantiesw";
         public static string Character_Skin_Xao_Bandage_Panties = "Xao_Bandage_Panties";
         public static string Character_Skin_Xao_Bandage_Panties_W = "Xao_Bandage_Panties_W";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_BandAids = "Xao_BandAids";
         public static string Character_Skin_Xao_Band_Aids = "Xao_Band_Aids";
         public static string Character_Skin_Xao_Bikini = "Xao_Bikini";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_Bikini_ = "Xao_Bikini_";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_BlackMaidPantyhose = "Xao_BlackMaidPantyhose";
         public static string Character_Skin_Xao_Black_Maid_Pantyhose = "Xao_Black_Maid_Pantyhose";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_CuteLaceBow = "Xao_CuteLaceBow";
         public static string Character_Skin_Xao_Cute_Lace_Bow = "Xao_Cute_Lace_Bow";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_Magicalteen = "Xao_Magicalteen";
         public static string Character_Skin_Xao_Magical_Teen = "Xao_Magical_Teen";
         public static string Character_Skin_Xao_Maid = "Xao_Maid";
         public static string Character_Skin_Xao_Miko = "Xao_Miko";
         public static string Character_Skin_Xao_Naked = "Xao_Naked";
         public static string Character_Skin_Xao_Swimsuit = "Xao_Swimsuit";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Xao_WhiteMaidPantyhose = "Xao_WhiteMaidPantyhose";
         public static string Character_Skin_Xao_White_Maid_Pantyhose = "Xao_White_Maid_Pantyhose";
 
     }

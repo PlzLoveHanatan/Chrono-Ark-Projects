@@ -77,10 +77,7 @@ namespace Xao
                 BChar.Overload = 0;
                 SelfStackDestroy();
                 Xao_Hearts.HeartsCheckAlly(BChar, -1);
-                if (new GDECharacterData(BChar.Info.KeyData).Gender == 1)
-                {
-                    Utils.PopHentaiText(BChar);
-                }
+                Utils.AllyHentaiText(BChar);
             }
             else
             {
