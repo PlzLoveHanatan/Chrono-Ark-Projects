@@ -213,7 +213,13 @@ namespace Xao
             ModItemKeys.Skill_S_Xao_SwimsuitDay_2,
             ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0,
             ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1,
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2,
+
+            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0,
+            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1,
+            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2,
+            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3,
+            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4,
         };
 
         public static readonly List<string> ChibiNames = new List<string>

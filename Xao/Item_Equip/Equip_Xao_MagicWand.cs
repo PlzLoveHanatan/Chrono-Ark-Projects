@@ -29,6 +29,10 @@ namespace Xao
         {
             if (SkillD.Master == BChar)
             {
+                if (new GDECharacterData(BChar.Info.KeyData).Gender == 1)
+                {
+                    Utils.PopHentaiText(BChar);
+                }
                 Xao_Combo.ComboChange(1);
             }
         }

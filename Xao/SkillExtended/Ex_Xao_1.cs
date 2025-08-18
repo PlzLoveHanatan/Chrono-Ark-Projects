@@ -41,6 +41,10 @@ namespace Xao
                     buff = ModItemKeys.Buff_B_Xao_Affection_Ally;
                 }
             }
+            if (new GDECharacterData(BChar.Info.KeyData).Gender == 1)
+            {
+                Utils.PopHentaiText(BChar);
+            }
             Utils.AddBuff(BChar, buff, 1);
         }
     }
