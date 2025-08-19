@@ -56,16 +56,21 @@ namespace Darkness
         {
             DarknessAttackMisses = false;
 
-            if (Utils.DarknessVoiceDialogue)
+            if (Utils.DarknessVoiceSkills)
             {
                 if (BChar.BarrierHP >= 15)
+                {
                     Utils.PlayDarknessBattleDialogue(MySkill, BChar);
-
+                }
                 else if (DarknessAttackMisses)
-                    Utils.TryPlayDarknessSound(SkillD, BChar);
 
+                {
+                    Utils.TryPlayDarknessSound(SkillD, BChar);
+                }
                 else
+                {
                     BattleSystem.DelayInput(Miss());
+                }
             }
         }
     }

@@ -68,25 +68,31 @@ namespace Darkness
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             DarknessAttackMisses = false;
-            Skill skill;
+            string skillKey = ModItemKeys.Skill_S_Darkness_SideSlash;
 
             if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Darkness_NormalKnight"))
-                skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash_0, BChar, BChar.MyTeam);
-            else
-                skill = Skill.TempSkill(ModItemKeys.Skill_S_Darkness_SideSlash, BChar, BChar.MyTeam);
+            {
+                skillKey = ModItemKeys.Skill_S_Darkness_SideSlash_0;
+            }
+            Skill skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
 
             BattleSystem.instance.AllyTeam.Add(skill, true);
 
-            if (Utils.DarknessVoiceDialogue)
+            if (Utils.DarknessVoiceSkills)
             {
                 if (BChar.BarrierHP >= 15)
+                {
                     Utils.PlayDarknessBattleDialogue(MySkill, BChar);
-
+                }
                 else if (DarknessAttackMisses)
-                    Utils.TryPlayDarknessSound(SkillD, BChar);
 
+                {
+                    Utils.TryPlayDarknessSound(SkillD, BChar);
+                }
                 else
+                {
                     BattleSystem.DelayInput(Miss());
+                }
             }
         }
     }

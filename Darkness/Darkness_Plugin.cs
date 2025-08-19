@@ -16,6 +16,8 @@ using HarmonyLib;
 using System.Reflection.Emit;
 using Dialogical;
 using UnityEngine.Experimental.UIElements;
+using static CharacterDocument;
+using System.Reflection;
 namespace Darkness
 {
     public class Darkness_Plugin : ChronoArkPlugin
@@ -155,7 +157,7 @@ namespace Darkness
             { "DarknessHealed", "ちょ、引っ張るな!や、やめ、やめろー!"},
             { "DarknessIdleBattle_0", "大盾か…確かに頼もしいが…なんだこのもどかしさは…"},
             { "DarknessIdleBattle_1", "皆の盾となり魔王軍に捕まった私は、くっ、想像しただけで!"},
-            { "DarknessIdleBattle_2", "大勢の観客の視線が私に注がれて…くぅ!"},   
+            { "DarknessIdleBattle_2", "大勢の観客の視線が私に注がれて…くぅ!"},
             { "DarknessIdleField_0", "わ、わ、わ、わたしだって女だ!堅いだの、怪力だの言われたら、傷つくのだぞ!"},
             { "DarknessIdleField_1", "ふっふっふっふっふっふっふっふっ…何をしているかって?見ればわかるだろう…日課の編み物だ…"},
             { "DarknessKill", "誰が相手でも私の使命に変わりはない さあ来い私が壁だ!"},
@@ -243,6 +245,64 @@ namespace Darkness
                     }
 
                     return true;
+                }
+            }
+
+
+            [HarmonyPatch(typeof(SKillCollection), "SkillAdd")]
+            [HarmonyPatch(new[] { typeof(string) })]
+            public static class SKillCollection_SkillAdd_Patch
+            {
+                static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+                {
+                    var codes = new List<CodeInstruction>(instructions);
+                    var loadAsyncMethod = AccessTools.Method(typeof(AddressableLoadManager), nameof(AddressableLoadManager.LoadAsyncAction));
+
+                    for (int i = 0; i < codes.Count; i++)
+                    {
+                        if (codes[i].opcode == OpCodes.Call && codes[i].operand is MethodInfo mi && mi == loadAsyncMethod)
+                        {
+                            codes.RemoveRange(i - 4, 5);
+
+                            codes.InsertRange(i - 4, new[]
+                            {
+                    new CodeInstruction(OpCodes.Ldarg_0), // this
+                    new CodeInstruction(OpCodes.Ldloc_3), // gdeskillData3
+                    new CodeInstruction(OpCodes.Ldloc_S, 4), // gameObject3
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(SKillCollection_SkillAdd_Patch), nameof(LoadSkinImage)))
+                });
+
+                            break;
+                        }
+                    }
+
+                    return codes;
+                }
+
+                public static void LoadSkinImage(SKillCollection instance, GDESkillData gdeskillData3, GameObject gameObject3)
+                {
+                    GDECharacter_SkinData gdecharacter_SkinData;
+                    GDEVFXSkillData vfxskillData = CharacterSkinData.GetVFXSkillData(
+                        gdeskillData3.User,
+                        gdeskillData3.Key,
+                        out gdecharacter_SkinData
+                    );
+
+                    string skillImagePath = gdeskillData3.Image_0_Path;
+
+                    if (!Misc.NullCheck(vfxskillData) && vfxskillData.SkillImage_Path.Count > 0)
+                    {
+                        skillImagePath = vfxskillData.SkillImage_Path[0];
+                    }
+
+                    if (!string.IsNullOrEmpty(skillImagePath))
+                    {
+                        AddressableLoadManager.LoadAsyncAction(
+                            skillImagePath,
+                            AddressableLoadManager.ManageType.Collection,
+                            gameObject3.GetComponent<SkillPrefab>().SkillImage
+                        );
+                    }
                 }
             }
         }

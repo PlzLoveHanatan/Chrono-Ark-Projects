@@ -7,6 +7,8 @@ using ChronoArkMod.ModData.Settings;
 using ChronoArkMod;
 using DarkTonic.MasterAudio;
 using static System.Windows.Forms.LinkLabel;
+using System.Collections;
+using UnityEngine;
 
 namespace Darkness
 {
@@ -14,7 +16,11 @@ namespace Darkness
     {
         public static bool DarknessVoiceSkills => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Voice Skills").Value;
         public static bool DarknessVoice => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Voice").Value;
-        public static bool DarknessVoiceDialogue => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Voice Dialogue").Value;
+
+        public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
+        public static BattleChar Darkness => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Darkness);
+
+        //public static bool DarknessVoiceDialogue => ModManager.getModInfo("Darkness").GetSetting<ToggleSetting>("Voice Dialogue").Value;
         //public static float DarknessMoreEnemies => ModManager.getModInfo("Darkness").GetSetting<SliderSetting>("Additional enemies").Value;
 
         public static float DarknessMoreEnemies
@@ -42,6 +48,7 @@ namespace Darkness
             { ModItemKeys.Skill_S_Darkness_Rare_UnbreakableWill, "DarknessWill" },
             { ModItemKeys.Skill_S_Darkness_ShieldofFaith, "DarknessShield" },
             { ModItemKeys.Skill_S_Darkness_SideSlash, "DarknessClumsy" },
+            { ModItemKeys.Skill_S_Darkness_SideSlash_0, "DarknessClumsy" },
 
         };
         private static readonly Dictionary<string, List<string>> DarknessBattleDialogue = new Dictionary<string, List<string>>
@@ -61,12 +68,20 @@ namespace Darkness
                     ModLocalization.DarknessAttackLands_0,
                     ModLocalization.DarknessAttackLands_1
                 }
+            },
+            {
+                ModItemKeys.Skill_S_Darkness_SideSlash_0,
+                new List<string>
+                {
+                    ModLocalization.DarknessAttackLands_0,
+                    ModLocalization.DarknessAttackLands_1
+                }
             }
         }; 
         
         public static void PlayDarknessSound(string skill)
         {
-            if (!Utils.DarknessVoiceSkills) return;
+            if (!Utils.DarknessVoiceSkills || skill == null) return;
 
             if (!DarknessSkillSounds.TryGetValue(skill, out string baseSound)) return;
 
@@ -77,37 +92,39 @@ namespace Darkness
         }
         public static void TryPlayDarknessSound(Skill skill, BattleChar bChar)
         {
-            if (skill == null) return;
-            if (bChar.Info.KeyData != ModItemKeys.Character_Darkness) return;
+            if (!Utils.DarknessVoiceSkills || skill == null || bChar != Darkness) return;
 
             PlayDarknessSound(skill.MySkill.KeyID);
         }
 
         public static void PlayDarknessBattleDialogue(Skill skill, BattleChar bChar)
         {
-            if (skill == null) return;
-            if (bChar.Info.KeyData != ModItemKeys.Character_Darkness) return;
-
-            if (!Utils.DarknessVoiceSkills) return;
+            if (!Utils.DarknessVoiceSkills || skill == null || bChar != Darkness) return;
 
             if (DarknessBattleDialogue.TryGetValue(skill.MySkill.KeyID, out List<string> lines) && lines.Count > 0)
             {
                 string text = lines[RandomManager.RandomInt(BattleRandom.PassiveItem, 0, lines.Count)];
                 var position = bChar.GetTopPos();
-                BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(position, text));
+
+                bChar.StartCoroutine(ShowSkillText(position, text));
             }
         }
 
         public static void PlayDarknessBattleDialogue2(Skill skill, BattleChar bChar)
         {
-            if (skill == null) return;
-            if (bChar.Info.KeyData != ModItemKeys.Character_Darkness) return;
-
-            if (!Utils.DarknessVoiceSkills) return;
+            if (!Utils.DarknessVoiceSkills || skill == null || bChar != Darkness) return;
 
             string text = ModLocalization.DarknessAttackMisses;
             var position = bChar.GetTopPos();
-            BattleSystem.DelayInput(BattleText.InstBattleTextAlly_Co(position, text));
+            bChar.StartCoroutine(ShowSkillText(position, text));
+        }
+
+        public static IEnumerator ShowSkillText(Vector3 position, string text)
+        {
+            var topText = BattleText.CustomText(position, text);
+            yield return new WaitForSecondsRealtime(2f);
+
+            topText?.End();
         }
     }
 }
