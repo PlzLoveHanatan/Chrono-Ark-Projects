@@ -25,21 +25,10 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            List<GDESkillData> list = new List<GDESkillData>();
-            foreach (GDESkillData gdeskillData in PlayData.ALLSKILLLIST.Concat(PlayData.ALLRARESKILLLIST))
-            {
-                if (gdeskillData.User != "" && gdeskillData.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && !gdeskillData.NoDrop && !gdeskillData.Lock)
-                {
-                    GDECharacterData gdecharacterData = new GDECharacterData(gdeskillData.User);
-                    if (!(gdeskillData.KeyID == GDEItemKeys.Skill_S_Phoenix_6) && !(gdeskillData.Key == GDEItemKeys.Skill_S_Phoenix_6) && gdecharacterData != null && Misc.IsUseableCharacter(gdecharacterData.Key))
-                    {
-                        list.Add(gdeskillData);
-                    }
-                }
-            }
+            Utils.DivineLottery();
 
             BattleChar battleChar = BChar; /*BattleSystem.instance.AllyList.Random(BattleRandom.PassiveItem);*/
-            Skill skill = Skill.TempSkill(list.Random(BattleRandom.PassiveItem).Key, battleChar, battleChar.MyTeam);
+            Skill skill = Skill.TempSkill(Utils.CachedSkills.Random(BattleRandom.PassiveItem).Key, battleChar, battleChar.MyTeam);
             skill.FreeUse = true;
             BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(battleChar, skill, false, false, false));
         }

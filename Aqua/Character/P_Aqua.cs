@@ -12,13 +12,15 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using NLog.Targets;
+using UnityEngine.EventSystems;
+using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Aqua
 {
     /// <summary>
     /// Aqua
     /// Passive:
     /// </summary>
-    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_UIOnBefore, IP_BattleStart_Ones
+    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_UIOnBefore, IP_BattleStart_Ones, IP_SomeOneDead
     {
         private int AquaDamageTaken;
         private bool AquaCurseRemoval;
@@ -92,10 +94,7 @@ namespace Aqua
 
                 foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
                 {
-                    if (enemy != null)
-                    {
-                        enemy.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, this.BChar, false, 0, false, -1, false);
-                    }
+                    enemy?.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, this.BChar, false, 0, false, -1, false);
                 }
 
                 if (AquaDamageTaken > 2) return;
@@ -106,10 +105,7 @@ namespace Aqua
                 {
                     foreach (var target in BattleSystem.instance.AllyTeam.AliveChars.Concat(BattleSystem.instance.EnemyTeam.AliveChars_Vanish))
                     {
-                        if (target != null)
-                        {
-                            target.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
-                        }
+                        target?.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
                     }
                 }
             }
@@ -178,6 +174,14 @@ namespace Aqua
             Aqua_Button.instance = button;
 
             aquaButton.SetActive(true);
+        }
+
+        public void SomeOneDead(BattleChar DeadChar)
+        {
+            if (DeadChar == BChar && Aqua_Button.instance != null)
+            {
+                UnityEngine.Object.Destroy(Aqua_Button.instance.gameObject);
+            }
         }
     }
 }

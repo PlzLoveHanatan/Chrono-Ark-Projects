@@ -10,6 +10,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using GameDataEditor;
 
 namespace Aqua
 {
@@ -26,6 +27,13 @@ namespace Aqua
         public static bool AquaVoiceButtonHotkey => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Aqua Voice Button Hotkey").Value;
 
         public static bool CleanseAllDebuffs => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Cleanse All Debuffs").Value;
+
+        public static bool AquaHealingButton => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Aqua Healing Button").Value;
+
+
+        public static List<GDESkillData> CachedSkills;
+        public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
+        public static BattleChar Aqua => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Aqua);
 
 
         private static readonly Dictionary<string, string> AquaSkillsSounds = new Dictionary<string, string>
@@ -151,6 +159,27 @@ namespace Aqua
             txt.fontSize = fontSize;
             txt.color = Color.white;
             txt.alignment = TextAlignmentOptions.Left;
+        }
+        public static void DivineLottery()
+        {
+            if (CachedSkills != null) return; // Уже инициализировано
+
+            CachedSkills = new List<GDESkillData>();
+
+            foreach (var gdeskillData in PlayData.ALLSKILLLIST.Concat(PlayData.ALLRARESKILLLIST))
+            {
+                if (string.IsNullOrEmpty(gdeskillData.User)) continue;
+                if (gdeskillData.Category.Key == GDEItemKeys.SkillCategory_DefultSkill) continue;
+                if (gdeskillData.NoDrop || gdeskillData.Lock) continue;
+                if (gdeskillData.KeyID == GDEItemKeys.Skill_S_Phoenix_6) continue;
+
+                var gdecharacterData = new GDECharacterData(gdeskillData.User);
+                if (gdecharacterData != null && Misc.IsUseableCharacter(gdecharacterData.Key))
+                {
+                    CachedSkills.Add(gdeskillData);
+                }
+            }
+            Debug.Log($"[SkillCache] Cached {CachedSkills.Count} usable skills");
         }
     }
 }

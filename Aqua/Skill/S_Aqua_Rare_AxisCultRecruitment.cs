@@ -33,7 +33,7 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 30);
+            bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 40);
 
             if (alwaysLucky)
             {

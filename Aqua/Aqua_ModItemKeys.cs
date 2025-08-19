@@ -286,7 +286,7 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick_VanishTrick_H = "S_Aqua_PartyTrick_VanishTrick_H";
 		/// <summary>
 		/// Axis Cult Recruitment
-		/// Gain a 30% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill from current fight.
+		/// Gain a 40% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill from current fight.
 		/// New followers bring 100~300 gold and 1~2 soulstones.
 		/// <color=#919191>Join us! We have hot springs... and emotional instability!</color>
 		/// </summary>

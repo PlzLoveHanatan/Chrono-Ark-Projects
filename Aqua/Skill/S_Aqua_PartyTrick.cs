@@ -238,19 +238,19 @@ namespace Aqua
 
                 int roll = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, 101);
 
-                if (roll < 50)
+                if (roll < 40)
                 {
                     InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
                 }
-                else if (roll < 60)
+                else if (roll < 50)
                 {
                     InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 1));
                 }
-                else if (roll < 85)
+                else if (roll < 75)
                 {
                     InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 1));
                 }
-                else if (roll < 90)
+                else if (roll < 80)
                 {
                     InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 1));
                 }
