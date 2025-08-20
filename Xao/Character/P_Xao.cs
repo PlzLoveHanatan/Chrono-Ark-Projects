@@ -13,6 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using Spine.Unity.Examples;
 using System.Web.Compilation;
+using static CharacterDocument;
 namespace Xao
 {
     /// <summary>
@@ -26,8 +27,8 @@ namespace Xao
         private string chibiName = "Chibi_Normal";
         private Utils.SpriteType chibiPath = Utils.SpriteType.Chibi_Idle; // Значение по умолчанию
         private Utils.SpriteType chibiPosition = Utils.SpriteType.Chibi_Idle;
-        public bool HentaiForm;
-        public bool FirstUse;
+        public bool HornyMod;
+        //public bool FirstUse;
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
@@ -102,9 +103,10 @@ namespace Xao
                     Utils.PopHentaiText(BChar);
                 }
 
+                int randomIndex;
                 if (SkillD.IsDamage)
                 {
-                    int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 5);
+                    randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 5);
 
                     switch (randomIndex)
                     {
@@ -124,7 +126,7 @@ namespace Xao
                 }
                 else
                 {
-                    int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
+                    randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
                     switch (randomIndex)
                     {
                         case 1:
@@ -213,7 +215,7 @@ namespace Xao
 
         public IEnumerator Draw(Skill Drawskill, bool NotDraw)
         {
-            if (!HentaiForm) yield break;
+            if (!HornyMod) yield break;
 
             if (Utils.XaoSkillList.TryGetValue(Drawskill.MySkill.KeyID, out var newSkillID))
             {
@@ -225,7 +227,7 @@ namespace Xao
 
         public void Turn()
         {
-            if (HentaiForm)
+            if (HornyMod)
             {
                 Utils.PopHentaiText(BChar);
                 //Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection, 1);

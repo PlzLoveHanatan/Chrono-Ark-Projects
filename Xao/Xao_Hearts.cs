@@ -53,7 +53,7 @@ namespace Xao
 
         public static void UpdateHearts(BattleChar bchar, int stackNum)
         {
-            if (stackNum > 3) return;
+            if (stackNum > 3 || bchar != Utils.Xao) return;
 
             GameObject[] normalHearts = { HeartNormal_0, HeartNormal_1, HeartNormal_2 };
             GameObject[] greyHearts = { HeartGrey_0, HeartGrey_1, HeartGrey_2 };
@@ -99,7 +99,7 @@ namespace Xao
 
         public static void UpdateHeartsAlly(BattleChar bchar, int stackNum)
         {
-            if (stackNum > 3) return;
+            if (stackNum > 3 || !bchar.Info.Ally) return;
 
             GameObject[] normalHearts = { HeartNormalAlly_0, HeartNormalAlly_1, HeartNormalAlly_2 };
             GameObject[] greyHearts = { HeartGreyAlly_0, HeartGreyAlly_1, HeartGreyAlly_2 };
@@ -144,7 +144,7 @@ namespace Xao
         }
         public static void UpdateHeartsAllySynergy(BattleChar bchar, int stackNum)
         {
-            if (stackNum > 1) return;
+            if (stackNum > 1 || !bchar.Info.Ally) return;
 
             GameObject[] normalHearts = { HeartNormalAllySynergy };
             GameObject[] greyHearts = { HeartGreyAllySynergy };

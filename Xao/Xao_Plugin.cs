@@ -76,16 +76,16 @@ namespace Xao
                 }
             }
 
-            [HarmonyPatch(typeof(CharacterSkinData), "SteamDLCCheck")]
-            public static class DLC_Patch
-            {
-                [HarmonyPrefix]
-                public static bool Prefix(ref bool __result, uint dlcKey)
-                {
-                    __result = true;
-                    return false;
-                }
-            }
+            //[HarmonyPatch(typeof(CharacterSkinData), "SteamDLCCheck")]
+            //public static class DLC_Patch
+            //{
+            //    [HarmonyPrefix]
+            //    public static bool Prefix(ref bool __result, uint dlcKey)
+            //    {
+            //        __result = true;
+            //        return false;
+            //    }
+            //}
         }
     }
 }

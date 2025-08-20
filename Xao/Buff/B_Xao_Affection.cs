@@ -126,7 +126,7 @@ namespace Xao
                     FirstTransform = true;
                     if (BChar.Info.Passive is P_Xao passive)
                     {
-                        passive.HentaiForm = true;
+                        passive.HornyMod = true;
                         BattleSystem.DelayInput(passive.ChangeFix());
                     }
                 }

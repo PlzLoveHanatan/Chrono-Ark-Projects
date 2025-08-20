@@ -19,6 +19,8 @@ using static TMPro.SpriteAssetUtilities.TexturePacker;
 using System.Runtime.InteropServices.WindowsRuntime;
 using static CharacterDocument;
 using System.Web;
+using Spine;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 namespace Xao
 {
     public static class Utils
@@ -30,6 +32,7 @@ namespace Xao
         public static bool ItemTake;
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
+        public static bool XaoHornyMod => Xao?.Info?.Passive is P_Xao p && p.HornyMod;
 
         public enum SpriteType
         {
@@ -256,10 +259,16 @@ namespace Xao
             ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2,
 
             ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0,
+            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01,
             ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1,
             ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2,
             ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3,
             ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4,
+
+            ModItemKeys.Skill_S_Xao_Rare_SleepSex_0,
+            ModItemKeys.Skill_S_Xao_Rare_SleepSex_01,
+            ModItemKeys.Skill_S_Xao_Rare_SleepSex_1,
+            ModItemKeys.Skill_S_Xao_Rare_SleepSex_2,
         };
 
         public static readonly List<string> ChibiNames = new List<string>
@@ -321,6 +330,11 @@ namespace Xao
             { ModItemKeys.Skill_S_Xao_SwimsuitDay_0, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0},
             { ModItemKeys.Skill_S_Xao_SwimsuitDay_1, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1},
             { ModItemKeys.Skill_S_Xao_SwimsuitDay_2, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2},
+            { ModItemKeys.Skill_S_Xao_Rare_SleepSex_0, ModItemKeys.Skill_S_Xao_Rare_SleepSex_01},
+            { ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0, ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01},
+            { ModItemKeys.Skill_S_Xao_MaidPanties_0, ModItemKeys.Skill_S_Xao_MaidPanties_Love_0},
+            { ModItemKeys.Skill_S_Xao_MaidPanties_1, ModItemKeys.Skill_S_Xao_MaidPanties_Love_1},
+            { ModItemKeys.Skill_S_Xao_MaidPanties_2, ModItemKeys.Skill_S_Xao_MaidPanties_Love_2},
         };
 
         private static int LastTextPositionIndex = -1;
@@ -348,6 +362,21 @@ namespace Xao
             newSkill.isExcept = isExcept;
             if (isDiscarded) newSkill.AutoDelete = discardedAfter;
             newSkill.AP = mana;
+            BattleSystem.instance.AllyTeam.Add(newSkill, true);
+            return newSkill;
+        }
+        public static Skill CreateSkill(string skill, BattleChar bchar, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0, bool isNotCount = false)
+        {
+            if (bchar == null)
+            {
+                Debug.Log($"[CreateSkill] BattleChar is null for skill {skill}");
+                return null;
+            }
+            Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
+            newSkill.isExcept = isExcept;
+            if (isDiscarded) newSkill.AutoDelete = discardedAfter;
+            newSkill.AP = mana;
+            newSkill.NotCount = isNotCount;
             BattleSystem.instance.AllyTeam.Add(newSkill, true);
             return newSkill;
         }
@@ -830,43 +859,60 @@ namespace Xao
                 RareBuffAwake = true;
             }
 
-            int mana = (RareNum % 2 == 0) ? 0 : 1;
-            bool glitch = (RareNum % 2 != 0) && RareNum <= 7;
+            // Определяем мана/свойства для текущего RareNum
+            bool isZeroMana = (RareNum % 2 == 0);
+            int mana = isZeroMana ? 0 : 1;
+            bool swift = isZeroMana;
 
-            if (RareNum % 2 != 0)
-            {
-                AddBuff(bchar, ModItemKeys.Buff_B_Xao_Affection);
-            }
+            // По умолчанию glitch выключен
+            bool glitch = !swift && RareNum < 7;
 
-            string skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0;
+            // Определяем Key и heartNum
+            string skillKey;
+            int heartNum;
+
             switch (RareNum)
             {
+                case 0:
                 case 1:
+                    skillKey = XaoHornyMod ? ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01 : ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0;
+                    heartNum = 0;
+                    break;
                 case 2:
-                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1;
-                    break;
                 case 3:
+                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1;
+                    heartNum = 2;
+                    break;
                 case 4:
-                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2;
-                    break;
                 case 5:
+                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2;
+                    heartNum = 3;
+                    break;
                 case 6:
+                case 7:
                     skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3;
+                    heartNum = 4;
+                    break;
+                default:
+                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4;
+                    heartNum = 5;
+                    glitch = true;
                     break;
             }
-            if (RareNum >= 7)
-            {
-                skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4;
-            }
-            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana);
+
+            // Создаём скилл
+            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana, swift);
 
             if (skill != null)
             {
-                BattleSystem.DelayInput(IncreaseNumForRare(skill, skillKey, glitch));
+                BattleSystem.DelayInput(IncreaseNumForRare(skill, bchar, glitch, swift, heartNum));
             }
+
+            // Увеличиваем счётчик для следующего вызова
+            RareNum++;
         }
 
-        private static IEnumerator IncreaseNumForRare(Skill skill, string skillKey, bool isGlitch = false)
+        private static IEnumerator IncreaseNumForRare(Skill skill, BattleChar bchar, bool isGlitch = false, bool isSwift = false, int heartNum = 0)
         {
             yield return null;
 
@@ -875,14 +921,19 @@ namespace Xao
                 GlitchEffect(skill);
             }
 
-            RareNum++;
-            
-            string baseName = new GDESkillData(skillKey).Name;
-            skill.MySkill.Name = $"{baseName} - {RareNum}";
-            skill.MySkill.Description = RareDescription;
+            if (!isSwift)
+            {
+                AddBuff(bchar, ModItemKeys.Buff_B_Xao_Affection);
+            }
+
+            string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
+            string heartChar = XaoHornyMod ? "♥" : "♡";
+            string heartString = heartNum > 0 ? new string(heartChar[0], heartNum) : "";
+
+            skill.MySkill.Name = $"{baseName} {heartString} - {RareNum}";
+            skill.MySkill.Description = RareSimpleExhangeDescription;
             skill.MyButton?.InputData(skill, null, false);
         }
-
 
         public static void GlitchEffect(this Skill changeFrom)
         {
@@ -892,13 +943,45 @@ namespace Xao
                 UnityEngine.Object.Destroy(obj, 0.5f);
             }
         }
-        public static string RareDescription
+
+        public static string RareSimpleExhangeDescription
         {
             get
             {
                 var text = ModLocalization.RareDescription ?? "";
                 return text;
             }
+        }
+
+        public static void RareSleepSex(BattleChar bchar, string skillKey, int mana = 0, int heartNum = 0, bool isHornyMod = false)
+        {
+            if (bchar == null || string.IsNullOrEmpty(skillKey)) return;
+
+            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana);
+            if (skill != null)
+            {
+                BattleSystem.DelayInput(RareSleepSexDescription(skill, heartNum, isHornyMod));
+            }
+        }
+
+        public static IEnumerator RareSleepSexDescription(Skill skill, int heartNum = 0, bool isHornyMod = false)
+        {
+            if (skill == null) yield break;
+
+            yield return null;
+
+            GlitchEffect(skill);
+
+            string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
+            string heartChar = isHornyMod ? "♥" : "♡";
+            string heartCount = heartNum > 0 ? new string(heartChar[0], heartNum) : "";
+
+            if (skill.MySkill != null)
+            {
+                skill.MySkill.Name = $"{baseName} {heartCount}";
+            }
+
+            skill.MyButton?.InputData(skill, null, false);
         }
 
         public static class SkillCache

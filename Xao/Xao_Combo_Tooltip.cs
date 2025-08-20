@@ -20,7 +20,7 @@ namespace Xao
             {
                 string text;
 
-                if (Xao_Combo.CurrentCombo >= 4)
+                if (Xao_Combo.CurrentCombo >= 8)
                 {
                     if (Xao_Combo.SaveComboBetweenTurns)
                     {

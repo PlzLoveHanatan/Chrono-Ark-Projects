@@ -15,11 +15,11 @@ namespace Xao
 {
     public class B_Xao_Combo : Buff, IP_PlayerTurn
     {
-        public override string DescExtended(string desc)
+        public override string DescExtended()
         {
             if (BattleSystem.instance != null)
             {
-                return base.DescExtended(desc).Replace("&a", Xao_Combo.CurrentCombo.ToString());
+                return base.DescExtended().Replace("&a", Xao_Combo.CurrentCombo.ToString());
             }
             return base.DescExtended().Replace("&a", 0.ToString());
         }
@@ -34,10 +34,7 @@ namespace Xao
             else
             {
                 Xao_Combo.SaveComboBetweenTurns = false;
-                if (Xao_Combo.CurrentCombo >= 4)
-                {
-                    Xao_Combo.IncreaseXaoAP(Utils.Xao.Info);
-                }
+                Xao_Combo.ApplyComboRewards(Xao_Combo.CurrentCombo);
             }
         }
     }
