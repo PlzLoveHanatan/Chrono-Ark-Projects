@@ -6,14 +6,12 @@ namespace Xao
 		/// <summary>
 		/// Affection <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
-		/// Increase Evade + Critical Chance by 3% for each <sprite name="Xao_Heart"> you have.
 		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection = "B_Xao_Affection";
 		/// <summary>
 		/// Affection <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
-		/// Increase Evade + Critical Chance by 3% for each <sprite name="Xao_Heart"> you have.
 		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection_Ally = "B_Xao_Affection_Ally";
@@ -36,20 +34,24 @@ namespace Xao
 		/// </summary>
         public static string Buff_B_Xao_Combo = "B_Xao_Combo";
 		/// <summary>
+		/// Starry Tease
+		/// 50% chance to deal &a additional damage <color=#FF7C34>(Attack * 0.2)</color> to the target.
+		/// </summary>
+        public static string Buff_B_Xao_MagicalDay_0 = "B_Xao_MagicalDay_0";
+		/// <summary>
+		/// Mistress' Touch
+		/// </summary>
+        public static string Buff_B_Xao_MistressTouch = "B_Xao_MistressTouch";
+		/// <summary>
 		/// Normal Mod
 		/// Just Visual Buff
 		/// </summary>
         public static string Buff_B_Xao_Mod_0 = "B_Xao_Mod_0";
 		/// <summary>
-		/// Horny Mod
-		/// At the start of each turn gain 1 <sprite name="Xao_Heart">.
+		/// Horny
+		/// At the start of turn, if Xao already has 3 <sprite name="Xao_Heart">, create a random swiftness 0-Cost Xao skill. Otherwise, she gains 1 <sprite name="Xao_Heart"> (up to 3).
 		/// </summary>
         public static string Buff_B_Xao_Mod_1 = "B_Xao_Mod_1";
-		/// <summary>
-		/// Panty Dominance
-		/// Next skill will cost 1 less.
-		/// </summary>
-        public static string Buff_B_Xao_PantyDominance = "B_Xao_PantyDominance";
         public static string Buff_B_Xao_S_SimpleExchange = "B_Xao_S_SimpleExchange";
 		/// <summary>
 		/// Wet Dream
@@ -112,15 +114,20 @@ namespace Xao
         public static string SkillEffect_SE_S_S_Xao_MaidPanties_0 = "SE_S_S_Xao_MaidPanties_0";
         public static string SkillEffect_SE_S_S_Xao_MaidPanties_1 = "SE_S_S_Xao_MaidPanties_1";
         public static string SkillEffect_SE_S_S_Xao_MaidPanties_2 = "SE_S_S_Xao_MaidPanties_2";
+        public static string SkillEffect_SE_S_S_Xao_MaidPanties_Love_0 = "SE_S_S_Xao_MaidPanties_Love_0";
+        public static string SkillEffect_SE_S_S_Xao_MaidPanties_Love_1 = "SE_S_S_Xao_MaidPanties_Love_1";
+        public static string SkillEffect_SE_S_S_Xao_MaidPanties_Love_2 = "SE_S_S_Xao_MaidPanties_Love_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperienceAnal_2 = "SE_S_S_Xao_MikoExperienceAnal_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperienceAnal_Love_2 = "SE_S_S_Xao_MikoExperienceAnal_Love_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_3 = "SE_S_S_Xao_MikoExperiencePussy_3";
         public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_Love_3 = "SE_S_S_Xao_MikoExperiencePussy_Love_3";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_0 = "SE_S_S_Xao_Rare_SleepSex_0";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_01 = "SE_S_S_Xao_Rare_SleepSex_01";
+        public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_1 = "SE_S_S_Xao_Rare_SleepSex_1";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_2 = "SE_S_S_Xao_Rare_SleepSex_2";
         public static string SkillEffect_SE_S_S_Xao_SwimsuitDay_2 = "SE_S_S_Xao_SwimsuitDay_2";
         public static string SkillEffect_SE_S_S_Xao_SwimsuitDay_Love_2 = "SE_S_S_Xao_SwimsuitDay_Love_2";
+        public static string SkillEffect_SE_Tick_B_Xao_MistressTouch = "SE_Tick_B_Xao_MistressTouch";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_0 = "SE_T_S_Xao_BikiniTime_0";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_1 = "SE_T_S_Xao_BikiniTime_1";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_2 = "SE_T_S_Xao_BikiniTime_2";
@@ -129,6 +136,7 @@ namespace Xao
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_Love_1 = "SE_T_S_Xao_BikiniTime_Love_1";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_Love_2 = "SE_T_S_Xao_BikiniTime_Love_2";
         public static string SkillEffect_SE_T_S_Xao_BikiniTime_Love_3 = "SE_T_S_Xao_BikiniTime_Love_3";
+        public static string SkillEffect_SE_T_S_Xao_B_MagicalDay = "SE_T_S_Xao_B_MagicalDay";
         public static string SkillEffect_SE_T_S_Xao_CowGirl_0 = "SE_T_S_Xao_CowGirl_0";
         public static string SkillEffect_SE_T_S_Xao_CowGirl_1 = "SE_T_S_Xao_CowGirl_1";
         public static string SkillEffect_SE_T_S_Xao_CowGirl_2 = "SE_T_S_Xao_CowGirl_2";
@@ -158,8 +166,12 @@ namespace Xao
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_Love_2 = "SE_T_S_Xao_MagicalGirlThighjob_Love_2";
         public static string SkillEffect_SE_T_S_Xao_MagicalGirlThighjob_Love_3 = "SE_T_S_Xao_MagicalGirlThighjob_Love_3";
         public static string SkillEffect_SE_T_S_Xao_MaidPanties_0 = "SE_T_S_Xao_MaidPanties_0";
+        public static string SkillEffect_SE_T_S_Xao_MaidPanties_01 = "SE_T_S_Xao_MaidPanties_01";
         public static string SkillEffect_SE_T_S_Xao_MaidPanties_1 = "SE_T_S_Xao_MaidPanties_1";
         public static string SkillEffect_SE_T_S_Xao_MaidPanties_2 = "SE_T_S_Xao_MaidPanties_2";
+        public static string SkillEffect_SE_T_S_Xao_MaidPanties_Love_0 = "SE_T_S_Xao_MaidPanties_Love_0";
+        public static string SkillEffect_SE_T_S_Xao_MaidPanties_Love_1 = "SE_T_S_Xao_MaidPanties_Love_1";
+        public static string SkillEffect_SE_T_S_Xao_MaidPanties_Love_2 = "SE_T_S_Xao_MaidPanties_Love_2";
         public static string SkillEffect_SE_T_S_Xao_MikoExperienceAnal_0 = "SE_T_S_Xao_MikoExperienceAnal_0";
         public static string SkillEffect_SE_T_S_Xao_MikoExperienceAnal_1 = "SE_T_S_Xao_MikoExperienceAnal_1";
         public static string SkillEffect_SE_T_S_Xao_MikoExperienceAnal_2 = "SE_T_S_Xao_MikoExperienceAnal_2";
@@ -175,6 +187,7 @@ namespace Xao
         public static string SkillEffect_SE_T_S_Xao_MikoExperiencePussy_Love_2 = "SE_T_S_Xao_MikoExperiencePussy_Love_2";
         public static string SkillEffect_SE_T_S_Xao_MikoExperiencePussy_Love_3 = "SE_T_S_Xao_MikoExperiencePussy_Love_3";
         public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_0 = "SE_T_S_Xao_Rare_SimpleExchange_0";
+        public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_01 = "SE_T_S_Xao_Rare_SimpleExchange_01";
         public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_1 = "SE_T_S_Xao_Rare_SimpleExchange_1";
         public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_2 = "SE_T_S_Xao_Rare_SimpleExchange_2";
         public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_3 = "SE_T_S_Xao_Rare_SimpleExchange_3";
@@ -233,6 +246,10 @@ namespace Xao
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload
 		/// </summary>
         public static string Skill_S_Xao_B_Affection_0 = "S_Xao_B_Affection_0";
+		/// <summary>
+		/// Magical Starfall
+		/// </summary>
+        public static string Skill_S_Xao_B_MagicalDay = "S_Xao_B_MagicalDay";
 		/// <summary>
 		/// Cowgirl ♡
 		/// Create a <color=#d78fe9>Cowgirl ♡♡</color> in hand.
@@ -398,6 +415,20 @@ namespace Xao
 		/// </summary>
         public static string Skill_S_Xao_MaidPanties_2 = "S_Xao_MaidPanties_2";
 		/// <summary>
+		/// Maid Panties Pleasure ♥
+		/// Create a <color=#d78fe9>Maid Panties Pleasure ♥♥</color> in hand.
+		/// </summary>
+        public static string Skill_S_Xao_MaidPanties_Love_0 = "S_Xao_MaidPanties_Love_0";
+		/// <summary>
+		/// Maid Panties Pleasure ♥♥
+		/// Create a <color=#d78fe9>Maid Panties Pleasure ♥♥♥</color> in hand.
+		/// </summary>
+        public static string Skill_S_Xao_MaidPanties_Love_1 = "S_Xao_MaidPanties_Love_1";
+		/// <summary>
+		/// Maid Panties Pleasure ♥♥♥
+		/// </summary>
+        public static string Skill_S_Xao_MaidPanties_Love_2 = "S_Xao_MaidPanties_Love_2";
+		/// <summary>
 		/// Miko Experience Anal ♡
 		/// Create a <color=#d78fe9>Miko Experience Anal ♡♡</color> in hand.
 		/// </summary>
@@ -470,6 +501,12 @@ namespace Xao
 		/// </summary>
         public static string Skill_S_Xao_Rare_SimpleExchange_0 = "S_Xao_Rare_SimpleExchange_0";
 		/// <summary>
+		/// Simple Exchange ♥
+		/// This skill can be played repeatedly during this turn.
+		/// Even-numbered skills cost 1 Mana. Odd-numbered skills cost 0 Mana, gain Swiftness and grant 1 <sprite name="Xao_Heart">.
+		/// </summary>
+        public static string Skill_S_Xao_Rare_SimpleExchange_01 = "S_Xao_Rare_SimpleExchange_01";
+		/// <summary>
 		/// Simple Exchange
 		/// </summary>
         public static string Skill_S_Xao_Rare_SimpleExchange_1 = "S_Xao_Rare_SimpleExchange_1";
@@ -488,20 +525,24 @@ namespace Xao
 		/// <summary>
 		/// Sleep Sex ♡
 		/// Create a <color=#d78fe9>Sleep Sex &a</color> in hand.
+		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// </summary>
         public static string Skill_S_Xao_Rare_SleepSex_0 = "S_Xao_Rare_SleepSex_0";
 		/// <summary>
 		/// Sleep Sex ♥
 		/// Create a <color=#d78fe9>Sleep Sex &a</color> in hand.
+		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// </summary>
         public static string Skill_S_Xao_Rare_SleepSex_01 = "S_Xao_Rare_SleepSex_01";
 		/// <summary>
 		/// Sleep Sex
 		/// Create a <color=#d78fe9>Sleep Sex &a</color> in hand.
+		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// </summary>
         public static string Skill_S_Xao_Rare_SleepSex_1 = "S_Xao_Rare_SleepSex_1";
 		/// <summary>
 		/// Sleep Sex
+		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// </summary>
         public static string Skill_S_Xao_Rare_SleepSex_2 = "S_Xao_Rare_SleepSex_2";
 		/// <summary>
@@ -537,8 +578,9 @@ namespace Xao
 		/// Passive:
 		/// Xao can obtain <color=#87CEFA>Combo</color> in fights and she cannot exceed 2 Overload.
 		/// Each time she uses a skill, she alternates between gaining +1 Overload and losing -1 Overload.
-		/// The first time Xao gains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload and transforms all of her skills into their <color=#d78fe9>Pleasure</color> versions.
-		/// While in <color=#d78fe9>Pleasure</color>, Xao gains 1 <sprite name="Xao_Heart"> (up to 3) at the start of each turn.
+		/// The first time Xao gains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload and becomes <color=#d78fe9>Horny</color>.
+		/// At the start of each turn, if Xao already has 3 <sprite name="Xao_Heart">, create a random swiftness 0-Cost Xao skill. Otherwise, she gains 1 <sprite name="Xao_Heart"> (up to 3).
+		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Xao = "Xao";
         public static string Character_Skin_Xao_Bandage_Panties = "Xao_Bandage_Panties";
@@ -554,33 +596,32 @@ namespace Xao
         public static string Character_Skin_Xao_Swimsuit = "Xao_Swimsuit";
         public static string Character_Skin_Xao_White_Maid_Pantyhose = "Xao_White_Maid_Pantyhose";
 		/// <summary>
-		/// Simple Exchange ♥
-		/// This skill can be played repeatedly during this turn.
-		/// Even-numbered skills cost 1 Mana. Odd-numbered skills cost 0 Mana, gain Swiftness and grant 1 <sprite name="Xao_Heart">.
+		/// Mistress' Dominance
+		/// Next skill will cost 1 less.
 		/// </summary>
-        public static string Skill_S_Xao_Rare_SimpleExchange_01 = "S_Xao_Rare_SimpleExchange_01";
-        public static string SkillEffect_SE_T_S_Xao_Rare_SimpleExchange_01 = "SE_T_S_Xao_Rare_SimpleExchange_01";
-        public static string SkillEffect_SE_T_S_Xao_MaidPanties_01 = "SE_T_S_Xao_MaidPanties_01";
+        public static string Buff_B_Xao_MistressDominance = "B_Xao_MistressDominance";
 		/// <summary>
-		/// Maid Panties Pleasure ♥
-		/// Create a <color=#d78fe9>Maid Panties Pleasure ♥♥</color> in hand.
+		/// Magical Ecstasy
 		/// </summary>
-        public static string Skill_S_Xao_MaidPanties_Love_0 = "S_Xao_MaidPanties_Love_0";
-        public static string SkillEffect_SE_T_S_Xao_MaidPanties_Love_0 = "SE_T_S_Xao_MaidPanties_Love_0";
-        public static string SkillEffect_SE_S_S_Xao_MaidPanties_Love_0 = "SE_S_S_Xao_MaidPanties_Love_0";
+        public static string Buff_B_Xao_MagicalDay_1 = "B_Xao_MagicalDay_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_0 = "SE_S_S_Xao_MagicalGirlPussy_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_1 = "SE_S_S_Xao_MagicalGirlPussy_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_2 = "SE_S_S_Xao_MagicalGirlPussy_2";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_0 = "SE_S_S_Xao_MagicalGirlPussy_Love_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_1 = "SE_S_S_Xao_MagicalGirlPussy_Love_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_2 = "SE_S_S_Xao_MagicalGirlPussy_Love_2";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_0 = "SE_S_S_Xao_MagicalGirlThighjob_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_1 = "SE_S_S_Xao_MagicalGirlThighjob_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_2 = "SE_S_S_Xao_MagicalGirlThighjob_2";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_0 = "SE_S_S_Xao_MagicalGirlThighjob_Love_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_1 = "SE_S_S_Xao_MagicalGirlThighjob_Love_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_2 = "SE_S_S_Xao_MagicalGirlThighjob_Love_2";
 		/// <summary>
-		/// Maid Panties Pleasure ♥♥
-		/// Create a <color=#d78fe9>Maid Panties Pleasure ♥♥♥</color> in hand.
+		/// Magical Climax
+		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// At the start of next turn restore 1 Mana and remove this buff.
 		/// </summary>
-        public static string Skill_S_Xao_MaidPanties_Love_1 = "S_Xao_MaidPanties_Love_1";
-        public static string SkillEffect_SE_T_S_Xao_MaidPanties_Love_1 = "SE_T_S_Xao_MaidPanties_Love_1";
-        public static string SkillEffect_SE_S_S_Xao_MaidPanties_Love_1 = "SE_S_S_Xao_MaidPanties_Love_1";
-		/// <summary>
-		/// Maid Panties Pleasure ♥♥♥
-		/// </summary>
-        public static string Skill_S_Xao_MaidPanties_Love_2 = "S_Xao_MaidPanties_Love_2";
-        public static string SkillEffect_SE_T_S_Xao_MaidPanties_Love_2 = "SE_T_S_Xao_MaidPanties_Love_2";
-        public static string SkillEffect_SE_S_S_Xao_MaidPanties_Love_2 = "SE_S_S_Xao_MaidPanties_Love_2";
+        public static string Buff_B_Xao_MagicalDay_2 = "B_Xao_MagicalDay_2";
 
     }
 

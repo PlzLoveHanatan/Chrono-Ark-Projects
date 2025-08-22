@@ -14,14 +14,14 @@ using Debug = UnityEngine.Debug;
 namespace Xao
 {
 	/// <summary>
-	/// Swimsuit Day Pleasure ♥
-	/// Create a <color=#d78fe9>Swimsuit Day Pleasure ♥</color> in hand.
+	/// Sleep Sex
+	/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>
 	/// </summary>
-    public class S_Xao_SwimsuitDay_Love_0 : Skill_Extended
+    public class S_Xao_Rare_SleepSex_2 : Skill_Extended
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.CreateSkill(ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1, BChar);
+            Xao_Combo.ComboChange(1);
         }
     }
 }

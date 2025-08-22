@@ -20,14 +20,14 @@ namespace Xao
     /// Xao
     /// Passive:
     /// </summary>
-    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn, IP_SkillUse_BasicSkill, IP_SkillUseHand_Team, IP_SkillUseHand_Basic_Team
+    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn, IP_SkillUse_BasicSkill, IP_SkillUseHand_Team, IP_SkillUseHand_Basic_Team, IP_BattleEnd
     {
         private GameObject chibi;
         private Vector3 size = new Vector3(235f, 235f);
         private string chibiName = "Chibi_Normal";
         private Utils.SpriteType chibiPath = Utils.SpriteType.Chibi_Idle; // Значение по умолчанию
         private Utils.SpriteType chibiPosition = Utils.SpriteType.Chibi_Idle;
-        public bool HornyMod;
+        public bool HornyMod = false;
         //public bool FirstUse;
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
@@ -38,10 +38,10 @@ namespace Xao
                 switch (randomIndex)
                 {
                     case 1:
-                        SetChibi("Chibi_TakingDamage_0", Utils.SpriteType.Chibi_TakingDamage_0);
+                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_0", Utils.SpriteType.Chibi_TakingDamage_0));
                         break;
                     case 2:
-                        SetChibi("Chibi_TakingDamage_1", Utils.SpriteType.Chibi_TakingDamage_1);
+                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_1", Utils.SpriteType.Chibi_TakingDamage_1));
                         break;
                 }
             }
@@ -55,10 +55,10 @@ namespace Xao
                 switch (randomIndex)
                 {
                     case 1:
-                        SetChibi("Chibi_Normal", Utils.SpriteType.Chibi_Normal);
+                        BChar.StartCoroutine(SetChibi("Chibi_Normal", Utils.SpriteType.Chibi_Normal));
                         break;
                     case 2:
-                        SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush);
+                        BChar.StartCoroutine(SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush));
                         break;
                 }
             }
@@ -111,16 +111,16 @@ namespace Xao
                     switch (randomIndex)
                     {
                         case 1:
-                            SetChibi("Chibi_Attack", Utils.SpriteType.Chibi_Attack);
+                            BChar.StartCoroutine(SetChibi("Chibi_Attack", Utils.SpriteType.Chibi_Attack));
                             break;
                         case 2:
-                            SetChibi("Chibi_AttackExtra_0", Utils.SpriteType.Chibi_AttackExtra_0);
+                            BChar.StartCoroutine(SetChibi("Chibi_AttackExtra_0", Utils.SpriteType.Chibi_AttackExtra_0));
                             break;
                         case 3:
-                            SetChibi("Chibi_AttackExtra_1", Utils.SpriteType.Chibi_AttackExtra_1);
+                            BChar.StartCoroutine(SetChibi("Chibi_AttackExtra_1", Utils.SpriteType.Chibi_AttackExtra_1));
                             break;
                         case 4:
-                            SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush);
+                            BChar.StartCoroutine(SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush));
                             break;
                     }
                 }
@@ -130,10 +130,10 @@ namespace Xao
                     switch (randomIndex)
                     {
                         case 1:
-                            SetChibi("Chibi_Normal", Utils.SpriteType.Chibi_Normal);
+                            BChar.StartCoroutine(SetChibi("Chibi_Normal", Utils.SpriteType.Chibi_Normal));
                             break;
                         case 2:
-                            SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush);
+                            BChar.StartCoroutine(SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush));
                             break;
                     }
                 }
@@ -163,7 +163,7 @@ namespace Xao
             }
         }
 
-        private void SetChibi(string name, Utils.SpriteType type)
+        private IEnumerator SetChibi(string name, Utils.SpriteType type)
         {
             chibiName = name;
             chibiPath = chibiPosition = type;
@@ -174,6 +174,7 @@ namespace Xao
                 bool isBounceAnimation = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3) == 1;
                 Utils.ChibiStartAnimation(chibi, isBounceAnimation);
             }
+            yield break;
         }
 
         public IEnumerator ChangeFix()
@@ -230,6 +231,18 @@ namespace Xao
             if (HornyMod)
             {
                 Utils.PopHentaiText(BChar);
+
+                var affection = BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Affection, false) as B_Xao_Affection;
+                if (affection?.StackNum >= 3)
+                {
+                    int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, Utils.XaoRandomSkill.Count);
+                    var randomSkill = Utils.XaoRandomSkill[randomIndex];
+                    Utils.CreateSkill(randomSkill, BChar, true, true, 1, 0, true);
+                }
+                else
+                {
+                    Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection);
+                }
                 //Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection, 1);
                 //Xao_Hearts.HeartsCheck(BChar, 1);
             }
@@ -257,6 +270,11 @@ namespace Xao
             {
                 Utils.Xao.Overload = 0;
             }
+        }
+
+        public void BattleEnd()
+        {
+           HornyMod = false;
         }
     }
 }

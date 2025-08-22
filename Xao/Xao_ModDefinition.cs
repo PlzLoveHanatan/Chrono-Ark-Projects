@@ -30,7 +30,7 @@ namespace Xao
         }
     }
 
-    public class ModIReturn : IP_BattleStart_Ones
+    public class ModIReturn : IP_BattleStart_Ones, IP_BattleEnd
     {
         private static readonly Dictionary<Utils.SpriteType, Sprite> Sprites = new Dictionary<Utils.SpriteType, Sprite>();
 
@@ -94,6 +94,11 @@ namespace Xao
         {
             Sprites.TryGetValue(type, out var sprite);
             return sprite;
+        }
+
+        public void BattleEnd()
+        {
+            Utils.XaoHornyModOff();
         }
     }
 }

@@ -14,14 +14,14 @@ using Debug = UnityEngine.Debug;
 namespace Xao
 {
 	/// <summary>
-	/// Swimsuit Day Pleasure ♥
-	/// Create a <color=#d78fe9>Swimsuit Day Pleasure ♥</color> in hand.
+	/// Magical Ecstasy
 	/// </summary>
-    public class S_Xao_SwimsuitDay_Love_0 : Skill_Extended
+    public class B_Xao_MagicalDay_1 : Buff
     {
-        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        public override void BuffStat()
         {
-            Utils.CreateSkill(ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1, BChar);
+            PlusPerStat.Damage = 3 * StackNum;
+            PlusStat.hit = 3 * StackNum;
         }
     }
 }

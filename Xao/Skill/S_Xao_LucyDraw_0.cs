@@ -34,7 +34,7 @@ namespace Xao
 
             if (Utils.Xao)
             {
-                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(strings, new SkillButton.SkillClickDel(Selection), "", false, false, true, false, false));
+                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(strings, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
             }
         }
 
@@ -50,7 +50,7 @@ namespace Xao
             }
             else
             {
-                Utils.AllyTeam.Draw();
+                Utils.AllyTeam.AP += 1;
                 Xao_Combo.SaveComboBetweenTurns = true;
                 Utils.PopHentaiText(Utils.Xao);
             }

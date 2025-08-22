@@ -33,6 +33,13 @@ namespace Xao
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
         public static bool XaoHornyMod => Xao?.Info?.Passive is P_Xao p && p.HornyMod;
+        public static void XaoHornyModOff()
+        {
+            if (Xao?.Info?.Passive is P_Xao p)
+            {
+                p.HornyMod = false;
+            }
+        }
 
         public enum SpriteType
         {
@@ -269,6 +276,18 @@ namespace Xao
             ModItemKeys.Skill_S_Xao_Rare_SleepSex_01,
             ModItemKeys.Skill_S_Xao_Rare_SleepSex_1,
             ModItemKeys.Skill_S_Xao_Rare_SleepSex_2,
+        };
+
+        public static readonly List<string> XaoRandomSkill = new List<string>
+        {
+            ModItemKeys.Skill_S_Xao_BikiniTime_Love_0,
+            ModItemKeys.Skill_S_Xao_CowGirl_Love_0,
+            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0,
+            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0,
+            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0,
+            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0,
+            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0,
+            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0,
         };
 
         public static readonly List<string> ChibiNames = new List<string>
@@ -583,7 +602,6 @@ namespace Xao
             {
                 UnityEngine.Object.Destroy(existing);
             }
-
             return Utils.CreateIcon(bchar, name, sprite, offset, size, isSibling);
         }
 
@@ -598,7 +616,6 @@ namespace Xao
                     break;
                 }
             }
-
             return Utils.CreateIcon(bchar, name, sprite, offset, size, isSibling);
         }
 
@@ -659,16 +676,10 @@ namespace Xao
         public static Vector3 GetRandomTextPosition()
         {
             if (TextPositions.Count == 0)
-            {
-                Debug.LogWarning("GetRandomTextPosition: TextPositions list is empty.");
                 return Vector3.zero;
-            }
 
             if (TextPositions.Count == 1)
-            {
-                Debug.Log("GetRandomTextPosition: Only one position available: " + TextPositions[0]);
                 return TextPositions[0];
-            }
 
             int index;
             do
@@ -677,24 +688,16 @@ namespace Xao
             } while (index == LastTextPositionIndex);
 
             LastTextPositionIndex = index;
-
-            Debug.Log("GetRandomTextPosition: Selected index " + index + " => " + TextPositions[index]);
             return TextPositions[index];
         }
 
         public static string GetRandomText()
         {
             if (TextPromt.Count == 0)
-            {
-                Debug.LogWarning("GetRandomText: TextPromt list is empty.");
                 return "";
-            }
 
             if (TextPromt.Count == 1)
-            {
-                Debug.Log("GetRandomText: Only one prompt available: " + TextPromt[0]);
                 return TextPromt[0];
-            }
 
             int index;
             do
@@ -703,8 +706,6 @@ namespace Xao
             } while (index == LastTextPromptIndex);
 
             LastTextPromptIndex = index;
-
-            Debug.Log("GetRandomText: Selected index " + index + " => " + TextPromt[index]);
             return TextPromt[index];
         }
 
@@ -982,35 +983,6 @@ namespace Xao
             }
 
             skill.MyButton?.InputData(skill, null, false);
-        }
-
-        public static class SkillCache
-        {
-            public static List<GDESkillData> CachedSkills;
-
-            public static void Init()
-            {
-                if (CachedSkills != null) return; // Уже инициализировано
-
-                CachedSkills = new List<GDESkillData>();
-
-                foreach (var gdeskillData in PlayData.ALLSKILLLIST)
-                {
-                    if (string.IsNullOrEmpty(gdeskillData.User)) continue;
-                    if (gdeskillData.Category.Key == GDEItemKeys.SkillCategory_LucySkill) continue;
-                    if (gdeskillData.Category.Key == GDEItemKeys.SkillCategory_DefultSkill) continue;
-                    if (gdeskillData.NoDrop || gdeskillData.Lock) continue;
-                    if (gdeskillData.KeyID == GDEItemKeys.Skill_S_Phoenix_6) continue;
-
-                    var gdecharacterData = new GDECharacterData(gdeskillData.User);
-                    if (gdecharacterData != null && Misc.IsUseableCharacter(gdecharacterData.Key))
-                    {
-                        CachedSkills.Add(gdeskillData);
-                    }
-                }
-
-                Debug.Log($"[SkillCache] Cached {CachedSkills.Count} usable skills");
-            }
-        }
+        } 
     }
 }
