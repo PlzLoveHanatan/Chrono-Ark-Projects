@@ -60,7 +60,8 @@ namespace Xao
                 {
                     Utils.AddBuff(aliveXao, combo);
                     Utils.AddBuff(aliveXao, normalMod);
-                    GameObject chibiIdle = Utils.CreateIcon(aliveXao, "Chibi_Idle", Utils.SpritePaths[Utils.SpriteType.Chibi_Idle], Utils.ChibiPosition[Utils.SpriteType.Chibi_Idle], new Vector3(235f, 235f));
+                    Utils.CreateIdleChibi();
+                    //GameObject chibiIdle = Utils.CreateIcon(aliveXao, "Chibi_Idle", Utils.SpritePaths[Utils.SpriteType.Chibi_Idle], Utils.ChibiPosition[Utils.SpriteType.Chibi_Idle], new Vector3(235f, 235f));
                     Xao_Combo.Combo_0 = Utils.CreateComboButton("Combo_0", BattleSystem.instance.ActWindow.transform, Utils.SpritePaths[Utils.SpriteType.Combo_0], new Vector2(110f, 110f), new Vector2(-749.7802f, -438.8362f));
                     Utils.AddComponent<Xao_Combo_Tooltip>(Xao_Combo.Combo_0);
                     //GameObject randomHentaitext = Utils.CreateIcon(Utils.Xao, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
@@ -70,7 +71,11 @@ namespace Xao
                     //Utils.AddBuff(aliveXao, affection);
                     Xao_Hearts.CreateHearts(aliveXao);
                     Xao_Hearts.SavedStackNum = 0;
+                    Xao_Hearts.SavedStackAlly = 0;
+                    Xao_Hearts.SavedStackAllySynergy = 0;
                     Xao_Combo.CurrentCombo = 0;
+                    Xao_Combo.KeyOnce = false;
+                    Xao_Combo.LegendaryOnce = false;
                     Utils.RareNum = 0;
                     Utils.RareBuffAwake = false;
                 }

@@ -17,11 +17,21 @@ namespace Xao
     {
         public override string DescExtended()
         {
-            if (BattleSystem.instance != null)
+            string combo;
+            if (BattleSystem.instance != null && Xao_Combo.AdditionalComboRewards)
             {
-                return base.DescExtended().Replace("&a", Xao_Combo.CurrentCombo.ToString());
+                combo = ModLocalization.Combo_Description_1;
+
+                if (!Xao_Combo.XaoEquipMagicWand)
+                {
+                    combo = ModLocalization.Combo_Description_2;
+                }
             }
-            return base.DescExtended().Replace("&a", 0.ToString());
+            else
+            {
+                combo = ModLocalization.Combo_Description_0;
+            }
+            return combo.Replace("&a", Xao_Combo.CurrentCombo.ToString());
         }
 
         public void Turn()

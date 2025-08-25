@@ -16,7 +16,7 @@ namespace Xao
     /// <summary>
     /// Affection
     /// </summary>
-    public class B_Xao_Affection_Ally_Synergy : Buff, IP_BuffAddAfter
+    public class B_Xao_Affection_Ally_Synergy : Buff, IP_BuffAddAfter, IP_SkillUse_User
     {
         private List<Skill> DynamicList = new List<Skill>();
 
@@ -77,6 +77,7 @@ namespace Xao
                 Xao_Hearts.HeartsCheckAllySynergy(BChar, -1);
                 Xao_Hearts.DestroyHeartAllySynergy();
                 Utils.AllyHentaiText(BChar);
+                Utils.PlayXaoSound("Xao_Affection_0");
             }
             else
             {
@@ -95,6 +96,13 @@ namespace Xao
             if (BuffTaker == BChar.Info.Ally && addedbuff == this)
             {
                 Xao_Hearts.HeartsCheckAllySynergy(BChar, 1);
+            }
+        }
+        public void SkillUse(Skill SkillD, List<BattleChar> Targets)
+        {
+            if (SkillD.Master == BChar)
+            {
+                Utils.AllyHentaiText(BChar);
             }
         }
     }

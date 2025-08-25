@@ -21,6 +21,7 @@ namespace Xao
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.CreateSkill(ModItemKeys.Skill_S_Xao_BikiniTime_Love_1, BChar);
+            Utils.PlayXaoVoice(BChar);
         }
     }
 }

@@ -78,6 +78,7 @@ namespace Xao
                 SelfStackDestroy();
                 Xao_Hearts.HeartsCheck(BChar, -1);
                 Utils.PopHentaiText(BChar);
+                Utils.PlayXaoSound("Xao_Affection_0");
             }
             else
             {
@@ -104,6 +105,7 @@ namespace Xao
 
                 if (StackNum >= 3 && !FirstTransform)
                 {
+                    Utils.PlayXaoVoice(BChar, true);
                     string characterPrefix = ModItemKeys.Character_Xao;
                     SkinData firstSkin = SaveManager.NowData.EnableSkins.FirstOrDefault(v => v.skinKey.StartsWith(characterPrefix));
 

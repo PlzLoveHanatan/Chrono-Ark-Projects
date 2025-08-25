@@ -22,6 +22,7 @@ namespace Xao
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.CreateSkill(ModItemKeys.Skill_S_Xao_MagicalGirlPussy_3, BChar);
+            Utils.PlayXaoVoice(BChar);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Xao
     /// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
     /// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
     /// </summary>
-    public class B_Xao_Affection_Ally : Buff, IP_BuffAddAfter
+    public class B_Xao_Affection_Ally : Buff, IP_BuffAddAfter, IP_SkillUse_User
     {
         private List<Skill> DynamicList = new List<Skill>();
 
@@ -78,6 +78,7 @@ namespace Xao
                 SelfStackDestroy();
                 Xao_Hearts.HeartsCheckAlly(BChar, -1);
                 Utils.AllyHentaiText(BChar);
+                Utils.PlayXaoSound("Xao_Affection_0");
             }
             else
             {
@@ -96,6 +97,14 @@ namespace Xao
             if (BuffTaker == BChar.Info.Ally && addedbuff == this)
             {
                 Xao_Hearts.HeartsCheckAlly(BChar, 1);
+                Utils.AllyHentaiText(BChar);
+            }
+        }
+        public void SkillUse(Skill SkillD, List<BattleChar> Targets)
+        {
+            if (SkillD.Master == BChar)
+            {
+                Utils.AllyHentaiText(BChar);
             }
         }
     }

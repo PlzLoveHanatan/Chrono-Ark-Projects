@@ -17,7 +17,7 @@ namespace Xao
     /// <summary>
     /// Love Egg
     /// </summary>
-    public class Equip_Xao_LoveEgg : EquipBase, IP_PlayerTurn, IP_SomeOneDead, IP_SkillUse_User, IP_BattleStart_UIOnBefore
+    public class Equip_Xao_LoveEgg : EquipBase, IP_PlayerTurn, IP_SomeOneDead, IP_BattleStart_UIOnBefore
     {
         public void BattleStartUIOnBefore(BattleSystem Ins)
         {
@@ -33,15 +33,9 @@ namespace Xao
             OnePassive = true;
             PlusStat.atk = 2;
             PlusStat.reg = 2;
-        }
-
-        public void SkillUse(Skill SkillD, List<BattleChar> Targets)
-        {
-            if (SkillD.Master == BChar)
-            {
-                Utils.AllyHentaiText(BChar);
-            }
-        }
+            PlusStat.dod = 3;
+            PlusStat.cri = 3;
+        }     
 
         public void SomeOneDead(BattleChar DeadChar)
         {
@@ -55,7 +49,6 @@ namespace Xao
         {
             string buff = BChar == Utils.Xao ? ModItemKeys.Buff_B_Xao_Affection : ModItemKeys.Buff_B_Xao_Affection_Ally;
             Utils.AddBuff(BChar, buff, 1);
-            Utils.AllyHentaiText(BChar);
         }
     }
 }

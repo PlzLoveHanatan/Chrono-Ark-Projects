@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Xao08222025203913</AssemblyName>
+    <AssemblyName>Xao08252025213403</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,7 +405,7 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Utils.cs" />
     <Compile Include="Xao_Chibi_Animations.cs" />
@@ -426,62 +426,81 @@
     <Compile Include="Buff\B_Xao_Affection.cs" />
     <Compile Include="Buff\B_Xao_Affection_Ally.cs" />
     <Compile Include="Buff\B_Xao_Affection_Ally_Synergy.cs" />
+    <Compile Include="Buff\B_Xao_ArousedBliss.cs" />
     <Compile Include="Buff\B_Xao_Combo.cs" />
+    <Compile Include="Buff\B_Xao_ForbiddenDesire.cs" />
     <Compile Include="Buff\B_Xao_MagicalDay_0.cs" />
     <Compile Include="Buff\B_Xao_MagicalDay_1.cs" />
     <Compile Include="Buff\B_Xao_MagicalDay_2.cs" />
     <Compile Include="Buff\B_Xao_MistressDominance.cs" />
+    <Compile Include="Buff\B_Xao_MistressTouch.cs" />
     <Compile Include="Buff\B_Xao_Mod_1.cs" />
-    <Compile Include="Buff\B_Xao_PantyDominance.cs" />
+    <Compile Include="Buff\B_Xao_PleasureLock.cs" />
+    <Compile Include="Buff\B_Xao_SoakedLust.cs" />
     <Compile Include="Buff\B_Xao_S_SimpleExchange.cs" />
+    <Compile Include="Buff\B_Xao_WetBliss.cs" />
     <Compile Include="Buff\B_Xao_WetDream.cs" />
     <Compile Include="Character\P_Xao.cs" />
     <Compile Include="Item_Equip\Equip_Xao_LoveEgg.cs" />
     <Compile Include="Item_Equip\Equip_Xao_MagicWand.cs" />
-    <Compile Include="Item_Passive\Re_Xao_test.cs" />
-    <Compile Include="Item_Passive\Re_Xao_test_0.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_0.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_1.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_2.cs" />
+    <Compile Include="Skill\S_Xao_BikiniTime_3.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_Love_0.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_Love_1.cs" />
     <Compile Include="Skill\S_Xao_BikiniTime_Love_2.cs" />
+    <Compile Include="Skill\S_Xao_BikiniTime_Love_3.cs" />
     <Compile Include="Skill\S_Xao_CowGirl_0.cs" />
     <Compile Include="Skill\S_Xao_CowGirl_1.cs" />
+    <Compile Include="Skill\S_Xao_CowGirl_2.cs" />
     <Compile Include="Skill\S_Xao_CowGirl_Love_0.cs" />
     <Compile Include="Skill\S_Xao_CowGirl_Love_1.cs" />
+    <Compile Include="Skill\S_Xao_CowGirl_Love_2.cs" />
     <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_0.cs" />
     <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_1.cs" />
+    <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_2.cs" />
     <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_Love_0.cs" />
     <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_Love_1.cs" />
+    <Compile Include="Skill\S_Xao_ExperienceMaidFootjob_Love_2.cs" />
     <Compile Include="Skill\S_Xao_LucyDraw_0.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_0.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_1.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_2.cs" />
+    <Compile Include="Skill\S_Xao_MagicalGirlPussy_3.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_Love_0.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_Love_1.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlPussy_Love_2.cs" />
+    <Compile Include="Skill\S_Xao_MagicalGirlPussy_Love_3.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlThighjob_0.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlThighjob_1.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlThighjob_2.cs" />
+    <Compile Include="Skill\S_Xao_MagicalGirlThighjob_3.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlThighjob_Love_0.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlThighjob_Love_1.cs" />
     <Compile Include="Skill\S_Xao_MagicalGirlThighjob_Love_2.cs" />
+    <Compile Include="Skill\S_Xao_MagicalGirlThighjob_Love_3.cs" />
     <Compile Include="Skill\S_Xao_MaidPanties_0.cs" />
     <Compile Include="Skill\S_Xao_MaidPanties_1.cs" />
+    <Compile Include="Skill\S_Xao_MaidPanties_2.cs" />
     <Compile Include="Skill\S_Xao_MaidPanties_Love_0.cs" />
     <Compile Include="Skill\S_Xao_MaidPanties_Love_1.cs" />
+    <Compile Include="Skill\S_Xao_MaidPanties_Love_2.cs" />
     <Compile Include="Skill\S_Xao_MikoExperienceAnal_0.cs" />
     <Compile Include="Skill\S_Xao_MikoExperienceAnal_1.cs" />
+    <Compile Include="Skill\S_Xao_MikoExperienceAnal_2.cs" />
     <Compile Include="Skill\S_Xao_MikoExperienceAnal_Love_0.cs" />
     <Compile Include="Skill\S_Xao_MikoExperienceAnal_Love_1.cs" />
+    <Compile Include="Skill\S_Xao_MikoExperienceAnal_Love_2.cs" />
     <Compile Include="Skill\S_Xao_MikoExperiencePussy_0.cs" />
     <Compile Include="Skill\S_Xao_MikoExperiencePussy_1.cs" />
     <Compile Include="Skill\S_Xao_MikoExperiencePussy_2.cs" />
+    <Compile Include="Skill\S_Xao_MikoExperiencePussy_3.cs" />
     <Compile Include="Skill\S_Xao_MikoExperiencePussy_Love_0.cs" />
     <Compile Include="Skill\S_Xao_MikoExperiencePussy_Love_1.cs" />
     <Compile Include="Skill\S_Xao_MikoExperiencePussy_Love_2.cs" />
+    <Compile Include="Skill\S_Xao_MikoExperiencePussy_Love_3.cs" />
     <Compile Include="Skill\S_Xao_Rare_SimpleExchange_0.cs" />
     <Compile Include="Skill\S_Xao_Rare_SimpleExchange_1.cs" />
     <Compile Include="Skill\S_Xao_Rare_SimpleExchange_2.cs" />
@@ -492,10 +511,13 @@
     <Compile Include="Skill\S_Xao_Rare_SleepSex_2.cs" />
     <Compile Include="Skill\S_Xao_SwimsuitDay_0.cs" />
     <Compile Include="Skill\S_Xao_SwimsuitDay_1.cs" />
+    <Compile Include="Skill\S_Xao_SwimsuitDay_2.cs" />
     <Compile Include="Skill\S_Xao_SwimsuitDay_Love_0.cs" />
     <Compile Include="Skill\S_Xao_SwimsuitDay_Love_1.cs" />
+    <Compile Include="Skill\S_Xao_SwimsuitDay_Love_2.cs" />
     <Compile Include="SkillExtended\Ex_Xao_0.cs" />
     <Compile Include="SkillExtended\Ex_Xao_1.cs" />
+    <Compile Include="SkillExtended\Ex_Xao_MistressDominance.cs" />
     <Compile Include="SkillExtended\Ex_Xao_PantyDominance.cs" />
     <Compile Include="SkillExtended\Ex_Xao_Rare.cs" />
   </ItemGroup>

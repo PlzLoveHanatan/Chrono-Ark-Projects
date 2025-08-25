@@ -22,22 +22,38 @@ namespace Xao
 		/// </summary>
         public static string Buff_B_Xao_Affection_Ally_Synergy = "B_Xao_Affection_Ally_Synergy";
 		/// <summary>
+		/// Aroused Bliss
+		/// </summary>
+        public static string Buff_B_Xao_ArousedBliss = "B_Xao_ArousedBliss";
+		/// <summary>
 		/// Combo
-		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
-		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.  
-		/// <color=#87CEFA>Combo</color> Rewards:  
-		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
-		/// <color=#d78fe9>4</color>: Draw 1 skill  
-		/// <color=#d78fe9>6</color>: Restore 1 Mana  
-		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>  
-		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// </summary>
         public static string Buff_B_Xao_Combo = "B_Xao_Combo";
+		/// <summary>
+		/// Forbidden Desire
+		/// Increase <color=#87CEFA>Combo</color> rewards for this battle.
+		/// </summary>
+        public static string Buff_B_Xao_ForbiddenDesire = "B_Xao_ForbiddenDesire";
 		/// <summary>
 		/// Starry Tease
 		/// 50% chance to deal &a additional damage <color=#FF7C34>(Attack * 0.2)</color> to the target.
 		/// </summary>
         public static string Buff_B_Xao_MagicalDay_0 = "B_Xao_MagicalDay_0";
+		/// <summary>
+		/// Magical Ecstasy
+		/// </summary>
+        public static string Buff_B_Xao_MagicalDay_1 = "B_Xao_MagicalDay_1";
+		/// <summary>
+		/// Magical Climax
+		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// At the start of next turn restore 1 Mana and remove this buff.
+		/// </summary>
+        public static string Buff_B_Xao_MagicalDay_2 = "B_Xao_MagicalDay_2";
+		/// <summary>
+		/// Mistress' Dominance
+		/// Next skill will cost 1 less.
+		/// </summary>
+        public static string Buff_B_Xao_MistressDominance = "B_Xao_MistressDominance";
 		/// <summary>
 		/// Mistress' Touch
 		/// </summary>
@@ -52,7 +68,21 @@ namespace Xao
 		/// At the start of turn, if Xao already has 3 <sprite name="Xao_Heart">, create a random swiftness 0-Cost Xao skill. Otherwise, she gains 1 <sprite name="Xao_Heart"> (up to 3).
 		/// </summary>
         public static string Buff_B_Xao_Mod_1 = "B_Xao_Mod_1";
+		/// <summary>
+		/// Pleasure Lock
+		/// Cannot take action.
+		/// </summary>
+        public static string Buff_B_Xao_PleasureLock = "B_Xao_PleasureLock";
+		/// <summary>
+		/// Soaked Lust
+		/// </summary>
+        public static string Buff_B_Xao_SoakedLust = "B_Xao_SoakedLust";
         public static string Buff_B_Xao_S_SimpleExchange = "B_Xao_S_SimpleExchange";
+		/// <summary>
+		/// Wet Bliss
+		/// Whenever playing skill increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color> and remove 1 stack.
+		/// </summary>
+        public static string Buff_B_Xao_WetBliss = "B_Xao_WetBliss";
 		/// <summary>
 		/// Wet Dream
 		/// Cannot gain Overload.
@@ -66,7 +96,7 @@ namespace Xao
         public static string Item_Equip_Equip_Xao_LoveEgg = "Equip_Xao_LoveEgg";
 		/// <summary>
 		/// Magic Wand
-		/// Whenever playing skill increase <color=#87CEFA>Combo</color> by 1.
+		/// Whenever playing skill increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// </summary>
         public static string Item_Equip_Equip_Xao_MagicWand = "Equip_Xao_MagicWand";
 		/// <summary>
@@ -77,39 +107,48 @@ namespace Xao
 		/// </summary>
         public static string SkillExtended_Ex_Xao_0 = "Ex_Xao_0";
 		/// <summary>
-		/// When played increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color> and gain 1 <sprite name="Xao_Heart">.
+		/// When played increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color> and gain 1 <sprite name="Xao_Heart"> (Max 1).
 		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// </summary>
         public static string SkillExtended_Ex_Xao_1 = "Ex_Xao_1";
 		/// <summary>
-		/// Panty Dominance
+		/// Mistress' Dominance
 		/// Next skill will cost 1 less.
 		/// </summary>
-        public static string SkillExtended_Ex_Xao_PantyDominance = "Ex_Xao_PantyDominance";
+        public static string SkillExtended_Ex_Xao_MistressDominance = "Ex_Xao_MistressDominance";
         public static string SkillExtended_Ex_Xao_Rare = "Ex_Xao_Rare";
 		/// <summary>
 		/// <color=#87CEFA>Combo</color>
 		/// <color=#919191>When you gain <color=#87CEFA>Combo</color> in a turn, receive rewards based on your <color=#87CEFA>Combo</color> count.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_Combo = "KeyWord_Combo";
-		/// <summary>
-		/// Test
-		/// </summary>
-        public static string Item_Passive_Re_Xao_test = "Re_Xao_test";
-		/// <summary>
-		/// Magic Lamp Test
-		/// </summary>
-        public static string Item_Passive_Re_Xao_test_0 = "Re_Xao_test_0";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_0 = "SE_S_S_Xao_BikiniTime_0";
+        public static string SkillEffect_SE_S_S_Xao_BikiniTime_1 = "SE_S_S_Xao_BikiniTime_1";
+        public static string SkillEffect_SE_S_S_Xao_BikiniTime_2 = "SE_S_S_Xao_BikiniTime_2";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_3 = "SE_S_S_Xao_BikiniTime_3";
+        public static string SkillEffect_SE_S_S_Xao_BikiniTime_Love_0 = "SE_S_S_Xao_BikiniTime_Love_0";
+        public static string SkillEffect_SE_S_S_Xao_BikiniTime_Love_1 = "SE_S_S_Xao_BikiniTime_Love_1";
+        public static string SkillEffect_SE_S_S_Xao_BikiniTime_Love_2 = "SE_S_S_Xao_BikiniTime_Love_2";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_Love_3 = "SE_S_S_Xao_BikiniTime_Love_3";
         public static string SkillEffect_SE_S_S_Xao_CowGirl_2 = "SE_S_S_Xao_CowGirl_2";
         public static string SkillEffect_SE_S_S_Xao_CowGirl_Love_2 = "SE_S_S_Xao_CowGirl_Love_2";
         public static string SkillEffect_SE_S_S_Xao_ExperienceMaidFootjob_2 = "SE_S_S_Xao_ExperienceMaidFootjob_2";
         public static string SkillEffect_SE_S_S_Xao_ExperienceMaidFootjob_Love_2 = "SE_S_S_Xao_ExperienceMaidFootjob_Love_2";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_0 = "SE_S_S_Xao_MagicalGirlPussy_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_1 = "SE_S_S_Xao_MagicalGirlPussy_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_2 = "SE_S_S_Xao_MagicalGirlPussy_2";
         public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_3 = "SE_S_S_Xao_MagicalGirlPussy_3";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_0 = "SE_S_S_Xao_MagicalGirlPussy_Love_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_1 = "SE_S_S_Xao_MagicalGirlPussy_Love_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_2 = "SE_S_S_Xao_MagicalGirlPussy_Love_2";
         public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_3 = "SE_S_S_Xao_MagicalGirlPussy_Love_3";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_0 = "SE_S_S_Xao_MagicalGirlThighjob_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_1 = "SE_S_S_Xao_MagicalGirlThighjob_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_2 = "SE_S_S_Xao_MagicalGirlThighjob_2";
         public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_3 = "SE_S_S_Xao_MagicalGirlThighjob_3";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_0 = "SE_S_S_Xao_MagicalGirlThighjob_Love_0";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_1 = "SE_S_S_Xao_MagicalGirlThighjob_Love_1";
+        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_2 = "SE_S_S_Xao_MagicalGirlThighjob_Love_2";
         public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_3 = "SE_S_S_Xao_MagicalGirlThighjob_Love_3";
         public static string SkillEffect_SE_S_S_Xao_MaidPanties_0 = "SE_S_S_Xao_MaidPanties_0";
         public static string SkillEffect_SE_S_S_Xao_MaidPanties_1 = "SE_S_S_Xao_MaidPanties_1";
@@ -307,21 +346,21 @@ namespace Xao
 		/// </summary>
         public static string Skill_S_Xao_ExperienceMaidFootjob_Love_2 = "S_Xao_ExperienceMaidFootjob_Love_2";
 		/// <summary>
-		/// Draw
+		/// <color=#87CEFA>Kaiju</color> <color=#d78fe9>Embrace</color>
 		/// Draw 2 skills and choose one:
-		/// - Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color> and Xao gains 1 <sprite name="Xao_Heart">.
-		/// - Or draw 1 additional skill and keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// - Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and Xao gains 1 <sprite name="Xao_Heart">.
+		/// - Or restore 1 Mana and keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// If Xao is fainted, draw 1 skill, then exclude this skill from the current fight.
 		/// </summary>
         public static string Skill_S_Xao_LucyDraw_0 = "S_Xao_LucyDraw_0";
 		/// <summary>
-		/// Some Name
-		/// Increase <color=#87CEFA>Combo</color> by 1 and Xao gain 1 <sprite name="Xao_Heart">.
+		/// <color=#87CEFA>Extra</color> <color=#d78fe9>Effort</color>
+		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and Xao gain 1 <sprite name="Xao_Heart">.
 		/// </summary>
         public static string Skill_S_Xao_LucyDraw_1 = "S_Xao_LucyDraw_1";
 		/// <summary>
-		/// Some Name 2
-		/// Draw 1 additional skill and keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// <color=#87CEFA>Take It</color> <color=#d78fe9>Easy</color>
+		/// Restore 1 Mana and keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// </summary>
         public static string Skill_S_Xao_LucyDraw_2 = "S_Xao_LucyDraw_2";
 		/// <summary>
@@ -542,6 +581,7 @@ namespace Xao
         public static string Skill_S_Xao_Rare_SleepSex_1 = "S_Xao_Rare_SleepSex_1";
 		/// <summary>
 		/// Sleep Sex
+		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// </summary>
         public static string Skill_S_Xao_Rare_SleepSex_2 = "S_Xao_Rare_SleepSex_2";
@@ -579,7 +619,7 @@ namespace Xao
 		/// Xao can obtain <color=#87CEFA>Combo</color> in fights and she cannot exceed 2 Overload.
 		/// Each time she uses a skill, she alternates between gaining +1 Overload and losing -1 Overload.
 		/// The first time Xao gains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload and becomes <color=#d78fe9>Horny</color>.
-		/// At the start of each turn, if Xao already has 3 <sprite name="Xao_Heart">, create a random swiftness 0-Cost Xao skill. Otherwise, she gains 1 <sprite name="Xao_Heart"> (up to 3).
+		/// At the start of each turn, if Xao already has 3 <sprite name="Xao_Heart">, create a random 0-Cost swiftness Xao skill. Otherwise, she gains 1 <sprite name="Xao_Heart"> (up to 3).
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Xao = "Xao";
@@ -595,33 +635,6 @@ namespace Xao
         public static string Character_Skin_Xao_Naked = "Xao_Naked";
         public static string Character_Skin_Xao_Swimsuit = "Xao_Swimsuit";
         public static string Character_Skin_Xao_White_Maid_Pantyhose = "Xao_White_Maid_Pantyhose";
-		/// <summary>
-		/// Mistress' Dominance
-		/// Next skill will cost 1 less.
-		/// </summary>
-        public static string Buff_B_Xao_MistressDominance = "B_Xao_MistressDominance";
-		/// <summary>
-		/// Magical Ecstasy
-		/// </summary>
-        public static string Buff_B_Xao_MagicalDay_1 = "B_Xao_MagicalDay_1";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_0 = "SE_S_S_Xao_MagicalGirlPussy_0";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_1 = "SE_S_S_Xao_MagicalGirlPussy_1";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_2 = "SE_S_S_Xao_MagicalGirlPussy_2";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_0 = "SE_S_S_Xao_MagicalGirlPussy_Love_0";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_1 = "SE_S_S_Xao_MagicalGirlPussy_Love_1";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlPussy_Love_2 = "SE_S_S_Xao_MagicalGirlPussy_Love_2";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_0 = "SE_S_S_Xao_MagicalGirlThighjob_0";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_1 = "SE_S_S_Xao_MagicalGirlThighjob_1";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_2 = "SE_S_S_Xao_MagicalGirlThighjob_2";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_0 = "SE_S_S_Xao_MagicalGirlThighjob_Love_0";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_1 = "SE_S_S_Xao_MagicalGirlThighjob_Love_1";
-        public static string SkillEffect_SE_S_S_Xao_MagicalGirlThighjob_Love_2 = "SE_S_S_Xao_MagicalGirlThighjob_Love_2";
-		/// <summary>
-		/// Magical Climax
-		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
-		/// At the start of next turn restore 1 Mana and remove this buff.
-		/// </summary>
-        public static string Buff_B_Xao_MagicalDay_2 = "B_Xao_MagicalDay_2";
 
     }
 
@@ -676,6 +689,61 @@ namespace Xao
 		/// Chinese-TW:
 		/// </summary>
         public static string Combo_3 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_3");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:  
+		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
+		/// <color=#d78fe9>4</color>: Draw 1 skill  
+		/// <color=#d78fe9>6</color>: Restore 1 Mana  
+		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:  
+		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
+		/// <color=#d78fe9>4</color>: Draw 1 skill  
+		/// <color=#d78fe9>6</color>: Restore 1 Mana  
+		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#d78fe9>15</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>20</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>30</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:  
+		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
+		/// <color=#d78fe9>4</color>: Draw 1 skill  
+		/// <color=#d78fe9>6</color>: Restore 1 Mana  
+		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#d78fe9>15</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>20</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>30</color>: Gain 1 unique <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_2");
 		/// <summary>
 		/// Korean:
 		/// English:

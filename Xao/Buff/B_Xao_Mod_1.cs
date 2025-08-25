@@ -21,8 +21,8 @@ namespace Xao
     {
         public void Turn()
         {
-            string affection = ModItemKeys.Buff_B_Xao_Affection;
-            Utils.AddBuff(BChar, affection);
+            //string affection = ModItemKeys.Buff_B_Xao_Affection;
+            //Utils.AddBuff(BChar, affection);
         }
     }
 }

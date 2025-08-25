@@ -22,12 +22,12 @@ namespace Xao
         public override void Init()
         {
             OnePassive = true;
-            LucySkillExBuff = (BuffSkillExHand)Skill_Extended.DataToExtended(ModItemKeys.SkillExtended_Ex_Xao_PantyDominance);
+            LucySkillExBuff = (BuffSkillExHand)Skill_Extended.DataToExtended(ModItemKeys.SkillExtended_Ex_Xao_MistressDominance);
         }
 
         public override bool CanSkillBuffAdd(Skill AddedSkill, int Index)
         {
-            return AddedSkill.ExtendedFind<Ex_Xao_PantyDominance>() == null && AddedSkill.Master == BChar;
+            return AddedSkill.ExtendedFind<Ex_Xao_MistressDominance>() == null && AddedSkill.Master == BChar;
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)

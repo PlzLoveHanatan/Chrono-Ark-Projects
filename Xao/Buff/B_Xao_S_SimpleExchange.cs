@@ -13,7 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    public class B_Xao_S_SimpleExchange : Buff, IP_Awake, IP_Discard, IP_TurnEnd
+    public class B_Xao_S_SimpleExchange : Buff, IP_Awake, IP_TurnEnd
     {
         public bool FirstAwake;
 

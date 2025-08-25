@@ -45,7 +45,7 @@ namespace Xao
             if (key == ModItemKeys.Skill_S_Xao_LucyDraw_1)
             {
                 //Xao_Hearts.HeartsCheck(Utils.Xao, 1);
-                Xao_Combo.ComboChange(1);
+                Xao_Combo.ComboChange(2);
                 Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection);
             }
             else

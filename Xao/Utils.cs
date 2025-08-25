@@ -21,15 +21,24 @@ using static CharacterDocument;
 using System.Web;
 using Spine;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Net.Sockets;
+using TileTypes;
 namespace Xao
 {
     public static class Utils
     {
+        public static float MoreChests => ModManager.getModInfo("Xao").GetSetting<SliderSetting>("More Chests").Value;
+        public static bool AdditionalSecretTile => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Additional Secret Tile").Value;
+        public static bool XaoSounds => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Sounds").Value;
+
         public static int RareNum;
 
         public static bool RareBuffAwake;
 
         public static bool ItemTake;
+
+        public static bool RemoveFogFromStage = false;
+
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
         public static bool XaoHornyMod => Xao?.Info?.Passive is P_Xao p && p.HornyMod;
@@ -130,6 +139,7 @@ namespace Xao
             new Vector3(-1.7f, -0.7f, 0f),
             new Vector3(0.2f, -0.8f, 0f),
             new Vector3(1.1f, -0.1f, 0f),
+            new Vector3(1.6f, -0.8f, 0f),
         };
 
         public static readonly List<string> TextPromt = new List<string>
@@ -517,7 +527,7 @@ namespace Xao
                 return null;
             }
 
-            Debug.Log($"[CreateIcon] Creating icon: {name} at {offset} with sprite: {sprite}");
+            //Debug.Log($"[CreateIcon] Creating icon: {name} at {offset} with sprite: {sprite}");
             Vector3 basePos = bchar.GetTopPos();
             return CreateIconUi(name, bchar.transform, sprite, size, basePos + offset, isSibling, isRecast);
         }
@@ -859,7 +869,7 @@ namespace Xao
                 AddBuff(bchar, ModItemKeys.Buff_B_Xao_S_SimpleExchange);
                 RareBuffAwake = true;
             }
-
+            
             // Определяем мана/свойства для текущего RareNum
             bool isZeroMana = (RareNum % 2 == 0);
             int mana = isZeroMana ? 0 : 1;
@@ -926,6 +936,13 @@ namespace Xao
             {
                 AddBuff(bchar, ModItemKeys.Buff_B_Xao_Affection);
             }
+            else if (!XaoHornyMod)
+            {
+                PopHentaiText(bchar);
+            }
+
+            bool coming = RareNum >= 6 ? true : !isSwift;
+            PlayXaoVoice(bchar, coming);
 
             string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
             string heartChar = XaoHornyMod ? "♥" : "♡";
@@ -958,14 +975,14 @@ namespace Xao
         {
             if (bchar == null || string.IsNullOrEmpty(skillKey)) return;
 
-            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana);
+            Skill skill = CreateSkill(skillKey, bchar, true, true, 2, mana);
             if (skill != null)
             {
-                BattleSystem.DelayInput(RareSleepSexDescription(skill, heartNum, isHornyMod));
+                BattleSystem.DelayInput(RareSleepSexDescription(bchar, skill, heartNum, isHornyMod));
             }
         }
 
-        public static IEnumerator RareSleepSexDescription(Skill skill, int heartNum = 0, bool isHornyMod = false)
+        public static IEnumerator RareSleepSexDescription(BattleChar bchar, Skill skill, int heartNum = 0, bool isHornyMod = false)
         {
             if (skill == null) yield break;
 
@@ -977,12 +994,97 @@ namespace Xao
             string heartChar = isHornyMod ? "♥" : "♡";
             string heartCount = heartNum > 0 ? new string(heartChar[0], heartNum) : "";
 
+            bool coming = heartNum  >= 3;
+            PlayXaoVoice(bchar, coming);
+
             if (skill.MySkill != null)
             {
                 skill.MySkill.Name = $"{baseName} {heartCount}";
             }
 
             skill.MyButton?.InputData(skill, null, false);
-        } 
+        }
+
+        public static readonly List<string> XaoVoiceEffect = new List<string>
+        {
+            "Xao_Skill_Effect_0",
+            "Xao_Skill_Effect_1",
+            "Xao_Skill_Effect_2",
+            "Xao_Skill_Effect_3",
+            "Xao_Skill_Effect_4",
+            "Xao_Skill_Effect_5",
+        };
+
+        public static readonly List<string> XaoVoiceComing = new List<string>
+        {
+            "Xao_Coming_0",
+            "Xao_Coming_1",
+            "Xao_Coming_2",
+        };
+
+        public static readonly List<string> XaoVoiceMaid = new List<string>
+        {
+            "Xao_Maid_0",
+            "Xao_Maid_1",
+        };
+
+        public static void PlayXaoSound(string sound)
+        {
+            if (string.IsNullOrEmpty(sound)) return;
+
+            string soundToPlay = sound;
+            MasterAudio.StopBus("SE");
+            MasterAudio.PlaySound(soundToPlay, 100f);
+        }
+
+        public static void PlayXaoVoice(BattleChar bchar, bool isComing = false)
+        {
+            if (!Utils.XaoSounds || bchar != Xao) return;
+
+            var list = isComing ? XaoVoiceComing : XaoVoiceEffect;
+            int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, list.Count);
+            string soundToPlay = list[randomIndex];
+
+            MasterAudio.StopBus("SE");
+            MasterAudio.PlaySound(soundToPlay, 100f);
+        }
+
+        public static void PlayXaoVoiceMaid(BattleChar bchar)
+        {
+            if (!Utils.XaoSounds || bchar != Xao) return;
+
+            int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, XaoVoiceMaid.Count);
+            string soundToPlay = XaoVoiceMaid[randomIndex];
+
+            MasterAudio.StopBus("SE");
+            MasterAudio.PlaySound(soundToPlay, 100f);
+        }
+
+        public static void RemoveFog()
+        {
+            if (StageSystem.instance != null)
+            {
+                if (StageSystem.instance.gameObject.activeInHierarchy && StageSystem.instance.Map != null)
+                {
+                    StageSystem.instance.Fogout(false);
+                }
+
+                if (StageSystem.instance.Map != null && StageSystem.instance.Map.EventTileList != null)
+                {
+                    for (int i = 0; i < StageSystem.instance.Map.EventTileList.Count; i++)
+                    {
+                        var tile = StageSystem.instance.Map.EventTileList[i];
+                        if (tile.Info.Type is HiddenWall)
+                        {
+                            tile.HexTileComponent.HiddenWallOpen();
+                        }
+                    }
+                }
+
+                StageSystem.instance.SightView(StageSystem.instance.PlayerPos);
+            }
+
+            RemoveFogFromStage = false;
+        }
     }
 }

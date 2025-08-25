@@ -98,7 +98,7 @@ namespace Xao
 
                 Xao_Combo.ComboChange(1);
 
-                if (Utils.HentaiSkills.Contains(SkillD.MySkill.KeyID))
+                if (Utils.HentaiSkills.Contains(SkillD.MySkill.KeyID) && HornyMod)
                 {
                     Utils.PopHentaiText(BChar);
                 }
@@ -230,14 +230,13 @@ namespace Xao
         {
             if (HornyMod)
             {
-                Utils.PopHentaiText(BChar);
-
                 var affection = BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Affection, false) as B_Xao_Affection;
                 if (affection?.StackNum >= 3)
                 {
                     int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, Utils.XaoRandomSkill.Count);
                     var randomSkill = Utils.XaoRandomSkill[randomIndex];
                     Utils.CreateSkill(randomSkill, BChar, true, true, 1, 0, true);
+                    Utils.PopHentaiText(BChar);
                 }
                 else
                 {

@@ -18,6 +18,7 @@ namespace Xao
         public void BattleStartUIOnBefore(BattleSystem Ins)
         {
             Xao_Hearts.SavedStackAllySynergy = 0;
+            Xao_Hearts.SavedStackAlly = 0;
         }
 
         public override void Init()
@@ -41,10 +42,7 @@ namespace Xao
                     buff = ModItemKeys.Buff_B_Xao_Affection_Ally;
                 }
             }
-            if (new GDECharacterData(BChar.Info.KeyData).Gender == 1)
-            {
-                Utils.PopHentaiText(BChar);
-            }
+            Utils.AllyHentaiText(BChar);
             Utils.AddBuff(BChar, buff, 1);
         }
     }

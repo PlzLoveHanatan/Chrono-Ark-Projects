@@ -120,18 +120,25 @@ namespace Xao
                         Utils.AddComponent<Xao_Hearts_Tooltip>(normalHearts[i]);
                     }
                 }
-                else // серые
+                else
                 {
                     if (normalHearts[i] != null)
                     {
                         Utils.DestroyAndNullify(ref normalHearts[i]);
                     }
-                    if (greyHearts[i] == null)
-                    {
-                        greyHearts[i] = Utils.CreateIcon(bchar, $"HeartGreyAlly_{i}", Utils.HeartsPath[$"HeartGrey_{i}"], Utils.HeartsPosition[$"HeartGrey_{i}"], new Vector3(90f, 90f), false);
-                        Utils.StartHeartsGreyPopOut(greyHearts[i]);
-                    }
                 }
+                //else // серые
+                //{
+                //    // Серое появляется только если нормальное уже существовало хотя бы один раз
+                //    if (normalHearts[i] != null)
+                //    {
+                //        if (greyHearts[i] == null)
+                //        {
+                //            greyHearts[i] = Utils.CreateIcon(bchar, $"HeartGreyAlly_{i}", Utils.HeartsPath[$"HeartGrey_{i}"], Utils.HeartsPosition[$"HeartGrey_{i}"], new Vector3(90f, 90f), false);
+                //            Utils.StartHeartsGreyPopOut(greyHearts[i]);
+                //        }
+                //    }
+                //}
             }
 
             HeartNormalAlly_0 = normalHearts[0];
@@ -142,6 +149,7 @@ namespace Xao
             HeartGreyAlly_1 = greyHearts[1];
             HeartGreyAlly_2 = greyHearts[2];
         }
+
         public static void UpdateHeartsAllySynergy(BattleChar bchar, int stackNum)
         {
             if (stackNum > 1 || !bchar.Info.Ally) return;
@@ -159,7 +167,7 @@ namespace Xao
                     }
                     if (normalHearts[i] == null)
                     {
-                        normalHearts[i] = Utils.CreateIcon(bchar, $"HeartNormalAlly", Utils.HeartsPath[$"HeartNormal_0"], Utils.HeartsPosition[$"HeartNormal_0"], new Vector3(90f, 90f), false, true);
+                        normalHearts[i] = Utils.CreateIcon(bchar, $"HeartNormalAlly", Utils.HeartsPath[$"HeartNormal_0"], new Vector3(1.25f, 0.5f), new Vector3(90f, 90f), false, true);
                         Utils.StartHeartsPopOut(normalHearts[i]);
                         Utils.AddComponent<Xao_Hearts_Script_Ally_Synergy>(normalHearts[i]);
                         Utils.AddComponent<Xao_Hearts_Tooltip>(normalHearts[i]);
@@ -173,7 +181,7 @@ namespace Xao
                     }
                     if (greyHearts[i] == null)
                     {
-                        greyHearts[i] = Utils.CreateIcon(bchar, $"HeartGreyAlly_0", Utils.HeartsPath[$"HeartGrey_0"], Utils.HeartsPosition[$"HeartGrey_0"], new Vector3(90f, 90f), false);
+                        greyHearts[i] = Utils.CreateIcon(bchar, $"HeartGreyAlly_0", Utils.HeartsPath[$"HeartGrey_0"], new Vector3(1.25f, 0.5f), new Vector3(90f, 90f), false);
                         Utils.StartHeartsGreyPopOut(greyHearts[i]);
                     }
                 }
@@ -219,15 +227,15 @@ namespace Xao
                 HeartGreyAlly_0 = Utils.CreateIcon(bchar, "HeartGreyAlly_0", Utils.HeartsPath["HeartGrey_0"], Utils.HeartsPosition["HeartGrey_0"], new Vector3(90f, 90f), false);
             }
 
-            if (HeartGreyAlly_1 == null)
-            {
-                HeartGreyAlly_1 = Utils.CreateIcon(bchar, "HeartGreyAlly_1", Utils.HeartsPath["HeartGrey_1"], Utils.HeartsPosition["HeartGrey_1"], new Vector3(90f, 90f), false);
-            }
+            //if (HeartGreyAlly_1 == null)
+            //{
+            //    HeartGreyAlly_1 = Utils.CreateIcon(bchar, "HeartGreyAlly_1", Utils.HeartsPath["HeartGrey_1"], Utils.HeartsPosition["HeartGrey_1"], new Vector3(90f, 90f), false);
+            //}
 
-            if (HeartGreyAlly_2 == null)
-            {
-                HeartGreyAlly_2 = Utils.CreateIcon(bchar, "HeartGreyAlly_2", Utils.HeartsPath["HeartGrey_2"], Utils.HeartsPosition["HeartGrey_2"], new Vector3(90f, 90f), false);
-            }
+            //if (HeartGreyAlly_2 == null)
+            //{
+            //    HeartGreyAlly_2 = Utils.CreateIcon(bchar, "HeartGreyAlly_2", Utils.HeartsPath["HeartGrey_2"], Utils.HeartsPosition["HeartGrey_2"], new Vector3(90f, 90f), false);
+            //}
         }
 
         public static void DestroyAndNullifyAllAlly()
@@ -245,7 +253,7 @@ namespace Xao
         {
             if (HeartGreyAllySynergy == null)
             {
-                HeartGreyAllySynergy = Utils.CreateIcon(bchar, "HeartGreyAllySynergy", Utils.HeartsPath["HeartGrey_0"], Utils.HeartsPosition["HeartGrey_0"], new Vector3(90f, 90f), false);
+                HeartGreyAllySynergy = Utils.CreateIcon(bchar, "HeartGreyAllySynergy", Utils.HeartsPath["HeartGrey_0"], new Vector3(1.25f, 0.5f), new Vector3(90f, 90f), false);
             }
         }
 
