@@ -61,7 +61,6 @@ namespace Xao
                     case 8:
                         Utils.DestroyAndNullify(ref Combo_1);
                         Utils.CreateNewCombo(Combo_2, "Combo_2", Utils.SpritePaths[Utils.SpriteType.Combo_2], true);
-                        IncreaseXaoAP(Utils.Xao.Info);
                         break;
 
                     case 10:
@@ -130,7 +129,10 @@ namespace Xao
 
         public static void IncreaseXaoAP(Character character)
         {
-            character.OriginStat.atk++;
+            if (Utils.XaoHornyMod)
+            {
+                character.OriginStat.atk++;
+            } 
         }
 
         public static void ApplyComboRewards(int currentCombo)

@@ -125,10 +125,15 @@ namespace Xao
         public static string SkillKeyword_KeyWord_Combo = "KeyWord_Combo";
 		/// <summary>
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards</color>
-		/// <color=#919191><color=#d78fe9>10</color>: Gain 1 Key (Once per battle)
-		/// <color=#d78fe9>15</color>: Reveal the Black Fog and the Secret Tile on the current stage
-		/// <color=#d78fe9>20</color>: Gain 1 Infinite Skill Book (Once per battle)
-		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)</color>
+		/// <color=#919191><color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
+		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>18</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// <color=#d78fe9>20</color>: Gain 'Enchanted Ring' (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>25</color>: Gain 1 unique
+		/// <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
+		/// </color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_ComboRewards = "KeyWord_ComboRewards";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_0 = "SE_S_S_Xao_BikiniTime_0";
@@ -629,6 +634,7 @@ namespace Xao
 		/// Each time she uses a skill, she alternates between gaining +1 Overload and losing -1 Overload.
 		/// The first time Xao gains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload and becomes <color=#d78fe9>Horny</color>.
 		/// At the start of each turn, if Xao already has 3 <sprite name="Xao_Heart">, create a random 0-Cost swiftness Xao skill. Otherwise, she gains 1 <sprite name="Xao_Heart"> (up to 3).
+		/// While being <color=#d78fe9>Horny</color> Xao gain unique <color=#d78fe9>10</color> <color=#87CEFA>Combo</color>.
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Xao = "Xao";
@@ -708,7 +714,6 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
 		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
-		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
 		/// Chinese:
@@ -725,15 +730,13 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
 		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
-		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
 		/// <color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
 		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
 		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
 		/// <color=#d78fe9>18</color>: Gain 1 Infinite Skill Book (Once per battle)
-		/// (Once per this <b>playthrough</b>)
 		/// <color=#d78fe9>20</color>: Gain 'Enchanted Ring' (Once per this <b>playthrough</b>)
 		/// <color=#d78fe9>25</color>: Gain 1 unique
-		/// <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> 
+		/// <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
 		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
@@ -750,18 +753,39 @@ namespace Xao
 		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
-		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
-		/// <color=#d78fe9>10</color>: Gain 1 Key (Once per battle)
-		/// <color=#d78fe9>15</color>: Reveal the Black Fog and the Secret Tile on the current stage
-		/// <color=#d78fe9>20</color>: Gain 1 Infinite Skill Book (Once per battle)
-		/// <color=#d78fe9>30</color>: Gain 1 unique <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_Horny_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_Horny_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:  
+		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
+		/// <color=#d78fe9>4</color>: Draw 1 skill  
+		/// <color=#d78fe9>6</color>: Restore 1 Mana  
+		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
+		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>18</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// <color=#d78fe9>20</color>: Gain 'Enchanted Ring' (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>25</color>: Gain 1 unique
+		/// <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
 		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string Combo_Description_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_2");
+        public static string Combo_Description_Horny_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_Horny_1");
 		/// <summary>
 		/// Korean:
 		/// English:
