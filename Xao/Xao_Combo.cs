@@ -21,8 +21,10 @@ namespace Xao
         public static bool KeyOnce = false;
         public static bool LegendaryOnce = false;
         public static bool InfinityBookOnce = false;
+        public static bool ManaPotionOnce = false;
         public static bool AdditionalComboRewards = false;
         public static bool XaoEquipMagicWand;
+        public static bool EnchantedRing;
 
         public static void ComboChange(int comboChange = 1, bool resetCombo = false, bool isNewTurn = false)
         {
@@ -63,6 +65,19 @@ namespace Xao
                         break;
 
                     case 10:
+                        IncreaseXaoAP(Utils.Xao.Info);
+                        break;
+
+                    case 12:
+                        if (AdditionalComboRewards && !ManaPotionOnce)
+                        {
+                            string manaPotion = GDEItemKeys.Item_Potions_Potion_Mana;
+                            GainReward(manaPotion);
+                            ManaPotionOnce = true;
+                        }
+                        break;
+
+                    case 14:
                         if (AdditionalComboRewards && !KeyOnce)
                         {
                             GainReward(GDEItemKeys.Item_Misc_Item_Key);
@@ -70,12 +85,14 @@ namespace Xao
                         }
                         break;
 
-                    case 15:
+                    case 16:
                         if (AdditionalComboRewards)
+                        {
                             Utils.RemoveFogFromStage = true;
+                        }
                         break;
 
-                    case 20:
+                    case 18:
                         if (AdditionalComboRewards && !InfinityBookOnce)
                         {
                             GainReward(GDEItemKeys.Item_Consume_SkillBookInfinity);
@@ -83,7 +100,16 @@ namespace Xao
                         }
                         break;
 
-                    case 30:
+                    case 20:
+                        if (AdditionalComboRewards && !EnchantedRing)
+                        {
+                            string enchantedRing = GDEItemKeys.Item_Equip_EnchantedRing;
+                            GainReward(enchantedRing);
+                            EnchantedRing = true;
+                        }
+                        break;
+
+                    case 25:
                         if (AdditionalComboRewards && !XaoEquipMagicWand)
                         {
                             GainReward(ModItemKeys.Item_Equip_Equip_Xao_MagicWand);
@@ -94,9 +120,7 @@ namespace Xao
                     case 50:
                         if (AdditionalComboRewards && !LegendaryOnce)
                         {
-                            GainReward(
-                                PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand })
-                            );
+                            GainReward(PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand } ));
                             LegendaryOnce = true;
                         }
                         break;
@@ -128,31 +152,50 @@ namespace Xao
 
             if (currentCombo >= 8)
             {
+                RemoveOverload();
+            }
+
+            if (currentCombo >= 10)
+            {
                 IncreaseXaoAP(Utils.Xao.Info);
             }
 
             if (!AdditionalComboRewards) return;
 
-            if (currentCombo >= 10 && !KeyOnce)
+            if (currentCombo >= 12 && !ManaPotionOnce)
+            {
+                string manaPotion = GDEItemKeys.Item_Potions_Potion_Mana;
+                GainReward(manaPotion);
+                ManaPotionOnce = true;
+            }
+
+            if (currentCombo >= 14 && !KeyOnce)
             {
                 string key = GDEItemKeys.Item_Misc_Item_Key;
                 GainReward(key);
                 KeyOnce = true;
             }
 
-            if (currentCombo >= 15)
+            if (currentCombo >= 16)
             {
                 Utils.RemoveFogFromStage = true;
             }
 
-            if (currentCombo >= 20 && !InfinityBookOnce)
+            if (currentCombo >= 18 && !InfinityBookOnce)
             {
                 string infinityBook = GDEItemKeys.Item_Consume_SkillBookInfinity;
                 GainReward(infinityBook);
                 InfinityBookOnce = true;
             }
 
-            if (currentCombo >= 30 && !XaoEquipMagicWand)
+            if (currentCombo >= 20 && !EnchantedRing)
+            {
+                string enchantedRing = GDEItemKeys.Item_Equip_EnchantedRing;
+                GainReward(enchantedRing);
+                EnchantedRing = true;
+            }
+
+            if (currentCombo >= 25 && !XaoEquipMagicWand)
             {
                 string xaoUniqueEquip = ModItemKeys.Item_Equip_Equip_Xao_MagicWand;
                 GainReward(xaoUniqueEquip);
@@ -182,6 +225,20 @@ namespace Xao
         public static void GainReward(string key)
         {
             InventoryManager.Reward(ItemBase.GetItem(key, 1));
+        }
+
+        public static void RemoveOverload()
+        {
+            Utils.AllyTeam.LucyChar.Overload = 0;
+            Utils.AllyTeam.AP += 1;
+
+            foreach (var ally in Utils.AllyTeam.AliveChars)
+            {
+                if (ally != null)
+                {
+                    ally.Overload = 0;
+                }
+            }
         }
     }
 }

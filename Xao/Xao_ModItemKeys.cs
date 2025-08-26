@@ -707,7 +707,8 @@ namespace Xao
 		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
-		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
 		/// Chinese:
@@ -723,10 +724,16 @@ namespace Xao
 		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
-		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
-		/// <color=#d78fe9>10</color>: Gain 1 Key (Once per battle)
-		/// <color=#d78fe9>15</color>: Reveal the Black Fog and the Secret Tile on the current stage
-		/// <color=#d78fe9>20</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
+		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>18</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>20</color>: Gain 'Enchanted Ring' (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>25</color>: Gain 1 unique
+		/// <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> 
 		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:

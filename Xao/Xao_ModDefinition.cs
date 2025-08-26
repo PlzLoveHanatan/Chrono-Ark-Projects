@@ -124,6 +124,7 @@ namespace Xao
             Xao_Combo.KeyOnce = false;
             Xao_Combo.LegendaryOnce = false;
             Xao_Combo.InfinityBookOnce = false;
+            Xao_Combo.ManaPotionOnce = false;
         }
     }
 }
