@@ -4,19 +4,19 @@ namespace Xao
     public static class ModItemKeys
     {
 		/// <summary>
-		/// Affection <sprite name="Xao_Heart">
+		/// Overload Ecstasy <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
 		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection = "B_Xao_Affection";
 		/// <summary>
-		/// Affection <sprite name="Xao_Heart">
+		/// Overload Ecstasy <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
 		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection_Ally = "B_Xao_Affection_Ally";
 		/// <summary>
-		/// Affection <sprite name="Xao_Heart">
+		/// Overload Ecstasy <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
 		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
@@ -31,6 +31,7 @@ namespace Xao
         public static string Buff_B_Xao_Combo = "B_Xao_Combo";
 		/// <summary>
 		/// Forbidden Desire
+		/// Activate all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
 		/// Increase <color=#87CEFA>Combo</color> rewards for this battle.
 		/// </summary>
         public static string Buff_B_Xao_ForbiddenDesire = "B_Xao_ForbiddenDesire";
@@ -100,14 +101,14 @@ namespace Xao
 		/// </summary>
         public static string Item_Equip_Equip_Xao_MagicWand = "Equip_Xao_MagicWand";
 		/// <summary>
-		/// When played, increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color> and, if <color=#87CEFA>Combo</color> is <color=#d78fe9>4</color> or more, <b>permanently</b> increase one stat of the ally based on their Role.
+		/// When played, increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and, if <color=#87CEFA>Combo</color> is <color=#d78fe9>6</color> or more, <b>permanently</b> increase one stat of the ally based on their Role.
 		/// Attack Role : Attack Power +1
 		/// Tank Role : Armor +3%
 		/// Support Role : Healing Power +1</color>
 		/// </summary>
         public static string SkillExtended_Ex_Xao_0 = "Ex_Xao_0";
 		/// <summary>
-		/// When played increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color> and gain 1 <sprite name="Xao_Heart"> (Max 1).
+		/// When played increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and gain 1 <sprite name="Xao_Heart"> (Max 1).
 		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// </summary>
         public static string SkillExtended_Ex_Xao_1 = "Ex_Xao_1";
@@ -122,6 +123,14 @@ namespace Xao
 		/// <color=#919191>When you gain <color=#87CEFA>Combo</color> in a turn, receive rewards based on your <color=#87CEFA>Combo</color> count.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_Combo = "KeyWord_Combo";
+		/// <summary>
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards</color>
+		/// <color=#919191><color=#d78fe9>10</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>15</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>20</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_ComboRewards = "KeyWord_ComboRewards";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_0 = "SE_S_S_Xao_BikiniTime_0";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_1 = "SE_S_S_Xao_BikiniTime_1";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_2 = "SE_S_S_Xao_BikiniTime_2";
@@ -715,9 +724,10 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
 		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
-		/// <color=#d78fe9>15</color>: Gain 1 Key (Once per battle)
-		/// <color=#d78fe9>20</color>: Reveal the Black Fog and the Secret Tile on the current stage
-		/// <color=#d78fe9>30</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
+		/// <color=#d78fe9>10</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>15</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>20</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
 		/// Chinese:
@@ -734,8 +744,9 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
 		/// <color=#d78fe9>8</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
-		/// <color=#d78fe9>15</color>: Gain 1 Key (Once per battle)
-		/// <color=#d78fe9>20</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>10</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>15</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>20</color>: Gain 1 Infinite Skill Book (Once per battle)
 		/// <color=#d78fe9>30</color>: Gain 1 unique <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
 		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>

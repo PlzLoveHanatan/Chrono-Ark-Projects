@@ -60,6 +60,7 @@ namespace Xao
         {
             return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Xao);
         }
+
         public static bool AdditionalSecretTile()
         {
             return XaoInParty() && Utils.AdditionalSecretTile;

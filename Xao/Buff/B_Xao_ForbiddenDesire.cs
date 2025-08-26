@@ -19,10 +19,16 @@ namespace Xao
     /// </summary>
     public class B_Xao_ForbiddenDesire : Buff, IP_Awake, IP_BattleEnd
     {
+        private bool FirstAwake;
+
         public void Awake()
         {
-            Xao_Combo.AdditionalComboRewards = true;
-            Xao_Combo.ApplyComboRewards(Xao_Combo.CurrentCombo);
+            if (!FirstAwake)
+            {
+                Xao_Combo.AdditionalComboRewards = true;
+                Xao_Combo.ApplyComboRewards(Xao_Combo.CurrentCombo);
+                FirstAwake = true;
+            }
         }
 
         public void BattleEnd()

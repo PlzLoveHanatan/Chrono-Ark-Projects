@@ -31,7 +31,7 @@ namespace Xao
             if (SkillD == null || BChar == null) return;
 
             Xao_Combo.SaveComboBetweenTurns = true;
-            Xao_Combo.ComboChange(1);
+            Xao_Combo.ComboChange(2);
 
             string buff = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
 

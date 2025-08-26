@@ -20,6 +20,7 @@ namespace Xao
         private static Vector2 size = new Vector2(110f, 110f);
         public static bool KeyOnce = false;
         public static bool LegendaryOnce = false;
+        public static bool InfinityBookOnce = false;
         public static bool AdditionalComboRewards = false;
         public static bool XaoEquipMagicWand;
 
@@ -33,19 +34,71 @@ namespace Xao
             else
             {
                 CurrentCombo += comboChange;
-                //if (CurrentCombo < 1 || CurrentCombo > 5) return;
+                //int[] comboMilestones = { 2, 4, 6, 8, 10, 15, 20, 30, 50 };
 
+                //if (comboMilestones.Contains(CurrentCombo))
+                //{
+                //    ApplyComboRewards(CurrentCombo);
+                //}
                 switch (CurrentCombo)
                 {
                     case 2:
+                        Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection);
+                        break;
+
                     case 4:
+                        Utils.DestroyAndNullify(ref Combo_0);
+                        Utils.CreateNewCombo(Combo_1, "Combo_1", Utils.SpritePaths[Utils.SpriteType.Combo_1], true);
+                        Utils.AllyTeam.Draw();
+                        break;
+
                     case 6:
+                        Utils.AllyTeam.AP += 1;
+                        break;
+
                     case 8:
+                        Utils.DestroyAndNullify(ref Combo_1);
+                        Utils.CreateNewCombo(Combo_2, "Combo_2", Utils.SpritePaths[Utils.SpriteType.Combo_2], true);
+                        IncreaseXaoAP(Utils.Xao.Info);
+                        break;
+
+                    case 10:
+                        if (AdditionalComboRewards && !KeyOnce)
+                        {
+                            GainReward(GDEItemKeys.Item_Misc_Item_Key);
+                            KeyOnce = true;
+                        }
+                        break;
+
                     case 15:
+                        if (AdditionalComboRewards)
+                            Utils.RemoveFogFromStage = true;
+                        break;
+
                     case 20:
+                        if (AdditionalComboRewards && !InfinityBookOnce)
+                        {
+                            GainReward(GDEItemKeys.Item_Consume_SkillBookInfinity);
+                            InfinityBookOnce = true;
+                        }
+                        break;
+
                     case 30:
+                        if (AdditionalComboRewards && !XaoEquipMagicWand)
+                        {
+                            GainReward(ModItemKeys.Item_Equip_Equip_Xao_MagicWand);
+                            XaoEquipMagicWand = true;
+                        }
+                        break;
+
                     case 50:
-                        ApplyComboRewards(CurrentCombo);
+                        if (AdditionalComboRewards && !LegendaryOnce)
+                        {
+                            GainReward(
+                                PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand })
+                            );
+                            LegendaryOnce = true;
+                        }
                         break;
                 }
             }
@@ -58,7 +111,6 @@ namespace Xao
 
         public static void ApplyComboRewards(int currentCombo)
         {
-            // Базовые награды
             if (currentCombo >= 2)
             {
                 Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection);
@@ -66,13 +118,6 @@ namespace Xao
 
             if (currentCombo >= 4)
             {
-                // Обновление UI комбо
-                Utils.DestroyAndNullify(ref Combo_0);
-                Combo_1 = Utils.CreateComboButton("Combo_1", BattleSystem.instance.ActWindow.transform, Utils.SpritePaths[Utils.SpriteType.Combo_1], size, new Vector2(-749.7802f, -438.8362f));
-                Utils.StartComboPopOut(Combo_1);
-                Utils.AddComponent<Xao_Combo_Tooltip>(Combo_1);
-
-                // Доп. действие
                 Utils.AllyTeam.Draw();
             }
 
@@ -83,39 +128,41 @@ namespace Xao
 
             if (currentCombo >= 8)
             {
-                Utils.DestroyAndNullify(ref Combo_1);
-                Combo_2 = Utils.CreateComboButton("Combo_2", BattleSystem.instance.ActWindow.transform, Utils.SpritePaths[Utils.SpriteType.Combo_2], size, new Vector2(-749.7802f, -438.8362f));
-                Utils.StartComboPopOut(Combo_2);
-                Utils.AddComponent<Xao_Combo_Tooltip>(Combo_2);
-
                 IncreaseXaoAP(Utils.Xao.Info);
             }
 
-            // Дополнительные награды
             if (!AdditionalComboRewards) return;
 
-            if (currentCombo >= 15 && !KeyOnce)
+            if (currentCombo >= 10 && !KeyOnce)
             {
-                InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Item_Key, 1));
+                string key = GDEItemKeys.Item_Misc_Item_Key;
+                GainReward(key);
                 KeyOnce = true;
             }
 
-            if (currentCombo >= 20)
+            if (currentCombo >= 15)
             {
                 Utils.RemoveFogFromStage = true;
+            }
+
+            if (currentCombo >= 20 && !InfinityBookOnce)
+            {
+                string infinityBook = GDEItemKeys.Item_Consume_SkillBookInfinity;
+                GainReward(infinityBook);
+                InfinityBookOnce = true;
             }
 
             if (currentCombo >= 30 && !XaoEquipMagicWand)
             {
                 string xaoUniqueEquip = ModItemKeys.Item_Equip_Equip_Xao_MagicWand;
-                InventoryManager.Reward(ItemBase.GetItem(xaoUniqueEquip, 1));
+                GainReward(xaoUniqueEquip);
                 XaoEquipMagicWand = true;
             }
 
             if (currentCombo >= 50 && !LegendaryOnce)
             {
-                string equipKey = PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand } );
-                InventoryManager.Reward(ItemBase.GetItem(equipKey, 1));
+                string equipKey = PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand });
+                GainReward(equipKey);
                 LegendaryOnce = true;
             }
         }
@@ -128,9 +175,13 @@ namespace Xao
 
             if (isNewTurn)
             {
-                Combo_0 = Utils.CreateComboButton("Combo_0", BattleSystem.instance.ActWindow.transform, Utils.SpritePaths[Utils.SpriteType.Combo_0], new Vector2(110f, 110f), new Vector2(-749.7802f, -438.8362f));
-                Utils.AddComponent<Xao_Combo_Tooltip>(Combo_0);
+                Utils.CreateNewCombo(Combo_0, "Combo_0", Utils.SpritePaths[Utils.SpriteType.Combo_0]);
             }
+        }
+
+        public static void GainReward(string key)
+        {
+            InventoryManager.Reward(ItemBase.GetItem(key, 1));
         }
     }
 }

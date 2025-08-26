@@ -38,10 +38,10 @@ namespace Xao
                 switch (randomIndex)
                 {
                     case 1:
-                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_0", Utils.SpriteType.Chibi_TakingDamage_0));
+                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_0", Utils.SpriteType.Chibi_TakingDamage_0, 2));
                         break;
                     case 2:
-                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_1", Utils.SpriteType.Chibi_TakingDamage_1));
+                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_1", Utils.SpriteType.Chibi_TakingDamage_1, 2));
                         break;
                 }
             }
@@ -163,7 +163,7 @@ namespace Xao
             }
         }
 
-        private IEnumerator SetChibi(string name, Utils.SpriteType type)
+        private IEnumerator SetChibi(string name, Utils.SpriteType type, int randomNum = 3)
         {
             chibiName = name;
             chibiPath = chibiPosition = type;
@@ -171,8 +171,24 @@ namespace Xao
 
             if (chibi != null)
             {
-                bool isBounceAnimation = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3) == 1;
-                Utils.ChibiStartAnimation(chibi, isBounceAnimation);
+                int randomAnim = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, randomNum);
+                bool isBounce = false;
+                bool isSpin = false;
+                bool isStartRandomEntrance = false;
+
+                switch (randomAnim)
+                {
+                    case 0:
+                        isBounce = true;
+                        break;
+                    case 1:
+                        isSpin = true;
+                        break;
+                    case 2:
+                        isStartRandomEntrance = true;
+                        break;
+                }
+                Utils.ChibiStartAnimation(chibi, isBounce, isSpin, isStartRandomEntrance);
             }
             yield break;
         }
@@ -273,7 +289,7 @@ namespace Xao
 
         public void BattleEnd()
         {
-           HornyMod = false;
+            HornyMod = false;
         }
     }
 }

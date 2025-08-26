@@ -18,14 +18,14 @@ namespace Xao
     /// </summary>
     public class S_Xao_LucyDraw_0 : Skill_Extended
     {
-        private readonly List<Skill> strings = new List<Skill>
-        {
-            Skill.TempSkill(ModItemKeys.Skill_S_Xao_LucyDraw_1, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
-            Skill.TempSkill(ModItemKeys.Skill_S_Xao_LucyDraw_2, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
-        };
-
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            List<Skill> strings = new List<Skill>
+            {
+                Skill.TempSkill(ModItemKeys.Skill_S_Xao_LucyDraw_1, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+                Skill.TempSkill(ModItemKeys.Skill_S_Xao_LucyDraw_2, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+            };
+
             int drawNum = 0;
             drawNum = Utils.Xao ? 2 : 1;
             MySkill.isExcept = Utils.Xao ? false : true;

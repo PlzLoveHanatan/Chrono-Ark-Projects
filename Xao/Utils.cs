@@ -623,7 +623,6 @@ namespace Xao
                 if (existing != null)
                 {
                     UnityEngine.Object.Destroy(existing);
-                    break;
                 }
             }
             return Utils.CreateIcon(bchar, name, sprite, offset, size, isSibling);
@@ -631,11 +630,19 @@ namespace Xao
 
         public static void CreateIdleChibi()
         {
-            string xao = ModItemKeys.Character_Xao;
-            var aliveXao = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(x => x != null && x.Info.KeyData == xao);
-            if (aliveXao != null)
+            if (Xao != null)
             {
-                Utils.CreateIcon(aliveXao, "Chibi_Idle", Utils.SpritePaths[SpriteType.Chibi_Idle], Utils.ChibiPosition[SpriteType.Chibi_Idle], new Vector3(250f, 250f));
+                CreateIcon(Xao, "Chibi_Idle", Utils.SpritePaths[SpriteType.Chibi_Idle], Utils.ChibiPosition[SpriteType.Chibi_Idle], new Vector3(250f, 250f));
+            }
+        }
+
+        public static void CreateNewCombo(GameObject combo, string comboName, string path, bool isPopout = false)
+        {
+            combo = CreateComboButton(comboName, BattleSystem.instance.ActWindow.transform, path, new Vector2(110f, 110f), new Vector2(-749.7802f, -438.8362f));
+            AddComponent<Xao_Combo_Tooltip>(combo);
+            if (isPopout)
+            {
+                StartComboPopOut(combo);
             }
         }
 
@@ -736,19 +743,23 @@ namespace Xao
             }
         }
 
-        public static void ChibiStartAnimation(GameObject obj, bool isBounce)
+        public static void ChibiStartAnimation(GameObject obj, bool isBounce = false, bool isSpin = false, bool isStartRandomEntrance = false)
         {
             if (obj != null)
             {
                 Xao_Chibi_Animations script = obj.GetComponent<Xao_Chibi_Animations>() ?? obj.AddComponent<Xao_Chibi_Animations>();
 
-                if (isBounce)
+                if (isStartRandomEntrance)
                 {
-                    script?.StartBounce();
+                    script.StartRandomEntrance();
                 }
-                else
+                else if (isBounce)
                 {
-                    script?.StartSpin();
+                    script.StartBounce();
+                }
+                else if (isSpin)
+                {
+                    script.StartSpin();
                 }
             }
         }

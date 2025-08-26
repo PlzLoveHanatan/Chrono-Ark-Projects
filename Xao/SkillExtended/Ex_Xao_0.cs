@@ -22,7 +22,7 @@ namespace Xao
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Xao_Combo.ComboChange(1);
+            Xao_Combo.ComboChange(2);
 
             if (Xao_Combo.CurrentCombo >= 4)
             {
