@@ -20,19 +20,12 @@ namespace Xao
     /// </summary>
     public class S_Xao_Rare_SleepSex_0 : Skill_Extended
     {
-        //public override void Init()
-        //{
-        //    string heart = Utils.XaoHornyMod ? "♥" : "♡";
-        //    string baseName = new GDESkillData(MySkill.MySkill.KeyID).Name;
-        //    MySkill.MySkill.Name = $"{baseName} {heart}";
-        //}
-
         public override string DescExtended(string desc)
         {
-            string heart = "";
+            string heart = "♡";
             if (BattleSystem.instance != null)
             {
-                heart = (BChar == Utils.Xao && Utils.XaoHornyMod) ? "♥" : "♡" ?? "";
+                heart = Utils.GetHeart(BChar);
             }
             return base.DescExtended(desc).Replace("&a", heart);
         }
@@ -40,7 +33,7 @@ namespace Xao
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Xao_Combo.ComboChange(1);
-            Utils.RareSleepSex(BChar, ModItemKeys.Skill_S_Xao_Rare_SleepSex_1, 0, 2, Utils.XaoHornyMod);
+            Utils.RareSleepSex(BChar, ModItemKeys.Skill_S_Xao_Rare_SleepSex_1, 0, 2);
         }
     }
 }

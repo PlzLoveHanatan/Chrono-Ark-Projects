@@ -119,12 +119,13 @@ namespace Xao
 
         public void ResetRewards()
         {
-            if (Xao_Combo.AdditionalComboRewards) Xao_Combo.AdditionalComboRewards = false;
-
+            Xao_Combo.AdditionalComboRewards_0 = false;
+            Xao_Combo.AdditionalComboRewards_1 = false;
             Xao_Combo.KeyOnce = false;
             Xao_Combo.LegendaryOnce = false;
             Xao_Combo.InfinityBookOnce = false;
             Xao_Combo.ManaPotionOnce = false;
+            Xao_Combo.AttackPowerOncePerFight = false;
         }
     }
 }

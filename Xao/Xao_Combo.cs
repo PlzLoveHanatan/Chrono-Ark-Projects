@@ -18,13 +18,21 @@ namespace Xao
         public static int CurrentCombo;
         public static bool SaveComboBetweenTurns = false;
         private static Vector2 size = new Vector2(110f, 110f);
+
         public static bool KeyOnce = false;
         public static bool LegendaryOnce = false;
         public static bool InfinityBookOnce = false;
         public static bool ManaPotionOnce = false;
-        public static bool AdditionalComboRewards = false;
-        public static bool XaoEquipMagicWand;
-        public static bool EnchantedRing;
+        public static bool AttackPowerOncePerFight = false;
+
+        public static bool XaoEquipMagicWand = false;
+        public static bool EnchantedRing = false;
+
+        public static bool AdditionalComboRewards_0 = false;
+        public static bool AdditionalComboRewards_1 = false;
+
+
+
 
         public static void ComboChange(int comboChange = 1, bool resetCombo = false, bool isNewTurn = false)
         {
@@ -45,22 +53,36 @@ namespace Xao
                 switch (CurrentCombo)
                 {
                     case 2:
-                        Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection);
+                        if (AdditionalComboRewards_0)
+                        {
+                            Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1);
+                        }
                         break;
 
                     case 4:
+
                         Utils.DestroyAndNullify(ref Combo_0);
                         Utils.CreateNewCombo(Combo_1, "Combo_1", Utils.SpritePaths[Utils.SpriteType.Combo_1], true);
-                        Utils.AllyTeam.Draw();
+                        if (AdditionalComboRewards_0)
+                        {
+                            Utils.AllyTeam.Draw();
+                        }
                         break;
 
                     case 6:
-                        Utils.AllyTeam.AP += 1;
+                        if (AdditionalComboRewards_0)
+                        {
+                            Utils.AllyTeam.AP += 1;
+                        }
                         break;
 
                     case 8:
                         Utils.DestroyAndNullify(ref Combo_1);
                         Utils.CreateNewCombo(Combo_2, "Combo_2", Utils.SpritePaths[Utils.SpriteType.Combo_2], true);
+                        if (AdditionalComboRewards_0)
+                        {
+                            RemoveOverload();
+                        }
                         break;
 
                     case 10:
@@ -68,7 +90,7 @@ namespace Xao
                         break;
 
                     case 12:
-                        if (AdditionalComboRewards && !ManaPotionOnce)
+                        if (AdditionalComboRewards_1 && !ManaPotionOnce)
                         {
                             string manaPotion = GDEItemKeys.Item_Potions_Potion_Mana;
                             GainReward(manaPotion);
@@ -77,7 +99,7 @@ namespace Xao
                         break;
 
                     case 14:
-                        if (AdditionalComboRewards && !KeyOnce)
+                        if (AdditionalComboRewards_1 && !KeyOnce)
                         {
                             GainReward(GDEItemKeys.Item_Misc_Item_Key);
                             KeyOnce = true;
@@ -85,14 +107,14 @@ namespace Xao
                         break;
 
                     case 16:
-                        if (AdditionalComboRewards)
+                        if (AdditionalComboRewards_1)
                         {
                             Utils.RemoveFogFromStage = true;
                         }
                         break;
 
                     case 18:
-                        if (AdditionalComboRewards && !InfinityBookOnce)
+                        if (AdditionalComboRewards_1 && !InfinityBookOnce)
                         {
                             GainReward(GDEItemKeys.Item_Consume_SkillBookInfinity);
                             InfinityBookOnce = true;
@@ -100,7 +122,7 @@ namespace Xao
                         break;
 
                     case 20:
-                        if (AdditionalComboRewards && !EnchantedRing)
+                        if (AdditionalComboRewards_1 && !EnchantedRing)
                         {
                             string enchantedRing = GDEItemKeys.Item_Equip_EnchantedRing;
                             GainReward(enchantedRing);
@@ -109,7 +131,7 @@ namespace Xao
                         break;
 
                     case 25:
-                        if (AdditionalComboRewards && !XaoEquipMagicWand)
+                        if (AdditionalComboRewards_1 && !XaoEquipMagicWand)
                         {
                             GainReward(ModItemKeys.Item_Equip_Equip_Xao_MagicWand);
                             XaoEquipMagicWand = true;
@@ -117,9 +139,9 @@ namespace Xao
                         break;
 
                     case 50:
-                        if (AdditionalComboRewards && !LegendaryOnce)
+                        if (AdditionalComboRewards_1 && !LegendaryOnce)
                         {
-                            GainReward(PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand } ));
+                            GainReward(PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand }));
                             LegendaryOnce = true;
                         }
                         break;
@@ -129,17 +151,25 @@ namespace Xao
 
         public static void IncreaseXaoAP(Character character)
         {
-            if (Utils.XaoHornyMod)
+            if (Utils.XaoHornyMod && !AttackPowerOncePerFight)
             {
                 character.OriginStat.atk++;
-            } 
+                AttackPowerOncePerFight = true;
+            }
         }
 
         public static void ApplyComboRewards(int currentCombo)
         {
+            if (currentCombo >= 10)
+            {
+                IncreaseXaoAP(Utils.Xao.Info);
+            }
+
+            if (!AdditionalComboRewards_0) return;
+
             if (currentCombo >= 2)
             {
-                Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection);
+                Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1);
             }
 
             if (currentCombo >= 4)
@@ -157,12 +187,7 @@ namespace Xao
                 RemoveOverload();
             }
 
-            if (currentCombo >= 10)
-            {
-                IncreaseXaoAP(Utils.Xao.Info);
-            }
-
-            if (!AdditionalComboRewards) return;
+            if (!AdditionalComboRewards_1) return;
 
             if (currentCombo >= 12 && !ManaPotionOnce)
             {

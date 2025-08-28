@@ -20,9 +20,11 @@ namespace Xao
     {
         public override void Init()
         {
-            PlusStat.RES_CC = -10 * StackNum;
-            PlusStat.RES_DEBUFF = -10 * StackNum;
-            PlusStat.RES_DOT = -10 * StackNum;
+            PlusStat.RES_CC = -8 * StackNum;
+            PlusStat.RES_DEBUFF = -8 * StackNum;
+            PlusStat.RES_DOT = -8 * StackNum;
+            PlusStat.def = -4 * StackNum;
+            PlusStat.hit = -4 * StackNum;
         }
     }
 }

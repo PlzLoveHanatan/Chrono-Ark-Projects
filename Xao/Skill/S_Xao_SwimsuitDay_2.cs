@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.Diagnostics;
 namespace Xao
 {
 	/// <summary>
@@ -20,6 +21,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.CopyAndExtendDebuffs(Targets[0]);
             Utils.PlayXaoVoice(BChar, true);
         }
     }

@@ -19,21 +19,40 @@ namespace Xao
         {
             string combo;
 
-            if (Utils.XaoHornyMod && Xao_Combo.AdditionalComboRewards)
+            if (Utils.XaoHornyMod)
             {
-                combo = ModLocalization.Combo_Description_Horny_1;
+                if (Xao_Combo.AdditionalComboRewards_0 && Xao_Combo.AdditionalComboRewards_1)
+                {
+                    combo = ModLocalization.Combo_Description_Horny_3; // All Combo
+                }
+                else if (Xao_Combo.AdditionalComboRewards_0)
+                {
+                    combo = ModLocalization.Combo_Description_Horny_1; // Only Combo I
+                }
+                else if (Xao_Combo.AdditionalComboRewards_1)
+                {
+                    combo = ModLocalization.Combo_Description_Horny_2; // Only Combo II
+                }
+                else
+                {
+                    combo = ModLocalization.Combo_Description_Horny_0; // Only 10th Combo
+                }
             }
-            else if (Utils.XaoHornyMod)
+            else if (Xao_Combo.AdditionalComboRewards_0 && Xao_Combo.AdditionalComboRewards_1)
             {
-                combo = ModLocalization.Combo_Description_Horny_0;
+                combo = ModLocalization.Combo_Description_3; // All combo, no 10th
             }
-            else if (Xao_Combo.AdditionalComboRewards)
+            else if (Xao_Combo.AdditionalComboRewards_0)
             {
-                combo = ModLocalization.Combo_Description_1;
+                combo = ModLocalization.Combo_Description_1; // Only Combo I
+            }
+            else if (Xao_Combo.AdditionalComboRewards_1)
+            {
+                combo = ModLocalization.Combo_Description_2; // Only Combo II
             }
             else
             {
-                combo = ModLocalization.Combo_Description_0;
+                combo = ModLocalization.Combo_Description_0; // No rewards
             }
             return combo.Replace("&a", Xao_Combo.CurrentCombo.ToString());
         }
@@ -48,6 +67,12 @@ namespace Xao
             else
             {
                 Xao_Combo.SaveComboBetweenTurns = false;
+
+                if (Xao_Combo.AttackPowerOncePerFight)
+                {
+                    Xao_Combo.AttackPowerOncePerFight = false;
+                }
+
                 Xao_Combo.ApplyComboRewards(Xao_Combo.CurrentCombo);
             }
         }

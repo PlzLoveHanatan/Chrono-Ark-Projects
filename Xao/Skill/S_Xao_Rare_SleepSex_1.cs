@@ -20,10 +20,10 @@ namespace Xao
     {
         public override string DescExtended(string desc)
         {
-            string heart = "";
+            string heart = "♡";
             if (BattleSystem.instance != null)
             {
-                heart = (BChar == Utils.Xao && Utils.XaoHornyMod) ? "♥" : "♡" ?? "";
+                heart = Utils.GetHeart(BChar, 2);
             }
             return base.DescExtended(desc).Replace("&a", heart);
         }
@@ -31,7 +31,7 @@ namespace Xao
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Xao_Combo.ComboChange(1);
-            Utils.RareSleepSex(BChar, ModItemKeys.Skill_S_Xao_Rare_SleepSex_2, 0, 3, Utils.XaoHornyMod);
+            Utils.RareSleepSex(BChar, ModItemKeys.Skill_S_Xao_Rare_SleepSex_2, 0, 3);
         }
     }
 }

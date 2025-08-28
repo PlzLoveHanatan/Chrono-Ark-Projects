@@ -11,15 +11,26 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using NLog.Targets;
 namespace Xao
 {
-	/// <summary>
-	/// Cowgirl ♡♡♡
-	/// </summary>
+    /// <summary>
+    /// Cowgirl ♡♡♡
+    /// </summary>
     public class S_Xao_CowGirl_2 : Skill_Extended
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            if (Xao_Combo.CurrentCombo >= 5)
+            {
+                foreach (var target in Targets)
+                {
+                    if (target != null)
+                    {
+                        BattleSystem.DelayInputAfter(Utils.ApplyPleasureLock(target, BChar));
+                    }
+                }
+            }
             Utils.PlayXaoVoice(BChar, true);
         }
     }

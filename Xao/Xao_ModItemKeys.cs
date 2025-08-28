@@ -32,7 +32,7 @@ namespace Xao
 		/// <summary>
 		/// Forbidden Desire
 		/// Activate all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
-		/// Increase <color=#87CEFA>Combo</color> rewards for this battle.
+		/// Gain <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards II</color> for this battle.
 		/// </summary>
         public static string Buff_B_Xao_ForbiddenDesire = "B_Xao_ForbiddenDesire";
 		/// <summary>
@@ -74,6 +74,12 @@ namespace Xao
 		/// Cannot take action.
 		/// </summary>
         public static string Buff_B_Xao_PleasureLock = "B_Xao_PleasureLock";
+		/// <summary>
+		/// Sacred Desire
+		/// Activate all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
+		/// Gain <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards I</color> for this battle.
+		/// </summary>
+        public static string Buff_B_Xao_SacredDesire = "B_Xao_SacredDesire";
 		/// <summary>
 		/// Soaked Lust
 		/// </summary>
@@ -120,11 +126,20 @@ namespace Xao
         public static string SkillExtended_Ex_Xao_Rare = "Ex_Xao_Rare";
 		/// <summary>
 		/// <color=#87CEFA>Combo</color>
-		/// <color=#919191>When you gain <color=#87CEFA>Combo</color> in a turn, receive rewards based on your <color=#87CEFA>Combo</color> count.</color>
+		/// <color=#919191>When you gain <color=#87CEFA>Combo</color> in a turn, receive rewards based on your <color=#87CEFA>Combo</color> count.
+		/// When you have at least <color=#d78fe9>X</color> <color=#87CEFA>Combo</color>, activate the effect.</color>  
 		/// </summary>
         public static string SkillKeyword_KeyWord_Combo = "KeyWord_Combo";
 		/// <summary>
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards</color>
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards I</color>
+		/// <color=#919191><color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
+		/// <color=#d78fe9>4</color>: Draw 1 skill  
+		/// <color=#d78fe9>6</color>: Restore 1 Mana  
+		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana</color>
+		/// </summary>
+        public static string SkillKeyword_KeyWord_ComboRewards_0 = "KeyWord_ComboRewards_0";
+		/// <summary>
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards II</color>
 		/// <color=#919191><color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
 		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
 		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
@@ -135,7 +150,7 @@ namespace Xao
 		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
 		/// </color>
 		/// </summary>
-        public static string SkillKeyword_KeyWord_ComboRewards = "KeyWord_ComboRewards";
+        public static string SkillKeyword_KeyWord_ComboRewards_1 = "KeyWord_ComboRewards_1";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_0 = "SE_S_S_Xao_BikiniTime_0";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_1 = "SE_S_S_Xao_BikiniTime_1";
         public static string SkillEffect_SE_S_S_Xao_BikiniTime_2 = "SE_S_S_Xao_BikiniTime_2";
@@ -172,7 +187,9 @@ namespace Xao
         public static string SkillEffect_SE_S_S_Xao_MaidPanties_Love_2 = "SE_S_S_Xao_MaidPanties_Love_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperienceAnal_2 = "SE_S_S_Xao_MikoExperienceAnal_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperienceAnal_Love_2 = "SE_S_S_Xao_MikoExperienceAnal_Love_2";
+        public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_2 = "SE_S_S_Xao_MikoExperiencePussy_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_3 = "SE_S_S_Xao_MikoExperiencePussy_3";
+        public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_Love_2 = "SE_S_S_Xao_MikoExperiencePussy_Love_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_Love_3 = "SE_S_S_Xao_MikoExperiencePussy_Love_3";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_0 = "SE_S_S_Xao_Rare_SleepSex_0";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_01 = "SE_S_S_Xao_Rare_SleepSex_01";
@@ -315,6 +332,7 @@ namespace Xao
         public static string Skill_S_Xao_CowGirl_1 = "S_Xao_CowGirl_1";
 		/// <summary>
 		/// Cowgirl ♡♡♡
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Always apply 'Pleasure Lock'.
 		/// </summary>
         public static string Skill_S_Xao_CowGirl_2 = "S_Xao_CowGirl_2";
 		/// <summary>
@@ -329,8 +347,11 @@ namespace Xao
         public static string Skill_S_Xao_CowGirl_Love_1 = "S_Xao_CowGirl_Love_1";
 		/// <summary>
 		/// Cowgirl Pleasure ♥♥♥
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Always apply 'Pleasure Lock'.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Destroy target's Action Point.
 		/// </summary>
         public static string Skill_S_Xao_CowGirl_Love_2 = "S_Xao_CowGirl_Love_2";
+        public static string Skill_S_Xao_DummyHeal = "S_Xao_DummyHeal";
 		/// <summary>
 		/// Experience Maid Footjob ♡
 		/// Create a <color=#d78fe9>Experience Maid Footjob ♡♡</color> in hand.
@@ -343,6 +364,7 @@ namespace Xao
         public static string Skill_S_Xao_ExperienceMaidFootjob_1 = "S_Xao_ExperienceMaidFootjob_1";
 		/// <summary>
 		/// Experience Maid Footjob ♡♡♡
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>4</color>: Apply additional stack of 'Mistress' Touch' to the target's.
 		/// </summary>
         public static string Skill_S_Xao_ExperienceMaidFootjob_2 = "S_Xao_ExperienceMaidFootjob_2";
 		/// <summary>
@@ -357,6 +379,8 @@ namespace Xao
         public static string Skill_S_Xao_ExperienceMaidFootjob_Love_1 = "S_Xao_ExperienceMaidFootjob_Love_1";
 		/// <summary>
 		/// Experience Maid Footjob Pleasure ♥♥♥
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>4</color>: Apply additional stack of 'Mistress' Touch' to the target's.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Apply 2 additional stacks of 'Mistress' Touch' to all enemies.
 		/// </summary>
         public static string Skill_S_Xao_ExperienceMaidFootjob_Love_2 = "S_Xao_ExperienceMaidFootjob_Love_2";
 		/// <summary>
@@ -465,6 +489,8 @@ namespace Xao
         public static string Skill_S_Xao_MaidPanties_1 = "S_Xao_MaidPanties_1";
 		/// <summary>
 		/// Maid Panties ♡♡♡
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>4</color>: Heal ally with lowest HP by 2.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Remove a random debuff.
 		/// </summary>
         public static string Skill_S_Xao_MaidPanties_2 = "S_Xao_MaidPanties_2";
 		/// <summary>
@@ -479,6 +505,9 @@ namespace Xao
         public static string Skill_S_Xao_MaidPanties_Love_1 = "S_Xao_MaidPanties_Love_1";
 		/// <summary>
 		/// Maid Panties Pleasure ♥♥♥
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>4</color>: Heal ally with lowest HP by 4.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Remove a random debuff.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Heal all allies by 4 and remove one random debuff each from all allies.
 		/// </summary>
         public static string Skill_S_Xao_MaidPanties_Love_2 = "S_Xao_MaidPanties_Love_2";
 		/// <summary>
@@ -521,13 +550,8 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperiencePussy_1 = "S_Xao_MikoExperiencePussy_1";
 		/// <summary>
 		/// Miko Experience Pussy ♡♡♡
-		/// Create a <color=#d78fe9>Miko Experience Pussy ♡♡♡♡</color> in hand.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperiencePussy_2 = "S_Xao_MikoExperiencePussy_2";
-		/// <summary>
-		/// Miko Experience Pussy ♡♡♡♡
-		/// </summary>
-        public static string Skill_S_Xao_MikoExperiencePussy_3 = "S_Xao_MikoExperiencePussy_3";
 		/// <summary>
 		/// Miko Experience Pussy Pleasure ♥
 		/// Create a <color=#d78fe9>Miko Experience Pussy Pleasure ♥♥</color> in hand.
@@ -540,13 +564,8 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperiencePussy_Love_1 = "S_Xao_MikoExperiencePussy_Love_1";
 		/// <summary>
 		/// Miko Experience Pussy Pleasure ♥♥♥
-		/// Create a <color=#d78fe9>Miko Experience Pussy Pleasure ♥♥♥♥</color> in hand.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperiencePussy_Love_2 = "S_Xao_MikoExperiencePussy_Love_2";
-		/// <summary>
-		/// Miko Experience Pussy Pleasure ♥♥♥♥
-		/// </summary>
-        public static string Skill_S_Xao_MikoExperiencePussy_Love_3 = "S_Xao_MikoExperiencePussy_Love_3";
 		/// <summary>
 		/// Simple Exchange ♡
 		/// This skill can be played repeatedly during this turn.
@@ -611,6 +630,8 @@ namespace Xao
         public static string Skill_S_Xao_SwimsuitDay_1 = "S_Xao_SwimsuitDay_1";
 		/// <summary>
 		/// Swimsuit Day ♡♡♡
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Increase all target's debuff stacks by 1.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: All target's debuffs remain an extra turn.
 		/// </summary>
         public static string Skill_S_Xao_SwimsuitDay_2 = "S_Xao_SwimsuitDay_2";
 		/// <summary>
@@ -625,6 +646,9 @@ namespace Xao
         public static string Skill_S_Xao_SwimsuitDay_Love_1 = "S_Xao_SwimsuitDay_Love_1";
 		/// <summary>
 		/// Swimsuit Day Pleasure ♥♥♥
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Increase all target's debuff stacks by 1.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: All target's debuffs remain an extra turn.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>9</color>: All above effects are triggered again.
 		/// </summary>
         public static string Skill_S_Xao_SwimsuitDay_Love_2 = "S_Xao_SwimsuitDay_Love_2";
 		/// <summary>
@@ -667,7 +691,7 @@ namespace Xao
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Current Combo is &a.
+		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -677,7 +701,7 @@ namespace Xao
 		/// Korean:
 		/// English:
 		/// We did it !
-		/// Current Combo is &a.
+		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -686,8 +710,8 @@ namespace Xao
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Current Combo is &a.
-		/// Combo will not reset at the start of the next turn.
+		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
+		/// <color=#87CEFA>Combo</color> will not reset at the start of the next turn.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -697,8 +721,8 @@ namespace Xao
 		/// Korean:
 		/// English:
 		/// We did it !
-		/// Current Combo is &a.
-		/// Combo will not reset at the start of the next turn.
+		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
+		/// <color=#87CEFA>Combo</color> will not reset at the start of the next turn.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -709,11 +733,6 @@ namespace Xao
 		/// English:
 		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
 		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
-		/// <color=#87CEFA>Combo</color> Rewards:  
-		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
-		/// <color=#d78fe9>4</color>: Draw 1 skill  
-		/// <color=#d78fe9>6</color>: Restore 1 Mana  
-		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
 		/// Chinese:
@@ -730,6 +749,18 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
 		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:  
 		/// <color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
 		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
 		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
@@ -743,7 +774,7 @@ namespace Xao
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string Combo_Description_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_1");
+        public static string Combo_Description_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_2");
 		/// <summary>
 		/// Korean:
 		/// English:
@@ -754,7 +785,27 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
 		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
-		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
+		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>18</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// <color=#d78fe9>20</color>: Gain 'Enchanted Ring' (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>25</color>: Gain 1 unique
+		/// <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_3 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_3");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b> (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
 		/// Chinese:
@@ -771,7 +822,20 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Draw 1 skill  
 		/// <color=#d78fe9>6</color>: Restore 1 Mana  
 		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
-		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b>
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b> (Once per battle)
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_Horny_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_Horny_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b> (Once per turn)
 		/// <color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
 		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
 		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
@@ -785,7 +849,32 @@ namespace Xao
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string Combo_Description_Horny_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_Horny_1");
+        public static string Combo_Description_Horny_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_Horny_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
+		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
+		/// <color=#87CEFA>Combo</color> Rewards:  
+		/// <color=#d78fe9>2</color>: Gain 1 <sprite name="Xao_Heart">  
+		/// <color=#d78fe9>4</color>: Draw 1 skill  
+		/// <color=#d78fe9>6</color>: Restore 1 Mana  
+		/// <color=#d78fe9>8</color>: Remove Overload from all allies and Restore 1 Mana
+		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b> (Once per battle)
+		/// <color=#d78fe9>12</color>: Gain 1 Mana Potion (Once per battle)
+		/// <color=#d78fe9>14</color>: Gain 1 Key (Once per battle)
+		/// <color=#d78fe9>16</color>: Reveal the Black Fog and the Secret Tile on the current stage
+		/// <color=#d78fe9>18</color>: Gain 1 Infinite Skill Book (Once per battle)
+		/// <color=#d78fe9>20</color>: Gain 'Enchanted Ring' (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>25</color>: Gain 1 unique
+		/// <color=#87CEFA>Xao's</color> <color=#d78fe9>Equipment</color> (Once per this <b>playthrough</b>)
+		/// <color=#d78fe9>50</color>: Gain 1 random <color=#F9D62FFF>Legendary Equipment</color> (Once per battle)
+		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Combo_Description_Horny_3 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_Horny_3");
 		/// <summary>
 		/// Korean:
 		/// English:

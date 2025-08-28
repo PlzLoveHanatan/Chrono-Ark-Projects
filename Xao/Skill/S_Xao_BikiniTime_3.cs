@@ -20,7 +20,6 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Xao_Combo.SaveComboBetweenTurns = true;
             Utils.PlayXaoVoice(BChar, true);
         }
     }
