@@ -111,7 +111,7 @@ namespace Xao
                     switch (randomIndex)
                     {
                         case 1:
-                            BChar.StartCoroutine(SetChibi("Chibi_Attack", Utils.SpriteType.Chibi_Attack));
+                            BChar.StartCoroutine(SetChibi("Chibi_Attack", Utils.SpriteType.Chibi_Attack, 2));
                             break;
                         case 2:
                             BChar.StartCoroutine(SetChibi("Chibi_AttackExtra_0", Utils.SpriteType.Chibi_AttackExtra_0));

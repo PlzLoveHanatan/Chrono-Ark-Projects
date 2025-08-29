@@ -16,17 +16,12 @@ namespace Xao
     /// <summary>
     /// Magical Climax
     /// </summary>
-    public class B_Xao_MagicalDay_2 : Buff, IP_Awake, IP_PlayerTurn
+    public class B_Xao_MagicalDay_2 : Buff
     {
-        public void Awake()
+        public override void BuffStat()
         {
-            Xao_Combo.SaveComboBetweenTurns = true;
-        }
-
-        public void Turn()
-        {
-            Utils.AllyTeam.AP += 1;
-            SelfDestroy();
+            PlusStat.dod = 3 * StackNum;
+            PlusStat.cri = 3 * StackNum;
         }
     }
 }

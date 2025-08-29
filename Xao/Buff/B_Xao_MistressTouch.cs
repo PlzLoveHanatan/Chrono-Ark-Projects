@@ -21,7 +21,7 @@ namespace Xao
         public override void BuffStat()
         {
             PlusStat.DMGTaken = 3 * StackNum;
-            PlusPerStat.Damage = -3 * StackNum;
+            PlusStat.crihit = 3 * StackNum;
             //PlusStat.hit = -3 * StackNum;
         }
     }

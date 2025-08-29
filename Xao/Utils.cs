@@ -23,6 +23,7 @@ using Spine;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Net.Sockets;
 using TileTypes;
+using NLog.Targets;
 namespace Xao
 {
     public static class Utils
@@ -34,8 +35,6 @@ namespace Xao
         public static int RareNum;
 
         public static bool RareBuffAwake;
-
-        public static bool ItemTake;
 
         public static bool RemoveFogFromStage = false;
 
@@ -362,6 +361,7 @@ namespace Xao
             { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_0, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0},
             { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_1, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_1},
             { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_2, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_2},
+            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_3, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_3},
             { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_0, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0},
             { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_1, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_1},
             { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_2, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_2},
@@ -434,7 +434,7 @@ namespace Xao
         {
             for (int i = 0; i < debuffNum; i++)
             {
-                if (enemy == null || buffKey.IsNullOrEmpty()) return;
+                if (enemy == null || buffKey.IsNullOrEmpty() || enemy.Info.Ally) return;
                 enemy.BuffAdd(buffKey, ally, false, percentage, false, -1, false);
             }
         }
@@ -1154,6 +1154,54 @@ namespace Xao
             }
         }
 
+        public static void MikoAnal()
+        {
+            if (Xao_Combo.CurrentCombo >= 6)
+            {
+                foreach (var target in EnemyTeam.AliveChars)
+                {
+                    AddBuff(target, ModItemKeys.Buff_B_Xao_Miko_0, 2);
+                }
+            }
+
+            if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod)
+            {
+                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, Xao_Combo.AdditionalComboRewards_0, Xao_Combo.AdditionalComboRewards_1, true);
+            }
+        }
+
+
+        public static void ApplyAndExtendBuffs()
+        {
+            if (Xao_Combo.CurrentCombo < 5) return;
+
+            foreach (var ally in AllyTeam.AliveChars)
+            {
+                AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalDay_2, 1);
+
+                if (Xao_Combo.CurrentCombo >= 7)
+                {
+                    AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalDay_3, 2);
+                }
+
+                if (Xao_Combo.CurrentCombo >= 9 && XaoHornyMod)
+                {
+                    var buffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, true, false).ToList();
+                    foreach (Buff buff in buffs)
+                    {
+                        if (!buff.BuffExtended.Any((Buff_Ex p) => p is B_Xao_Ex_MagicalDay))
+                        {
+                            foreach (StackBuff stackBuff in buff.StackInfo)
+                            {
+                                stackBuff.RemainTime++;
+                            }
+                            buff.AddBuffEx(new B_Xao_Ex_MagicalDay());
+                        }
+                    }
+                }
+            }
+        }
+
         public static void CopyAndExtendDebuffs(BattleChar target)
         {
             if (target == null || Xao_Combo.CurrentCombo < 5) return;
@@ -1233,6 +1281,20 @@ namespace Xao
                 var randomDebuff = debuffs[randomIndex];
                 randomDebuff.SelfDestroy();
             }
+        }
+
+        public static string GetAffectionBuff(Character myChar)
+        {
+            string buff = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
+            if (myChar?.Equip != null && myChar.Equip.Exists(item => item != null && item.itemkey == ModItemKeys.Item_Equip_Equip_Xao_LoveEgg))
+            {
+                buff = ModItemKeys.Buff_B_Xao_Affection_Ally;
+            }
+            else if (myChar.KeyData == Xao.Info.KeyData)
+            {
+                buff = ModItemKeys.Buff_B_Xao_Affection;
+            }
+            return buff;
         }
     }
 }

@@ -17,244 +17,169 @@ namespace Xao
         public static GameObject Combo_0, Combo_1, Combo_2, Combo_3;
         public static int CurrentCombo;
         public static bool SaveComboBetweenTurns = false;
-        private static Vector2 size = new Vector2(110f, 110f);
 
-        public static bool KeyOnce = false;
-        public static bool LegendaryOnce = false;
-        public static bool InfinityBookOnce = false;
-        public static bool ManaPotionOnce = false;
-        public static bool AttackPowerOncePerFight = false;
+        public static bool AP_OncePerFight;
+        public static bool ManaPotion_OncePerFight;
+        public static bool Key_OncePerFight;
+        public static bool InfinityBook_OncePerFight;
+        public static bool Legendary_OncePerFight;
 
-        public static bool XaoEquipMagicWand = false;
-        public static bool EnchantedRing = false;
+        public static bool EnchantedRing;
+        public static bool XaoEquipMagicWand;
 
-        public static bool AdditionalComboRewards_0 = false;
-        public static bool AdditionalComboRewards_1 = false;
+        public static bool AdditionalComboRewards_0;
+        public static bool AdditionalComboRewards_1;
 
-
-
+        private static Dictionary<int, Action> СomboRewards = new Dictionary<int, Action>
+        {
+            { 2, () => { if (AdditionalComboRewards_0) Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1); } },
+            { 4, () => { if (AdditionalComboRewards_0) Utils.AllyTeam.Draw(); } },
+            { 6, () => { if (AdditionalComboRewards_0) Utils.AllyTeam.AP += 1; } },
+            { 8, () => { if (AdditionalComboRewards_0) RemoveOverloadAndGainMana(); } },
+            { 10, () => { if (!AP_OncePerFight) IncreaseXaoAttackPower(Utils.Xao.Info, Utils.XaoHornyMod, AP_OncePerFight); } },
+            { 12, () => { if (AdditionalComboRewards_1 && !ManaPotion_OncePerFight) { GainReward(GDEItemKeys.Item_Potions_Potion_Mana); ManaPotion_OncePerFight = true; } } },
+            { 14, () => { if (AdditionalComboRewards_1 && !Key_OncePerFight) { GainReward(GDEItemKeys.Item_Misc_Item_Key); Key_OncePerFight = true; } } },
+            { 16, () => { if (AdditionalComboRewards_1) Utils.RemoveFogFromStage = true; } },
+            { 18, () => { if (AdditionalComboRewards_1 && !InfinityBook_OncePerFight) { GainReward(GDEItemKeys.Item_Consume_SkillBookInfinity); InfinityBook_OncePerFight = true; } } },
+            { 20, () => { if (AdditionalComboRewards_1 && !EnchantedRing) { GainReward(GDEItemKeys.Item_Equip_EnchantedRing); EnchantedRing = true; } } },
+            { 25, () => { if (AdditionalComboRewards_1 && !XaoEquipMagicWand) { GainReward(ModItemKeys.Item_Equip_Equip_Xao_MagicWand); XaoEquipMagicWand = true; } } },
+            { 50, () => { if (AdditionalComboRewards_1 && !Legendary_OncePerFight) { GainReward(PlayData.GetEquipRandom(4, false, new List<string>())); Legendary_OncePerFight = true; } } },
+        };
 
         public static void ComboChange(int comboChange = 1, bool resetCombo = false, bool isNewTurn = false)
         {
             if (resetCombo)
             {
-                DestroyAndNullifyAll(isNewTurn);
+                CurrentCombo = 0;
+                DestroyCombo(isNewTurn);
+                return;
             }
 
-            else
+            CurrentCombo += comboChange;
+
+            TriggerComboVisual(CurrentCombo);
+
+            if (СomboRewards.TryGetValue(CurrentCombo, out var rewardAction))
             {
-                CurrentCombo += comboChange;
-                //int[] comboMilestones = { 2, 4, 6, 8, 10, 15, 20, 30, 50 };
-
-                //if (comboMilestones.Contains(CurrentCombo))
-                //{
-                //    ApplyComboRewards(CurrentCombo);
-                //}
-                switch (CurrentCombo)
-                {
-                    case 2:
-                        if (AdditionalComboRewards_0)
-                        {
-                            Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1);
-                        }
-                        break;
-
-                    case 4:
-
-                        Utils.DestroyAndNullify(ref Combo_0);
-                        Utils.CreateNewCombo(Combo_1, "Combo_1", Utils.SpritePaths[Utils.SpriteType.Combo_1], true);
-                        if (AdditionalComboRewards_0)
-                        {
-                            Utils.AllyTeam.Draw();
-                        }
-                        break;
-
-                    case 6:
-                        if (AdditionalComboRewards_0)
-                        {
-                            Utils.AllyTeam.AP += 1;
-                        }
-                        break;
-
-                    case 8:
-                        Utils.DestroyAndNullify(ref Combo_1);
-                        Utils.CreateNewCombo(Combo_2, "Combo_2", Utils.SpritePaths[Utils.SpriteType.Combo_2], true);
-                        if (AdditionalComboRewards_0)
-                        {
-                            RemoveOverload();
-                        }
-                        break;
-
-                    case 10:
-                        IncreaseXaoAP(Utils.Xao.Info);
-                        break;
-
-                    case 12:
-                        if (AdditionalComboRewards_1 && !ManaPotionOnce)
-                        {
-                            string manaPotion = GDEItemKeys.Item_Potions_Potion_Mana;
-                            GainReward(manaPotion);
-                            ManaPotionOnce = true;
-                        }
-                        break;
-
-                    case 14:
-                        if (AdditionalComboRewards_1 && !KeyOnce)
-                        {
-                            GainReward(GDEItemKeys.Item_Misc_Item_Key);
-                            KeyOnce = true;
-                        }
-                        break;
-
-                    case 16:
-                        if (AdditionalComboRewards_1)
-                        {
-                            Utils.RemoveFogFromStage = true;
-                        }
-                        break;
-
-                    case 18:
-                        if (AdditionalComboRewards_1 && !InfinityBookOnce)
-                        {
-                            GainReward(GDEItemKeys.Item_Consume_SkillBookInfinity);
-                            InfinityBookOnce = true;
-                        }
-                        break;
-
-                    case 20:
-                        if (AdditionalComboRewards_1 && !EnchantedRing)
-                        {
-                            string enchantedRing = GDEItemKeys.Item_Equip_EnchantedRing;
-                            GainReward(enchantedRing);
-                            EnchantedRing = true;
-                        }
-                        break;
-
-                    case 25:
-                        if (AdditionalComboRewards_1 && !XaoEquipMagicWand)
-                        {
-                            GainReward(ModItemKeys.Item_Equip_Equip_Xao_MagicWand);
-                            XaoEquipMagicWand = true;
-                        }
-                        break;
-
-                    case 50:
-                        if (AdditionalComboRewards_1 && !LegendaryOnce)
-                        {
-                            GainReward(PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand }));
-                            LegendaryOnce = true;
-                        }
-                        break;
-                }
+                rewardAction?.Invoke();
             }
         }
 
-        public static void IncreaseXaoAP(Character character)
+        private static void TriggerComboVisual(int currentCombo)
         {
-            if (Utils.XaoHornyMod && !AttackPowerOncePerFight)
+            switch (currentCombo)
+            {
+                case 4:
+                    Utils.DestroyAndNullify(ref Combo_0);
+                    Utils.CreateNewCombo(Combo_1, "Combo_1", Utils.SpritePaths[Utils.SpriteType.Combo_1], true);
+                    break;
+                case 8:
+                    Utils.DestroyAndNullify(ref Combo_1);
+                    Utils.CreateNewCombo(Combo_2, "Combo_2", Utils.SpritePaths[Utils.SpriteType.Combo_2], true);
+                    break;
+            }
+        }
+
+        public static void IncreaseXaoAttackPower(Character character, bool isHorny = false, bool oncePerFight = false)
+        {
+            if (isHorny && !oncePerFight)
             {
                 character.OriginStat.atk++;
-                AttackPowerOncePerFight = true;
+                AP_OncePerFight = true;
             }
         }
+        public static void IncreaseAttackPower(Character character)
+        {
+            character.OriginStat.atk++;
+        }
 
-        public static void ApplyComboRewards(int currentCombo)
+        public static void GainComboRewards(int currentCombo, bool isSmallReward = false, bool isBigReward = false, bool isAdditionalReward = false)
         {
             if (currentCombo >= 10)
             {
-                IncreaseXaoAP(Utils.Xao.Info);
+                IncreaseXaoAttackPower(Utils.Xao.Info, Utils.XaoHornyMod, AP_OncePerFight);
+
+                if (isAdditionalReward)
+                {
+                    IncreaseAttackPower(Utils.Xao.Info);
+                }
             }
 
-            if (!AdditionalComboRewards_0) return;
-
-            if (currentCombo >= 2)
+            if (isSmallReward)
             {
-                Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1);
+                if (currentCombo >= 2)
+                {
+                    Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1);
+                }
+
+                if (currentCombo >= 4)
+                {
+                    Utils.AllyTeam.Draw();
+                }
+
+                if (currentCombo >= 6)
+                {
+                    Utils.AllyTeam.AP += 1;
+                }
+
+                if (currentCombo >= 8)
+                {
+                    RemoveOverloadAndGainMana();
+                }
             }
 
-            if (currentCombo >= 4)
+            if (isBigReward)
             {
-                Utils.AllyTeam.Draw();
+                if (currentCombo >= 12 && (!ManaPotion_OncePerFight || isAdditionalReward))
+                {
+                    GainReward(GDEItemKeys.Item_Potions_Potion_Mana);
+                    ManaPotion_OncePerFight = true;
+                }
+
+                if (currentCombo >= 14 && (!Key_OncePerFight || isAdditionalReward))
+                {
+                    GainReward(GDEItemKeys.Item_Misc_Item_Key);
+                    Key_OncePerFight = true;
+                }
+
+                if (currentCombo >= 16)
+                {
+                    Utils.RemoveFogFromStage = true;
+                }
+
+                if (currentCombo >= 18 && (!InfinityBook_OncePerFight || isAdditionalReward))
+                {
+                    GainReward(GDEItemKeys.Item_Consume_SkillBookInfinity);
+                    InfinityBook_OncePerFight = true;
+                }
+
+                if (currentCombo >= 20 && !EnchantedRing)
+                {
+                    GainReward(GDEItemKeys.Item_Equip_EnchantedRing);
+                    EnchantedRing = true;
+                }
+
+                if (currentCombo >= 25 && !XaoEquipMagicWand)
+                {
+                    GainReward(ModItemKeys.Item_Equip_Equip_Xao_MagicWand);
+                    XaoEquipMagicWand = true;
+                }
+
+                if (currentCombo >= 50 && (!Legendary_OncePerFight || isAdditionalReward))
+                {
+                    string equipKey = PlayData.GetEquipRandom(4, false, new List<string>());
+                    GainReward(equipKey);
+                    Legendary_OncePerFight = true;
+                }
             }
-
-            if (currentCombo >= 6)
-            {
-                Utils.AllyTeam.AP += 1;
-            }
-
-            if (currentCombo >= 8)
-            {
-                RemoveOverload();
-            }
-
-            if (!AdditionalComboRewards_1) return;
-
-            if (currentCombo >= 12 && !ManaPotionOnce)
-            {
-                string manaPotion = GDEItemKeys.Item_Potions_Potion_Mana;
-                GainReward(manaPotion);
-                ManaPotionOnce = true;
-            }
-
-            if (currentCombo >= 14 && !KeyOnce)
-            {
-                string key = GDEItemKeys.Item_Misc_Item_Key;
-                GainReward(key);
-                KeyOnce = true;
-            }
-
-            if (currentCombo >= 16)
-            {
-                Utils.RemoveFogFromStage = true;
-            }
-
-            if (currentCombo >= 18 && !InfinityBookOnce)
-            {
-                string infinityBook = GDEItemKeys.Item_Consume_SkillBookInfinity;
-                GainReward(infinityBook);
-                InfinityBookOnce = true;
-            }
-
-            if (currentCombo >= 20 && !EnchantedRing)
-            {
-                string enchantedRing = GDEItemKeys.Item_Equip_EnchantedRing;
-                GainReward(enchantedRing);
-                EnchantedRing = true;
-            }
-
-            if (currentCombo >= 25 && !XaoEquipMagicWand)
-            {
-                string xaoUniqueEquip = ModItemKeys.Item_Equip_Equip_Xao_MagicWand;
-                GainReward(xaoUniqueEquip);
-                XaoEquipMagicWand = true;
-            }
-
-            if (currentCombo >= 50 && !LegendaryOnce)
-            {
-                string equipKey = PlayData.GetEquipRandom(4, false, new List<string> { ModItemKeys.Item_Equip_Equip_Xao_MagicWand });
-                GainReward(equipKey);
-                LegendaryOnce = true;
-            }
-        }
-
-        public static void DestroyAndNullifyAll(bool isNewTurn = false)
-        {
-            Utils.DestroyAndNullify(ref Combo_0);
-            Utils.DestroyAndNullify(ref Combo_1);
-            Utils.DestroyAndNullify(ref Combo_2);
-
-            if (isNewTurn)
-            {
-                Utils.CreateNewCombo(Combo_0, "Combo_0", Utils.SpritePaths[Utils.SpriteType.Combo_0]);
-            }
-        }
+        }   
 
         public static void GainReward(string key)
         {
             InventoryManager.Reward(ItemBase.GetItem(key, 1));
         }
 
-        public static void RemoveOverload()
+        public static void RemoveOverloadAndGainMana()
         {
             Utils.AllyTeam.LucyChar.Overload = 0;
             Utils.AllyTeam.AP += 1;
@@ -265,6 +190,17 @@ namespace Xao
                 {
                     ally.Overload = 0;
                 }
+            }
+        }
+        public static void DestroyCombo(bool isNewTurn = false)
+        {
+            Utils.DestroyAndNullify(ref Combo_0);
+            Utils.DestroyAndNullify(ref Combo_1);
+            Utils.DestroyAndNullify(ref Combo_2);
+
+            if (isNewTurn)
+            {
+                Utils.CreateNewCombo(Combo_0, "Combo_0", Utils.SpritePaths[Utils.SpriteType.Combo_0]);
             }
         }
     }

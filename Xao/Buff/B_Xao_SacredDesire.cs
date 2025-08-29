@@ -16,7 +16,7 @@ namespace Xao
 	/// <summary>
 	/// Sacred Desire
 	/// </summary>
-    public class B_Xao_SacredDesire : Buff, IP_Awake, IP_BattleEnd
+    public class B_Xao_SacredDesire : Buff, IP_Awake
     {
         private bool FirstAwake;
 
@@ -25,15 +25,9 @@ namespace Xao
             if (!FirstAwake)
             {
                 Xao_Combo.AdditionalComboRewards_0 = true;
-                Xao_Combo.AttackPowerOncePerFight = false;
-                Xao_Combo.ApplyComboRewards(Xao_Combo.CurrentCombo);
-                FirstAwake = true;
+                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, Xao_Combo.AdditionalComboRewards_0, Xao_Combo.AdditionalComboRewards_1);
+                FirstAwake = true;  
             }
-        }
-
-        public void BattleEnd()
-        {
-            Xao_Combo.AdditionalComboRewards_0 = false;
         }
     }
 }

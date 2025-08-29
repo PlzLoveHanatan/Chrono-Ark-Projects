@@ -20,8 +20,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Xao_Combo.ComboChange(1);
-            Utils.HealAndRemoveDebuffs(BChar, Targets[0], 3);
+            Utils.HealAndRemoveDebuffs(BChar, Targets[0], 2);
             Utils.PlayXaoVoiceMaid(BChar);
         }
     }

@@ -17,11 +17,17 @@ namespace Xao
         public Image Img;
         public bool interactable = true;
         private bool wasInteractable = false;
+        public BattleChar Owner { get; private set; }
 
         public Color normalColor = Color.white;
         public Color hoverColor = new Color(0.8f, 0.8f, 0.8f);
         public Color pressedColor = new Color(0.9f, 0.9f, 0.9f);
         public Color disabledColor = new Color(1f, 1f, 1f, 0.5f);
+
+        public void SetOwner(BattleChar owner)
+        {
+            Owner = owner;
+        }
 
         public void Awake()
         {
@@ -82,10 +88,16 @@ namespace Xao
 
         public void RemoveOverloadAllySynergy()
         {
+            if (Owner == null) return;
+
             string buffKey = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
-            var aliveAlly = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c?.BuffReturn(buffKey, false) != null);
-            var affectionAllySynergy = aliveAlly.BuffReturn(buffKey, false) as B_Xao_Affection_Ally_Synergy;
+            var affectionAllySynergy = Owner.BuffReturn(buffKey, false) as B_Xao_Affection_Ally_Synergy;
             affectionAllySynergy?.AllyCallSynergy();
+
+            //string buffKey = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
+            //var aliveAlly = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c?.BuffReturn(buffKey, false) != null);
+            //var affectionAllySynergy = aliveAlly.BuffReturn(buffKey, false) as B_Xao_Affection_Ally_Synergy;
+            //affectionAllySynergy?.AllyCallSynergy();
         }
     }
 }

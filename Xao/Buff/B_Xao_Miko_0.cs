@@ -13,16 +13,15 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    /// <summary>
-    /// Magical Day
-    /// </summary>
-    public class B_Xao_MagicalDay_0 : Buff
+	/// <summary>
+	/// Forbidden Ritual
+	/// </summary>
+    public class B_Xao_Miko_0 : Buff
     {
         public override void BuffStat()
         {
-            PlusStat.dod = 3 * StackNum;
-            PlusStat.PlusCriDmg = 3 * StackNum;
-            PlusStat.PlusCriHeal = 3 * StackNum;
+            PlusPerStat.Damage = -5 * StackNum;
+            PlusStat.hit = -5 * StackNum;
         }
     }
 }

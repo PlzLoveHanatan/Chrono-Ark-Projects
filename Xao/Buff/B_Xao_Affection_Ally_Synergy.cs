@@ -68,20 +68,15 @@ namespace Xao
 
             string key = myButton.Myskill.MySkill.KeyID;
 
-            //overload = key == ModItemKeys.Skill_S_Xao_B_Affection_0 ? 0 : overload;
-
             if (key == ModItemKeys.Skill_S_Xao_B_Affection_0)
             {
                 BChar.Overload = 0;
                 SelfStackDestroy();
-                Xao_Hearts.HeartsCheckAllySynergy(BChar, -1);
-                Xao_Hearts.DestroyHeartAllySynergy();
+
+                Xao_Hearts_Ally_Synergy.HeartsCheck(BChar, -1);
+                Xao_Hearts_Ally_Synergy.DestroyHearts(BChar);
                 Utils.AllyHentaiText(BChar);
                 Utils.PlayXaoSound("Xao_Affection_0");
-            }
-            else
-            {
-
             }
         }
 
@@ -95,7 +90,7 @@ namespace Xao
         {
             if (BuffTaker == BChar.Info.Ally && addedbuff == this)
             {
-                Xao_Hearts.HeartsCheckAllySynergy(BChar, 1);
+                Xao_Hearts_Ally_Synergy.HeartsCheck(BChar, 1);
             }
         }
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)

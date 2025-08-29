@@ -6,19 +6,16 @@ namespace Xao
 		/// <summary>
 		/// Overload Ecstasy <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
-		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection = "B_Xao_Affection";
 		/// <summary>
 		/// Overload Ecstasy <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
-		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection_Ally = "B_Xao_Affection_Ally";
 		/// <summary>
 		/// Overload Ecstasy <sprite name="Xao_Heart">
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
-		/// <color=#919191>You can activate this buff by left-clicking. Cannot be activated if user is stunned.</color>
 		/// </summary>
         public static string Buff_B_Xao_Affection_Ally_Synergy = "B_Xao_Affection_Ally_Synergy";
 		/// <summary>
@@ -30,24 +27,17 @@ namespace Xao
 		/// </summary>
         public static string Buff_B_Xao_Combo = "B_Xao_Combo";
 		/// <summary>
-		/// Forbidden Desire
-		/// Activate all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
-		/// Gain <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards II</color> for this battle.
-		/// </summary>
-        public static string Buff_B_Xao_ForbiddenDesire = "B_Xao_ForbiddenDesire";
-		/// <summary>
-		/// Starry Tease
-		/// 50% chance to deal &a additional damage <color=#FF7C34>(Attack * 0.2)</color> to the target.
+		/// Magical Ecstasy
 		/// </summary>
         public static string Buff_B_Xao_MagicalDay_0 = "B_Xao_MagicalDay_0";
 		/// <summary>
-		/// Magical Ecstasy
+		/// Magical Climax
+		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// At the start of next turn remove this buff.
 		/// </summary>
         public static string Buff_B_Xao_MagicalDay_1 = "B_Xao_MagicalDay_1";
 		/// <summary>
-		/// Magical Climax
-		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
-		/// At the start of next turn restore 1 Mana and remove this buff.
+		/// Magical Tease
 		/// </summary>
         public static string Buff_B_Xao_MagicalDay_2 = "B_Xao_MagicalDay_2";
 		/// <summary>
@@ -76,8 +66,8 @@ namespace Xao
         public static string Buff_B_Xao_PleasureLock = "B_Xao_PleasureLock";
 		/// <summary>
 		/// Sacred Desire
-		/// Activate all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
-		/// Gain <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards I</color> for this battle.
+		/// Activate <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards I</color> for this battle.
+		/// Gain all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
 		/// </summary>
         public static string Buff_B_Xao_SacredDesire = "B_Xao_SacredDesire";
 		/// <summary>
@@ -107,14 +97,14 @@ namespace Xao
 		/// </summary>
         public static string Item_Equip_Equip_Xao_MagicWand = "Equip_Xao_MagicWand";
 		/// <summary>
-		/// When played, increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and, if <color=#87CEFA>Combo</color> is <color=#d78fe9>6</color> or more, <b>permanently</b> increase one stat of the ally based on their Role.
+		/// When played, increase your current <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and, if <color=#87CEFA>Combo</color> is <color=#d78fe9>6</color> or more, <b>permanently</b> increase one stat of the ally based on their Role.
 		/// Attack Role : Attack Power +1
 		/// Tank Role : Armor +3%
 		/// Support Role : Healing Power +1</color>
 		/// </summary>
         public static string SkillExtended_Ex_Xao_0 = "Ex_Xao_0";
 		/// <summary>
-		/// When played increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and gain 1 <sprite name="Xao_Heart"> (Max 1).
+		/// When played increase your current <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and gain 1 <sprite name="Xao_Heart"> (Max 1).
 		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// </summary>
         public static string SkillExtended_Ex_Xao_1 = "Ex_Xao_1";
@@ -418,6 +408,8 @@ namespace Xao
         public static string Skill_S_Xao_MagicalGirlPussy_2 = "S_Xao_MagicalGirlPussy_2";
 		/// <summary>
 		/// Magical Girl Pussy ♡♡♡♡
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: All allies gain 1 <sprite name="Xao_Heart">.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: All allies gain 2 stacks of 'Magical Ecstasy'.
 		/// </summary>
         public static string Skill_S_Xao_MagicalGirlPussy_3 = "S_Xao_MagicalGirlPussy_3";
 		/// <summary>
@@ -437,6 +429,9 @@ namespace Xao
         public static string Skill_S_Xao_MagicalGirlPussy_Love_2 = "S_Xao_MagicalGirlPussy_Love_2";
 		/// <summary>
 		/// Magical Girl Pussy Pleasure ♥♥♥♥
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: All allies gain 1 <sprite name="Xao_Heart">.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: All allies gain 2 stacks of 'Magical Ecstasy'.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>10</color>: Cost is reduced by 1.
 		/// </summary>
         public static string Skill_S_Xao_MagicalGirlPussy_Love_3 = "S_Xao_MagicalGirlPussy_Love_3";
 		/// <summary>
@@ -456,6 +451,8 @@ namespace Xao
         public static string Skill_S_Xao_MagicalGirlThighjob_2 = "S_Xao_MagicalGirlThighjob_2";
 		/// <summary>
 		/// Magical Girl Thighjob ♡♡♡♡
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: All allies gain 1 stack of  'Magical Tease'.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: All allies gain 2 stacks of 'Magical Desire'.
 		/// </summary>
         public static string Skill_S_Xao_MagicalGirlThighjob_3 = "S_Xao_MagicalGirlThighjob_3";
 		/// <summary>
@@ -475,6 +472,9 @@ namespace Xao
         public static string Skill_S_Xao_MagicalGirlThighjob_Love_2 = "S_Xao_MagicalGirlThighjob_Love_2";
 		/// <summary>
 		/// Magical Girl Thighjob Pleasure ♥♥♥♥
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: All allies gain 1 stack of  'Magical Tease'.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: All allies gain 2 stacks of 'Magical Desire'.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>9</color>: All allies buffs remain 1 extra turn. Buffs that were extended by this effect cannot be extended again.
 		/// </summary>
         public static string Skill_S_Xao_MagicalGirlThighjob_Love_3 = "S_Xao_MagicalGirlThighjob_Love_3";
 		/// <summary>
@@ -522,6 +522,7 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperienceAnal_1 = "S_Xao_MikoExperienceAnal_1";
 		/// <summary>
 		/// Miko Experience Anal ♡♡♡
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Apply 2 stack of 'Forbidden Ritual' to all enemies.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperienceAnal_2 = "S_Xao_MikoExperienceAnal_2";
 		/// <summary>
@@ -536,6 +537,8 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperienceAnal_Love_1 = "S_Xao_MikoExperienceAnal_Love_1";
 		/// <summary>
 		/// Miko Experience Anal Pleasure ♥♥♥
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Apply 2 stack of 'Forbidden Ritual' to all enemies.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Trigger all current <color=#87CEFA>Combo</color> rewards.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperienceAnal_Love_2 = "S_Xao_MikoExperienceAnal_Love_2";
 		/// <summary>
@@ -674,6 +677,22 @@ namespace Xao
         public static string Character_Skin_Xao_Naked = "Xao_Naked";
         public static string Character_Skin_Xao_Swimsuit = "Xao_Swimsuit";
         public static string Character_Skin_Xao_White_Maid_Pantyhose = "Xao_White_Maid_Pantyhose";
+		/// <summary>
+		/// Magical Desire
+		/// Whenever playing skill increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color> and remove 1 stack.
+		/// </summary>
+        public static string Buff_B_Xao_MagicalDay_3 = "B_Xao_MagicalDay_3";
+		/// <summary>
+		/// Forbidden Ritual
+		/// </summary>
+        public static string Buff_B_Xao_Miko_0 = "B_Xao_Miko_0";
+		/// <summary>
+		/// Forbidden Desire
+		/// Activate <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards II</color> for this battle.
+		/// Gain all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
+		/// </summary>
+        public static string Buff_B_Xao_Miko_1 = "B_Xao_Miko_1";
+        public static string Buff_B_Xao_Ex_MagicalDay = "B_Xao_Ex_MagicalDay";
 
     }
 

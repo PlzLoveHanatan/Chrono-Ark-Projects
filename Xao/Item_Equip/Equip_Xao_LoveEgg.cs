@@ -23,8 +23,7 @@ namespace Xao
         {
             if (BChar != Utils.Xao)
             {
-                Xao_Hearts.CreateHeartsAlly(BChar);
-                Xao_Hearts.SavedStackAlly = 0;
+                //Xao_Hearts_Ally.DestroyHearts(BChar);
             }
         }
 
@@ -41,13 +40,13 @@ namespace Xao
         {
             if (DeadChar == BChar)
             {
-                Xao_Hearts.DestroyAndNullifyAllAlly();
+                Xao_Hearts_Ally.DestroyHearts(BChar);
             }
         }
 
         public void Turn()
         {
-            string buff = BChar == Utils.Xao ? ModItemKeys.Buff_B_Xao_Affection : ModItemKeys.Buff_B_Xao_Affection_Ally;
+            string buff = Utils.GetAffectionBuff(BChar.Info);
             Utils.AddBuff(BChar, buff, 1);
         }
     }

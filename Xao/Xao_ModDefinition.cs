@@ -13,7 +13,6 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using static Mono.Security.X509.X520;
-using static Xao.Utils;
 using System.Drawing;
 namespace Xao
 {
@@ -88,7 +87,7 @@ namespace Xao
             }
         }
 
-        public static Sprite GetSprite(SpriteType type)
+        public static Sprite GetSprite(Utils.SpriteType type)
         {
             Sprites.TryGetValue(type, out var sprite);
             return sprite;
@@ -108,8 +107,8 @@ namespace Xao
         public void ResetHeartsNum()
         {
             Xao_Hearts.SavedStackNum = 0;
-            Xao_Hearts.SavedStackAlly = 0;
-            Xao_Hearts.SavedStackAllySynergy = 0;
+            Xao_Hearts_Ally.DestroyAll();
+            Xao_Hearts_Ally_Synergy.DestroyAll();
         }
 
         public void ResetCombo()
@@ -119,13 +118,13 @@ namespace Xao
 
         public void ResetRewards()
         {
+            Xao_Combo.AP_OncePerFight = false;
+            Xao_Combo.ManaPotion_OncePerFight = false;
+            Xao_Combo.Key_OncePerFight = false;
+            Xao_Combo.InfinityBook_OncePerFight = false;
+            Xao_Combo.Legendary_OncePerFight = false;
             Xao_Combo.AdditionalComboRewards_0 = false;
             Xao_Combo.AdditionalComboRewards_1 = false;
-            Xao_Combo.KeyOnce = false;
-            Xao_Combo.LegendaryOnce = false;
-            Xao_Combo.InfinityBookOnce = false;
-            Xao_Combo.ManaPotionOnce = false;
-            Xao_Combo.AttackPowerOncePerFight = false;
         }
     }
 }

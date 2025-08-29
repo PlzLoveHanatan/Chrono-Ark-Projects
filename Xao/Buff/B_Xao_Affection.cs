@@ -70,8 +70,6 @@ namespace Xao
 
             string key = myButton.Myskill.MySkill.KeyID;
 
-            //overload = key == ModItemKeys.Skill_S_Xao_B_Affection_0 ? 0 : overload;
-
             if (key == ModItemKeys.Skill_S_Xao_B_Affection_0)
             {
                 BChar.Overload = 0;
@@ -79,10 +77,6 @@ namespace Xao
                 Xao_Hearts.HeartsCheck(BChar, -1);
                 Utils.PopHentaiText(BChar);
                 Utils.PlayXaoSound("Xao_Affection_0");
-            }
-            else
-            {
-
             }
         }
 

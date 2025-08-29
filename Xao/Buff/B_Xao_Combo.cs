@@ -61,19 +61,12 @@ namespace Xao
         {
             if (!Xao_Combo.SaveComboBetweenTurns)
             {
-                Xao_Combo.CurrentCombo = 0;
                 Xao_Combo.ComboChange(0, true, true);
             }
             else
             {
                 Xao_Combo.SaveComboBetweenTurns = false;
-
-                if (Xao_Combo.AttackPowerOncePerFight)
-                {
-                    Xao_Combo.AttackPowerOncePerFight = false;
-                }
-
-                Xao_Combo.ApplyComboRewards(Xao_Combo.CurrentCombo);
+                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, Xao_Combo.AdditionalComboRewards_0, Xao_Combo.AdditionalComboRewards_1);
             }
         }
     }

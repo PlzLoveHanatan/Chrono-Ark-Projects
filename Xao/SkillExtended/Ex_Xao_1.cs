@@ -13,14 +13,8 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    public class Ex_Xao_1 : Skill_Extended, IP_BattleStart_UIOnBefore
+    public class Ex_Xao_1 : Skill_Extended
     {
-        public void BattleStartUIOnBefore(BattleSystem Ins)
-        {
-            Xao_Hearts.SavedStackAllySynergy = 0;
-            Xao_Hearts.SavedStackAlly = 0;
-        }
-
         public override void Init()
         {
             OnePassive = true;
@@ -33,16 +27,7 @@ namespace Xao
             Xao_Combo.SaveComboBetweenTurns = true;
             Xao_Combo.ComboChange(2);
 
-            string buff = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
-
-            if (MyChar.Equip != null)
-            {
-                if (MyChar.Equip.Exists(item => item != null && item.itemkey == ModItemKeys.Item_Equip_Equip_Xao_LoveEgg))
-                {
-                    buff = ModItemKeys.Buff_B_Xao_Affection_Ally;
-                }
-            }
-            Utils.AllyHentaiText(BChar);
+            var buff = Utils.GetAffectionBuff(MyChar);
             Utils.AddBuff(BChar, buff, 1);
         }
     }

@@ -13,11 +13,11 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    /// <summary>
-    /// Forbidden Desire
-    ///  Increase <color=#87CEFA>Combo</color> rewards for this battle.
-    /// </summary>
-    public class B_Xao_ForbiddenDesire : Buff, IP_Awake, IP_BattleEnd
+	/// <summary>
+	/// Activate <color=#87CEFA>Combo</color> <color=#d78fe9>Rewards II</color> for this battle.
+	/// Gain all current <color=#87CEFA>Combo</color> rewards upon gaining this buff (Once per battle).
+	/// </summary>
+    public class B_Xao_Miko_1 : Buff, IP_Awake
     {
         private bool FirstAwake;
 
@@ -26,15 +26,9 @@ namespace Xao
             if (!FirstAwake)
             {
                 Xao_Combo.AdditionalComboRewards_1 = true;
-                Xao_Combo.AttackPowerOncePerFight = false;
-                Xao_Combo.ApplyComboRewards(Xao_Combo.CurrentCombo);
+                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, Xao_Combo.AdditionalComboRewards_0, Xao_Combo.AdditionalComboRewards_1);
                 FirstAwake = true;
             }
-        }
-
-        public void BattleEnd()
-        {
-            Xao_Combo.AdditionalComboRewards_1 = false;
         }
     }
 }

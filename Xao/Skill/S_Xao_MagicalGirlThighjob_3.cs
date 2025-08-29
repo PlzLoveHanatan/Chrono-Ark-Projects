@@ -20,6 +20,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.ApplyAndExtendBuffs();
             Utils.PlayXaoVoice(BChar, true);
         }
     }

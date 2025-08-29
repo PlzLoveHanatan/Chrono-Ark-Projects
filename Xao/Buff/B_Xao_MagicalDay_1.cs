@@ -16,12 +16,22 @@ namespace Xao
 	/// <summary>
 	/// Magical Ecstasy
 	/// </summary>
-    public class B_Xao_MagicalDay_1 : Buff
+	public class B_Xao_MagicalDay_1 : Buff, IP_Awake, IP_PlayerTurn
     {
-        public override void BuffStat()
+        public override void Init()
         {
-            PlusPerStat.Damage = 3 * StackNum;
-            PlusStat.hit = 3 * StackNum;
+            PlusStat.dod = 15f;
         }
-    }
+
+        public void Awake()
+        {
+            Xao_Combo.SaveComboBetweenTurns = true;
+        }
+
+        public void Turn()
+        {
+            //Utils.AllyTeam.AP += 1;
+            SelfDestroy();
+        }		
+	}
 }

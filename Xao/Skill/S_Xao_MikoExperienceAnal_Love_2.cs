@@ -13,13 +13,14 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-	/// <summary>
-	/// Miko Experience Anal Pleasure ♥♥♥
-	/// </summary>
+    /// <summary>
+    /// Miko Experience Anal Pleasure ♥♥♥
+    /// </summary>
     public class S_Xao_MikoExperienceAnal_Love_2 : Skill_Extended
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.MikoAnal();
             Utils.PlayXaoVoice(BChar, true);
         }
     }
