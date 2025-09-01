@@ -403,9 +403,11 @@ namespace Urunhilda
     {
 		/// <summary>
 		/// Korean:
+		/// 조심하세요, 우룬힐다 아가씨.
 		/// English:
 		/// Careful Lady Urunhilda.
 		/// Japanese:
+		/// 気をつけて、ウルンヒルダ様。
 		/// Chinese:
 		/// 小心！乌伦希尔妲小姐！
 		/// Chinese-TW:
@@ -413,9 +415,11 @@ namespace Urunhilda
         public static string AllyTakesDamage => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("AllyTakesDamage");
 		/// <summary>
 		/// Korean:
+		/// 네가 날 만질 때마다 점점 기분이 좋아져.
 		/// English:
 		/// When you touch me, I gradually start to feel good.
 		/// Japanese:
+		/// あなたに触れられると、少しずつ気持ちよくなる。
 		/// Chinese:
 		/// 每当你触碰我，我都会更加愉悦。
 		/// Chinese-TW:
@@ -423,9 +427,11 @@ namespace Urunhilda
         public static string Urunhilda_BI_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_0");
 		/// <summary>
 		/// Korean:
+		/// 더 만져도 돼.
 		/// English:
 		/// You can touch me more.
 		/// Japanese:
+		/// もっと触っていいよ。
 		/// Chinese:
 		/// 再多摸摸我......
 		/// Chinese-TW:
@@ -433,9 +439,11 @@ namespace Urunhilda
         public static string Urunhilda_BI_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_1");
 		/// <summary>
 		/// Korean:
+		/// 넌 정말... 짓궂어...
 		/// English:
 		/// You're so... naughty...
 		/// Japanese:
+		/// あなたって本当に…いじわる…
 		/// Chinese:
 		/// 你真是...太调皮了...
 		/// Chinese-TW:
@@ -443,9 +451,11 @@ namespace Urunhilda
         public static string Urunhilda_BI_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_2");
 		/// <summary>
 		/// Korean:
+		/// 아, 아-안 돼, 그렇게 내 젖꼭지를 문지르지 마! 하, 하, 하, 하...
 		/// English:
 		/// Ah, n-no, don't rub my nipples like that! Hah, hah, hah, hah...
 		/// Japanese:
+		/// あ、だ、だめ、そんな風に乳首をこすらないで！はぁ、はぁ、はぁ、はぁ…
 		/// Chinese:
 		/// 啊，不-不要，不要那樣揉我的乳頭！哈，哈，哈，哈....
 		/// Chinese-TW:
@@ -453,9 +463,11 @@ namespace Urunhilda
         public static string Urunhilda_BI_3 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BI_3");
 		/// <summary>
 		/// Korean:
+		/// 날 보러 온 거야? 외로웠어?
 		/// English:
 		/// Did you come to see me? Feeling lonely, were you?
 		/// Japanese:
+		/// 私に会いに来たの？寂しかったの？
 		/// Chinese:
 		/// 你是来看我的吗？感到寂寞了吗？
 		/// Chinese-TW:
@@ -463,9 +475,11 @@ namespace Urunhilda
         public static string Urunhilda_BS_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_0");
 		/// <summary>
 		/// Korean:
+		/// 좋은 아침. 오늘은 무슨 계획이 있어?
 		/// English:
 		/// Good morning. So, what's your plan for today?
 		/// Japanese:
+		/// おはよう。さて、今日は何をするつもり？
 		/// Chinese:
 		/// 早上好，今天有什么计划？
 		/// Chinese-TW:
@@ -473,9 +487,11 @@ namespace Urunhilda
         public static string Urunhilda_BS_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_1");
 		/// <summary>
 		/// Korean:
+		/// 이 시간에 무슨 일로 온 거야?
 		/// English:
 		/// What brings you here at this hour?
 		/// Japanese:
+		/// こんな時間にどうして来たの？
 		/// Chinese:
 		/// 来找我做什么呢？
 		/// Chinese-TW:
@@ -483,9 +499,11 @@ namespace Urunhilda
         public static string Urunhilda_BS_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_BS_2");
 		/// <summary>
 		/// Korean:
+		/// 내 광기의 결실을 보고 싶어? 정말, 넌 변태야.
 		/// English:
 		/// Do you want to see the fruits of my madness? Geez, you're such a perv.
 		/// Japanese:
+		/// 私の狂気の果実を見たいの？まったく、あなたって変態ね。
 		/// Chinese:
 		/// 你想看我疯狂的成果吗？天哪，真是个变态。
 		/// Chinese-TW:
@@ -493,9 +511,11 @@ namespace Urunhilda
         public static string Urunhilda_Chest_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Chest_0");
 		/// <summary>
 		/// Korean:
+		/// 뭐? 내가 너 위해 일부러 이렇게 하는데, 그게 네 대답이야?
 		/// English:
 		/// Huh? I'm going out of my way to do this for you, and that's how you talk to me?
 		/// Japanese:
+		/// え？わざわざあなたのためにしてあげてるのに、その言い方？
 		/// Chinese:
 		/// 哈？我特地为你做这个，你就这样跟我说话？
 		/// Chinese-TW:
@@ -503,9 +523,11 @@ namespace Urunhilda
         public static string Urunhilda_Chest_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Chest_1");
 		/// <summary>
 		/// Korean:
+		/// 네가 지금 누구한테 말하고 있다고 생각해?
 		/// English:
 		/// Who exactly do you think you're talking to?
 		/// Japanese:
+		/// あなたは今誰に話していると思ってるの？
 		/// Chinese:
 		/// 你以为你在跟谁说话？
 		/// Chinese-TW:
@@ -513,9 +535,11 @@ namespace Urunhilda
         public static string Urunhilda_Cri_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Cri_0");
 		/// <summary>
 		/// Korean:
+		/// 내가 이렇게까지 만져도 된다고 한 적 없잖아!
 		/// English:
 		/// I never said you could touch me this much, you know!
 		/// Japanese:
+		/// こんなに触っていいなんて言ってないでしょ！
 		/// Chinese:
 		/// 我可没说过你可以再碰我！
 		/// Chinese-TW:
@@ -523,9 +547,11 @@ namespace Urunhilda
         public static string Urunhilda_Cri_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Cri_1");
 		/// <summary>
 		/// Korean:
+		/// 하-하아, 잠깐만!
 		/// English:
 		/// H-Hey, wait a second!
 		/// Japanese:
+		/// ちょ、ちょっと待って！
 		/// Chinese:
 		/// 等-等等！
 		/// Chinese-TW:
@@ -533,9 +559,11 @@ namespace Urunhilda
         public static string Urunhilda_Curse_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Curse_0");
 		/// <summary>
 		/// Korean:
+		/// 칫, 알았어. 이 정도는 봐줄 테니까, 빨리 끝내, 알았지?
 		/// English:
 		/// Ugh, fine. I'll let you get away with this much, so just finish it quickly, okay?
 		/// Japanese:
+		/// ちっ、わかったわ。このくらいは許してあげるから、早く終わらせてよね。
 		/// Chinese:
 		/// 好吧。我会让你做到这样的，所以快点结束，好吗？
 		/// Chinese-TW:
@@ -543,9 +571,11 @@ namespace Urunhilda
         public static string Urunhilda_Curse_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Curse_1");
 		/// <summary>
 		/// Korean:
+		/// 네 상황을 정말 싫어하는 건 아닐지도 몰라.
 		/// English:
 		/// I might not really dislike your situation.
 		/// Japanese:
+		/// 君の状況を本当に嫌っているわけではないかもしれない。
 		/// Chinese:
 		/// 我可能并不是真的讨厌你。
 		/// Chinese-TW:
@@ -553,9 +583,11 @@ namespace Urunhilda
         public static string Urunhilda_DeathDoorAlly => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoorAlly");
 		/// <summary>
 		/// Korean:
+		/// 너... 나한테 뭘 할 생각이야...
 		/// English:
 		/// What are you planning to do to me...
 		/// Japanese:
+		/// あなたは私に何をするつもりなの…
 		/// Chinese:
 		/// 你打算对我做什么...
 		/// Chinese-TW:
@@ -563,9 +595,11 @@ namespace Urunhilda
         public static string Urunhilda_DeathDoor_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoor_0");
 		/// <summary>
 		/// Korean:
+		/// 왜 날 만지는 거야?
 		/// English:
 		/// Why are you touching me?
 		/// Japanese:
+		/// なんで私に触ってるの？
 		/// Chinese:
 		/// 为什么摸我？
 		/// Chinese-TW:
@@ -573,9 +607,11 @@ namespace Urunhilda
         public static string Urunhilda_DeathDoor_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_DeathDoor_1");
 		/// <summary>
 		/// Korean:
+		/// 네가 가장 좋아하는 파트너가 될 테니까, 여러 가지 가르쳐줘.
 		/// English:
 		/// I'll become your favorite partner, so teach me various things.
 		/// Japanese:
+		/// あなたのお気に入りのパートナーになってあげるから、いろいろ教えてね。
 		/// Chinese:
 		/// 我会成为你最喜欢的搭档，所以教我各种事情吧。
 		/// Chinese-TW:
@@ -583,9 +619,11 @@ namespace Urunhilda
         public static string Urunhilda_FI_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_0");
 		/// <summary>
 		/// Korean:
+		/// 오늘은 나한테 뭘 해줄 거야?
 		/// English:
 		/// What will you do for me today?
 		/// Japanese:
+		/// 今日は私に何をしてくれるの？
 		/// Chinese:
 		/// 今天你会为我做什么？
 		/// Chinese-TW:
@@ -593,9 +631,11 @@ namespace Urunhilda
         public static string Urunhilda_FI_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_1");
 		/// <summary>
 		/// Korean:
+		/// 칫, 좋아. 그냥 하자, 그렇지?
 		/// English:
 		/// Tch, fine. I guess we'll just do it, won't we?
 		/// Japanese:
+		/// ちっ、いいわ。やればいいんでしょ？
 		/// Chinese:
 		/// 啧，好吧。我想我们直接做吧！
 		/// Chinese-TW:
@@ -603,9 +643,11 @@ namespace Urunhilda
         public static string Urunhilda_FI_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_FI_2");
 		/// <summary>
 		/// Korean:
+		/// 으으... 기분 좋아... 나... 벌써...
 		/// English:
 		/// Ugh... it feels good... I... already...
 		/// Japanese:
+		/// あぁ…気持ちいい…私…もう…
 		/// Chinese:
 		/// 呃...感觉好舒服...我...已经...
 		/// Chinese-TW:
@@ -613,9 +655,11 @@ namespace Urunhilda
         public static string Urunhilda_Healed_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Healed_0");
 		/// <summary>
 		/// Korean:
+		/// 읏... 하-하아, 좀 더 부드럽게 만져줄래!
 		/// English:
 		/// Nngh... H-Hey, touch me more gently, will you!
 		/// Japanese:
+		/// んっ…ちょ、ちょっと…もっと優しく触ってよ！
 		/// Chinese:
 		/// 唔...嘿-嘿，再温柔地摸摸我，好吗。
 		/// Chinese-TW:
@@ -623,9 +667,11 @@ namespace Urunhilda
         public static string Urunhilda_Healed_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Healed_1");
 		/// <summary>
 		/// Korean:
+		/// 나-나-나-나-나... 안 돼... 나, 나 가버려!
 		/// English:
 		/// I-I-I-I-I-I-I... I can't... I-I'm c-coming!
 		/// Japanese:
+		/// わ、わ、わ、わ、わ…だめ…私、イっちゃう！
 		/// Chinese:
 		/// 我-我-我...我不能...我-我去了！
 		/// Chinese-TW:
@@ -633,9 +679,11 @@ namespace Urunhilda
         public static string Urunhilda_Kill_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Kill_0");
 		/// <summary>
 		/// Korean:
+		/// 왜... 왜 나를 이렇게 부끄럽게 만들어...?
 		/// English:
 		/// W-why are you making me do something so embarrassing...?
 		/// Japanese:
+		/// ど、どうしてこんなに恥ずかしいことをさせるの…？
 		/// Chinese:
 		/// 为-为什么你要让我做这么尴尬的事情...？
 		/// Chinese-TW:
@@ -643,9 +691,11 @@ namespace Urunhilda
         public static string Urunhilda_Kill_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Kill_1");
 		/// <summary>
 		/// Korean:
+		/// 너무 시끄러워, 그만 좀 물어봐, 바보야, 이제 좀 꺼져!
 		/// English:
 		/// You're so noisy, just stop asking, idiot, go away already!
 		/// Japanese:
+		/// うるさいな、もう質問やめろよ、バカ、さっさと消えて！
 		/// Chinese:
 		/// 你好吵，别问了，白痴，快滚开！
 		/// Chinese-TW:
@@ -653,9 +703,11 @@ namespace Urunhilda
         public static string Urunhilda_Master => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Master");
 		/// <summary>
 		/// Korean:
+		/// 또 시험이야, 뭐야. 이번엔 나한테 뭘 시키려는 거야?
 		/// English:
 		/// Another trial, huh? Geez. So what are you trying to make me do this time?
 		/// Japanese:
+		/// また試練かよ、ったく。今度は私に何をさせるつもりなの？
 		/// Chinese:
 		/// 又是试炼，嗯...那么这次你想让我做什么？
 		/// Chinese-TW:
@@ -663,9 +715,11 @@ namespace Urunhilda
         public static string Urunhilda_Pharos_0 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_0");
 		/// <summary>
 		/// Korean:
+		/// 네가 말 안 해도 알아! 날 그냥 내버려둬, 이 변태 괴짜야!
 		/// English:
 		/// I don't need you to tell me! Leave me alone, you perverted freak!
 		/// Japanese:
+		/// 言われなくても分かってる！放っておいてよ、この変態！
 		/// Chinese:
 		/// 我不需要你告诉我！离我远点，你这个变态！
 		/// Chinese-TW:
@@ -673,9 +727,11 @@ namespace Urunhilda
         public static string Urunhilda_Pharos_1 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_1");
 		/// <summary>
 		/// Korean:
+		/// 으... 나... 정말... 이걸 해야 해...?
 		/// English:
 		/// Nngh... Do I... really... have to do this...?
 		/// Japanese:
+		/// んっ…私…本当に…これをやらなきゃいけないの…？
 		/// Chinese:
 		/// 唔...我真的...必须做这个...？
 		/// Chinese-TW:
@@ -683,9 +739,11 @@ namespace Urunhilda
         public static string Urunhilda_Pharos_2 => ModManager.getModInfo("Urunhilda").localizationInfo.SystemLocalizationUpdate("Urunhilda_Pharos_2");
 		/// <summary>
 		/// Korean:
+		/// 더...
 		/// English:
 		/// More...
 		/// Japanese:
+		/// もっと…
 		/// Chinese:
 		/// 我还要更多...
 		/// Chinese-TW:

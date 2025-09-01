@@ -379,68 +379,131 @@ namespace Urunhilda
             }
 
             private static readonly Dictionary<string, string> UrunhildaVoiceLinesEN = new Dictionary<string, string>
-        {
-            { "Urunhilda_BS_0", "Did you come to see me? Feeling lonely, were you?"},
-            { "Urunhilda_BS_1", "Good morning. So, what's your plan for today?"},
-            { "Urunhilda_BS_2", "What brings you here at this hour?"},
-            { "Urunhilda_Chest_0", "Do you want to see the fruits of my madness? Geez, you're such a perv."},
-            { "Urunhilda_Chest_1", "Huh? I'm going out of my way to do this for you, and that's how you talk to me?"},
-            { "Urunhilda_Cri_0", "Who exactly do you think you're talking to?"},
-            { "Urunhilda_Cri_1", "I never said you could touch me this much, you know!"},
-            { "Urunhilda_Curse_0", "H-Hey, wait a second!"},
-            { "Urunhilda_Curse_1", "Ugh, fine. I'll let you get away with this much, so just finish it quickly, okay?"},
-            { "Urunhilda_Healed_0", "Ugh... it feels good... I... already..."},
-            { "Urunhilda_Healed_1", "Nngh... H-Hey, touch me more gently, will you!"},
-            { "Urunhilda_BI_0", "When you touch me, I gradually start to feel good."},
-            { "Urunhilda_BI_1", "You can touch me more."},
-            { "Urunhilda_BI_2", "You're so... naughty..."},
-            { "Urunhilda_BI_3", "Ah, n-no, don't rub my nipples like that! Hah, hah, hah, hah..."},
-            { "Urunhilda_FI_0", "I'll become your favorite partner, so teach me various things."},
-            { "Urunhilda_FI_1", "What will you do for me today?"},
-            { "Urunhilda_FI_2", "Tch, fine. I guess we'll just do it, won't we?"},
-            { "Urunhilda_Kill_0", "I-I-I-I-I-I-I... I can't... I-I'm c-coming!"},
-            { "Urunhilda_Kill_1", "W-why are you making me do something so embarrassing...?"},
-            { "Urunhilda_Master", "You're so noisy, just stop asking, idiot, go away already!"},
-            { "Urunhilda_Pharos_0", "Another trial, huh? Geez. So what are you trying to make me do this time?"},
-            { "Urunhilda_Pharos_1", "I don't need you to tell me! Leave me alone, you perverted freak!"},
-            { "Urunhilda_Pharos_2", "Nngh... Do I... really... have to do this...?"},
-            { "Urunhilda_Potion", "More..."},
-            { "Urunhilda_DeathDoor_0", "What are you planning to do to me..."},
-            { "Urunhilda_DeathDoor_1", "Why are you touching me?"},
-            { "Urunhilda_DeathDoorAlly", "I might not really dislike your situation."},
-        };
+            {
+                { "Urunhilda_BS_0", "Did you come to see me? Feeling lonely, were you?"},
+                { "Urunhilda_BS_1", "Good morning. So, what's your plan for today?"},
+                { "Urunhilda_BS_2", "What brings you here at this hour?"},
+                { "Urunhilda_Chest_0", "Do you want to see the fruits of my madness? Geez, you're such a perv."},
+                { "Urunhilda_Chest_1", "Huh? I'm going out of my way to do this for you, and that's how you talk to me?"},
+                { "Urunhilda_Cri_0", "Who exactly do you think you're talking to?"},
+                { "Urunhilda_Cri_1", "I never said you could touch me this much, you know!"},
+                { "Urunhilda_Curse_0", "H-Hey, wait a second!"},
+                { "Urunhilda_Curse_1", "Ugh, fine. I'll let you get away with this much, so just finish it quickly, okay?"},
+                { "Urunhilda_Healed_0", "Ugh... it feels good... I... already..."},
+                { "Urunhilda_Healed_1", "Nngh... H-Hey, touch me more gently, will you!"},
+                { "Urunhilda_BI_0", "When you touch me, I gradually start to feel good."},
+                { "Urunhilda_BI_1", "You can touch me more."},
+                { "Urunhilda_BI_2", "You're so... naughty..."},
+                { "Urunhilda_BI_3", "Ah, n-no, don't rub my nipples like that! Hah, hah, hah, hah..."},
+                { "Urunhilda_FI_0", "I'll become your favorite partner, so teach me various things."},
+                { "Urunhilda_FI_1", "What will you do for me today?"},
+                { "Urunhilda_FI_2", "Tch, fine. I guess we'll just do it, won't we?"},
+                { "Urunhilda_Kill_0", "I-I-I-I-I-I-I... I can't... I-I'm c-coming!"},
+                { "Urunhilda_Kill_1", "W-why are you making me do something so embarrassing...?"},
+                { "Urunhilda_Master", "You're so noisy, just stop asking, idiot, go away already!"},
+                { "Urunhilda_Pharos_0", "Another trial, huh? Geez. So what are you trying to make me do this time?"},
+                { "Urunhilda_Pharos_1", "I don't need you to tell me! Leave me alone, you perverted freak!"},
+                { "Urunhilda_Pharos_2", "Nngh... Do I... really... have to do this...?"},
+                { "Urunhilda_Potion", "More..."},
+                { "Urunhilda_DeathDoor_0", "What are you planning to do to me..."},
+                { "Urunhilda_DeathDoor_1", "Why are you touching me?"},
+                { "Urunhilda_DeathDoorAlly", "I might not really dislike your situation."},
+            };
 
             private static readonly Dictionary<string, string> UrunhildaVoiceLinesCN = new Dictionary<string, string>
-        {
-            { "Urunhilda_BS_0", "你是来看我的吗？感到寂寞了吗？"},
-            { "Urunhilda_BS_1", "早上好，今天有什么计划？"},
-            { "Urunhilda_BS_2", "来找我做什么呢？"},
-            { "Urunhilda_Chest_0", "你想看我疯狂的成果吗？天哪，真是个变态。"},
-            { "Urunhilda_Chest_1", "哈？我特地为你做这个，你就这样跟我说话？"},
-            { "Urunhilda_Cri_0", "你以为你在跟谁说话？"},
-            { "Urunhilda_Cri_1", "我可没说过你可以再碰我！"},
-            { "Urunhilda_Curse_0", "等-等等！"},
-            { "Urunhilda_Curse_1", "好吧。我会让你做到这样的，所以快点结束，好吗？"},
-            { "Urunhilda_Healed_0", "呃...感觉好舒服...我...已经..."},
-            { "Urunhilda_Healed_1", "唔...嘿-嘿，再温柔地摸摸我，好吗。"},
-            { "Urunhilda_BI_0", "每当你触碰我，我都会更加愉悦。"},
-            { "Urunhilda_BI_1", "再多摸摸我......"},
-            { "Urunhilda_BI_2", "你真是...太调皮了..."},
-            { "Urunhilda_BI_3", "啊，不-不要，不要那樣揉我的乳頭！哈，哈，哈，哈...."},
-            { "Urunhilda_FI_0", "我会成为你最喜欢的搭档，所以教我各种事情吧。"},
-            { "Urunhilda_FI_1", "今天你会为我做什么？"},
-            { "Urunhilda_FI_2", "啧，好吧。我想我们直接做吧！"},
-            { "Urunhilda_Kill_0", "我-我-我...我不能...我-我去了！"},
-            { "Urunhilda_Kill_1", "为-为什么你要让我做这么尴尬的事情...？"},
-            { "Urunhilda_Master", "你好吵，别问了，白痴，快滚开！"},
-            { "Urunhilda_Pharos_0", "又是试炼，嗯...那么这次你想让我做什么？"},
-            { "Urunhilda_Pharos_1", "我不需要你告诉我！离我远点，你这个变态！"},
-            { "Urunhilda_Pharos_2", "唔...我真的...必须做这个...？"},
-            { "Urunhilda_Potion", "我还要更多..."},
-            { "Urunhilda_DeathDoor_0", "你打算对我做什么..."},
-            { "Urunhilda_DeathDoor_1", "为什么摸我？"},
-            { "Urunhilda_DeathDoorAlly", "我可能并不是真的讨厌你。"},
-        };
+            {
+                { "Urunhilda_BS_0", "你是来看我的吗？感到寂寞了吗？"},
+                { "Urunhilda_BS_1", "早上好，今天有什么计划？"},
+                { "Urunhilda_BS_2", "来找我做什么呢？"},
+                { "Urunhilda_Chest_0", "你想看我疯狂的成果吗？天哪，真是个变态。"},
+                { "Urunhilda_Chest_1", "哈？我特地为你做这个，你就这样跟我说话？"},
+                { "Urunhilda_Cri_0", "你以为你在跟谁说话？"},
+                { "Urunhilda_Cri_1", "我可没说过你可以再碰我！"},
+                { "Urunhilda_Curse_0", "等-等等！"},
+                { "Urunhilda_Curse_1", "好吧。我会让你做到这样的，所以快点结束，好吗？"},
+                { "Urunhilda_Healed_0", "呃...感觉好舒服...我...已经..."},
+                { "Urunhilda_Healed_1", "唔...嘿-嘿，再温柔地摸摸我，好吗。"},
+                { "Urunhilda_BI_0", "每当你触碰我，我都会更加愉悦。"},
+                { "Urunhilda_BI_1", "再多摸摸我......"},
+                { "Urunhilda_BI_2", "你真是...太调皮了..."},
+                { "Urunhilda_BI_3", "啊，不-不要，不要那樣揉我的乳頭！哈，哈，哈，哈...."},
+                { "Urunhilda_FI_0", "我会成为你最喜欢的搭档，所以教我各种事情吧。"},
+                { "Urunhilda_FI_1", "今天你会为我做什么？"},
+                { "Urunhilda_FI_2", "啧，好吧。我想我们直接做吧！"},
+                { "Urunhilda_Kill_0", "我-我-我...我不能...我-我去了！"},
+                { "Urunhilda_Kill_1", "为-为什么你要让我做这么尴尬的事情...？"},
+                { "Urunhilda_Master", "你好吵，别问了，白痴，快滚开！"},
+                { "Urunhilda_Pharos_0", "又是试炼，嗯...那么这次你想让我做什么？"},
+                { "Urunhilda_Pharos_1", "我不需要你告诉我！离我远点，你这个变态！"},
+                { "Urunhilda_Pharos_2", "唔...我真的...必须做这个...？"},
+                { "Urunhilda_Potion", "我还要更多..."},
+                { "Urunhilda_DeathDoor_0", "你打算对我做什么..."},
+                { "Urunhilda_DeathDoor_1", "为什么摸我？"},
+                { "Urunhilda_DeathDoorAlly", "我可能并不是真的讨厌你。"},
+            };
+            private static readonly Dictionary<string, string> UrunhildaVoiceLinesKR = new Dictionary<string, string>
+            {
+                { "Urunhilda_BS_0", "날 보러 온 거야? 외로웠어?" },
+                { "Urunhilda_BS_1", "좋은 아침. 오늘은 무슨 계획이 있어?" },
+                { "Urunhilda_BS_2", "이 시간에 무슨 일로 온 거야?" },
+                { "Urunhilda_Chest_0", "내 광기의 결실을 보고 싶어? 정말, 넌 변태야." },
+                { "Urunhilda_Chest_1", "뭐? 내가 너 위해 일부러 이렇게 하는데, 그게 네 대답이야?" },
+                { "Urunhilda_Cri_0", "네가 지금 누구한테 말하고 있다고 생각해?" },
+                { "Urunhilda_Cri_1", "내가 이렇게까지 만져도 된다고 한 적 없잖아!" },
+                { "Urunhilda_Curse_0", "하-하아, 잠깐만!" },
+                { "Urunhilda_Curse_1", "칫, 알았어. 이 정도는 봐줄 테니까, 빨리 끝내, 알았지?" },
+                { "Urunhilda_Healed_0", "으으... 기분 좋아... 나... 벌써..." },
+                { "Urunhilda_Healed_1", "읏... 하-하아, 좀 더 부드럽게 만져줄래!" },
+                { "Urunhilda_BI_0", "네가 날 만질 때마다 점점 기분이 좋아져." },
+                { "Urunhilda_BI_1", "더 만져도 돼." },
+                { "Urunhilda_BI_2", "넌 정말... 짓궂어..." },
+                { "Urunhilda_BI_3", "아, 아-안 돼, 그렇게 내 젖꼭지를 문지르지 마! 하, 하, 하, 하..." },
+                { "Urunhilda_FI_0", "네가 가장 좋아하는 파트너가 될 테니까, 여러 가지 가르쳐줘." },
+                { "Urunhilda_FI_1", "오늘은 나한테 뭘 해줄 거야?" },
+                { "Urunhilda_FI_2", "칫, 좋아. 그냥 하자, 그렇지?" },
+                { "Urunhilda_Kill_0", "나-나-나-나-나... 안 돼... 나, 나 가버려!" },
+                { "Urunhilda_Kill_1", "왜... 왜 나를 이렇게 부끄럽게 만들어...?" },
+                { "Urunhilda_Master", "너무 시끄러워, 그만 좀 물어봐, 바보야, 이제 좀 꺼져!" },
+                { "Urunhilda_Pharos_0", "또 시험이야, 뭐야. 이번엔 나한테 뭘 시키려는 거야?" },
+                { "Urunhilda_Pharos_1", "네가 말 안 해도 알아! 날 그냥 내버려둬, 이 변태 괴짜야!" },
+                { "Urunhilda_Pharos_2", "으... 나... 정말... 이걸 해야 해...?" },
+                { "Urunhilda_Potion", "더..." },
+                { "Urunhilda_DeathDoor_0", "너... 나한테 뭘 할 생각이야..." },
+                { "Urunhilda_DeathDoor_1", "왜 날 만지는 거야?" },
+                { "Urunhilda_DeathDoorAlly", "네 상황을 정말 싫어하는 건 아닐지도 몰라." },
+            };
+
+            private static readonly Dictionary<string, string> UrunhildaVoiceLinesJP = new Dictionary<string, string>
+            {
+                { "Urunhilda_BS_0", "私に会いに来たの？寂しかったの？" },
+                { "Urunhilda_BS_1", "おはよう。さて、今日は何をするつもり？" },
+                { "Urunhilda_BS_2", "こんな時間にどうして来たの？" },
+                { "Urunhilda_Chest_0", "私の狂気の果実を見たいの？まったく、あなたって変態ね。" },
+                { "Urunhilda_Chest_1", "え？わざわざあなたのためにしてあげてるのに、その言い方？" },
+                { "Urunhilda_Cri_0", "あなたは今誰に話していると思ってるの？" },
+                { "Urunhilda_Cri_1", "こんなに触っていいなんて言ってないでしょ！" },
+                { "Urunhilda_Curse_0", "ちょ、ちょっと待って！" },
+                { "Urunhilda_Curse_1", "ちっ、わかったわ。このくらいは許してあげるから、早く終わらせてよね。" },
+                { "Urunhilda_Healed_0", "あぁ…気持ちいい…私…もう…" },
+                { "Urunhilda_Healed_1", "んっ…ちょ、ちょっと…もっと優しく触ってよ！" },
+                { "Urunhilda_BI_0", "あなたに触れられると、少しずつ気持ちよくなる。" },
+                { "Urunhilda_BI_1", "もっと触っていいよ。" },
+                { "Urunhilda_BI_2", "あなたって本当に…いじわる…" },
+                { "Urunhilda_BI_3", "あ、だ、だめ、そんな風に乳首をこすらないで！はぁ、はぁ、はぁ、はぁ…" },
+                { "Urunhilda_FI_0", "あなたのお気に入りのパートナーになってあげるから、いろいろ教えてね。" },
+                { "Urunhilda_FI_1", "今日は私に何をしてくれるの？" },
+                { "Urunhilda_FI_2", "ちっ、いいわ。やればいいんでしょ？" },
+                { "Urunhilda_Kill_0", "わ、わ、わ、わ、わ…だめ…私、イっちゃう！" },
+                { "Urunhilda_Kill_1", "ど、どうしてこんなに恥ずかしいことをさせるの…？" },
+                { "Urunhilda_Master", "うるさいな、もう質問やめろよ、バカ、さっさと消えて！" },
+                { "Urunhilda_Pharos_0", "また試練かよ、ったく。今度は私に何をさせるつもりなの？" },
+                { "Urunhilda_Pharos_1", "言われなくても分かってる！放っておいてよ、この変態！" },
+                { "Urunhilda_Pharos_2", "んっ…私…本当に…これをやらなきゃいけないの…？" },
+                { "Urunhilda_Potion", "もっと…" },
+                { "Urunhilda_DeathDoor_0", "あなたは私に何をするつもりなの…" },
+                { "Urunhilda_DeathDoor_1", "なんで私に触ってるの？" },
+                { "Urunhilda_DeathDoorAlly", "君の状況を本当に嫌っているわけではないかもしれない。" },
+            };
 
             [HarmonyPatch(typeof(PrintText))]
             [HarmonyPatch(nameof(PrintText.TextInput))]
@@ -459,15 +522,15 @@ namespace Urunhilda
 
                     switch (language)
                     {
-                        //case "Korean":
-                        //    selectedDict = UrunhildaVoiceLinesKR;
-                        //    break;
+                        case "Korean":
+                            selectedDict = UrunhildaVoiceLinesKR;
+                            break;
                         case "English":
                             selectedDict = UrunhildaVoiceLinesEN;
                             break;
-                        //case "Japanese":
-                        //    selectedDict = UrunhildaVoiceLinesJP;
-                        //    break;
+                        case "Japanese":
+                            selectedDict = UrunhildaVoiceLinesJP;
+                            break;
                         case "Chinese":
                             selectedDict = UrunhildaVoiceLinesCN;
                             break;
