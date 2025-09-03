@@ -22,14 +22,16 @@ namespace Darkness
     {
         public override string DescExtended()
         {
-            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.atk * 0.6f)).ToString());
+            return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.atk * 0.4f)).ToString());
         }
 
         public override void Init()
         {
             base.Init();
-            this.PlusStat.Strength = true;
+            PlusStat.Strength = true;
+            PlusStat.AggroPer = 70;
         }
+
         public void DamageChange_Hit_sumoperation(Skill SkillD, int Damage, ref bool Cri, bool View, ref int PlusDamage)
         {
             if (Damage > 0 && !SkillD.Master.Info.Ally)
@@ -45,6 +47,7 @@ namespace Darkness
                 EffectView.TextOutSimple(this.BChar, this.BuffData.Name);
             }
         }
+
         public void Dodge(BattleChar Char, SkillParticle SP)
         {
             if (Char == BChar && !SP.UseStatus.Info.Ally)
@@ -57,6 +60,7 @@ namespace Darkness
                 EffectView.TextOutSimple(this.BChar, this.BuffData.Name);
             }
         }
+
         public IEnumerator Wait()
         {
             yield return new WaitForSeconds(0.2f);
@@ -65,7 +69,7 @@ namespace Darkness
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            if (BuffTaker.Info.KeyData != ModItemKeys.Character_Darkness && addedbuff.BuffData.Key == ModItemKeys.Buff_B_Darkness_HurtMeMorePlease)
+            if (BuffTaker.Info.KeyData != ModItemKeys.Character_Darkness && addedbuff == this)
             {
                 SelfDestroy();
             }

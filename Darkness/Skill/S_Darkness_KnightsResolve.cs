@@ -19,23 +19,12 @@ namespace Darkness
     /// </summary>
     public class S_Darkness_KnightsResolve : Skill_Extended
     {
-        public override void Init()
-        {
-            base.Init();
-            OnePassive = true;
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
-        }
-
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
-            if (MySkill.BasicSkill)
+            if (BChar.BarrierHP >= 20)
             {
-                this.MySkill.APChange = -1;
-                base.SkillParticleOn();
-                return;
+                MySkill.APChange = -1;
             }
-            base.SkillParticleOff();
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)

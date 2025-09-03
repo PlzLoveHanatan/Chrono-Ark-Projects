@@ -19,7 +19,7 @@ namespace Darkness
         {
             base.Init();
             OnePassive = true;
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
         }
 
         public override void FixedUpdate()
@@ -27,17 +27,19 @@ namespace Darkness
             if (BChar.BarrierHP >= 15)
             {
                 MySkill.APChange = -1;
-                base.SkillParticleOn();
-
-                return;
+                SkillParticleOn();
             }
-
-            base.SkillParticleOff();
+            else
+            {
+                SkillParticleOff();
+            }
         }
+
         public override bool CanSkillEnforce(Skill MainSkill)
         {
             return MainSkill.AP >= 2;
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.5f);

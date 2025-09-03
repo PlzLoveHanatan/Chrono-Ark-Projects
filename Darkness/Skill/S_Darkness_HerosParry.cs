@@ -20,19 +20,21 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.4f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.2f)).ToString());
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.TryPlayDarknessSound(SkillD, BChar);
-
-            int barrierHP = (int)(BChar.GetStat.maxhp * 0.4f);
+            int barrierHP = (int)(BChar.GetStat.maxhp * 0.2f);
             BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierHP;
             foreach (var a in BChar.MyTeam.AliveChars)
             {
-                if (a != null && a != BChar)
+                if (a != null && a.Info.KeyData != ModItemKeys.Character_Darkness)
+                {
                     a.BuffAdd(ModItemKeys.Buff_B_Darkness_DarknessProtection, BChar, false, 0, false, -1, false);
+                }
             }
+            Utils.TryPlayDarknessSound(SkillD, BChar);
         }
     }
 }

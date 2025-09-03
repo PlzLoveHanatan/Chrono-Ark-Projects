@@ -16,13 +16,14 @@ namespace Darkness
 	/// <summary>
 	/// Ecstatic Endurance
 	/// </summary>
-    public class B_Darkness_EcstaticEndurance : Buff, IP_HPChange, IP_Awake
+    public class B_Darkness_EcstaticEndurance : Buff, IP_HPChange, IP_Awake, IP_BuffAddAfter
     {
         public override void Init()
         {
             PlusStat.DeadImmune = 100;
             PlusStat.AggroPer = 100;
         }
+
         public void HPChange(BattleChar Char, bool Healed)
         {
             if (BChar.HP <= 0)
@@ -30,11 +31,20 @@ namespace Darkness
                 BChar.HP = 1;
             }
         }
+
         public void Awake()
         {
             if (BChar.HP <= 0)
             {
                 BChar.HP = 1;
+            }
+        }
+
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            if (BuffTaker.Info.KeyData != ModItemKeys.Character_Darkness && addedbuff == this)
+            {
+                SelfDestroy();
             }
         }
     }

@@ -35,10 +35,14 @@ namespace Darkness
             skill.AutoDelete = 1;
             skill.isExcept = true;
 
-            var debuffs = Targets[0].GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 1);
-            foreach (var b in debuffs)
+            int num = BChar.BarrierHP >= 15 ? 2 : 1;
+            for (int i = 0; i < num; i++)
             {
-                b.SelfDestroy();
+                var debuffs = Targets[0].GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).Random(BChar.GetRandomClass().Main, 1);
+                foreach (var b in debuffs)
+                {
+                    b.SelfDestroy();
+                }
             }
         }
     }

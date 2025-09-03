@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using NLog.Targets;
 namespace Darkness
 {
     /// <summary>
@@ -23,11 +24,35 @@ namespace Darkness
         {
             return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.TryPlayDarknessSound(SkillD, BChar);
 
-            BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.5f);
+            if (BChar.BarrierHP >= 15)
+            {
+                BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.5f);
+
+                if (BChar.BarrierHP >= 30)
+                {
+                    BattleSystem.DelayInput(ExtraCast());
+                }
+            }
+        }
+        public IEnumerator ExtraCast()
+        {
+            yield return null;
+
+            string skillKey = ModItemKeys.Skill_S_Darkness_Rare_IronMaidensEmbrace;
+
+            Skill skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
+            skill.FreeUse = true;
+
+            if (BChar != null && !BChar.Dummy && !BChar.IsDead)
+            {
+                BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, BChar, false, false, true, null));
+            }
+            yield break;
         }
     }
 }

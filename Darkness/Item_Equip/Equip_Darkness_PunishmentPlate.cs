@@ -16,7 +16,7 @@ namespace Darkness
 	/// <summary>
 	/// Punishment Plate ♡
 	/// </summary>
-    public class Equip_Darkness_PunishmentPlate : EquipBase, IP_PlayerTurn
+    public class Equip_Darkness_PunishmentPlate : EquipBase
     {
         public override void Init()
         {
@@ -28,13 +28,6 @@ namespace Darkness
             PlusStat.RES_DEBUFF = 25f;
             PlusStat.RES_CC = 25f;
             PlusStat.RES_DOT = 25f; 
-        }
-
-        public void Turn()
-        {
-            var buff = ModItemKeys.Buff_B_Darkness_HurtMeMorePlease;
-            if (BChar.Info.KeyData == ModItemKeys.Character_Darkness)
-                BChar.BuffAdd(buff, BChar, false, 0, false, -1, false);
         }
     }
 }

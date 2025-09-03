@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Darkness08192025095656</AssemblyName>
+    <AssemblyName>Darkness09032025182104</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,7 +405,7 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Darkness_ModDefinition.cs" />
     <Compile Include="Darkness_ModItemKeys.cs" />
@@ -418,6 +418,7 @@
     <Compile Include="Buff\B_Darkness_DarknessProtection.cs" />
     <Compile Include="Buff\B_Darkness_DelightfulDefense.cs" />
     <Compile Include="Buff\B_Darkness_EcstaticEndurance.cs" />
+    <Compile Include="Buff\B_Darkness_Ex_UnbreakableWill.cs" />
     <Compile Include="Buff\B_Darkness_HitMeHarder.cs" />
     <Compile Include="Buff\B_Darkness_HurtMeMorePlease.cs" />
     <Compile Include="Buff\B_Darkness_IronMaidenMode.cs" />
@@ -428,6 +429,7 @@
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Skill\S_Darkness_ClumsySlash.cs" />
     <Compile Include="Skill\S_Darkness_CrusaderDomination.cs" />
+    <Compile Include="Skill\S_Darkness_Decoy.cs" />
     <Compile Include="Skill\S_Darkness_HerosParry.cs" />
     <Compile Include="Skill\S_Darkness_KnightsResolve.cs" />
     <Compile Include="Skill\S_Darkness_LastStand.cs" />

@@ -20,17 +20,19 @@ namespace Darkness
         {
             base.Init();
             OnePassive = true;
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
         }
 
         public override void FixedUpdate()
         {
             if (BChar.BarrierHP >= 15)
             {
-                base.SkillParticleOn();
-                return;
+                SkillParticleOn();
             }
-            base.SkillParticleOff();
+            else
+            {
+                SkillParticleOff();
+            }
         }
 
         public override bool CanSkillEnforce(Skill MainSkill)
@@ -42,21 +44,29 @@ namespace Darkness
         {
             if (BChar.BarrierHP >= 15 && SkillD.Master == BChar)
             {
-                Skill cloneSkill = MySkill.CloneSkill(true, null, null, true);
-                BattleSystem.DelayInputAfter(AdditionalAttack(cloneSkill, Targets[0]));
+                //Skill cloneSkill = MySkill.CloneSkill(true, null, null, true);
+                BattleSystem.DelayInputAfter(AdditionalAttack(Targets[0]));
             }
         }
 
-        public IEnumerator AdditionalAttack(Skill AttackSkill, BattleChar Target)
+        public IEnumerator AdditionalAttack(BattleChar Target)
         {
-            yield return new WaitForSeconds(0.2f);
-            bool AdditionalHit = true;
-            if (Target.IsDead || !AdditionalHit) yield break;
+            yield return null;
 
-            BChar.ParticleOut(AttackSkill, Target);
+            Skill skill = Skill.TempSkill(MySkill.MySkill.KeyID, BChar, BChar.MyTeam);
 
-            AdditionalHit = false;
+            if (BChar != null && !BChar.Dummy && !BChar.IsDead)
+            {
+                if (!Target.IsDead)
+                {
+                    BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, Target, false, false, true, null));
 
+                }
+                else if (BattleSystem.instance.EnemyList.Count > 0)
+                {
+                    BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, BChar.BattleInfo.EnemyList.Random(BChar.GetRandomClass().Main), false, false, true, null));
+                }
+            }
             yield break;
         }
     }

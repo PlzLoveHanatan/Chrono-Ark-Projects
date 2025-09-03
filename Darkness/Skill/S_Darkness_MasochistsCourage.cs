@@ -27,7 +27,7 @@ namespace Darkness
         }
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.6f)).ToString()).Replace("&b", ((int)(BChar.GetStat.maxhp * 0.2f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.7f)).ToString()).Replace("&b", ((int)(BChar.GetStat.maxhp * 0.3f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -35,19 +35,18 @@ namespace Darkness
             Utils.TryPlayDarknessSound(SkillD, BChar);
 
             var nonLethalDamage = GDEItemKeys.Buff_B_Momori_P_NoDead;
-            int masochistsCourage = (int)(BChar.GetStat.maxhp * 0.6f);
-            int barrierValue = (int)(BChar.GetStat.maxhp * 0.6f);
-            bool applyBuff = BChar.HP <= barrierValue;
+            int damage = (int)(BChar.GetStat.maxhp * 0.7f);
+            int barrierValue = damage;
+            bool lowHp = BChar.HP <= BChar.GetStat.maxhp * 0.5f;
 
             BChar.BuffAdd(nonLethalDamage, BChar, false, 0, false, -1, false);
-            BChar.Damage(BChar, masochistsCourage, false, true, false, 0, false, false, false);
+            BChar.Damage(BChar, damage, false, true, false, 0, false, false, false);
             BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
             BChar.BuffRemove(nonLethalDamage, false);
 
-            if (applyBuff)
+            if (lowHp)
             {
-                BChar.BuffAdd(ModItemKeys.Buff_B_Darkness_HurtMeMorePlease, BChar, false, 0, false, -1, false);
-                BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += (int)(BChar.GetStat.maxhp * 0.2f);
+                BChar.BuffAdd(ModItemKeys.Buff_S_Darkness_StubbornKnight, BChar, false, 0, false, -1, false).BarrierHP += (int)(BChar.GetStat.maxhp * 0.3f);
             }
         }
     }

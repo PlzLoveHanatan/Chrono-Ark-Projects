@@ -16,14 +16,14 @@ namespace Darkness
 	/// <summary>
 	/// Delightful Defense ♡
 	/// </summary>
-    public class B_Darkness_DelightfulDefense : Buff, IP_PlayerTurn
+    public class B_Darkness_DelightfulDefense : Buff, IP_TurnEndButtonEnemy, IP_BuffAddAfter
     {
         public override string DescExtended()
         {
             return base.DescExtended().Replace("&a", ((int)(BChar.GetStat.maxhp * 0.5f)).ToString());
         }
 
-        public void Turn()
+        public void TurnEndButtonEnemy()
         {
             if (StackNum >= 1)
             {
@@ -31,7 +31,15 @@ namespace Darkness
                 {
                     BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.5f);
                 }
-            } 
+            }
+        }
+
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            if (BuffTaker.Info.KeyData != ModItemKeys.Character_Darkness && addedbuff == this)
+            {
+                SelfDestroy();
+            }
         }
     }
 }

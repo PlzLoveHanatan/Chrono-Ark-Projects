@@ -12,6 +12,7 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using NLog.Targets;
+using ChronoArkMod.ModEditor;
 namespace Darkness
 {
     /// <summary>
@@ -23,7 +24,12 @@ namespace Darkness
         public override void Init()
         {
             base.Init();
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
+        }
+
+        public override bool TargetHit(BattleChar Target)
+        {
+            return Target.GetBuffs(BattleChar.GETBUFFTYPE.CC, false, false).Count != 0;
         }
 
         public override void FixedUpdate()
@@ -31,28 +37,33 @@ namespace Darkness
             base.FixedUpdate();
             if (BChar.BarrierHP >= 15)
             {
-                base.SkillParticleOn();
-                return;
+                SkillParticleOn();
             }
-            base.SkillParticleOff();
-        }
-        public override bool TargetHit(BattleChar Target)
-        {
-            return Target.GetBuffs(BattleChar.GETBUFFTYPE.CC, false, false).Count != 0;
+            else
+            {
+                SkillParticleOff();
+            }
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            foreach (var target in Targets)
+            {
+                if (target != null && !target.Info.Ally)
+                {
+                    if (BChar.BarrierHP >= 15)
+                    {
+                        target.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 0, false, -1, false);
+                    }
+
+                    if (BChar.BarrierHP >= 30)
+                    {
+                        target.BuffAdd(ModItemKeys.Buff_B_Darkness_TrialofWeakness, BChar, false, 0, false, -1, false);
+                        target.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 0, false, -1, false);
+                    }
+                }
+            }
             Utils.TryPlayDarknessSound(SkillD, BChar);
-            var target = Targets[0];
-
-            if (!target.Info.Ally)
-                if (BChar.BarrierHP >= 15)
-                    target.BuffAdd(ModItemKeys.Buff_B_Darkness_TrialofWeakness, BChar, false, 999, false, -1, false);
-
-            if (BChar.BarrierHP >= 25)
-                target.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 999, false, -1, false);
-
         }
     }
 }

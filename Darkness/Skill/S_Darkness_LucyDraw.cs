@@ -24,14 +24,20 @@ namespace Darkness
         {
             var allies = BattleSystem.instance.AllyTeam.AliveChars;
             var aliveDarkness = allies.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Darkness);
-
-            BattleSystem.instance.AllyTeam.Draw(3);
+            int drawNum = 0;
 
             if (aliveDarkness != null)
             {
                 Utils.PlayDarknessSound(MySkill.MySkill.KeyID);
                 BChar.MyTeam.partybarrier.BarrierHP += (int)(aliveDarkness.GetStat.maxhp * 0.5f);
+                drawNum = 3;
             }
+            else
+            {
+                drawNum = 1;
+                MySkill.isExcept = true;
+            }
+            BattleSystem.instance.AllyTeam.Draw(drawNum);
         }
     }
 }

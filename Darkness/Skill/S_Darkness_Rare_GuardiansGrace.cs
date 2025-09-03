@@ -22,46 +22,51 @@ namespace Darkness
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.5f)).ToString());
         }
+
         public override void Init()
         {
             base.Init();
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
+            OnePassive = true;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Ex_LucyD_18_SwimDLC).Particle_Path;
         }
 
         public override void FixedUpdate()
         {
-            OnePassive = true;
-            if (BChar.BarrierHP >= 15)
+            if (BChar.BarrierHP >= 20)
             {
-                base.SkillParticleOn();
-                if (BChar.BarrierHP >= 25)
+                MySkill.MySkill.NODOD = true;
+                SkillParticleOn();
+                if (BChar.BarrierHP >= 30)
                 {
                     MySkill.APChange = -1;
                 }
-                return;
             }
-
-            base.SkillParticleOff();
+            else
+            {
+                SkillParticleOff();
+            }
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.TryPlayDarknessSound(SkillD, BChar);
-
-            List<Buff> buffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, false, false);
-            int num = 0;
-            foreach (Buff buff in buffs)
+            if (BChar.BarrierHP >= 10)
             {
-                num += buff.StackNum;
+                List<Buff> buffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, false, false);
+                int num = 0;
+                foreach (Buff buff in buffs)
+                {
+                    num += buff.StackNum;
+                }
+                SkillBasePlus.Target_BaseDMG = (int)(num * (BChar.GetStat.atk * 0.5f));
             }
-            this.SkillBasePlus.Target_BaseDMG = (int)(num * (this.BChar.GetStat.atk * 0.4f));
         }
 
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
         {
-            if (BChar.BarrierHP >= 15)
+            if (BChar.BarrierHP >= 20)
             {
                 Cri = true;
             }

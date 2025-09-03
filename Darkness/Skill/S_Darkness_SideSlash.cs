@@ -23,22 +23,23 @@ namespace Darkness
         public override void Init()
         {
             base.Init();
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path; 
+            OnePassive = true;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path; 
         }
 
         public override void FixedUpdate()
         {
-            OnePassive = true;
             if (BChar.BarrierHP >= 15)
             {
                 MySkill.MySkill.NODOD = true;
-                base.SkillParticleOn();
-
-                return;
+                SkillParticleOn();
             }
-
-            base.SkillParticleOff();
+            else
+            {
+                SkillParticleOff();
+            }            
         }
+
         public override void AttackEffectSingle(BattleChar hit, SkillParticle SP, int DMG, int Heal)
         {
             DarknessAttackMisses = true;

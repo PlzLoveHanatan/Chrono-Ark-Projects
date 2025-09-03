@@ -16,7 +16,7 @@ namespace Darkness
     /// <summary>
     /// Iron Maiden Mode
     /// </summary>
-    public class B_Darkness_IronMaidenMode : Buff, IP_DamageTakeChange, IP_PlayerTurn
+    public class B_Darkness_IronMaidenMode : Buff, IP_PlayerTurn, IP_BuffAddAfter
     {
         private bool RemoveTaunt;
         private bool RemoveTauntOnce;
@@ -123,19 +123,7 @@ namespace Darkness
         {
             base.Init();
             PlusStat.AggroPer = 100;
-        }
-
-        public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
-        {
-            if (!Preview && Dmg >= 1)
-            {
-                Dmg = (int)(Dmg * 0.5f);
-            }
-            if (Dmg <= 1)
-            {
-                Dmg = 1;
-            }
-            return Dmg;
+            PlusStat.DMGTaken = -30;
         }
 
         public void Turn()
@@ -146,6 +134,14 @@ namespace Darkness
                 {
                     e.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 999, false, -1, false);
                 }
+            }
+        }
+
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            if (BuffTaker.Info.KeyData != ModItemKeys.Character_Darkness && addedbuff == this)
+            {
+                SelfDestroy();
             }
         }
     }

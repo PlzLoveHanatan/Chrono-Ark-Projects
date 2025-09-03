@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using NLog.Targets;
 namespace Darkness
 {
     /// <summary>
@@ -20,45 +21,40 @@ namespace Darkness
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.TryPlayDarknessSound(SkillD, BChar);
-
-            var allies = BattleSystem.instance.AllyTeam.AliveChars;
-            var lucyAlly = BattleSystem.instance.AllyTeam.LucyAlly;
-
-            IEnumerable<BattleChar> allAllies = allies;
-            if (lucyAlly != null)
-                allAllies = allAllies.Concat(new[] { lucyAlly });
-
-            foreach (BattleChar battleChar in allAllies)
+            if (BChar.BarrierHP >= 10)
             {
-                foreach (Buff buff in battleChar.Buffs)
+                foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars)
                 {
-                    if (buff.BuffData.Hide)
-                        continue;
+                    enemy?.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 0, false, -1, false);
+                }
 
-                    if (buff.BuffData.Debuff)
-                    {
-                        for (int i = 0; i < 2; i++)
-                        {
-                            buff.TurnUpdate();
-                        }
-                    }
-                    else if (buff.BuffData.LifeTime != 0f)
-                    {
-                        foreach (StackBuff stackBuff in buff.StackInfo)
-                        {
-                            for (int i = 0; i < 2; i++)
-                            {
-                                stackBuff.RemainTime++;
-                            }
-                        }
-                    }
+                if (BChar.BarrierHP >= 20)
+                {
+                    BattleSystem.DelayInputAfter(ExtendBuffs());
                 }
             }
+            Utils.TryPlayDarknessSound(SkillD, BChar);
+        }
 
-            foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
+        public IEnumerator ExtendBuffs()
+        {
+            yield return null;
+
+            var buffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, true, false).ToList();
+
+            foreach (Buff buff in buffs)
             {
-                e.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 999, false, -1, false);
+                foreach (StackBuff stackBuff in buff.StackInfo)
+                {
+                    if (!buff.BuffExtended.Any((Buff_Ex p) => p is B_Darkness_Ex_UnbreakableWill))
+                    {
+                        if (stackBuff.RemainTime != 0)
+                        {
+                            stackBuff.RemainTime++;
+                        }
+                        buff.AddBuffEx(new B_Darkness_Ex_UnbreakableWill());
+                    }
+                }
             }
         }
     }

@@ -24,7 +24,7 @@ namespace Darkness
         {
             base.Init();
             OnePassive = true;
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
 
             if (!SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Darkness_NormalKnight")) return;
             {
@@ -38,20 +38,21 @@ namespace Darkness
 
         public override void FixedUpdate()
         {
-            if (MySkill.BasicSkill)
-            {
-                MySkill.APChange = -1;
-            }
             if (BChar.BarrierHP >= 15)
             {
                 MySkill.MySkill.NODOD = true;
-                base.SkillParticleOn();
-
-                return;
+                SkillParticleOn();
+                if (BChar.BarrierHP >= 25)
+                {
+                    MySkill.APChange = -1;
+                }
             }
-
-            base.SkillParticleOff();
+            else
+            {
+                SkillParticleOff();
+            }
         }
+
         public override void AttackEffectSingle(BattleChar hit, SkillParticle SP, int DMG, int Heal)
         {
             DarknessAttackMisses = true;

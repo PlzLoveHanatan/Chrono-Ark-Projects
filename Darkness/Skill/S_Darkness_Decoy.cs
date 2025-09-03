@@ -11,15 +11,13 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using Spine;
-using System.Threading;
 namespace Darkness
 {
-    /// <summary>
-    /// Last Stand
-    /// This skill always lands if you have barrier remaining. Deal additional &a damage based on 
-    /// </summary>
-    public class S_Darkness_LastStand : Skill_Extended
+	/// <summary>
+	/// Decoy
+	/// <color=#50C878>Barrier</color> <color=#1E90FF>15</color>: Gain <color=#FF1493>Hurt Me Please ♡</color>.
+	/// </summary>
+    public class S_Darkness_Decoy : Skill_Extended
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
@@ -27,10 +25,7 @@ namespace Darkness
 
             if (BChar.BarrierHP >= 20)
             {
-                foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars)
-                {
-                    e.BuffAdd(ModItemKeys.Buff_B_Darkness_BustyTaunt, BChar, false, 0, false, -1, false);
-                }
+                BChar.BuffAdd(ModItemKeys.Buff_B_Darkness_HurtMeMorePlease, BChar, false, 0, false, -1, false);
             }
         }
     }

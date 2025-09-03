@@ -18,17 +18,14 @@ namespace Darkness
     /// Darkness
     /// Passive:
     /// </summary>
-    public class P_Darkness : Passive_Char, IP_PlayerTurn, IP_DamageTakeChange
+    public class P_Darkness : Passive_Char, IP_PlayerTurn, IP_LevelUp
     {
         public override void Init()
         {
             OnePassive = true;
             base.Init();
         }
-        public override void FixedUpdate()
-        {
-            PlusStat.DeadImmune = MyChar.LV * 10 - 5;
-        }
+
         public void Turn()
         {
             var buff = ModItemKeys.Buff_B_Darkness_Armorgasm;
@@ -46,13 +43,13 @@ namespace Darkness
 
             if (MyChar.LV >= 4)
             {
-                var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 1);
-                var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
-                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
-                BattleChar randomTarget = enemies[randomIndex];
+                var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).Random(BChar.GetRandomClass().Main, 1);
+                //var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
+                //int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
+                //BattleChar randomTarget = enemies[randomIndex];
                 foreach (var b in debuffs)
                 {
-                    randomTarget.BuffAdd(b.BuffData.Key, BChar, false, 999, false, -1, false);
+                    //randomTarget.BuffAdd(b.BuffData.Key, BChar, false, 999, false, -1, false);
                     b.SelfDestroy();
                 }
             }
@@ -61,32 +58,43 @@ namespace Darkness
             var hurtMeMoreReturn = BChar.BuffReturn(hurtMeMore, false);
 
             if (MyChar.LV >= 6 && hurtMeMoreReturn == null)
-                BChar.BuffAdd(hurtMeMore, BChar, false, 0, false, -1, false);
-        }
-        public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
-        {
-            if (MyChar.LV >= 2)
             {
-                var darknessEcstasy = ModItemKeys.Buff_B_Darkness_HurtMeMorePlease;
-                var darknessEcstasyReturn = BChar.BuffReturn(darknessEcstasy, false) as B_Darkness_DarknessEcstasy;
-
-                if (darknessEcstasyReturn != null)
-                    darknessEcstasyReturn.Damage = Dmg;
-
-                if (!Preview && Dmg >= 1)
-                {
-                    if (MyChar.LV >= 5)
-                        Dmg = (int)(Dmg * 0.55f);
-
-                    else
-                        Dmg = (int)(Dmg * 0.85f);
-                }
-                if (Dmg <= 1)
-                {
-                    Dmg = 1;
-                }
+                BChar.BuffAdd(hurtMeMore, BChar, false, 0, false, -1, false);
             }
-            return Dmg;
+        }
+
+        public void LevelUp()
+        {
+            int level = MyChar.LV;
+            switch (level)
+            {
+                case 2:
+                    IncreaseStats(MyChar, true, 10);
+                    break;
+                case 3:
+                    IncreaseStats(MyChar);
+                    break;
+                case 4:
+                    IncreaseStats(MyChar);
+                    break;
+                case 5:
+                    IncreaseStats(MyChar, true, 15);
+                    break;
+                case 6:
+                    IncreaseStats(MyChar);
+                    break;
+            }
+        }
+
+        public void IncreaseStats(Character character, bool isDamageTaken = false, int damageTaken = 0)
+        {
+            character.OriginStat.DeadImmune += 5;
+            character.OriginStat.AggroPer += 10;
+
+            if (isDamageTaken)
+            {
+                character.OriginStat.DMGTaken -= damageTaken;
+            }
         }
     }
 }

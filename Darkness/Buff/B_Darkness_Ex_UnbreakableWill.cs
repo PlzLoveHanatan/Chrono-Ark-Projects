@@ -13,14 +13,8 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Darkness
 {
-	/// <summary>
-	/// Trial of Weakness
-	/// </summary>
-    public class B_Darkness_TrialofWeakness : Buff
+    public class B_Darkness_Ex_UnbreakableWill : Buff_Ex
     {
-        public override void BuffStat()
-        {
-            PlusPerStat.Damage = -10 * StackNum;
-        }
+
     }
 }
