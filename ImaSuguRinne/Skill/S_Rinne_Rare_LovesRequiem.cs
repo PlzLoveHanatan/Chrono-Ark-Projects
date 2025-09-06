@@ -21,18 +21,18 @@ namespace ImaSuguRinne
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.3f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f)).ToString());
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (this.BChar.GetStat.atk * 0.3f));
+            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (this.BChar.GetStat.atk * 0.4f));
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (this.BChar.GetStat.atk * 0.3f));
+            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (this.BChar.GetStat.atk * 0.4f));
 
             int randomIndex = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, BChar.MyTeam.Skills_Deck.Count + 1);
             BChar.MyTeam.Skills_Deck.Insert(randomIndex, this.MySkill);

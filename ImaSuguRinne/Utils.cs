@@ -34,7 +34,9 @@ namespace ImaSuguRinne
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
 
-        public static bool GettingTwoMemory;
+        public static bool GettingMemory;
+
+        private static Dictionary<string, int> originalMaxStacks = new Dictionary<string, int>();
 
         public static readonly List<string> RinneSkills = new List<string>
         {
@@ -47,6 +49,16 @@ namespace ImaSuguRinne
             ModItemKeys.Skill_S_Rinne_EndlessSorrow,
             ModItemKeys.Skill_S_Rinne_FragmentofMemory,
             ModItemKeys.Skill_S_Rinne_ResonanceofPain,
+        };
+
+        public static readonly List<string> RinnOnceSkills = new List<string>
+        {
+            ModItemKeys.Skill_S_Rinne_FragmentofMemory,
+            ModItemKeys.Skill_S_Rinne_Rare_LovesRequiem,
+            ModItemKeys.Skill_S_Rinne_BloomofSorrow,
+            ModItemKeys.Skill_S_Rinne_CycleofBloom_0,
+            ModItemKeys.Skill_S_Rinne_CycleofEchoes_0,
+            ModItemKeys.Skill_S_Rinne_CycleofSuffering_0,
         };
 
         public static void CreateSkill(BattleChar bchar, string skill)
@@ -215,11 +227,10 @@ namespace ImaSuguRinne
         {
             if (target == null || target.Info.Ally) return;
 
-            var debuffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALL, true, false).ToList();
+            List<Buff> debuffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false);
 
             foreach (Buff debuff in debuffs)
             {
-                debuff.BuffData.MaxStack++;
                 target.BuffAdd(debuff.BuffData.Key, debuff.Usestate_L, false, 999, false, debuff.StackInfo[debuff.StackInfo.Count - 1].RemainTime, false);
 
                 foreach (StackBuff stackBuff in debuff.StackInfo)

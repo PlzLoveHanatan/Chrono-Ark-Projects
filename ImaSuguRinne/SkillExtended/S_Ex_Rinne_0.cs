@@ -39,14 +39,14 @@ namespace ImaSuguRinne
             var oldSkill = Utils.AllyTeam.Skills_Deck.Concat(Utils.AllyTeam.Skills_UsedDeck).FirstOrDefault(x => x != null && x.MySkill.KeyID == skill.MySkill.KeyID && x.ExtendedFind_DataName(ModItemKeys.SkillExtended_S_Ex_Rinne_0) != null);
             if (oldSkill != null)
             {
-                if (Utils.AllyTeam.Skills_Deck.Contains(oldSkill))
-                {
-                    Utils.AllyTeam.Skills_Deck.Remove(oldSkill);
-                }
-
                 if (Utils.AllyTeam.Skills_UsedDeck.Contains(oldSkill))
                 {
                     Utils.AllyTeam.Skills_UsedDeck.Remove(oldSkill);
+                }
+
+                if (Utils.AllyTeam.Skills_Deck.Contains(oldSkill))
+                {
+                    Utils.AllyTeam.Skills_Deck.Remove(oldSkill);
                 }
             }
 

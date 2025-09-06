@@ -15,6 +15,11 @@ namespace ImaSuguRinne
 {
     public class S_Ex_Rinne_1 : Skill_Extended
     {
+        public override bool CanSkillEnforce(Skill MainSkill)
+        {
+            return MainSkill.AP >= 1;
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             bool swift = MySkill.NotCount;

@@ -51,7 +51,7 @@ namespace ImaSuguRinne
             [HarmonyPostfix]
             public static void StageStartPostfix()
             {
-                if (PlayData.TSavedata.StageNum >= 0 && RinneInParty() && !Utils.GettingTwoMemory)
+                if (PlayData.TSavedata.StageNum >= 0 && RinneInParty() && !Utils.GettingMemory)
                 {
                     Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Rinne_FragmentofMemory);
 
@@ -60,10 +60,21 @@ namespace ImaSuguRinne
                         Utils.RinneChar.UseSoulStone(skill);
                     }
 
-                    Utils.GettingTwoMemory = true;
+                    Utils.GettingMemory = true;
                 }
             }
         }
+
+        //[HarmonyPatch(typeof(FieldSystem), "SteamDLCCheck")]
+        //public static class DLC_Patch
+        //{
+        //    [HarmonyPostfix]
+        //    public static bool Prefix(ref bool __result, uint dlcKey)
+        //    {
+        //        __result = true;
+        //        return false;
+        //    }
+        //}
 
 
 
@@ -73,8 +84,8 @@ namespace ImaSuguRinne
             [HarmonyPostfix]
             public static void Postfix()
             {
-                Utils.GettingTwoMemory = false;
-                Debug.Log($"Memory is {Utils.GettingTwoMemory}");
+                Utils.GettingMemory = false;
+                Debug.Log($"Memory is {Utils.GettingMemory}");
             }
         }
     }

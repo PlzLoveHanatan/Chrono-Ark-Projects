@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>ImaSuguRinne09062025111624</AssemblyName>
+    <AssemblyName>ImaSuguRinne09072025012201</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,7 +405,7 @@
 <!-- Extra Reference End-->
   </ItemGroup>
   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="ImaSuguRinne_ModDefinition.cs" />
     <Compile Include="ImaSuguRinne_ModItemKeys.cs" />
@@ -429,6 +429,8 @@
     <Compile Include="Buff\B_Rinne_SufferingCycle.cs" />
     <Compile Include="Buff\B_Rinne_SufferingRebirth.cs" />
     <Compile Include="Character\P_Rinne.cs" />
+    <Compile Include="Item_Equip\E_Rinne_BloomingDress.cs" />
+    <Compile Include="Item_Equip\E_Rinne_BloomingPetal.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Skill\S_Rinne_BloomofSorrow.cs" />
     <Compile Include="Skill\S_Rinne_BrokenEnd.cs" />
@@ -445,6 +447,8 @@
     <Compile Include="Skill\S_Rinne_Rare_EternalFate_1.cs" />
     <Compile Include="Skill\S_Rinne_Rare_LovesRequiem.cs" />
     <Compile Include="Skill\S_Rinne_ResonanceofPain.cs" />
+    <Compile Include="SkillExtended\S_Ex_E_BloomingDress.cs" />
+    <Compile Include="SkillExtended\S_Ex_E_BloomingPetal.cs" />
     <Compile Include="SkillExtended\S_Ex_Rinne_0.cs" />
     <Compile Include="SkillExtended\S_Ex_Rinne_1.cs" />
     <Compile Include="SkillExtended\S_Ex_Rinne_Swift_Mana.cs" />
