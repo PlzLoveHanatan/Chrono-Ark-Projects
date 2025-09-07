@@ -9,7 +9,7 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_BloomingAgony = "B_Rinne_BloomingAgony";
 		/// <summary>
-		/// Blooming Cycle
+		/// Blooming ✿ Cycle
 		/// Restore 1 Mana at 2 stacks.
 		/// </summary>
         public static string Buff_B_Rinne_BloomingCycle = "B_Rinne_BloomingCycle";
@@ -18,7 +18,7 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_BloomingRebirth = "B_Rinne_BloomingRebirth";
 		/// <summary>
-		/// Sorrow Blooming
+		/// Sorrow Blooming ✿
 		/// </summary>
         public static string Buff_B_Rinne_BloomingSorrow = "B_Rinne_BloomingSorrow";
 		/// <summary>
@@ -26,16 +26,16 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_BrokenSoul = "B_Rinne_BrokenSoul";
 		/// <summary>
-		/// Echoes Cycle
+		/// Echoes Cycle ❀
 		/// Draw 1 skill at 2 stacks.
 		/// </summary>
         public static string Buff_B_Rinne_EchoesCycle = "B_Rinne_EchoesCycle";
 		/// <summary>
-		/// Echoes Rebirth
+		/// Echoes Rebirth ❀
 		/// </summary>
         public static string Buff_B_Rinne_EchoesRebirth = "B_Rinne_EchoesRebirth";
 		/// <summary>
-		/// Endless Cycle
+		/// Endless Cycle ❀
 		/// Draw 1 skill and restore 1 Mana at 2 stacks.
 		/// </summary>
         public static string Buff_B_Rinne_EndlessCycle = "B_Rinne_EndlessCycle";
@@ -45,12 +45,12 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_EndlessDespair = "B_Rinne_EndlessDespair";
 		/// <summary>
-		/// Eternal Blooming
-		/// At the start of each turn shuffle 3 copies of <color=#FF44AA>Eternal Requiem</color> into deck.
+		/// Eternal Blooming ✿
+		/// At the start of each turn shuffle 3 copies of <color=#FF44AA>Eternal Blooming ✿</color> into deck.
 		/// </summary>
         public static string Buff_B_Rinne_EternalBlooming = "B_Rinne_EternalBlooming";
 		/// <summary>
-		/// Fading Memory
+		/// Fading ❀ Memory
 		/// </summary>
         public static string Buff_B_Rinne_FadingMemory = "B_Rinne_FadingMemory";
 		/// <summary>
@@ -71,12 +71,12 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_SorrowResonance = "B_Rinne_SorrowResonance";
 		/// <summary>
-		/// Suffering Cycle
+		/// Suffering Cycle ❀
 		/// Restore 2 Mana at 4 stacks.
 		/// </summary>
         public static string Buff_B_Rinne_SufferingCycle = "B_Rinne_SufferingCycle";
 		/// <summary>
-		/// Suffering Rebirth
+		/// Suffering Rebirth ❀
 		/// </summary>
         public static string Buff_B_Rinne_SufferingRebirth = "B_Rinne_SufferingRebirth";
 		/// <summary>
@@ -91,12 +91,17 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Item_Equip_E_Rinne_BloomingPetal = "E_Rinne_BloomingPetal";
 		/// <summary>
-		/// Fading Memory
-		/// <color=#919191>Restore 2 Mana at 4 stacks. </color>
+		/// <color=#9933AA>Suffering Cycle</color>
+		/// <color=#919191>Restore 2 Mana at 4 stacks.</color>
 		/// </summary>
-        public static string SkillKeyword_KeyWord_FadingMemory = "KeyWord_FadingMemory";
+        public static string SkillKeyword_KeyWord_SufferingCycle = "KeyWord_SufferingCycle";
 		/// <summary>
-		/// Rinne
+		/// Unique Buff ❀✿
+		/// Only Rinne ✿ can have these buffs.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_UniqueBuff = "KeyWord_UniqueBuff";
+		/// <summary>
+		/// Rinne ✿
 		/// Passive:
 		/// Hit Rate above 100% is converted into Critical Chance.
 		/// Rinne starts with one copy of <color=#CC99FF>Memory ❀ Fragment</color> in the deck.
@@ -153,6 +158,7 @@ namespace ImaSuguRinne
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle = "SE_T_S_Rinne_SorrowCycle";
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle_0 = "SE_T_S_Rinne_SorrowCycle_0";
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle_1 = "SE_T_S_Rinne_SorrowCycle_1";
+        public static string SkillExtended_S_Ex_E_BloomingDress = "S_Ex_E_BloomingDress";
         public static string SkillExtended_S_Ex_E_BloomingPetal = "S_Ex_E_BloomingPetal";
 		/// <summary>
 		/// When drawn, draw a skill.
@@ -176,12 +182,12 @@ namespace ImaSuguRinne
 		/// <summary>
 		/// Broken ❀ Cycle
 		/// Gain guaranteed Critical if user played 2 skills this turn.
-		/// If this attack lands, draw 2 skills and gain 2 stacks of <color=#9933AA>Suffering Cycle</color>.
+		/// If this attack lands, draw 1 skill and gain 2 stacks of <color=#9933AA>Suffering Cycle</color>.
 		/// </summary>
         public static string Skill_S_Rinne_BrokenEnd = "S_Rinne_BrokenEnd";
 		/// <summary>
 		/// Cascade of Pain
-		/// Deal &a additional damage for each debuff on the target.
+		/// Deal &a additional damage <color=#FF7C34>(20% Attack Power)</color> for each debuff on the target.
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Rinne_CascadeofPain = "S_Rinne_CascadeofPain";
@@ -229,7 +235,7 @@ namespace ImaSuguRinne
         public static string Skill_S_Rinne_Draw = "S_Rinne_Draw";
 		/// <summary>
 		/// Endless Sorrow
-		/// If facing one enemy, apply additional skills debuffs to the target.
+		/// If facing one enemy, apply additional stack of  <color=#6622AA>Sorrow Resonance</color> to the target's.
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Rinne_EndlessSorrow = "S_Rinne_EndlessSorrow";
@@ -272,7 +278,6 @@ namespace ImaSuguRinne
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Rinne_ResonanceofPain = "S_Rinne_ResonanceofPain";
-        public static string SkillExtended_S_Ex_E_BloomingDress = "S_Ex_E_BloomingDress";
 
     }
 
@@ -280,22 +285,43 @@ namespace ImaSuguRinne
     {
 		/// <summary>
 		/// Korean:
+		/// 이 스킬은 이번 턴 동안 반복해서 사용할 수 있습니다.
 		/// English:
 		/// This skill can be played repeatedly during this turn.
 		/// Japanese:
+		/// このスキルはこのターン中繰り返し使用できます。
 		/// Chinese:
+		/// 此技能在本回合内可反复使用。
 		/// Chinese-TW:
+		/// 此技能在本回合内可反复使用。
 		/// </summary>
         public static string Blooming_Dress => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("Blooming_Dress");
 		/// <summary>
 		/// Korean:
+		/// 사용 시, 이 스킬을 복사하여 덱에 섞어 넣습니다.
 		/// English:
 		/// When played, copy this skill and shuffle it into your deck.
 		/// Japanese:
+		/// 使用時、このスキルをコピーしてデッキに混ぜる。
 		/// Chinese:
+		/// 使用时，复制此技能并洗入牌库。
 		/// Chinese-TW:
+		/// 使用时，复制此技能并洗入牌库。
 		/// </summary>
         public static string Blooming_Petal => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("Blooming_Petal");
+		/// <summary>
+		/// Korean:
+		/// 지금 다시 시도하세요!
+		/// English:
+		/// Retry now!
+		/// Japanese:
+		/// 今すぐリトライ！
+		/// Chinese:
+		/// 立即重试！
+		/// Chinese-TW:
+		/// 立即重试！
+		/// </summary>
+        public static string RetryNow => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("RetryNow");
 
     }
 }

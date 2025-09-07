@@ -42,7 +42,7 @@ namespace ImaSuguRinne
 
             if (BChar.BattleInfo.EnemyList.Count == 1)
             {
-                Utils.AddDebuff(Targets[0], BChar, ModItemKeys.Buff_B_Rinne_SorrowEmbrace, 1);
+                //Utils.AddDebuff(Targets[0], BChar, ModItemKeys.Buff_B_Rinne_SorrowEmbrace, 1);
                 Utils.AddDebuff(Targets[0], BChar, ModItemKeys.Buff_B_Rinne_SorrowResonance, 1);
             }
         }

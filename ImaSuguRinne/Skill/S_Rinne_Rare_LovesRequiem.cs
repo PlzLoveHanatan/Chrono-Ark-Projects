@@ -32,6 +32,7 @@ namespace ImaSuguRinne
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            BChar.StartCoroutine(Utils.RetryNow(BChar));
             this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (this.BChar.GetStat.atk * 0.4f));
 
             int randomIndex = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, BChar.MyTeam.Skills_Deck.Count + 1);

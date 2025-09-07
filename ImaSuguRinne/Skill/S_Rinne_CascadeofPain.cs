@@ -20,7 +20,7 @@ namespace ImaSuguRinne
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.3f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.2f)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -31,7 +31,7 @@ namespace ImaSuguRinne
             {
                 num++;
             }
-            this.SkillBasePlus.Target_BaseDMG = (int)((float)num * (this.BChar.GetStat.atk * 0.3f));
+            this.SkillBasePlus.Target_BaseDMG = (int)((float)num * (this.BChar.GetStat.atk * 0.2f));
 
             Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_CascadeofPain, true, true, 1, 1, true);
         }
@@ -44,7 +44,7 @@ namespace ImaSuguRinne
             {
                 num++;
             }
-            this.SkillBasePlusPreview.Target_BaseDMG = (int)((float)num * (this.BChar.GetStat.atk * 0.3f));
+            this.SkillBasePlusPreview.Target_BaseDMG = (int)((float)num * (this.BChar.GetStat.atk * 0.2f));
             base.Special_PointerEnter(Char);
         }
     }

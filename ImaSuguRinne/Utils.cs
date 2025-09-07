@@ -29,12 +29,15 @@ namespace ImaSuguRinne
 {
     public static class Utils
     {
+        public static bool MagicalEquip => ModManager.getModInfo("ImaSuguRinne").GetSetting<ToggleSetting>("Magical Equip").Value;
         public static BattleChar Rinne => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Rinne);
         public static Character RinneChar => PlayData.TSavedata.Party.FirstOrDefault(x => x.KeyData == ModItemKeys.Character_Rinne);
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
 
         public static bool GettingMemory;
+
+        public static bool Equip;
 
         private static Dictionary<string, int> originalMaxStacks = new Dictionary<string, int>();
 
@@ -251,6 +254,18 @@ namespace ImaSuguRinne
                 int randomIndex = RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, bchar.MyTeam.Skills_Deck.Count + 1);
                 bchar.MyTeam.Skills_Deck.Insert(randomIndex, skill);
             }
+        }
+
+        public static IEnumerator RetryNow(BattleChar bchar)
+        {
+            if (bchar != Rinne) yield break;
+
+            string text = ModLocalization.RetryNow ?? "";
+            Vector3 position = bchar.GetTopPos();
+            BattleText topText = BattleText.CustomText(position, text);
+            yield return new WaitForSecondsRealtime(2f);
+
+            topText?.End();
         }
     }
 }

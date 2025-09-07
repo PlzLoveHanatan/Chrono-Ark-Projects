@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using static System.Net.Mime.MediaTypeNames;
 namespace ImaSuguRinne
 {
     /// <summary>
@@ -27,6 +28,7 @@ namespace ImaSuguRinne
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            BChar.StartCoroutine(Utils.RetryNow(BChar));
             //Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_FragmentofMemory, false, false, 0, 0, true, false);
             if (MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_S_Ex_Rinne_Swift_Mana) == null)
             {

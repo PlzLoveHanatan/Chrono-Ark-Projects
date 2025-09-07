@@ -23,7 +23,7 @@ namespace ImaSuguRinne
             PlusStat.RES_CC = -10 * StackNum;
             PlusStat.RES_DEBUFF = -10 * StackNum;
             PlusStat.RES_DOT = -10 * StackNum;
-            PlusStat.DMGTaken = 3 * StackNum;
+            //PlusStat.DMGTaken = 3 * StackNum;
         }
 
         public void Buffadded(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff)
@@ -38,7 +38,7 @@ namespace ImaSuguRinne
         {
             if (BuffTaker != null && !BuffTaker.IsDead)
             {
-                BuffTaker.Damage(BuffUser, 2, false, true, false, 0, false, false, false);
+                BuffTaker.Damage(BuffUser, 1, false, true, false, 0, false, false, false);
             }
             yield break;
         }

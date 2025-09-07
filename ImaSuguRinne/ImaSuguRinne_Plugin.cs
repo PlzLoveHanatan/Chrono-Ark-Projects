@@ -51,16 +51,26 @@ namespace ImaSuguRinne
             [HarmonyPostfix]
             public static void StageStartPostfix()
             {
-                if (PlayData.TSavedata.StageNum >= 0 && RinneInParty() && !Utils.GettingMemory)
+                if (PlayData.TSavedata.StageNum >= 0 && RinneInParty())
                 {
-                    Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Rinne_FragmentofMemory);
-
-                    for (int i = 0; i < 1; i++)
+                    if (Utils.MagicalEquip && !Utils.Equip)
                     {
-                        Utils.RinneChar.UseSoulStone(skill);
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Rinne_BloomingPetal, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Rinne_BloomingDress, 1));
+                        Utils.Equip = true;
                     }
 
-                    Utils.GettingMemory = true;
+                    if (!Utils.GettingMemory)
+                    {
+                        Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Rinne_FragmentofMemory);
+
+                        for (int i = 0; i < 1; i++)
+                        {
+                            Utils.RinneChar.UseSoulStone(skill);
+                        }
+
+                        Utils.GettingMemory = true;
+                    }
                 }
             }
         }
@@ -85,6 +95,7 @@ namespace ImaSuguRinne
             public static void Postfix()
             {
                 Utils.GettingMemory = false;
+                Utils.Equip = false;
                 Debug.Log($"Memory is {Utils.GettingMemory}");
             }
         }
