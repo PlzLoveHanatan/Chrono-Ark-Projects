@@ -76,10 +76,6 @@ namespace Darkness
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Darkness = "Darkness";
-		/// <summary>
-		/// Passive:
-		/// </summary>
-        public static string Character_Darkness_Normal = "Darkness_Normal";
         public static string Character_Skin_Darkness_NormalKnight = "Darkness_NormalKnight";
 		/// <summary>
 		/// Pleasure Piercer ♡
@@ -111,7 +107,8 @@ namespace Darkness
 		/// <color=#FF1493>Busty ♡ Taunt</color>
 		/// <color=#919191>Can only target user.
 		/// Removed 1 stack at the start of the next turn.
-		/// CC (Base <sprite=2> 105%) debuff. Max 2 stacks </color>
+		/// CC (Base <sprite=2> 105%) debuff.
+		/// Max 2 stacks </color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_BustyTaunt = "KeyWord_BustyTaunt";
 		/// <summary>
@@ -300,6 +297,7 @@ namespace Darkness
 		/// Stubborn Knight (Darkness Edition)
 		/// </summary>
         public static string Buff_S_Darkness_StubbornKnight_0 = "S_Darkness_StubbornKnight_0";
+        public static string Skill_S_Darkness_Rare_IronMaidensEmbrace_0 = "S_Darkness_Rare_IronMaidensEmbrace_0";
 
     }
 

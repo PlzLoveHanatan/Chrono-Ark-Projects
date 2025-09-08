@@ -39,20 +39,22 @@ namespace Darkness
                 }
             }
         }
+
         public IEnumerator ExtraCast()
         {
             yield return null;
 
-            string skillKey = ModItemKeys.Skill_S_Darkness_Rare_IronMaidensEmbrace;
+            string skillKey = ModItemKeys.Skill_S_Darkness_Rare_IronMaidensEmbrace_0;
 
             Skill skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
             skill.FreeUse = true;
 
             if (BChar != null && !BChar.Dummy && !BChar.IsDead)
             {
+                BChar.MyTeam.partybarrier.BarrierHP += (int)(BChar.GetStat.maxhp * 0.5f);
+                BChar.BuffAdd(ModItemKeys.Buff_B_Darkness_DelightfulDefense, BChar, false, 0, false, -1, false);
                 BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, BChar, false, false, true, null));
             }
-            yield break;
         }
     }
 }
