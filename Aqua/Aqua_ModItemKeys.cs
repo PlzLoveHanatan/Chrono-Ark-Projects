@@ -174,6 +174,7 @@ namespace Aqua
 		/// If Aqua is fainted, do not cast 'Nature's Beauty'.
 		/// </summary>
         public static string Skill_S_Aqua_LucyDraw = "S_Aqua_LucyDraw";
+        public static string VFXSkill_S_Aqua_LucyDraw_H = "S_Aqua_LucyDraw_H";
 		/// <summary>
 		/// Overflowing Grace of the Water Goddess
 		/// Apply <color=#A3DFF7>Drenched</color> to all allies and enemies.
