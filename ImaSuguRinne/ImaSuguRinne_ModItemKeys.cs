@@ -158,6 +158,7 @@ namespace ImaSuguRinne
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle = "SE_T_S_Rinne_SorrowCycle";
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle_0 = "SE_T_S_Rinne_SorrowCycle_0";
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle_1 = "SE_T_S_Rinne_SorrowCycle_1";
+        public static string Character_Skin_Skin_MagicalBikini = "Skin_MagicalBikini";
         public static string SkillExtended_S_Ex_E_BloomingDress = "S_Ex_E_BloomingDress";
         public static string SkillExtended_S_Ex_E_BloomingPetal = "S_Ex_E_BloomingPetal";
 		/// <summary>

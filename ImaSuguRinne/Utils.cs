@@ -24,6 +24,8 @@ using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Net.Sockets;
 using TileTypes;
 using NLog.Targets;
+using Steamworks;
+using I2.Loc;
 
 namespace ImaSuguRinne
 {
@@ -38,8 +40,7 @@ namespace ImaSuguRinne
         public static bool GettingMemory;
 
         public static bool Equip;
-
-        private static Dictionary<string, int> originalMaxStacks = new Dictionary<string, int>();
+        public static bool DeadImmune;
 
         public static readonly List<string> RinneSkills = new List<string>
         {

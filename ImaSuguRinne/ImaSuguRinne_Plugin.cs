@@ -75,19 +75,6 @@ namespace ImaSuguRinne
             }
         }
 
-        //[HarmonyPatch(typeof(FieldSystem), "SteamDLCCheck")]
-        //public static class DLC_Patch
-        //{
-        //    [HarmonyPostfix]
-        //    public static bool Prefix(ref bool __result, uint dlcKey)
-        //    {
-        //        __result = true;
-        //        return false;
-        //    }
-        //}
-
-
-
         [HarmonyPatch(typeof(PlayData), "GameEndInit")]
         public static class MemoryReset
         {
@@ -96,7 +83,6 @@ namespace ImaSuguRinne
             {
                 Utils.GettingMemory = false;
                 Utils.Equip = false;
-                Debug.Log($"Memory is {Utils.GettingMemory}");
             }
         }
     }
