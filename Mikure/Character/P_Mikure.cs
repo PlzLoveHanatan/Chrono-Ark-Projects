@@ -17,7 +17,7 @@ namespace Mikure
     /// Mikure
     /// Passive:
     /// </summary>
-    public class P_Mikure : Passive_Char, IP_Healed, IP_SomeOneDead, IP_SkillUse_User
+    public class P_Mikure : Passive_Char, IP_Healed, IP_SkillUse_User
     {
         public override void Init()
         {
@@ -48,7 +48,7 @@ namespace Mikure
 
             if (HealedChar.BuffReturn(areYouOK, false) is B_Mikure_AreYouOK ok)
             {
-                ok.OverHealed += (int)Misc.PerToNum(OverHeal, 100f);
+                ok.OverHealed += (int)Misc.PerToNum(OverHeal, 50);
                 ok.BuffStat();
             }
         }
@@ -60,13 +60,5 @@ namespace Mikure
                 Utils.ReviveAllies(Targets);
             }
         }
-
-        public void SomeOneDead(BattleChar DeadChar)
-        {
-            if (DeadChar.Info.Ally && DeadChar != BChar)
-            {
-
-            }
-        }        
     }
 }

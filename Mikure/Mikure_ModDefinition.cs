@@ -35,6 +35,12 @@ namespace Mikure
             {
                 Utils.AllySkills.Clear();
                 Utils.SaveAllySkill();
+
+                if (Utils.RemovePainSharing)
+                {
+                    Utils.PainSharingRemoveAlly();
+                    Utils.PainSharingRemoveLucy();
+                }
             }
         }
 

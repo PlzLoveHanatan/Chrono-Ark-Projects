@@ -21,7 +21,7 @@ namespace Mikure
         public override void Init()
         {
             PlusStat.Strength = true;
-            PlusStat.HEALTaken = 30;
+            PlusStat.HEALTaken = 15;
         }
     }
 }

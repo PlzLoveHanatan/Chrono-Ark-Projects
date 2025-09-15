@@ -14,17 +14,14 @@ using Debug = UnityEngine.Debug;
 namespace Mikure
 {
 	/// <summary>
-	/// Restrained
-	/// Stunned.
-	/// Whenever you are healed, the ally with the lowest health is also healed for half the amount.
+	/// Please Be OK!
 	/// </summary>
-    public class B_Mikure_Restrained : Buff
+    public class B_Mikure_IfYouWeretoTripIWouldBeSad_0 : Buff
     {
         public override void Init()
         {
-            PlusStat.DMGTaken = 20;
             PlusPerStat.Damage = 20;
-            PlusStat.AggroPer = 100;
+            PlusPerStat.MaxHP = 20;
         }
     }
 }

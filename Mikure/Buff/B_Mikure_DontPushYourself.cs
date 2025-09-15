@@ -20,7 +20,8 @@ namespace Mikure
     {
         public override void Init()
         {
-            PlusStat.DMGTaken = -10;
+            PlusStat.DMGTaken = -20;
+            PlusPerStat.Damage = -20;
         }
     }
 }

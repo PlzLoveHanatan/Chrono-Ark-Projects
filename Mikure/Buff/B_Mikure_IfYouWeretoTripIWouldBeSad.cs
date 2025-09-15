@@ -20,9 +20,10 @@ namespace Mikure
     {
         public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
         {
-            if (Dmg >= 1)
+            if (!Preview && Dmg >= 1)
             {
-                Dmg = 1;
+                SelfStackDestroy();
+                return 1;
             }
             return Dmg;
         }

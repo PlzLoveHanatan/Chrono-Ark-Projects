@@ -17,9 +17,13 @@ namespace Mikure
         public static string Buff_B_Mikure_DontPushYourself = "B_Mikure_DontPushYourself";
 		/// <summary>
 		/// Please Don't Break!
-		/// When attacked, reduce incoming damage to 1 and remove this buff.
+		/// When taking damage, reduce incoming damage to 1 and remove 1 stack.
 		/// </summary>
         public static string Buff_B_Mikure_IfYouWeretoTripIWouldBeSad = "B_Mikure_IfYouWeretoTripIWouldBeSad";
+		/// <summary>
+		/// Please Be OK!
+		/// </summary>
+        public static string Buff_B_Mikure_IfYouWeretoTripIWouldBeSad_0 = "B_Mikure_IfYouWeretoTripIWouldBeSad_0";
 		/// <summary>
 		/// Pulse!
 		/// </summary>
@@ -50,6 +54,14 @@ namespace Mikure
 		/// </summary>
         public static string Buff_B_Mikure_StayHere = "B_Mikure_StayHere";
 		/// <summary>
+		/// This skill can be cast even if you are stunned. Increase damage by <color=#FF7C34>50% of Max HP</color>.
+		/// </summary>
+        public static string SkillExtended_Ex_Mikure_0 = "Ex_Mikure_0";
+		/// <summary>
+		/// This skill can be cast even if you are stunned. Remove 2 random debuffs from self.
+		/// </summary>
+        public static string SkillExtended_Ex_Mikure_1 = "Ex_Mikure_1";
+		/// <summary>
 		/// Pulse!
 		/// <color=#919191>Attack Power +10%
 		/// Critical Damage +10%
@@ -68,11 +80,12 @@ namespace Mikure
 		/// Mikure
 		/// Passive:
 		/// Reduces the cost of all fixed Healing skills by 1.
-		/// All allies gain Max HP equal to 100% of excess healing.
-		/// Healing skills can target dead allies, restore an ally's health by 25% and cure faint status. 
+		/// All allies gain Max HP equal to 50% of excess healing.
+		/// Healing skills can target dead allies (mouse targeting), restore an ally's health by 25% and cure faint status. 
+		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Mikure = "Mikure";
-        public static string SkillEffect_SE_Tick_B_Mikure_DontPushYourself = "SE_Tick_B_Mikure_DontPushYourself";
+        public static string SkillEffect_SE_Tick_B_Mikure_AreYouRunningAwayfromMyCheckup = "SE_Tick_B_Mikure_AreYouRunningAwayfromMyCheckup";
         public static string SkillEffect_SE_T_S_Mikure_AnytimeNow = "SE_T_S_Mikure_AnytimeNow";
         public static string SkillEffect_SE_T_S_Mikure_AreYouOK = "SE_T_S_Mikure_AreYouOK";
         public static string SkillEffect_SE_T_S_Mikure_DontPushYourself = "SE_T_S_Mikure_DontPushYourself";
@@ -170,7 +183,6 @@ namespace Mikure
         public static string Skill_S_Mikure_RestrainRecklessness = "S_Mikure_RestrainRecklessness";
 		/// <summary>
 		/// Stay With Me!
-		/// Block one debuff that is not resisted.
 		/// </summary>
         public static string Skill_S_Mikure_StayHere = "S_Mikure_StayHere";
 

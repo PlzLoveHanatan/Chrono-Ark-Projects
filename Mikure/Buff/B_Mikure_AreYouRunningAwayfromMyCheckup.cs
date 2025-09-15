@@ -16,14 +16,40 @@ namespace Mikure
 	/// <summary>
 	/// Are You Running Away from My Checkup?
 	/// </summary>
-    public class B_Mikure_AreYouRunningAwayfromMyCheckup : Buff
+    public class B_Mikure_AreYouRunningAwayfromMyCheckup : Buff, IP_BuffAdd, IP_Awake
     {
+        public bool DebuffBlocked;
+
+        public override string DescExtended()
+        {
+            string text = !DebuffBlocked ? ModLocalization.DebuffBlocked : "";
+            return text;
+        }
+
+        public void Awake()
+        {
+            DebuffBlocked = false;
+        }
+
+        public void Buffadded(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff)
+        {
+            if (BuffTaker == BChar && addedbuff.BuffData.Debuff)
+            {
+                if (!DebuffBlocked)
+                {
+                    DebuffBlocked = true;
+
+                    BuffTaker.BuffRemove(addedbuff.BuffData.Key);
+                    BuffTaker.SimpleTextOut(ScriptLocalization.UI_Battle.DebuffGuard);
+                }
+            }
+        }
+
         public override void Init()
         {
-            PlusPerStat.Damage = 15;
-            PlusStat.cri = 15;
-            PlusStat.hit = 15;
-            PlusStat.HitMaximum = true;
+            PlusStat.RES_DOT = 20;
+            PlusStat.RES_DEBUFF = 20;
+            PlusStat.RES_CC = 20;
         }
     }
 }

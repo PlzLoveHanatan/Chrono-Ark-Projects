@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChronoArkMod;
+using ChronoArkMod.ModData.Settings;
+using GameDataEditor;
 using I2.Loc;
 using NLog.Targets;
 using UnityEngine;
@@ -13,6 +15,7 @@ namespace Mikure
 {
     public static class Utils
     {
+        public static bool RemovePainSharing => ModManager.getModInfo("Mikure").GetSetting<ToggleSetting>("Remove Pain Sharing").Value;
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
         public static BattleChar Mikure => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Mikure);
@@ -263,6 +266,48 @@ namespace Mikure
                     int randomIndex = RandomManager.RandomInt(ally.GetRandomClass().Main, 0, ally.MyTeam.Skills_Deck.Count + 1);
                     ally.MyTeam.Skills_Deck.Insert(randomIndex, skill);
                     Debug.Log($"[AddAllySkill] Вставил {skill.MySkill.KeyID} в колоду {ally.Info.KeyData} на позицию {randomIndex}");
+                }
+            }
+        }
+
+        public static readonly List<string> PainSharingAlly = new List<string>
+        {
+            GDEItemKeys.Buff_B_BloodyMist_ShareDamage_Ally,
+            GDEItemKeys.Buff_B_ProgramMaster_LucyMain_Ally,
+        };
+
+        public static readonly List<string> PainSharingLucy = new List<string>
+        {
+            GDEItemKeys.Buff_B_BloodyMist_ShareDamage,
+            GDEItemKeys.Buff_B_ProgramMaster_LucyMain,
+        };
+
+        public static void PainSharingRemoveAlly()
+        {
+            foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
+            {
+                if (ally == null) continue;
+
+                foreach (var buffKey in PainSharingAlly)
+                {
+                    if (ally?.BuffReturn(buffKey, false) is Buff buff)
+                    {
+                        buff?.SelfDestroy();
+                    }
+                }
+            }
+        }
+
+        public static void PainSharingRemoveLucy()
+        {
+            var lucy = BattleSystem.instance.AllyTeam.LucyAlly;
+            if (lucy == null) return;
+
+            foreach (var buffKey in PainSharingLucy)
+            {
+                if (lucy?.BuffReturn(buffKey, false) is Buff buff)
+                {
+                    buff?.SelfDestroy();
                 }
             }
         }

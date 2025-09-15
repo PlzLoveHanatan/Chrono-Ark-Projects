@@ -17,40 +17,12 @@ namespace Mikure
 	/// <summary>
 	/// Stay With Me!
 	/// </summary>
-    public class B_Mikure_StayHere : Buff, IP_BuffAdd, IP_Awake
+    public class B_Mikure_StayHere : Buff
     {
-        public bool DebuffBlocked;
-
-        public override string DescExtended()
-        {
-            string text = !DebuffBlocked ? ModLocalization.DebuffBlocked : "";
-            return text;
-        }
-
-        public void Awake()
-        {
-            DebuffBlocked = false;
-        }
-
-        public void Buffadded(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff)
-        {
-            if (BuffTaker == BChar && addedbuff.BuffData.Debuff)
-            {
-                if (!DebuffBlocked)
-                {
-                    DebuffBlocked = true;
-
-                    addedbuff.SelfDestroy();
-                    BuffTaker.SimpleTextOut(ScriptLocalization.UI_Battle.DebuffGuard);
-                }
-            }
-        }
-
         public override void Init()
         {
-            PlusStat.RES_DOT = 15;
-            PlusStat.RES_DEBUFF = 15;
-            PlusStat.RES_CC = 15;
+            PlusStat.cri = 10;
+            PlusStat.hit = 10;
         }
     }
 }
