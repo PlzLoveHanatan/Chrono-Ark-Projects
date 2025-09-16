@@ -21,7 +21,6 @@ namespace Mikure
         public override void Init()
         {
             PlusPerStat.Damage = 20;
-            PlusPerStat.MaxHP = 20;
         }
     }
 }

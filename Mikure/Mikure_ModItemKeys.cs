@@ -129,6 +129,7 @@ namespace Mikure
         public static string SkillEffect_SE_T_S_Mikure_StayHere = "SE_T_S_Mikure_StayHere";
         public static string SkillEffect_SE_T_S_Mikure_StayHere_0 = "SE_T_S_Mikure_StayHere_0";
         public static string SkillEffect_SE_T_S_Mikure_StayHere_1 = "SE_T_S_Mikure_StayHere_1";
+        public static string Character_Skin_Skin_Mikure_Nurse = "Skin_Mikure_Nurse";
 		/// <summary>
 		/// Anytime?! Now!!
 		/// When played choose 1 debuff type to remove from the target.

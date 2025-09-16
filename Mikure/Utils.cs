@@ -202,7 +202,7 @@ namespace Mikure
                 {
                     target.Info.Incapacitated = false;
                     target.Info.Hp = 0;
-                    int hp = target.GetStat.maxhp / 4;
+                    int hp = target.GetStat.maxhp / 4 - target.HP;
                     BattleSystem.DelayInput(HealingParticle(target, BattleSystem.instance.DummyChar, hp, true));
                     BattleSystem.DelayInputAfter(RemoveAllySkill(target));
                     BattleSystem.DelayInputAfter(AddAllySkill(target));
@@ -238,10 +238,7 @@ namespace Mikure
                 {
                     AllySkills[master] = new List<Skill>();
                 }
-
                 AllySkills[master].Add(skill);
-
-                Debug.Log($"[BattleStart] Добавил скилл {skill.MySkill.KeyID} для {master.Info.KeyData}");
             }
         }
 
@@ -268,7 +265,6 @@ namespace Mikure
                 {
                     int randomIndex = RandomManager.RandomInt(ally.GetRandomClass().Main, 0, ally.MyTeam.Skills_Deck.Count + 1);
                     ally.MyTeam.Skills_Deck.Insert(randomIndex, skill);
-                    Debug.Log($"[AddAllySkill] Вставил {skill.MySkill.KeyID} в колоду {ally.Info.KeyData} на позицию {randomIndex}");
                 }
             }
         }
