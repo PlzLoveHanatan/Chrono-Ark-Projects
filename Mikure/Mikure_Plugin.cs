@@ -32,12 +32,44 @@ namespace Mikure
         {
             try
             {
-                Debug.Log("worky worky");
                 harmony.PatchAll();
             }
             catch (Exception e)
             {
                 Debug.Log("Mikure: Patch Catch: " + e.ToString());
+            }
+        }
+
+        public static bool MikureInParty()
+        {
+            return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Mikure);
+        }
+
+        [HarmonyPatch(typeof(FieldSystem), "StageStart")]
+        public static class StagePatch
+        {
+            [HarmonyPostfix]
+            public static void StageStartPostfix()
+            {
+                if (MikureInParty())
+                {
+                    if (PlayData.TSavedata.StageNum >= 0 && Utils.NurseEquip && !Utils.Equip)
+                    {
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Mikure_CareHeaddress, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Mikure_EmergencyInjection, 1));
+                        Utils.Equip = true;
+                    }
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
+        public static class MemoryReset
+        {
+            [HarmonyPostfix]
+            public static void Postfix()
+            {
+                Utils.Equip = false;
             }
         }
 

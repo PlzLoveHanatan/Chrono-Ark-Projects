@@ -16,6 +16,15 @@ namespace Mikure
 		/// </summary>
         public static string Buff_B_Mikure_DontPushYourself = "B_Mikure_DontPushYourself";
 		/// <summary>
+		/// I'll Take Care of You!
+		/// </summary>
+        public static string Buff_B_Mikure_E_CareHeaddress = "B_Mikure_E_CareHeaddress";
+		/// <summary>
+		/// Emergency Injection!
+		/// Next Healing skill's healing is increased by 100%.
+		/// </summary>
+        public static string Buff_B_Mikure_E_EmergencyInjection = "B_Mikure_E_EmergencyInjection";
+		/// <summary>
 		/// Please Don't Break!
 		/// When taking damage, reduce incoming damage to 1 and remove 1 stack.
 		/// </summary>
@@ -54,13 +63,31 @@ namespace Mikure
 		/// </summary>
         public static string Buff_B_Mikure_StayHere = "B_Mikure_StayHere";
 		/// <summary>
-		/// This skill can be cast even if you are stunned. Increase damage by <color=#FF7C34>50% of Max HP</color>.
+		/// This skill can be cast even if you are stunned. Deal additional damage equal to <color=#FF7C34>50% of Max HP</color>.
 		/// </summary>
         public static string SkillExtended_Ex_Mikure_0 = "Ex_Mikure_0";
 		/// <summary>
 		/// This skill can be cast even if you are stunned. Remove 2 random debuffs from self.
 		/// </summary>
         public static string SkillExtended_Ex_Mikure_1 = "Ex_Mikure_1";
+		/// <summary>
+		/// Emergency Injection!
+		/// The skill's healing is increased by 100%.
+		/// </summary>
+        public static string SkillExtended_Ex_Mikure_EmergencyInjection = "Ex_Mikure_EmergencyInjection";
+		/// <summary>
+		/// Care Headdress ♡
+		/// Healed ally gain barrier equal to 80% of wearer Healing Power.
+		/// <color=#919191>I'll take care of you...  
+		/// For. ever. and ever. and ever!</color>
+		/// </summary>
+        public static string Item_Equip_E_Mikure_CareHeaddress = "E_Mikure_CareHeaddress";
+		/// <summary>
+		/// Emergency Injection!
+		/// Each turn, the first healing skill played from hand has its healing increased by 100%.
+		/// <color=#919191>Is it Painful!? Do You Want To Make it End!?</color>
+		/// </summary>
+        public static string Item_Equip_E_Mikure_EmergencyInjection = "E_Mikure_EmergencyInjection";
 		/// <summary>
 		/// Pulse!
 		/// <color=#919191>Attack Power +10%
@@ -192,38 +219,54 @@ namespace Mikure
     {
 		/// <summary>
 		/// Korean:
+		/// 제거할 디버프 유형을 선택하세요
 		/// English:
 		/// Select debuff type to remove
 		/// Japanese:
+		/// 削除するデバフの種類を選んでください
 		/// Chinese:
+		/// 选择要移除的减益类型
 		/// Chinese-TW:
+		/// 选择要移除的减益类型
 		/// </summary>
         public static string Anytime => ModManager.getModInfo("Mikure").localizationInfo.SystemLocalizationUpdate("Anytime");
 		/// <summary>
 		/// Korean:
+		/// 기절한 아군
 		/// English:
 		/// Fainted Ally
 		/// Japanese:
+		/// 気絶した味方
 		/// Chinese:
+		/// 昏厥的队友
 		/// Chinese-TW:
+		/// 昏厥的队友
 		/// </summary>
         public static string DeadAlly => ModManager.getModInfo("Mikure").localizationInfo.SystemLocalizationUpdate("DeadAlly");
 		/// <summary>
 		/// Korean:
+		/// 턴마다 한 번 저항하지 못한 디버프 1개를 막습니다.
 		/// English:
-		/// Block one debuff that is not resisted.
+		/// Once per turn block one debuff that is not resisted.
 		/// Japanese:
+		/// ターンごとに抵抗できなかったデバフを1つ防ぎます。
 		/// Chinese:
+		/// 每回合可阻挡1个未被抵抗的减益。
 		/// Chinese-TW:
+		/// 每回合可阻挡1个未被抵抗的减益。
 		/// </summary>
         public static string DebuffBlocked => ModManager.getModInfo("Mikure").localizationInfo.SystemLocalizationUpdate("DebuffBlocked");
 		/// <summary>
 		/// Korean:
+		/// 아군에게 적용할 버프를 선택하세요
 		/// English:
 		/// Select buff to apply to ally
 		/// Japanese:
+		/// 味方に適用するバフを選んでください
 		/// Chinese:
+		/// 选择要对队友施加的增益
 		/// Chinese-TW:
+		/// 选择要对队友施加的增益
 		/// </summary>
         public static string WhatYouNeed => ModManager.getModInfo("Mikure").localizationInfo.SystemLocalizationUpdate("WhatYouNeed");
 

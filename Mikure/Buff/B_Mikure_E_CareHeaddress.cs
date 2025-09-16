@@ -14,14 +14,10 @@ using Debug = UnityEngine.Debug;
 namespace Mikure
 {
 	/// <summary>
-	/// Don't Push Yourself!
+	/// I'll Take Care of You!
 	/// </summary>
-    public class B_Mikure_DontPushYourself : Buff
+    public class B_Mikure_E_CareHeaddress : Buff
     {
-        public override void Init()
-        {
-            PlusStat.DMGTaken = -30;
-            PlusPerStat.Damage = -30;
-        }
+
     }
 }

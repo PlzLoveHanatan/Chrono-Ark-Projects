@@ -21,7 +21,7 @@ namespace Mikure
     {
         public override void Init()
         {
-            PlusStat.def = 10;
+            PlusStat.def = 15;
         }
     }
 }

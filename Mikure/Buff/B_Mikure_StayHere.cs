@@ -23,6 +23,7 @@ namespace Mikure
         {
             PlusStat.cri = 10;
             PlusStat.hit = 10;
+            PlusStat.HitMaximum = true;
         }
     }
 }

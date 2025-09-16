@@ -13,15 +13,11 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Mikure
 {
-	/// <summary>
-	/// Don't Push Yourself!
-	/// </summary>
-    public class B_Mikure_DontPushYourself : Buff
+    public class Ex_Mikure_EmergencyInjection : BuffSkillExHand
     {
         public override void Init()
         {
-            PlusStat.DMGTaken = -30;
-            PlusPerStat.Damage = -30;
+            PlusSkillPerFinal.Heal = 100;
         }
     }
 }

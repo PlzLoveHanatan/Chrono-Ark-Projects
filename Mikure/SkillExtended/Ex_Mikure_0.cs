@@ -31,7 +31,7 @@ namespace Mikure
         {
             base.SkillUseSingle(SkillD, Targets);
             int damage = BChar.GetStat.maxhp / 2;
-            SkillBasePlus.Target_BaseDMG += damage;
+            SkillBaseFinal.Target_BaseDMG = damage;
         }
     }
 }

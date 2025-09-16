@@ -16,7 +16,7 @@ namespace Mikure
 	/// <summary>
 	/// Are You Running Away from My Checkup?
 	/// </summary>
-    public class B_Mikure_AreYouRunningAwayfromMyCheckup : Buff, IP_BuffAdd, IP_Awake
+    public class B_Mikure_AreYouRunningAwayfromMyCheckup : Buff, IP_BuffAdd, IP_Awake, IP_PlayerTurn
     {
         public bool DebuffBlocked;
 
@@ -39,7 +39,8 @@ namespace Mikure
                 {
                     DebuffBlocked = true;
 
-                    BuffTaker.BuffRemove(addedbuff.BuffData.Key);
+                    addedbuff.SelfDestroy();
+
                     BuffTaker.SimpleTextOut(ScriptLocalization.UI_Battle.DebuffGuard);
                 }
             }
@@ -50,6 +51,11 @@ namespace Mikure
             PlusStat.RES_DOT = 20;
             PlusStat.RES_DEBUFF = 20;
             PlusStat.RES_CC = 20;
+        }
+
+        public void Turn()
+        {
+            DebuffBlocked = false;
         }
     }
 }
