@@ -24,9 +24,9 @@ namespace Akari
 
         public override void Init()
         {
-            PlusStat.atk = 2f;
-            PlusStat.reg = 2f;
-            PlusStat.cri = 15f;
+            PlusStat.atk = 3f;
+            PlusStat.reg = 3f;
+            PlusStat.cri = 10f;
             OnePassive = true;
         }
 
@@ -38,7 +38,7 @@ namespace Akari
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            if (!AmmoDiscard && SkillD.Master == BChar && (SkillD.IsDamage || SkillD.IsHeal))
+            if (!AmmoDiscard && SkillD.Master == BChar && (SkillD.IsDamage || SkillD.IsHeal) && !Utils.Ammunition.Contains(SkillD.MySkill.KeyID))
             {
                 List<Skill> ammunitionInHand = BattleSystem.instance.AllyTeam.Skills.FindAll(s => Utils.Ammunition.Contains(s.MySkill.KeyID));
 

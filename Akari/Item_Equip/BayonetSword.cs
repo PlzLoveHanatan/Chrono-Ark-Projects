@@ -19,14 +19,14 @@ namespace Akari
 
         public override void Init()
         {
-            PlusPerStat.Damage = 20;
-            PlusStat.hit = 5f;
-            PlusStat.dod = 5f;
+            PlusPerStat.Damage = 25;
+            PlusStat.dod = 10f;
             PlusStat.HIT_CC = 10f;
             PlusStat.HIT_DEBUFF = 10f;
             PlusStat.HIT_DOT = 10f;
             OnePassive = true;
         }
+
         public void Turn()
         {
             AttackUsesThisTurn = 0;

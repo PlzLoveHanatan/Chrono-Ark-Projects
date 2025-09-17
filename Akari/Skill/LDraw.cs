@@ -24,6 +24,23 @@ namespace Akari
                 Skill.TempSkill(ModItemKeys.Skill_LDraw_1, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
             };
 
+            List<Skill> stringsH = new List<Skill>
+            {
+                Skill.TempSkill(ModItemKeys.Skill_LDraw_0_H, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+                Skill.TempSkill(ModItemKeys.Skill_LDraw_1_H, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+            };
+
+            List<Skill> skills = new List<Skill>();
+
+            if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Skin_Akari_Otome"))
+            {
+                skills.AddRange(stringsH);
+            }
+            else
+            {
+                skills.AddRange(strings);
+            }
+                
             if (!Utils.Akari)
             {
                 BattleSystem.instance.AllyTeam.Draw(1);
@@ -31,7 +48,7 @@ namespace Akari
             }
             else
             {
-                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(strings, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(skills, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
 
             }
         }
@@ -40,7 +57,7 @@ namespace Akari
         {
             string key = Mybutton.Myskill.MySkill.KeyID;
 
-            if (key == ModItemKeys.Skill_LDraw_0)
+            if (key == ModItemKeys.Skill_LDraw_0 || key == ModItemKeys.Skill_LDraw_0_H)
             {
                 BattleSystem.instance.AllyTeam.Draw(3);
             }
