@@ -18,57 +18,37 @@ namespace Akari
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            bool flag = false;
-            using (List<BattleChar>.Enumerator enumerator = BattleSystem.instance.AllyTeam.AliveChars.GetEnumerator())
+            List<Skill> strings = new List<Skill>
             {
-                while (enumerator.MoveNext())
-                {
-                    if (enumerator.Current.Info.KeyData == ModItemKeys.Character_Akari)
-                    {
-                        flag = true;
-                        break;
-                    }
-                }
+                Skill.TempSkill(ModItemKeys.Skill_LDraw_0, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+                Skill.TempSkill(ModItemKeys.Skill_LDraw_1, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+            };
+
+            if (!Utils.Akari)
+            {
+                BattleSystem.instance.AllyTeam.Draw(1);
+                MySkill.isExcept = true;
             }
-            if (!flag)
+            else
+            {
+                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(strings, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+
+            }
+        }
+
+        private void Selection(SkillButton Mybutton)
+        {
+            string key = Mybutton.Myskill.MySkill.KeyID;
+
+            if (key == ModItemKeys.Skill_LDraw_0)
+            {
+                BattleSystem.instance.AllyTeam.Draw(3);
+            }
+            else
             {
                 BattleSystem.instance.AllyTeam.Draw(2);
-                return;
-            }
-
-            base.SkillUseSingle(SkillD, Targets);
-            BattleSystem.instance.AllyTeam.Draw(2);
-            BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill>
-        {
-            Skill.TempSkill(ModItemKeys.Skill_LDraw_0, this.BChar, this.BChar.MyTeam),
-            Skill.TempSkill(ModItemKeys.Skill_LDraw_1, this.BChar, this.BChar.MyTeam)
-        }, new SkillButton.SkillClickDel(this.Del), "", false, false, true, false, true));
-        }
-        private void Del(SkillButton Mybutton)
-        {
-            BattleChar battleChar = null;
-            foreach (BattleChar battleChar2 in BattleSystem.instance.AllyTeam.AliveChars)
-            {
-                if (battleChar2.Info.KeyData == ModItemKeys.Character_Akari)
-                {
-                    battleChar = battleChar2;
-                    break;
-                } 
-            }
-            if (battleChar == null)
-            {
-                return;
-            }
-
-            if (Mybutton.Myskill.MySkill.KeyID == ModItemKeys.Skill_LDraw_0)
-            {
-                BattleSystem.instance.AllyTeam.Draw();
-            }
-            if (Mybutton.Myskill.MySkill.KeyID == ModItemKeys.Skill_LDraw_1)
-            {
                 MasterAudio.PlaySound("Gun_Reload1", 100f, null, 0f, null, null, false, false);
-
-                Utils.CreateRandomAmmunition(BChar, 2);
+                Utils.ChargeMag(Utils.Akari);
             }
         }
     }

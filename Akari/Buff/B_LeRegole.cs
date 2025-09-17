@@ -20,7 +20,7 @@ namespace Akari
     {
         public override void BuffStat()
         {
-            PlusPerStat.Damage = 30;
+            PlusPerStat.Damage = 20;
         } 
     }
 }

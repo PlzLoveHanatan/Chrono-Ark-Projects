@@ -6,10 +6,11 @@ namespace Akari
 		/// <summary>
 		/// Akari
 		/// Passive:
-		/// Every 3rd attack Akari uses (excluding Ammunition) deals 15% increased damage.
-		/// Starting from the 4th turn, all of Akari's attacks deal 15% increased damage for the rest of the battle.
-		/// Each time Akari plays an attack (excluding Ranged Attacks and Ammunition), she gains 1 stack of "Ammo Supply".
-		/// Each time Ammunition is discarded, Akari gains 1 stack of "Tactical Reload" for every unit of ammunition discarded.
+		/// At the start of each fight gain 1 'Standart Mag'.
+		/// Every 3rd attack deals 20% increased damage.  
+		/// From the 4th turn, all attacks deal 20% increased damage for the rest of the battle.  
+		/// Whenever play an attack (excluding Ranged Attacks and Ammunition), gain 1 stack of 'Ammo Supply'.
+		/// Whenever Ammunition is discarded, gain 1 stack of 'Tactical Reload' for each unit of Ammunition discarded.
 		/// </summary>
         public static string Character_Akari = "Akari";
 		/// <summary>
@@ -34,7 +35,7 @@ namespace Akari
         public static string Skill_BayonetCombat = "BayonetCombat";
 		/// <summary>
 		/// Bayonet Sword
-		/// Whenever the wearer plays an attack skill from hand (excluding Ranged Attacks and Ammunition), create a random Ammunition in hand.
+		/// Whenever playing an attack skill from hand (excluding Ranged Attacks and Ammunition), create a random Ammunition in hand.
 		/// Only activates twice per turn.
 		/// <color=#919191>Only those who value their ammo know how to strike with precision.</color> 
 		/// </summary>
@@ -68,15 +69,13 @@ namespace Akari
 		/// Le Regole
 		/// </summary>
         public static string Buff_B_LeRegole = "B_LeRegole";
-        public static string Buff_B_LeRegole_NextTurn = "B_LeRegole_NextTurn";
 		/// <summary>
 		/// Punishing Precision
 		/// </summary>
         public static string Buff_B_PunishingPrecision = "B_PunishingPrecision";
 		/// <summary>
 		/// Steel Reprisal
-		/// When attacked, counterattack for 110% of Attack Power.
-		/// This buff is removed if you take damage from the attacker.
+		/// When attacked, counterattack for &a <color=#FF7C34>(90% Attack Power)</color>.
 		/// </summary>
         public static string Buff_B_SteelReprisal = "B_SteelReprisal";
 		/// <summary>
@@ -91,19 +90,20 @@ namespace Akari
         public static string Buff_B_TacticalReload = "B_TacticalReload";
 		/// <summary>
 		/// The Boss's Orders
-		/// All Range Attacks now discard 1 additional Ammunition.
+		/// All Range Attacks discard 1 additional Ammunition.
 		/// </summary>
         public static string Buff_B_TheBossOrders = "B_TheBossOrders";
 		/// <summary>
 		/// Threefold Tenacity
-		/// At 3 stacks increase next skill's damage by 15%.
+		/// At 3 stacks increase next skill's damage by 20%.
 		/// </summary>
         public static string Buff_B_ThreefoldTenacity = "B_ThreefoldTenacity";
+        public static string Buff_B_ThreefoldTenacity_0 = "B_ThreefoldTenacity_0";
 		/// <summary>
 		/// Threefold Tenacity
-		/// Increase all skill's damage by 15%.
+		/// All skill's damage increased by 20%.
 		/// </summary>
-        public static string Buff_B_ThreefoldTenacity_0 = "B_ThreefoldTenacity_0";
+        public static string Buff_B_ThreefoldTenacity_1 = "B_ThreefoldTenacity_1";
 		/// <summary>
 		/// Class and Respect
 		/// If this attack lands, restore 2 mana.
@@ -118,18 +118,24 @@ namespace Akari
 		/// </summary>
         public static string Skill_Discipline = "Discipline";
 		/// <summary>
-		/// Increase damage by 15% and create 2 random Ammunition in hand.
+		/// Damage/Healing is increased by 30%.
+		/// Draw 1 skill and create 2 random Ammunition in hand.
+		/// <sprite name="비용2"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_AmmoSupply = "Ex_AmmoSupply";
 		/// <summary>
-		/// When played from hand, discard a random Ammunition. If an Ammunition was discarded increase this skill's Damage/Healing by 30%
-		/// <sprite name="비용1"> or more
+		/// Cost is reduced by 1. When played from hand, discard a random Ammunition. If an Ammunition was discarded increase this skill's Damage/Healing by 30%
+		/// <sprite name="비용2"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_AmmunitionDiscard = "Ex_AmmunitionDiscard";
-        public static string SkillExtended_Ex_IncreaseHeal = "Ex_IncreaseHeal";
+        public static string SkillExtended_Ex_JudgmentsPistol = "Ex_JudgmentsPistol";
+		/// <summary>
+		/// Threefold Tenacity
+		/// This skill's damage increased by 20%.
+		/// </summary>
+        public static string SkillExtended_Ex_ThreefoldTenacity = "Ex_ThreefoldTenacity";
 		/// <summary>
 		/// Ferrous Guard
-		/// Cost is reduced by 1 if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_FerrousGuard = "FerrousGuard";
 		/// <summary>
@@ -144,9 +150,9 @@ namespace Akari
         public static string Skill_FlameAmmunition_PlusView = "FlameAmmunition_PlusView";
 		/// <summary>
 		/// Focus Fire
-		/// If facing 1 enemy, damage is increased by &a.
+		/// If facing 1 enemy, damage is increased by &a <color=#FF7C34>(30% Attack Power)</color>.
 		/// Discard up to 3 Ammunitions.
-		/// For each Ammunition discarded, increase this skill's damage by 15%.
+		/// For each Ammunition discarded, increase this skill's damage by 20%.
 		/// </summary>
         public static string Skill_FocusFire = "FocusFire";
 		/// <summary>
@@ -161,10 +167,9 @@ namespace Akari
         public static string Skill_FrostAmmunition_PlusView = "FrostAmmunition_PlusView";
 		/// <summary>
 		/// Judgment's Pistol
-		/// At the start of each turn, gain 1 stack of "Ammo Supply".
-		/// Whenever the wearer plays an skill (excluding Ammunition) from hand, discard a random Ammunition.
+		/// At the start of each turn, create random Ammunition in hand. Whenever playing a skill (excluding Ammunition) from hand, discard a random Ammunition.
 		/// If an Ammunition was discarded increase this skill's Damage/Healing by 30%.
-		/// Only activates twice per turn.
+		/// Only activates once per turn.
 		/// <color=#919191>Ammunition is precious. Every shot fired must count – Akari</color> 
 		/// </summary>
         public static string Item_Equip_JudgmentsPistol = "JudgmentsPistol";
@@ -185,25 +190,24 @@ namespace Akari
         public static string SkillKeyword_KeyWord_RangeAttack = "KeyWord_RangeAttack";
 		/// <summary>
 		/// Strategic Resupply
-		/// Draw 2 skills.
-		/// Choose - Draw 1 more.
-		/// Or, create 2 random Ammunition in hand.
-		/// If Akari is fainted, do not choose and draw 2 skills.
+		/// Choose one -
+		/// Draw 3 skills.
+		/// Or, draw 2 skills and gain 1 'Standart Mag'.
+		/// If Akari is fainted, draw 1 skill and exclude this skill from current fight.
 		/// </summary>
         public static string Skill_LDraw = "LDraw";
 		/// <summary>
-		/// Draw 1 skill.
+		/// Draw 3 skills.
 		/// </summary>
         public static string Skill_LDraw_0 = "LDraw_0";
 		/// <summary>
-		/// Create 2 random Ammunition in hand
+		/// Draw 2 skills and gain 1 'Standart Mag'.
 		/// </summary>
         public static string Skill_LDraw_1 = "LDraw_1";
 		/// <summary>
 		/// Le Regole
-		/// If facing 1 enemy, damage is increased by &a.
-		/// Create a random Ammunition in hand.
-		/// At the start of the next turn, apply the "Le Regole" buff to all allies.
+		/// If facing 1 enemy, damage is increased by &a <color=#FF7C34>(60% Attack Power)</color>.
+		/// Gain 1 'Standart Mag'.
 		/// </summary>
         public static string Skill_LeRegole = "LeRegole";
 		/// <summary>
@@ -249,10 +253,12 @@ namespace Akari
 		/// <summary>
 		/// Shock Round
 		/// Discard up to 2 Ammunitions.
-		/// For each Ammunition discarded, increase this skill's damage by 15%.
+		/// For each Ammunition discarded, increase this skill's damage by 20%.
 		/// If 2 Ammunitions are discarded, apply (<sprite=2>&a%) Stun to the target.
 		/// </summary>
         public static string Skill_ShockRound = "ShockRound";
+        public static string Character_Skin_Skin_Akari_Otome = "Skin_Akari_Otome";
+        public static string Item_Active_Standart_Mag = "Standart_Mag";
 		/// <summary>
 		/// Steel Knuckles
 		/// Draw 1 skill.
@@ -265,25 +271,31 @@ namespace Akari
 		/// <summary>
 		/// Summary Judgment
 		/// Discard up to 4 Ammunitions.
-		/// For each Ammunition discarded, increase this skill's damage by 30%.
+		/// For each Ammunition discarded, increase this skill's damage by 40%.
 		/// </summary>
         public static string Skill_SummaryJudgment = "SummaryJudgment";
 		/// <summary>
 		/// Suppressing Shot
+		/// Cost is reduced by 1 if this skill is a fixed ability.
 		/// Discard a random Ammunition.
-		/// If an Ammunition was discarded, increase this skill's damage by 15%.
+		/// If an Ammunition was discarded, increase this skill's damage by 20%.
 		/// </summary>
         public static string Skill_SuppressingShot = "SuppressingShot";
-		/// <summary>
-		/// Threefold Tenacity
-		/// Damage Increased by 15%
-		/// </summary>
-        public static string SkillExtended_Ex_ThreefoldTenacity = "Ex_ThreefoldTenacity";
+        public static string Skill_S_Akari_StandartMag = "S_Akari_StandartMag";
 
     }
 
     public static class ModLocalization
     {
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Mag loaded!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Reload => ModManager.getModInfo("Akari").localizationInfo.SystemLocalizationUpdate("Reload");
 
     }
 }

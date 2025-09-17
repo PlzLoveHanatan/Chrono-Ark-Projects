@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Akari
 {
-    public static class PlayData
+    public class ClassandRespectScale : CustomValue
     {
-        public static class TSavedata
-        {
-            public static int ClassandRespectScale = 0;
-        }
+        public int currentDamage = 0;
     }
 }

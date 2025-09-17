@@ -19,13 +19,12 @@ namespace Akari
 
         public override void Init()
         {
-            this.PlusPerStat.Damage = 20;
-            this.PlusStat.hit = 5f;
-            this.PlusStat.dod = 5f;
-            this.PlusStat.HIT_CC = 10f;
-            this.PlusStat.HIT_DEBUFF = 10f;
-            this.PlusStat.HIT_DOT = 10f;
-            base.Init();
+            PlusPerStat.Damage = 20;
+            PlusStat.hit = 5f;
+            PlusStat.dod = 5f;
+            PlusStat.HIT_CC = 10f;
+            PlusStat.HIT_DEBUFF = 10f;
+            PlusStat.HIT_DOT = 10f;
             OnePassive = true;
         }
         public void Turn()

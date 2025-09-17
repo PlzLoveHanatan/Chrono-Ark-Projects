@@ -16,30 +16,15 @@ namespace Akari
     /// <summary>
     /// Threefold Tenacity
     /// </summary>
-    public class B_ThreefoldTenacity : Buff, IP_SkillUse_User
+    public class B_ThreefoldTenacity : Buff, IP_BuffAddAfter
     {
-        public override void Init()
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            base.Init();
-            LucySkillExBuff = (BuffSkillExHand)Skill_Extended.DataToExtended(ModItemKeys.SkillExtended_Ex_ThreefoldTenacity);
-        }
-
-        public void SkillUse(Skill SkillD, List<BattleChar> Targets)
-        {
-            if (BChar.Info.Passive is P_Akari akariPassive)
+            if (BuffTaker == BChar && addedbuff == this && addedbuff.StackNum >= 3)
             {
-                if (akariPassive?.currentTurn >= 4) return;
-            }
-
-            if (SkillD.Master == BChar && SkillD.IsDamage && !SkillD.FreeUse && !Utils.Ammunition.Contains(SkillD.MySkill.KeyID))
-            {
+                BChar.BuffAdd(ModItemKeys.Buff_B_ThreefoldTenacity_0, BChar, false, 0, false, -1, false);
                 SelfDestroy();
             }
-        }
-
-        public override bool CanSkillBuffAdd(Skill AddedSkill, int Index)
-        {
-            return AddedSkill.ExtendedFind<Ex_ThreefoldTenacity>() == null && AddedSkill.Master == BChar && AddedSkill.IsDamage && !Utils.Ammunition.Contains(AddedSkill.MySkill.KeyID);
         }
     }
 }

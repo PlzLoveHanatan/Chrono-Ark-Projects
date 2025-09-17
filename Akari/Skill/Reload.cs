@@ -28,6 +28,7 @@ namespace Akari
                 MySkill.APChange = -1;
             }
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             

@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Akari05192025194814</AssemblyName>
+    <AssemblyName>Akari09172025132648</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -382,9 +382,30 @@
       <Private>False</Private>
     </Reference>
     <!-- Extra Reference Start-->
+    <Reference Include="0Harmony">
+      <HintPath>..\..\Akari\Assemblies\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\Akari\Assemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\..\Akari\Assemblies\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\..\Akari\Assemblies\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\..\Akari\Assemblies\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>..\..\Akari\Assemblies\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>..\..\Akari\Assemblies\MonoMod.Utils.dll</HintPath>
+    </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                                                                                                                                                                                                                                                                                                                      <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Akari_ModDefinition.cs" />
     <Compile Include="Akari_ModItemKeys.cs" />
@@ -397,10 +418,11 @@
     <Compile Include="Buff\B_CombatReadiness.cs" />
     <Compile Include="Buff\B_FrostAmmunition.cs" />
     <Compile Include="Buff\B_LeRegole.cs" />
-    <Compile Include="Buff\B_LeRegole_NextTurn.cs" />
     <Compile Include="Buff\B_SteelReprisal.cs" />
     <Compile Include="Buff\B_TacticalReload.cs" />
     <Compile Include="Buff\B_ThreefoldTenacity.cs" />
+    <Compile Include="Buff\B_ThreefoldTenacity_0.cs" />
+    <Compile Include="Buff\B_ThreefoldTenacity_1.cs" />
     <Compile Include="Character\P_Akari.cs" />
     <Compile Include="Item_Equip\BayonetSword.cs" />
     <Compile Include="Item_Equip\JudgmentsPistol.cs" />
@@ -421,9 +443,10 @@
     <Compile Include="Skill\SteelKnuckles_0.cs" />
     <Compile Include="Skill\SummaryJudgment.cs" />
     <Compile Include="Skill\SuppressingShot.cs" />
+    <Compile Include="Skill\S_Akari_StandartMag.cs" />
     <Compile Include="SkillExtended\Ex_AmmoSupply.cs" />
     <Compile Include="SkillExtended\Ex_AmmunitionDiscard.cs" />
-    <Compile Include="SkillExtended\Ex_IncreaseHeal.cs" />
+    <Compile Include="SkillExtended\Ex_JudgmentsPistol.cs" />
     <Compile Include="SkillExtended\Ex_ThreefoldTenacity.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->

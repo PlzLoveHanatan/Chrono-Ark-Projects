@@ -22,68 +22,26 @@ namespace Akari
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(100f + this.BChar.GetStat.HIT_CC)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(100f + BChar.GetStat.HIT_CC)).ToString());
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            base.SkillUseSingle(SkillD, Targets);
             MasterAudio.PlaySound("Gun_Normal", 100f, null, 0f, null, null, false, false);
 
-            List<Skill> ammunitionInHand = BattleSystem.instance.AllyTeam.Skills.FindAll(skill => Utils.Ammunition.Contains(skill.MySkill.KeyID));
+            int discardedAmo = Utils.DiscardAndApplyAmmunition(BChar, 2, Targets[0]);
 
-            if (ammunitionInHand.Count <= 0) return;
-
-            int numDiscard = 2;
-
-            int bonusDiscard = 0;
-
-            var TheBossOrders = BChar.BuffReturn(ModItemKeys.Buff_B_TheBossOrders, false);
-
-            if (TheBossOrders?.StackNum >= 1)
+            if (discardedAmo > 0)
             {
-                bonusDiscard = 1;
-            }
+                PlusSkillPerFinal.Damage = 20 * discardedAmo;
 
-            numDiscard += bonusDiscard;
-
-            if (numDiscard > ammunitionInHand.Count)
-            {
-                numDiscard = ammunitionInHand.Count;
-            }
-
-            List<Skill> randomAmmunition = RandomManager.Random(ammunitionInHand, MySkill.Master.GetRandomClass().SkillSelect, numDiscard);
-
-            foreach (var ammunition in randomAmmunition)
-            {
-                ammunition.Delete(false);
-            }
-
-            int FlameCheck = randomAmmunition.Count(skill => skill.MySkill.KeyID == ModItemKeys.Skill_FlameAmmunition);
-            int FrostCheck = randomAmmunition.Count(skill => skill.MySkill.KeyID == ModItemKeys.Skill_FrostAmmunition);
-            int PiercingCheck = randomAmmunition.Count(skill => skill.MySkill.KeyID == ModItemKeys.Skill_Armor_piercingAmmunition);
-            int AmmunitionCheck = FlameCheck + FrostCheck + PiercingCheck;
-
-            PlusSkillPerFinal.Damage = 15 * AmmunitionCheck;
-
-            var target = Targets[0];
-
-            if (AmmunitionCheck >= 2)
-            {
-                target.BuffAdd(GDEItemKeys.Buff_B_Common_Rest, this.BChar, false, (int)(100f + this.BChar.GetStat.HIT_CC), false, -1, false);
-            }
-
-            for (int i = 0; i < FlameCheck; i++)
-            {
-                target.BuffAdd(ModItemKeys.Buff_B_FlameAmmunition, this.BChar, false, 0, false, -1, false);
-            }
-            for (int j = 0; j < FrostCheck; j++)
-            {
-                target.BuffAdd(ModItemKeys.Buff_B_FrostAmmunition, this.BChar, false, 0, false, -1, false);
-            }
-            for (int k = 0; k < PiercingCheck; k++)
-            {
-                target.BuffAdd(ModItemKeys.Buff_B_Armor_piercingAmmunition, this.BChar, false, 0, false, -1, false);
+                if (discardedAmo >= 2)
+                {
+                    foreach (BattleChar target in Targets)
+                    {
+                        target.BuffAdd(GDEItemKeys.Buff_B_Common_Rest, BChar, false, (int)(100f + BChar.GetStat.HIT_CC), false, -1, false);
+                    }
+                }
             }
         }
     }

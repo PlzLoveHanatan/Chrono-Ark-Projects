@@ -24,10 +24,9 @@ namespace Akari
     /// Passive:
     /// After every three successful attacks with Melee Combat Pages, add a random Ammunition to hand.
     /// </summary>
-    public class P_Akari : Passive_Char, IP_PlayerTurn, IP_SkillUse_User, IP_DamageChange_sumoperation, IP_Discard, IP_BattleStart_Ones
+    public class P_Akari : Passive_Char, IP_PlayerTurn, IP_SkillUse_User, IP_Discard, IP_LevelUp, IP_BattleStart_Ones
     {
-        public int currentTurn;
-        private int akariAttacksPlayed;
+        public bool Mag;
 
         public override void Init()
         {
@@ -35,42 +34,33 @@ namespace Akari
             OnePassive = true;
         }
 
-        public void BattleStart(BattleSystem Ins)
-        {
-            currentTurn = 0;
-            akariAttacksPlayed = 0;
-        }
-
         public void Turn()
         {
-            var threeFold = ModItemKeys.Buff_B_ThreefoldTenacity;
+            var threeFold = ModItemKeys.Buff_B_ThreefoldTenacity_1;
 
-            if (currentTurn > 3) return;
-
-            if (currentTurn == 3)
+            if (BattleSystem.instance.TurnNum >= 4)
             {
-                BChar.BuffAdd(threeFold, BChar, false, 0, false, -1, false);
-            }
+                if (BChar.BuffReturn(threeFold, false) == null)
+                {
+                    BChar.BuffAdd(threeFold, BChar, false, 0, false, -1, false);
+                }
 
-            currentTurn++;
+                if (BChar.BuffReturn(ModItemKeys.Buff_B_ThreefoldTenacity, false) != null)
+                {
+                    BChar.BuffRemove(ModItemKeys.Buff_B_ThreefoldTenacity);
+                }
+            }
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            var threeFold = ModItemKeys.Buff_B_ThreefoldTenacity;
-            var ammoSupply = ModItemKeys.Buff_AmmoSupply;
-
-            if (currentTurn >= 3) return; 
-
             if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !Utils.Ammunition.Contains(SkillD.MySkill.KeyID))
             {
-                BChar.BuffAdd(ammoSupply, BChar, false, 0, false, -1, false);
+                BChar.BuffAdd(ModItemKeys.Buff_AmmoSupply, BChar, false, 0, false, -1, false);
 
-                akariAttacksPlayed++;
-
-                if (akariAttacksPlayed == 2)
+                if (BattleSystem.instance.TurnNum <= 3)
                 {
-                    BChar.BuffAdd(threeFold, BChar, false, 0, false, -1, false);
+                    BChar.BuffAdd(ModItemKeys.Buff_B_ThreefoldTenacity, BChar, false, 0, false, -1, false);
                 }
             }
         }
@@ -83,16 +73,24 @@ namespace Akari
             }
         }
 
-        public void DamageChange_sumoperation(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View, ref int PlusDamage)
+        public void LevelUp()
         {
-            if ((currentTurn >= 3 || akariAttacksPlayed == 3) && !Utils.Ammunition.Contains(SkillD.MySkill.KeyID))
+            if (!Mag)
             {
-                if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse)
-                {
-                    PlusDamage += (int)(Damage * 0.15f);
-                    akariAttacksPlayed = 0;
-                }
+                FieldSystem.DelayInput(GainMag());
             }
+        }
+
+        public IEnumerator GainMag()
+        {
+            InventoryManager.Reward(ItemBase.GetItem(ModItemKeys.Item_Active_Standart_Mag));
+            Mag = true;
+            yield return null;
+        }
+
+        public void BattleStart(BattleSystem Ins)
+        {
+            Utils.ChargeMag(BChar);
         }
     }
 }

@@ -13,12 +13,12 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Akari
 {
-    public class Ex_IncreaseHeal : Skill_Extended
+    public class Ex_JudgmentsPistol : Skill_Extended
     {
         public override void Init()
         {
-            base.Init();
-            this.PlusSkillPerFinal.Heal = 30;
+            PlusSkillPerFinal.Damage = 30;
+            PlusSkillPerFinal.Heal = 30;
         }
     }
 }

@@ -15,6 +15,32 @@ namespace Akari
 {
     public class Ex_ThreefoldTenacity : BuffSkillExHand
     {
-        
+        public override void Init()
+        {
+            PlusSkillPerFinal.Damage = 20;
+        }
+
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        {
+            PlusSkillPerFinal.Damage = 20;
+
+            if (BattleSystem.instance.TurnNum <= 3)
+            {
+                BattleSystem.DelayInput(BuffRemove());
+            }
+        }
+
+        private IEnumerator BuffRemove()
+        {
+            yield return null;
+
+            if (BChar.BuffReturn(ModItemKeys.Buff_B_ThreefoldTenacity_0, false) != null)
+            {
+                BChar.BuffRemove(ModItemKeys.Buff_B_ThreefoldTenacity_0);
+            }
+
+            //var skill = BattleSystem.instance.AllyTeam.Skills_Basic.Where(s => s.Master.Info == Utils.Akari.Info && s.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_ThreefoldTenacity) != null).FirstOrDefault();
+            //skill?.ExtendedDelete(ModItemKeys.SkillExtended_Ex_ThreefoldTenacity);
+        }
     }
 }

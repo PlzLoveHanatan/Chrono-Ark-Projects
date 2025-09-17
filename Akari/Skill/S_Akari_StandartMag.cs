@@ -11,17 +11,15 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using System.Threading;
 namespace Akari
 {
-	/// <summary>
-	/// Ferrous Guard (Melee)
-	/// </summary>
-    public class FerrousGuard : Skill_Extended
+    public class S_Akari_StandartMag : Skill_Extended
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Melee_Normal", 100f, null, 0f, null, null, false, false);
+            MasterAudio.PlaySound("Gun_Reload1", 100f, null, 0f, null, null, false, false);
+            var bhcar = Utils.Akari ? Utils.Akari : BattleSystem.instance.AllyTeam.LucyAlly;
+            Utils.CreateRandomAmmunition(Targets[0], 2);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Akari
         public override void BuffStat()
         {
             PlusStat.Strength = true;
-            PlusStat.DMGTaken = -10;
+            PlusStat.DMGTaken = -15;
         }
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
