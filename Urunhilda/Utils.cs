@@ -21,10 +21,12 @@ namespace Urunhilda
     public static class Utils
     {
         public static bool RewardTake;
+        public static bool Equip;
         public static bool UrunhildaVoice => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Voice").Value;
         public static bool MonetaryLuckOn => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Monetary Luck On").Value;
         public static bool MoreItemsInShop => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("More Items In Shop").Value;
         public static bool BonusesAlwaysOn => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Bonuses Always On").Value;
+        public static bool BeastkinEquip => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Beastkin Equip").Value;
         public static float MoreEvents => ModManager.getModInfo("Urunhilda").GetSetting<SliderSetting>("More Events").Value;
 
         public static void UrunhildaFirstReward()

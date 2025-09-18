@@ -44,9 +44,8 @@ namespace Urunhilda
 
         public override void Init()
         {
-            PlusStat.atk = 1;
-            PlusStat.reg = 1;
-            PlusStat.cri = 3;
+            PlusPerStat.Damage = 20;
+            PlusStat.PlusCriDmg = 20;
         }
     }
 }

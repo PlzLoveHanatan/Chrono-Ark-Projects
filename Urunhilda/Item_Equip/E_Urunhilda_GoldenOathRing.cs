@@ -19,9 +19,8 @@ namespace Urunhilda
 
         public override void Init()
         {
-            PlusStat.reg = 2;
-            PlusStat.atk = 2;
-            PlusStat.dod = 10;
+            PlusStat.reg = 3;
+            PlusStat.atk = 3;
         }
 
         public void Buffadded(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff)

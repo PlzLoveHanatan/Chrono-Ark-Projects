@@ -66,20 +66,34 @@ namespace Urunhilda
             {
                 if (UrunhildaAlwysInParty())
                 {
-                    if (PlayData.TSavedata.StageNum >= 1 && !Utils.RewardTake)
+                    if (PlayData.TSavedata.StageNum >= 0)
                     {
+                        if (!Utils.RewardTake)
+                        {
+                            Utils.UrunhildaFirstReward();
+                            Utils.IncreaseArkPassiveNum();
+                            Utils.RewardTake = true;
+                        }
 
-                        Utils.UrunhildaFirstReward();
-                        Utils.IncreaseArkPassiveNum();
-                        Utils.RewardTake = true;
-                    }
-                    else if (PlayData.TSavedata.StageNum == 0)
-                    {
-                        Utils.UrunhildaFirstReward();
-                        Utils.IncreaseArkPassiveNum(1);
-                        Utils.RewardTake = true;
+                        if (Utils.BeastkinEquip && !Utils.Equip)
+                        {
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Urunhilda_BeastkinBrush, 1));
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Urunhilda_GoldenOathRing, 1));
+                            Utils.Equip = true;
+                        }
                     }
                 }
+            }
+        }
+
+        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
+        public static class MemoryReset
+        {
+            [HarmonyPostfix]
+            public static void Postfix()
+            {
+                Utils.RewardTake = false;
+                Utils.Equip = false;
             }
         }
 
