@@ -24,7 +24,7 @@ namespace Akari
         {
             PlusSkillPerFinal.Damage = 20;
 
-            if (BattleSystem.instance.TurnNum <= 3)
+            if (BattleSystem.instance.TurnNum <= 3 && !SkillD.FreeUse && !SkillD.BasicSkill && !Utils.Ammunition.Contains(SkillD.MySkill.KeyID))
             {
                 BattleSystem.DelayInput(BuffRemove());
             }

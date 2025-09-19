@@ -8,7 +8,7 @@ namespace Akari
 		/// Passive:
 		/// At the start of each fight gain 1 'Standart Mag'.
 		/// Every 3rd attack deals 20% increased damage.  
-		/// From the 4th turn, all attacks deal 20% increased damage for the rest of the battle.  
+		/// From the 3rd turn, all attacks deal 20% increased damage for the rest of the battle.  
 		/// Whenever play an attack (excluding Ranged Attacks and Ammunition), gain 1 stack of 'Ammo Supply'.
 		/// Whenever Ammunition is discarded, gain 1 stack of 'Tactical Reload' for each unit of Ammunition discarded.
 		/// </summary>
@@ -96,7 +96,7 @@ namespace Akari
         public static string Buff_B_TheBossOrders = "B_TheBossOrders";
 		/// <summary>
 		/// Threefold Tenacity
-		/// At 3 stacks increase next skill's damage by 20%.
+		/// At 2 stacks increase next skill's damage by 20%.
 		/// </summary>
         public static string Buff_B_ThreefoldTenacity = "B_ThreefoldTenacity";
         public static string Buff_B_ThreefoldTenacity_0 = "B_ThreefoldTenacity_0";

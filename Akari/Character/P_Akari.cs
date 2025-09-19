@@ -54,7 +54,7 @@ namespace Akari
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !Utils.Ammunition.Contains(SkillD.MySkill.KeyID))
+            if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.BasicSkill && !Utils.Ammunition.Contains(SkillD.MySkill.KeyID))
             {
                 BChar.BuffAdd(ModItemKeys.Buff_AmmoSupply, BChar, false, 0, false, -1, false);
 

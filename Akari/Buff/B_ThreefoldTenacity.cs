@@ -20,7 +20,7 @@ namespace Akari
     {
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            if (BuffTaker == BChar && addedbuff == this && addedbuff.StackNum >= 3)
+            if (BuffTaker == BChar && addedbuff == this && addedbuff.StackNum >= 2)
             {
                 BChar.BuffAdd(ModItemKeys.Buff_B_ThreefoldTenacity_0, BChar, false, 0, false, -1, false);
                 SelfDestroy();
