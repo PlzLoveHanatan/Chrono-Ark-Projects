@@ -42,20 +42,13 @@ namespace Urunhilda
 
         public static bool UrunhildaInParty()
         {
-            return Utils.BonusesAlwaysOn || UrunhildaAlwysInParty();
+            return Utils.BonusesAlwaysOn || UrunhildaAlwaysInParty();
         }
 
 
-        public static bool UrunhildaAlwysInParty()
+        public static bool UrunhildaAlwaysInParty()
         {
-            foreach (var character in PlayData.TSavedata.Party)
-            {
-                if (character.KeyData == ModItemKeys.Character_Urunhilda)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Urunhilda);
         }
 
         [HarmonyPatch(typeof(FieldSystem), "StageStart")]
@@ -64,7 +57,7 @@ namespace Urunhilda
             [HarmonyPostfix]
             public static void StageStartPostfix()
             {
-                if (UrunhildaAlwysInParty())
+                if (UrunhildaAlwaysInParty())
                 {
                     if (PlayData.TSavedata.StageNum >= 0)
                     {
@@ -566,6 +559,98 @@ namespace Urunhilda
                     }
 
                     return true;
+                }
+            }
+
+            [HarmonyPatch(typeof(CharStatV4), "UIEnableSetting")]
+            public static class ManaArraysEnsurePatch
+            {
+                // максимальное количество иконок для отображения
+                public const int MaxAllowedIcons = 10;
+
+                [HarmonyPrefix]
+                public static void PrefixEnsureArrays()
+                {
+                    if (UrunhildaInParty())
+                    { 
+                        // вычисляем сколько реально нужно
+                        int required = Math.Max(PlayData.AP, PlayData.TSavedata.SoulUpgrade.AP + 1);
+                        required = Math.Max(required, PlayData.TSavedata.SoulUpgrade.SkillDraw + 1);
+
+                        int ensureLength = Math.Min(required, MaxAllowedIcons);
+
+                        EnsureNumericCollectionLength("MPUpgradeNum", ensureLength);
+                        EnsureNumericCollectionLength("DrawUpgradeNum", ensureLength);
+                    }
+                }
+
+                private static void EnsureNumericCollectionLength(string fieldName, int requiredLength)
+                {
+                    if (UrunhildaInParty())
+                    {
+                        FieldInfo fi = typeof(PlayData).GetField(fieldName, BindingFlags.Public | BindingFlags.Static);
+                        if (fi == null) return;
+
+                        object val = fi.GetValue(null);
+                        if (val == null) return;
+
+                        if (val is int[] arr)
+                        {
+                            if (arr.Length < requiredLength)
+                            {
+                                int oldLen = arr.Length;
+                                int[] newArr = new int[requiredLength];
+                                Array.Copy(arr, newArr, oldLen);
+                                int fillValue = (oldLen > 0) ? arr[oldLen - 1] : 1;
+                                for (int i = oldLen; i < requiredLength; i++) newArr[i] = fillValue;
+                                fi.SetValue(null, newArr);
+                            }
+                        }
+                        else if (val is List<int> list)
+                        {
+                            if (list.Count < requiredLength)
+                            {
+                                int oldCount = list.Count;
+                                int fillValue = (oldCount > 0) ? list[oldCount - 1] : 1;
+                                while (list.Count < requiredLength) list.Add(fillValue);
+                            }
+                        }
+                    }
+                }
+            }
+
+            [HarmonyPatch(typeof(CharStatV4), "UIEnableSetting")]
+            public static class ManaUIPatch
+            {
+                [HarmonyPostfix]    
+                public static void ManaPatchPostfix(CharStatV4 __instance)
+                {
+                    if (UrunhildaInParty())
+                    { 
+                        if (__instance == null) return;
+                        Transform manaAlign = __instance.ManaAlign?.transform;
+                        if (manaAlign == null) return;
+
+                        int ap = Math.Min(PlayData.AP, ManaArraysEnsurePatch.MaxAllowedIcons);
+
+                        // Создаём недостающие иконки
+                        while (manaAlign.childCount < ap)
+                        {
+                            GameObject prototype = (manaAlign.childCount > 0) ? manaAlign.GetChild(0).gameObject : null;
+                            if (prototype == null) break;
+
+                            GameObject newIcon = GameObject.Instantiate(prototype, manaAlign);
+                            Image img = newIcon.GetComponent<Image>();
+                            if (img != null) img.sprite = __instance.ManaSprite;
+                            newIcon.SetActive(true);
+                        }
+
+                        // Включаем/выключаем иконки по AP
+                        for (int i = 0; i < manaAlign.childCount; i++)
+                        {
+                            manaAlign.GetChild(i).gameObject.SetActive(i < ap);
+                        }
+                    }
                 }
             }
         }

@@ -166,8 +166,7 @@ namespace Urunhilda
 
         public static void ForceMPUpgrade()
         {
-            PlayData.TSavedata.SoulUpgrade.AP++; // Also increase next Mana upgrade
-
+            PlayData.TSavedata.SoulUpgrade.AP++;
             //PlayData.TSavedata._AP++;
 
             MasterAudio.PlaySound("SE_ClickButton", 1f);
@@ -178,9 +177,18 @@ namespace Urunhilda
             {
                 for (int i = 0; i < charStatUI.ManaAlign.transform.childCount; i++)
                 {
-                    charStatUI.ManaAlign.transform.GetChild(i).GetComponent<UnityEngine.UI.Image>().sprite = charStatUI.ManaSprite;
+                    charStatUI.ManaAlign.transform.GetChild(i).GetComponent<Image>().sprite = charStatUI.ManaSprite;
                 }
-                for (int j = 0; j < PlayData.AP; j++)
+
+                while (charStatUI.ManaAlign.transform.childCount < PlayData.AP)
+                {
+                    var newIcon = GameObject.Instantiate(charStatUI.ManaAlign.transform.GetChild(0).gameObject,charStatUI.ManaAlign.transform);
+                    newIcon.GetComponent<Image>().sprite = charStatUI.ManaSprite;
+                    newIcon.SetActive(true);
+                }
+
+                int manaToShow = Mathf.Min(PlayData.AP, charStatUI.ManaAlign.transform.childCount);
+                for (int j = 0; j < manaToShow; j++)
                 {
                     charStatUI.ManaAlign.transform.GetChild(j).gameObject.SetActive(true);
                 }
@@ -190,6 +198,33 @@ namespace Urunhilda
                 Debug.LogWarning("[Mod] CharStatV4 UI not found while forcing MPUpgrade.");
             }
         }
+
+        //public static void ForceMPUpgrade()
+        //{
+        //    PlayData.TSavedata.SoulUpgrade.AP++; // Also increase next Mana upgrade
+
+        //    //PlayData.TSavedata._AP++;
+
+        //    MasterAudio.PlaySound("SE_ClickButton", 1f);
+        //    MasterAudio.PlaySound("SE_MpRe", 1f);
+
+        //    var charStatUI = UIManager.inst.CharstatUI.GetComponent<CharStatV4>();
+        //    if (charStatUI != null)
+        //    {
+        //        for (int i = 0; i < charStatUI.ManaAlign.transform.childCount; i++)
+        //        {
+        //            charStatUI.ManaAlign.transform.GetChild(i).GetComponent<UnityEngine.UI.Image>().sprite = charStatUI.ManaSprite;
+        //        }
+        //        for (int j = 0; j < PlayData.AP; j++)
+        //        {
+        //            charStatUI.ManaAlign.transform.GetChild(j).gameObject.SetActive(true);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.LogWarning("[Mod] CharStatV4 UI not found while forcing MPUpgrade.");
+        //    }
+        //}
 
 
         public static void getSprite(string path, Image img)
