@@ -24,11 +24,6 @@ namespace ImaSuguRinne
             OnePassive = true;
         }
 
-        public override void FixedUpdate()
-        {
-            PlusStat.DeadImmune = 100;
-        }
-
         public void CriPerChange(Skill skill, BattleChar Target, ref float CriPer)
         {
             if (Target.NullCheck())

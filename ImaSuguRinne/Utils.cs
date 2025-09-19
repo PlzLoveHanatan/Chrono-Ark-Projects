@@ -91,16 +91,16 @@ namespace ImaSuguRinne
             return newSkill;
         }
 
-        public static Skill CreateSkill(BattleChar bchar, Skill keepExtendedFrom, string skillKey, bool isExcept = false, bool isDiscarded = false,
-    int discardedAfter = 0, int mana = 0, bool isNotCount = false, bool isAddToHand = true, bool keepExtended = false)
+        public static Skill CreateSkill(BattleChar bchar, Skill keepExtendedFrom, string skillKey, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0, bool isNotCount = false, bool isAddToHand = true, bool keepExtended = false)
         {
             Skill newSkill = Skill.TempSkill(skillKey, bchar, bchar.MyTeam);
             newSkill.isExcept = isExcept;
 
             if (isDiscarded)
+            {
                 newSkill.AutoDelete = discardedAfter;
+            }
 
-            // Копируем экстенды
             if (keepExtended && keepExtendedFrom != null)
             {
                 foreach (Skill_Extended skill_Extended in keepExtendedFrom.AllExtendeds)
@@ -121,19 +121,18 @@ namespace ImaSuguRinne
                 }
             }
 
-            // **ВАЖНО**: перезаписываем AP и Swift **после всех операций с экстендом**
             newSkill.AP = mana;
             newSkill.NotCount = isNotCount;
 
-            // Обновляем CharinfoSkilldata, чтобы свойства сохранились при повторном добавлении в деку
             if (newSkill.CharinfoSkilldata != null)
             {
                 newSkill.CharinfoSkilldata.SkillInfo = newSkill.MySkill;
             }
 
             if (isAddToHand)
+            {
                 BattleSystem.instance.AllyTeam.Add(newSkill, true);
-
+            }
             return newSkill;
         }
 
