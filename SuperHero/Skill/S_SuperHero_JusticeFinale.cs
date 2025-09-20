@@ -28,35 +28,18 @@ namespace SuperHero
 
         public override void FixedUpdate()
         {
-            base.SkillParticleOn();
+            SkillParticleOn();
         }
 
         public override bool Terms()
         {
-            if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)
-                return true;
-
-            return false;
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
-
-            var superHero = ModItemKeys.Character_SuperHero;
-            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
-            var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Concat(allies);
-            foreach (var target in enemies)
-            {
-                target.HPToZero();
-                for (int i = 0; i < 5; i++)
-                {
-                    if (!target.IsDead)
-                    {
-                        target.Dead(false, false);
-                    }
-                }
-            }
+            Utils.JusticeKillAll();
         }
     }
 }

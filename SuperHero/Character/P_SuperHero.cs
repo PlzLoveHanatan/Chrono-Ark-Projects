@@ -14,13 +14,14 @@ using Debug = UnityEngine.Debug;
 using System.Diagnostics.Contracts;
 using static B_LBossFirst_Summons_0;
 using Spine;
+using Spine.Unity.Examples;
 namespace SuperHero
 {
     /// <summary>
     /// Super Hero
     /// Passive:
     /// </summary>
-    public class P_SuperHero : Passive_Char, IP_PlayerTurn, IP_Kill, IP_BattleStart_Ones, IP_SkillUse_User, IP_BattleEndRewardChange
+    public class P_SuperHero : Passive_Char, IP_PlayerTurn, IP_Kill, IP_BattleStart_Ones, IP_SkillUse_User, IP_Discard
     {
         public bool PlotArmor;
         public bool Relentless;
@@ -31,7 +32,8 @@ namespace SuperHero
         public bool JusticeAscention;
 
         public int Complex;
-        public bool SuperHeroPassive;
+        public bool SuperHero;
+        public bool SuperVillain;
 
         public override void Init()
         {
@@ -40,44 +42,14 @@ namespace SuperHero
 
         public void BattleStart(BattleSystem Ins)
         {
-            Utils.RemovePainSharingBuffsFromAllAllies();
-            Utils.RemovePainSharingBuffsFromLucy();
-
-            //if (!Utils.Timer)
-            //{
-            //    var TimerObj = new GameObject("GlobalTimerManager");
-            //    TimerObj.AddComponent<GlobalTimerManager>();
-            //    GlobalTimerManager.Instance?.StartTimer();
-            //}
-
-            BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_GloryofJustice, BChar, false, 0, false, -1, false);
-            BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_IntheNameofJustice, BChar, false, 0, false, -1, false);
-            PlotArmor = false;
-            Relentless = false;
-            SecondAct = false;
-            OverPowered = false;
-            JusticeHero = false;
-            JusticeAscention = false;
-            Complex = 0;
+            ResetFlags();
+            //Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_GloryofJustice);
         }
-        public void BattleEndRewardChange()
-        {
-            if (Utils.Music)
-            {
-                BattleSystem.DelayInputAfter(Utils.StopSong());
-            }
-        }
-
-        //public override void FixedUpdate()
-        //{
-        //    PlusStat.atk = Utils.Attack;
-        //}
 
         public void KillEffect(SkillParticle SP)
         {
             if (SP.UseStatus == BChar)
             {
-                //Utils.Attack++;
                 for (int i = 0; i < 2; i++)
                 {
                     BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
@@ -87,75 +59,59 @@ namespace SuperHero
 
         public void Turn()
         {
-            var plotArmor = ModItemKeys.Buff_B_SuperHero_PlotArmor;
-            var relentless = ModItemKeys.Buff_B_SuperHero_RelentlessRecovery;
-            var secondAct = ModItemKeys.Buff_B_SuperHero_SecondAct;
-
-            var overPowered = ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist;
-            var justiceHero = ModItemKeys.Buff_B_SuperHero_JusticeHero;
-            var justiceAscention = ModItemKeys.Buff_B_SuperHero_JusticeAscension;
-
-            var gloryOfJustice = ModItemKeys.Buff_B_SuperHero_GloryofJustice;
-            var heroComplex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var complex = BChar.BuffReturn(heroComplex, false) as B_SuperHero_HeroComplex;
-
-            var inTheName = ModItemKeys.Buff_B_SuperHero_IntheNameofJustice;
-
-            if (BattleSystem.instance.TurnNum >= 3 && heroComplex != null && complex.StackNum >= 25 && !SuperHeroPassive)
+            var buffMap = new Dictionary<string, bool>
             {
-                Skill skill;
+                { ModItemKeys.Buff_B_SuperHero_SecondAct, SecondAct },
+                { ModItemKeys.Buff_B_SuperHero_RelentlessRecovery, Relentless },
+                { ModItemKeys.Buff_B_SuperHero_PlotArmor, PlotArmor },
+                //{ ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist, OverPowered },
+                //{ ModItemKeys.Buff_B_SuperHero_JusticeHero, JusticeHero },
+                //{ ModItemKeys.Buff_B_SuperHero_JusticeAscension, JusticeAscention }
+            };
+
+            foreach (var kvp in buffMap)
+            {
+                if (kvp.Value)
+                {
+                    EnsureBuff(BChar, kvp.Key);
+                }
+            }
+
+            //EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_GloryofJustice);
+            EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_HeroComplex, Complex);
+            EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_HeroComplex, Complex);
+
+            Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_HeroComplex);
+
+            string skillKey = "";
+
+            if (!SuperHero && BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) is B_SuperHero_HeroComplex complex && complex.StackNum >= 25)
+            {
                 if (BattleSystem.instance.TurnNum >= 5)
                 {
-                    skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_JusticeFinale, BChar, BChar.MyTeam);
+                    skillKey = ModItemKeys.Skill_S_SuperHero_JusticeFinale;
+
+                    var skillFixed = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
+                    (BChar as BattleAlly).MyBasicSkill.SkillInput(skillFixed);
                 }
-                else
+                else if (BattleSystem.instance.TurnNum >= 3)
                 {
-                    skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_JusticePatience, BChar, BChar.MyTeam);
+                    skillKey = ModItemKeys.Skill_S_SuperHero_JusticePatience;
                 }
-                BattleSystem.instance.AllyTeam.Add(skill, true);
+            }
+            else if (BattleSystem.instance.TurnNum >= 3)
+            {
+                skillKey = ModItemKeys.Skill_S_SuperHero_JusticePatience_0;
             }
 
-            if (SecondAct && BChar.BuffReturn(secondAct) == null)
+            if (!string.IsNullOrEmpty(skillKey))
             {
-                BChar.BuffAdd(secondAct, BChar, false, 0, false, -1, false);
-            }
-            if (Relentless && BChar.BuffReturn(relentless) == null)
-            {
-                BChar.BuffAdd(relentless, BChar, false, 0, false, -1, false);
-            }
-            if (PlotArmor && BChar.BuffReturn(plotArmor) == null)
-            {
-                BChar.BuffAdd(plotArmor, BChar, false, 0, false, -1, false);
-            }
-            if (OverPowered && BChar.BuffReturn(overPowered) == null)
-            {
-                BChar.BuffAdd(overPowered, BChar, false, 0, false, -1, false);
-            }
-            if (JusticeHero && BChar.BuffReturn(justiceHero) == null)
-            {
-                BChar.BuffAdd(justiceHero, BChar, false, 0, false, -1, false);
-            }
-            if (JusticeAscention && BChar.BuffReturn(justiceAscention) == null)
-            {
-                BChar.BuffAdd(justiceAscention, BChar, false, 0, false, -1, false);
-            }
-            if (BChar.BuffReturn(gloryOfJustice) == null)
-            {
-                BChar.BuffAdd(gloryOfJustice, BChar, false, 0, false, -1, false);
-            }
-            if (BChar.BuffReturn(heroComplex) == null)
-            {
-                for (int i = 0; i < Complex; i++)
+                var skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
+                if (skill != null)
                 {
-                    BChar.BuffAdd(heroComplex, BChar, false, 0, false, -1, false);
+                    BattleSystem.instance.AllyTeam.Add(skill, true);
                 }
             }
-            if (BChar.BuffReturn(inTheName) == null)
-            {
-                BChar.BuffAdd(inTheName, BChar, false, 0, false, -1, false);
-            }
-
-            BChar.BuffAdd(heroComplex, BChar, false, 0, false, -1, false);
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
@@ -164,6 +120,51 @@ namespace SuperHero
             {
                 BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
             }
+        }
+
+        public void EnsureBuff(BattleChar target, string buffKey, int buffNum = 1, bool addIfMissing = true)
+        {
+            if (target.BuffReturn(buffKey) != null) return;
+
+            if (addIfMissing)
+            {
+                Utils.AddBuff(target, BattleSystem.instance.DummyChar, buffKey, buffNum);
+            }
+        }
+
+        public void Discard(bool Click, Skill skill, bool HandFullWaste)
+        {
+            var justice = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0;
+            var justice1 = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1;
+
+            if (skill.MySkill.KeyID == justice || skill.MySkill.KeyID == justice1)
+            {
+                if (!HandFullWaste)
+                {
+                    Utils.AllyTeam.Draw();
+                }
+            }
+        }
+
+        public void BecomeJusticeHero()
+        {
+            if (PlotArmor && Relentless && SecondAct)
+            {
+                BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, ModItemKeys.Buff_B_SuperHero_JusticeAscension, true, false));
+            }
+        }
+
+        public void ResetFlags()
+        {
+            PlotArmor = false;
+            Relentless = false;
+            SecondAct = false;
+            OverPowered = false;
+            JusticeHero = false;
+            JusticeAscention = false;
+            SuperHero = false;
+            SuperVillain = false;
+            Complex = 0;
         }
     }
 }

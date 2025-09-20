@@ -19,20 +19,6 @@ namespace SuperHero
     /// </summary>
     public class E_SuperHero_LightArmor : EquipBase, IP_DamageTake, IP_PlayerTurn, IP_BattleStart_Ones
     {
-        public void Enchent()
-        {
-            MyItem.Enchant.CurseEnchant = false;
-        }
-
-        public override void Init()
-        {
-            OnePassive = true;
-            if (MyItem != null)
-            {
-                MyItem.Curse = new EquipCurse();
-                MyItem._Isidentify = true;
-            }
-        }
         public void BattleStart(BattleSystem Ins)
         {
             var buff = ModItemKeys.Buff_B_E_SuperHero_LightArmor;
@@ -43,11 +29,10 @@ namespace SuperHero
         {
             var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
             var complex = User.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
-            if (User.Info.KeyData == ModItemKeys.Character_SuperHero && complex.StackNum < 25 && Dmg > 1)
+            if (User.Info.KeyData == ModItemKeys.Character_SuperHero && complex.StackNum < 25 && Dmg >= 1)
             {
                 //int damage = 0;
                 //damage = Dmg;
-                Dmg = 0;
                 resist = true;                
 
                 //if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)

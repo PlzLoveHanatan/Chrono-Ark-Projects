@@ -24,23 +24,31 @@ namespace SuperHero
             OnePassive = true;
         }
 
+        public override bool Terms()
+        {
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var buff2 = BChar.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
-            if (buff2 != null)
+            if (BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) is B_SuperHero_HeroComplex complex)
             {
-                buff2.JusticeDamage = (int)(BChar.GetStat.atk * 1.1f);
+                complex.JusticeDamage = (int)(BChar.GetStat.atk * 0.8f);
             }
 
             foreach (var target in Targets)
             {
                 if (target is BattleEnemy enemy)
                 {
-                    if (enemy.Boss && enemy.HP <= enemy.GetStat.maxhp * 0.25f)
+                    if (enemy.Boss && enemy.HP <= enemy.GetStat.maxhp * 0.3f)
+                    {
                         enemy.HPToZero();
-                    else if (enemy.HP <= enemy.GetStat.maxhp * 0.5f)
+                    }
+
+                    else if (enemy.HP <= enemy.GetStat.maxhp * 0.6f)
+                    {
                         enemy.HPToZero();
+                    }
                 }
                 else
                 {

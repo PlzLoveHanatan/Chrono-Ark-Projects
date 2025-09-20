@@ -21,117 +21,81 @@ namespace SuperHero
     /// </summary>
     public class B_SuperHero_GloryofJustice : Buff, IP_Hit, IP_Dodge
     {
-        public bool SuperHeroGlory;
         public override string DescExtended()
         {
             int attack = (int)(BChar.GetStat.atk * 0.4f);
-            var complex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var heroComplex = BChar.BuffReturn(complex, false) as B_SuperHero_HeroComplex;
-            int index = 0;
-            if (BattleSystem.instance != null && heroComplex != null)
+            string text = ModLocalization.GloryOfJustice_0;
+            var complex = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) as B_SuperHero_HeroComplex;
+
+            if (BattleSystem.instance != null && (Utils.SuperHeroMod(BChar)))
             {
-                if (SuperHeroGlory)
-                {
-                    return base.DescExtended().Replace("&a", attack.ToString()).Replace("&b", 0.ToString());
-                }
-                else
-                {
-                    return base.DescExtended().Replace("&a", attack.ToString()).Replace("&b", (StackNum * 4).ToString());
-                }
+                text = ModLocalization.GloryOfJustice_1;
+                return text.Replace("&a", attack.ToString());
             }
-            return base.DescExtended().Replace("&a", attack.ToString()).Replace("&b", index.ToString());
+            return text.Replace("&a", attack.ToString()).Replace("&b", (complex.StackNum * 2).ToString());
         }
 
         public void Hit(SkillParticle SP, int Dmg, bool Cri)
         {
-            var superHero = ModItemKeys.Character_SuperHero;
-            var complex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var heroComplex = BChar.BuffReturn(complex, false) as B_SuperHero_HeroComplex;
-
-            if (Dmg >= 1 && SP.UseStatus.Info.KeyData != superHero)
+            if (Dmg >= 1)
             {
-                var attacker = SP.UseStatus;
-                var newTarget = SP.UseStatus;
-                var justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory;
-
-                if (heroComplex != null && heroComplex.StackNum >= 25 && !SuperHeroGlory)
-                {
-                    justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory_0;
-                }
-
-                Skill skill = Skill.TempSkill(justice, BChar, BChar.MyTeam);
-                skill.FreeUse = true;
-                skill.PlusHit = true;
-
-                if (AllyTarget() && !SuperHeroGlory)
-                {
-                    newTarget = JusticeStrike();
-                    if (StackNum >= 25)
-                    {
-                        Utils.ForceKill(newTarget);
-                    }
-                    
-                    if (newTarget.Info.KeyData == ModItemKeys.Character_SuperHero)
-                    {
-                        return;
-                    }
-                    else if (newTarget == null)
-                    {
-                        newTarget = attacker;
-                    }
-                }
-
-                BattleSystem.DelayInput(Wait());
-                BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, newTarget, false, false, true, null));
-                EffectView.TextOutSimple(BChar, BuffData.Name);
+                HandleJusticeAction(SP, SP.UseStatus);
             }
         }
 
         public void Dodge(BattleChar Char, SkillParticle SP)
         {
-            var superHero = ModItemKeys.Character_SuperHero;
-            var complex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var heroComplex = BChar.BuffReturn(complex, false) as B_SuperHero_HeroComplex;
-
-            if (Char == BChar && SP.UseStatus.Info.KeyData != superHero)
+            if (Char == BChar)
             {
-                var attacker = SP.UseStatus;
-                var newTarget = SP.UseStatus;
-                var justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory;
-
-                if (heroComplex != null && heroComplex.StackNum >= 25 && !SuperHeroGlory)
-                {
-                    justice = ModItemKeys.Skill_S_SuperHero_JusticeGlory_0;
-                }
-
-                Skill skill = Skill.TempSkill(justice, BChar, BChar.MyTeam);
-                skill.FreeUse = true;
-                skill.PlusHit = true;
-
-                if (AllyTarget() && !SuperHeroGlory)
-                {
-                    newTarget = JusticeStrike();
-
-                    if (StackNum >= 25)
-                    {
-                        Utils.ForceKill(newTarget);
-                    }
-                    if (newTarget.Info.KeyData == ModItemKeys.Character_SuperHero)
-                    {
-                        return;
-                    }
-                    else if (newTarget == null)
-                    {
-                        newTarget = attacker;
-                    }
-                }
-
-                BattleSystem.DelayInput(Wait());
-                BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, newTarget, false, false, true, null));
-                EffectView.TextOutSimple(BChar, BuffData.Name);
+                HandleJusticeAction(SP, SP.UseStatus);
             }
         }
 
+        private void HandleJusticeAction(SkillParticle SP, BattleChar defaultTarget)
+        {
+            if (SP.UseStatus.Info.KeyData == Utils.SuperHero.Info.KeyData) return;
+
+            var complex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
+            var heroComplex = BChar.BuffReturn(complex, false) as B_SuperHero_HeroComplex;
+
+            var justiceSkillKey = ModItemKeys.Skill_S_SuperHero_JusticeGlory;
+
+            if (heroComplex != null && heroComplex.StackNum >= 25 && !Utils.SuperHeroMod(BChar))
+            {
+                justiceSkillKey = ModItemKeys.Skill_S_SuperHero_JusticeGlory_0;
+            }
+
+            Skill skill = Skill.TempSkill(justiceSkillKey, BChar, BChar.MyTeam);
+            skill.FreeUse = true;
+            skill.PlusHit = true;
+
+            var target = defaultTarget;
+
+            if (!Utils.SuperHeroMod(BChar))
+            {
+                if (AllyTarget())
+                {
+                    var ally = JusticeStrike();
+                    if (ally != null)
+                    {
+                        target = ally;
+
+                        if (heroComplex != null && heroComplex.StackNum >= 25)
+                        {
+                            Utils.ForceKill(target);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                target = defaultTarget;
+            }
+
+            BattleSystem.DelayInput(Wait());
+            BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, target, false, false, true, null));
+            EffectView.TextOutSimple(BChar, BuffData.Name);
+        }
 
         public IEnumerator Wait()
         {
@@ -141,22 +105,18 @@ namespace SuperHero
 
         public bool AllyTarget()
         {
-            var complex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var heroComplex = BChar.BuffReturn(complex, false) as B_SuperHero_HeroComplex;
             int index = 0;
-            if (heroComplex != null)
+
+            if (BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) is B_SuperHero_HeroComplex complex)
             {
-                index = heroComplex.StackNum * 4;
+                index = complex.StackNum * 2;
             }
             return RandomManager.RandomPer(BattleRandom.PassiveItem, 100, index);
         }
 
         public BattleChar JusticeStrike()
         {
-            var superHero = ModItemKeys.Character_SuperHero;
-            var newTargets = BattleSystem.instance.AllyTeam.AliveChars
-                .Where(a => a != null && a.Info.KeyData != superHero)
-                .ToList();
+            var newTargets = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != null && a != Utils.SuperHero).ToList();
 
             if (newTargets.Count == 0)
             {
@@ -165,6 +125,14 @@ namespace SuperHero
 
             int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, newTargets.Count);
             return newTargets[index];
+        }
+
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+        {
+            if (addedbuff.BuffData.Key == ModItemKeys.Buff_B_SuperHero_GloryofJustice && BuffTaker != Utils.SuperHero)
+            {
+                BuffTaker.BuffRemove(ModItemKeys.Buff_B_SuperHero_GloryofJustice);
+            }
         }
     }
 }

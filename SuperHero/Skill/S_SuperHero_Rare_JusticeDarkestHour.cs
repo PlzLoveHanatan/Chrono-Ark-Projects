@@ -30,40 +30,20 @@ namespace SuperHero
 
         public override void FixedUpdate()
         {
-            base.SkillParticleOn();
+            SkillParticleOn();
         }
 
         public override bool Terms()
         {
-            if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)
-                return true;
-
-            return false;
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            //Utils.SuperStats = true;
             Utils.PlaySong(MySkill.MySkill.KeyID);
-            var superHero = ModItemKeys.Character_SuperHero;
-            var heroComplex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var hero = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(x => x != null && x.Info.KeyData == superHero);
-            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
-            if (superHero != null)
-            {
-                for (int i = 0; i < 25; i++)
-                {
-                    hero.BuffAdd(heroComplex, BChar, false, 0, false, -1, false);
-                }
-                foreach (var target in allies)
-                {
-                    Utils.ForceKill(target);
-                }
-            }
-            else
-            {
-                BattleSystem.instance.AllyTeam.Draw();
-                MySkill.isExcept = true;
-            }
+            Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_HeroComplex, 25);
+            BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, ModItemKeys.Buff_B_SuperHero_JusticeHero, false, true));
         }
     }
 }

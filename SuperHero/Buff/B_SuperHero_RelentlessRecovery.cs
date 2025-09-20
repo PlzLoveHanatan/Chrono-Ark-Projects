@@ -26,7 +26,10 @@ namespace SuperHero
         public void Awake()
         {
             if (BChar.Info.Passive is P_SuperHero superHero)
+            {
                 superHero.Relentless = true;
+                superHero.BecomeJusticeHero();
+            } 
         }
 
         public void Turn()
@@ -43,13 +46,9 @@ namespace SuperHero
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_RelentlessRecovery;
-            if (addedbuff.BuffData.Key == buff)
+            if (addedbuff.BuffData.Key == ModItemKeys.Buff_B_SuperHero_RelentlessRecovery && BuffTaker != Utils.SuperHero)
             {
-                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
-                {
-                    BuffTaker.BuffRemove(buff, true);
-                }
+                BuffTaker.BuffRemove(ModItemKeys.Buff_B_SuperHero_RelentlessRecovery);
             }
         }
     }

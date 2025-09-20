@@ -19,23 +19,9 @@ namespace SuperHero
     /// </summary>
     public class S_SuperHero_UnwantedSuccessStory : Skill_Extended
     {
-        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        public override bool Terms()
         {
-            var heroKey = ModItemKeys.Character_SuperHero;
-            var hero = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c.Info.KeyData == heroKey);
-            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != heroKey).ToList();
-            int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, allies.Count);
-            BattleChar randomTarget = allies[randomIndex];
-            if (BChar.Info.Passive is P_SuperHero Hero)
-            {
-                if (Hero != null && Hero.SuperHeroPassive) return;
-
-                else if (randomTarget != null)
-                {
-                    randomTarget.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroPresence, BChar, false, 0, false, -1, false);
-                    randomTarget.Damage(hero, (int)(hero.GetStat.atk), false, true, false, 0, false, false, false);
-                }
-            }
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
     }
 }

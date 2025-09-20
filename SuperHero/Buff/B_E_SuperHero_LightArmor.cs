@@ -25,7 +25,7 @@ namespace SuperHero
             {
                 if (BuffTaker == BChar)
                 {
-                    BuffTaker.BuffRemove(buff, true);
+                    addedbuff.SelfDestroy();
                 }
             }
         }

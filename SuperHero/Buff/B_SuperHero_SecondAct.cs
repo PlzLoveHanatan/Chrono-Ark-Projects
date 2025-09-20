@@ -21,25 +21,23 @@ namespace SuperHero
         public void Awake()
         {
             if (BChar.Info.Passive is P_SuperHero superHero)
+            {
                 superHero.SecondAct = true;
+                superHero.BecomeJusticeHero();
+            } 
         }
 
         public void Turn()
         {
-            var team = BattleSystem.instance.AllyTeam;
-            team.Draw(2);
-            team.AP += 2;
+            Utils.AllyTeam.Draw(2);
+            Utils.AllyTeam.AP += 2;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_SecondAct;
-            if (addedbuff.BuffData.Key == buff)
+            if (addedbuff.BuffData.Key == ModItemKeys.Buff_B_SuperHero_SecondAct && BuffTaker != Utils.SuperHero)
             {
-                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
-                {
-                    BuffTaker.BuffRemove(buff, true);
-                }
+                BuffTaker.BuffRemove(ModItemKeys.Buff_B_SuperHero_SecondAct);
             }
         }
     }

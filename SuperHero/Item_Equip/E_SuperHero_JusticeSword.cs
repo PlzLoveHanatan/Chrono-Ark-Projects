@@ -12,45 +12,60 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using NLog.Targets;
+using Spine;
+using System.Security.Cryptography;
 namespace SuperHero
 {
-    public class E_SuperHero_JusticeSword : EquipBase, IP_SkillUse_User, IP_PlayerTurn
+    public class E_SuperHero_JusticeSword : EquipBase, IP_SkillUse_User, IP_PlayerTurn, IP_BattleStart_Ones
     {
+        public bool FirstMarkCheck = true;
+
+
+        public override string DescInit()
+        {
+            string text = ModLocalization.JusticeSword_0;
+
+            if (BChar != null && BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) is B_SuperHero_HeroComplex complex)
+            {
+                if (complex.StackNum >= 25 && Utils.SuperVillainMod(BChar))
+                {
+                    text = ModLocalization.JusticeSword_1;
+                }
+            }
+            return base.DescInit() + "\n" + text;
+        }
+
+        public void BattleStart(BattleSystem Ins)
+        {
+            FirstMarkCheck = true;
+        }
 
         public override void FixedUpdate()
         {
-            PlusStat.atk = Utils.JusticeSword;
-        }
-
-        public void Enchent()
-        {
-            MyItem.Enchant.CurseEnchant = false;
-        }
-
-        public override void Init()
-        {
-            if (MyItem != null)
+            var justiceDamage = PlayData.TSavedata.GetCustomValue<JusticeSword>();
+            if (justiceDamage == null)
             {
-                MyItem.Curse = new EquipCurse();
-                MyItem._Isidentify = true;
+                justiceDamage = new JusticeSword();
+                PlayData.TSavedata.AddCustomValue(justiceDamage);
+                justiceDamage.JusticeDamage = 0;
             }
+            PlusStat.atk = justiceDamage.JusticeDamage;
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            var superHero = ModItemKeys.Character_SuperHero;
-            var buff = ModItemKeys.Buff_B_SuperHero_MarkofJustice;
-            if (Utils.HeroAttacksWithMark.Contains(SkillD.MySkill.KeyID) && SkillD.Master.Info.KeyData == superHero)
+            var markOfJustice = ModItemKeys.Buff_B_SuperHero_MarkofJustice;
+            if (Utils.HeroAttacksWithMark.Contains(SkillD.MySkill.KeyID) && SkillD.Master == Utils.SuperHero)
             {
-                foreach (var t in Targets)
+                foreach (var target in Targets)
                 {
-                    var buff2 = t.BuffReturn(buff, false) as B_SuperHero_MarkofJustice;
+                    if (target.Info.Ally) continue;
 
-                    if (!t.Info.Ally && t.BuffReturn(buff, false) != null)
+                    if (target.BuffReturn(markOfJustice, false) is B_SuperHero_MarkofJustice mark)
                     {
-                        t.BuffAdd(buff, BChar, false, 0, false, -1, false);
-                        buff2.MarkStacks++;
-                        buff2.BuffStat();
+                        Utils.AddDebuff(target, BChar, markOfJustice, 1);
+                        mark.MarkStacks++;
+                        mark.BuffStat();
                     }
                 }
             }
@@ -58,76 +73,56 @@ namespace SuperHero
 
         public void Turn()
         {
-            Skill newSkill;
-            var superHero = ModItemKeys.Character_SuperHero;
-            var justice = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0;
-            var justice1 = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1;
-            var hero = BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(x => x != null && x.Info.KeyData == superHero);
+            Skill skill;
             var heroComplex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var complex = hero.BuffReturn(heroComplex, false) as B_SuperHero_HeroComplex;
+            string skillKey = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1;
 
-            if (hero != null && complex != null && !complex.SuperHero && (BattleSystem.instance.TurnNum < 3 || complex.StackNum < 25))
+            Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, heroComplex);
+
+            if (Utils.SuperHero && Utils.SuperHero.BuffReturn(heroComplex, false) is B_SuperHero_HeroComplex complex && !Utils.SuperHeroMod(BChar) /*&& (BattleSystem.instance.TurnNum < 3 || complex.StackNum < 25)*/)
             {
                 if (complex.StackNum >= 20)
                 {
-                    newSkill = Skill.TempSkill(justice, BChar, BChar.MyTeam);
-                }
-                else
-                {
-                    newSkill = Skill.TempSkill(justice1, BChar, BChar.MyTeam);
+                    skillKey = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0;
                 }
             }
-            else
-            {
-                newSkill = Skill.TempSkill(justice1, BChar, BChar.MyTeam);
-            }
+            skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
+            BattleSystem.instance.AllyTeam.Add(skill, true);
 
-            BattleSystem.instance.AllyTeam.Add(newSkill, true);
-
-            bool firstCheck = true;
             var markofJustice = ModItemKeys.Buff_B_SuperHero_MarkofJustice;
-            var allyTeam = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
-            var enemyTeam = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
 
-            if (hero != null)
+            foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
             {
-                hero.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
-            }
-
-            foreach (var enemy in enemyTeam)
-            {
-                var buff2 = enemy.BuffReturn(markofJustice, false) as B_SuperHero_MarkofJustice;
-
                 if (enemy != null)
                 {
-                    enemy.BuffAdd(markofJustice, BChar, false, 999, false, -1, false);
+                    Utils.AddDebuff(enemy, BChar, markofJustice, 1, 999);
 
-                    if (buff2 != null && buff2.BuffData != null)
+                    if (enemy.BuffReturn(markofJustice, false) is B_SuperHero_MarkofJustice mark)
                     {
-                        if (buff2.BuffData.MaxStack != 5 && firstCheck)
+                        if (mark?.BuffData.MaxStack != 5 && FirstMarkCheck)
                         {
-                            buff2.BuffData.MaxStack = 5;
-                            firstCheck = false;
+                            mark.BuffData.MaxStack = 5;
+                            FirstMarkCheck = false;
                         }
                     }
                 }
             }
-            if (!complex.SuperHero)
+
+            if (Utils.SuperHeroMod(BChar))
             {
-                foreach (var ally in allyTeam)
+                foreach (var ally in Utils.AllyTeam.AliveChars)
                 {
-                    ally?.BuffAdd(markofJustice, BChar, false, 999, false, -1, false);
+                    if (ally != null && ally.BuffReturn(markofJustice, false) is B_SuperHero_MarkofJustice mark)
+                    {
+                        mark?.SelfDestroy();
+                    }
                 }
             }
-            else
+            else if (Utils.SuperVillainMod(BChar))
             {
-                foreach (var ally in allyTeam)
+                foreach (var ally in Utils.AllyTeam.AliveChars)
                 {
-                    var buff2 = ally.BuffReturn(markofJustice, false) as B_SuperHero_MarkofJustice;
-                    if (ally != null && buff2 != null)
-                    {
-                        buff2.SelfDestroy();
-                    }
+                    Utils.AddDebuff(ally, BChar, markofJustice, 1, 999);
                 }
             }
         }

@@ -16,12 +16,22 @@ namespace SuperHero
 	/// <summary>
 	/// Overpowered Protagonist
 	/// </summary>
-    public class B_SuperHero_OverpoweredProtagonist : Buff, IP_HPChange, IP_Awake, IP_BuffAddAfter
+    public class B_SuperHero_OverpoweredProtagonist : Buff, IP_HPChange, IP_Awake, IP_BuffAddAfter, IP_SkillUse_User
     {
         public override void Init()
         {
             PlusStat.atk = 10;
-            PlusStat.PlusCriDmg = 50;
+            //PlusStat.PlusCriDmg = 50;
+        }
+
+        public override string DescExtended()
+        {
+            string text = ModLocalization.OverPowered;
+            if (!Utils.SuperHeroMod(BChar))
+            {
+                return base.DescExtended() + "\n" + text;
+            }
+            return base.DescExtended();
         }
 
         public void HPChange(BattleChar Char, bool Healed)
@@ -35,7 +45,9 @@ namespace SuperHero
         public void Awake()
         {
             if (BChar.Info.Passive is P_SuperHero superHero)
+            {
                 superHero.OverPowered = true;
+            }
 
             if (BChar.HP <= 0)
             {
@@ -45,13 +57,19 @@ namespace SuperHero
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist;
-            if (addedbuff.BuffData.Key == buff)
+            if (addedbuff.BuffData.Key == ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist && BuffTaker != Utils.SuperHero)
             {
-                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
-                {
-                    BuffTaker.BuffRemove(buff, true);
-                }
+                BuffTaker.BuffRemove(ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist);
+            }
+        }
+
+        public void SkillUse(Skill SkillD, List<BattleChar> Targets)
+        {
+            bool neverLucky = RandomManager.RandomPer(BChar.GetRandomClass().Main, 100, 50);
+
+            if (neverLucky && !Utils.SuperHeroMod(BChar))
+            {
+                Utils.AttackRedirect(BChar, SkillD, Targets);
             }
         }
     }

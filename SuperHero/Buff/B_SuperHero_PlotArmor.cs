@@ -38,7 +38,10 @@ namespace SuperHero
         public void Awake()
         {
             if (BChar.Info.Passive is P_SuperHero superHero)
+            {
                 superHero.PlotArmor = true;
+                superHero.BecomeJusticeHero();
+            } 
         }
 
         public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
@@ -68,15 +71,12 @@ namespace SuperHero
                 BChar.ParticleOut(healingParticle, BChar);
             }
         }
+
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_PlotArmor;
-            if (addedbuff.BuffData.Key == buff)
+            if (addedbuff.BuffData.Key == ModItemKeys.Buff_B_SuperHero_PlotArmor && BuffTaker != Utils.SuperHero)
             {
-                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
-                {
-                    BuffTaker.BuffRemove(buff, true);
-                }
+                BuffTaker.BuffRemove(ModItemKeys.Buff_B_SuperHero_PlotArmor);
             }
         }
     }

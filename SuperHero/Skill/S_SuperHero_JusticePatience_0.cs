@@ -13,14 +13,18 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace SuperHero
 {
-    /// <summary>
-    /// Justice ☆ Patience
-    /// </summary>
-    public class S_SuperHero_JusticePatience : Skill_Extended
+	/// <summary>
+	/// <color=#FF4500>Justice ☆ Patience</color>
+	/// This skill can be cast even if you are stunned.
+	/// Only <color=#FFA500>Super Hero</color> can use this skill.
+	/// This skill can be played repeatedly during this turn.
+	/// Remove 1 random debuff from <color=#FFA500>Self</color>.
+	/// </summary>
+    public class S_SuperHero_JusticePatience_0 : Skill_Extended
     {
         public override void Init()
         {
-            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_1_Ex).Particle_Path;
         }
 
         public override void FixedUpdate()
@@ -38,7 +42,7 @@ namespace SuperHero
         {
             Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
 
-            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_JusticePatience, this.BChar, this.BChar.MyTeam);
+            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_JusticePatience_0, this.BChar, this.BChar.MyTeam);
             BattleSystem.instance.AllyTeam.Add(skill, true);
             skill.AutoDelete = 1;
             skill.isExcept = true;
@@ -49,5 +53,6 @@ namespace SuperHero
                 debuff.SelfDestroy();
             }
         }
+
     }
 }

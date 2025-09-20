@@ -18,6 +18,11 @@ namespace SuperHero
     /// </summary>
     public class S_SuperHero_IntheNameofJustice : Skill_Extended
     {
+        public override bool Terms()
+        {
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_IntheNameofJustice, this.BChar, this.BChar.MyTeam);

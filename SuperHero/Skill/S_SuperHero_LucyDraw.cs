@@ -26,27 +26,15 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            var allies = BattleSystem.instance.AllyTeam.AliveChars;
-            var aliveHero = allies.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_SuperHero);
-
-            if (aliveHero != null)
+            if (Utils.SuperHero)
             {
-                Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_DummyHeal, BChar, BChar.MyTeam);
-                healingParticle.PlusHit = true;
-                healingParticle.FreeUse = true;
-
-                aliveHero.ParticleOut(healingParticle, aliveHero);
-
-                BattleSystem.instance.AllyTeam.Draw(2);
-
-                for (int i = 0; i < 2; i++)
-                {
-                    aliveHero.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
-                }
+                BattleSystem.DelayInput(Utils.HealingParticle(Utils.SuperHero, BattleSystem.instance.DummyChar));
+                Utils.AddBuff(Utils.SuperHero, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_HeroComplex, 3);
+                BattleSystem.instance.AllyTeam.Draw(3);
             }
             else
             {
-                BattleSystem.instance.AllyTeam.Draw();
+                Utils.AllyTeam.Draw();
                 MySkill.isExcept = true;
             }
         }

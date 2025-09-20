@@ -23,8 +23,19 @@ namespace SuperHero
         {
             if (MySkill.BasicSkill)
             {
-                MySkill.APChange = -1;
+                MySkill.APChange = -2;
             }
+        }
+
+        public override string DescExtended(string desc)
+        {
+            string text = Utils.SuperHeroMod(BChar) ? ModLocalization.BloodStained_1 : ModLocalization.BloodStained_0;
+            return base.DescExtended(desc).Replace("&a", text);
+        }
+
+        public override bool Terms()
+        {
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -35,7 +46,7 @@ namespace SuperHero
             var randomTarget = allies[index];
             if (BChar.Info.Passive is P_SuperHero Hero)
             {
-                if (Hero != null && Hero.SuperHeroPassive) return;
+                if (Hero.SuperHero) return;
 
                 else
                 {

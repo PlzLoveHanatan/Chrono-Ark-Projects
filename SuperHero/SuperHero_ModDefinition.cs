@@ -14,49 +14,42 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 namespace SuperHero
 {
-    public class SuperHero_ModDefinition:ModDefinition
+    public class SuperHero_ModDefinition : ModDefinition
     {
         public override Type ModItemKeysType => typeof(ModItemKeys);
-        /* //Example
-        [CustomGDE(nameof(GDEItemKeys.Character_Sizz),nameof(GDECharacterData.name))]
-        public string SizzName
+        public override List<object> BattleSystem_ModIReturn()
         {
-            get
+            var list = base.BattleSystem_ModIReturn();
+
+            list.Add(new ModIReturn());
+
+            return list;
+        }
+    }
+
+    public class ModIReturn : IP_BattleStart_Ones, IP_BattleEnd
+    {
+        public void BattleStart(BattleSystem Ins)
+        {
+            if (SuperHero_Plugin.SuperHeroInParty())
             {
-                return $"Sizz(New Name of {ModId})";
+                Utils.SuperStats = false;
+                Utils.RemovePainSharingBuffsFromAllAllies();
+                Utils.RemovePainSharingBuffsFromLucy();
+                //MasterAudio.PlaySound("BattleStart", 1f, null, 0f, null, null, false, false);
             }
         }
-        [CustomGDE(nameof(GDEItemKeys.Skill_S_Sizz_2), "UseAp")]
-        [CustomGDE(nameof(GDEItemKeys.Skill_S_Sizz_1), "UseAp")]
-        public static int Sizz1AP(int oldap)
-        {
-            return oldap + 1;
-        }
-        [CustomGDE("S_Sizz_1", nameof(GDESkillData.Except))]
-        public static bool Sizz1Except = true;
-        */
-    }
-    /* //Example
-    public class ExampleSkill : CustomSkillGDE<SuperHero_ModDefinition>
-    {
-        public override string Key()
-        {
-            return "ExampleSkill"; //it will override your "ExampleSkill" gdata in the mod editor
-        }
-        public override ModGDEInfo.LoadingType GetLoadingType()
-        {
-            return ModGDEInfo.LoadingType.Add; 
-        }
-        public override void SetValue()
-        {
-            PlusSkillView = ModKey<ExampleSkill>();//for ModDefinition gdata
-            User = GDEItemKeys.Character_Azar;//for gdata of orginial game
-            SkillExtended = new List<string> { typeof(ExampleSkill_SkillExtended).AssemblyQualifiedName };//for script
-            //Image_0 = assetInfo.ImageFromAsset("Your AssetBundle Path", "Path in Unity"); 
-        }
-        public class ExampleSkill_SkillExtended:Skill_Extended
-        {
 
+        public void BattleEnd()
+        {
+            if (SuperHero_Plugin.SuperHeroInParty())
+            {
+                Utils.SuperStats = false;
+                //BattleSystem.DelayInput(Utils.StopSong());
+                MasterAudio.StopBus("BGM");
+                MasterAudio.FadeBusToVolume("BGM", 0f, 1f, null, false, false);
+                FieldSystem.FieldBGMOn();
+            }
         }
-    }*/
+    }
 }

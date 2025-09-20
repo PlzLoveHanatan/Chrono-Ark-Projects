@@ -32,15 +32,12 @@ namespace SuperHero
 
         public override void FixedUpdate()
         {
-            base.SkillParticleOn();
+            SkillParticleOn();
         }
 
         public override bool Terms()
         {
-            if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)
-                return true;
-
-            return false;
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -49,7 +46,9 @@ namespace SuperHero
             BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_EgoShield, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
 
             foreach (var target in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
+            {
                 target.BuffAdd(ModItemKeys.Buff_B_SuperHero_HerosSpotlight, BChar, false, 999, false, -1, false);
+            } 
         }
 
         public void SkillUseAfter(Skill SkillD)

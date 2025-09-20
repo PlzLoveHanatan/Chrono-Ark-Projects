@@ -14,6 +14,7 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using HarmonyLib;
 using TileTypes;
+using EItem;
 namespace SuperHero
 {
     public class SuperHero_Plugin : ChronoArkPlugin
@@ -41,29 +42,8 @@ namespace SuperHero
         }
         public static bool SuperHeroInParty()
         {
-            foreach (var character in PlayData.TSavedata.Party)
-            {
-                if (character.KeyData == ModItemKeys.Character_SuperHero)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_SuperHero);
         }
-
-        //[HarmonyPatch(typeof(B_ProgramMaster_LucyMain))]
-        //[HarmonyPatch(nameof(B_ProgramMaster_LucyMain.BuffOneAwake))]
-        //public static class PainSharingPatch
-        //{
-        //    static bool Prefix(B_ProgramMaster_LucyMain __instance)
-        //    {
-        //        if (SuperHeroInParty())
-        //        {
-        //            return false;
-        //        }
-        //        return true;
-        //    }
-        //}
 
         [HarmonyPatch(typeof(FieldSystem), "StageStart")]
         public static class StagePatch
@@ -75,11 +55,11 @@ namespace SuperHero
                 {
                     if (PlayData.TSavedata.StageNum >= 1 && !IsCamp)
                     {
-                        Utils.JusticeSword++;
+                        IncreaseSwordDamage();
                     }
-                    if (PlayData.TSavedata.StageNum >= 1 && !Utils.ItemTake)
+                    if (PlayData.TSavedata.StageNum >= 0 && !Utils.Equip)
                     {
-                        Utils.ItemTake = true;
+                        Utils.Equip = true;
                         PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
                         PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
                     }
@@ -94,16 +74,24 @@ namespace SuperHero
                         //    GlobalTimerManager.Instance?.StartTimer();
                         //    Utils.FirstTimer = true;
                         //}
-
-
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
-                        Utils.ItemTake = true;
                     }
                 }
             }
         }
 
+        public static void IncreaseSwordDamage(int damage = 1)
+        {
+            var justiceDamage = PlayData.TSavedata.GetCustomValue<JusticeSword>();
+
+            if (justiceDamage == null)
+            {
+                justiceDamage = new JusticeSword();
+                PlayData.TSavedata.AddCustomValue(justiceDamage);
+                justiceDamage.JusticeDamage = 0;
+            }
+
+            justiceDamage.JusticeDamage += damage;
+        }
 
         public static bool IsCamp
         {
@@ -153,105 +141,13 @@ namespace SuperHero
             }
         }
 
-        [HarmonyPatch(typeof(TrueEndCreditUI))]
-        [HarmonyPatch(nameof(TrueEndCreditUI.Start))]
-        public class TimerPatch
+        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
+        public static class MemoryReset
         {
-            [HarmonyPrefix]
-            public static void Prefix()
+            [HarmonyPostfix]
+            public static void Postfix()
             {
-                GlobalTimerManager.Instance?.PauseTimer();
-            }
-        }
-
-        [HarmonyPatch(typeof(TrueEndCreditUI))]
-        [HarmonyPatch("Update")]
-        public class TrueEndCreditUI_UpdatePatch
-        {
-            [HarmonyPrefix]
-            public static void Prefix()
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    GlobalTimerManager.Instance?.PauseTimer();
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(MainOptionMenu))]
-        [HarmonyPatch("Start")]
-        public class MainOptionMenu_MainOptionMenu
-        {
-            [HarmonyPrefix]
-            public static void Prefix()
-            {
-                GlobalTimerManager.Instance?.DestroySelfAndUI();
-            }
-        }
-
-        [HarmonyPatch(typeof(PauseWindow))]
-        [HarmonyPatch("Restart")]
-        public class TimerPatch_Restart
-        {
-            [HarmonyPrefix]
-            public static void Prefix()
-            {
-                Utils.ItemTake = true;
-                GlobalTimerManager.Instance?.ResetTimer();
-            }
-        }
-
-        [HarmonyPatch(typeof(PauseWindow))]
-        [HarmonyPatch("ReturnToMain")]
-        public class TimerPatch_ReturnToMain
-        {
-            [HarmonyPrefix]
-            public static void Prefix()
-            {
-                GlobalTimerManager.SaveCurrentTime();
-                string time = GlobalTimerManager.GetSavedTime();
-                Debug.Log("Saved timer time: " + time);
-            }
-        }
-
-        [HarmonyPatch(typeof(PauseWindow))]
-        [HarmonyPatch("Continue")]
-        public class TimerPatch_Continue
-        {
-            [HarmonyPrefix]
-            public static void Prefix()
-            {
-                if (GlobalTimerManager.Instance != null)
-                {
-                    var TimerObj = new GameObject("GlobalTimerManager");
-                    TimerObj.AddComponent<GlobalTimerManager>();
-                    GlobalTimerManager.Instance?.StartTimer();
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(PauseWindow))]
-        [HarmonyPatch("QuitGame")]
-        public class TimerPatch_QuitGame
-        {
-            [HarmonyPrefix]
-            public static void Prefix()
-            {
-                GlobalTimerManager.SaveCurrentTime();
-                string time = GlobalTimerManager.GetSavedTime();
-                Debug.Log("Saved timer time: " + time);
-                GlobalTimerManager.Instance?.StopTimer();
-            }
-        }
-
-        [HarmonyPatch(typeof(ResultUI))]
-        [HarmonyPatch("ContinueClick")]
-        public class TimerPatch_ResultUI
-        {
-            [HarmonyPrefix]
-            public static void Prefix()
-            {
-                GlobalTimerManager.Instance?.DestroySelfAndUI();
+                Utils.Equip = false;
             }
         }
 
@@ -271,6 +167,98 @@ namespace SuperHero
                 }
 
                 return true;
+            }
+        }
+
+
+        [HarmonyPatch(typeof(Character), nameof(Character.StatC))]
+        class FaintResistPatch
+        {
+            [HarmonyPrefix]
+            static bool Prefix(Stat inputstat, ref Stat __result)
+            {
+                Stat stat = inputstat;
+
+                if (stat.atk < 0f)
+                {
+                    stat.atk = 0f;
+                }
+
+                if (stat.def < 0f)
+                {
+                    stat.def = 0f;
+                }
+
+                if (stat.PerfectShield)
+                {
+                    stat.def = 100f;
+                }
+                else if (stat.def > 80f)
+                {
+                    if (!Utils.SuperStats)
+                    {
+                        stat.def = 80f;
+                    }      
+                }
+
+                if (stat.dod < 0f)
+                {
+                    stat.dod = 0f;
+                }
+
+                if (stat.PerfectDodge)
+                {
+                    stat.dod = 500f;
+                }
+                else if (stat.dod > 80f)
+                {
+                    if (!Utils.SuperStats)
+                    {
+                        stat.dod = 80f;
+                    }
+                }
+
+                if (stat.Penetration < 0f)
+                {
+                    stat.Penetration = 0f;
+                }
+
+                if (stat.AggroPer < -100)
+                {
+                    stat.AggroPer = -100;
+                }
+                else if (stat.AggroPer > 100)
+                {
+                    if (!Utils.SuperStats)
+                    {
+                        stat.AggroPer = 100;
+                    }
+                }
+
+                if (stat.maxhp < 0)
+                {
+                    stat.maxhp = 0;
+                }
+
+                if (stat.reg < 0f)
+                {
+                    stat.reg = 0f;
+                }
+
+                if (stat.DeadImmune < 0)
+                {
+                    stat.DeadImmune = 0;
+                }
+                else if (stat.DeadImmune > 80)
+                {
+                    if (!Utils.SuperStats)
+                    {
+                        stat.DeadImmune = 80;
+                    }
+                }
+
+                __result = stat;
+                return false;
             }
         }
     }

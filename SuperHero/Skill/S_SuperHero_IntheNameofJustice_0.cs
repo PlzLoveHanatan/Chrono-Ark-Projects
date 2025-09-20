@@ -26,15 +26,12 @@ namespace SuperHero
 
         public override void FixedUpdate()
         {
-            base.SkillParticleOn();
+            SkillParticleOn();
         }
 
         public override bool Terms()
         {
-            if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)
-                return true;
-
-            return false;
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)

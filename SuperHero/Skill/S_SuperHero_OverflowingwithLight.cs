@@ -25,23 +25,19 @@ namespace SuperHero
 
         public override void FixedUpdate()
         {
-            base.SkillParticleOn();
+            SkillParticleOn();
         }
+
         public override bool Terms()
         {
-            if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)
-                return true;
-
-            return false;
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            var team = BattleSystem.instance.AllyTeam;
-            team.Draw(2);
-            team.AP += 2;
-            
-            team.LucyChar.Overload = 0;
+            Utils.AllyTeam.Draw(2);
+            Utils.AllyTeam.AP += 2;
+            Utils.AllyTeam.LucyChar.Overload = 0;
             BChar.Overload = 0;
         }
     }

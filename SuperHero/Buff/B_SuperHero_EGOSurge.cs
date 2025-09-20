@@ -34,13 +34,9 @@ namespace SuperHero
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_SuperHero_EGOSurge;
-            if (addedbuff.BuffData.Key == buff)
+            if (addedbuff.BuffData.Key == ModItemKeys.Buff_B_SuperHero_EGOSurge && BuffTaker != Utils.SuperHero)
             {
-                if (BuffTaker.Info.KeyData != ModItemKeys.Character_SuperHero)
-                {
-                    BuffTaker.BuffRemove(buff);
-                }
+                BuffTaker.BuffRemove(ModItemKeys.Buff_B_SuperHero_EGOSurge);
             }
         }
     }

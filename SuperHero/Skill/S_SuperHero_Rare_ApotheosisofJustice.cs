@@ -20,76 +20,52 @@ namespace SuperHero
     /// </summary>
     public class S_SuperHero_Rare_ApotheosisofJustice : Skill_Extended, IP_SkillUse_User_After
     {
-        private bool SuperHero;
         public override void Init()
         {
             OnePassive = true;
             SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
         }
+        public override string DescExtended(string desc)
+        {
+            string text = Utils.SuperHeroMod(BChar) ? ModLocalization.Apotheosis_1 : ModLocalization.Apotheosis_0;
+            return base.DescExtended(desc).Replace("&a", text);
+        }
 
         public override void FixedUpdate()
         {
-            base.SkillParticleOn();
+            SkillParticleOn();
         }
 
         public override bool Terms()
         {
-            if (BChar.Info.KeyData == ModItemKeys.Character_SuperHero)
-                return true;
-
-            return false;
+            return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.PlaySong(MySkill.MySkill.KeyID);
-            if (BChar.Info.Passive is P_SuperHero Hero)
-            {
-                if (Hero != null && Hero.SuperHeroPassive)
-                {
-                    SuperHero = true;
-                }
-            }
-            var superHero = ModItemKeys.Character_SuperHero;
-            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
-            var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
-            foreach (var target in enemies)
-            {
-                target?.BuffAdd(ModItemKeys.Buff_B_SuperHero_HerosSpotlight, BChar, false, 999, false, -1, false);
-            }
-
-            if (!SuperHero)
-            {
-                foreach (var ally in allies)
-                {
-                    ally?.BuffAdd(ModItemKeys.Buff_B_SuperHero_HerosSpotlight, BChar, false, 0, false, -1, false);
-                }
-            }
+            ApplySpotLight();
         }
 
         public void SkillUseAfter(Skill SkillD)
         {
-            var superHero = ModItemKeys.Character_SuperHero;
-            var buff = ModItemKeys.Buff_B_SuperHero_HerosSpotlight;
-            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.Info.KeyData != superHero);
-            var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
+            ApplySpotLight();
+        }
 
-            foreach (var target in enemies)
+        public void ApplySpotLight()
+        {
+            List<BattleChar> targets = Utils.EnemyTeam.AliveChars_Vanish;
+
+            if (!Utils.SuperHeroMod(BChar))
             {
-                if (target?.BuffReturn(buff, false) == null)
-                {
-                    target?.BuffAdd(buff, BChar, false, 999, false, -1, false);
-                }
+                targets.AddRange(Utils.AllyTeam.AliveChars.Where(x => x != Utils.SuperHero));
             }
 
-            if (!SuperHero)
+            foreach (var target in targets)
             {
-                foreach (var ally in allies)
+                if (target != null)
                 {
-                    if (ally?.BuffReturn(buff, false) == null)
-                    {
-                        ally?.BuffAdd(buff, BChar, false, 999, false, -1, false);
-                    }
+                    Utils.AddDebuff(target, BChar, ModItemKeys.Buff_B_SuperHero_HerosSpotlight, 1, 999);
                 }
             }
         }
