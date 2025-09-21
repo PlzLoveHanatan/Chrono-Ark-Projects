@@ -53,7 +53,7 @@ namespace SuperHero
             {
                 if (SuperHeroInParty())
                 {
-                    if (PlayData.TSavedata.StageNum >= 1 && !IsCamp)
+                    if (PlayData.TSavedata.StageNum >= 0 && !IsCamp)
                     {
                         IncreaseSwordDamage();
                     }

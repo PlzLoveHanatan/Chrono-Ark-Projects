@@ -18,16 +18,17 @@ namespace SuperHero
     /// <summary>
     /// The Applause Never Ends
     /// </summary>
-    public class S_SuperHero_TheApplauseNeverEnds : Skill_Extended, IP_SkillUse_User_After
+    public class S_SuperHero_TheApplauseNeverEnds : Skill_Extended
     {
         public override string DescExtended(string desc)
         {
             return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.maxhp * 0.4f)).ToString());
         }
+
         public override void Init()
         {
             OnePassive = true;
-            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Ex_LucyD_18_SwimDLC).Particle_Path;
         }
 
         public override void FixedUpdate()
@@ -44,25 +45,6 @@ namespace SuperHero
         {
             int barrierValue = (int)(BChar.GetStat.maxhp * 0.4f);
             BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_EgoShield, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
-
-            foreach (var target in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
-            {
-                target.BuffAdd(ModItemKeys.Buff_B_SuperHero_HerosSpotlight, BChar, false, 999, false, -1, false);
-            } 
-        }
-
-        public void SkillUseAfter(Skill SkillD)
-        {
-            var buff = ModItemKeys.Buff_B_SuperHero_HerosSpotlight;
-            var enemy = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
-
-            foreach (var target in enemy)
-            {
-                if (target?.BuffReturn(buff, false) == null)
-                {
-                    target.BuffAdd(buff, BChar, false, 999, false, -1, false);
-                }
-            }
         }
     }
 }

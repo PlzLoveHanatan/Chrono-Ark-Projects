@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using System.Security.Cryptography;
 namespace SuperHero
 {
     /// <summary>
@@ -23,14 +24,14 @@ namespace SuperHero
         {
             if (MySkill.BasicSkill)
             {
-                MySkill.APChange = -2;
+                MySkill.APChange = -1;
             }
         }
 
         public override string DescExtended(string desc)
         {
             string text = Utils.SuperHeroMod(BChar) ? ModLocalization.BloodStained_1 : ModLocalization.BloodStained_0;
-            return base.DescExtended(desc).Replace("&a", text);
+            return base.DescExtended(desc).Replace("Description", text);
         }
 
         public override bool Terms()
@@ -40,19 +41,15 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            var superHero = ModItemKeys.Character_SuperHero;
-            var allies = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null & x.Info.KeyData != superHero).ToList();
-            int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, allies.Count);
-            var randomTarget = allies[index];
-            if (BChar.Info.Passive is P_SuperHero Hero)
+            if (!Utils.SuperHeroMod(BChar))
             {
-                if (Hero.SuperHero) return;
-
-                else
+                foreach (var ally in Utils.AllyTeam.AliveChars)
                 {
-                    randomTarget.BuffAdd(ModItemKeys.Buff_B_SuperHero_ScarletRemnant_0, BChar, false, 0, false, -1, false);
+                    if (ally == Utils.SuperHero) continue;
+
+                    Utils.AddDebuff(ally, BChar, ModItemKeys.Buff_B_SuperHero_ScarletRemnant, 1);
                 }
-            }
+            }  
         }
     }
 }

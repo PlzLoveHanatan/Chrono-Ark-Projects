@@ -27,7 +27,7 @@ namespace SuperHero
 
             if (BChar != null && BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) is B_SuperHero_HeroComplex complex)
             {
-                if (complex.StackNum >= 25 && Utils.SuperVillainMod(BChar))
+                if (complex.StackNum >= 20 && !Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar))
                 {
                     text = ModLocalization.JusticeSword_1;
                 }
@@ -54,16 +54,15 @@ namespace SuperHero
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            var markOfJustice = ModItemKeys.Buff_B_SuperHero_MarkofJustice;
             if (Utils.HeroAttacksWithMark.Contains(SkillD.MySkill.KeyID) && SkillD.Master == Utils.SuperHero)
             {
                 foreach (var target in Targets)
                 {
                     if (target.Info.Ally) continue;
 
-                    if (target.BuffReturn(markOfJustice, false) is B_SuperHero_MarkofJustice mark)
+                    if (target.BuffReturn(ModItemKeys.Buff_B_SuperHero_MarkofJustice, false) is B_SuperHero_MarkofJustice mark)
                     {
-                        Utils.AddDebuff(target, BChar, markOfJustice, 1);
+                        Utils.AddDebuff(target, BChar, ModItemKeys.Buff_B_SuperHero_MarkofJustice, 1);
                         mark.MarkStacks++;
                         mark.BuffStat();
                     }
@@ -73,11 +72,8 @@ namespace SuperHero
 
         public void Turn()
         {
-            Skill skill;
             var heroComplex = ModItemKeys.Buff_B_SuperHero_HeroComplex;
             string skillKey = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1;
-
-            Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, heroComplex);
 
             if (Utils.SuperHero && Utils.SuperHero.BuffReturn(heroComplex, false) is B_SuperHero_HeroComplex complex && !Utils.SuperHeroMod(BChar) /*&& (BattleSystem.instance.TurnNum < 3 || complex.StackNum < 25)*/)
             {
@@ -86,8 +82,9 @@ namespace SuperHero
                     skillKey = ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0;
                 }
             }
-            skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
-            BattleSystem.instance.AllyTeam.Add(skill, true);
+
+            Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, heroComplex);
+            Utils.CreateSkill(BChar, skillKey, true, true, 1, 0, true);
 
             var markofJustice = ModItemKeys.Buff_B_SuperHero_MarkofJustice;
 
@@ -95,7 +92,7 @@ namespace SuperHero
             {
                 if (enemy != null)
                 {
-                    Utils.AddDebuff(enemy, BChar, markofJustice, 1, 999);
+                    Utils.AddDebuff(enemy, BChar, markofJustice);
 
                     if (enemy.BuffReturn(markofJustice, false) is B_SuperHero_MarkofJustice mark)
                     {
@@ -108,21 +105,11 @@ namespace SuperHero
                 }
             }
 
-            if (Utils.SuperHeroMod(BChar))
+            if (Utils.SuperVillainMod(BChar))
             {
                 foreach (var ally in Utils.AllyTeam.AliveChars)
                 {
-                    if (ally != null && ally.BuffReturn(markofJustice, false) is B_SuperHero_MarkofJustice mark)
-                    {
-                        mark?.SelfDestroy();
-                    }
-                }
-            }
-            else if (Utils.SuperVillainMod(BChar))
-            {
-                foreach (var ally in Utils.AllyTeam.AliveChars)
-                {
-                    Utils.AddDebuff(ally, BChar, markofJustice, 1, 999);
+                    Utils.AddDebuff(ally, BChar, markofJustice);
                 }
             }
         }

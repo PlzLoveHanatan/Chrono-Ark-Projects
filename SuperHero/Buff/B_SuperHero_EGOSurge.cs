@@ -28,7 +28,7 @@ namespace SuperHero
         {
             if (Damage >= 1)
             {
-                BChar.Heal(BChar, (int)(Damage * 0.15f), false, false, null);
+                BChar.Heal(BChar, (int)(Damage * 0.2f), false, false, null);
             }
         }
 

@@ -18,7 +18,7 @@ namespace SuperHero
     /// <summary>
     /// Hero Complex
     /// </summary>
-    public class B_SuperHero_HeroComplex : Buff, IP_BuffAddAfter, IP_SomeOneDead, IP_Awake
+    public class B_SuperHero_HeroComplex : Buff, IP_BuffAddAfter, IP_SomeOneDead, IP_Awake, IP_SkillUse_User
     {
         private readonly List<string> Objects = new List<string>()
         {
@@ -32,24 +32,6 @@ namespace SuperHero
             "StarVillian3",
         };
 
-        private readonly List<string> VillainObjects = new List<string>()
-        {
-            "VillainMascot",
-            "StarVillian1",
-            "StarVillian2",
-            "StarVillian3",
-        };
-
-        private readonly List<string> HeroObjects = new List<string>()
-        {
-            "HeroMascot",
-            "Star1",
-            "Star2",
-            "Star3",
-        };
-
-        public int JusticeDamage;
-
         private GameObject heroMascot;
         private GameObject villainMascot;
 
@@ -61,11 +43,13 @@ namespace SuperHero
         private GameObject StarPurple2;
         private GameObject StarPurple3;
 
-        //public override string DescExtended()
-        //{
-        //    string text = Utils.SuperHeroMod(BChar) ? ModLocalization.HeroComplex_1 : ModLocalization.HeroComplex_0;
-        //    return text.Replace("&a", (StackNum * 2).ToString());
-        //}
+        public override string DescExtended()
+        {
+            bool apotheosis = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist, false) != null;
+            int num = Utils.OldStats ? 4 : 1;
+            string text = Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar) || apotheosis ? "" : ModLocalization.HeroComplex_0;
+            return base.DescExtended().Replace("&a", num.ToString()).Replace("Description", text);
+        }
 
         public void Awake()
         {
@@ -84,15 +68,23 @@ namespace SuperHero
 
         public override void BuffStat()
         {
-            int increaseStats = StackNum * 2;
-            PlusPerStat.MaxHP = increaseStats;
-            PlusStat.maxhp = increaseStats;
+            int num = Utils.OldStats ? 4 : 1;
+            int increaseStats = num * StackNum;
+
+            if (Utils.OldStats)
+            {
+                PlusPerStat.Damage = increaseStats;
+                PlusPerStat.Heal = increaseStats;
+                PlusPerStat.MaxHP = increaseStats;
+                PlusStat.cri = increaseStats;
+            }
+
             //PlusStat.atk = increaseStats;
-            PlusPerStat.Damage = increaseStats;
-            PlusStat.cri = increaseStats;
+            //PlusStat.reg = increaseStats;
+
+            PlusStat.maxhp = increaseStats;
             PlusStat.dod = increaseStats;
             PlusStat.def = increaseStats;
-            //PlusStat.reg = increaseStats;
             PlusStat.hit = increaseStats;
             PlusStat.RES_CC = increaseStats;
             PlusStat.RES_DEBUFF = increaseStats;
@@ -102,7 +94,7 @@ namespace SuperHero
             PlusStat.HIT_DOT = increaseStats;
             PlusStat.HEALTaken = increaseStats;
             PlusStat.DeadImmune = increaseStats;
-            //PlusStat.PlusCriDmg = increaseStats;
+            PlusStat.PlusCriDmg = increaseStats;
             PlusStat.CRIGetDMG = -increaseStats;
             PlusStat.DMGTaken = -increaseStats;
             PlusStat.HEALTaken = increaseStats;
@@ -129,7 +121,7 @@ namespace SuperHero
                     villainMascot = CreateVillainMascot(BChar);
                 }
 
-                if (StackNum >= 25 && !Utils.SuperHeroMod(BChar))
+                if (StackNum >= 25 && !Utils.SuperHeroMod(BChar) && !Utils.SuperVillainMod(BChar))
                 {
                     DestroyObjects(StarYellow1, StarYellow2, StarYellow3);
                     StarYellow1 = StarYellow2 = StarYellow3 = null;
@@ -285,6 +277,15 @@ namespace SuperHero
             {
                 UnityEngine.Object.Destroy(obj);
             }
+        }
+
+        public void SkillUse(Skill SkillD, List<BattleChar> Targets)
+        {
+            bool apotheosis = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist, false) != null;
+
+            if (Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar) || apotheosis) return;
+
+            Utils.AttackRedirect(BChar, SkillD, Targets, 10);
         }
     }
 }

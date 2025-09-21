@@ -20,7 +20,7 @@ namespace SuperHero
     {
         public override void Init()
         {
-            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
         }
 
         public override void FixedUpdate()
@@ -38,7 +38,11 @@ namespace SuperHero
             Utils.AllyTeam.Draw(2);
             Utils.AllyTeam.AP += 2;
             Utils.AllyTeam.LucyChar.Overload = 0;
-            BChar.Overload = 0;
+
+            foreach (var ally in Utils.AllyTeam.AliveChars)
+            {
+                ally.Overload = 0;
+            }
         }
     }
 }

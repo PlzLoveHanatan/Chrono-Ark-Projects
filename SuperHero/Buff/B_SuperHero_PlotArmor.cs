@@ -18,21 +18,18 @@ namespace SuperHero
 	/// <summary>
 	/// Plot Armor
 	/// </summary>
-    public class B_SuperHero_PlotArmor : Buff, IP_DamageTakeChange, IP_PlayerTurn, IP_Awake, IP_BuffAddAfter
+    public class B_SuperHero_PlotArmor : Buff, IP_PlayerTurn, IP_Awake, IP_BuffAddAfter
     {
         public override string DescExtended()
         {
-            var complex = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false);
-            if (BattleSystem.instance != null && complex != null)
-            {
-                return base.DescExtended().Replace("&a", ((int)(complex.StackNum * 4)).ToString());
-            }
-            return base.DescExtended().Replace("&a", 0.ToString());
+            int hp = (int)(BChar.GetStat.maxhp * 0.4f);
+            return base.DescExtended().Replace("&a", hp.ToString());
         }
 
         public override void Init()
         {
             PlusStat.Strength = true;
+            PlusStat.DMGTaken = -20;
         }
 
         public void Awake()
@@ -44,32 +41,10 @@ namespace SuperHero
             } 
         }
 
-        public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
-        {
-            if (!Preview && Dmg >= 1)
-            {
-                Dmg = (int)(Dmg * 0.85f);
-            }
-            if (Dmg <= 1)
-            {
-                Dmg = 1;
-            }
-            return Dmg;
-        }
-
         public void Turn()
         {
-            var complex = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false);
-            if (complex != null)
-            {
-                BChar.Heal(BattleSystem.instance.DummyChar, (int)(complex.StackNum * 4f), false, true, null);
-
-                Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_DummyHeal, BChar, BChar.MyTeam);
-                healingParticle.PlusHit = true;
-                healingParticle.FreeUse = true;
-
-                BChar.ParticleOut(healingParticle, BChar);
-            }
+            int barrierValue = (int)(BChar.GetStat.maxhp * 0.4f);
+            BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_EgoShield, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)

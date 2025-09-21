@@ -23,17 +23,17 @@ namespace SuperHero
             return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
         }
 
+        public override string DescExtended(string desc)
+        {
+            string text = Utils.SuperHeroMod(BChar) ? ModLocalization.InTheNameOfJustice_1 : ModLocalization.InTheNameOfJustice_0;
+            return base.DescExtended(desc).Replace("Description", text);
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_IntheNameofJustice, this.BChar, this.BChar.MyTeam);
-            BattleSystem.instance.AllyTeam.Add(skill, true);
-            skill.AutoDelete = 1;
-            skill.isExcept = true;
-
-            var target = Targets[0];
-
-            BattleSystem.DelayInput(RestoreMana(target));
-
+            Utils.ApplyJusticeMark(BChar);
+            Utils.CreateSkill(BChar, ModItemKeys.Skill_S_SuperHero_IntheNameofJustice, true, true, 1, 1, true);
+            BattleSystem.DelayInput(RestoreMana(Targets[0]));
         }
 
         public IEnumerator RestoreMana(BattleChar target)
@@ -41,8 +41,6 @@ namespace SuperHero
             if (!target.IsDead) yield break;
 
             BattleSystem.instance.AllyTeam.AP += 2;
-
-            yield return null;
         }
     }
 }

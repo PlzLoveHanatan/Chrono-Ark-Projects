@@ -34,8 +34,19 @@ namespace SuperHero
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             //Utils.SuperStats = true;
+
+            foreach (var ally in Utils.AllyTeam.AliveChars)
+            {
+                foreach (var buff in Utils.SuperHeroDebuff)
+                {
+                    if (ally.BuffReturn(buff, false) != null)
+                    {
+                        ally.BuffRemove(buff, true);
+                    }
+                }
+            }
             Utils.PlaySong(MySkill.MySkill.KeyID);
-            BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, ModItemKeys.Buff_B_SuperHero_JusticeAscension, true, false));
+            BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, true, false));
         }
     }
 }

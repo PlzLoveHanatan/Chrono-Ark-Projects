@@ -10,7 +10,7 @@ namespace SuperHero
         public static string Buff_B_Ex_SuperHero_BarrierofLight = "B_Ex_SuperHero_BarrierofLight";
 		/// <summary>
 		/// Light ☆ Armor
-		/// Blocks <color=#FF4500>Mark of Justice</color>.
+		/// Blocks all <color=#FF4500>Justice debuffs </color>.
 		/// </summary>
         public static string Buff_B_E_SuperHero_LightArmor = "B_E_SuperHero_LightArmor";
 		/// <summary>
@@ -19,7 +19,6 @@ namespace SuperHero
         public static string Buff_B_SuperHero_BlindingGlory = "B_SuperHero_BlindingGlory";
 		/// <summary>
 		/// Ego Shield
-		/// Only <color=#FFA500>Super Hero</color> can have this barrier.
 		/// </summary>
         public static string Buff_B_SuperHero_EgoShield = "B_SuperHero_EgoShield";
 		/// <summary>
@@ -29,15 +28,15 @@ namespace SuperHero
         public static string Buff_B_SuperHero_EGOSurge = "B_SuperHero_EGOSurge";
 		/// <summary>
 		/// Glory of Justice ☆
-		/// When attacked, counterattack for &a equal <color=#FF7C34>(40% Attack Power)</color>.
+		/// When attacked, counterattack for &a equal <color=#FF7C34>(50% Attack Power)</color>.
 		/// </summary>
         public static string Buff_B_SuperHero_GloryofJustice = "B_SuperHero_GloryofJustice";
 		/// <summary>
 		/// Hero Complex ☆
-		/// Increase stats by 2% for each buff stack.
+		/// Increase stats by &a% for each buff stack.
+		/// Description
 		/// </summary>
         public static string Buff_B_SuperHero_HeroComplex = "B_SuperHero_HeroComplex";
-        public static string Buff_B_SuperHero_HeroComplex_0 = "B_SuperHero_HeroComplex_0";
 		/// <summary>
 		/// Hero Presence
 		/// Cannot take action.
@@ -70,22 +69,18 @@ namespace SuperHero
         public static string Buff_B_SuperHero_OverpoweredProtagonist = "B_SuperHero_OverpoweredProtagonist";
 		/// <summary>
 		/// Plot Armor ☆
-		/// All incoming damage is reduced by 15%. Every turn restore &a HP <color=#FF7C34>(Hero Complex StackNum * 4%)</color>.
+		/// At the start of each turn gain &a barrier <color=#FF7C34>(40% of Max Health)</color>.
 		/// </summary>
         public static string Buff_B_SuperHero_PlotArmor = "B_SuperHero_PlotArmor";
 		/// <summary>
 		/// Relentless Recovery ☆
-		/// At the start of each turn remove 3 random debuffs and gain &a barrier <color=#FF7C34>(Max HP * 0.4)</color>. 
+		/// At the start of each turn remove 2 random debuffs and restore &a HP <color=#FF7C34>(20% of Max Health)</color>.
 		/// </summary>
         public static string Buff_B_SuperHero_RelentlessRecovery = "B_SuperHero_RelentlessRecovery";
 		/// <summary>
 		/// Scarlet Remnant
 		/// </summary>
         public static string Buff_B_SuperHero_ScarletRemnant = "B_SuperHero_ScarletRemnant";
-		/// <summary>
-		/// Scarlet Remnant
-		/// </summary>
-        public static string Buff_B_SuperHero_ScarletRemnant_0 = "B_SuperHero_ScarletRemnant_0";
 		/// <summary>
 		/// Second Act ☆
 		/// At the start of each turn draw 2 additional skill and Restore 2 Mana.
@@ -102,7 +97,8 @@ namespace SuperHero
         public static string Item_Equip_E_SuperHero_JusticeSword = "E_SuperHero_JusticeSword";
 		/// <summary>
 		/// Light ☆ Armor
-		/// When attacked by <color=#FFA500>Super Hero</color>, reduce the damage taken to 0, unless <color=#FFA500>Super Hero</color> becomes a <color=#FF00FF>Super Villain</color>.
+		/// Blocks all <color=#FF4500>Justice debuffs </color>.
+		/// When attacked by <color=#FFA500>Super Hero</color>, reduce the damage by 50%, unless <color=#FFA500>Super Hero</color> becomes a <color=#FF00FF>Super Villain</color>.
 		/// This equipment cannot be cursed.
 		/// <color=red>Cannot be equipped by</color> <color=#FFA500>Super Hero</color>.
 		/// <color=#919191><color=#FF00FF>Justice ☆</color> always finds its villain.</color>
@@ -193,11 +189,11 @@ namespace SuperHero
 		/// <summary>
 		/// Super Hero
 		/// Passive:
-		/// Gain 2 <color=#FFD700>Hero Complex</color> when killing an enemy.
-		/// Gain <color=#FFD700>Hero Complex</color> whenever playing non-Сlass attack skills.
-		/// At the start of each turn, gain <color=#FFD700>Hero Complex</color> (up to 25).
-		/// At max <color=#FFD700>Hero Complex</color> <color=#FFA500>Super Hero</color> becomes a <color=#FF00FF>Super Villain</color>.
-		/// At the start of 3rd turn create <color=#FF4500>Justice ☆ Patience</color> in hand at the start of each turn.
+		/// Gain <color=#FFD700>Hero Complex</color> whenever you play non-Class attack skills.  
+		/// At the start of each turn, gain <color=#FFD700>Hero Complex</color> (up to 25).  
+		/// At max <color=#FFD700>Hero Complex</color>, <color=#FFA500>Super Hero</color> becomes a <color=#FF00FF>Super Villain</color>.  
+		/// At the start of the 3rd turn, create <color=#FF4500>Justice ☆ Patience</color> in hand at the start of each turn.  
+		/// Once per fight, <color=#FFA500>Super Hero</color> can become a <color=#1E90FF>Justice Hero</color> if you gain 3 unique <color=#FFA500>Super Hero</color> <color=#1E90FF>buffs</color> (Plot Armor, Relentless Recovery, Second Act).
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_SuperHero = "SuperHero";
@@ -205,30 +201,28 @@ namespace SuperHero
         public static string Character_Skin_SuperHero_LightOfHope = "SuperHero_LightOfHope";
 		/// <summary>
 		/// Bloodstained Dress
-		/// &a
+		/// Description
 		/// </summary>
         public static string Skill_S_SuperHero_BloodstainedDress = "S_SuperHero_BloodstainedDress";
         public static string Skill_S_SuperHero_DummyHeal = "S_SuperHero_DummyHeal";
 		/// <summary>
 		/// Erase the Mobs
-		/// If the target's health is below 60% (30% for bosses), <b>reduce the target's health to 0</b>.
-		/// Otherwise gain 3 <color=#FFD700>Hero Complex</color>.
+		/// Description
 		/// </summary>
         public static string Skill_S_SuperHero_ErasetheMobs = "S_SuperHero_ErasetheMobs";
 		/// <summary>
 		/// In the Name of Justice ☆
-		/// This skill can be played repeatedly during this turn.
-		/// If this skill defeat an enemy restore 2 Mana.
+		/// Description
 		/// </summary>
         public static string Skill_S_SuperHero_IntheNameofJustice = "S_SuperHero_IntheNameofJustice";
 		/// <summary>
 		/// <color=#FF00FF>In the Name of Justice ☆</color>
-		/// Draw 1 skill if this skill Exchanged or Discarded.
+		/// Description
 		/// </summary>
         public static string Skill_S_SuperHero_IntheNameofJustice_0 = "S_SuperHero_IntheNameofJustice_0";
 		/// <summary>
 		/// <color=#FF4500>In the Name of Justice ☆</color>
-		/// Draw 1 skill if this skill Exchanged or Discarded.
+		/// Description
 		/// </summary>
         public static string Skill_S_SuperHero_IntheNameofJustice_1 = "S_SuperHero_IntheNameofJustice_1";
 		/// <summary>
@@ -250,7 +244,6 @@ namespace SuperHero
 		/// <summary>
 		/// <color=#FF00FF>Justice ☆ Impatience</color>
 		/// This skill can be cast even if you are stunned.
-		/// Only <color=#FF00FF>Super Villain</color> can use this skill.
 		/// This skill can be played repeatedly during this turn.
 		/// Remove 1 random debuff from <color=#FF00FF>Self</color>.
 		/// </summary>
@@ -258,13 +251,12 @@ namespace SuperHero
 		/// <summary>
 		/// <color=#FF4500>Justice ☆ Patience</color>
 		/// This skill can be cast even if you are stunned.
-		/// Only <color=#FFA500>Super Hero</color> can use this skill.
 		/// This skill can be played repeatedly during this turn.
 		/// Remove 1 random debuff from <color=#FFA500>Self</color>.
 		/// </summary>
         public static string Skill_S_SuperHero_JusticePatience_0 = "S_SuperHero_JusticePatience_0";
 		/// <summary>
-		/// <color=#00BFFF>Limit Break ☆</color>
+		/// <color=#1E90FF>Limit Break ☆</color>
 		/// Remove all debuffs.
 		/// All buffs remain 2 extra turn.
 		/// </summary>
@@ -277,8 +269,8 @@ namespace SuperHero
 		/// </summary>
         public static string Skill_S_SuperHero_LucyDraw = "S_SuperHero_LucyDraw";
 		/// <summary>
-		/// <color=#00BFFF>Overflowing with Light ☆</color>
-		/// Remove overload from Lucy and self, restore 2 mana and draw 2 skills.
+		/// <color=#1E90FF>Overflowing with Light ☆</color>
+		/// Remove Overload from all allies, restore 2 mana and draw 2 skills.
 		/// </summary>
         public static string Skill_S_SuperHero_OverflowingwithLight = "S_SuperHero_OverflowingwithLight";
 		/// <summary>
@@ -295,21 +287,23 @@ namespace SuperHero
         public static string Skill_S_SuperHero_Rare_JusticeDarkestHour = "S_SuperHero_Rare_JusticeDarkestHour";
 		/// <summary>
 		/// <color=#1E90FF>Justice Hero ☆</color>
-		/// Remove <color=#FF4500>Mark of Justice</color> from all allies.
+		/// Remove all <color=#FF4500>Justice debuffs </color> from all allies.
 		/// <color=#919191>This world needs a <color=#1E90FF>Hero ☆</color></color>
 		/// </summary>
         public static string Skill_S_SuperHero_Rare_JusticeHero = "S_SuperHero_Rare_JusticeHero";
 		/// <summary>
-		/// <color=#00BFFF>Applause Never Ends ☆</color>
-		/// Apply <color=#50C878>Hero's Spotlight</color> to all enemies and gain &a Barrier <color=#FF7C34>(Max HP * 0.4)</color>.
+		/// <color=#1E90FF>Applause Never Ends ☆</color>
+		/// Gain &a Barrier <color=#FF7C34>(40% of Max Health)</color>.
 		/// </summary>
         public static string Skill_S_SuperHero_TheApplauseNeverEnds = "S_SuperHero_TheApplauseNeverEnds";
 		/// <summary>
 		/// Unwanted Success Story
+		/// Description
 		/// </summary>
         public static string Skill_S_SuperHero_UnwantedSuccessStory = "S_SuperHero_UnwantedSuccessStory";
 		/// <summary>
 		/// World Is Mine
+		/// Description
 		/// </summary>
         public static string Skill_S_SuperHero_WorldIsMine = "S_SuperHero_WorldIsMine";
 
@@ -339,7 +333,7 @@ namespace SuperHero
 		/// Korean:
 		/// English:
 		/// Cost reduced by 2 if this is a fixed ability.
-		/// Apply 1 turn <color=#DC143C>Scarlet Remnant</color> to a random ally.
+		/// Apply <color=#DC143C>Scarlet Remnant</color> to all allies.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -357,26 +351,26 @@ namespace SuperHero
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// When attacked, counterattack for &a equal <color=#FF7C34>(40% Attack Power)</color>.
-		/// Gain &b% chance <color=#FF7C34>(Hero Complex StackNum * 2%)</color> to counterattack ally instead of attacker.
+		/// All allies take damage equal 50% of their Max Health.
+		/// If the target's health is below 60% (30% for bosses), <b>reduce the target's health to 0</b>.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string GloryOfJustice_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("GloryOfJustice_0");
+        public static string EraseMobs_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("EraseMobs_0");
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// When attacked, counterattack for &a equal <color=#FF7C34>(40% Attack Power)</color>.
+		/// If the target's health is below 60% (30% for bosses), <b>reduce the target's health to 0</b>.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string GloryOfJustice_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("GloryOfJustice_1");
+        public static string EraseMobs_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("EraseMobs_1");
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Increase stats by 2% for each buff stack. Gain &a% chance <color=#FF7C34>(2% * StackNum)</color> to target an ally with attacks.
+		/// Gain 10% chance to target allies with attacks.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -385,12 +379,53 @@ namespace SuperHero
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Increase stats by 4% for each buff stack.
+		/// This skill can be played repeatedly during this turn.
+		/// If this skill defeat an enemy restore 2 Mana.
+		/// Apply <color=#FF4500>Mark of Justice</color> to a random ally.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string HeroComplex_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("HeroComplex_1");
+        public static string InTheNameOfJustice_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// This skill can be played repeatedly during this turn.
+		/// If this skill defeat an enemy restore 2 Mana.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string InTheNameOfJustice_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Draw 1 skill if this skill Exchanged or Discarded.
+		/// Apply <color=#FF4500>Mark of Justice</color> to a random ally.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string InTheNameOfJustice_2 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Draw 1 skill if this skill Exchanged or Discarded.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string InTheNameOfJustice_3 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_3");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Draw 1 skill if this skill Exchanged or Discarded.
+		/// Apply <color=#FF4500>Mark of Justice</color> to a random <color=#FF00FF>Villain</color>.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string InTheNameOfJustice_4 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_4");
 		/// <summary>
 		/// Korean:
 		/// English:
@@ -449,21 +484,21 @@ namespace SuperHero
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// This skill always target an enemy and random ally.
+		/// Apply <color=#FFA500>Hero Presence</color> to a random ally.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string Unwanted => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("Unwanted");
+        public static string Unwanted_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("Unwanted_0");
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Attack all targets except <color=#FFA500>Super Hero</color>.
+		/// Apply <color=#50C878>Hero's Spotlight</color> to all allies.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
-        public static string WorldIsMine => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("WorldIsMine");
+        public static string World_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("World_0");
 
     }
 }

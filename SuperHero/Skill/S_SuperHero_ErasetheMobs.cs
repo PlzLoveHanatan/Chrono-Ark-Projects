@@ -24,6 +24,12 @@ namespace SuperHero
             OnePassive = true;
         }
 
+        public override string DescExtended(string desc)
+        {
+            string text = Utils.SuperHeroMod(BChar) ? ModLocalization.EraseMobs_1 : ModLocalization.EraseMobs_0;
+            return base.DescExtended(desc).Replace("Description", text);
+        }
+
         public override bool Terms()
         {
             return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
@@ -31,9 +37,15 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_HeroComplex, false) is B_SuperHero_HeroComplex complex)
+            if (!Utils.SuperHeroMod(BChar))
             {
-                complex.JusticeDamage = (int)(BChar.GetStat.atk * 0.8f);
+                foreach (var ally in Utils.AllyTeam.AliveChars)
+                {
+                    if (ally == Utils.SuperHero) continue;
+
+                    int damage = ally.GetStat.maxhp / 2;
+                    ally?.Damage(BChar, damage, false, false, true);
+                }
             }
 
             foreach (var target in Targets)
@@ -48,13 +60,6 @@ namespace SuperHero
                     else if (enemy.HP <= enemy.GetStat.maxhp * 0.6f)
                     {
                         enemy.HPToZero();
-                    }
-                }
-                else
-                {
-                    for (var i = 0; i < 3; i++)
-                    {
-                        BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
                     }
                 }
             }

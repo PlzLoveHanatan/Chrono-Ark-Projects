@@ -21,7 +21,7 @@ namespace SuperHero
     /// Super Hero
     /// Passive:
     /// </summary>
-    public class P_SuperHero : Passive_Char, IP_PlayerTurn, IP_Kill, IP_BattleStart_Ones, IP_SkillUse_User, IP_Discard
+    public class P_SuperHero : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_SkillUse_User, IP_Discard
     {
         public bool PlotArmor;
         public bool Relentless;
@@ -31,9 +31,13 @@ namespace SuperHero
         public bool JusticeHero;
         public bool JusticeAscention;
 
+        public bool GloryOFJustice;
+
         public int Complex;
         public bool SuperHero;
         public bool SuperVillain;
+
+        public bool BecomeJustice;
 
         public override void Init()
         {
@@ -43,18 +47,6 @@ namespace SuperHero
         public void BattleStart(BattleSystem Ins)
         {
             ResetFlags();
-            //Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_GloryofJustice);
-        }
-
-        public void KillEffect(SkillParticle SP)
-        {
-            if (SP.UseStatus == BChar)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_HeroComplex, BChar, false, 0, false, -1, false);
-                }
-            }
         }
 
         public void Turn()
@@ -64,9 +56,8 @@ namespace SuperHero
                 { ModItemKeys.Buff_B_SuperHero_SecondAct, SecondAct },
                 { ModItemKeys.Buff_B_SuperHero_RelentlessRecovery, Relentless },
                 { ModItemKeys.Buff_B_SuperHero_PlotArmor, PlotArmor },
-                //{ ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist, OverPowered },
-                //{ ModItemKeys.Buff_B_SuperHero_JusticeHero, JusticeHero },
-                //{ ModItemKeys.Buff_B_SuperHero_JusticeAscension, JusticeAscention }
+                { ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist, OverPowered },
+                { ModItemKeys.Buff_B_SuperHero_GloryofJustice, GloryOFJustice},
             };
 
             foreach (var kvp in buffMap)
@@ -77,9 +68,17 @@ namespace SuperHero
                 }
             }
 
-            //EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_GloryofJustice);
+            if (SuperHero)
+            {
+                EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_JusticeHero);
+            }
+            else if (SuperVillain)
+            {
+                EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_JusticeAscension);
+            }
+
             EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_HeroComplex, Complex);
-            EnsureBuff(BChar, ModItemKeys.Buff_B_SuperHero_HeroComplex, Complex);
+            
 
             Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_HeroComplex);
 
@@ -148,9 +147,11 @@ namespace SuperHero
 
         public void BecomeJusticeHero()
         {
-            if (PlotArmor && Relentless && SecondAct)
+            if (PlotArmor && Relentless && SecondAct && !BecomeJustice)
             {
-                BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, ModItemKeys.Buff_B_SuperHero_JusticeAscension, true, false));
+                Utils.CreateSkill(BChar, ModItemKeys.Skill_S_SuperHero_Rare_JusticeHero, true, true, 1, 0, true);
+                BecomeJustice = true;
+                //BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, ModItemKeys.Buff_B_SuperHero_JusticeAscension, true, false));
             }
         }
 
@@ -162,8 +163,10 @@ namespace SuperHero
             OverPowered = false;
             JusticeHero = false;
             JusticeAscention = false;
+            GloryOFJustice = false;
             SuperHero = false;
             SuperVillain = false;
+            BecomeJustice = false;
             Complex = 0;
         }
     }

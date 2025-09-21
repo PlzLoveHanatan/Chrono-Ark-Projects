@@ -17,6 +17,7 @@ namespace SuperHero
     {
         public override void Init()
         {
+            OnePassive = true;
             PlusStat.atk = 5;
             //PlusStat.PlusCriDmg = 25;
         }
@@ -41,7 +42,7 @@ namespace SuperHero
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.AttackRedirect(BChar, SkillD, Targets);
+            Utils.AttackRedirect(BChar, SkillD, Targets, 100);
         }
     }
 }

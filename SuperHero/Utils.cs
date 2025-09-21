@@ -22,6 +22,7 @@ namespace SuperHero
     {
         public static bool Timer => ModManager.getModInfo("SuperHero").GetSetting<ToggleSetting>("Timer").Value;
         public static bool Music => ModManager.getModInfo("SuperHero").GetSetting<ToggleSetting>("Music").Value;
+        public static bool OldStats => ModManager.getModInfo("SuperHero").GetSetting<ToggleSetting>("Old Stats").Value;
 
         public static bool FirstTimer;
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
@@ -67,7 +68,16 @@ namespace SuperHero
             ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0,
             ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1,
             ModItemKeys.Skill_S_SuperHero_JusticePatience,
+            ModItemKeys.Skill_S_SuperHero_JusticePatience_0,
             ModItemKeys.Skill_S_SuperHero_JusticeFinale,
+        };
+
+        public static readonly List<string> SuperHeroDebuff = new List<string>
+        {
+            ModItemKeys.Buff_B_SuperHero_MarkofJustice,
+            ModItemKeys.Buff_B_SuperHero_ScarletRemnant,
+            ModItemKeys.Buff_B_SuperHero_HerosSpotlight,
+            ModItemKeys.Buff_B_SuperHero_HeroPresence,
         };
 
         public static readonly List<string> PainSharingAlly = new List<string>
@@ -88,6 +98,32 @@ namespace SuperHero
             { ModItemKeys.Skill_S_SuperHero_Rare_JusticeHero, "Halcyon" },
             { ModItemKeys.Skill_S_SuperHero_Rare_JusticeDarkestHour, "Parousia" },
         };
+
+        public static void CreateSkill(BattleChar bchar, string skill)
+        {
+            Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
+            BattleSystem.instance.AllyTeam.Add(newSkill, true);
+        }
+
+        public static Skill CreateSkill(BattleChar bchar, string skillKey, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0, bool isNotCount = false, bool isAddToHand = true)
+        {
+            Skill newSkill = Skill.TempSkill(skillKey, bchar, bchar.MyTeam);
+            newSkill.isExcept = isExcept;
+
+            if (isDiscarded)
+            {
+                newSkill.AutoDelete = discardedAfter;
+            }
+
+            newSkill.AP = mana;
+            newSkill.NotCount = isNotCount;
+
+            if (isAddToHand)
+            {
+                BattleSystem.instance.AllyTeam.Add(newSkill, true);
+            }
+            return newSkill;
+        }
 
         public static void AddBuff(BattleChar target, BattleChar user, string buffKey, int buffNum = 1)
         {
@@ -354,8 +390,12 @@ namespace SuperHero
             }
         }
 
-        public static void AttackRedirect(BattleChar bchar, Skill skillD, List<BattleChar> targets)
+        public static void AttackRedirect(BattleChar bchar, Skill skillD, List<BattleChar> targets, int chance = 0)
         {
+            bool neverLucky = RandomManager.RandomPer(bchar.GetRandomClass().Main, 100, chance);
+
+            if (!neverLucky) return;
+
             string key = skillD.MySkill.KeyID;
             var target = targets[0];
             var worldIsMine = ModItemKeys.Skill_S_SuperHero_WorldIsMine;
@@ -402,7 +442,7 @@ namespace SuperHero
             }
         }
 
-        public static IEnumerator SuperHeroModCheck(BattleChar bchar, string buffKey, bool isHeroMod = false, bool isVillainMod = false, bool isAddBuff = false)
+        public static IEnumerator SuperHeroModCheck(BattleChar bchar, bool isHeroMod = false, bool isVillainMod = false, bool isAddBuff = false)
         {
             yield return null;
 
@@ -417,6 +457,8 @@ namespace SuperHero
                 complex.UpdateHeroMod(isHeroMod, isVillainMod);
             }
 
+            string buffKey = isHeroMod ? ModItemKeys.Buff_B_SuperHero_JusticeAscension : ModItemKeys.Buff_B_SuperHero_JusticeHero;
+
             if (bchar.BuffReturn(buffKey, false) != null)
             {
                 bchar.BuffRemove(buffKey, true);
@@ -425,6 +467,18 @@ namespace SuperHero
             if (isAddBuff && bchar.BuffReturn(ModItemKeys.Buff_B_SuperHero_JusticeHero, false) == null)
             {
                 AddBuff(bchar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_JusticeHero);
+            }
+        }
+
+        public static void ApplyJusticeMark(BattleChar bchar, bool isAlmostVillain = false)
+        {
+            if (!SuperHeroMod(bchar) || isAlmostVillain)
+            {
+                var allies = AllyTeam.AliveChars.Where(x => x != SuperHero).ToList();
+                int index = RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, allies.Count);
+                var randomAlly = allies[index];
+
+                AddDebuff(randomAlly, bchar, ModItemKeys.Buff_B_SuperHero_MarkofJustice);
             }
         }
     }

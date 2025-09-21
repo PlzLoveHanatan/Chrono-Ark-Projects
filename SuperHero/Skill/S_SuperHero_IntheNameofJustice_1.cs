@@ -24,6 +24,12 @@ namespace SuperHero
             SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_10_Ex).Particle_Path;
         }
 
+        public override string DescExtended(string desc)
+        {
+            string text = Utils.SuperHeroMod(BChar) ? ModLocalization.InTheNameOfJustice_3 : ModLocalization.InTheNameOfJustice_2;
+            return base.DescExtended(desc).Replace("Description", text);
+        }
+
         public override void FixedUpdate()
         {
             SkillParticleOn();
@@ -36,6 +42,7 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.ApplyJusticeMark(BChar);
             Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
         }
     }

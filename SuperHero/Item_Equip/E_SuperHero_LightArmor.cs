@@ -17,38 +17,32 @@ namespace SuperHero
     /// <summary>
     /// Light ☆ Armor
     /// </summary>
-    public class E_SuperHero_LightArmor : EquipBase, IP_DamageTake, IP_PlayerTurn, IP_BattleStart_Ones
+    public class E_SuperHero_LightArmor : EquipBase, IP_PlayerTurn, IP_BuffAddAfter, IP_DamageTakeChange
     {
-        public void BattleStart(BattleSystem Ins)
+        public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            var buff = ModItemKeys.Buff_B_E_SuperHero_LightArmor;
-            BChar.BuffAdd(buff, BChar, false, 0, false, -1, false);
-        }
-
-        public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
-        {
-            var buff = ModItemKeys.Buff_B_SuperHero_HeroComplex;
-            var complex = User.BuffReturn(buff, false) as B_SuperHero_HeroComplex;
-            if (User.Info.KeyData == ModItemKeys.Character_SuperHero && complex.StackNum < 25 && Dmg >= 1)
+            if (BuffTaker == BChar && Utils.SuperHeroDebuff.Contains(addedbuff.BuffData.Key))
             {
-                //int damage = 0;
-                //damage = Dmg;
-                resist = true;                
-
-                //if (BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Count > 0)
-                //{
-                //    BattleSystem.instance.EnemyTeam.AliveChars_Vanish.Random(BChar.GetRandomClass().Main).Damage(BChar, damage / 2, false, false, false, 0, false, false, false);
-                //}
+                BuffTaker.BuffRemove(addedbuff.BuffData.Key, true);
             }
         }
 
         public void Turn()
         {
-            var buff = ModItemKeys.Buff_B_E_SuperHero_LightArmor;
-            if (BChar.BuffReturn(buff, false) == null)
+            var lightArmor = ModItemKeys.Buff_B_E_SuperHero_LightArmor;
+            if (BChar.BuffReturn(lightArmor, false) == null)
             {
-                BChar.BuffAdd(buff, BChar, false, 0, false, -1, false);
+                Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, lightArmor);
             }
+        }
+
+        public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
+        {
+            if (Hit == BChar && User == Utils.SuperHero && !Utils.SuperVillainMod(User))
+            {
+                Dmg = Dmg / 2;
+            }
+            return Dmg;
         }
     }
 }

@@ -19,9 +19,26 @@ namespace SuperHero
     /// </summary>
     public class S_SuperHero_UnwantedSuccessStory : Skill_Extended
     {
+        public override string DescExtended(string desc)
+        {
+            string text = Utils.SuperHeroMod(BChar) ? "" : ModLocalization.Unwanted_0;
+            return base.DescExtended(desc).Replace("Description", text);
+        }
+
         public override bool Terms()
         {
             return BChar.Info.KeyData == ModItemKeys.Character_SuperHero;
+        }
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+        {
+            if (!Utils.SuperHeroMod(BChar))
+            {
+                var allies = Utils.AllyTeam.AliveChars.Where(x => x != Utils.SuperHero).ToList();
+                int index = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, allies.Count);
+                var randomAlly = allies[index];
+
+                Utils.AddDebuff(randomAlly, BChar, ModItemKeys.Buff_B_SuperHero_HeroPresence);
+            }
         }
     }
 }

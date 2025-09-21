@@ -41,11 +41,7 @@ namespace SuperHero
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
-
-            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_SuperHero_JusticePatience_0, this.BChar, this.BChar.MyTeam);
-            BattleSystem.instance.AllyTeam.Add(skill, true);
-            skill.AutoDelete = 1;
-            skill.isExcept = true;
+            Utils.CreateSkill(BChar, ModItemKeys.Skill_S_SuperHero_JusticePatience_0, true, true, 1, 1, true);
 
             var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 1);
             foreach (var debuff in debuffs)
@@ -53,6 +49,5 @@ namespace SuperHero
                 debuff.SelfDestroy();
             }
         }
-
     }
 }

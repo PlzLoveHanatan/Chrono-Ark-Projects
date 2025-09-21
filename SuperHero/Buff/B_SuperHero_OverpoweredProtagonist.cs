@@ -20,6 +20,7 @@ namespace SuperHero
     {
         public override void Init()
         {
+            OnePassive = true;
             PlusStat.atk = 10;
             //PlusStat.PlusCriDmg = 50;
         }
@@ -27,11 +28,11 @@ namespace SuperHero
         public override string DescExtended()
         {
             string text = ModLocalization.OverPowered;
-            if (!Utils.SuperHeroMod(BChar))
+            if (Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar))
             {
-                return base.DescExtended() + "\n" + text;
+                return base.DescExtended();
             }
-            return base.DescExtended();
+            return base.DescExtended() + "\n" + text;
         }
 
         public void HPChange(BattleChar Char, bool Healed)
@@ -65,12 +66,9 @@ namespace SuperHero
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            bool neverLucky = RandomManager.RandomPer(BChar.GetRandomClass().Main, 100, 50);
+            if (Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar)) return;
 
-            if (neverLucky && !Utils.SuperHeroMod(BChar))
-            {
-                Utils.AttackRedirect(BChar, SkillD, Targets);
-            }
+            Utils.AttackRedirect(BChar, SkillD, Targets, 50);
         }
     }
 }

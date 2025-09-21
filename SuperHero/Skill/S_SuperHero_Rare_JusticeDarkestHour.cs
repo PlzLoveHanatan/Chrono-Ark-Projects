@@ -43,7 +43,7 @@ namespace SuperHero
             //Utils.SuperStats = true;
             Utils.PlaySong(MySkill.MySkill.KeyID);
             Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_HeroComplex, 25);
-            BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, ModItemKeys.Buff_B_SuperHero_JusticeHero, false, true));
+            BattleSystem.DelayInput(Utils.SuperHeroModCheck(BChar, false, true));
         }
     }
 }
