@@ -21,14 +21,14 @@ namespace SuperHero
     {
         public override void BuffStat()
         {
-            PlusPerStat.Damage = 15 * StackNum;
+            PlusPerStat.Damage = 5 * StackNum;
         }
 
         public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
         {
             if (Damage >= 1)
             {
-                BChar.Heal(BChar, (int)(Damage * 0.2f), false, false, null);
+                BChar.Heal(BChar, (int)(Damage * 0.15f), false, false, null);
             }
         }
 

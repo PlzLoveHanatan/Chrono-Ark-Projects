@@ -35,7 +35,7 @@ namespace SuperHero
         public void Turn()
         {
             int healNum = (int)(BChar.GetStat.maxhp * 0.2);
-            Utils.HealingParticle(BChar, BattleSystem.instance.DummyChar, healNum, true);
+            BattleSystem.DelayInput(Utils.HealingParticle(BChar, BattleSystem.instance.DummyChar, healNum, true));
 
             var debuffs = BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false).Random(BChar.GetRandomClass().Main, 2);
             foreach (var debuff in debuffs)

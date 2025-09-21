@@ -33,7 +33,7 @@ namespace SuperHero
         {
             if (!Utils.SuperHeroMod(BChar))
             {
-                var allies = Utils.AllyTeam.AliveChars.Where(x => x != Utils.SuperHero).ToList();
+                var allies = Utils.AllyTeam.AliveChars.Where(x => x != Utils.SuperHero && x.BuffReturn(ModItemKeys.Buff_B_E_SuperHero_LightArmor) == null).ToList();
                 int index = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, allies.Count);
                 var randomAlly = allies[index];
 

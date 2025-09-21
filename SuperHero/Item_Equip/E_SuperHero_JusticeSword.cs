@@ -42,14 +42,12 @@ namespace SuperHero
 
         public override void FixedUpdate()
         {
-            var justiceDamage = PlayData.TSavedata.GetCustomValue<JusticeSword>();
-            if (justiceDamage == null)
+            var justiceData = PlayData.TSavedata.GetCustomValue<JusticeSword>();
+
+            if (justiceData != null)
             {
-                justiceDamage = new JusticeSword();
-                PlayData.TSavedata.AddCustomValue(justiceDamage);
-                justiceDamage.JusticeDamage = 0;
+                PlusStat.atk = justiceData.JusticeSwordDamage;
             }
-            PlusStat.atk = justiceDamage.JusticeDamage;
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)

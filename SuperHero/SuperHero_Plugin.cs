@@ -15,6 +15,7 @@ using ChronoArkMod.ModData;
 using HarmonyLib;
 using TileTypes;
 using EItem;
+using PItem;
 namespace SuperHero
 {
     public class SuperHero_Plugin : ChronoArkPlugin
@@ -53,44 +54,32 @@ namespace SuperHero
             {
                 if (SuperHeroInParty())
                 {
-                    if (PlayData.TSavedata.StageNum >= 0 && !IsCamp)
+                    var justiceData = PlayData.TSavedata.GetCustomValue<JusticeSword>();
+                    if (justiceData == null)
                     {
-                        IncreaseSwordDamage();
+                        justiceData = new JusticeSword();
+                        PlayData.TSavedata.AddCustomValue(justiceData);
                     }
-                    if (PlayData.TSavedata.StageNum >= 0 && !Utils.Equip)
+
+                    if (!justiceData.ItemsGiven)
                     {
-                        Utils.Equip = true;
                         PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_LightArmor, 1));
                         PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_SuperHero_JusticeSword, 1));
+                        justiceData.ItemsGiven = true;
                     }
-                    else if (PlayData.TSavedata.StageNum == 0)
+
+                    int currentStage = PlayData.TSavedata.StageNum;
+                    if (currentStage >= 0 && !IsCamp)
                     {
-                        //if (Utils.Timer && !Utils.FirstTimer)
-                        //{
-                        //    GlobalTimerManager.Instance?.DestroySelfAndUI();
-                        //    var TimerObj = new GameObject("GlobalTimerManager");
-                        //    TimerObj.AddComponent<GlobalTimerManager>();
-                        //    GlobalTimerManager.Instance?.ResetTimer();
-                        //    GlobalTimerManager.Instance?.StartTimer();
-                        //    Utils.FirstTimer = true;
-                        //}
+                        if (justiceData.LastBoostedStage < currentStage)
+                        {
+                            int stagesPassed = currentStage - Math.Max(justiceData.LastBoostedStage, 0);
+                            justiceData.JusticeSwordDamage += stagesPassed;
+                            justiceData.LastBoostedStage = currentStage;
+                        }
                     }
                 }
             }
-        }
-
-        public static void IncreaseSwordDamage(int damage = 1)
-        {
-            var justiceDamage = PlayData.TSavedata.GetCustomValue<JusticeSword>();
-
-            if (justiceDamage == null)
-            {
-                justiceDamage = new JusticeSword();
-                PlayData.TSavedata.AddCustomValue(justiceDamage);
-                justiceDamage.JusticeDamage = 0;
-            }
-
-            justiceDamage.JusticeDamage += damage;
         }
 
         public static bool IsCamp
@@ -170,96 +159,39 @@ namespace SuperHero
             }
         }
 
+        //[HarmonyPatch(typeof(Character), nameof(Character.StatC))]
+        //public static class StatPatch
+        //{
+        //    [HarmonyPostfix]
+        //    public static void Postfix(Character __instance, Stat inputstat, ref Stat __result)
+        //    {
+        //        if (__instance == null)
+        //        {
+        //            Debug.Log("[StatPatch] __instance is null, skipping patch.");
+        //            return;
+        //        }
 
-        [HarmonyPatch(typeof(Character), nameof(Character.StatC))]
-        class FaintResistPatch
-        {
-            [HarmonyPrefix]
-            static bool Prefix(Stat inputstat, ref Stat __result)
-            {
-                Stat stat = inputstat;
+        //        Stat stat = inputstat;
 
-                if (stat.atk < 0f)
-                {
-                    stat.atk = 0f;
-                }
+        //        stat.atk = Mathf.Max(stat.atk, 0f);
+        //        stat.def = Mathf.Max(stat.def, 0f);
+        //        stat.dod = Mathf.Max(stat.dod, 0f);
+        //        stat.Penetration = Mathf.Max(stat.Penetration, 0f);
+        //        stat.maxhp = Mathf.Max(stat.maxhp, 0);
+        //        stat.reg = Mathf.Max(stat.reg, 0f);
+        //        stat.DeadImmune = Mathf.Max(stat.DeadImmune, 0);
+        //        stat.AggroPer = Mathf.Clamp(stat.AggroPer, -100, 100);
 
-                if (stat.def < 0f)
-                {
-                    stat.def = 0f;
-                }
+        //        if (stat.PerfectShield) stat.def = 100f;
+        //        if (stat.PerfectDodge) stat.dod = 500f;
 
-                if (stat.PerfectShield)
-                {
-                    stat.def = 100f;
-                }
-                else if (stat.def > 80f)
-                {
-                    if (!Utils.SuperStats)
-                    {
-                        stat.def = 80f;
-                    }      
-                }
+        //        if (__instance.KeyData == ModItemKeys.Character_SuperHero)
+        //        {
+        //            Debug.Log("[StatPatch] Hero detected.");
+        //        }
 
-                if (stat.dod < 0f)
-                {
-                    stat.dod = 0f;
-                }
-
-                if (stat.PerfectDodge)
-                {
-                    stat.dod = 500f;
-                }
-                else if (stat.dod > 80f)
-                {
-                    if (!Utils.SuperStats)
-                    {
-                        stat.dod = 80f;
-                    }
-                }
-
-                if (stat.Penetration < 0f)
-                {
-                    stat.Penetration = 0f;
-                }
-
-                if (stat.AggroPer < -100)
-                {
-                    stat.AggroPer = -100;
-                }
-                else if (stat.AggroPer > 100)
-                {
-                    if (!Utils.SuperStats)
-                    {
-                        stat.AggroPer = 100;
-                    }
-                }
-
-                if (stat.maxhp < 0)
-                {
-                    stat.maxhp = 0;
-                }
-
-                if (stat.reg < 0f)
-                {
-                    stat.reg = 0f;
-                }
-
-                if (stat.DeadImmune < 0)
-                {
-                    stat.DeadImmune = 0;
-                }
-                else if (stat.DeadImmune > 80)
-                {
-                    if (!Utils.SuperStats)
-                    {
-                        stat.DeadImmune = 80;
-                    }
-                }
-
-                __result = stat;
-                return false;
-            }
-        }
+        //        __result = stat;
+        //    }
+        //}
     }
 }

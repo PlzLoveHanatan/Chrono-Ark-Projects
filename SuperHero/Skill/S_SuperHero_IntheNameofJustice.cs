@@ -31,10 +31,10 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.ApplyJusticeMark(BChar);
-            Utils.CreateSkill(BChar, ModItemKeys.Skill_S_SuperHero_IntheNameofJustice, true, true, 1, 1, true);
+            Utils.CreateSkill(BChar, ModItemKeys.Skill_S_SuperHero_IntheNameofJustice, true, true, 1, 1, true, true);
             BattleSystem.DelayInput(RestoreMana(Targets[0]));
-        }
+            Utils.ApplyJusticeMark(BChar);
+        }   
 
         public IEnumerator RestoreMana(BattleChar target)
         {

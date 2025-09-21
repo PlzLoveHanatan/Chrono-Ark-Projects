@@ -22,7 +22,7 @@ namespace SuperHero
     {
         public override string DescExtended()
         {
-            int hp = (int)(BChar.GetStat.maxhp * 0.4f);
+            int hp = (int)(BChar.GetStat.maxhp * 0.2f);
             return base.DescExtended().Replace("&a", hp.ToString());
         }
 
@@ -43,7 +43,7 @@ namespace SuperHero
 
         public void Turn()
         {
-            int barrierValue = (int)(BChar.GetStat.maxhp * 0.4f);
+            int barrierValue = (int)(BChar.GetStat.maxhp * 0.2f);
             BChar.BuffAdd(ModItemKeys.Buff_B_SuperHero_EgoShield, BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
         }
 

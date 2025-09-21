@@ -16,13 +16,12 @@ namespace SuperHero
 	/// <summary>
 	/// Overpowered Protagonist
 	/// </summary>
-    public class B_SuperHero_OverpoweredProtagonist : Buff, IP_HPChange, IP_Awake, IP_BuffAddAfter, IP_SkillUse_User
+    public class B_SuperHero_OverpoweredProtagonist : Buff, IP_Awake, IP_BuffAddAfter, IP_SkillUse_User
     {
         public override void Init()
         {
             OnePassive = true;
-            PlusStat.atk = 10;
-            //PlusStat.PlusCriDmg = 50;
+            PlusStat.atk = 5;
         }
 
         public override string DescExtended()
@@ -32,15 +31,7 @@ namespace SuperHero
             {
                 return base.DescExtended();
             }
-            return base.DescExtended() + "\n" + text;
-        }
-
-        public void HPChange(BattleChar Char, bool Healed)
-        {
-            if (BChar.HP <= 0)
-            {
-                BChar.HP = 1;
-            }
+            return base.DescExtended() + text;
         }
 
         public void Awake()
@@ -48,11 +39,6 @@ namespace SuperHero
             if (BChar.Info.Passive is P_SuperHero superHero)
             {
                 superHero.OverPowered = true;
-            }
-
-            if (BChar.HP <= 0)
-            {
-                BChar.HP = 1;
             }
         }
 

@@ -13,6 +13,7 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using Unity.Collections.LowLevel.Unsafe;
+using static CharacterDocument;
 namespace SuperHero
 {
     /// <summary>
@@ -47,7 +48,7 @@ namespace SuperHero
         {
             bool apotheosis = BChar.BuffReturn(ModItemKeys.Buff_B_SuperHero_OverpoweredProtagonist, false) != null;
             int num = Utils.OldStats ? 4 : 1;
-            string text = Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar) || apotheosis ? "" : ModLocalization.HeroComplex_0;
+            string text = Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar) || apotheosis ? "" : ModLocalization.HeroComplex_0.Replace("&b", StackNum.ToString());
             return base.DescExtended().Replace("&a", num.ToString()).Replace("Description", text);
         }
 
@@ -77,6 +78,8 @@ namespace SuperHero
                 PlusPerStat.Heal = increaseStats;
                 PlusPerStat.MaxHP = increaseStats;
                 PlusStat.cri = increaseStats;
+                PlusStat.DMGTaken = -increaseStats;
+                PlusStat.PlusCriDmg = increaseStats;
             }
 
             //PlusStat.atk = increaseStats;
@@ -94,9 +97,7 @@ namespace SuperHero
             PlusStat.HIT_DOT = increaseStats;
             PlusStat.HEALTaken = increaseStats;
             PlusStat.DeadImmune = increaseStats;
-            PlusStat.PlusCriDmg = increaseStats;
             PlusStat.CRIGetDMG = -increaseStats;
-            PlusStat.DMGTaken = -increaseStats;
             PlusStat.HEALTaken = increaseStats;
             PlusStat.Penetration = increaseStats;
             PlusStat.AggroPer = increaseStats;
@@ -130,6 +131,7 @@ namespace SuperHero
 
                     SuperHero_FaceChange.ChooseFace(BChar, true);
                     Utils.AddBuff(BChar, BattleSystem.instance.DummyChar, ModItemKeys.Buff_B_SuperHero_JusticeAscension);
+                    Utils.PlaySong(ModItemKeys.Skill_S_SuperHero_Rare_JusticeDarkestHour);
                 }
             }
             else
@@ -285,7 +287,7 @@ namespace SuperHero
 
             if (Utils.SuperHeroMod(BChar) || Utils.SuperVillainMod(BChar) || apotheosis) return;
 
-            Utils.AttackRedirect(BChar, SkillD, Targets, 10);
+            Utils.AttackRedirect(BChar, SkillD, Targets, StackNum);
         }
     }
 }

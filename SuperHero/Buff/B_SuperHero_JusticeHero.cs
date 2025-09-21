@@ -20,8 +20,8 @@ namespace SuperHero
     {
         public override void Init()
         {
-            PlusStat.atk = 5;
-            //PlusStat.PlusCriDmg = 25;
+            OnePassive = true;
+            PlusPerStat.Damage = 30;
         }
 
         public void Awake()

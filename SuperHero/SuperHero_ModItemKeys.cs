@@ -5,12 +5,12 @@ namespace SuperHero
     {
 		/// <summary>
 		/// Barrier of Light ☆
-		/// When attacked by <color=#FFA500>Super Hero</color> or <color=#FF00FF>Super Villain</color>, block <color=#FF4500>Mark of Justice</color>, reflect the half damage received onto a random enemy and reduce the damage taken to 0 and remove 1 stack.
+		/// When attacked by <color=#FFA500>Super Hero</color> or <color=#FF00FF>Super Villain</color>, reduce the incoming damage to 0, reflect it onto a random enemy, and remove 1 stack.
 		/// </summary>
         public static string Buff_B_Ex_SuperHero_BarrierofLight = "B_Ex_SuperHero_BarrierofLight";
 		/// <summary>
 		/// Light ☆ Armor
-		/// Blocks all <color=#FF4500>Justice debuffs </color>.
+		/// Blocks all <color=#FF4500>Justice debuffs</color>.
 		/// </summary>
         public static string Buff_B_E_SuperHero_LightArmor = "B_E_SuperHero_LightArmor";
 		/// <summary>
@@ -64,12 +64,11 @@ namespace SuperHero
         public static string Buff_B_SuperHero_MarkofJustice = "B_SuperHero_MarkofJustice";
 		/// <summary>
 		/// Overpowered Protagonist ☆
-		/// HP cannot drop below 0.
 		/// </summary>
         public static string Buff_B_SuperHero_OverpoweredProtagonist = "B_SuperHero_OverpoweredProtagonist";
 		/// <summary>
 		/// Plot Armor ☆
-		/// At the start of each turn gain &a barrier <color=#FF7C34>(40% of Max Health)</color>.
+		/// At the start of each turn gain &a barrier <color=#FF7C34>(20% of Max Health)</color>.
 		/// </summary>
         public static string Buff_B_SuperHero_PlotArmor = "B_SuperHero_PlotArmor";
 		/// <summary>
@@ -83,12 +82,12 @@ namespace SuperHero
         public static string Buff_B_SuperHero_ScarletRemnant = "B_SuperHero_ScarletRemnant";
 		/// <summary>
 		/// Second Act ☆
-		/// At the start of each turn draw 2 additional skill and Restore 2 Mana.
+		/// At the start of each turn draw 1 additional skill and Restore 1 Mana.
 		/// </summary>
         public static string Buff_B_SuperHero_SecondAct = "B_SuperHero_SecondAct";
 		/// <summary>
-		/// When cast, <color=#FFA500>Super Hero</color> gains 4 <color=#FFD700>Hero Complex</color> and gains a buff that reflects damage received onto a random enemy and reduces the next two instances of damage taken from <color=#FFA500>Super Hero</color> to 0.
-		/// Can only activate once per battle.
+		/// When cast, <color=#FFA500>Super Hero</color> gains 4 <color=#FFD700>Hero Complex</color>.
+		/// Gain a buff that reduces the next damage received from <color=#FFA500>Super Hero</color> to 0 and reflects it onto a random enemy.
 		/// </summary>
         public static string SkillExtended_Ex_SuperHero_BarrierofLight = "Ex_SuperHero_BarrierofLight";
 		/// <summary>
@@ -270,7 +269,7 @@ namespace SuperHero
         public static string Skill_S_SuperHero_LucyDraw = "S_SuperHero_LucyDraw";
 		/// <summary>
 		/// <color=#1E90FF>Overflowing with Light ☆</color>
-		/// Remove Overload from all allies, restore 2 mana and draw 2 skills.
+		/// Remove Overload from all allies, restore 1 mana and draw 1 skill.
 		/// </summary>
         public static string Skill_S_SuperHero_OverflowingwithLight = "S_SuperHero_OverflowingwithLight";
 		/// <summary>
@@ -293,7 +292,7 @@ namespace SuperHero
         public static string Skill_S_SuperHero_Rare_JusticeHero = "S_SuperHero_Rare_JusticeHero";
 		/// <summary>
 		/// <color=#1E90FF>Applause Never Ends ☆</color>
-		/// Gain &a Barrier <color=#FF7C34>(40% of Max Health)</color>.
+		/// Gain &a Barrier <color=#FF7C34>(20% of Max Health)</color>.
 		/// </summary>
         public static string Skill_S_SuperHero_TheApplauseNeverEnds = "S_SuperHero_TheApplauseNeverEnds";
 		/// <summary>
@@ -332,7 +331,7 @@ namespace SuperHero
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Cost reduced by 2 if this is a fixed ability.
+		/// Cost reduced by 1 if this is a fixed ability.
 		/// Apply <color=#DC143C>Scarlet Remnant</color> to all allies.
 		/// Japanese:
 		/// Chinese:
@@ -342,7 +341,7 @@ namespace SuperHero
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Cost reduced by 2 if this is a fixed ability.
+		/// Cost reduced by 1 if this is a fixed ability.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -370,7 +369,7 @@ namespace SuperHero
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Gain 10% chance to target allies with attacks.
+		/// Gain &b% chance to target allies with attacks.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:

@@ -21,7 +21,7 @@ namespace SuperHero
     /// Super Hero
     /// Passive:
     /// </summary>
-    public class P_SuperHero : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_SkillUse_User, IP_Discard
+    public class P_SuperHero : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_SkillUse_User, IP_Discard, IP_BattleEnd
     {
         public bool PlotArmor;
         public bool Relentless;
@@ -168,6 +168,11 @@ namespace SuperHero
             SuperVillain = false;
             BecomeJustice = false;
             Complex = 0;
+        }
+
+        public void BattleEnd()
+        {
+            ResetFlags();
         }
     }
 }

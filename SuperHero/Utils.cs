@@ -15,6 +15,7 @@ using ChronoArkMod.ModData.Settings;
 using GameDataEditor;
 using DarkTonic.MasterAudio;
 using System.Collections;
+using JetBrains.Annotations;
 
 namespace SuperHero
 {
@@ -396,14 +397,10 @@ namespace SuperHero
 
             if (!neverLucky) return;
 
-            string key = skillD.MySkill.KeyID;
             var target = targets[0];
-            var worldIsMine = ModItemKeys.Skill_S_SuperHero_WorldIsMine;
-            var unwantedSuccessStory = ModItemKeys.Skill_S_SuperHero_UnwantedSuccessStory;
-
             var aliveAllies = AllyTeam.AliveChars.Where(x => x != SuperHero).ToList();
 
-            if (aliveAllies.Count == 0 || key == unwantedSuccessStory || key == worldIsMine) return;
+            if (aliveAllies.Count == 0) return;
 
             int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, aliveAllies.Count);
             var randomTarget = aliveAllies[index];
@@ -422,7 +419,7 @@ namespace SuperHero
                         {
                             if (ally != null)
                             {
-                                ForceKill(ally);
+                                //ForceKill(ally);
                             }
                         }
                     }
@@ -435,7 +432,7 @@ namespace SuperHero
 
                         if (SuperVillainMod(bchar))
                         {
-                            ForceKill(randomTarget);
+                            //ForceKill(randomTarget);
                         }
                     }
                 }
@@ -474,7 +471,7 @@ namespace SuperHero
         {
             if (!SuperHeroMod(bchar) || isAlmostVillain)
             {
-                var allies = AllyTeam.AliveChars.Where(x => x != SuperHero).ToList();
+                var allies = AllyTeam.AliveChars.Where(x => x != SuperHero && x.BuffReturn(ModItemKeys.Buff_B_E_SuperHero_LightArmor) == null).ToList();
                 int index = RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, allies.Count);
                 var randomAlly = allies[index];
 

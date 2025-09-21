@@ -64,5 +64,24 @@ namespace SuperHero
                 }
             }
         }
+
+        public override void Special_PointerEnter(BattleChar Char)
+        {
+            if (Char is BattleEnemy && Char.Info.EnemyCate != GDEItemKeys.EnemyCategory_ECategory_TrialEnemy)
+            {
+                if ((Char as BattleEnemy).Boss)
+                {
+                    if (30f >= Misc.NumToPer(Char.GetStat.maxhp, Char.HP))
+                    {
+                        EffectView.TextOutSimple(Char, ScriptLocalization.CharText_Ilya.Kill);
+                    }
+                }
+                else if (60f >= Misc.NumToPer(Char.GetStat.maxhp, Char.HP))
+                {
+                    EffectView.TextOutSimple(Char, ScriptLocalization.CharText_Ilya.Kill);
+                }
+            }
+            base.Special_PointerEnter(Char);
+        }
     }
 }

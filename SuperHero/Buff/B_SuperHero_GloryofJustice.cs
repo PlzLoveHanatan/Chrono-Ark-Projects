@@ -45,7 +45,7 @@ namespace SuperHero
 
         private void HandleJusticeAction(BattleChar target)
         {
-            if (target.Info.Ally && !Utils.SuperVillainMod(BChar)) return;
+            if (target.Info.Ally || target == Utils.SuperHero) return;
 
             var skillKey = ModItemKeys.Skill_S_SuperHero_JusticeGlory;
 

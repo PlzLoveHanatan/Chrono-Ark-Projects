@@ -35,8 +35,8 @@ namespace SuperHero
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.AllyTeam.Draw(2);
-            Utils.AllyTeam.AP += 2;
+            Utils.AllyTeam.Draw();
+            Utils.AllyTeam.AP += 1;
             Utils.AllyTeam.LucyChar.Overload = 0;
 
             foreach (var ally in Utils.AllyTeam.AliveChars)
