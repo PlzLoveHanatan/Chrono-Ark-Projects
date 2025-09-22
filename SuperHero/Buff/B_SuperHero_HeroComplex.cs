@@ -108,7 +108,11 @@ namespace SuperHero
             if (addedbuff == this && BuffTaker == Utils.SuperHero)
             {
                 BuffStat();
-                EnsureYellowStars(ref StarYellow1, ref StarYellow2, ref StarYellow3, BChar, StackNum);
+
+                if (!Utils.SuperVillainMod(BChar))
+                {
+                    EnsureYellowStars(ref StarYellow1, ref StarYellow2, ref StarYellow3, BChar, StackNum);
+                }
 
                 if (BChar.Info.Passive is P_SuperHero superHero)
                 {

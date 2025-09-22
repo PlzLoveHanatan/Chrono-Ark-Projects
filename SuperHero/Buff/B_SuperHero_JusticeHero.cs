@@ -31,6 +31,7 @@ namespace SuperHero
                 superHero.JusticeHero = true;
                 superHero.SuperVillain = false;
                 superHero.SuperHero = true;
+                BattleSystem.DelayInput(Utils.CheckModSkills(true));
             } 
         }
 

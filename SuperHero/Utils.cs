@@ -16,6 +16,7 @@ using GameDataEditor;
 using DarkTonic.MasterAudio;
 using System.Collections;
 using JetBrains.Annotations;
+using Steamworks;
 
 namespace SuperHero
 {
@@ -100,6 +101,19 @@ namespace SuperHero
             { ModItemKeys.Skill_S_SuperHero_Rare_JusticeDarkestHour, "Parousia" },
         };
 
+        public static readonly Dictionary<string, string> SwitchToHero = new Dictionary<string, string>
+        {
+            { ModItemKeys.Skill_S_SuperHero_JusticePatience, ModItemKeys.Skill_S_SuperHero_JusticePatience_0 },
+            { ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0, ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1 },
+            { ModItemKeys.Skill_S_SuperHero_JusticeFinale, ModItemKeys.Skill_S_SuperHero_JusticePatience_0 },
+        };
+
+        public static readonly Dictionary<string, string> SwitchToVillain = new Dictionary<string, string>
+        {
+            { ModItemKeys.Skill_S_SuperHero_JusticePatience_0, ModItemKeys.Skill_S_SuperHero_JusticePatience },
+            { ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_1, ModItemKeys.Skill_S_SuperHero_IntheNameofJustice_0 },
+        };
+
         public static void CreateSkill(BattleChar bchar, string skill)
         {
             Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
@@ -159,21 +173,6 @@ namespace SuperHero
             MasterAudio.StopBus("BGM");
             MasterAudio.StopBus("StoryBGM");
             MasterAudio.PlaySound(soundToPlay, 100f, null, 0f, null, null, false, false);
-        }
-
-        public static IEnumerator StopSong()
-        {
-            yield return new WaitForFixedUpdate();
-            MasterAudio.StopBus("BGM");
-            MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
-
-            yield return null;
-
-            //Action completionCallback = delegate ()
-            //{
-            //    MasterAudio.StopBus("BattleBGM");
-            //};
-            //MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, completionCallback, true, true);
         }
 
         public static void RemovePainSharingBuffsFromAllAllies()
@@ -391,15 +390,12 @@ namespace SuperHero
             }
         }
 
-        public static void AttackRedirect(BattleChar bchar, Skill skillD, List<BattleChar> targets, int chance = 0)
+        public static void AttackRedirect(BattleChar bchar, Skill skillD, List<BattleChar> targets, int chance = 0, int damage = 0)
         {
             bool neverLucky = RandomManager.RandomPer(bchar.GetRandomClass().Main, 100, chance);
-
             if (!neverLucky) return;
 
-            var target = targets[0];
             var aliveAllies = AllyTeam.AliveChars.Where(x => x != SuperHero).ToList();
-
             if (aliveAllies.Count == 0) return;
 
             int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, aliveAllies.Count);
@@ -411,29 +407,31 @@ namespace SuperHero
 
                 if (skillD.MySkill.Target.Key == GDEItemKeys.s_targettype_all_enemy)
                 {
+                    foreach (var enemy in EnemyTeam.AliveChars)
+                    {
+                        AddBuff(enemy, bchar, ModItemKeys.Buff_B_SuperHero_EnemyResist);
+                    }
+
                     targets.AddRange(aliveAllies);
+
+                    foreach (var ally in aliveAllies)
+                    {
+                        ally?.Damage(bchar, damage, false, false);
+
+                        //if (SuperVillainMod(bchar))
+                        //{
+                        //    ForceKill(ally);
+                        //}
+                    }
+                }
+
+                else if (randomTarget != null)
+                {
+                    targets.Add(randomTarget);
 
                     if (SuperVillainMod(bchar))
                     {
-                        foreach (var ally in aliveAllies)
-                        {
-                            if (ally != null)
-                            {
-                                //ForceKill(ally);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (randomTarget != null)
-                    {
-                        targets.Add(randomTarget);
-
-                        if (SuperVillainMod(bchar))
-                        {
-                            //ForceKill(randomTarget);
-                        }
+                        //ForceKill(randomTarget);
                     }
                 }
             }
@@ -476,6 +474,87 @@ namespace SuperHero
                 var randomAlly = allies[index];
 
                 AddDebuff(randomAlly, bchar, ModItemKeys.Buff_B_SuperHero_MarkofJustice);
+            }
+        }
+        public static void SkillChange(this Skill changeFrom, Skill changeTo, bool keepID = true, bool keepExtended = true)
+        {
+            if (changeFrom.MyButton != null)
+            {
+                UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
+                UnityEngine.Object.Destroy(obj, 1f);
+            }
+
+            List<Skill_Extended> ExtendedToKeep = new List<Skill_Extended>();
+            ExtendedToKeep.AddRange(changeTo.AllExtendeds.Select(ex => ex.Clone() as Skill_Extended));
+            foreach (Skill_Extended skill_Extended in changeFrom.AllExtendeds)
+            {
+                foreach (string text in changeFrom.MySkill.SkillExtended)
+                {
+                    if (keepExtended && !text.Contains(skill_Extended.Name))
+                    {
+                        ExtendedToKeep.Add(skill_Extended.Clone() as Skill_Extended);
+                    }
+                    skill_Extended.SelfDestroy();
+                }
+            }
+
+            bool createExcept = keepExtended && changeFrom.isExcept;
+            changeFrom.Init(changeTo.MySkill, changeFrom.Master, changeFrom.Master.MyTeam);
+            if (createExcept) changeFrom.isExcept = true;
+
+            foreach (var skill_Extended in ExtendedToKeep)
+            {
+                if (skill_Extended.BattleExtended)
+                {
+                    changeFrom.ExtendedAdd_Battle(skill_Extended);
+                }
+                else
+                {
+                    changeFrom.ExtendedAdd(skill_Extended);
+                }
+            }
+
+            changeFrom.Image_Skill = changeTo.Image_Skill;
+            changeFrom.Image_Button = changeTo.Image_Button;
+            changeFrom.Image_Basic = changeTo.Image_Basic;
+
+            if (changeFrom.CharinfoSkilldata == null) changeFrom.CharinfoSkilldata = new CharInfoSkillData(changeFrom.MySkill);
+
+            changeFrom.CharinfoSkilldata.SkillInfo = changeFrom.MySkill;
+            Skill_Extended oldUpgrade = changeFrom.CharinfoSkilldata.SKillExtended;
+            if (!keepID)
+            {
+                changeFrom.CharinfoSkilldata.CopyData(changeTo.CharinfoSkilldata);
+            }
+            if (keepExtended)
+            {
+                changeFrom.CharinfoSkilldata.SKillExtended = oldUpgrade;
+            }
+            else
+            {
+                changeFrom.CharinfoSkilldata.SKillExtended = changeTo.CharinfoSkilldata.SKillExtended;
+            }
+            BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
+        }
+
+        public static IEnumerator CheckModSkills(bool isHeroMod = false)
+        {
+            yield return null;
+
+            var dictionary = isHeroMod ? SwitchToHero : SwitchToVillain;
+
+            foreach (Skill skill in AllyTeam.Skills)
+            {
+                if (dictionary.TryGetValue(skill.MySkill.KeyID, out var newSkillID))
+                {
+                    var newSkill = Skill.TempSkill(newSkillID, skill.Master, skill.Master.MyTeam);
+                    skill.SkillChange(newSkill);
+                }
+
+                //if (isHeroMod && skill.MySkill.KeyID == ModItemKeys.Skill_S_SuperHero_JusticeFinale)
+                //{
+                //    skill.Remove();
+                //}
             }
         }
     }

@@ -28,6 +28,7 @@ namespace SuperHero
                 superHero.JusticeAscention = true;
                 superHero.SuperVillain = true;
                 superHero.SuperHero = false;
+                BattleSystem.DelayInput(Utils.CheckModSkills(false));
             }
         }
 
@@ -38,10 +39,10 @@ namespace SuperHero
                 BuffTaker.BuffRemove(ModItemKeys.Buff_B_SuperHero_JusticeAscension);
             }
         }
-
+        
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.AttackRedirect(BChar, SkillD, Targets, 100);
+            Utils.AttackRedirect(BChar, SkillD, Targets, 100, SkillD.TargetDamage);
         }
     }
 }

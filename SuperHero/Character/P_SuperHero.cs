@@ -90,8 +90,8 @@ namespace SuperHero
                 {
                     skillKey = ModItemKeys.Skill_S_SuperHero_JusticeFinale;
 
-                    var skillFixed = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
-                    (BChar as BattleAlly).MyBasicSkill.SkillInput(skillFixed);
+                    //var skillFixed = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
+                    //(BChar as BattleAlly).MyBasicSkill.SkillInput(skillFixed);
                 }
                 else if (BattleSystem.instance.TurnNum >= 3)
                 {

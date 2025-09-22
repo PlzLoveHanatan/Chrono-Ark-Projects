@@ -28,7 +28,10 @@ namespace SuperHero
 
         public override void FixedUpdate()
         {
-            SkillParticleOn();
+            if (!Utils.SuperHeroMod(BChar))
+            {
+                SkillParticleOn();
+            }
         }
 
         public override bool Terms()

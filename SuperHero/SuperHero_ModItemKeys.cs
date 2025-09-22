@@ -26,6 +26,7 @@ namespace SuperHero
 		/// Heal 15% of all damage dealt.
 		/// </summary>
         public static string Buff_B_SuperHero_EGOSurge = "B_SuperHero_EGOSurge";
+        public static string Buff_B_SuperHero_EnemyResist = "B_SuperHero_EnemyResist";
 		/// <summary>
 		/// Glory of Justice ☆
 		/// When attacked, counterattack for &a equal <color=#FF7C34>(50% Attack Power)</color>.
@@ -312,121 +313,199 @@ namespace SuperHero
     {
 		/// <summary>
 		/// Korean:
+		/// 모든 적과 아군에게 <color=#50C878>히어로의 스포트라이트</color>를 적용합니다.
 		/// English:
 		/// Apply <color=#50C878>Hero's Spotlight</color> to all enemies and allies.
 		/// Japanese:
+		/// 全ての敵と味方に<color=#50C878>ヒーローのスポットライト</color>を適用する。
 		/// Chinese:
+		/// 对所有敌人和友方施加<color=#50C878>英雄的聚光灯</color>。
 		/// Chinese-TW:
+		/// 對所有敵人和友方施加<color=#50C878>英雄的聚光燈</color>。
 		/// </summary>
         public static string Apotheosis_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("Apotheosis_0");
 		/// <summary>
 		/// Korean:
+		/// 모든 적에게 <color=#50C878>히어로의 스포트라이트</color>를 적용합니다.
 		/// English:
 		/// Apply <color=#50C878>Hero's Spotlight</color> to all enemies.
 		/// Japanese:
+		/// 全ての敵に<color=#50C878>ヒーローのスポットライト</color>を適用する。
 		/// Chinese:
+		/// 对所有敌人施加<color=#50C878>英雄的聚光灯</color>。
 		/// Chinese-TW:
+		/// 對所有敵人施加<color=#50C878>英雄的聚光燈</color>。
 		/// </summary>
         public static string Apotheosis_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("Apotheosis_1");
 		/// <summary>
 		/// Korean:
+		/// 고정 능력일 경우 비용이 1减少됩니다.
+		/// 모든 아군에게 <color=#DC143C>주홍색 잔재</color>를 적용합니다.
 		/// English:
 		/// Cost reduced by 1 if this is a fixed ability.
 		/// Apply <color=#DC143C>Scarlet Remnant</color> to all allies.
 		/// Japanese:
+		/// 固定アビリティの場合、コストが1減少する。
+		/// 味方全体に<color=#DC143C>真紅の残滓</color>を適用する。
 		/// Chinese:
+		/// 若是固定能力，则费用减少1。
+		/// 对所有友方施加<color=#DC143C>猩红残迹</color>。
 		/// Chinese-TW:
+		/// 若是固定能力，則費用減少1。
+		/// 對所有友方施加<color=#DC143C>猩紅殘跡</color>。
 		/// </summary>
         public static string BloodStained_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("BloodStained_0");
 		/// <summary>
 		/// Korean:
+		/// 고정 능력일 경우 비용이 1减少됩니다.
 		/// English:
 		/// Cost reduced by 1 if this is a fixed ability.
 		/// Japanese:
+		/// 固定アビリティの場合、コストが1減少する。
 		/// Chinese:
+		/// 若是固定能力，则费用减少1。
 		/// Chinese-TW:
+		/// 若是固定能力，則費用減少1。
 		/// </summary>
         public static string BloodStained_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("BloodStained_1");
 		/// <summary>
 		/// Korean:
+		/// 모든 아군이 최대 체력의 50%에 해당하는 피해를 받습니다.
+		/// 대상의 체력이 60% (보스의 경우 30%) 미만일 경우, <b>대상의 체력을 0으로 만듭니다</b>.
 		/// English:
 		/// All allies take damage equal 50% of their Max Health.
 		/// If the target's health is below 60% (30% for bosses), <b>reduce the target's health to 0</b>.
 		/// Japanese:
+		/// 味方全体が最大HPの50%に等しいダメージを受ける。
+		/// 対象のHPが60%（ボスの場合は30%）未満の場合、<b>対象のHPを0にする</b>。
 		/// Chinese:
+		/// 所有友方受到等于其最大生命值50%的伤害。
+		/// 若目标生命值低于60%（首领为30%），<b>则目标生命值降为0</b>。
 		/// Chinese-TW:
+		/// 所有友方受到等於其最大生命值50%的傷害。
+		/// 若目標生命值低於60%（首領為30%），<b>則目標生命值降為0</b>。
 		/// </summary>
         public static string EraseMobs_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("EraseMobs_0");
 		/// <summary>
 		/// Korean:
+		/// 대상의 체력이 60% (보스의 경우 30%) 미만일 경우, <b>대상의 체력을 0으로 만듭니다</b>.
 		/// English:
 		/// If the target's health is below 60% (30% for bosses), <b>reduce the target's health to 0</b>.
 		/// Japanese:
+		/// 対象のHPが60%（ボスの場合は30%）未満の場合、<b>対象のHPを0にする</b>。
 		/// Chinese:
+		/// 若目标生命值低于60%（首领为30%），<b>则目标生命值降为0</b>。
 		/// Chinese-TW:
+		/// 若目標生命值低於60%（首領為30%），<b>則目標生命值降為0</b>。
 		/// </summary>
         public static string EraseMobs_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("EraseMobs_1");
 		/// <summary>
 		/// Korean:
+		/// 공격으로 아군을 대상으로 지정할 확률 &b%를 얻습니다.
 		/// English:
 		/// Gain &b% chance to target allies with attacks.
 		/// Japanese:
+		/// 攻撃で味方を対象にする確率&b%を獲得する
 		/// Chinese:
+		/// 获得&b%几率以友方为攻击目标。
 		/// Chinese-TW:
+		/// 獲得&b%機率以友方為攻擊目標。
 		/// </summary>
         public static string HeroComplex_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("HeroComplex_0");
 		/// <summary>
 		/// Korean:
+		/// 이 턴 동안 이 스킬을 반복해서 사용할 수 있습니다.
+		/// 이 스킬로 적을 처치하면 마나 2를 회복합니다.
+		/// 무작위 아군에게 <color=#FF4500>정의의 표식</color>을 적용합니다.
 		/// English:
 		/// This skill can be played repeatedly during this turn.
 		/// If this skill defeat an enemy restore 2 Mana.
 		/// Apply <color=#FF4500>Mark of Justice</color> to a random ally.
 		/// Japanese:
+		/// このターン中、このスキルを繰り返し使用できる。
+		/// このスキルで敵を倒した場合、マナを2回復する。
+		/// ランダムな味方に<color=#FF4500>正義の印</color>を適用する。
 		/// Chinese:
+		/// 此回合内可重复使用此技能。
+		/// 若此技能击败敌人，则恢复2点法力值。
+		/// 对随机友方施加<color=#FF4500>正义标记</color>。
 		/// Chinese-TW:
+		/// 此回合內可重複使用此技能。
+		/// 若此技能擊敗敵人，則恢復2點法力值。
+		/// 對隨機友方施加<color=#FF4500>正義標記</color>。
 		/// </summary>
         public static string InTheNameOfJustice_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_0");
 		/// <summary>
 		/// Korean:
+		/// 이 턴 동안 이 스킬을 반복해서 사용할 수 있습니다.
+		/// 이 스킬로 적을 처치하면 마나 2를 회복합니다
 		/// English:
 		/// This skill can be played repeatedly during this turn.
 		/// If this skill defeat an enemy restore 2 Mana.
 		/// Japanese:
+		/// このターン中、このスキルを繰り返し使用できる。
+		/// このスキルで敵を倒した場合、マナを2回復する。
 		/// Chinese:
+		/// 此回合内可重复使用此技能。
+		/// 若此技能击败敌人，则恢复2点法力值。
 		/// Chinese-TW:
 		/// </summary>
         public static string InTheNameOfJustice_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_1");
 		/// <summary>
 		/// Korean:
+		/// 이 스킬이 교체되거나 버려지면 스킬 1장을 뽑습니다.
+		/// 무작위 아군에게 <color=#FF4500>정의의 표식</color>을 적용합니다.
 		/// English:
 		/// Draw 1 skill if this skill Exchanged or Discarded.
 		/// Apply <color=#FF4500>Mark of Justice</color> to a random ally.
 		/// Japanese:
+		/// このスキルが交換または破棄された場合、スキルを1枚引く。
+		/// ランダムな味方に<color=#FF4500>正義の印</color>を適用する。
 		/// Chinese:
+		/// 若此技能被交换或丢弃，则抽取1张技能牌。
+		/// 对随机友方施加<color=#FF4500>正义标记</color>。
 		/// Chinese-TW:
+		/// 若此技能被交換或丟棄，則抽取1張技能牌。
+		/// 對隨機友方施加<color=#FF4500>正義標記</color>。
 		/// </summary>
         public static string InTheNameOfJustice_2 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_2");
 		/// <summary>
 		/// Korean:
+		/// 이 스킬이 교체되거나 버려지면 스킬 1장을 뽑습니다.
 		/// English:
 		/// Draw 1 skill if this skill Exchanged or Discarded.
 		/// Japanese:
+		/// このスキルが交換または破棄された場合、スキルを1枚引く。
 		/// Chinese:
+		/// 若此技能被交换或丢弃，则抽取1张技能牌。
 		/// Chinese-TW:
+		/// 若此技能被交換或丟棄，則抽取1張技能牌。
 		/// </summary>
         public static string InTheNameOfJustice_3 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_3");
 		/// <summary>
 		/// Korean:
+		/// 이 스킬이 교체되거나 버려지면 스킬 1장을 뽑습니다.
+		/// 무작위 <color=#FF00FF>악당</color>에게 <color=#FF4500>정의의 표식</color>을 적용합니다.
 		/// English:
 		/// Draw 1 skill if this skill Exchanged or Discarded.
 		/// Apply <color=#FF4500>Mark of Justice</color> to a random <color=#FF00FF>Villain</color>.
 		/// Japanese:
+		/// このスキルが交換または破棄された場合、スキルを1枚引く。
+		/// ランダムな<color=#FF00FF>悪党</color>に<color=#FF4500>正義の印</color>を適用する。
 		/// Chinese:
+		/// 若此技能被交换或丢弃，则抽取1张技能牌。
+		/// 对随机<color=#FF00FF>反派</color>施加<color=#FF4500>正义标记</color>。
 		/// Chinese-TW:
 		/// </summary>
         public static string InTheNameOfJustice_4 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("InTheNameOfJustice_4");
 		/// <summary>
 		/// Korean:
+		/// 매 턴 시작 시, 손에 비용 0인 <color=#FF4500>정의의 이름으로</color>을 생성하고, 모든 <color=#FF00FF>적</color>에게 <color=#FF4500>정의의 표식</color>을 적용하며, <color=#FFD700>히어로 콤플렉스</color>를 얻습니다.
+		/// <color=#FF4500>정의의 표식</color>을 부여하는 공격은 추가로 1스택을 적용하고 최대 스택을 1增加시킵니다.
+		/// 이 장비는 저주받을 수 없습니다.
+		/// <color=red>장비 가능:</color> <color=#FFA500>슈퍼 히어로</color>のみ.
+		/// <color=#919191>정의 ☆가 실현되었다!
+		/// 이 아이템은 클리어한 스테이지마다 공격력 +1을 얻습니다.</color>
 		/// English:
 		/// At the start of each turn, create a 0-Cost <color=#FF4500>In the Name of Justice</color> in hand, apply <color=#FF4500>Mark of Justice</color> to all <color=#FF00FF>Enemies</color>, and gain <color=#FFD700>Hero Complex</color>.
 		/// Attacks that inflict <color=#FF4500>Mark of Justice</color> apply 1 additional stack and increase its max stack by 1.
@@ -435,12 +514,36 @@ namespace SuperHero
 		/// <color=#919191>Justice ☆ is served!
 		/// This item gains +1 Attack Power for every cleared stage.</color>
 		/// Japanese:
+		/// 各ターン開始時、手札にコスト0の<color=#FF4500>正義の名において</color>を作成し、全ての<color=#FF00FF>敵</color>に<color=#FF4500>正義の印</color>を適用し、<color=#FFD700>ヒーローコンプレックス</color>を獲得する。
+		/// <color=#FF4500>正義の印</color>を付与する攻撃は追加で1スタック適用し、最大スタックを1増加させる。
+		/// この装備は呪われない。
+		/// <color=red>装備可能:</color> <color=#FFA500>スーパーヒーロー</color>のみ.
+		/// <color=#919191>正義☆は果たされた！
+		/// このアイテムはクリアしたステージ毎に攻撃力+1を獲得する。</color>
 		/// Chinese:
+		/// 每回合开始时，在手牌中生成一张消耗为0的<color=#FF4500>以正义之名</color>，对所有<color=#FF00FF>敌人</color>施加<color=#FF4500>正义标记</color>，并获得<color=#FFD700>英雄情结</color>。
+		/// 造成<color=#FF4500>正义标记</color>的攻击会额外施加1层并使其最大层数+1。
+		/// 此装备无法被诅咒。
+		/// <color=red>可装备者仅限：</color> <color=#FFA500>超级英雄</color>。
+		/// <color=#919191>正义☆得到伸张！
+		/// 此物品每通过一个关卡便获得+1攻击力。</color>
 		/// Chinese-TW:
+		/// 每回合開始時，在手牌中生成一張消耗為0的<color=#FF4500>以正義之名</color>，對所有<color=#FF00FF>敵人</color>施加<color=#FF4500>正義標記</color>，並獲得<color=#FFD700>英雄情結</color>。
+		/// 造成<color=#FF4500>正義標記</color>的攻擊會額外施加1層並使其最大層數+1。
+		/// 此裝備無法被詛咒。
+		/// <color=red>可裝備者僅限：</color> <color=#FFA500>超級英雄</color>。
+		/// <color=#919191>正義☆得到伸張！
+		/// 此物品每通過一個關卡便獲得+1攻擊力。</color>
 		/// </summary>
         public static string JusticeSword_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("JusticeSword_0");
 		/// <summary>
 		/// Korean:
+		/// 매 턴 시작 시, 손에 비용 0인 <color=#FF00FF>정의의 이름으로</color>을 생성하고, 모든 <color=#FF00FF>악당</color>에게 <color=#FF4500>정의의 표식</color>을 적용하며, <color=#FFD700>히어로 콤플렉스</color>를 얻습니다.
+		/// <color=#FF4500>정의의 표식</color>을 부여하는 공격은 추가로 1스택을 적용하고 최대 스택을 1增加시킵니다.
+		/// 이 장비는 저주받을 수 없습니다.
+		/// <color=red>장비 가능:</color> <color=#FF00FF>슈퍼 빌런</color>のみ.
+		/// <color=#919191>정의 ☆가 실현되었다!
+		/// 이 아이템은 클리어한 스테이지마다 공격력 +1을 얻습니다.</color>
 		/// English:
 		/// At the start of each turn, create a 0-Cost <color=#FF00FF>In the Name of Justice</color> in hand, apply <color=#FF4500>Mark of Justice</color> to all <color=#FF00FF>Villains</color>, and gain <color=#FFD700>Hero Complex</color>.
 		/// Attacks that inflict <color=#FF4500>Mark of Justice</color> apply 1 additional stack and increase its max stack by 1.
@@ -449,53 +552,91 @@ namespace SuperHero
 		/// <color=#919191>Justice ☆ is served!
 		/// This item gains +1 Attack Power for every cleared stage.</color>
 		/// Japanese:
+		/// 各ターン開始時、手札にコスト0の<color=#FF00FF>正義の名において</color>を作成し、全ての<color=#FF00FF>悪党</color>に<color=#FF4500>正義の印</color>を適用し、<color=#FFD700>ヒーローコンプレックス</color>を獲得する。
+		/// <color=#FF4500>正義の印</color>を付与する攻撃は追加で1スタック適用し、最大スタックを1増加させる。
+		/// この装備は呪われない。
+		/// <color=red>装備可能:</color> <color=#FF00FF>スーパーヴィラン</color>のみ.
+		/// <color=#919191>正義☆は果たされた！
+		/// このアイテムはクリアしたステージ毎に攻撃力+1を獲得する。</color>
 		/// Chinese:
+		/// 每回合开始时，在手牌中生成一张消耗为0的<color=#FF00FF>以正义之名</color>，对所有<color=#FF00FF>反派</color>施加<color=#FF4500>正义标记</color>，并获得<color=#FFD700>英雄情结</color>。
+		/// 造成<color=#FF4500>正义标记</color>的攻击会额外施加1层并使其最大层数+1。
+		/// 此装备无法被诅咒。
+		/// <color=red>可装备者仅限：</color> <color=#FF00FF>超级反派</color>。
+		/// <color=#919191>正义☆得到伸张！
+		/// 此物品每通过一个关卡便获得+1攻击力。</color>
 		/// Chinese-TW:
+		/// 每回合開始時，在手牌中生成一張消耗為0的<color=#FF00FF>以正義之名</color>，對所有<color=#FF00FF>反派</color>施加<color=#FF4500>正義標記</color>，並獲得<color=#FFD700>英雄情結</color>。
+		/// 造成<color=#FF4500>正義標記</color>的攻擊會額外施加1層並使其最大層數+1。
+		/// 此裝備無法被詛咒。
+		/// <color=red>可裝備者僅限：</color> <color=#FF00FF>超級反派</color>。
+		/// <color=#919191>正義☆得到伸張！
+		/// 此物品每通過一個關卡便獲得+1攻擊力。</color>
 		/// </summary>
         public static string JusticeSword_1 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("JusticeSword_1");
 		/// <summary>
 		/// Korean:
+		/// 아군을 대상으로 지정할 확률 50%를 얻습니다.
 		/// English:
 		/// Gain 50% chance to target allies.
 		/// Japanese:
+		/// 味方を対象にする確率50%を獲得する。
 		/// Chinese:
+		/// 获得50%几率以友方为目标。
 		/// Chinese-TW:
+		/// 獲得50%機率以友方為目標。
 		/// </summary>
         public static string OverPowered => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("OverPowered");
 		/// <summary>
 		/// Korean:
+		/// 버리기, 교체, 또는 오버플로로 비활성화될 수 없습니다. &a턴 후 제거됩니다.
 		/// English:
 		/// Cannot be disabled by discarding, exchanging, or overflow. Removed after &a turn(s).
 		/// Japanese:
+		/// 破棄、交換、またはオーバーフローでは無効化できない。&aターン後に解除される。
 		/// Chinese:
+		/// 无法通过丢弃、交换或溢出被禁用。&a回合后移除。
 		/// Chinese-TW:
+		/// 無法通過丟棄、交換或溢出被禁用。&a回合後移除。
 		/// </summary>
         public static string SuperHero_Stun => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("SuperHero_Stun");
 		/// <summary>
 		/// Korean:
+		/// &a턴 후 제거됩니다.
 		/// English:
 		/// Removed after &a turn.
 		/// Japanese:
+		/// &aターン後に解除される。
 		/// Chinese:
+		/// &a回合后移除。
 		/// Chinese-TW:
+		/// &a回合後移除。
 		/// </summary>
         public static string SuperHero_Stun_Enemy => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("SuperHero_Stun_Enemy");
 		/// <summary>
 		/// Korean:
+		/// 무작위 아군에게 <color=#FFA500>히어로의 존재감</color>를 적용합니다.
 		/// English:
 		/// Apply <color=#FFA500>Hero Presence</color> to a random ally.
 		/// Japanese:
+		/// ランダムな味方に<color=#FFA500>ヒーローの存在感</color>を適用する。
 		/// Chinese:
+		/// 对随机友方施加<color=#FFA500>英雄气场</color>。
 		/// Chinese-TW:
+		/// 對隨機友方施加<color=#FFA500>英雄氣場</color>。
 		/// </summary>
         public static string Unwanted_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("Unwanted_0");
 		/// <summary>
 		/// Korean:
+		/// 모든 아군에게 <color=#50C878>히어로의 스포트라이트</color>를 적용합니다.
 		/// English:
 		/// Apply <color=#50C878>Hero's Spotlight</color> to all allies.
 		/// Japanese:
+		/// 味方全体に<color=#50C878>ヒーローのスポットライト</color>を適用する。
 		/// Chinese:
+		/// 对所有友方施加<color=#50C878>英雄的聚光灯</color>。
 		/// Chinese-TW:
+		/// 對所有友方施加<color=#50C878>英雄的聚光燈</color>。
 		/// </summary>
         public static string World_0 => ModManager.getModInfo("SuperHero").localizationInfo.SystemLocalizationUpdate("World_0");
 

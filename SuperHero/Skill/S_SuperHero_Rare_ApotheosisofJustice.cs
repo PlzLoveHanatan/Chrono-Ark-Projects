@@ -28,7 +28,7 @@ namespace SuperHero
         public override string DescExtended(string desc)
         {
             string text = Utils.SuperHeroMod(BChar) ? ModLocalization.Apotheosis_1 : ModLocalization.Apotheosis_0;
-            return base.DescExtended(desc).Replace("&a", text);
+            return base.DescExtended(desc).Replace("Description", text);
         }
 
         public override void FixedUpdate()
@@ -65,7 +65,7 @@ namespace SuperHero
             {
                 if (target != null)
                 {
-                    Utils.AddDebuff(target, BChar, ModItemKeys.Buff_B_SuperHero_HerosSpotlight, 1, 999);
+                    Utils.AddDebuff(target, BChar, ModItemKeys.Buff_B_SuperHero_HerosSpotlight);
                 }
             }
         }
