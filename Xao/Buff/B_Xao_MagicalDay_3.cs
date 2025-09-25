@@ -21,9 +21,7 @@ namespace Xao
         public override void BuffStat()
         {
             PlusStat.dod = 3 * StackNum;
-            //PlusStat.RES_CC = 5 * StackNum;
-            //PlusStat.RES_DEBUFF = 5 * StackNum;
-            //PlusStat.RES_DOT = 5 * StackNum;
+            PlusStat.cri = 3 * StackNum;
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
@@ -34,31 +32,5 @@ namespace Xao
                 SelfStackDestroy();
             }
         }
-        //public override string DescExtended()
-        //{
-        //    int damage = (int)(BChar.GetStat.atk * 0.4);
-        //    return base.DescExtended().Replace("&a", damage.ToString());
-        //}
-
-        //public void SkillUse(Skill SkillD, List<BattleChar> Targets)
-        //{
-        //    if (SkillD.Master == BChar && SkillD.IsDamage && !SkillD.FreeUse)
-        //    {
-        //        bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
-
-        //        if (alwaysLucky)
-        //        {
-        //            Skill magicalStars = Skill.TempSkill(ModItemKeys.Skill_S_Xao_B_MagicalDay, BChar, BChar.MyTeam);
-        //            magicalStars.PlusHit = true;
-        //            magicalStars.FreeUse = true;
-        //            foreach (var b in Targets)
-        //            {
-        //                if (b.Info.Ally) continue;
-
-        //                BChar.ParticleOut(magicalStars, b);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

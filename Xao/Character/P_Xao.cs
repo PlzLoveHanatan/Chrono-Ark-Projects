@@ -20,30 +20,35 @@ namespace Xao
     /// Xao
     /// Passive:
     /// </summary>
-    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn, IP_SkillUse_BasicSkill, IP_SkillUseHand_Team, IP_SkillUseHand_Basic_Team, IP_BattleEnd
+    public class P_Xao : Passive_Char, IP_SkillUse_User, IP_DamageTake, IP_Healed, IP_SomeOneDead, IP_SkillUse_User_After, IP_Draw, IP_PlayerTurn, IP_SkillUse_BasicSkill, IP_SkillUseHand_Team, IP_SkillUseHand_Basic_Team
     {
-        private GameObject chibi;
-        private Vector3 size = new Vector3(235f, 235f);
-        private string chibiName = "Chibi_Normal";
-        private Utils.SpriteType chibiPath = Utils.SpriteType.Chibi_Idle; // Значение по умолчанию
-        private Utils.SpriteType chibiPosition = Utils.SpriteType.Chibi_Idle;
         public bool HornyMod = false;
-        //public bool FirstUse;
+
+        public override void Init()
+        {
+            OnePassive = true;
+        }
+
+        public void Turn()
+        {
+            if (HornyMod && BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Affection, false) is B_Xao_Affection affection && affection?.StackNum >= 3)
+            {
+                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, Utils.XaoRandomSkill.Count);
+                var randomSkill = Utils.XaoRandomSkill[randomIndex];
+                Utils.CreateSkill(randomSkill, BChar, true, true, 1, 0, true);
+                Utils.PopHentaiText(BChar);
+            }
+            else
+            {
+                Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection);
+            }
+        }
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
             if (User != BChar && Dmg >= 1)
             {
-                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
-                switch (randomIndex)
-                {
-                    case 1:
-                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_0", Utils.SpriteType.Chibi_TakingDamage_0, 2));
-                        break;
-                    case 2:
-                        BChar.StartCoroutine(SetChibi("Chibi_TakingDamage_1", Utils.SpriteType.Chibi_TakingDamage_1, 2));
-                        break;
-                }
+                Utils.ChooseBattleChibi(BChar, 3, true);
             }
         }
 
@@ -51,32 +56,7 @@ namespace Xao
         {
             if (HealedChar == BChar && Healer != BChar)
             {
-                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
-                switch (randomIndex)
-                {
-                    case 1:
-                        BChar.StartCoroutine(SetChibi("Chibi_Normal", Utils.SpriteType.Chibi_Normal));
-                        break;
-                    case 2:
-                        BChar.StartCoroutine(SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush));
-                        break;
-                }
-            }
-        }
-
-        public override void Init()
-        {
-            OnePassive = true;
-        }
-
-        public void SkillUseAfter(Skill SkillD)
-        {
-            if (SkillD.Master == BChar)
-            {
-                if (BChar.Overload > 1)
-                {
-                    BChar.Overload = 0;
-                }
+                Utils.ChooseBattleChibi(BChar, 3, false, true);
             }
         }
 
@@ -96,46 +76,31 @@ namespace Xao
                     }
                 }
 
-                Xao_Combo.ComboChange(1);
+                Xao_Combo.ComboChange();
 
                 if (Utils.HentaiSkills.Contains(SkillD.MySkill.KeyID) && HornyMod)
                 {
                     Utils.PopHentaiText(BChar);
                 }
 
-                int randomIndex;
                 if (SkillD.IsDamage)
                 {
-                    randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 5);
-
-                    switch (randomIndex)
-                    {
-                        case 1:
-                            BChar.StartCoroutine(SetChibi("Chibi_Attack", Utils.SpriteType.Chibi_Attack, 2));
-                            break;
-                        case 2:
-                            BChar.StartCoroutine(SetChibi("Chibi_AttackExtra_0", Utils.SpriteType.Chibi_AttackExtra_0));
-                            break;
-                        case 3:
-                            BChar.StartCoroutine(SetChibi("Chibi_AttackExtra_1", Utils.SpriteType.Chibi_AttackExtra_1));
-                            break;
-                        case 4:
-                            BChar.StartCoroutine(SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush));
-                            break;
-                    }
+                    Utils.ChooseBattleChibi(BChar, 5, false, false, true);
                 }
                 else
                 {
-                    randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
-                    switch (randomIndex)
-                    {
-                        case 1:
-                            BChar.StartCoroutine(SetChibi("Chibi_Normal", Utils.SpriteType.Chibi_Normal));
-                            break;
-                        case 2:
-                            BChar.StartCoroutine(SetChibi("Chibi_NormalBlush", Utils.SpriteType.Chibi_NormalBlush));
-                            break;
-                    }
+                    Utils.ChooseBattleChibi(BChar, 3, false, true, false);
+                }
+            }
+        }
+
+        public void SkillUseAfter(Skill SkillD)
+        {
+            if (SkillD.Master == BChar)
+            {
+                if (BChar.Overload > 1)
+                {
+                    BChar.Overload = 0;
                 }
             }
         }
@@ -163,73 +128,6 @@ namespace Xao
             }
         }
 
-        private IEnumerator SetChibi(string name, Utils.SpriteType type, int randomNum = 3)
-        {
-            chibiName = name;
-            chibiPath = chibiPosition = type;
-            chibi = Utils.ReplaceChibiIcon(Utils.ChibiNames, BChar, name, Utils.SpritePaths[type], Utils.ChibiPosition[type], size);
-
-            if (chibi != null)
-            {
-                int randomAnim = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, randomNum);
-                bool isBounce = false;
-                bool isSpin = false;
-                bool isStartRandomEntrance = false;
-
-                switch (randomAnim)
-                {
-                    case 0:
-                        isBounce = true;
-                        break;
-                    case 1:
-                        isSpin = true;
-                        break;
-                    case 2:
-                        isStartRandomEntrance = true;
-                        break;
-                }
-                Utils.ChibiStartAnimation(chibi, isBounce, isSpin, isStartRandomEntrance);
-            }
-            yield break;
-        }
-
-        public IEnumerator ChangeFix()
-        {
-            yield return null;
-            var team = BattleSystem.instance.AllyTeam;
-            var fixedSkill = (BChar as BattleAlly)?.MyBasicSkill?.buttonData;
-
-            if (fixedSkill?.MySkill != null && Utils.XaoSkillList.TryGetValue(fixedSkill.MySkill.KeyID, out var newSkillID2))
-            {
-                var newSkill = Skill.TempSkill(newSkillID2, fixedSkill.Master, fixedSkill.Master.MyTeam);
-                Skill refillSkill = newSkill.CloneSkill();
-                (BChar as BattleAlly).MyBasicSkill.SkillInput(refillSkill);
-                (BChar as BattleAlly).BattleBasicskillRefill = refillSkill;
-                (BChar as BattleAlly).BasicSkill = refillSkill;
-                int ind = BChar.MyTeam.Chars.IndexOf(BChar);
-                if (ind >= 0)
-                {
-                    BChar.MyTeam.Skills_Basic[ind] = refillSkill;
-                }
-            }
-
-            var allSkillsToChange = team.Skills
-                .Concat(team.Skills_Deck)
-                .Concat(team.Skills_UsedDeck)
-                .Where(skill => skill?.MySkill != null && Utils.XaoSkillList.ContainsKey(skill.MySkill.KeyID))
-                .ToList();
-
-            foreach (Skill skill in allSkillsToChange)
-            {
-                if (Utils.XaoSkillList.TryGetValue(skill.MySkill.KeyID, out var newSkillID))
-                {
-                    var newSkill = Skill.TempSkill(newSkillID, skill.Master, skill.Master.MyTeam);
-                    skill.SkillChange(newSkill);
-                }
-            }
-            yield break;
-        }
-
         public IEnumerator Draw(Skill Drawskill, bool NotDraw)
         {
             if (!HornyMod) yield break;
@@ -239,42 +137,21 @@ namespace Xao
                 var newSkill = Skill.TempSkill(newSkillID, Drawskill.Master, Drawskill.Master.MyTeam);
                 Drawskill.SkillChange(newSkill);
             }
-            yield break;
-        }
-
-        public void Turn()
-        {
-            if (HornyMod)
-            {
-                var affection = BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Affection, false) as B_Xao_Affection;
-                if (affection?.StackNum >= 3)
-                {
-                    int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, Utils.XaoRandomSkill.Count);
-                    var randomSkill = Utils.XaoRandomSkill[randomIndex];
-                    Utils.CreateSkill(randomSkill, BChar, true, true, 1, 0, true);
-                    Utils.PopHentaiText(BChar);
-                }
-                else
-                {
-                    Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection);
-                }
-                //Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Affection, 1);
-                //Xao_Hearts.HeartsCheck(BChar, 1);
-            }
+            yield return null;
         }
 
         public void SKillUseHand_Team(Skill skill)
         {
             if (skill.Master == BChar) return;
 
-            BattleSystem.DelayInput(OverloadCheck());
+            BChar.StartCoroutine(OverloadCheck());
         }
 
         public void SKillUseHand_Basic_Team(Skill skill)
         {
             if (skill.Master == BChar) return;
 
-            BattleSystem.DelayInput(OverloadCheck());
+            BChar.StartCoroutine(OverloadCheck());
         }
 
         public IEnumerator OverloadCheck()
@@ -285,11 +162,6 @@ namespace Xao
             {
                 Utils.Xao.Overload = 0;
             }
-        }
-
-        public void BattleEnd()
-        {
-            HornyMod = false;
         }
     }
 }

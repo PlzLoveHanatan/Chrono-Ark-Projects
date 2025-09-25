@@ -25,8 +25,7 @@ namespace Xao
         {
             if (!FirstAwake)
             {
-                Xao_Combo.AdditionalComboRewards_1 = true;
-                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, Xao_Combo.AdditionalComboRewards_0, Xao_Combo.AdditionalComboRewards_1);
+                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, true);
                 FirstAwake = true;
             }
         }

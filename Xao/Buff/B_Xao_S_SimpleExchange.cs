@@ -31,14 +31,12 @@ namespace Xao
             if (skill.MySkill.KeyID == ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0)
             {
                 Utils.RareNum = 0;
-                Utils.RareBuffAwake = false;
             }
         }
 
         public void TurnEnd()
         {
             Utils.RareNum = 0;
-            Utils.RareBuffAwake = false;
         }
     }
 }

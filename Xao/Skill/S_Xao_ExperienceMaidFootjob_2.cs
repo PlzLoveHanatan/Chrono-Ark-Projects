@@ -21,18 +21,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            string debuff = ModItemKeys.Buff_B_Xao_MistressTouch;
-
-            if (Xao_Combo.CurrentCombo >= 4)
-            {
-                foreach (var target in Targets)
-                {
-                    if (target != null)
-                    {
-                        Utils.AddDebuff(target, BChar, debuff, 1);
-                    }
-                }
-            }
+            Utils.MaidFootJob(Targets, BChar);
             Utils.PlayXaoVoiceMaid(BChar);
         }
     }

@@ -17,43 +17,7 @@ namespace Xao
     {
         public override string DescExtended()
         {
-            string combo;
-
-            if (Utils.XaoHornyMod)
-            {
-                if (Xao_Combo.AdditionalComboRewards_0 && Xao_Combo.AdditionalComboRewards_1)
-                {
-                    combo = ModLocalization.Combo_Description_Horny_3; // All Combo
-                }
-                else if (Xao_Combo.AdditionalComboRewards_0)
-                {
-                    combo = ModLocalization.Combo_Description_Horny_1; // Only Combo I
-                }
-                else if (Xao_Combo.AdditionalComboRewards_1)
-                {
-                    combo = ModLocalization.Combo_Description_Horny_2; // Only Combo II
-                }
-                else
-                {
-                    combo = ModLocalization.Combo_Description_Horny_0; // Only 10th Combo
-                }
-            }
-            else if (Xao_Combo.AdditionalComboRewards_0 && Xao_Combo.AdditionalComboRewards_1)
-            {
-                combo = ModLocalization.Combo_Description_3; // All combo, no 10th
-            }
-            else if (Xao_Combo.AdditionalComboRewards_0)
-            {
-                combo = ModLocalization.Combo_Description_1; // Only Combo I
-            }
-            else if (Xao_Combo.AdditionalComboRewards_1)
-            {
-                combo = ModLocalization.Combo_Description_2; // Only Combo II
-            }
-            else
-            {
-                combo = ModLocalization.Combo_Description_0; // No rewards
-            }
+            string combo = Utils.XaoHornyMod() ? ModLocalization.Combo_Description_Horny_0 : ModLocalization.Combo_Description_0;
             return combo.Replace("&a", Xao_Combo.CurrentCombo.ToString());
         }
 
@@ -66,7 +30,7 @@ namespace Xao
             else
             {
                 Xao_Combo.SaveComboBetweenTurns = false;
-                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, Xao_Combo.AdditionalComboRewards_0, Xao_Combo.AdditionalComboRewards_1);
+                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, false);
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Xao
     {
         public override void BuffStat()
         {
-            PlusStat.PlusCriDmg = 3 * StackNum;
+            PlusStat.cri = 3 * StackNum;
             PlusStat.dod = 3 * StackNum;
         }
     }

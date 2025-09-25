@@ -16,7 +16,7 @@ namespace Xao
     /// <summary>
     /// Affection
     /// </summary>
-    public class B_Xao_Affection : Buff, IP_BuffAddAfter, IP_Awake
+    public class B_Xao_Affection : Buff, IP_BuffAddAfter
     {
         public bool FirstTransform;
 
@@ -88,11 +88,7 @@ namespace Xao
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            string buff = ModItemKeys.Buff_B_Xao_Affection;
-            string xao = ModItemKeys.Character_Xao;
-            string normalMod = ModItemKeys.Buff_B_Xao_Mod_0;
-            string hornyMod = ModItemKeys.Buff_B_Xao_Mod_1;
-            if (BuffTaker.Info.KeyData == xao && addedbuff == this)
+            if (BuffTaker.Info.KeyData == Utils.Xao.Info.KeyData && addedbuff == this)
             {
                 Xao_Hearts.HeartsCheck(BChar, 1);
                 Utils.PopHentaiText(BChar);
@@ -100,12 +96,11 @@ namespace Xao
                 if (StackNum >= 3 && !FirstTransform)
                 {
                     Utils.PlayXaoVoice(BChar, true);
-                    string characterPrefix = ModItemKeys.Character_Xao;
-                    SkinData firstSkin = SaveManager.NowData.EnableSkins.FirstOrDefault(v => v.skinKey.StartsWith(characterPrefix));
+                    SkinData skin = SaveManager.NowData.EnableSkins.FirstOrDefault(v => v.skinKey.StartsWith(ModItemKeys.Character_Xao));
 
-                    if (!string.IsNullOrEmpty(firstSkin.skinKey))
+                    if (!string.IsNullOrEmpty(skin.skinKey))
                     {
-                        Xao_Face_Change.ChooseFace(BChar, firstSkin.skinKey);
+                        Xao_Face_Change.ChooseFace(BChar, skin.skinKey);
                     }
                     else
                     {
@@ -114,24 +109,20 @@ namespace Xao
 
                     if (BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Mod_0, false) != null)
                     {
-                        BChar.BuffRemove(normalMod);
-                        Utils.AddBuff(BChar, hornyMod);
+                        BChar.BuffRemove(ModItemKeys.Buff_B_Xao_Mod_0);
+                        Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Mod_1);
                     }
 
-                    BChar.Overload = 0;
-                    FirstTransform = true;
                     if (BChar.Info.Passive is P_Xao passive)
                     {
                         passive.HornyMod = true;
-                        BattleSystem.DelayInput(passive.ChangeFix());
                     }
+
+                    BattleSystem.DelayInput(Utils.ChangeXaoSkills(BChar));
+                    BChar.Overload = 0;
+                    FirstTransform = true;
                 }
             }
-        }
-
-        public void Awake()
-        {
-
         }
     }
 }

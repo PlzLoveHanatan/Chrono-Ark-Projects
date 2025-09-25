@@ -37,44 +37,28 @@ namespace Xao
 
         public void Awake()
         {
-
-            if (!FirstAwake)
+            if (!FirstAwake && Xao_Plugin.XaoInParty())
             {
                 LoadAllSprites();
                 FirstAwake = true;
             }
-            Debug.Log($"[{FirstAwake} is ] Awake completed");
         }
 
         public void BattleStart(BattleSystem Ins)
         {
-            try
+            if (Xao_Plugin.XaoInParty() && Utils.Xao)
             {
-                string combo = ModItemKeys.Buff_B_Xao_Combo;
-                string affection = ModItemKeys.Buff_B_Xao_Affection;
-                string normalMod = ModItemKeys.Buff_B_Xao_Mod_0;
-                if (Utils.Xao != null)
-                {
-                    Utils.AddBuff(Utils.Xao, combo);
-                    Utils.AddBuff(Utils.Xao, normalMod);
-                    Utils.CreateIdleChibi();
-                    //GameObject chibiIdle = Utils.CreateIcon(aliveXao, "Chibi_Idle", Utils.SpritePaths[Utils.SpriteType.Chibi_Idle], Utils.ChibiPosition[Utils.SpriteType.Chibi_Idle], new Vector3(235f, 235f));
-                    //GameObject randomHentaitext = Utils.CreateIcon(Utils.Xao, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
-                    //Utils.StartTextPopOut(randomHentaitext);
-                    //var combo2 = Utils.CreateIcon(aliveXao, "Combo_0",Utils.SpritePaths[Utils.SpriteType.Combo_0],Utils.ComboPosition[Utils.SpriteType.Combo_0],new Vector3(100f, 100f));
-                    //Utils.AddBuff(aliveXao, affection);
-                    Utils.CreateNewCombo(Xao_Combo.Combo_0, "Combo_0", Utils.SpritePaths[Utils.SpriteType.Combo_0]);
-                    Xao_Hearts.CreateHearts(Utils.Xao);
+                Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Combo);
+                Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Mod_0);
+                Utils.CreateIdleChibi();
+                Utils.CreateNewCombo(Xao_Combo.Combo_0, "Combo_0", Utils.SpritePaths[Utils.SpriteType.Combo_0]);
+                Utils.XaoHornyModOff();
+                Xao_Hearts.CreateHearts(Utils.Xao);
 
-                    ResetCombo();
-                    ResetHeartsNum();
-                    ResetRewards();
-                    ResetRare();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.Log($"Battle Start Error" + e.ToString());
+                ResetCombo();
+                ResetHeartsNum();
+                ResetRewards();
+                ResetRare();
             }
         }
 
@@ -101,7 +85,6 @@ namespace Xao
         public void ResetRare()
         {
             Utils.RareNum = 0;
-            Utils.RareBuffAwake = false;
         }
 
         public void ResetHeartsNum()
@@ -118,13 +101,8 @@ namespace Xao
 
         public void ResetRewards()
         {
-            Xao_Combo.AP_OncePerFight = false;
-            Xao_Combo.ManaPotion_OncePerFight = false;
-            Xao_Combo.Key_OncePerFight = false;
-            Xao_Combo.InfinityBook_OncePerFight = false;
+            Xao_Combo.AttackPower_OncePerFight = false;
             Xao_Combo.Legendary_OncePerFight = false;
-            Xao_Combo.AdditionalComboRewards_0 = false;
-            Xao_Combo.AdditionalComboRewards_1 = false;
         }
     }
 }
