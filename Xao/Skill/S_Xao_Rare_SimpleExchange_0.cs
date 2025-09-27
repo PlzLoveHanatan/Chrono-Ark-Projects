@@ -19,6 +19,11 @@ namespace Xao
     /// </summary>
     public class S_Xao_Rare_SimpleExchange_0 : Skill_Extended
     {
+        public override string DescExtended(string desc)
+        {
+            return base.DescExtended(desc).Replace("Description", ModLocalization.Rare_SimpleExchange);
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Utils.RareSimpleExchange(BChar);

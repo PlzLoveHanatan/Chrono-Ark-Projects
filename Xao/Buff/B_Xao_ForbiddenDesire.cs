@@ -14,14 +14,14 @@ using Debug = UnityEngine.Debug;
 namespace Xao
 {
 	/// <summary>
-	/// Forbidden Ritual
+	/// Forbidden Desire
 	/// </summary>
-    public class B_Xao_Miko_0 : Buff
+    public class B_Xao_ForbiddenDesire : Buff
     {
         public override void BuffStat()
         {
-            PlusPerStat.Damage = -5 * StackNum;
-            PlusStat.hit = -5 * StackNum;
+            PlusPerStat.Damage = -4 * StackNum;
+            PlusStat.dod = -4 * StackNum;
         }
     }
 }

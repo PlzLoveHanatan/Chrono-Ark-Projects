@@ -76,14 +76,18 @@ namespace Xao
                 Xao_Hearts_Ally_Synergy.HeartsCheck(BChar, -1);
                 Xao_Hearts_Ally_Synergy.DestroyHearts(BChar);
                 Utils.AllyHentaiText(BChar);
-                Utils.PlayXaoSound("Xao_Affection_0");
+
+                if (Utils.Xao)
+                {
+                    Utils.PlayXaoSound("Xao_Affection_0");
+                }
             }
         }
 
         public override void BuffStat()
         {
-            PlusStat.cri = 3 * StackNum;
             PlusStat.dod = 3 * StackNum;
+            PlusStat.cri = 3 * StackNum;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)

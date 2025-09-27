@@ -21,6 +21,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
+            Utils.MikoPussy();
             Utils.PlayXaoVoice(BChar, true);
         }
     }

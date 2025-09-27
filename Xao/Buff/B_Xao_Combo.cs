@@ -23,14 +23,14 @@ namespace Xao
 
         public void Turn()
         {
-            if (!Xao_Combo.SaveComboBetweenTurns)
-            {
-                Xao_Combo.ComboChange(0, true, true);
-            }
-            else
+            if (Xao_Combo.SaveComboBetweenTurns)
             {
                 Xao_Combo.SaveComboBetweenTurns = false;
                 Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, false);
+            }
+            else
+            {
+                Xao_Combo.ComboChange(0, true, true);
             }
         }
     }

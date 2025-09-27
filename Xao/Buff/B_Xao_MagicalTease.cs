@@ -14,15 +14,14 @@ using Debug = UnityEngine.Debug;
 namespace Xao
 {
 	/// <summary>
-	/// Mistress' Touch
+	/// Magical Tease
 	/// </summary>
-    public class B_Xao_MistressTouch : Buff
+    public class B_Xao_MagicalTease : Buff
     {
         public override void BuffStat()
         {
-            PlusStat.DMGTaken = 3 * StackNum;
-            PlusStat.crihit = 3 * StackNum;
-            //PlusStat.hit = -3 * StackNum;
+            PlusStat.dod = 3 * StackNum;
+            PlusStat.cri = 3 * StackNum;
         }
     }
 }

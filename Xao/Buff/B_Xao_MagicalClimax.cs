@@ -14,13 +14,13 @@ using Debug = UnityEngine.Debug;
 namespace Xao
 {
 	/// <summary>
-	/// Magical Ecstasy
+	/// Magical Climax
 	/// </summary>
-	public class B_Xao_MagicalDay_1 : Buff, IP_Awake, IP_PlayerTurn
+    public class B_Xao_MagicalClimax : Buff, IP_Awake, IP_PlayerTurn
     {
         public override void Init()
         {
-            PlusStat.dod = 15f;
+            PlusStat.dod = 10f;
         }
 
         public void Awake()
@@ -30,8 +30,8 @@ namespace Xao
 
         public void Turn()
         {
-            //Utils.AllyTeam.AP += 1;
+            Utils.AllyTeam.AP += 1;
             SelfDestroy();
         }		
-	}
+    }
 }

@@ -16,17 +16,12 @@ namespace Xao
 	/// <summary>
 	/// Sacred Desire
 	/// </summary>
-    public class B_Xao_SacredDesire : Buff, IP_Awake
+    public class B_Xao_SacredDesire : Buff
     {
-        private bool FirstAwake;
-
-        public void Awake()
+        public override void BuffStat()
         {
-            if (!FirstAwake)
-            {
-                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, true);
-                FirstAwake = true;  
-            }
+            PlusStat.hit = -4;
+            PlusStat.cri = -4;
         }
     }
 }

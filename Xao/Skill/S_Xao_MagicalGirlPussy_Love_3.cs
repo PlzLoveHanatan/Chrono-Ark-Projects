@@ -21,13 +21,12 @@ namespace Xao
         public override void Init()
         {
             base.Init();
-            OnePassive = true;
             SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Priest_Ex_P).Particle_Path;
         }
 
         public override void FixedUpdate()
         {
-            if (Xao_Combo.CurrentCombo >= 10)
+            if (Xao_Combo.CurrentCombo >= 4)
             {
                 MySkill.APChange = -1;
                 SkillParticleOn();
@@ -40,20 +39,7 @@ namespace Xao
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (Xao_Combo.CurrentCombo >= 6)
-            {
-                foreach (var ally in Utils.AllyTeam.AliveChars)
-                {
-                    string affection = Utils.GetAffectionBuff(ally.Info);
-                    Utils.AddBuff(ally, affection);
-
-                    if (Xao_Combo.CurrentCombo >= 8)
-                    {
-                        string magicalDay = ModItemKeys.Buff_B_Xao_MagicalDay_0;
-                        Utils.AddBuff(ally, magicalDay, 2);
-                    }
-                }
-            }
+            Utils.MagicalGirlPussy();
             Utils.PlayXaoVoice(BChar, true);
         }
     }

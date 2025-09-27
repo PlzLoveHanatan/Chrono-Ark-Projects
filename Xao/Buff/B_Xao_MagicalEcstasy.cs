@@ -13,16 +13,15 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    /// <summary>
-    /// Horny Mod
-    /// At the start of each turn obtain <sprite name="Xao_Heart">.
-    /// </summary>
-    public class B_Xao_Mod_1 : Buff, IP_PlayerTurn
+	/// <summary>
+	/// Magical Ecstasy
+	/// </summary>
+    public class B_Xao_MagicalEcstasy : Buff
     {
-        public void Turn()
+        public override void BuffStat()
         {
-            //string affection = ModItemKeys.Buff_B_Xao_Affection;
-            //Utils.AddBuff(BChar, affection);
+            PlusStat.dod = 3 * StackNum;
+            PlusStat.cri = 3 * StackNum;
         }
     }
 }

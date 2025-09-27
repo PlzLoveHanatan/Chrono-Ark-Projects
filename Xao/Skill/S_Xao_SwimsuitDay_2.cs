@@ -21,7 +21,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.CopyAndExtendDebuffs(Targets[0]);
+            Utils.SwimsuitDay(Targets[0]);
             Utils.PlayXaoVoice(BChar, true);
         }
     }

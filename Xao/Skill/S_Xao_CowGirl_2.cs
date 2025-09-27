@@ -21,16 +21,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            if (Xao_Combo.CurrentCombo >= 5)
-            {
-                foreach (var target in Targets)
-                {
-                    if (target != null)
-                    {
-                        BattleSystem.DelayInputAfter(Utils.ApplyPleasureLock(target, BChar));
-                    }
-                }
-            }
+            BattleSystem.DelayInputAfter(Utils.CowGirl(Targets[0], BChar));
             Utils.PlayXaoVoice(BChar, true);
         }
     }

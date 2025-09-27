@@ -13,16 +13,12 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace Xao
 {
-    /// <summary>
-    /// Magical Day
-    /// </summary>
-    public class B_Xao_MagicalDay_0 : Buff
+    public class B_Xao_WetLust : Buff
     {
         public override void BuffStat()
         {
-            PlusStat.dod = 3 * StackNum;
             PlusStat.cri = 3 * StackNum;
-
+            PlusStat.dod = 3 * StackNum;
         }
     }
 }

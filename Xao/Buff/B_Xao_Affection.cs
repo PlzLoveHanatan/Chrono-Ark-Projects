@@ -82,8 +82,8 @@ namespace Xao
 
         public override void BuffStat()
         {
-            PlusStat.cri = 3 * StackNum;
             PlusStat.dod = 3 * StackNum;
+            PlusStat.cri = 3 * StackNum;
         }
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
@@ -105,12 +105,6 @@ namespace Xao
                     else
                     {
                         Xao_Face_Change.ChooseFace(BChar, ModItemKeys.Character_Xao);
-                    }
-
-                    if (BChar.BuffReturn(ModItemKeys.Buff_B_Xao_Mod_0, false) != null)
-                    {
-                        BChar.BuffRemove(ModItemKeys.Buff_B_Xao_Mod_0);
-                        Utils.AddBuff(BChar, ModItemKeys.Buff_B_Xao_Mod_1);
                     }
 
                     if (BChar.Info.Passive is P_Xao passive)

@@ -14,12 +14,13 @@ using Debug = UnityEngine.Debug;
 namespace Xao
 {
 	/// <summary>
-	/// Starry Tease
+	/// Magical Desire
 	/// </summary>
-    public class B_Xao_MagicalDay_3 : Buff, IP_SkillUse_User
+    public class B_Xao_MagicalDesire : Buff, IP_SkillUse_User
     {
         public override void BuffStat()
         {
+            //PlusStat.Strength = true;
             PlusStat.dod = 3 * StackNum;
             PlusStat.cri = 3 * StackNum;
         }
@@ -28,7 +29,7 @@ namespace Xao
         {
             if (SkillD.Master == BChar)
             {
-                Xao_Combo.ComboChange(1);
+                Xao_Combo.ComboChange();
                 SelfStackDestroy();
             }
         }

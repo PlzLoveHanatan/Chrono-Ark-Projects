@@ -29,13 +29,9 @@ namespace Xao
 {
     public static class Utils
     {
-        public static float MoreChests => ModManager.getModInfo("Xao").GetSetting<SliderSetting>("More Chests").Value;
-        public static bool AdditionalSecretTile => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Additional Secret Tile").Value;
         public static bool XaoSounds => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Sounds").Value;
 
         public static int RareNum;
-
-        public static bool RemoveFogFromStage = false;
 
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
@@ -50,10 +46,10 @@ namespace Xao
         {
             string heart = (bchar == Xao && XaoHornyMod()) ? "♥" : "♡";
 
-            if (heartNum < 1)
-            {
-                heartNum = 1;
-            }
+            //if (heartNum < 1)
+            //{
+            //    heartNum = 1;
+            //}
 
             return string.Concat(Enumerable.Repeat(heart, heartNum));
         }
@@ -898,62 +894,47 @@ namespace Xao
             }
         }
 
-        public static void RareSimpleExchange(BattleChar bchar)
+        public static void RareSimpleExchange(BattleChar bchar, int rareNum = 1)
         {
-            // Определяем мана/свойства для текущего RareNum
-            bool isZeroMana = (RareNum % 2 == 0);
-            int mana = isZeroMana ? 0 : 1;
-            bool swift = isZeroMana;
+            Xao_Combo.ComboChange();
 
-            // По умолчанию glitch выключен
-            bool glitch = !swift && RareNum < 7;
+            RareNum += rareNum;
+            bool evenCheck = RareNum % 2 == 0;
+            int mana = evenCheck ? 1 : 1; // always cost 1 mana
 
-            // Определяем Key и heartNum
-            string skillKey;
-            int heartNum;
+            int heartNum = 0;
+            bool glitch = evenCheck;
+            string skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0;
 
-            switch (RareNum)
+            if (RareNum > 8)
             {
-                case 0:
-                case 1:
-                    skillKey = XaoHornyMod() ? ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01 : ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0;
-                    heartNum = 0;
-                    break;
-                case 2:
-                case 3:
-                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1;
-                    heartNum = 2;
-                    break;
-                case 4:
-                case 5:
-                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2;
-                    heartNum = 3;
-                    break;
-                case 6:
-                case 7:
-                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3;
-                    heartNum = 4;
-                    break;
-                default:
-                    skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4;
-                    heartNum = 5;
-                    glitch = true;
-                    break;
+                skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4;
+                heartNum = 5;
+                glitch = false;
             }
-
-            // Создаём скилл
-            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana, swift);
+            else
+            {
+                switch (RareNum)
+                {
+                    case 1: skillKey = XaoHornyMod() ? ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01 : ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0; break;
+                    case 2:
+                    case 3: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1; heartNum = 2; break;
+                    case 4:
+                    case 5: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2; heartNum = 3; break;
+                    case 6:
+                    case 7: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3; heartNum = 4; break;
+                    case 8: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4; heartNum = 5; break;
+                }
+            }
+            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana, true);
 
             if (skill != null)
             {
-                BattleSystem.DelayInput(IncreaseNumForRare(skill, bchar, glitch, swift, heartNum));
+                BattleSystem.DelayInput(IncreaseNumForRare(skill, bchar, glitch, heartNum, evenCheck));
             }
-
-            // Увеличиваем счётчик для следующего вызова
-            RareNum++;
         }
 
-        private static IEnumerator IncreaseNumForRare(Skill skill, BattleChar bchar, bool isGlitch = false, bool isSwift = false, int heartNum = 0)
+        private static IEnumerator IncreaseNumForRare(Skill skill, BattleChar bchar, bool isGlitch = false, int heartNum = 0, bool isComing = false)
         {
             yield return null;
 
@@ -962,24 +943,13 @@ namespace Xao
                 GlitchEffect(skill);
             }
 
-            if (!isSwift)
-            {
-                AddBuff(bchar, ModItemKeys.Buff_B_Xao_Affection, 1);
-            }
-            else if (!XaoHornyMod())
-            {
-                PopHentaiText(bchar);
-            }
-
-            bool coming = RareNum >= 6 ? true : !isSwift;
-            PlayXaoVoice(bchar, coming);
+            PlayXaoVoice(bchar, isComing);
 
             string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
-            string heartChar = XaoHornyMod() ? "♥" : "♡";
-            string heartString = heartNum > 0 ? new string(heartChar[0], heartNum) : "";
+            string heartString = GetHeart(bchar, heartNum);
 
             skill.MySkill.Name = $"{baseName} {heartString} - {RareNum}";
-            skill.MySkill.Description = RareSimpleExhangeDescription;
+            skill.MySkill.Description = ModLocalization.Rare_SimpleExchange;
             skill.MyButton?.InputData(skill, null, false);
         }
 
@@ -989,15 +959,6 @@ namespace Xao
             {
                 UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
                 UnityEngine.Object.Destroy(obj, 0.5f);
-            }
-        }
-
-        public static string RareSimpleExhangeDescription
-        {
-            get
-            {
-                var text = ModLocalization.RareDescription ?? "";
-                return text;
             }
         }
 
@@ -1014,24 +975,22 @@ namespace Xao
 
         public static IEnumerator RareSleepSexDescription(BattleChar bchar, Skill skill, int heartNum = 0)
         {
-            if (skill == null) yield break;
+            if (skill == null || bchar.IsDead) yield break;
 
             yield return null;
 
             GlitchEffect(skill);
 
             string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
-            string heartChar = XaoHornyMod() ? "♥" : "♡";
-            string heartCount = heartNum > 0 ? new string(heartChar[0], heartNum) : "";
+            string heartString = GetHeart(bchar, heartNum);
 
             bool coming = heartNum >= 3;
             PlayXaoVoice(bchar, coming);
 
             if (skill.MySkill != null)
             {
-                skill.MySkill.Name = $"{baseName} {heartCount}";
+                skill.MySkill.Name = $"{baseName} {heartString}";
             }
-
             skill.MyButton?.InputData(skill, null, false);
         }
 
@@ -1125,129 +1084,209 @@ namespace Xao
             }
         }
 
+        public static void BikiniTime(BattleChar bchar)
+        {
+            if (Xao_Combo.CurrentCombo >= 7)
+            {
+                foreach (var ally in AllyTeam.AliveChars)
+                {
+                    AddBuff(ally, ModItemKeys.Buff_B_Xao_WetLust, 2);
+                }
+
+                if (Xao_Combo.CurrentCombo >= 9)
+                {
+                    Xao_Combo.SaveComboBetweenTurns = true;
+                }
+
+                if (Xao_Combo.CurrentCombo >= 11 && XaoHornyMod())
+                {
+                    AddBuff(bchar, ModItemKeys.Buff_B_Xao_WetDream);
+                }
+            }
+        }
+
 
         public static void MaidFootJob(List<BattleChar> Targets, BattleChar bchar)
         {
-            string debuff = ModItemKeys.Buff_B_Xao_MistressTouch;
+            if (Xao_Combo.CurrentCombo < 3) return;
 
-            if (Xao_Combo.CurrentCombo >= 4)
+            if (Targets[0] is BattleEnemy mainTarget)
             {
-                foreach (var target in Targets)
+                List<BattleEnemy> additionalTargets = new List<BattleEnemy>();
+
+                if (mainTarget.istaunt)
                 {
-                    if (target != null)
+                    foreach (var enemy in BattleSystem.instance.EnemyList)
                     {
-                       AddDebuff(target, bchar, debuff, 1);
+                        if (enemy != mainTarget && enemy.istaunt)
+                        {
+                            additionalTargets.Add(enemy);
+                        }
                     }
                 }
-            }
-
-            if (Xao_Combo.CurrentCombo >= 6 && XaoHornyMod())
-            {
-                foreach (var enemy in EnemyTeam.AliveChars_Vanish)
+                else
                 {
-                    if (enemy != null)
+                    foreach (var enemy in BattleSystem.instance.EnemyList)
                     {
-                        AddDebuff(enemy, bchar, debuff, 2);
+                        if (enemy != mainTarget && !enemy.istaunt)
+                        {
+                            additionalTargets.Add(enemy);
+                        }
+                    }
+                }
+                Targets.AddRange(additionalTargets);
+
+
+                string debuff = ModItemKeys.Buff_B_Xao_MistressTouch;
+
+                if (Xao_Combo.CurrentCombo >= 5 && XaoHornyMod())
+                {
+                    foreach (var target in Targets)
+                    {
+                        if (target != null)
+                        {
+                            AddDebuff(target, bchar, debuff, 2);
+                        }
                     }
                 }
             }
         }
 
-
-        public static void MikoAnal()
+        public static void MikoPussy()
         {
-            if (Xao_Combo.CurrentCombo >= 6)
+            if (Xao_Combo.CurrentCombo >= 7)
             {
-                foreach (var target in EnemyTeam.AliveChars)
-                {
-                    AddBuff(target, ModItemKeys.Buff_B_Xao_Miko_0, 2);
-                }
-            }
-
-            if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
-            {
-                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, true);
-            }
-        }
-
-
-        public static void ApplyAndExtendBuffs()
-        {
-            if (Xao_Combo.CurrentCombo < 5) return;
-
-            foreach (var ally in AllyTeam.AliveChars)
-            {
-                AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalDay_2, 1);
-
-                if (Xao_Combo.CurrentCombo >= 7)
-                {
-                    AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalDay_3, 2);
-                }
+                PlayData.TSavedata._Gold += 200;
 
                 if (Xao_Combo.CurrentCombo >= 9 && XaoHornyMod())
                 {
-                    var buffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, true, false).ToList();
-                    foreach (Buff buff in buffs)
+                    Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, true);
+                }
+            }
+        }
+
+        public static void MikoAnal()
+        {
+            if (Xao_Combo.CurrentCombo >= 7)
+            {
+                InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
+
+                if (Xao_Combo.CurrentCombo >= 9 && XaoHornyMod())
+                {
+                    Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, true);
+                }
+            }
+        }
+
+
+        public static void MagicalGirlPussy()
+        {
+            if (Xao_Combo.CurrentCombo >= 6)
+            {
+                foreach (var ally in AllyTeam.AliveChars)
+                {
+                    string affection = GetAffectionBuff(ally.Info);
+                    AddBuff(ally, affection);
+
+                    if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
                     {
-                        if (!buff.BuffExtended.Any((Buff_Ex p) => p is B_Xao_Ex_MagicalDay))
+                        AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalEcstasy, 3);
+                    }
+                }
+            }
+        }
+
+
+        public static void MagicalGirlThigh()
+        {
+            if (Xao_Combo.CurrentCombo >= 3)
+            {
+                foreach (var ally in AllyTeam.AliveChars)
+                {
+                    AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalTease, 1);
+
+                    if (Xao_Combo.CurrentCombo >= 5)
+                    {
+                        AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalDesire, 2);
+                    }
+
+                    if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
+                    {
+                        var buffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, true, false).ToList();
+                        foreach (Buff buff in buffs)
                         {
                             foreach (StackBuff stackBuff in buff.StackInfo)
                             {
                                 stackBuff.RemainTime++;
                             }
-                            buff.AddBuffEx(new B_Xao_Ex_MagicalDay());
+                            //if (!buff.BuffExtended.Any((Buff_Ex p) => p is B_Xao_Ex_MagicalDay))
+                            //{
+
+                            //    buff.AddBuffEx(new B_Xao_Ex_MagicalDay());
+                            //}
                         }
                     }
                 }
             }
         }
 
-        public static void CopyAndExtendDebuffs(BattleChar target)
+        public static void SwimsuitDay(BattleChar target)
         {
-            if (target == null || Xao_Combo.CurrentCombo < 5) return;
+            if (target == null || Xao_Combo.CurrentCombo < 4) return;
 
-            int num = Xao_Combo.CurrentCombo >= 9 && XaoHornyMod() ? 2 : 1;
+            var debuffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALL, true, false).ToList();
 
-            for (int i = 0; i < num; i++)
+            foreach (Buff debuff in debuffs)
             {
-                var debuffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALL, true, false).ToList();
+                target.BuffAdd(debuff.BuffData.Key, debuff.Usestate_L, false, 999, false, debuff.StackInfo[debuff.StackInfo.Count - 1].RemainTime, false);
 
-                foreach (Buff debuff in debuffs)
+                if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
                 {
-                    target.BuffAdd(debuff.BuffData.Key, debuff.Usestate_L, false, 999, false, debuff.StackInfo[debuff.StackInfo.Count - 1].RemainTime, false);
-
-                    if (Xao_Combo.CurrentCombo >= 7)
+                    foreach (StackBuff stackBuff in debuff.StackInfo)
                     {
-                        foreach (StackBuff stackBuff in debuff.StackInfo)
+                        if (stackBuff.RemainTime != 0)
                         {
-                            if (stackBuff.RemainTime != 0)
-                            {
-                                stackBuff.RemainTime++;
-                            }
+                            stackBuff.RemainTime++;
                         }
                     }
                 }
             }
         }
 
-        public static IEnumerator ApplyPleasureLock(BattleChar target, BattleChar user)
+
+        public static IEnumerator CowGirl(BattleChar target, BattleChar user)
         {
             yield return null;
 
-            if (target.IsDead || target.Info.Ally) yield break;
+            if (target.IsDead || target.Info.Ally || Xao_Combo.CurrentCombo < 5) yield break;
 
             string stun = ModItemKeys.Buff_B_Xao_PleasureLock;
 
             if (target.BuffReturn(stun, false) == null)
             {
-                Utils.AddDebuff(target, user, stun, 5, 999);
+                AddDebuff(target, user, stun, 10, 999);
             }
+
+            if (Xao_Combo.CurrentCombo > 7 && XaoHornyMod())
+            {
+                if (BattleSystem.instance.EnemyCastSkills.Count > 0)
+                {
+                    CastingSkill targetSkill = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.skill.Master == target);
+
+                    if (targetSkill != null)
+                    {
+                        BattleSystem.instance.EnemyCastSkills.Remove(targetSkill);
+                        BattleSystem.instance.ActWindow.CastingWasteFixed(targetSkill);
+                    }
+                }
+            }
+
             yield break;
         }
 
         public static void HealAndRemoveDebuffs(BattleChar user, BattleChar target, int healNum = 0)
         {
-            if (Xao_Combo.CurrentCombo >= 4)
+            if (Xao_Combo.CurrentCombo >= 5)
             {
                 var allyWithLowestHp = AllyTeam.AliveChars.Where(x => x != null && x.HP < x.GetStat.maxhp).OrderBy(x => x.HP).FirstOrDefault();
 
@@ -1257,19 +1296,13 @@ namespace Xao
                 }
             }
 
-            if (Xao_Combo.CurrentCombo >= 6 && target != null)
-            {
-                var debuffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false);
-                RemoveDebuff(debuffs);
-            }
-
-            if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
+            if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
             {
                 foreach (var ally in AllyTeam.AliveChars)
                 {
                     var debuffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false);
                     RemoveDebuff(debuffs);
-                    BattleSystem.DelayInput(HealingParticle(ally, user, healNum, true));
+                    BattleSystem.DelayInput(HealingParticle(ally, user, 5, true));
                 }
             }
         }

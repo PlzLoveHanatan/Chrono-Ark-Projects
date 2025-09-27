@@ -24,10 +24,9 @@ namespace Xao
 
         private static Dictionary<int, Action> СomboRewards = new Dictionary<int, Action>
         {
-            { 2, () => { Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1); } },
-            { 4, () => { Utils.AllyTeam.Draw(); } },
-            { 6, () => { Utils.AllyTeam.AP += 1; } },
-            { 8, () => { RemoveOverloadAndGainMana(); } },
+            { 4, () => { Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1); } },
+            { 6, () => { Utils.AllyTeam.Draw(); } },
+            { 8, () => { Utils.AllyTeam.AP += 1; } },
             { 10, () => { if (!AttackPower_OncePerFight) IncreaseXaoAttackPower(Utils.Xao.Info, Utils.XaoHornyMod(), AttackPower_OncePerFight); } },
             { 50, () => {{ GainReward(PlayData.GetEquipRandom(4, false, new List<string>())); Legendary_OncePerFight = true; } } },
         };
@@ -100,26 +99,26 @@ namespace Xao
 
         public static void GainComboRewards(int currentCombo, bool isAdditionalReward = false)
         {
-            if (currentCombo >= 2)
+            if (currentCombo >= 4)
             {
                 Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Affection, 1);
             }
 
-            if (currentCombo >= 4)
+            if (currentCombo >= 6)
             {
                 Utils.AllyTeam.AP += 1;
             }
 
-            if (currentCombo >= 6)
+            if (currentCombo >= 8)
             {
                 Utils.AllyTeam.Draw();
 
             }
 
-            if (currentCombo >= 8)
-            {
-                RemoveOverloadAndGainMana();
-            }
+            //if (currentCombo >= 8)
+            //{
+            //    RemoveOverloadAndGainMana();
+            //}
 
             if (currentCombo >= 10)
             {
@@ -127,7 +126,7 @@ namespace Xao
 
                 if (isAdditionalReward)
                 {
-                    IncreaseXaoAttackPower(Utils.Xao.Info);
+                    IncreaseXaoAttackPower(Utils.Xao.Info, isAdditionalReward);
                 }
             }
         }   
@@ -137,19 +136,20 @@ namespace Xao
             InventoryManager.Reward(ItemBase.GetItem(key, 1));
         }
 
-        public static void RemoveOverloadAndGainMana()
-        {
-            Utils.AllyTeam.LucyChar.Overload = 0;
-            Utils.AllyTeam.AP += 1;
+        //public static void RemoveOverloadAndGainMana()
+        //{
+        //    Utils.AllyTeam.LucyChar.Overload = 0;
+        //    Utils.AllyTeam.AP += 1;
 
-            foreach (var ally in Utils.AllyTeam.AliveChars)
-            {
-                if (ally != null)
-                {
-                    ally.Overload = 0;
-                }
-            }
-        }
+        //    foreach (var ally in Utils.AllyTeam.AliveChars)
+        //    {
+        //        if (ally != null)
+        //        {
+        //            ally.Overload = 0;
+        //        }
+        //    }
+        //}
+
         public static void DestroyCombo(bool isNewTurn = false)
         {
             if (isNewTurn)

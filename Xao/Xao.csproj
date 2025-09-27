@@ -3,12 +3,13 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Xao09252025203445</AssemblyName>
+    <AssemblyName>Xao09282025000900</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <ReferencePath>D:/SteamLibrary/steamapps/common/Chrono Ark/ChronoArk_Data/Managed</ReferencePath>
+    <ProjectGuid>{FE5C7B27-1722-4217-AC7B-2608C932F387}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
@@ -404,8 +405,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- Compile ItemGroup Start-->
+                                                                                                        <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Utils.cs" />
     <Compile Include="Xao_Chibi_Animations.cs" />
@@ -428,24 +428,22 @@
     <Compile Include="Buff\B_Xao_Affection.cs" />
     <Compile Include="Buff\B_Xao_Affection_Ally.cs" />
     <Compile Include="Buff\B_Xao_Affection_Ally_Synergy.cs" />
-    <Compile Include="Buff\B_Xao_ArousedBliss.cs" />
     <Compile Include="Buff\B_Xao_Combo.cs" />
     <Compile Include="Buff\B_Xao_Ex_MagicalDay.cs" />
-    <Compile Include="Buff\B_Xao_MagicalDay_0.cs" />
-    <Compile Include="Buff\B_Xao_MagicalDay_1.cs" />
-    <Compile Include="Buff\B_Xao_MagicalDay_2.cs" />
-    <Compile Include="Buff\B_Xao_MagicalDay_3.cs" />
-    <Compile Include="Buff\B_Xao_Miko_0.cs" />
-    <Compile Include="Buff\B_Xao_Miko_1.cs" />
+    <Compile Include="Buff\B_Xao_ForbiddenDesire.cs" />
+    <Compile Include="Buff\B_Xao_MagicalClimax.cs" />
+    <Compile Include="Buff\B_Xao_MagicalDesire.cs" />
+    <Compile Include="Buff\B_Xao_MagicalEcstasy.cs" />
+    <Compile Include="Buff\B_Xao_MagicalTease.cs" />
     <Compile Include="Buff\B_Xao_MistressDominance.cs" />
-    <Compile Include="Buff\B_Xao_MistressTouch.cs" />
-    <Compile Include="Buff\B_Xao_Mod_1.cs" />
+    <Compile Include="Buff\B_Xao_MistressSupremacy.cs" />
     <Compile Include="Buff\B_Xao_PleasureLock.cs" />
     <Compile Include="Buff\B_Xao_SacredDesire.cs" />
     <Compile Include="Buff\B_Xao_SoakedLust.cs" />
     <Compile Include="Buff\B_Xao_S_SimpleExchange.cs" />
     <Compile Include="Buff\B_Xao_WetBliss.cs" />
     <Compile Include="Buff\B_Xao_WetDream.cs" />
+    <Compile Include="Buff\B_Xao_WetLust.cs" />
     <Compile Include="Character\P_Xao.cs" />
     <Compile Include="Item_Equip\Equip_Xao_LoveEgg.cs" />
     <Compile Include="Item_Equip\Equip_Xao_MagicWand.cs" />
@@ -523,7 +521,6 @@
     <Compile Include="SkillExtended\Ex_Xao_1.cs" />
     <Compile Include="SkillExtended\Ex_Xao_MistressDominance.cs" />
     <Compile Include="SkillExtended\Ex_Xao_PantyDominance.cs" />
-    <Compile Include="SkillExtended\Ex_Xao_Rare.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

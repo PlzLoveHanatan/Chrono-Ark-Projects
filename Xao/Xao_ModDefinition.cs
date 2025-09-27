@@ -29,11 +29,11 @@ namespace Xao
         }
     }
 
-    public class ModIReturn : IP_BattleStart_Ones, IP_BattleEnd
+    public class ModIReturn : IP_BattleStart_Ones, IP_BattleEnd, IP_PlayerTurn
     {
         private static readonly Dictionary<Utils.SpriteType, Sprite> Sprites = new Dictionary<Utils.SpriteType, Sprite>();
 
-        private bool FirstAwake;
+        public bool FirstAwake;
 
         public void Awake()
         {
@@ -46,10 +46,9 @@ namespace Xao
 
         public void BattleStart(BattleSystem Ins)
         {
-            if (Xao_Plugin.XaoInParty() && Utils.Xao)
+            if (Utils.Xao)
             {
                 Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Combo);
-                Utils.AddBuff(Utils.Xao, ModItemKeys.Buff_B_Xao_Mod_0);
                 Utils.CreateIdleChibi();
                 Utils.CreateNewCombo(Xao_Combo.Combo_0, "Combo_0", Utils.SpritePaths[Utils.SpriteType.Combo_0]);
                 Utils.XaoHornyModOff();
@@ -62,6 +61,21 @@ namespace Xao
             }
         }
 
+        public void Turn()
+        {
+            if (Utils.Xao)
+            {
+                ResetRare();
+            }
+        }
+
+        public void BattleEnd()
+        {
+            if (Utils.Xao)
+            {
+                Utils.XaoHornyModOff();
+            }
+        }
 
         public static void LoadAllSprites()
         {
@@ -75,11 +89,6 @@ namespace Xao
         {
             Sprites.TryGetValue(type, out var sprite);
             return sprite;
-        }
-
-        public void BattleEnd()
-        {
-            Utils.XaoHornyModOff();
         }
 
         public void ResetRare()
