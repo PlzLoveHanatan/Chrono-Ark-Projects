@@ -72,7 +72,7 @@ namespace ImaSuguRinne
         public static string Buff_B_Rinne_SorrowResonance = "B_Rinne_SorrowResonance";
 		/// <summary>
 		/// Suffering Cycle ❀
-		/// Restore 2 Mana at 4 stacks.
+		/// Restore 1 Mana at 4 stacks.
 		/// </summary>
         public static string Buff_B_Rinne_SufferingCycle = "B_Rinne_SufferingCycle";
 		/// <summary>
@@ -183,7 +183,7 @@ namespace ImaSuguRinne
 		/// <summary>
 		/// Broken ❀ Cycle
 		/// Gain guaranteed Critical if user played 2 skills this turn.
-		/// If this attack lands, draw 1 skill and gain 2 stacks of <color=#9933AA>Suffering Cycle</color>.
+		/// If this attack lands, draw 1 skill.
 		/// </summary>
         public static string Skill_S_Rinne_BrokenEnd = "S_Rinne_BrokenEnd";
 		/// <summary>
@@ -279,6 +279,7 @@ namespace ImaSuguRinne
 		/// This skill can be played repeatedly during this turn.
 		/// </summary>
         public static string Skill_S_Rinne_ResonanceofPain = "S_Rinne_ResonanceofPain";
+        public static string SkillEffect_SE_S_S_Rinne_BrokenEnd = "SE_S_S_Rinne_BrokenEnd";
 
     }
 

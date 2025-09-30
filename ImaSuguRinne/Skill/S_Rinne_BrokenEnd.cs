@@ -39,7 +39,7 @@ namespace ImaSuguRinne
         public override void AttackEffectSingle(BattleChar hit, SkillParticle SP, int DMG, int Heal)
         {
             Utils.AllyTeam.Draw();
-            Utils.AddBuff(BChar, ModItemKeys.Buff_B_Rinne_SufferingCycle, 2);
+            //Utils.AddBuff(BChar, ModItemKeys.Buff_B_Rinne_SufferingCycle, 2);
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)

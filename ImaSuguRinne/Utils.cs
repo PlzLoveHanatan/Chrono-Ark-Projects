@@ -40,7 +40,6 @@ namespace ImaSuguRinne
         public static bool GettingMemory;
 
         public static bool Equip;
-        public static bool DeadImmune;
 
         public static readonly List<string> RinneSkills = new List<string>
         {
@@ -108,13 +107,16 @@ namespace ImaSuguRinne
                     bool isBase = keepExtendedFrom.MySkill.SkillExtended.Any(text => text.Contains(skill_Extended.Name));
                     if (!isBase)
                     {
-                        Skill_Extended clone = skill_Extended.Clone() as Skill_Extended;
-                        if (clone != null)
+                        if (skill_Extended.Clone() is Skill_Extended clone)
                         {
                             if (clone.BattleExtended)
+                            {
                                 newSkill.ExtendedAdd_Battle(clone);
+                            }
                             else
+                            {
                                 newSkill.ExtendedAdd(clone);
+                            }     
                         }
                     }
                     skill_Extended.SelfDestroy();
@@ -135,61 +137,6 @@ namespace ImaSuguRinne
             }
             return newSkill;
         }
-
-
-        //public static Skill CreateSkill(BattleChar bchar, Skill keepExtendedFrom, string skillKey, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0, bool isNotCount = false, bool isAddToHand = true, bool keepExtended = false)
-        //{
-        //    Skill newSkill = Skill.TempSkill(skillKey, bchar, bchar.MyTeam);
-        //    newSkill.isExcept = isExcept;
-
-        //    if (isDiscarded)
-        //    {
-        //        newSkill.AutoDelete = discardedAfter;
-        //    }
-
-        //    newSkill.AP = mana;
-        //    newSkill.NotCount = isNotCount;
-
-        //    if (keepExtended && keepExtendedFrom != null)
-        //    {
-        //        List<Skill_Extended> extendedToKeep = new List<Skill_Extended>();
-
-        //        foreach (Skill_Extended skill_Extended in keepExtendedFrom.AllExtendeds)
-        //        {
-        //            bool isBase = keepExtendedFrom.MySkill.SkillExtended.Any(text => text.Contains(skill_Extended.Name));
-
-        //            if (!isBase)
-        //            {
-        //                Skill_Extended clone = skill_Extended.Clone() as Skill_Extended;
-        //                if (clone != null)
-        //                {
-        //                    extendedToKeep.Add(clone);
-        //                }
-        //            }
-        //            skill_Extended.SelfDestroy();
-        //        }
-
-        //        foreach (var ex in extendedToKeep)
-        //        {
-        //            if (ex.BattleExtended)
-        //            {
-        //                newSkill.ExtendedAdd_Battle(ex);
-        //            }
-        //            else
-        //            {
-        //                newSkill.ExtendedAdd(ex);
-        //            }
-        //        }
-        //    }
-
-        //    if (isAddToHand)
-        //    {
-        //        BattleSystem.instance.AllyTeam.Add(newSkill, true);
-        //    }
-        //    return newSkill;
-        //}
-
-
 
         public static void AddBuff(BattleChar bchar, string buffKey, int buffNum = 1)
         {
@@ -248,7 +195,7 @@ namespace ImaSuguRinne
 
         public static void EternalRare(BattleChar bchar)
         {
-            Skill skill = Utils.CreateSkill(bchar, ModItemKeys.Skill_S_Rinne_Rare_EternalFate_1, false, false, 0, 0, true, false);
+            Skill skill = CreateSkill(bchar, ModItemKeys.Skill_S_Rinne_Rare_EternalFate_1, false, false, 0, 0, true, false);
             for (int i = 0; i < 3; i++)
             {
                 int randomIndex = RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, bchar.MyTeam.Skills_Deck.Count + 1);

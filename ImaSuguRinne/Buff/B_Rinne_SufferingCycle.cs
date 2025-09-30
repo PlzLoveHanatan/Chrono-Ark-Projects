@@ -32,7 +32,7 @@ namespace ImaSuguRinne
 
             if (BattleSystem.instance != null && StackNum >= 4)
             {
-                Utils.AllyTeam.AP += 2;
+                Utils.AllyTeam.AP += 1;
                 SelfDestroy();
             }
         }
