@@ -3,12 +3,13 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>ImaSuguRinne09302025095638</AssemblyName>
+    <AssemblyName>ImaSuguRinne10012025174911</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <ReferencePath>D:/SteamLibrary/steamapps/common/Chrono Ark/ChronoArk_Data/Managed</ReferencePath>
+    <ProjectGuid>{71B28022-0AB7-4BF2-B707-2AFB5B06050D}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
@@ -404,8 +405,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <!-- Compile ItemGroup Start-->
+                                                                                    <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="ImaSuguRinne_ModDefinition.cs" />
     <Compile Include="ImaSuguRinne_ModItemKeys.cs" />
@@ -415,6 +415,7 @@
     <Compile Include="Buff\B_Rinne_BloomingCycle.cs" />
     <Compile Include="Buff\B_Rinne_BloomingRebirth.cs" />
     <Compile Include="Buff\B_Rinne_BloomingSorrow.cs" />
+    <Compile Include="Buff\B_Rinne_BloomingWound.cs" />
     <Compile Include="Buff\B_Rinne_BrokenSoul.cs" />
     <Compile Include="Buff\B_Rinne_EchoesCycle.cs" />
     <Compile Include="Buff\B_Rinne_EchoesRebirth.cs" />
@@ -427,7 +428,6 @@
     <Compile Include="Buff\B_Rinne_SorrowEmbrace.cs" />
     <Compile Include="Buff\B_Rinne_SorrowResonance.cs" />
     <Compile Include="Buff\B_Rinne_SufferingCycle.cs" />
-    <Compile Include="Buff\B_Rinne_SufferingRebirth.cs" />
     <Compile Include="Character\P_Rinne.cs" />
     <Compile Include="Item_Equip\E_Rinne_BloomingDress.cs" />
     <Compile Include="Item_Equip\E_Rinne_BloomingPetal.cs" />

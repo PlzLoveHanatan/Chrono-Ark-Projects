@@ -35,7 +35,10 @@ namespace ImaSuguRinne
             }
             else
             {
-                BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(BattleSystem.instance.AllyTeam.Skills_Deck, new SkillButton.SkillClickDel(this.Del), ScriptLocalization.System_SkillSelect.DrawSkill, false, true, true, false, true));
+                List<Skill> list = new List<Skill>();
+                list.AddRange(BattleSystem.instance.AllyTeam.Skills_Deck);
+                list = RandomManager.Shuffle<Skill>(RandomClass.CreateRandomClass(BChar.GetRandomClass().Main), list);
+                BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(list, new SkillButton.SkillClickDel(Del), ModLocalization.EverlastingYouth, false, true, true, false, true));
             }
         }
 
@@ -48,9 +51,8 @@ namespace ImaSuguRinne
         public IEnumerator AddInDeck()
         {
             yield return null;
-            //Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_Draw, false, false, 0, 0, true, false);
-            int randomIndex = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, BChar.MyTeam.Skills_Deck.Count + 1);
-            BChar.MyTeam.Skills_Deck.Insert(randomIndex, MySkill);
+            Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_Draw, false, false, 0, 0, true, false);
+            Utils.InsertSkillInDeck(BChar, skill);
         }
     }
 }

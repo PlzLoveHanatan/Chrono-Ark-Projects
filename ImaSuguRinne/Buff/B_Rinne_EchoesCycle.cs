@@ -30,9 +30,9 @@ namespace ImaSuguRinne
         {
             PlusStat.hit = 2 * StackNum;
 
-            if (BattleSystem.instance != null && StackNum >= 2)
+            if (BattleSystem.instance != null && StackNum >= 4)
             {
-                Utils.AllyTeam.Draw();
+                Utils.AllyTeam.AP += 1;
                 SelfDestroy();
             }
         }

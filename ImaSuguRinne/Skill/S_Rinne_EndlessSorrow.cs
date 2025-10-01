@@ -21,7 +21,17 @@ namespace ImaSuguRinne
     {
         public override void Init()
         {
+            OnePassive = true;
             SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
+        }
+
+        public override IEnumerator DrawAction()
+        {
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_EndlessSorrow_0)
+            {
+                Utils.CastSkill(BChar, MySkill);
+            }
+            return base.DrawAction();
         }
 
         public override void FixedUpdate()
@@ -38,12 +48,19 @@ namespace ImaSuguRinne
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_EndlessSorrow, true, true, 1, 1, true);
-
             if (BChar.BattleInfo.EnemyList.Count == 1)
             {
-                //Utils.AddDebuff(Targets[0], BChar, ModItemKeys.Buff_B_Rinne_SorrowEmbrace, 1);
                 Utils.AddDebuff(Targets[0], BChar, ModItemKeys.Buff_B_Rinne_SorrowResonance, 1);
+            }
+
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_EndlessSorrow_0)
+            {
+                Utils.AllyTeam.Draw();
+            }
+            else
+            {
+                Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_EndlessSorrow_0, true, true, 0, 0, true, false);
+                Utils.InsertSkillInDeck(BChar, skill, 2);
             }
         }
     }

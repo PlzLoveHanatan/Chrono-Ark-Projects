@@ -14,14 +14,13 @@ using Debug = UnityEngine.Debug;
 namespace ImaSuguRinne
 {
 	/// <summary>
-	/// Broken Soul
+	/// Blooming Wound
 	/// </summary>
-    public class B_Rinne_BrokenSoul : Buff
+    public class B_Rinne_BloomingWound : Buff
     {
         public override void BuffStat()
         {
-            PlusPerStat.Damage = -4 * StackNum;
-            PlusStat.def = -4 * StackNum;
+            PlusStat.dod = -4 * StackNum;
         }
     }
 }

@@ -25,10 +25,10 @@ namespace ImaSuguRinne
 
         public override void BuffStat()
         {
-            PlusPerStat.Damage = -5 * StackNum;
-            PlusStat.def = -5 * StackNum;
-            PlusStat.hit = -5 * StackNum;
-            PlusStat.dod = -5 * StackNum;
+            PlusPerStat.Damage = -4 * StackNum;
+            PlusStat.def = -4 * StackNum;
+            PlusStat.hit = -4 * StackNum;
+            PlusStat.dod = -4 * StackNum;
         }
 
         public IEnumerator Draw(Skill Drawskill, bool NotDraw)

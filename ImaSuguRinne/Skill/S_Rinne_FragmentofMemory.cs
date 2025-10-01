@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -12,6 +12,10 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using static System.Net.Mime.MediaTypeNames;
+using Dialogical;
+using Spine;
+using static CharacterDocument;
+using System.Text.RegularExpressions;
 namespace ImaSuguRinne
 {
     /// <summary>
@@ -19,23 +23,41 @@ namespace ImaSuguRinne
     /// </summary>
     public class S_Rinne_FragmentofMemory : Skill_Extended
     {
+        public override void Init()
+        {
+            if (MySkill.AllExtendeds != null && MySkill.AllExtendeds.Count > 0 && MySkill.MySkill.Name != ModLocalization.MemoryFragment)
+            {
+                MySkill.MySkill.Name = ModLocalization.MemoryFragment;
+            }
+        }
+
         public override IEnumerator DrawAction()
         {
-            Utils.AllyTeam.Draw();
-            Utils.GlitchEffect(MySkill, 1);
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_FragmentofMemory_0)
+            {
+                Utils.CastSkill(BChar, MySkill);
+            }
+            else
+            {
+                Utils.GlitchEffect(MySkill, 1);
+                Utils.AllyTeam.Draw();
+            }
             return base.DrawAction();
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             BChar.StartCoroutine(Utils.RetryNow(BChar));
-            //Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_FragmentofMemory, false, false, 0, 0, true, false);
-            if (MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_S_Ex_Rinne_Swift_Mana) == null)
+
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_FragmentofMemory_0)
             {
-                MySkill?.ExtendedAdd_Battle(ModItemKeys.SkillExtended_S_Ex_Rinne_Swift_Mana);
+                Utils.AllyTeam.Draw();
             }
-            int randomIndex = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, BChar.MyTeam.Skills_Deck.Count + 1);
-            BChar.MyTeam.Skills_Deck.Insert(randomIndex, this.MySkill);
+            else
+            {
+                Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_FragmentofMemory_0, true, true, 0, 0, true, false);
+                Utils.InsertSkillInDeck(BChar, skill);
+            }
         }
     }
 }

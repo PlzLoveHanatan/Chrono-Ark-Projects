@@ -21,22 +21,29 @@ namespace ImaSuguRinne
     {
         public override string DescExtended(string desc)
         {
-            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(BChar.GetStat.atk * 0.5f)).ToString());
+        }
+        public override void Init()
+        {
+            if (MySkill.AllExtendeds != null && MySkill.AllExtendeds.Count > 0 && MySkill.MySkill.Name != ModLocalization.BloomingRequiem)
+            {
+                MySkill.MySkill.Name = ModLocalization.BloomingRequiem;
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (this.BChar.GetStat.atk * 0.4f));
+            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (BChar.GetStat.atk * 0.5f));
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             BChar.StartCoroutine(Utils.RetryNow(BChar));
-            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (this.BChar.GetStat.atk * 0.4f));
+            this.SkillBasePlus.Target_BaseDMG = (int)(RinneSkillUsed() * (BChar.GetStat.atk * 0.5f));
 
             int randomIndex = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, BChar.MyTeam.Skills_Deck.Count + 1);
-            BChar.MyTeam.Skills_Deck.Insert(randomIndex, this.MySkill);
+            BChar.MyTeam.Skills_Deck.Insert(randomIndex, MySkill);
         }
 
         private int RinneSkillUsed()

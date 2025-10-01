@@ -17,7 +17,7 @@ namespace ImaSuguRinne
     /// <summary>
     /// Blooming Petal ✿
     /// </summary>
-    public class E_Rinne_BloomingPetal : EquipBase, IP_Draw, IP_CriPerChange, IP_BattleStart_Ones
+    public class E_Rinne_BloomingPetal : EquipBase, IP_Draw, IP_BattleStart_Ones
     {
         public override void Init()
         {
@@ -44,24 +44,6 @@ namespace ImaSuguRinne
                 {
                     skill.ExtendedAdd_Battle(ModItemKeys.SkillExtended_S_Ex_E_BloomingPetal);
                 }
-            }
-        }
-
-        public void CriPerChange(Skill skill, BattleChar Target, ref float CriPer)
-        {
-            if (Target.NullCheck())
-            {
-                return;
-            }
-            int num = Target.HitPerNum(skill.Master, skill, false);
-            int num2 = 0;
-            if (num > 100)
-            {
-                num2 = num - 100;
-            }
-            if (num2 > 0)
-            {
-                CriPer += (float)num2;
             }
         }
     }

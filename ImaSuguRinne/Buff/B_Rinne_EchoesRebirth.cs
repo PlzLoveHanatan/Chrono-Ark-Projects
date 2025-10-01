@@ -28,7 +28,7 @@ namespace ImaSuguRinne
 
         public override void Init()
         {
-            PlusStat.hit = 4 * StackNum;
+            PlusPerStat.MaxHP = 4 * StackNum;
         }
     }
 }

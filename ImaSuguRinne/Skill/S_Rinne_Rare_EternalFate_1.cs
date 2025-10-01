@@ -21,22 +21,14 @@ namespace ImaSuguRinne
     {
         public override IEnumerator DrawAction()
         {
-            if (Utils.Rinne)
-            {
-                Utils.GlitchEffect(MySkill, 1);
-                BattleSystem.DelayInputAfter(BattleSystem.instance.SkillRandomUseIenum(Utils.Rinne, MySkill, false, false, true));
-            }
-            else
-            {
-                Utils.AllyTeam.Skills.Remove(MySkill);
-            }
+            Utils.CastSkill(BChar, MySkill);
             return base.DrawAction();
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             var highManaSkill = Utils.AllyTeam.Skills.Where(x => x != null).OrderByDescending(x => x.AP).FirstOrDefault();
-            BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(Utils.Rinne, highManaSkill, false, false, true));
+            BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, highManaSkill, false, false, true));
             Utils.AllyTeam.Draw(1);
         }
     }

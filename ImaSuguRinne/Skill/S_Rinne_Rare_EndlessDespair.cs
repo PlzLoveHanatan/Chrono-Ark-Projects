@@ -23,6 +23,15 @@ namespace ImaSuguRinne
             OnePassive = true;
         }
 
+        public override IEnumerator DrawAction()
+        {
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_Rare_EndlessDespair_0)
+            {
+                Utils.CastSkill(BChar, MySkill);
+            }
+            return base.DrawAction();
+        }
+
         public override void FixedUpdate()
         {
             if (MySkill.BasicSkill)
@@ -33,11 +42,21 @@ namespace ImaSuguRinne
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.UnlockSkillPreview(MySkill.MySkill.KeyID);
-            if (!MySkill.BasicSkill)
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_Rare_EndlessDespair_0)
             {
-                Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_Rare_EndlessDespair, true, true, 1, 1, true, true);
+                Utils.AllyTeam.Draw();
             }
+            else if (!MySkill.BasicSkill)
+            {
+                Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_Rare_EndlessDespair_0, true, true, 0, 0, true, false);
+                Utils.InsertSkillInDeck(BChar, skill, 5);
+                //Utils.CopiesSelection(BChar, skill);
+            }
+
+            //if (!MySkill.BasicSkill)
+            //{
+            //    Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_Rare_EndlessDespair, true, true, 1, 1, true, true);
+            //}
         }
 
 

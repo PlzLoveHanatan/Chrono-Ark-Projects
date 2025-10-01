@@ -49,7 +49,7 @@ namespace ImaSuguRinne
         {
             if (!target.IsDead) yield break;
 
-            Utils.AddBuff(BChar, ModItemKeys.Buff_B_Rinne_ShatteredBlooming, 1);
+            //Utils.AddBuff(BChar, ModItemKeys.Buff_B_Rinne_ShatteredBlooming, 1);
 
             if (!this.MySkill.isExcept)
             {

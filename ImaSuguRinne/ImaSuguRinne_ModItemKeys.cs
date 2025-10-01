@@ -5,12 +5,12 @@ namespace ImaSuguRinne
     {
 		/// <summary>
 		/// Blooming Agony
-		/// Whenever you receive a debuff, take <color=purple>2 Pain damage</color>.
+		/// Whenever you receive a debuff, take <color=purple>1 Pain damage</color>.
 		/// </summary>
         public static string Buff_B_Rinne_BloomingAgony = "B_Rinne_BloomingAgony";
 		/// <summary>
-		/// Blooming ✿ Cycle
-		/// Restore 1 Mana at 2 stacks.
+		/// Blooming Cycle ✿
+		/// Restore 1 Mana at 4 stacks.
 		/// </summary>
         public static string Buff_B_Rinne_BloomingCycle = "B_Rinne_BloomingCycle";
 		/// <summary>
@@ -22,12 +22,16 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_BloomingSorrow = "B_Rinne_BloomingSorrow";
 		/// <summary>
+		/// Blooming Wound ✿
+		/// </summary>
+        public static string Buff_B_Rinne_BloomingWound = "B_Rinne_BloomingWound";
+		/// <summary>
 		/// Broken Soul
 		/// </summary>
         public static string Buff_B_Rinne_BrokenSoul = "B_Rinne_BrokenSoul";
 		/// <summary>
 		/// Echoes Cycle ❀
-		/// Draw 1 skill at 2 stacks.
+		/// Restore 1 Mana at 4 stacks.
 		/// </summary>
         public static string Buff_B_Rinne_EchoesCycle = "B_Rinne_EchoesCycle";
 		/// <summary>
@@ -50,11 +54,11 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_EternalBlooming = "B_Rinne_EternalBlooming";
 		/// <summary>
-		/// Fading ❀ Memory
+		/// Fading Memory ❀
 		/// </summary>
         public static string Buff_B_Rinne_FadingMemory = "B_Rinne_FadingMemory";
 		/// <summary>
-		/// Shattered ❀ Blooming
+		/// Shattered Blooming ❀
 		/// </summary>
         public static string Buff_B_Rinne_ShatteredBlooming = "B_Rinne_ShatteredBlooming";
 		/// <summary>
@@ -76,17 +80,12 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Buff_B_Rinne_SufferingCycle = "B_Rinne_SufferingCycle";
 		/// <summary>
-		/// Suffering Rebirth ❀
-		/// </summary>
-        public static string Buff_B_Rinne_SufferingRebirth = "B_Rinne_SufferingRebirth";
-		/// <summary>
 		/// Blooming ✿ Dress
 		/// All user skills played from hand that costs 1 or more Mana can be played repeatedly during this turn.
 		/// </summary>
         public static string Item_Equip_E_Rinne_BloomingDress = "E_Rinne_BloomingDress";
 		/// <summary>
 		/// Blooming ✿ Petal
-		/// Hit Rate above 100% is converted into Critical Chance.
 		/// <b>At the start of battle</b>, give your own skills in the deck Once (When played, copy this skill and shuffle it into your deck.)
 		/// </summary>
         public static string Item_Equip_E_Rinne_BloomingPetal = "E_Rinne_BloomingPetal";
@@ -104,11 +103,12 @@ namespace ImaSuguRinne
 		/// Rinne ✿
 		/// Passive:
 		/// Hit Rate above 100% is converted into Critical Chance.
-		/// Rinne starts with one copy of <color=#CC99FF>Memory ❀ Fragment</color> in the deck.
+		/// Rinne starts with one copy of <color=#CC99FF>Memory Fragment ❀</color> in the deck.
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Rinne = "Rinne";
         public static string SkillEffect_SE_S_S_Rinne_BloomofSorrow = "SE_S_S_Rinne_BloomofSorrow";
+        public static string SkillEffect_SE_S_S_Rinne_BrokenEnd = "SE_S_S_Rinne_BrokenEnd";
         public static string SkillEffect_SE_S_S_Rinne_CascadeofPain = "SE_S_S_Rinne_CascadeofPain";
         public static string SkillEffect_SE_S_S_Rinne_CycleofBloom_0 = "SE_S_S_Rinne_CycleofBloom_0";
         public static string SkillEffect_SE_S_S_Rinne_CycleofBloom_1 = "SE_S_S_Rinne_CycleofBloom_1";
@@ -121,6 +121,7 @@ namespace ImaSuguRinne
         public static string SkillEffect_SE_S_S_Rinne_DualityofEchoes_1 = "SE_S_S_Rinne_DualityofEchoes_1";
         public static string SkillEffect_SE_S_S_Rinne_EmbraceofSorrow = "SE_S_S_Rinne_EmbraceofSorrow";
         public static string SkillEffect_SE_S_S_Rinne_FragmentofMemory = "SE_S_S_Rinne_FragmentofMemory";
+        public static string SkillEffect_SE_S_S_Rinne_FragmentofMemory_0 = "SE_S_S_Rinne_FragmentofMemory_0";
         public static string SkillEffect_SE_S_S_Rinne_Rare_CascadeofDespair_0 = "SE_S_S_Rinne_Rare_CascadeofDespair_0";
         public static string SkillEffect_SE_S_S_Rinne_Rare_EndlessDespair = "SE_S_S_Rinne_Rare_EndlessDespair";
         public static string SkillEffect_SE_S_S_Rinne_Rare_EternalFate_0 = "SE_S_S_Rinne_Rare_EternalFate_0";
@@ -129,9 +130,11 @@ namespace ImaSuguRinne
         public static string SkillEffect_SE_S_S_Rinne_SorrowCycle_0 = "SE_S_S_Rinne_SorrowCycle_0";
         public static string SkillEffect_SE_S_S_Rinne_SorrowCycle_1 = "SE_S_S_Rinne_SorrowCycle_1";
         public static string SkillEffect_SE_Tick_B_Rinne_BloomingAgony = "SE_Tick_B_Rinne_BloomingAgony";
+        public static string SkillEffect_SE_Tick_B_Rinne_BloomingWound = "SE_Tick_B_Rinne_BloomingWound";
         public static string SkillEffect_SE_T_S_Rinne_BloomofSorrow = "SE_T_S_Rinne_BloomofSorrow";
         public static string SkillEffect_SE_T_S_Rinne_BrokenEnd = "SE_T_S_Rinne_BrokenEnd";
         public static string SkillEffect_SE_T_S_Rinne_CascadeofPain = "SE_T_S_Rinne_CascadeofPain";
+        public static string SkillEffect_SE_T_S_Rinne_CascadeofPain_0 = "SE_T_S_Rinne_CascadeofPain_0";
         public static string SkillEffect_SE_T_S_Rinne_CycleofBloom_0 = "SE_T_S_Rinne_CycleofBloom_0";
         public static string SkillEffect_SE_T_S_Rinne_CycleofBloom_1 = "SE_T_S_Rinne_CycleofBloom_1";
         public static string SkillEffect_SE_T_S_Rinne_CycleofDoom = "SE_T_S_Rinne_CycleofDoom";
@@ -147,14 +150,18 @@ namespace ImaSuguRinne
         public static string SkillEffect_SE_T_S_Rinne_EndlessMoment = "SE_T_S_Rinne_EndlessMoment";
         public static string SkillEffect_SE_T_S_Rinne_EndlessRequiem = "SE_T_S_Rinne_EndlessRequiem";
         public static string SkillEffect_SE_T_S_Rinne_EndlessSorrow = "SE_T_S_Rinne_EndlessSorrow";
+        public static string SkillEffect_SE_T_S_Rinne_EndlessSorrow_0 = "SE_T_S_Rinne_EndlessSorrow_0";
         public static string SkillEffect_SE_T_S_Rinne_FragmentofMemory = "SE_T_S_Rinne_FragmentofMemory";
+        public static string SkillEffect_SE_T_S_Rinne_FragmentofMemory_0 = "SE_T_S_Rinne_FragmentofMemory_0";
         public static string SkillEffect_SE_T_S_Rinne_Rare_CascadeofDespair = "SE_T_S_Rinne_Rare_CascadeofDespair";
         public static string SkillEffect_SE_T_S_Rinne_Rare_CascadeofDespair_0 = "SE_T_S_Rinne_Rare_CascadeofDespair_0";
         public static string SkillEffect_SE_T_S_Rinne_Rare_EndlessDespair = "SE_T_S_Rinne_Rare_EndlessDespair";
+        public static string SkillEffect_SE_T_S_Rinne_Rare_EndlessDespair_0 = "SE_T_S_Rinne_Rare_EndlessDespair_0";
         public static string SkillEffect_SE_T_S_Rinne_Rare_EndlessRequiem = "SE_T_S_Rinne_Rare_EndlessRequiem";
         public static string SkillEffect_SE_T_S_Rinne_Rare_EternalFate_1 = "SE_T_S_Rinne_Rare_EternalFate_1";
         public static string SkillEffect_SE_T_S_Rinne_Rare_LovesRequiem = "SE_T_S_Rinne_Rare_LovesRequiem";
         public static string SkillEffect_SE_T_S_Rinne_ResonanceofPain = "SE_T_S_Rinne_ResonanceofPain";
+        public static string SkillEffect_SE_T_S_Rinne_ResonanceofPain_0 = "SE_T_S_Rinne_ResonanceofPain_0";
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle = "SE_T_S_Rinne_SorrowCycle";
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle_0 = "SE_T_S_Rinne_SorrowCycle_0";
         public static string SkillEffect_SE_T_S_Rinne_SorrowCycle_1 = "SE_T_S_Rinne_SorrowCycle_1";
@@ -181,55 +188,63 @@ namespace ImaSuguRinne
 		/// </summary>
         public static string Skill_S_Rinne_BloomofSorrow = "S_Rinne_BloomofSorrow";
 		/// <summary>
-		/// Broken ❀ Cycle
+		/// Broken Cycle ❀
 		/// Gain guaranteed Critical if user played 2 skills this turn.
-		/// If this attack lands, draw 1 skill.
+		/// If this attack lands, draw 2 skills.
 		/// </summary>
         public static string Skill_S_Rinne_BrokenEnd = "S_Rinne_BrokenEnd";
 		/// <summary>
 		/// Cascade of Pain
-		/// Deal &a additional damage <color=#FF7C34>(20% Attack Power)</color> for each debuff on the target.
-		/// This skill can be played repeatedly during this turn.
+		/// Deal &a additional damage <color=#FF7C34>(20% Attack Power)</color> for each debuff on the target.  
+		/// When played, shuffle 3 copies of <color=#9370DB>Cascade of Pain ✿</color> into deck.
 		/// </summary>
         public static string Skill_S_Rinne_CascadeofPain = "S_Rinne_CascadeofPain";
 		/// <summary>
-		/// Cycle of Blooming ✿
-		/// Create <color=#FF77FF>Cycle of Blooming ✿</color> in hand.
+		/// <color=#9370DB>Cascade of Pain ✿</color>
+		/// <b>Cast when drawn</b>
+		/// Cast this skill on a random enemy and draw 1 skill.
+		/// Deal &a additional damage <color=#FF7C34>(20% Attack Power)</color> for each debuff on the target.
+		/// If Rinne is fainted exclude this skill.
+		/// </summary>
+        public static string Skill_S_Rinne_CascadeofPain_0 = "S_Rinne_CascadeofPain_0";
+		/// <summary>
+		/// Blooming Cycle ✿
+		/// Create <color=#ed0f87>Blooming Cycle ✿</color> in hand.
 		/// </summary>
         public static string Skill_S_Rinne_CycleofBloom_0 = "S_Rinne_CycleofBloom_0";
 		/// <summary>
-		/// Cycle of Blooming ✿
-		/// Create <color=#FF77FF>Cycle of Blooming ✿</color> in hand.
+		/// Blooming Cycle ✿
+		/// Create <color=#ed0f87>Blooming Cycle ✿</color> in hand.
 		/// </summary>
         public static string Skill_S_Rinne_CycleofBloom_1 = "S_Rinne_CycleofBloom_1";
 		/// <summary>
-		/// Cycle of Echoes
-		/// Create <color=#B266FF>Cycle of Echoes</color> in hand.
+		/// Echoes Cycle ❀
+		/// Create <color=#ed0f87>Echoes Cycle ❀ </color> in hand.
 		/// </summary>
         public static string Skill_S_Rinne_CycleofEchoes_0 = "S_Rinne_CycleofEchoes_0";
 		/// <summary>
-		/// Cycle of Echoes
-		/// Create <color=#B266FF>Cycle of Echoes</color> in hand.
+		/// Echoes Cycle
+		/// Create <color=#ed0f87>Echoes Cycle ❀ </color> in hand.
 		/// </summary>
         public static string Skill_S_Rinne_CycleofEchoes_1 = "S_Rinne_CycleofEchoes_1";
 		/// <summary>
-		/// Cycle of Suffering
-		/// Create <color=#FF33CC>Cycle of Suffering</color> in hand.
+		/// Suffering Cycle ❀
+		/// Create <color=#ed0f87>Suffering Cycle ❀</color> in hand.
 		/// </summary>
         public static string Skill_S_Rinne_CycleofSuffering_0 = "S_Rinne_CycleofSuffering_0";
 		/// <summary>
-		/// Cycle of Suffering
-		/// Create <color=#FF33CC>Cycle of Suffering</color> in hand.
+		/// Suffering Cycle ❀
+		/// Create <color=#ed0f87>Suffering Cycle ❀</color> in hand.
 		/// </summary>
         public static string Skill_S_Rinne_CycleofSuffering_1 = "S_Rinne_CycleofSuffering_1";
 		/// <summary>
-		/// Shattered ❀ Spiral
+		/// Shattered Spiral
 		/// Exceeding crit chance is converted into crit damage.
-		/// If you defeat an enemy with this skill, draw this skill again and gain additional stack of <color=#FF77FF>Shattered ❀ Blooming</color>.
+		/// If you defeat an enemy with this skill, draw this skill again.
 		/// </summary>
         public static string Skill_S_Rinne_DesperateSpiral = "S_Rinne_DesperateSpiral";
 		/// <summary>
-		/// Eternity Blooming ✿
+		/// Everlasting Youth ✿
 		/// When drawn, draw a skill.
 		/// When played, choose a skill from your deck to add to your hand. Copy this skill and shuffle it into your deck.
 		/// </summary>
@@ -237,21 +252,43 @@ namespace ImaSuguRinne
 		/// <summary>
 		/// Endless Sorrow
 		/// If facing one enemy, apply additional stack of  <color=#6622AA>Sorrow Resonance</color> to the target's.
-		/// This skill can be played repeatedly during this turn.
+		/// When played, shuffle 2 copies of <color=#9370DB>Endless Sorrow ✿</color> into deck.
 		/// </summary>
         public static string Skill_S_Rinne_EndlessSorrow = "S_Rinne_EndlessSorrow";
 		/// <summary>
-		/// <color=#CC99FF>Memory ❀ Fragment</color>
+		/// <color=#9370DB>Endless Sorrow ✿</color>
+		/// <b>Cast when drawn</b>
+		/// Cast this skill and draw 1 skill.
+		/// If facing one enemy, apply additional stack of  <color=#6622AA>Sorrow Resonance</color> to the target's.
+		/// If Rinne is fainted exclude this skill.
+		/// </summary>
+        public static string Skill_S_Rinne_EndlessSorrow_0 = "S_Rinne_EndlessSorrow_0";
+		/// <summary>
+		/// <color=#CC99FF>Memory Fragment ❀</color>
 		/// When drawn, draw a skill.
-		/// When played, copy this skill and shuffle it into your deck. Shuffled skill cost 0 Mana and gain Swiftness.
+		/// When played, shuffle copy of <color=#CC99FF>Memory Fragment ❀</color> into deck.
 		/// </summary>
         public static string Skill_S_Rinne_FragmentofMemory = "S_Rinne_FragmentofMemory";
 		/// <summary>
+		/// <color=#CC99FF>Memory Fragment ❀</color>
+		/// <b>Cast when drawn</b>
+		/// Cast this skill on a random enemy and draw 1 skill.
+		/// If Rinne is fainted exclude this skill.
+		/// </summary>
+        public static string Skill_S_Rinne_FragmentofMemory_0 = "S_Rinne_FragmentofMemory_0";
+		/// <summary>
 		/// Endless Despair
-		/// If this skill is a fixed ability, its cost is reduced by 1 and it refreshes each time you play a Rinne's skill from hand.
-		/// This skill can be played repeatedly during this turn.
+		/// Cost is reduced by 1 if this skill is a fixed ability and it refreshes every time you play a Rinne's skill from hand.
+		/// When played from hand, shuffle 5 copies of <color=#9370DB>Endless Despair ✿</color> into deck.
 		/// </summary>
         public static string Skill_S_Rinne_Rare_EndlessDespair = "S_Rinne_Rare_EndlessDespair";
+		/// <summary>
+		/// <color=#9370DB>Endless Despair ✿</color>
+		/// <b>Cast when drawn</b>
+		/// Cast this skill and draw 1 skill.
+		/// If Rinne is fainted exclude this skill.
+		/// </summary>
+        public static string Skill_S_Rinne_Rare_EndlessDespair_0 = "S_Rinne_Rare_EndlessDespair_0";
 		/// <summary>
 		/// Eternal Blooming ✿
 		/// Create and shuffle 3 copies of <color=#FF44AA>Eternal Blooming ✿</color> into deck.
@@ -260,31 +297,57 @@ namespace ImaSuguRinne
 		/// <summary>
 		/// <color=#FF44AA>Eternal Blooming  ✿</color>
 		/// <b>Cast when drawn</b>
-		/// Cast the highest-cost skill in your hand. Draw 1 skill.
-		/// If Rinne is fainted exclude this skill from the current fight.
+		/// Cast the highest-cost skill in hand and draw 1 skill.
+		/// If Rinne is fainted exclude this skill.
 		/// </summary>
         public static string Skill_S_Rinne_Rare_EternalFate_1 = "S_Rinne_Rare_EternalFate_1";
 		/// <summary>
-		/// Rinne's Blooming ✿
+		/// <color=#ed0f87>Blooming Requiem ✿</color>
 		/// When played, copy this skill and shuffle it into your deck.
-		/// Deal &a additional damage per Rinne's skill's played this turn.
+		/// Deal &a additional damage <color=#FF7C34>(50% Attack Power)</color> per <color=#ed0f87>Rinne's</color> skill's played this turn.
 		/// </summary>
         public static string Skill_S_Rinne_Rare_LovesRequiem = "S_Rinne_Rare_LovesRequiem";
 		/// <summary>
-		/// Pain ❀ Resonance
+		/// Pain Resonance
 		/// Attack all enemies with the same Taunt status as the target.
 		/// If facing 1 enemy cost is reduced by 1.
 		/// Increase all enemy debuff stacks by 1.
 		/// All enemy debuffs remain an extra turn.
-		/// This skill can be played repeatedly during this turn.
+		/// When played, shuffle 1 copy of <color=#9370DB>Pain Resonance ✿</color> into deck.
 		/// </summary>
         public static string Skill_S_Rinne_ResonanceofPain = "S_Rinne_ResonanceofPain";
-        public static string SkillEffect_SE_S_S_Rinne_BrokenEnd = "SE_S_S_Rinne_BrokenEnd";
+		/// <summary>
+		/// <color=#9370DB>Pain Resonance ✿</color>
+		/// <b>Cast when drawn</b>
+		/// Cast this skill on a random enemy and draw 1 skill.
+		/// Attack all enemies with the same Taunt status as the target.
+		/// Increase all enemy debuff stacks by 1.
+		/// All enemy debuffs remain an extra turn.
+		/// If Rinne is fainted exclude this skill.
+		/// </summary>
+        public static string Skill_S_Rinne_ResonanceofPain_0 = "S_Rinne_ResonanceofPain_0";
+		/// <summary>
+		/// Spend 1 Mana to shuffle 2 additional copies into deck
+		/// </summary>
+        public static string Skill_S_Rinne_Selection_0 = "S_Rinne_Selection_0";
+		/// <summary>
+		/// Dont spend mana
+		/// </summary>
+        public static string Skill_S_Rinne_Selection_1 = "S_Rinne_Selection_1";
 
     }
 
     public static class ModLocalization
     {
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Blooming Requiem ✿
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string BloomingRequiem => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("BloomingRequiem");
 		/// <summary>
 		/// Korean:
 		/// 이 스킬은 이번 턴 동안 반복해서 사용할 수 있습니다.
@@ -311,6 +374,24 @@ namespace ImaSuguRinne
 		/// 使用时，复制此技能并洗入牌库。
 		/// </summary>
         public static string Blooming_Petal => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("Blooming_Petal");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Select a Skill to Draw (Skills are shown in random order)
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EverlastingYouth => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("EverlastingYouth");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Memory Fragment ❀
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MemoryFragment => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("MemoryFragment");
 		/// <summary>
 		/// Korean:
 		/// 지금 다시 시도하세요!

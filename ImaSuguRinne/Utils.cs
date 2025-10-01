@@ -116,7 +116,7 @@ namespace ImaSuguRinne
                             else
                             {
                                 newSkill.ExtendedAdd(clone);
-                            }     
+                            }
                         }
                     }
                     skill_Extended.SelfDestroy();
@@ -196,11 +196,68 @@ namespace ImaSuguRinne
         public static void EternalRare(BattleChar bchar)
         {
             Skill skill = CreateSkill(bchar, ModItemKeys.Skill_S_Rinne_Rare_EternalFate_1, false, false, 0, 0, true, false);
-            for (int i = 0; i < 3; i++)
+            InsertSkillInDeck(bchar, skill, 3);
+        }
+
+        public static void CopiesSelection(BattleChar bchar, Skill skill)
+        {
+            if (AllyTeam.AP >= 1)
             {
-                int randomIndex = RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, bchar.MyTeam.Skills_Deck.Count + 1);
-                bchar.MyTeam.Skills_Deck.Insert(randomIndex, skill);
+                List<Skill> skillList = new List<Skill>
+                {
+                    Skill.TempSkill(ModItemKeys.Skill_S_Rinne_Selection_0, bchar, bchar.MyTeam),
+                    Skill.TempSkill(ModItemKeys.Skill_S_Rinne_Selection_1, bchar, bchar.MyTeam)
+                };
+
+                BattleSystem.DelayInput(
+                    BattleSystem.I_OtherSkillSelect(
+                        skillList,
+                        new SkillButton.SkillClickDel(btn => OnSkillSelected(btn, bchar, skill)),
+                        ScriptLocalization.System_SkillSelect.EffectSelect,
+                        false,
+                        false
+                    )
+                );
             }
+            else
+            {
+                InsertSkillInDeck(bchar, skill);
+            }
+        }
+
+
+
+        public static void OnSkillSelected(SkillButton myButton, BattleChar bchar, Skill skill)
+        {
+            int copies = 0;
+            string key = myButton.Myskill.MySkill.KeyID;
+
+            if (key == ModItemKeys.Skill_S_Rinne_Selection_0)
+            {
+                copies = 2;
+                AllyTeam.AP -= 1;
+            }
+            else if (key == ModItemKeys.Skill_S_Rinne_Selection_1)
+            {
+                copies = 4;
+                AllyTeam.AP -= 2;
+            }
+            InsertSkillInDeck(bchar, skill, copies + 1);
+        }
+
+
+
+        public static void InsertSkillInDeck(BattleChar bchar, Skill skill, int createSkills = 1)
+        {
+            for (int i = 0; i < createSkills; i++)
+            {
+                bchar.MyTeam.Skills_Deck.Insert(RandomDeckIndex(bchar), skill);
+            }
+        }
+
+        public static int RandomDeckIndex(BattleChar bchar)
+        {
+            return RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, bchar.MyTeam.Skills_Deck.Count + 1);
         }
 
         public static IEnumerator RetryNow(BattleChar bchar)
@@ -213,6 +270,36 @@ namespace ImaSuguRinne
             yield return new WaitForSecondsRealtime(2f);
 
             topText?.End();
+        }
+
+        public static void CastSkill(BattleChar bchar, Skill skill)
+        {
+            if (Rinne)
+            {
+                GlitchEffect(skill, 1);
+                if (EnemyTeam.AliveChars.Count > 0)
+                {
+                    BattleSystem.DelayInputAfter(BattleSystem.instance.SkillRandomUseIenum(bchar, skill, false, false, true));
+                }
+                else
+                {
+                    RemoveSkill(skill);
+                }
+            }
+            else
+            {
+                RemoveSkill(skill);
+            }
+        }
+
+        public static void RemoveSkill(Skill skill)
+        {
+            if (skill != null)
+            {
+                GlitchEffect(skill, 2);
+                AllyTeam.Skills.Remove(skill);
+                AllyTeam.Draw();
+            }
         }
     }
 }

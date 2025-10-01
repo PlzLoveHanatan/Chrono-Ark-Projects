@@ -21,8 +21,8 @@ namespace ImaSuguRinne
         public override void BuffStat()
         {
             //PlusStat.def = -5 * StackNum;
-            PlusStat.hit = -5 * StackNum;
-            PlusStat.dod = -5 * StackNum;
+            PlusStat.hit = -4 * StackNum;
+            PlusStat.dod = -4 * StackNum;
         }
     }
 }

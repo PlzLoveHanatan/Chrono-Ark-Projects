@@ -20,8 +20,8 @@ namespace ImaSuguRinne
     {
         public override void BuffStat()
         {
-            PlusStat.dod = -5 * StackNum;
-            PlusPerStat.Damage = -5 * StackNum;
+            PlusStat.dod = -4 * StackNum;
+            PlusPerStat.Damage = -4 * StackNum;
         }
     }
 }

@@ -25,6 +25,15 @@ namespace ImaSuguRinne
             SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_WitchBoss_Ex_0).Particle_Path;
         }
 
+        public override IEnumerator DrawAction()
+        {
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_ResonanceofPain_0)
+            {
+                Utils.CastSkill(BChar, MySkill);
+            }
+            return base.DrawAction();
+        }
+
         public override void FixedUpdate()
         {
             if (BChar.BattleInfo.EnemyList.Count == 1)
@@ -67,11 +76,19 @@ namespace ImaSuguRinne
                 Targets.AddRange(additionalTargets);
             }
 
-            Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_ResonanceofPain, true, true, 1, 2, false);
-
             foreach (var target in Targets)
             {
                 Utils.CopyAndExtendDebuffs(target);
+            }
+
+            if (MySkill.MySkill.KeyID == ModItemKeys.Skill_S_Rinne_ResonanceofPain_0)
+            {
+                Utils.AllyTeam.Draw();
+            }
+            else
+            {
+                Skill skill = Utils.CreateSkill(BChar, ModItemKeys.Skill_S_Rinne_ResonanceofPain_0, true, true, 0, 0, true, false);
+                Utils.InsertSkillInDeck(BChar, skill);
             }
         }
     }
