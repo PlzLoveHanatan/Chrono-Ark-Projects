@@ -28,7 +28,8 @@ namespace Aqua
 
         public static bool CleanseAllDebuffs => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Cleanse All Debuffs").Value;
 
-        public static bool AquaHealingButton => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Aqua Healing Button").Value;
+        public static bool GoddessEquip => ModManager.getModInfo("Aqua").GetSetting<ToggleSetting>("Goddess Equip").Value;
+        public static bool Equip;
 
 
         public static List<GDESkillData> CachedSkills;
@@ -179,7 +180,6 @@ namespace Aqua
                     CachedSkills.Add(gdeskillData);
                 }
             }
-            Debug.Log($"[SkillCache] Cached {CachedSkills.Count} usable skills");
         }
     }
 }

@@ -103,6 +103,36 @@ namespace Aqua
             { "Other_1", "화조풍월~! 역시 퀘스트가 끝난 후에는 슈와슈와가 최고야!" },
             { "Master", "기껏 이쪽 세계에 왔는 걸~. 재밌는 기억을 잔뜩 만들어줬으면 해!" }
         };
+        private static readonly Dictionary<string, string> AquaVoiceLinesJP = new Dictionary<string, string>
+        {
+            { "BattleStart_0", "私はアクシス教の神聖なる化身、水を司る女神！" },
+            { "BattleStart_1", "もっと甘やかして！ 崇めて！ 私は女神なんだから！" },
+            { "BattleStart_2", "私は誰でしょう？ 名前は言えないけど、通りすがりの水の女神です！" },
+            { "IdlingB_0", "回復も支援も、大司祭である私に任せて！" },
+            { "IdlingB_1", "カズマさ〜ん、退屈だよ〜！ 高い高いして！" },
+            { "DeathA_0", "女神である私が、こんな馬鹿げた役をやるなんて認めない！" },
+            { "DeathA_1", "たまには、静かにシュワシュワを飲みたい時もある…" },
+            { "DeathA_2", "ううっ…くさい…くっさぁ…" },
+            { "DeathAlly_0", "魔王を早く倒して、この世界をなんとかしてよ！" },
+            { "DeathAlly_1", "任せて！ ゴッドスマッシュを見せてあげるから！" },
+            { "Kill_0", "獲物確保、水の女神アクア参上！" },
+            { "Kill_1", "一生懸命働いて、いつか厩舎暮らしから抜け出さなきゃ！" },
+            { "Cri_0", "今日もマスターに褒められた！" },
+            { "Chest_0", "なぜエスティアが女神だと信じられてるの？ 私も女神なんだよ？" },
+            { "Potion_0", "今夜はお祭り！ 美味しいお菓子と炭酸飲料で朝までパーティーしよう！" },
+            { "IdlingF_0", "ねえめぐみん！ こっち来て！ ここに変な魚がいるよ！" },
+            { "IdlingF_1", "私はただの人間には興味ないの。大丈夫！ 本物の女神だから！" },
+            { "IdlingF_2", "カズマ！ 疲れた！ おんぶして！ おんぶ！" },
+            { "Heal_0", "ねえ、ご飯まだ？ お腹すいたよ…" },
+            { "Heal_1", "女神は繊細なんだから！ 静かな部屋と暖かい布団がないと眠れないの！" },
+            { "Heal_2", "今の暮らしに感謝しなきゃ。もう藁の上で寝るなんて想像したくもないから。" },
+            { "Curse", "魂が命じる時、真の技は自らが成すもの！" },
+            { "Pharos", "温泉の水を浄化してごめんね、でも私は女神だから仕方ないでしょ？" },
+            { "Other_0", "ふふん、これが私特製の女神ケーキ！どう？ 美味しそうでしょ？" },
+            { "Other_1", "自然の美しさ〜！ クエストの後はやっぱり炭酸飲料が最高！" },
+            { "Master", "この世界に来たからには、楽しい思い出をたくさん作ってほしい！" }
+        };
+
 
         private static readonly Dictionary<string, string> AquaVoiceLinesChinese = new Dictionary<string, string>
         {
@@ -203,8 +233,17 @@ namespace Aqua
                             }
                             break;
 
-                        //case "Japanese":
-                        //    break;
+                        case "Japanese":
+
+                            foreach (var kvp in AquaVoiceLinesJP)
+                            {
+                                if (inText.Contains(kvp.Value))
+                                {
+                                    MasterAudio.StopBus("SE");
+                                    MasterAudio.PlaySound(kvp.Key, 100f, null, 0f, null, null, false, false);
+                                }
+                            }
+                            break;
 
                         case "Chinese":
 
@@ -247,6 +286,34 @@ namespace Aqua
             }
         }
 
+        [HarmonyPatch(typeof(FieldSystem), "StageStart")]
+        public static class StagePatch
+        {
+            [HarmonyPostfix]
+            public static void StageStartPostfix()
+            {
+                if (PlayData.TSavedata.StageNum >= 0 && AquaInParty())
+                {
+                    if (Utils.GoddessEquip && !Utils.Equip)
+                    {
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Aqua_Hagoromo, 1));
+                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Aqua_SacredLaundryStaff, 1));
+                        Utils.Equip = true;
+                    }
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
+        public static class MemoryReset
+        {
+            [HarmonyPostfix]
+            public static void Postfix()
+            {
+                Utils.Equip = false;
+            }
+        }
+
         [HarmonyPatch(typeof(CharEquipInven))]
         [HarmonyPatch(nameof(CharEquipInven.AddNewItem))]
         public class Curse_Equip_Patch
@@ -254,7 +321,7 @@ namespace Aqua
             [HarmonyPrefix]
             public static void Prefix(int ItemNum, ItemBase Item)
             {
-                if (AquaInPlay())
+                if (AquaInParty() && Utils.CleanseAllCurses)
                 {
                     if (Item is Item_Equip equip && equip.IsCurse)
                     {
@@ -283,7 +350,7 @@ namespace Aqua
             [HarmonyPrefix]
             public static bool NewCurse_Prefix(Item_Equip MainItem, string CurseKey, ref EquipCurse __result)
             {
-                if (AquaInPlay())
+                if (AquaInParty() && Utils.CleanseAllCurses)
                 {
                     __result = new EquipCurse();
                     __result.MyItem = MainItem;
@@ -299,7 +366,7 @@ namespace Aqua
         [HarmonyPatch(nameof(EquipCurse.RandomCurse))]
         public static bool RandomCurse_Prefix(Item_Equip MainItem, ref EquipCurse __result)
         {
-            if (AquaInPlay())
+            if (AquaInParty() && Utils.CleanseAllCurses)
             {
                 __result = new EquipCurse();
                 __result.MyItem = MainItem;
@@ -307,31 +374,12 @@ namespace Aqua
 
                 return false;
             }
-
             return true;
         }
 
-        [HarmonyPatch(typeof(Misc))]
-        public static class Misc_IsFemale_Patch
+        public static bool AquaInParty()
         {
-            [HarmonyPatch("IsFemale")]
-            [HarmonyPostfix]
-            public static void IsFemale_Postfix(ref bool __result, string Key)
-            {
-                __result = true;
-            }
-        }
-
-        private static bool AquaInPlay()
-        {
-            if (!Utils.CleanseAllCurses) return false;
-
-            foreach (var character in PlayData.TSavedata.Party)
-            {
-                if (character.KeyData == ModItemKeys.Character_Aqua) return true;
-            }
-
-            return false;
+            return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Aqua);
         }
     }
 }

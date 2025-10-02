@@ -67,12 +67,6 @@ namespace Aqua
             if (interactable && BattleSystem.instance.ActWindow.CanAnyMove && Utils.AquaVoiceButtonHotkey && Input.GetKeyDown(KeyCode.N))
             {
                 AquaButton?.AquaYapping();
-
-                if (Utils.AquaHealingButton)
-                {
-                    AquaButton?.AquaHealingTears();
-                }
-
                 Img.color = normalColor;
 
                 //Img.rectTransform.localScale = 1.1f * Vector3.one;
@@ -109,11 +103,6 @@ namespace Aqua
             if (!interactable || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 
             AquaButton?.AquaYapping();
-
-            if (Utils.AquaHealingButton)
-            {
-                AquaButton?.AquaHealingTears();
-            }
             Img.rectTransform.localScale = 1.1f * Vector3.one;
             Img.color = pressedColor;
         }

@@ -20,11 +20,8 @@ namespace Aqua
     /// Aqua
     /// Passive:
     /// </summary>
-    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_UIOnBefore, IP_BattleStart_Ones, IP_SomeOneDead
+    public class P_Aqua : Passive_Char, IP_DamageTake, IP_BuffAddAfter, IP_BattleStart_UIOnBefore, IP_BattleStart_Ones, IP_SomeOneDead
     {
-        private int AquaDamageTaken;
-        private bool AquaCurseRemoval;
-
         public override void Init()
         {
             OnePassive = true;
@@ -32,7 +29,6 @@ namespace Aqua
 
         public void BattleStart(BattleSystem Ins)
         {
-            AquaCurseRemoval = false;
 
             if (Utils.CleanseAllCurses)
             {
@@ -43,35 +39,27 @@ namespace Aqua
                     {
                         PlayData.TSavedata.LucySkills.RemoveAt(i);
                         i--;
-                        AquaCurseRemoval = true;
                     }
                 }
 
-                if (AquaCurseRemoval)
+
+                var team = BattleSystem.instance.AllyTeam;
+                var deck = team.Skills.Concat(team.Skills_Deck).ToList();
+
+                for (int i = 0; i < deck.Count; i++)
                 {
-                    var team = BattleSystem.instance.AllyTeam;
-                    var deck = team.Skills.Concat(team.Skills_Deck).ToList();
+                    var skill = deck[i];
 
-                    for (int i = 0; i < deck.Count; i++)
+                    if (skill?.MySkill != null && skill.MySkill.User == "LucyCurse" || skill?.MySkill?.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy)
                     {
-                        var skill = deck[i];
+                        team.Skills.Remove(skill);
+                        team.Skills_Deck.Remove(skill);
 
-                        if (skill?.MySkill != null && skill.MySkill.User == "LucyCurse" || skill?.MySkill?.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy)
-                        {
-                            team.Skills.Remove(skill);
-                            team.Skills_Deck.Remove(skill);
-                        }
+                        MasterAudio.StopBus("SE");
+                        MasterAudio.PlaySound("WaterSpell", 100f, null, 0f, null, null, false, false);
                     }
-
-                    MasterAudio.StopBus("SE");
-                    MasterAudio.PlaySound("WaterSpell", 100f, null, 0f, null, null, false, false);
                 }
             }
-        }
-
-        public void Turn()
-        {
-            AquaDamageTaken = 0;
         }
 
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
@@ -80,33 +68,22 @@ namespace Aqua
             {
                 foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
                 {
-                    if (ally != BChar && ally != null)
+                    if (ally != null)
                     {
-                        ally.Heal(BattleSystem.instance.DummyChar, 2f, false, true, null);
+                        ally?.Heal(BattleSystem.instance.DummyChar, 2f, false, true, null);
 
-                        Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, this.BChar, this.BChar.MyTeam);
+                        Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, BChar, BChar.MyTeam);
                         healingParticle.PlusHit = true;
                         healingParticle.FreeUse = true;
 
-                        this.BChar.ParticleOut(healingParticle, ally);
+                        BChar.ParticleOut(healingParticle, ally);
                     }
                 }
 
                 foreach (var enemy in BattleSystem.instance.EnemyTeam.AliveChars_Vanish)
                 {
-                    enemy?.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, this.BChar, false, 0, false, -1, false);
-                }
-
-                if (AquaDamageTaken > 2) return;
-
-                AquaDamageTaken++;
-
-                if (AquaDamageTaken == 2)
-                {
-                    foreach (var target in BattleSystem.instance.AllyTeam.AliveChars.Concat(BattleSystem.instance.EnemyTeam.AliveChars_Vanish))
-                    {
-                        target?.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
-                    }
+                    enemy?.BuffAdd(ModItemKeys.Buff_B_Aqua_CryingShame, BChar, false, 0, false, -1, false);
+                    enemy?.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, BChar, false, 0, false, -1, false);
                 }
             }
         }
@@ -148,11 +125,11 @@ namespace Aqua
                 Vector3 offset = new Vector3(1.25f, 0.85f, 0f);
                 Vector3 finalPos = basePos + offset;
 
-                createIconButton("Aqua_Chibi", aqua.transform, "AquaChibi.png", new Vector3(130f, 158f), finalPos);
+                CreateIconButton("Aqua_Chibi", aqua.transform, "AquaChibi.png", new Vector3(130f, 158f), finalPos);
             }
         }
 
-        private void createIconButton(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos)
+        private void CreateIconButton(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos)
         {
             GameObject aquaButton = Utils.creatGameObject(name, parent);
             if (aquaButton == null) return;

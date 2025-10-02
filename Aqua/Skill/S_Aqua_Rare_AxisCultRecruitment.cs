@@ -37,8 +37,8 @@ namespace Aqua
 
             if (alwaysLucky)
             {
-                int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
-                int index2 = RandomManager.RandomInt(BattleRandom.PassiveItem, 100, 300);
+                int index = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, 4);
+                int index2 = RandomManager.RandomInt(BattleRandom.PassiveItem, 50, 400);
 
                 InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, index));
                 InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, index2));
@@ -47,6 +47,7 @@ namespace Aqua
                 MySkill.isExcept = true;
             }
         }
+
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
         {
 
@@ -63,7 +64,7 @@ namespace Aqua
                     Target.HPToZero();
                 }
             }
-
+            Recruitment = false;
             return Damage;
         }
     }

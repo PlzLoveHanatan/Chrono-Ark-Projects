@@ -6,19 +6,23 @@ namespace Aqua
 		/// <summary>
 		/// Aqua
 		/// Passive:
-		/// Aqua cannot be afflicted with any debuffs and cleanses all curses. Every time Aqua takes damage, heal all allies (except Aqua) by 2 HP, and apply <color=#FF6B6B>Crying Shame</color> (<sprite=0>100%) to all enemies.
-		/// If Aqua takes damage 2 times in a turn apply <color=#A3DFF7>Drenched</color> (<sprite=0>100%) to all allies and enemies, only activates once per turn.
+		/// Aqua cannot be afflicted with any debuffs and cleanses all curses from equipment and deck.
+		/// Every time Aqua takes damage, heal all allies by 2, apply <color=#FF6B6B>Crying Shame</color> and <color=#A3DFF7>Drenched</color> to all enemies.
 		/// <color=#919191>- This passive is applied from level 1.
-		/// Her tears may be annoying, but surprisingly effective.
-		/// Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
+		/// Her tears may be annoying, but surprisingly effective. Magical debuffs require mental stability to take effect. Sadly, that ship sank long ago.</color>
 		/// </summary>
         public static string Character_Aqua = "Aqua";
         public static string Character_Skin_Aqua_Bunny_Skin_H = "Aqua_Bunny_Skin_H";
+        public static string Character_Skin_Aqua_Bunny_Skin_R = "Aqua_Bunny_Skin_R";
         public static string Character_Skin_Aqua_Nurse_Skin = "Aqua_Nurse_Skin";
 		/// <summary>
 		/// Aqua Veil
 		/// </summary>
         public static string Buff_B_Aqua_AquaVeil = "B_Aqua_AquaVeil";
+		/// <summary>
+		/// Aqua Veil
+		/// </summary>
+        public static string Buff_B_Aqua_AquaVeil_0 = "B_Aqua_AquaVeil_0";
 		/// <summary>
 		/// Crying Shame
 		/// </summary>
@@ -140,27 +144,30 @@ namespace Aqua
         public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment = "SE_T_S_Aqua_SplashofJudgment";
         public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment_0 = "SE_T_S_Aqua_SplashofJudgment_0";
         public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment_0_H = "SE_T_S_Aqua_SplashofJudgment_0_H";
+        public static string SkillEffect_SE_T_S_Aqua_SplashofJudgment_0_R = "SE_T_S_Aqua_SplashofJudgment_0_R";
         public static string SkillEffect_SE_T_S_Aqua_TorrentialTears = "SE_T_S_Aqua_TorrentialTears";
         public static string SkillEffect_SE_T_TorrentialTears = "SE_T_TorrentialTears";
 		/// <summary>
 		/// Aqua-Grade Purification
-		/// If the target is an ally, they will be healed instead.
-		/// Remove all buffs/debuffs from target's.
+		/// Remove all target's debuffs.
 		/// </summary>
         public static string Skill_S_Aqua_AquaGradePurification = "S_Aqua_AquaGradePurification";
         public static string VFXSkill_S_Aqua_AquaGradePurification_H = "S_Aqua_AquaGradePurification_H";
+        public static string VFXSkill_S_Aqua_AquaGradePurification_R = "S_Aqua_AquaGradePurification_R";
 		/// <summary>
 		/// Blessing of the Axis Cult
 		/// Cost is reduced by 1 and gain 'Swiftness' if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_Aqua_BlessingoftheAxisCult = "S_Aqua_BlessingoftheAxisCult";
         public static string VFXSkill_S_Aqua_BlessingoftheAxisCult_H = "S_Aqua_BlessingoftheAxisCult_H";
+        public static string VFXSkill_S_Aqua_BlessingoftheAxisCult_R = "S_Aqua_BlessingoftheAxisCult_R";
 		/// <summary>
 		/// Divine Lottery
 		/// Cast a random skill.
 		/// </summary>
         public static string Skill_S_Aqua_DivineLottery = "S_Aqua_DivineLottery";
         public static string VFXSkill_S_Aqua_DivineLottery_H = "S_Aqua_DivineLottery_H";
+        public static string VFXSkill_S_Aqua_DivineLottery_R = "S_Aqua_DivineLottery_R";
         public static string Skill_S_Aqua_DummyHeal = "S_Aqua_DummyHeal";
 		/// <summary>
 		/// Fog of Blessings (and Mistakes)
@@ -168,13 +175,15 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_FogofBlessings = "S_Aqua_FogofBlessings";
         public static string VFXSkill_S_Aqua_FogofBlessings_H = "S_Aqua_FogofBlessings_H";
+        public static string VFXSkill_S_Aqua_FogofBlessings_R = "S_Aqua_FogofBlessings_R";
 		/// <summary>
 		/// Goddess's Secret Weapon (Don't Tell Kazuma)
-		/// Draw 2 skill's and cast 'Nature's Beauty' to all allies.
-		/// If Aqua is fainted, do not cast 'Nature's Beauty'.
+		/// Draw 3 skill's and cast 'Nature's Beauty' to all allies.
+		/// If Aqua is fainted, draw 1 skill and exclude this skill from the current fight.
 		/// </summary>
         public static string Skill_S_Aqua_LucyDraw = "S_Aqua_LucyDraw";
         public static string VFXSkill_S_Aqua_LucyDraw_H = "S_Aqua_LucyDraw_H";
+        public static string VFXSkill_S_Aqua_LucyDraw_R = "S_Aqua_LucyDraw_R";
 		/// <summary>
 		/// Overflowing Grace of the Water Goddess
 		/// Apply <color=#A3DFF7>Drenched</color> to all allies and enemies.
@@ -182,12 +191,14 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_OverflowingGrace = "S_Aqua_OverflowingGrace";
         public static string VFXSkill_S_Aqua_OverflowingGrace_H = "S_Aqua_OverflowingGrace_H";
+        public static string VFXSkill_S_Aqua_OverflowingGrace_R = "S_Aqua_OverflowingGrace_R";
 		/// <summary>
 		/// Party Drunkard
 		/// Cost is reduced by 1 if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_Aqua_PartyDrunkard = "S_Aqua_PartyDrunkard";
         public static string VFXSkill_S_Aqua_PartyDrunkard_H = "S_Aqua_PartyDrunkard_H";
+        public static string VFXSkill_S_Aqua_PartyDrunkard_R = "S_Aqua_PartyDrunkard_R";
 		/// <summary>
 		/// Party Trick
 		/// Randomly activate one of the following 7 effects:  
@@ -202,16 +213,20 @@ namespace Aqua
         public static string Skill_S_Aqua_PartyTrick = "S_Aqua_PartyTrick";
 		/// <summary>
 		/// Certain kill party trick, the type 100 mist!
-		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 3 stacks of <color=#5F9EA0>Aqua Veil</color> to all allies and enemies and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
-		/// <color=#919191>Once activated, it would last for at least half a day before fading.</color>
+		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 3 stacks of <color=#5F9EA0>Aqua Veil</color> (1 turn for allies) to all targets and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
+		/// <color=#919191>Once activated, it continues for half a day before finally fading away.</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_Certainkill = "S_Aqua_PartyTrick_Certainkill";
 		/// <summary>
 		/// Certain kill party trick, the type 100 mist!
-		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 3 stacks of <color=#5F9EA0>Aqua Veil</color> to all allies and enemies and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
-		/// <color=#919191>Once activated, it would last for at least half a day before fading.</color>
+		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 3 stacks of <color=#5F9EA0>Aqua Veil</color> (1 turn for allies) to all targets and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_Certainkill_H = "S_Aqua_PartyTrick_Certainkill_H";
+		/// <summary>
+		/// Certain kill party trick, the type 100 mist!
+		/// Apply 3 stacks of <color=#A3DFF7>Drenched</color> and 3 stacks of <color=#5F9EA0>Aqua Veil</color> (1 turn for allies) to all targets and apply <color=#48D1CC>Type 100 Recovery Mode</color> to all allies.
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_Certainkill_R = "S_Aqua_PartyTrick_Certainkill_R";
         public static string VFXSkill_S_Aqua_PartyTrick_H = "S_Aqua_PartyTrick_H";
 		/// <summary>
 		/// Minor pocket dimension
@@ -226,6 +241,12 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_Minorpocket_H = "S_Aqua_PartyTrick_Minorpocket_H";
 		/// <summary>
+		/// Minor pocket dimension
+		/// Gain random book (Skill Book, Infinite Skill Book, Golden Skill Book, Mysterious Skill Book, Transcendent Tome).
+		/// <color=#919191>She opened a rift to store snacks. Someone's forgotten tome fell out instead.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_Minorpocket_R = "S_Aqua_PartyTrick_Minorpocket_R";
+		/// <summary>
 		/// Nature's Beauty
 		/// Heal all allies by 5 and apply 5 barrier.
 		/// <color=#919191>Trust Me, I'm a Goddess!</color>
@@ -237,6 +258,12 @@ namespace Aqua
 		/// <color=#919191>Trust Me, I'm a Goddess!</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_NaturesBeauty_H = "S_Aqua_PartyTrick_NaturesBeauty_H";
+		/// <summary>
+		/// Nature's Beauty
+		/// Heal all allies by 5 and apply 5 barrier.
+		/// <color=#919191>Trust Me, I'm a Goddess!</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_NaturesBeauty_R = "S_Aqua_PartyTrick_NaturesBeauty_R";
 		/// <summary>
 		/// Phantasmal Beauty
 		/// Apply Stun (<sprite=2>150%) to all enemies.
@@ -250,17 +277,30 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_PhantasmalBeauty_H = "S_Aqua_PartyTrick_PhantasmalBeauty_H";
 		/// <summary>
+		/// Phantasmal Beauty
+		/// Apply Stun (<sprite=2>150%) to all enemies.
+		/// <color=#919191>Behold, My Illusion!</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_PhantasmalBeauty_R = "S_Aqua_PartyTrick_PhantasmalBeauty_R";
+        public static string VFXSkill_S_Aqua_PartyTrick_R = "S_Aqua_PartyTrick_R";
+		/// <summary>
 		/// Telekinesis Trick
-		/// Deal <color=purple>10 Pain damage</color> and apply 'Unstable Posture' to a random target.
+		/// Deal <color=purple>10 Pain damage</color> and apply 'Unstable Posture' to a random enemy.
 		/// <color=#919191>Totally Controlled!</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_TelekinesisTrick = "S_Aqua_PartyTrick_TelekinesisTrick";
 		/// <summary>
 		/// Telekinesis Trick
-		/// Deal <color=purple>10 Pain damage</color> and apply 'Unstable Posture' to a random target.
+		/// Deal <color=purple>10 Pain damage</color> and apply 'Unstable Posture' to a random enemy.
 		/// <color=#919191>Totally Controlled!</color>
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_TelekinesisTrick_H = "S_Aqua_PartyTrick_TelekinesisTrick_H";
+		/// <summary>
+		/// Telekinesis Trick
+		/// Deal <color=purple>10 Pain damage</color> and apply 'Unstable Posture' to a random enemy.
+		/// <color=#919191>Totally Controlled!</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_TelekinesisTrick_R = "S_Aqua_PartyTrick_TelekinesisTrick_R";
 		/// <summary>
 		/// Unusual Plant
 		/// Gain random potion.
@@ -274,6 +314,12 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_UnusualPlant_H = "S_Aqua_PartyTrick_UnusualPlant_H";
 		/// <summary>
+		/// Unusual Plant
+		/// Gain random potion.
+		/// <color=#919191>Aqua tried to make flowers bloom. Something... drinkable sprouted instead.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_UnusualPlant_R = "S_Aqua_PartyTrick_UnusualPlant_R";
+		/// <summary>
 		/// Vanish Trick
 		/// Random enemy disappears (Deal <color=purple>40 Pain damage</color> to bosses instead).
 		/// <color=#919191>Aqua knows not where it goes nor can she return the object.</color>
@@ -286,20 +332,28 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_PartyTrick_VanishTrick_H = "S_Aqua_PartyTrick_VanishTrick_H";
 		/// <summary>
+		/// Vanish Trick
+		/// Random enemy disappears (Deal <color=purple>40 Pain damage</color> to bosses instead).
+		/// <color=#919191>Aqua knows not where it goes nor can she return the object.</color>
+		/// </summary>
+        public static string Skill_S_Aqua_PartyTrick_VanishTrick_R = "S_Aqua_PartyTrick_VanishTrick_R";
+		/// <summary>
 		/// Axis Cult Recruitment
-		/// Gain a 40% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead, granting a special reward), then exclude this skill from current fight.
-		/// New followers bring 100~300 gold and 1~2 soulstones.
+		/// Gain a 40% chance to recruit the enemy into the Axis Cult (Deals <color=purple>60 Pain damage</color> to bosses instead and gain reward), then exclude this skill from current fight.
+		/// New followers bring 50~400 gold and 0~3 soulstones.
 		/// <color=#919191>Join us! We have hot springs... and emotional instability!</color>
 		/// </summary>
         public static string Skill_S_Aqua_Rare_AxisCultRecruitment = "S_Aqua_Rare_AxisCultRecruitment";
         public static string VFXSkill_S_Aqua_Rare_AxisCultRecruitment_H = "S_Aqua_Rare_AxisCultRecruitment_H";
+        public static string VFXSkill_S_Aqua_Rare_AxisCultRecruitment_R = "S_Aqua_Rare_AxisCultRecruitment_R";
 		/// <summary>
 		/// God's Blow
-		/// Gain 50% chance to increase this skill damage by 400%.
+		/// Gain 50% chance to increase this skill damage by 500%.
 		/// <color=#919191>Aqua gathers all her divine might... and misses spectacularly half the time.</color>
 		/// </summary>
         public static string Skill_S_Aqua_Rare_GodsBlow = "S_Aqua_Rare_GodsBlow";
         public static string VFXSkill_S_Aqua_Rare_GodsBlow_H = "S_Aqua_Rare_GodsBlow_H";
+        public static string VFXSkill_S_Aqua_Rare_GodsBlow_R = "S_Aqua_Rare_GodsBlow_R";
 		/// <summary>
 		/// Splash of Judgment
 		/// Gain 'Swiftness' if this skill is a fixed ability.
@@ -315,7 +369,12 @@ namespace Aqua
 		/// Splash of Judgment
 		/// </summary>
         public static string Skill_S_Aqua_SplashofJudgment_0_H = "S_Aqua_SplashofJudgment_0_H";
+		/// <summary>
+		/// Splash of Judgment
+		/// </summary>
+        public static string Skill_S_Aqua_SplashofJudgment_0_R = "S_Aqua_SplashofJudgment_0_R";
         public static string VFXSkill_S_Aqua_SplashofJudgment_H = "S_Aqua_SplashofJudgment_H";
+        public static string VFXSkill_S_Aqua_SplashofJudgment_R = "S_Aqua_SplashofJudgment_R";
 		/// <summary>
 		/// Torrential Tears
 		/// Apply <color=#A3DFF7>Drenched</color> and <color=#FF6B6B>Crying Shame</color> to allies.
@@ -324,6 +383,7 @@ namespace Aqua
 		/// </summary>
         public static string Skill_S_Aqua_TorrentialTears = "S_Aqua_TorrentialTears";
         public static string VFXSkill_S_Aqua_TorrentialTears_H = "S_Aqua_TorrentialTears_H";
+        public static string VFXSkill_S_Aqua_TorrentialTears_R = "S_Aqua_TorrentialTears_R";
 
     }
 

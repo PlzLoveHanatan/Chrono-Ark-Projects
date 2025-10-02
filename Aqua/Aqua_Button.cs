@@ -94,26 +94,9 @@ namespace Aqua
         public void AquaYapping()
         {
             string randomSound = AquaVoiceLines[RandomManager.RandomInt(BattleRandom.PassiveItem, 0, AquaVoiceLines.Count)];
+            PlayData.TSavedata._Gold += 1;
             MasterAudio.StopBus("SE");
             MasterAudio.PlaySound(randomSound, 100f);
-        }
-
-        public void AquaHealingTears()
-        {
-            PlayData.TSavedata._Gold += 1;
-            foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
-            {
-                if (ally != Utils.Aqua && ally != null)
-                {
-                    ally.Heal(BattleSystem.instance.DummyChar, 2f, false, true, null);
-
-                    Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_DummyHeal, Utils.Aqua, Utils.Aqua.MyTeam);
-                    healingParticle.PlusHit = true;
-                    healingParticle.FreeUse = true;
-
-                    Utils.Aqua.ParticleOut(healingParticle, ally);
-                }
-            }
         }
     }
 }

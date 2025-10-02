@@ -23,19 +23,24 @@ namespace Aqua
     {
         private bool Vanish = true;
 
-
         public override void Init()
         {
             OnePassive = true;
 
-            if (!SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_H")) return;
+            string plusSkillView = ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty;
+
+            if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_H"))
             {
-                GDESkillData gdeskillData = new GDESkillData(MySkill.MySkill.KeyID);
-
-                MySkill.Init(gdeskillData, BChar, BChar.MyTeam);
-
-                MySkill.MySkill.PlusSkillView = ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_H;
+                plusSkillView = ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_H;
             }
+            else if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_R"))
+            {
+                plusSkillView = ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_R;
+            }
+
+            GDESkillData gdeskillData = new GDESkillData(MySkill.MySkill.KeyID);
+            MySkill.Init(gdeskillData, BChar, BChar.MyTeam);
+            MySkill.MySkill.PlusSkillView = plusSkillView;
         }
 
 
@@ -64,6 +69,17 @@ namespace Aqua
             ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill_H,
             ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant_H,
             ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket_H,
+        };
+
+        private readonly List<string> AquaRandomSkillSelectionR = new List<string>
+        {
+            ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_R,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty_R,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick_R,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick_R,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill_R,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant_R,
+            ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket_R,
         };
 
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
@@ -97,22 +113,24 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
+            List<string> aquaSkills = new List<string>();
+
+
             if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_H"))
             {
-                List<string> aquaSkillsH = new List<string>();
-                aquaSkillsH.AddRange(AquaRandomSkillSelectionH);
-
-                Skill randomSkil = Skill.TempSkill(aquaSkillsH.Random(this.BChar.GetRandomClass().Main), this.MySkill.Master, this.MySkill.Master.MyTeam);
-                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { randomSkil }, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+                aquaSkills.AddRange(AquaRandomSkillSelectionH);
+            }
+            else if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_R"))
+            {
+                aquaSkills.AddRange(AquaRandomSkillSelectionR);
             }
             else
             {
-                List<string> aquaSkills = new List<string>();
                 aquaSkills.AddRange(AquaRandomSkillSelection);
-
-                Skill randomSkil = Skill.TempSkill(aquaSkills.Random(this.BChar.GetRandomClass().Main), this.MySkill.Master, this.MySkill.Master.MyTeam);
-                BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { randomSkil }, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
             }
+
+            Skill randomSkil = Skill.TempSkill(aquaSkills.Random(this.BChar.GetRandomClass().Main), this.MySkill.Master, this.MySkill.Master.MyTeam);
+            BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { randomSkil }, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
         }
 
         public void Selection(SkillButton Mybutton)
@@ -122,13 +140,13 @@ namespace Aqua
 
         private IEnumerator RandomSkillSelect(SkillButton Mybutton)
         {
-            string skillId = Mybutton.Myskill.MySkill.KeyID;
+            string key = Mybutton.Myskill.MySkill.KeyID;
             var allies = BattleSystem.instance.AllyTeam.AliveChars;
             var enemies = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
             var allTargets = allies.Concat(enemies).ToList();
             var stun = GDEItemKeys.Buff_B_Common_Rest;
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_H)
+            if (key == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty || key == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_H || key == ModItemKeys.Skill_S_Aqua_PartyTrick_NaturesBeauty_R)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -148,7 +166,7 @@ namespace Aqua
                 }
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty_H)
+            if (key == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty || key == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty_H || key == ModItemKeys.Skill_S_Aqua_PartyTrick_PhantasmalBeauty_R)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -161,7 +179,7 @@ namespace Aqua
                 }
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick_H)
+            if (key == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick || key == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick_H || key == ModItemKeys.Skill_S_Aqua_PartyTrick_VanishTrick_R)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -178,15 +196,15 @@ namespace Aqua
                 int result = DamageChange(dummySkill, dummyTarget, dummyDamage, ref dummyCri, false);
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick_H)
+            if (key == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick || key == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick_H || key == ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick_R)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
                     Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick);
                 }
 
-                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, allTargets.Count);
-                BattleChar randomTarget = allTargets[randomIndex];
+                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, enemies.Count);
+                BattleChar randomTarget = enemies[randomIndex];
 
                 randomTarget.BuffAdd(ModItemKeys.Buff_B_Aqua_UnstablePosture, this.BChar, false, 0, false, -1, false);
                 Skill Telekinesis = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_PartyTrick_TelekinesisTrick, this.BChar, this.BChar.MyTeam);
@@ -197,7 +215,7 @@ namespace Aqua
                 BChar.ParticleOut(Telekinesis, randomTarget);
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill_H)
+            if (key == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill || key == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill_H || key == ModItemKeys.Skill_S_Aqua_PartyTrick_Certainkill_R)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -208,8 +226,9 @@ namespace Aqua
                 {
                     foreach (var target in allTargets)
                     {
+                        string auqaVeil = target.Info.Ally ? ModItemKeys.Buff_B_Aqua_AquaVeil_0 : ModItemKeys.Buff_B_Aqua_AquaVeil;
                         target.BuffAdd(ModItemKeys.Buff_B_Aqua_Drenched, this.BChar, false, 0, false, -1, false);
-                        target.BuffAdd(ModItemKeys.Buff_B_Aqua_AquaVeil, this.BChar, false, 0, false, -1, false);
+                        target.BuffAdd(auqaVeil, this.BChar, false, 0, false, -1, false);
 
                         if (target.Info.Ally)
                         {
@@ -219,7 +238,7 @@ namespace Aqua
                 }
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant_H)
+            if (key == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant || key == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant_H || key == ModItemKeys.Skill_S_Aqua_PartyTrick_UnusualPlant_R)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
@@ -229,38 +248,45 @@ namespace Aqua
                 InventoryManager.Reward(InventoryManager.RewardKey(GDEItemKeys.Reward_R_GetPotion, false));
             }
 
-            if (skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket || skillId == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket_H)
+            if (key == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket || key == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket_H || key == ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket_R)
             {
                 if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.Name == ModItemKeys.Character_Aqua)
                 {
                     Utils.PlaySound(ModItemKeys.Skill_S_Aqua_PartyTrick_Minorpocket);
                 }
 
-                int roll = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, 101);
+                int roll = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, 101);
 
-                if (roll < 40)
+                foreach (var entry in RewardTable)
                 {
-                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
-                }
-                else if (roll < 50)
-                {
-                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 1));
-                }
-                else if (roll < 75)
-                {
-                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare, 1));
-                }
-                else if (roll < 80)
-                {
-                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy, 1));
-                }
-                else
-                {
-                    InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy_Rare, 1));
+                    if (roll < entry.Threshold)
+                    {
+                        GainReward(entry.RewardId);
+                        break;
+                    }
                 }
             }
-
             yield break;
+        }
+
+        private struct RewardChance
+        {
+            public int Threshold;
+            public string RewardId;
+        }
+
+        private readonly RewardChance[] RewardTable =
+        {
+            new RewardChance { Threshold = 40, RewardId = GDEItemKeys.Item_Consume_SkillBookCharacter },
+            new RewardChance { Threshold = 50, RewardId = GDEItemKeys.Item_Consume_SkillBookInfinity },
+            new RewardChance { Threshold = 75, RewardId = GDEItemKeys.Item_Consume_SkillBookCharacter_Rare },
+            new RewardChance { Threshold = 80, RewardId = GDEItemKeys.Item_Consume_SkillBookLucy },
+            new RewardChance { Threshold = 100, RewardId = GDEItemKeys.Item_Consume_SkillBookLucy_Rare }
+        };
+
+        public void GainReward(string reward)
+        {
+            InventoryManager.Reward(ItemBase.GetItem(reward));
         }
     }
 }

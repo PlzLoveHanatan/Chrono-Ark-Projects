@@ -18,14 +18,17 @@ namespace Aqua
     /// </summary>
     public class B_Aqua_LiquidCourage : Buff, IP_SkillUse_User
     {
-        public override void BuffStat()
+
+        public override void Init()
         {
-            this.PlusPerStat.Damage = 25;
+            PlusPerStat.Damage = 30;
         }
+
         public override bool UseSkillBuff(Skill Myskill)
         {
             return Myskill.IsDamage;
         }
+
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
             bool neverLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 15);

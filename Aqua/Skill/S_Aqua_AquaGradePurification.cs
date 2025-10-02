@@ -17,7 +17,7 @@ namespace Aqua
     /// <summary>
     /// Aqua-Grade Purification
     /// </summary>
-    public class S_Aqua_AquaGradePurification : Skill_Extended, IP_ChangeDamageState
+    public class S_Aqua_AquaGradePurification : Skill_Extended
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
@@ -28,21 +28,14 @@ namespace Aqua
 
             var target = Targets[0];
 
-            if (target != null)
+            if (target != null && target.Info.Ally)
             {
-                var buffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALL, false, false);
+                var buffs = target.GetBuffs(BattleChar.GETBUFFTYPE.DEBUFF, false, false);
 
                 foreach (var buff in buffs)
                 {
                     buff.SelfDestroy();
                 }
-            }
-        }
-        public void ChangeDamageState(SkillParticle SP, BattleChar Target, int DMG, bool Cri, ref bool ToHeal, ref bool ToPain)
-        {
-            if (Target.Info.Ally && SP.SkillData == MySkill)
-            {
-                ToHeal = true;
             }
         }
     }

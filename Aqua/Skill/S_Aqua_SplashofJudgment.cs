@@ -60,37 +60,37 @@ namespace Aqua
         {
             yield return new WaitForSecondsRealtime(0.2f);
 
-            Skill tempSkill;
+            string skillKey;
             if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_H"))
             {
-                Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_SplashofJudgment_0_H, this.BChar, this.BChar.MyTeam);
-                skill.FreeUse = true;
-                skill.Counting = 1;
-                skill.PlusHit = true;
-                tempSkill = skill;
+                skillKey = ModItemKeys.Skill_S_Aqua_SplashofJudgment_0_H;
+            }
+            else if (SaveManager.NowData.EnableSkins.Any((SkinData v) => v.skinKey == "Aqua_Bunny_Skin_RE"))
+            {
+                skillKey = ModItemKeys.Skill_S_Aqua_SplashofJudgment_0_R;
             }
             else
             {
-                Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Aqua_SplashofJudgment_0, this.BChar, this.BChar.MyTeam);
-                skill.FreeUse = true;
-                skill.Counting = 1;
-                skill.PlusHit = true;
-                tempSkill = skill;
+                skillKey = ModItemKeys.Skill_S_Aqua_SplashofJudgment_0;
             }
 
+            Skill skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
+            skill.FreeUse = true;
+            skill.Counting = 1;
+            skill.PlusHit = true;
 
-            if (this.BChar != null && !this.BChar.Dummy && !this.BChar.IsDead)
+
+            if (BChar != null && !BChar.Dummy && !BChar.IsDead)
             {
                 if (!Target.IsDead)
                 {
-                    BattleSystem.DelayInput(BattleSystem.instance.ForceAction(tempSkill, Target, false, false, true, null));
-                    Target.BuffAdd(GDEItemKeys.Buff_B_EnemyTaunt, this.BChar, false, 0, false, -1, false);
-
+                    BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, Target, false, false, true, null));
+                    Target.BuffAdd(GDEItemKeys.Buff_B_EnemyTaunt, BChar, false, 0, false, -1, false);
                 }
                 else if (BattleSystem.instance.EnemyList.Count > 0)
                 {
-                    BattleSystem.DelayInput(BattleSystem.instance.ForceAction(tempSkill, this.BChar.BattleInfo.EnemyList.Random(this.BChar.GetRandomClass().Main), false, false, true, null));
-                    Target.BuffAdd(GDEItemKeys.Buff_B_EnemyTaunt, this.BChar, false, 0, false, -1, false);
+                    BattleSystem.DelayInput(BattleSystem.instance.ForceAction(skill, BChar.BattleInfo.EnemyList.Random(BChar.GetRandomClass().Main), false, false, true, null));
+                    Target.BuffAdd(GDEItemKeys.Buff_B_EnemyTaunt, BChar, false, 0, false, -1, false);
                 }
             }
             yield break;

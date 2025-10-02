@@ -29,7 +29,7 @@ namespace Aqua
                 Utils.PlaySound(MySkill.MySkill.KeyID);
             }
 
-            BattleSystem.instance.AllyTeam.Draw(2);
+            int drawnum = 0;
 
             if (aliveAqua != null)
             {
@@ -43,8 +43,15 @@ namespace Aqua
                     healingParticle.FreeUse = true;
 
                     this.BChar.ParticleOut(healingParticle, ally);
+                    drawnum = 3;
                 }
             }
+            else
+            {
+                MySkill.isExcept = true;
+                drawnum = 1;
+            }
+            BattleSystem.instance.AllyTeam.Draw(drawnum);
         }
     }
 }

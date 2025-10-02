@@ -18,6 +18,11 @@ namespace Aqua
 	/// </summary>
     public class S_Aqua_Rare_GodsBlow : Skill_Extended
     {
+        public override void Init()
+        {
+            OnePassive = true;
+        }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             if (Utils.AquaVoiceSkills && MySkill?.MySkill != null && BChar.Info.KeyData == ModItemKeys.Character_Aqua)
@@ -29,7 +34,7 @@ namespace Aqua
 
             if (alwaysLucky && SkillD.MySkill.KeyID == ModItemKeys.Skill_S_Aqua_Rare_GodsBlow)
             {
-                PlusSkillPerFinal.Damage = 400;
+                PlusSkillPerFinal.Damage = 500;
             }
         }
     }
