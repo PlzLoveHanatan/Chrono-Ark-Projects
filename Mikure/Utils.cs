@@ -17,8 +17,6 @@ namespace Mikure
     {
         public static bool RemovePainSharing => ModManager.getModInfo("Mikure").GetSetting<ToggleSetting>("Remove Pain Sharing").Value;
         public static bool NurseEquip => ModManager.getModInfo("Mikure").GetSetting<ToggleSetting>("Nurse Equip").Value;
-
-        public static bool Equip;
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
         public static BattleChar Mikure => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Mikure);

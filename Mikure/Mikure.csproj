@@ -3,12 +3,13 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Mikure09162025184053</AssemblyName>
+    <AssemblyName>Mikure10042025124624</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <ReferencePath>D:/SteamLibrary/steamapps/common/Chrono Ark/ChronoArk_Data/Managed</ReferencePath>
+    <ProjectGuid>{6860CE63-A2D5-44D7-BFCE-757623BE294F}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
@@ -404,9 +405,9 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <!-- Compile ItemGroup Start-->
+            <!-- Compile ItemGroup Start-->
   <ItemGroup>
+    <Compile Include="Mikure_Equip.cs" />
     <Compile Include="Mikure_ModDefinition.cs" />
     <Compile Include="Mikure_ModItemKeys.cs" />
     <Compile Include="Mikure_Plugin.cs" />

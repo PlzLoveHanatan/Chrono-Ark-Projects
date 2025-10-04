@@ -46,7 +46,10 @@ namespace Mikure
 
         public void BattleEnd()
         {
-            Utils.AllySkills.Clear();
+            if (Utils.Mikure)
+            {
+                Utils.AllySkills.Clear();
+            }   
         }
     }
 }

@@ -53,24 +53,42 @@ namespace Mikure
             {
                 if (MikureInParty())
                 {
-                    if (PlayData.TSavedata.StageNum >= 0 && Utils.NurseEquip && !Utils.Equip)
+                    EnsureMikureEquip();
+
+                    if (PlayData.TSavedata.StageNum >= 0)
                     {
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Mikure_CareHeaddress, 1));
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Mikure_EmergencyInjection, 1));
-                        Utils.Equip = true;
-                    }
+                        if (Utils.NurseEquip && !HasMikureEquip())
+                        {
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Mikure_CareHeaddress, 1));
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Mikure_EmergencyInjection, 1));
+                            SetMikureEquipFlag(true);
+                        }
+                    }  
                 }
             }
         }
 
-        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
-        public static class MemoryReset
+        public static bool HasMikureEquip() => PlayData.TSavedata.GetCustomValue<Mikure_Equip>()?.GainMikureEquip ?? false;
+
+        public static void EnsureMikureEquip()
         {
-            [HarmonyPostfix]
-            public static void Postfix()
+            var equip = PlayData.TSavedata.GetCustomValue<Mikure_Equip>();
+            if (equip == null)
             {
-                Utils.Equip = false;
+                equip = new Mikure_Equip { GainMikureEquip = false };
+                PlayData.TSavedata.AddCustomValue(equip);
             }
+        }
+
+        public static void SetMikureEquipFlag(bool value)
+        {
+            var equip = PlayData.TSavedata.GetCustomValue<Mikure_Equip>();
+            if (equip == null)
+            {
+                equip = new Mikure_Equip();
+                PlayData.TSavedata.AddCustomValue(equip);
+            }
+            equip.GainMikureEquip = value;
         }
 
         [HarmonyPatch(typeof(SKillCollection), nameof(SKillCollection.SkillTarget))]
