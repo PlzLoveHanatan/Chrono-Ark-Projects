@@ -59,35 +59,51 @@ namespace Urunhilda
             {
                 if (UrunhildaAlwaysInParty())
                 {
+                    EnsureUrunhildaEquip();
+
+                    var startingReward = PlayData.TSavedata.GetCustomValue<Urunhilda_Value>();
+
                     if (PlayData.TSavedata.StageNum >= 0)
                     {
-                        if (!Utils.RewardTake)
-                        {
-                            Utils.UrunhildaFirstReward();
-                            Utils.IncreaseArkPassiveNum();
-                            Utils.RewardTake = true;
-                        }
-
-                        if (Utils.BeastkinEquip && !Utils.Equip)
+                        if (Utils.BeastkinEquip && !HasUrunhildaEquip())
                         {
                             PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Urunhilda_BeastkinBrush, 1));
                             PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Urunhilda_GoldenOathRing, 1));
-                            Utils.Equip = true;
+                            SetUrunhildaEquipFlag(true);
+                        }
+
+                        if (!startingReward.GainStartingReward)
+                        {
+                            Utils.UrunhildaFirstReward();
+                            Utils.IncreaseArkPassiveNum();
+                            startingReward.GainStartingReward = true;
                         }
                     }
                 }
             }
         }
 
-        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
-        public static class MemoryReset
+        public static bool HasUrunhildaEquip() => PlayData.TSavedata.GetCustomValue<Urunhilda_Value>()?.GainUrunhildaEquip ?? false;
+
+        public static void EnsureUrunhildaEquip()
         {
-            [HarmonyPostfix]
-            public static void Postfix()
+            var equip = PlayData.TSavedata.GetCustomValue<Urunhilda_Value>();
+            if (equip == null)
             {
-                Utils.RewardTake = false;
-                Utils.Equip = false;
+                equip = new Urunhilda_Value { GainUrunhildaEquip = false };
+                PlayData.TSavedata.AddCustomValue(equip);
             }
+        }
+
+        public static void SetUrunhildaEquipFlag(bool value)
+        {
+            var equip = PlayData.TSavedata.GetCustomValue<Urunhilda_Value>();
+            if (equip == null)
+            {
+                equip = new Urunhilda_Value();
+                PlayData.TSavedata.AddCustomValue(equip);
+            }
+            equip.GainUrunhildaEquip = value;
         }
 
         [HarmonyPatch(typeof(GDEStageData), "get_Event_L")]
@@ -651,6 +667,18 @@ namespace Urunhilda
                             manaAlign.GetChild(i).gameObject.SetActive(i < ap);
                         }
                     }
+                }
+            }
+
+            [HarmonyPatch(typeof(RE_Midas))]
+            [HarmonyPatch(MethodType.Constructor)] // Патчим конструктор
+            public static class MidasShrinePatch
+            {
+                [HarmonyPostfix]
+                public static void Postfix(RE_Midas __instance)
+                {
+                    if (UrunhildaInParty() && Utils.MidasShrine)
+                    __instance.Money = 3000; // Меняем после создания объекта
                 }
             }
         }

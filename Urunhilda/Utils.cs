@@ -28,6 +28,7 @@ namespace Urunhilda
         public static bool BonusesAlwaysOn => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Bonuses Always On").Value;
         public static bool BeastkinEquip => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Beastkin Equip").Value;
         public static float MoreEvents => ModManager.getModInfo("Urunhilda").GetSetting<SliderSetting>("More Events").Value;
+        public static bool MidasShrine => ModManager.getModInfo("Urunhilda").GetSetting<ToggleSetting>("Midas Shrine").Value;
 
         public static void UrunhildaFirstReward()
         {

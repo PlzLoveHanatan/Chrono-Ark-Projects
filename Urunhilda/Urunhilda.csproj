@@ -3,12 +3,13 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Urunhilda09192025104158</AssemblyName>
+    <AssemblyName>Urunhilda10042025133415</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <ReferencePath>D:/SteamLibrary/steamapps/common/Chrono Ark/ChronoArk_Data/Managed</ReferencePath>
+    <ProjectGuid>{91C68351-0A16-4684-9F51-9BB6C3B2AA09}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
@@ -404,14 +405,14 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- Compile ItemGroup Start-->
+          <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Urunhilda_Items.cs" />
     <Compile Include="Urunhilda_ModDefinition.cs" />
     <Compile Include="Urunhilda_ModItemKeys.cs" />
     <Compile Include="Urunhilda_Plugin.cs" />
     <Compile Include="Urunhilda_Ui.cs" />
+    <Compile Include="Urunhilda_Value.cs" />
     <Compile Include="Urunhilda_Visual.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Buff\B_Urunhilda_BeastkinInstinct.cs" />
