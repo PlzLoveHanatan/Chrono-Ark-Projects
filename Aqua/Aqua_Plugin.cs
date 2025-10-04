@@ -292,26 +292,44 @@ namespace Aqua
             [HarmonyPostfix]
             public static void StageStartPostfix()
             {
-                if (PlayData.TSavedata.StageNum >= 0 && AquaInParty())
+                if (AquaInParty())
                 {
-                    if (Utils.GoddessEquip && !Utils.Equip)
+                    EnsureAquaEquip();
+
+                    if (PlayData.TSavedata.StageNum >= 0)
                     {
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Aqua_Hagoromo, 1));
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Aqua_SacredLaundryStaff, 1));
-                        Utils.Equip = true;
+                        if (Utils.GoddessEquip && !HasAquaEquip())
+                        {
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Aqua_Hagoromo, 1));
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Aqua_SacredLaundryStaff, 1));
+                            SetAquaEquipFlag(true);
+                        }
                     }
                 }
             }
         }
 
-        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
-        public static class MemoryReset
+        public static bool HasAquaEquip() => PlayData.TSavedata.GetCustomValue<Aqua_Equip>()?.GainAquaEquip ?? false;
+
+        public static void EnsureAquaEquip()
         {
-            [HarmonyPostfix]
-            public static void Postfix()
+            var equip = PlayData.TSavedata.GetCustomValue<Aqua_Equip>();
+            if (equip == null)
             {
-                Utils.Equip = false;
+                equip = new Aqua_Equip { GainAquaEquip = false };
+                PlayData.TSavedata.AddCustomValue(equip);
             }
+        }
+
+        public static void SetAquaEquipFlag(bool value)
+        {
+            var equip = PlayData.TSavedata.GetCustomValue<Aqua_Equip>();
+            if (equip == null)
+            {
+                equip = new Aqua_Equip();
+                PlayData.TSavedata.AddCustomValue(equip);
+            }
+            equip.GainAquaEquip = value;
         }
 
         [HarmonyPatch(typeof(CharEquipInven))]
