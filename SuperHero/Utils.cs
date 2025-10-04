@@ -53,7 +53,6 @@ namespace SuperHero
 
         public static bool TimerOn;
 
-        public static bool Equip;
 
         public static readonly List<string> HeroAttacks = new List<string>
         {
@@ -476,6 +475,7 @@ namespace SuperHero
                 AddDebuff(randomAlly, bchar, ModItemKeys.Buff_B_SuperHero_MarkofJustice);
             }
         }
+
         public static void SkillChange(this Skill changeFrom, Skill changeTo, bool keepID = true, bool keepExtended = true)
         {
             if (changeFrom.MyButton != null)

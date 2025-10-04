@@ -130,16 +130,6 @@ namespace SuperHero
             }
         }
 
-        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
-        public static class MemoryReset
-        {
-            [HarmonyPostfix]
-            public static void Postfix()
-            {
-                Utils.Equip = false;
-            }
-        }
-
         [HarmonyPatch(typeof(CharEquipInven), nameof(CharEquipInven.OnDropSlot))]
         [HarmonyPatch(new Type[] { typeof(ItemBase) })]
         public static class EquipPatch
