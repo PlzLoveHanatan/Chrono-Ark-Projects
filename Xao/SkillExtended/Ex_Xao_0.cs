@@ -18,13 +18,25 @@ namespace Xao
         public override void Init()
         {
             OnePassive = true;
+            bool hasComboKeyword = MySkill.MySkill.PlusKeyWords.Any(k => k.Key == ModItemKeys.SkillKeyword_KeyWord_Combo);
+
+            if (!hasComboKeyword)
+            {
+                MySkill.MySkill.PlusKeyWords.Add(new GDESkillKeywordData(ModItemKeys.SkillKeyword_KeyWord_Combo));
+            }
+        }
+
+
+        public override bool CanSkillEnforce(Skill MainSkill)
+        {
+            return MainSkill.AP >= 1;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
             Xao_Combo.ComboChange(2);
 
-            if (Xao_Combo.CurrentCombo >= 4)
+            if (Xao_Combo.CurrentCombo >= 6)
             {
                 ApplyRoleStatBonus(BChar.Info);
             }

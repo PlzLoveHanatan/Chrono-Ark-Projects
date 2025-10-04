@@ -20,7 +20,7 @@ namespace Xao
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.HealAndRemoveDebuffs(BChar, Targets[0], 3);
+            Utils.MaidPanties(BChar);
             Utils.PlayXaoVoiceMaid(BChar);
         }
     }

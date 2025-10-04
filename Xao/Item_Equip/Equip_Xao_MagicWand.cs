@@ -21,13 +21,15 @@ namespace Xao
         public override void Init()
         {
             OnePassive = true;
-            PlusPerStat.Damage = 20;
-            PlusPerStat.Heal = 20;
+            PlusPerStat.Damage = 25;
+            PlusPerStat.Heal = 25;
+            PlusStat.dod = 3;
+            PlusStat.cri = 3;
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            if (SkillD.Master == BChar)
+            if (SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.PlusHit)
             {
                 Utils.AllyHentaiText(BChar);
                 Xao_Combo.ComboChange(1);

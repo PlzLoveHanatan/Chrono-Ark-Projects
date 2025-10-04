@@ -110,8 +110,9 @@ namespace Xao
 
         public void ResetRewards()
         {
-            Xao_Combo.AttackPower_OncePerFight = false;
-            Xao_Combo.Legendary_OncePerFight = false;
+            Xao_Combo_Rewards.AttackPowerOncePerFight = false;
+            Xao_Combo_Rewards.RelicPouchOncePerFight = false;
+            Xao_Combo_Rewards.Legendary_OncePerFight = false;
         }
     }
 }

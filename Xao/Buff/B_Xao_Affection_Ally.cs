@@ -20,68 +20,14 @@ namespace Xao
     /// </summary>
     public class B_Xao_Affection_Ally : Buff, IP_BuffAddAfter, IP_SkillUse_User
     {
-        private List<Skill> DynamicList = new List<Skill>();
-
-        private readonly List<string> ChoiceSkill = new List<string>
-        {
-            ModItemKeys.Skill_S_Xao_B_Affection_0,
-        };
-
         public override void BuffOneAwake()
         {
-            base.BuffOneAwake();
             BuffIcon.AddComponent<Button>().onClick.AddListener(AllyCall);
         }
 
         public void AllyCall()
         {
-            if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove) return;
-
-            BattleSystem.DelayInputAfter(Selection());
-        }
-
-        private IEnumerator Selection()
-        {
-            yield return null;
-
-            DynamicList.Clear();
-
-            foreach (var key in ChoiceSkill)
-            {
-                var skill = Skill.TempSkill(key, BChar, BChar.MyTeam);
-                if (skill == null || skill.MySkill == null) continue;
-                DynamicList.Add(skill);
-            }
-            if (DynamicList.Count == 0) yield break;
-
-            BattleSystem.DelayInput(
-                BattleSystem.I_OtherSkillSelect(
-                    DynamicList,
-                    SkillButton,
-                    ScriptLocalization.System_SkillSelect.EffectSelect,
-                    true, false
-                )
-            );
-        }
-
-        public void SkillButton(SkillButton myButton)
-        {
-            if (myButton == null || myButton.Myskill == null || myButton.Myskill.MySkill == null) return;
-
-            string key = myButton.Myskill.MySkill.KeyID;
-
-            if (key == ModItemKeys.Skill_S_Xao_B_Affection_0)
-            {
-                BChar.Overload = 0;
-                SelfStackDestroy();
-                Xao_Hearts_Ally.HeartsCheckAlly(BChar, -1);
-                Utils.AllyHentaiText(BChar);
-
-                if (Utils.Xao)
-                {
-                    Utils.PlayXaoSound("Xao_Affection_0");
-                }
-            }
+            Utils.AffectionSelection(BChar);
         }
 
         public override void BuffStat()
@@ -92,12 +38,13 @@ namespace Xao
 
         public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
         {
-            if (BuffTaker == BChar.Info.Ally && addedbuff == this)
+            if (BuffTaker == BChar && addedbuff == this)
             {
                 Xao_Hearts_Ally.HeartsCheckAlly(BChar, 1);
                 Utils.AllyHentaiText(BChar);
             }
         }
+
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
             if (SkillD.Master == BChar)

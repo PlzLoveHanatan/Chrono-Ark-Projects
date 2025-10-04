@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Xao09282025000900</AssemblyName>
+    <AssemblyName>Xao10042025134406</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,13 +405,15 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                        <!-- Compile ItemGroup Start-->
+                    <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Utils.cs" />
     <Compile Include="Xao_Chibi_Animations.cs" />
     <Compile Include="Xao_Combo.cs" />
     <Compile Include="Xao_Combo_Animations.cs" />
+    <Compile Include="Xao_Combo_Rewards.cs" />
     <Compile Include="Xao_Combo_Tooltip.cs" />
+    <Compile Include="Xao_Equip.cs" />
     <Compile Include="Xao_Face_Change.cs" />
     <Compile Include="Xao_Hearts.cs" />
     <Compile Include="Xao_Hearts_Ally.cs" />
@@ -430,6 +432,7 @@
     <Compile Include="Buff\B_Xao_Affection_Ally_Synergy.cs" />
     <Compile Include="Buff\B_Xao_Combo.cs" />
     <Compile Include="Buff\B_Xao_Ex_MagicalDay.cs" />
+    <Compile Include="Buff\B_Xao_E_LoveEgg.cs" />
     <Compile Include="Buff\B_Xao_ForbiddenDesire.cs" />
     <Compile Include="Buff\B_Xao_MagicalClimax.cs" />
     <Compile Include="Buff\B_Xao_MagicalDesire.cs" />
@@ -520,7 +523,6 @@
     <Compile Include="SkillExtended\Ex_Xao_0.cs" />
     <Compile Include="SkillExtended\Ex_Xao_1.cs" />
     <Compile Include="SkillExtended\Ex_Xao_MistressDominance.cs" />
-    <Compile Include="SkillExtended\Ex_Xao_PantyDominance.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

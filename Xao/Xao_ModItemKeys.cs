@@ -24,6 +24,11 @@ namespace Xao
         public static string Buff_B_Xao_Combo = "B_Xao_Combo";
         public static string Buff_B_Xao_Ex_MagicalDay = "B_Xao_Ex_MagicalDay";
 		/// <summary>
+		/// Love Egg
+		/// Activate all current <color=#87CEFA>Combo</color> rewards and remove this buff.
+		/// </summary>
+        public static string Buff_B_Xao_E_LoveEgg = "B_Xao_E_LoveEgg";
+		/// <summary>
 		/// Forbidden Desire
 		/// </summary>
         public static string Buff_B_Xao_ForbiddenDesire = "B_Xao_ForbiddenDesire";
@@ -91,24 +96,28 @@ namespace Xao
 		/// <summary>
 		/// Love Egg
 		/// At the start of each turn gain 1 <sprite name="Xao_Heart"> (up to 3).
+		/// Once per fight, activate all current <color=#87CEFA>Combo</color> rewards.
 		/// <color=#919191>Can be equipped on any ally.</color>
 		/// </summary>
         public static string Item_Equip_Equip_Xao_LoveEgg = "Equip_Xao_LoveEgg";
 		/// <summary>
 		/// Magic Wand
-		/// Whenever playing skill increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
+		/// Whenever playing a skill increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// </summary>
         public static string Item_Equip_Equip_Xao_MagicWand = "Equip_Xao_MagicWand";
 		/// <summary>
-		/// When played, increase your current <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and, if <color=#87CEFA>Combo</color> is <color=#d78fe9>6</color> or more, <b>permanently</b> increase one stat of the ally based on their Role.
+		/// When played, increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color>.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: <b>permanently</b> increase one stat based on Role.
 		/// Attack Role : Attack Power +1
 		/// Tank Role : Armor +3%
 		/// Support Role : Healing Power +1</color>
+		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Xao_0 = "Ex_Xao_0";
 		/// <summary>
-		/// When played increase your current <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and gain 1 <sprite name="Xao_Heart"> (Max 1).
+		/// When played, increase <color=#87CEFA>Combo</color> by <color=#d78fe9>2</color> and gain 1 <sprite name="Xao_Heart"> (Max 1).
 		/// Keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Xao_1 = "Ex_Xao_1";
 		/// <summary>
@@ -116,7 +125,6 @@ namespace Xao
 		/// Next skill will cost 1 less.
 		/// </summary>
         public static string SkillExtended_Ex_Xao_MistressDominance = "Ex_Xao_MistressDominance";
-        public static string SkillExtended_Ex_Xao_Rare = "Ex_Xao_Rare";
 		/// <summary>
 		/// <color=#87CEFA>Combo</color>
 		/// <color=#919191>When you gain <color=#87CEFA>Combo</color>, receive rewards based on your current <color=#87CEFA>Combo</color>.
@@ -168,6 +176,12 @@ namespace Xao
         public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_3 = "SE_S_S_Xao_MikoExperiencePussy_3";
         public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_Love_2 = "SE_S_S_Xao_MikoExperiencePussy_Love_2";
         public static string SkillEffect_SE_S_S_Xao_MikoExperiencePussy_Love_3 = "SE_S_S_Xao_MikoExperiencePussy_Love_3";
+        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_0 = "SE_S_S_Xao_Rare_SimpleExchange_0";
+        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_01 = "SE_S_S_Xao_Rare_SimpleExchange_01";
+        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_1 = "SE_S_S_Xao_Rare_SimpleExchange_1";
+        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_2 = "SE_S_S_Xao_Rare_SimpleExchange_2";
+        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_3 = "SE_S_S_Xao_Rare_SimpleExchange_3";
+        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_4 = "SE_S_S_Xao_Rare_SimpleExchange_4";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_0 = "SE_S_S_Xao_Rare_SleepSex_0";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_01 = "SE_S_S_Xao_Rare_SleepSex_01";
         public static string SkillEffect_SE_S_S_Xao_Rare_SleepSex_1 = "SE_S_S_Xao_Rare_SleepSex_1";
@@ -299,6 +313,10 @@ namespace Xao
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload
 		/// </summary>
         public static string Skill_S_Xao_B_Affection_0 = "S_Xao_B_Affection_0";
+		/// <summary>
+		/// Activate all current <color=#87CEFA>Combo</color> rewards.
+		/// </summary>
+        public static string Skill_S_Xao_B_LoveEgg = "S_Xao_B_LoveEgg";
 		/// <summary>
 		/// <color=#87CEFA>Wet</color> <color=#d78fe9>Bliss</color>
 		/// </summary>
@@ -482,7 +500,7 @@ namespace Xao
         public static string Skill_S_Xao_MaidPanties_1 = "S_Xao_MaidPanties_1";
 		/// <summary>
 		/// Maid Panties ♡♡♡
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Heal an ally with lowest HP by 3.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Heal an ally with lowest HP by 2.
 		/// </summary>
         public static string Skill_S_Xao_MaidPanties_2 = "S_Xao_MaidPanties_2";
 		/// <summary>
@@ -497,8 +515,8 @@ namespace Xao
         public static string Skill_S_Xao_MaidPanties_Love_1 = "S_Xao_MaidPanties_Love_1";
 		/// <summary>
 		/// Maid Panties Pleasure ♥♥♥
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Heal an ally with lowest HP by 3.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Heal all allies by 5 and remove one random debuff each from all allies.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Heal an ally with lowest HP by 2.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Heal all allies by 3 and remove one random debuff each from all allies.
 		/// </summary>
         public static string Skill_S_Xao_MaidPanties_Love_2 = "S_Xao_MaidPanties_Love_2";
 		/// <summary>
@@ -513,7 +531,7 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperienceAnal_1 = "S_Xao_MikoExperienceAnal_1";
 		/// <summary>
 		/// Miko Experience Anal ♡♡♡
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Gain Skill Book.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Gain Skill Book.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperienceAnal_2 = "S_Xao_MikoExperienceAnal_2";
 		/// <summary>
@@ -528,8 +546,8 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperienceAnal_Love_1 = "S_Xao_MikoExperienceAnal_Love_1";
 		/// <summary>
 		/// Miko Experience Anal Pleasure ♥♥♥
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Gain Skill Book.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>9</color>: Activate all current <color=#87CEFA>Combo</color> rewards.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Gain Skill Book.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Activate all current <color=#87CEFA>Combo</color> rewards.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperienceAnal_Love_2 = "S_Xao_MikoExperienceAnal_Love_2";
 		/// <summary>
@@ -544,7 +562,7 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperiencePussy_1 = "S_Xao_MikoExperiencePussy_1";
 		/// <summary>
 		/// Miko Experience Pussy ♡♡♡
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Gain 200 Gold.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Gain 250 Gold.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperiencePussy_2 = "S_Xao_MikoExperiencePussy_2";
 		/// <summary>
@@ -559,8 +577,8 @@ namespace Xao
         public static string Skill_S_Xao_MikoExperiencePussy_Love_1 = "S_Xao_MikoExperiencePussy_Love_1";
 		/// <summary>
 		/// Miko Experience Pussy Pleasure ♥♥♥
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Gain 200 Gold.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>9</color>: Activate all current <color=#87CEFA>Combo</color> rewards.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Gain 250 Gold.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Activate all current <color=#87CEFA>Combo</color> rewards.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperiencePussy_Love_2 = "S_Xao_MikoExperiencePussy_Love_2";
 		/// <summary>
@@ -649,7 +667,7 @@ namespace Xao
 		/// Xao can obtain <color=#87CEFA>Combo</color> in fights and cannot exceed 2 Overload.  
 		/// Xao alternates between gaining 1 Overload and losing 1 Overload whenever she uses a skill.
 		/// At the start of each turn, if Xao has 3 <sprite name="Xao_Heart">, create a random 0-Cost Swiftness Xao skill. Otherwise, she gains 1 <sprite name="Xao_Heart"> (up to 3).
-		/// The first time Xao gains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload, gains a <color=#d78fe9>10</color> <color=#87CEFA>Combo</color>, and becomes <color=#d78fe9>Horny</color>. Skills gain additional <color=#87CEFA>Combo</color> effects while Xao is <color=#d78fe9>Horny</color>.
+		/// The first time Xao gains 3 <sprite name="Xao_Heart"> in a battle, she removes all Overload, and becomes <color=#d78fe9>Horny</color>. Skills gain additional <color=#87CEFA>Combo</color> effects while Xao is <color=#d78fe9>Horny</color>.
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Xao = "Xao";
@@ -665,12 +683,6 @@ namespace Xao
         public static string Character_Skin_Xao_Naked = "Xao_Naked";
         public static string Character_Skin_Xao_Swimsuit = "Xao_Swimsuit";
         public static string Character_Skin_Xao_White_Maid_Pantyhose = "Xao_White_Maid_Pantyhose";
-        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_0 = "SE_S_S_Xao_Rare_SimpleExchange_0";
-        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_01 = "SE_S_S_Xao_Rare_SimpleExchange_01";
-        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_1 = "SE_S_S_Xao_Rare_SimpleExchange_1";
-        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_2 = "SE_S_S_Xao_Rare_SimpleExchange_2";
-        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_3 = "SE_S_S_Xao_Rare_SimpleExchange_3";
-        public static string SkillEffect_SE_S_S_Xao_Rare_SimpleExchange_4 = "SE_S_S_Xao_Rare_SimpleExchange_4";
 
     }
 
@@ -734,28 +746,16 @@ namespace Xao
 		/// <color=#d78fe9>4</color>: Gain 1 <sprite name="Xao_Heart">
 		/// <color=#d78fe9>6</color>: Restore 1 Mana
 		/// <color=#d78fe9>8</color>: Draw 1 skill
+		/// <color=#d78fe9>10</color>: Reduce cost of all skiils in hand by 1
+		/// <color=#d78fe9>15</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b> (Once per battle)
+		/// <color=#d78fe9>25</color>: Gain relic pouch and expand your Relic inventory by 1 (Once per battle)
+		/// <color=#d78fe9>50</color>: View 3 random <color=#F9D62FFF>Legendary</color> Equipment and select 1 to obtain (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
         public static string Combo_Description_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_0");
-		/// <summary>
-		/// Korean:
-		/// English:
-		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
-		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
-		/// <color=#87CEFA>Combo</color> Rewards:
-		/// <color=#d78fe9>4</color>: Gain 1 <sprite name="Xao_Heart">
-		/// <color=#d78fe9>6</color>: Restore 1 Mana
-		/// <color=#d78fe9>8</color>: Draw 1 skill
-		/// <color=#d78fe9>10</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b> (Once per battle)
-		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
-		/// Japanese:
-		/// Chinese:
-		/// Chinese-TW:
-		/// </summary>
-        public static string Combo_Description_Horny_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_Horny_0");
 		/// <summary>
 		/// Korean:
 		/// English:
@@ -775,6 +775,265 @@ namespace Xao
 		/// Chinese-TW:
 		/// </summary>
         public static string WetBliss => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("WetBliss");
+		/// <summary>
+		/// Korean:
+		/// 만나서 반가워요. 잘 부탁드려요.
+		/// English:
+		/// Nice to meet you  Please take care of me.
+		/// Japanese:
+		/// よろしくお願いします
+		/// Chinese:
+		/// 很高兴见到你。请多关照。
+		/// Chinese-TW:
+		/// 很高興見到你。請多關照。
+		/// </summary>
+        public static string Xao_BattleStart_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_BattleStart_0");
+		/// <summary>
+		/// Korean:
+		/// 최선을 다해 주세요.
+		/// English:
+		/// Please do your best.
+		/// Japanese:
+		/// 頑張ってください
+		/// Chinese:
+		/// 请尽全力。
+		/// Chinese-TW:
+		/// 請盡全力。
+		/// </summary>
+        public static string Xao_BattleStart_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_BattleStart_1");
+		/// <summary>
+		/// Korean:
+		/// 짜증 나…
+		/// English:
+		/// So annoying...
+		/// Japanese:
+		/// めんどくさーい
+		/// Chinese:
+		/// 真烦人…
+		/// Chinese-TW:
+		/// 真煩人…
+		/// </summary>
+        public static string Xao_BattleStart_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_BattleStart_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Since the recent results were good, we got more time off than expected.
+		/// Japanese:
+		/// ここ最近の成績が良かったから思ったより休みをもらった
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Chest => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Chest");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Here you go.
+		/// Japanese:
+		/// どうぞ
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Cri => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Cri");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// That tickles.
+		/// Japanese:
+		/// くすぐったい。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Curse_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Curse_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// That surprised me.
+		/// Japanese:
+		/// びっくりした。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Curse_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Curse_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Are you okay?
+		/// Japanese:
+		/// 大丈夫ですか?
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_DeathDoorAlly_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoorAlly_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// If you collapse here, all your effort until now will go to waste.
+		/// Japanese:
+		/// ここで倒れたら、今までの努力がパーになってしまうよ。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_DeathDoorAlly_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoorAlly_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I can't move.
+		/// Japanese:
+		/// 動けなーい
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_DeathDoor_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoor_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I'm tired...
+		/// Japanese:
+		/// 疲れた...
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_DeathDoor_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoor_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// It feels good...
+		/// Japanese:
+		/// 気持ちいい...
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Healed => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Healed");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// If you're tired, please rest in bed.
+		/// Japanese:
+		/// 疲れたらベッドで休んでください。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Idling_in_Battle_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Battle_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Want to take a break?
+		/// Japanese:
+		/// 休憩する?
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Idling_in_Battle_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Battle_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// You're pushing yourself too hard.
+		/// Japanese:
+		/// あんたは自分を追い込みすぎている。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Idling_in_Battle_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Battle_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// If you've got something you want to do, some goal to reach—then do it, won't you?
+		/// Japanese:
+		/// やりたいことがあって達成したい目標があるならやれば?
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Idling_in_Field_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Field_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// You said you'd take me somewhere far, let me experience something new, and show me different scenery than before.
+		/// Japanese:
+		/// 遠くへ遊びに行こうとか新しいものに触れようとか今までとは違う景色を見せてあげるよって言ってくれたじゃん
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Idling_in_Field_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Field_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// You worked hard again this time, good job.
+		/// Japanese:
+		/// 今回も頑張ってくれて お疲れ様
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Idling_in_Field_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Field_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Is it over?
+		/// Japanese:
+		/// 終わった?
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Killing_Enemy_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Killing_Enemy_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Here, take this.
+		/// Japanese:
+		/// これあげる。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Killing_Enemy_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Killing_Enemy_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Even if you fail, or feel like slacking off along the way, it's fine.
+		/// Japanese:
+		/// 失敗しても途中でサボりたくなっても大丈夫。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Master => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Master");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Feels strange.
+		/// Japanese:
+		/// 変な感じ
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Pharos_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Pharos_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Do you want to have sex?
+		/// Japanese:
+		/// セックスしたいの?
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Pharos_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Pharos_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I'm worn out...
+		/// Japanese:
+		/// へとへと…
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Pharos_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Pharos_2");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Breakfast?
+		/// Japanese:
+		/// 朝ごはん?
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string Xao_Potion => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Potion");
 
     }
 }

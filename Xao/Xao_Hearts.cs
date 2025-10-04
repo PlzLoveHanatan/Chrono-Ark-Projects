@@ -22,6 +22,11 @@ namespace Xao
 
         public static void HeartsCheck(BattleChar bchar, int stackChange = 0)
         {
+            if (bchar != Utils.Xao)
+            {
+                return;
+            }
+
             SavedStackNum += stackChange;
             SavedStackNum = Mathf.Clamp(SavedStackNum, 0, 3);
             UpdateHearts(bchar, SavedStackNum);
@@ -29,7 +34,7 @@ namespace Xao
 
         public static void UpdateHearts(BattleChar bchar, int stackNum)
         {
-            if (stackNum > 3 || bchar != Utils.Xao) return;
+            if (stackNum > 3) return;
 
             GameObject[] normalHearts = { HeartNormal_0, HeartNormal_1, HeartNormal_2 };
             GameObject[] greyHearts = { HeartGrey_0, HeartGrey_1, HeartGrey_2 };

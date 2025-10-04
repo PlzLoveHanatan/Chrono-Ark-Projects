@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using UnityEngine;
 
 namespace Xao
@@ -18,6 +19,11 @@ namespace Xao
 
         public static void HeartsCheckAlly(BattleChar bchar, int stackChange = 0)
         {
+            if (!bchar.Info.Ally)
+            {
+                return;
+            }
+
             if (!savedStacks.ContainsKey(bchar))
             {
                 savedStacks[bchar] = 0;
@@ -31,8 +37,6 @@ namespace Xao
 
         private static void UpdateHeartsAlly(BattleChar bchar, int stackNum)
         {
-            if (!bchar.Info.Ally) return;
-
             // создаём массивы серых и нормальных сердец для этого союзника, если ещё нет
             if (!heartNormals.ContainsKey(bchar))
             {

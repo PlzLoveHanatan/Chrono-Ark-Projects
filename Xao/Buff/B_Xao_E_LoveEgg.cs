@@ -14,14 +14,18 @@ using Debug = UnityEngine.Debug;
 namespace Xao
 {
 	/// <summary>
-	/// Panty Dominance
+	/// Love Egg
 	/// </summary>
-    public class Ex_Xao_PantyDominance : BuffSkillExHand
+    public class B_Xao_E_LoveEgg : Buff
     {
-        public override void Init()
+        public override void BuffOneAwake()
         {
-            base.Init();
-            APChange = -1;
+            BuffIcon.AddComponent<Button>().onClick.AddListener(Call);
+        }
+
+        public void Call()
+        {
+            Utils.AffectionSelection(BChar, true);
         }
     }
 }

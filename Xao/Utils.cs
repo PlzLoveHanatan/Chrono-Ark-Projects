@@ -25,13 +25,17 @@ using System.Net.Sockets;
 using TileTypes;
 using NLog.Targets;
 using System.ServiceModel.Configuration;
+using I2.Loc;
 namespace Xao
 {
     public static class Utils
     {
-        public static bool XaoSounds => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Sounds").Value;
+        public static bool XaoVoice => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice").Value;
+        public static bool XaoVoiceSkills => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice Skills").Value;
+        public static bool KaijuEquip => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Kaiju Equip").Value;
 
         public static int RareNum;
+        public static bool Equip;
 
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
@@ -1019,7 +1023,7 @@ namespace Xao
 
         public static void PlayXaoSound(string sound)
         {
-            if (string.IsNullOrEmpty(sound) || !XaoSounds) return;
+            if (string.IsNullOrEmpty(sound) || !XaoVoiceSkills) return;
 
             string soundToPlay = sound;
             MasterAudio.StopBus("SE");
@@ -1028,7 +1032,7 @@ namespace Xao
 
         public static void PlayXaoVoice(BattleChar bchar, bool isComing = false)
         {
-            if (!XaoSounds || bchar != Xao) return;
+            if (!XaoVoiceSkills || bchar != Xao) return;
 
             var list = isComing ? XaoVoiceComing : XaoVoiceEffect;
             int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, list.Count);
@@ -1040,7 +1044,7 @@ namespace Xao
 
         public static void PlayXaoVoiceMaid(BattleChar bchar)
         {
-            if (!XaoSounds || bchar != Xao) return;
+            if (!XaoVoiceSkills || bchar != Xao) return;
 
             int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, XaoVoiceMaid.Count);
             string soundToPlay = XaoVoiceMaid[randomIndex];
@@ -1154,26 +1158,26 @@ namespace Xao
 
         public static void MikoPussy()
         {
-            if (Xao_Combo.CurrentCombo >= 7)
+            if (Xao_Combo.CurrentCombo >= 6)
             {
-                PlayData.TSavedata._Gold += 200;
+                PlayData.TSavedata._Gold += 250;
 
-                if (Xao_Combo.CurrentCombo >= 9 && XaoHornyMod())
+                if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
                 {
-                    Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, true);
+                    Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
                 }
             }
         }
 
         public static void MikoAnal()
         {
-            if (Xao_Combo.CurrentCombo >= 7)
+            if (Xao_Combo.CurrentCombo >= 6)
             {
                 InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
 
-                if (Xao_Combo.CurrentCombo >= 9 && XaoHornyMod())
+                if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
                 {
-                    Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, true);
+                    Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
                 }
             }
         }
@@ -1284,7 +1288,7 @@ namespace Xao
             yield break;
         }
 
-        public static void HealAndRemoveDebuffs(BattleChar user, BattleChar target, int healNum = 0)
+        public static void MaidPanties(BattleChar user)
         {
             if (Xao_Combo.CurrentCombo >= 5)
             {
@@ -1292,7 +1296,7 @@ namespace Xao
 
                 if (allyWithLowestHp != null)
                 {
-                    BattleSystem.DelayInput(HealingParticle(allyWithLowestHp, user, healNum));
+                    BattleSystem.DelayInput(HealingParticle(allyWithLowestHp, user, 2));
                 }
             }
 
@@ -1302,7 +1306,7 @@ namespace Xao
                 {
                     var debuffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false);
                     RemoveDebuff(debuffs);
-                    BattleSystem.DelayInput(HealingParticle(ally, user, 5, true));
+                    BattleSystem.DelayInput(HealingParticle(ally, user, 3, true));
                 }
             }
         }
@@ -1320,7 +1324,7 @@ namespace Xao
         public static string GetAffectionBuff(Character myChar)
         {
             string buff = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
-            if (myChar?.Equip != null && myChar.Equip.Exists(item => item != null && item.itemkey == ModItemKeys.Item_Equip_Equip_Xao_LoveEgg))
+            if (myChar?.Equip != null && myChar.Equip.Exists(item => item != null && item.itemkey == ModItemKeys.Item_Equip_Equip_Xao_LoveEgg) && myChar.KeyData != Xao.Info.KeyData)
             {
                 buff = ModItemKeys.Buff_B_Xao_Affection_Ally;
             }
@@ -1342,6 +1346,8 @@ namespace Xao
 
             if (isTakingDamage)
             {
+                animationIndex = 2;
+
                 switch (randomIndex)
                 {
                     case 1: chibiName = "Chibi_TakingDamage_0"; sprite = SpriteType.Chibi_TakingDamage_0; break;
@@ -1428,6 +1434,97 @@ namespace Xao
                 }
             }
             yield break;
+        }
+
+        public static void AffectionSelection(BattleChar bchar, bool isLoveEgg = false)
+        {
+            if (bchar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove)
+            {
+                return;
+            }
+            BattleSystem.DelayInputAfter(SelectionCoroutine(bchar, isLoveEgg));
+        }
+
+        private static IEnumerator SelectionCoroutine(BattleChar bchar, bool isLoveEgg = false)
+        {
+            yield return null;
+
+            List<Skill> dynamicList = new List<Skill>();
+
+            string skillKey = isLoveEgg ? ModItemKeys.Skill_S_Xao_B_LoveEgg : ModItemKeys.Skill_S_Xao_B_Affection_0;
+
+            var skill = Skill.TempSkill(skillKey, bchar, bchar.MyTeam);
+            if (skill != null)
+            {
+                dynamicList.Add(skill);
+            }
+
+            if (dynamicList.Count > 0)
+            {
+                BattleSystem.DelayInput(
+                    BattleSystem.I_OtherSkillSelect(
+                        dynamicList,
+                        new SkillButton.SkillClickDel(btn => OnSkillSelected(btn, bchar)),
+                        ScriptLocalization.System_SkillSelect.EffectSelect,
+                        true,
+                        false
+                    )
+                );
+            }
+        }
+
+        private static void OnSkillSelected(SkillButton myButton, BattleChar bchar)
+        {
+            if (myButton == null || myButton.Myskill == null || myButton.Myskill.MySkill == null)
+            {
+                return;
+            }
+
+            string key = myButton.Myskill.MySkill.KeyID;
+
+            if (key == ModItemKeys.Skill_S_Xao_B_Affection_0)
+            {
+                bchar.Overload = 0;
+
+                string affectionBuff = GetAffectionBuff(bchar.Info);
+
+                if (bchar.BuffReturn(affectionBuff, false) is Buff affection)
+                {
+                    affection?.SelfStackDestroy();
+                }
+
+                if (bchar == Xao)
+                {
+                    Xao_Hearts.HeartsCheck(bchar, -1);
+                }
+                else if (affectionBuff == ModItemKeys.Buff_B_Xao_Affection_Ally)
+                {
+                    Xao_Hearts_Ally.HeartsCheckAlly(bchar, -1);
+                }
+                else
+                {
+                    Xao_Hearts_Ally_Synergy.HeartsCheck(bchar, -1);
+                }
+                PopHentaiText(bchar);
+
+                if (Xao)
+                {
+                    PlayXaoSound("Xao_Affection_0");
+                }
+            }
+            else if (key == ModItemKeys.Skill_S_Xao_B_LoveEgg)
+            {
+                Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
+                if (bchar.BuffReturn(ModItemKeys.Buff_B_Xao_E_LoveEgg, false) is Buff egg)
+                {
+                    egg?.SelfDestroy();
+                }
+
+                if (Xao)
+                {
+                    PlayXaoSound("Xao_LoveEgg");
+                }
+            }
         }
     }
 }

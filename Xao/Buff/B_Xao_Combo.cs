@@ -17,7 +17,7 @@ namespace Xao
     {
         public override string DescExtended()
         {
-            string combo = Utils.XaoHornyMod() ? ModLocalization.Combo_Description_Horny_0 : ModLocalization.Combo_Description_0;
+            string combo = ModLocalization.Combo_Description_0;
             return combo.Replace("&a", Xao_Combo.CurrentCombo.ToString());
         }
 
@@ -26,7 +26,7 @@ namespace Xao
             if (Xao_Combo.SaveComboBetweenTurns)
             {
                 Xao_Combo.SaveComboBetweenTurns = false;
-                Xao_Combo.GainComboRewards(Xao_Combo.CurrentCombo, false);
+                Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, false);
             }
             else
             {

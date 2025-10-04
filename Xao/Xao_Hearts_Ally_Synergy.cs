@@ -16,6 +16,11 @@ namespace Xao
 
         public static void HeartsCheck(BattleChar bchar, int stackChange = 0)
         {
+            if (!bchar.Info.Ally)
+            {
+                return;
+            }
+
             if (!savedStacks.ContainsKey(bchar))
             {
                 savedStacks[bchar] = 0;
@@ -29,7 +34,10 @@ namespace Xao
 
         private static void UpdateHearts(BattleChar bchar, int stackNum)
         {
-            if (stackNum > 1 || !bchar.Info.Ally) return;
+            if (stackNum > 1)
+            {
+                return;
+            }
 
             // Цветное сердце
             if (stackNum > 0)
