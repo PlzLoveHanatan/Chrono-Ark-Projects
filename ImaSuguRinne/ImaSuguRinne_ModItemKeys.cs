@@ -4,7 +4,7 @@ namespace ImaSuguRinne
     public static class ModItemKeys
     {
 		/// <summary>
-		/// Blooming Agony
+		/// Blooming Agony ✿
 		/// Whenever you receive a debuff, take <color=purple>1 Pain damage</color>.
 		/// </summary>
         public static string Buff_B_Rinne_BloomingAgony = "B_Rinne_BloomingAgony";
@@ -341,68 +341,80 @@ namespace ImaSuguRinne
     {
 		/// <summary>
 		/// Korean:
+		/// 피어나는 진혼곡 ✿
 		/// English:
 		/// Blooming Requiem ✿
 		/// Japanese:
+		/// 咲き誇る鎮魂歌 ✿
 		/// Chinese:
+		/// 绽放安魂曲 ✿
 		/// Chinese-TW:
+		/// 綻放安魂曲 ✿
 		/// </summary>
         public static string BloomingRequiem => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("BloomingRequiem");
 		/// <summary>
 		/// Korean:
-		/// 이 스킬은 이번 턴 동안 반복해서 사용할 수 있습니다.
+		/// 이 스킬은 이번 턴 동안 반복 사용 가능.
 		/// English:
 		/// This skill can be played repeatedly during this turn.
 		/// Japanese:
-		/// このスキルはこのターン中繰り返し使用できます。
+		/// このスキルはこのターン中繰り返し使用可能。
 		/// Chinese:
-		/// 此技能在本回合内可反复使用。
+		/// 此技能在本回合中可无限重复使用。
 		/// Chinese-TW:
-		/// 此技能在本回合内可反复使用。
+		/// 此技能在本回合中可無限重複使用。
 		/// </summary>
         public static string Blooming_Dress => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("Blooming_Dress");
 		/// <summary>
 		/// Korean:
-		/// 사용 시, 이 스킬을 복사하여 덱에 섞어 넣습니다.
+		/// 사용 시, 이 스킬을 복사해 덱에 섞어 넣음.
 		/// English:
 		/// When played, copy this skill and shuffle it into your deck.
 		/// Japanese:
-		/// 使用時、このスキルをコピーしてデッキに混ぜる。
+		/// 使用時、このスキルをコピーしてデッキに戻す。
 		/// Chinese:
 		/// 使用时，复制此技能并洗入牌库。
 		/// Chinese-TW:
-		/// 使用时，复制此技能并洗入牌库。
+		/// 使用時，複製此技能並洗入牌庫。
 		/// </summary>
         public static string Blooming_Petal => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("Blooming_Petal");
 		/// <summary>
 		/// Korean:
+		/// 뽑을 스킬 선택 (스킬은 무작위 순서로 표시됨)
 		/// English:
 		/// Select a Skill to Draw (Skills are shown in random order)
 		/// Japanese:
+		/// 引くスキルを選択（スキルはランダム順で表示）
 		/// Chinese:
+		/// 选择要抽取的技能（技能以随机顺序显示）
 		/// Chinese-TW:
+		/// 選擇要抽取的技能（技能以隨機順序顯示）
 		/// </summary>
         public static string EverlastingYouth => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("EverlastingYouth");
 		/// <summary>
 		/// Korean:
+		/// 기억 조각 ❀
 		/// English:
 		/// Memory Fragment ❀
 		/// Japanese:
+		/// 記憶の断片 ❀
 		/// Chinese:
+		/// 记忆碎片 ❀
 		/// Chinese-TW:
+		/// 記憶碎片 ❀
 		/// </summary>
         public static string MemoryFragment => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("MemoryFragment");
 		/// <summary>
 		/// Korean:
-		/// 지금 다시 시도하세요!
+		/// 지금 다시 시도해!
 		/// English:
 		/// Retry now!
 		/// Japanese:
 		/// 今すぐリトライ！
 		/// Chinese:
-		/// 立即重试！
+		/// 现在重试！
 		/// Chinese-TW:
-		/// 立即重试！
+		/// 現在重試！
 		/// </summary>
         public static string RetryNow => ModManager.getModInfo("ImaSuguRinne").localizationInfo.SystemLocalizationUpdate("RetryNow");
 

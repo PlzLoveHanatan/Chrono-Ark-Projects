@@ -51,39 +51,57 @@ namespace ImaSuguRinne
             [HarmonyPostfix]
             public static void StageStartPostfix()
             {
-                if (PlayData.TSavedata.StageNum >= 0 && RinneInParty())
+                if (RinneInParty())
                 {
-                    if (Utils.MagicalEquip && !Utils.Equip)
-                    {
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Rinne_BloomingPetal, 1));
-                        PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Rinne_BloomingDress, 1));
-                        Utils.Equip = true;
-                    }
+                    EnsureImaSuguRinneEquip();
 
-                    if (!Utils.GettingMemory)
-                    {
-                        Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Rinne_FragmentofMemory);
+                    var memory = PlayData.TSavedata.GetCustomValue<ImaSuguRinne_Value>();
 
-                        for (int i = 0; i < 1; i++)
+                    if (PlayData.TSavedata.StageNum >= 0)
+                    {
+                        if (Utils.MagicalEquip && !HasImaSuguRinneEquip())
                         {
-                            Utils.RinneChar.UseSoulStone(skill);
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Rinne_BloomingPetal, 1));
+                            PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_Rinne_BloomingDress, 1));
+                            SetImaSuguRinneEquipFlag(true);
                         }
 
-                        Utils.GettingMemory = true;
+                        if (memory.GainMemorySkill)
+                        {
+                            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Rinne_FragmentofMemory);
+
+                            for (int i = 0; i < 1; i++)
+                            {
+                                Utils.RinneChar.UseSoulStone(skill);
+                            }
+                            memory.GainMemorySkill = false;
+                        }  
                     }
                 }
             }
         }
 
-        [HarmonyPatch(typeof(PlayData), "GameEndInit")]
-        public static class MemoryReset
+        public static bool HasImaSuguRinneEquip() => PlayData.TSavedata.GetCustomValue<ImaSuguRinne_Value>()?.GainImaSuguRinneEquip ?? false;
+
+        public static void EnsureImaSuguRinneEquip()
         {
-            [HarmonyPostfix]
-            public static void Postfix()
+            var equip = PlayData.TSavedata.GetCustomValue<ImaSuguRinne_Value>();
+            if (equip == null)
             {
-                Utils.GettingMemory = false;
-                Utils.Equip = false;
+                equip = new ImaSuguRinne_Value { GainImaSuguRinneEquip = false };
+                PlayData.TSavedata.AddCustomValue(equip);
             }
+        }
+
+        public static void SetImaSuguRinneEquipFlag(bool value)
+        {
+            var equip = PlayData.TSavedata.GetCustomValue<ImaSuguRinne_Value>();
+            if (equip == null)
+            {
+                equip = new ImaSuguRinne_Value();
+                PlayData.TSavedata.AddCustomValue(equip);
+            }
+            equip.GainImaSuguRinneEquip = value;
         }
     }
 }

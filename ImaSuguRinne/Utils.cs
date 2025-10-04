@@ -37,10 +37,6 @@ namespace ImaSuguRinne
         public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
         public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
 
-        public static bool GettingMemory;
-
-        public static bool Equip;
-
         public static readonly List<string> RinneSkills = new List<string>
         {
             ModItemKeys.Skill_S_Rinne_BrokenEnd,
