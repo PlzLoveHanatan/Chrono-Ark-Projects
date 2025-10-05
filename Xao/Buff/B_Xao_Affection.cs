@@ -60,9 +60,10 @@ namespace Xao
                     if (BChar.Info.Passive is P_Xao passive)
                     {
                         passive.HornyMod = true;
-                    }
+					}
 
-                    BattleSystem.DelayInput(Utils.ChangeXaoSkills(BChar));
+					Utils.ChooseBattleChibi(BChar, 3, false, true);
+					BattleSystem.DelayInput(Utils.ChangeXaoSkills(BChar));
                     BChar.Overload = 0;
                     FirstTransform = true;
                 }

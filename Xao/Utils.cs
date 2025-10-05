@@ -1,1530 +1,1629 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChronoArkMod.ModData;
 using ChronoArkMod;
+using ChronoArkMod.ModData.Settings;
+using DarkTonic.MasterAudio;
+using GameDataEditor;
+using I2.Loc;
+using TMPro;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Experimental.U2D;
-using static ChronoArkMod.ModEditor.Console.ConsoleManager;
 using UnityEngine.UI;
-using TMPro;
-using ChronoArkMod.ModData.Settings;
-using GameDataEditor;
-using DarkTonic.MasterAudio;
-using System.Collections;
-using static TMPro.SpriteAssetUtilities.TexturePacker;
-using System.Runtime.InteropServices.WindowsRuntime;
-using static CharacterDocument;
-using System.Web;
-using Spine;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Net.Sockets;
-using TileTypes;
-using NLog.Targets;
-using System.ServiceModel.Configuration;
-using I2.Loc;
 namespace Xao
 {
-    public static class Utils
-    {
-        public static bool XaoVoice => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice").Value;
-        public static bool XaoVoiceSkills => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice Skills").Value;
-        public static bool KaijuEquip => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Kaiju Equip").Value;
-
-        public static int RareNum;
-        public static bool Equip;
-
-        public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
-        public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
-        public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
-        public static bool XaoHornyMod()
-        {
-            return Xao.Info.Passive is P_Xao xao && xao.HornyMod;
-        }
-
-
-        public static string GetHeart(BattleChar bchar, int heartNum = 1)
-        {
-            string heart = (bchar == Xao && XaoHornyMod()) ? "♥" : "♡";
-
-            //if (heartNum < 1)
-            //{
-            //    heartNum = 1;
-            //}
-
-            return string.Concat(Enumerable.Repeat(heart, heartNum));
-        }
-
-        public static void XaoHornyModOff()
-        {
-            if (Xao?.Info?.Passive is P_Xao p)
-            {
-                p.HornyMod = false;
-            }
-        }
-
-        public enum SpriteType
-        {
-            Chibi_Idle,
-            Chibi_Attack,
-            Chibi_AttackExtra_0,
-            Chibi_AttackExtra_1,
-            Chibi_Normal,
-            Chibi_NormalBlush,
-            Chibi_TakingDamage_0,
-            Chibi_TakingDamage_1,
-            Heart_Grey_0,
-            Heart_Grey_1,
-            Heart_Grey_2,
-            Heart_Normal_0,
-            Heart_Normal_1,
-            Heart_Normal_2,
-            HentaiText_0,
-            HentaiText_1,
-            HentaiText_2,
-            HentaiText_3,
-            HentaiText_4,
-            HentaiText_5,
-            HentaiText_6,
-            HentaiText_7,
-            HentaiText_8,
-            Combo_0,
-            Combo_1,
-            Combo_2,
-            Combo_3,
-            XaoFace_BandagePanties,
-            XaoFace_BandagePantiesW,
-            XaoFace_BandAids,
-            XaoFace_Bikini,
-            XaoFace_BlackMaidPantyhose,
-            XaoFace_CuteLaceBow,
-            XaoFace_Kaiju,
-            XaoFace_MagicalTeen,
-            XaoFace_Maid,
-            XaoFace_Miko,
-            XaoFace_Swimsuit,
-            XaoFace_WhiteMaidPantyhose,
-        };
-
-        public static readonly Dictionary<SpriteType, string> SpritePaths = new Dictionary<SpriteType, string>()
-        {
-            { SpriteType.Chibi_Idle, "Visual/Chibi/Idle.png" },
-            { SpriteType.Chibi_Attack, "Visual/Chibi/Attack.png" },
-            { SpriteType.Chibi_AttackExtra_0, "Visual/Chibi/AttackExtra_0.png" },
-            { SpriteType.Chibi_AttackExtra_1, "Visual/Chibi/AttackExtra_1.png" },
-            { SpriteType.Chibi_Normal, "Visual/Chibi/Normal.png" },
-            { SpriteType.Chibi_NormalBlush, "Visual/Chibi/NormalBlush.png" },
-            { SpriteType.Chibi_TakingDamage_0, "Visual/Chibi/TakingDamage_0.png" },
-            { SpriteType.Chibi_TakingDamage_1, "Visual/Chibi/TakingDamage_1.png" },
-            { SpriteType.Heart_Grey_0, "Visual/Heart/HeartGrey_0.png" },
-            { SpriteType.Heart_Normal_0, "Visual/Heart/Heart_Normal_0.png" },
-            { SpriteType.HentaiText_0, "Visual/Text/H_text_1_L.png" },
-            { SpriteType.HentaiText_1, "Visual/Text/H_text_1_M.png" },
-            { SpriteType.HentaiText_2, "Visual/Text/H_text_1_S.png" },
-            { SpriteType.HentaiText_3, "Visual/Text/H_text_2_L.png" },
-            { SpriteType.HentaiText_4, "Visual/Text/H_text_2_M.png" },
-            { SpriteType.HentaiText_5, "Visual/Text/H_text_2_S.png" },
-            { SpriteType.HentaiText_6, "Visual/Text/H_text_3_L.png" },
-            { SpriteType.HentaiText_7, "Visual/Text/H_text_3_M.png" },
-            { SpriteType.HentaiText_8, "Visual/Text/H_text_3_S.png" },
-            { SpriteType.Combo_0, "Visual/Combo/Combo_0.png" },
-            { SpriteType.Combo_1, "Visual/Combo/Combo_1.png" },
-            { SpriteType.Combo_2, "Visual/Combo/Combo_2.png" },
-            { SpriteType.Combo_3, "Visual/Combo/Combo_3.png" },
-            { SpriteType.XaoFace_BandagePanties, "Visual/Faces/BandagePanties.png" },
-            { SpriteType.XaoFace_BandagePantiesW, "Visual/Faces/BandagePantiesW.png" },
-            { SpriteType.XaoFace_BandAids , "Visual/Faces/BandAids.png" },
-            { SpriteType.XaoFace_Bikini , "Visual/Faces/Bikini.png" },
-            { SpriteType.XaoFace_BlackMaidPantyhose , "Visual/Faces/BlackMaidPantyhose.png" },
-            { SpriteType.XaoFace_CuteLaceBow , "Visual/Faces/CuteLaceBow.png" },
-            { SpriteType.XaoFace_Kaiju , "Visual/Faces/Kaiju.png" },
-            { SpriteType.XaoFace_MagicalTeen , "Visual/Faces/MagicalTeen.png" },
-            { SpriteType.XaoFace_Maid , "Visual/Faces/Maid.png" },
-            { SpriteType.XaoFace_Miko , "Visual/Faces/Miko.png" },
-            { SpriteType.XaoFace_Swimsuit , "Visual/Faces/Swimsuit.png" },
-            { SpriteType.XaoFace_WhiteMaidPantyhose , "Visual/Faces/WhiteMaidPantyhose.png" },
-        };
-
-        public static readonly List<Vector3> TextPositions = new List<Vector3>
-        {
-            new Vector3(0.4f, -0.4f, 0f),
-            new Vector3(-0.6f, -0.6f, 0f),
-            new Vector3(-1.7f, -0.7f, 0f),
-            new Vector3(0.2f, -0.8f, 0f),
-            new Vector3(1.1f, -0.1f, 0f),
-            new Vector3(1.6f, -0.8f, 0f),
-        };
-
-        public static readonly List<string> TextPromt = new List<string>
-        {
-            "Visual/Text/H_text_1_L.png",
-            "Visual/Text/H_text_1_M.png",
-            "Visual/Text/H_text_1_S.png",
-            "Visual/Text/H_text_2_L.png",
-            "Visual/Text/H_text_2_M.png",
-            "Visual/Text/H_text_2_S.png",
-            "Visual/Text/H_text_3_L.png",
-            "Visual/Text/H_text_3_M.png",
-            "Visual/Text/H_text_3_S.png",
-        };
-
-        public static readonly Dictionary<string, SpriteType> SkinKeyToSpriteType = new Dictionary<string, SpriteType>
-        {
-            { ModItemKeys.Character_Skin_Xao_Bandage_Panties, SpriteType.XaoFace_BandagePanties },
-            { ModItemKeys.Character_Skin_Xao_Bandage_Panties_W, SpriteType.XaoFace_BandagePantiesW },
-            { ModItemKeys.Character_Skin_Xao_Band_Aids, SpriteType.XaoFace_BandAids },
-            { ModItemKeys.Character_Skin_Xao_Bikini, SpriteType.XaoFace_Bikini },
-            { ModItemKeys.Character_Skin_Xao_Black_Maid_Pantyhose, SpriteType.XaoFace_BlackMaidPantyhose },
-            { ModItemKeys.Character_Skin_Xao_Cute_Lace_Bow, SpriteType.XaoFace_CuteLaceBow },
-            { ModItemKeys.Character_Xao, SpriteType.XaoFace_Kaiju },
-            { ModItemKeys.Character_Skin_Xao_Magical_Teen, SpriteType.XaoFace_MagicalTeen },
-            { ModItemKeys.Character_Skin_Xao_Maid, SpriteType.XaoFace_Maid },
-            { ModItemKeys.Character_Skin_Xao_Miko, SpriteType.XaoFace_Miko },
-            { ModItemKeys.Character_Skin_Xao_Swimsuit, SpriteType.XaoFace_Swimsuit },
-            { ModItemKeys.Character_Skin_Xao_White_Maid_Pantyhose, SpriteType.XaoFace_WhiteMaidPantyhose },
-        };
-
-        public static readonly Dictionary<SpriteType, Vector3> ChibiPosition = new Dictionary<SpriteType, Vector3>
-        {
-            { SpriteType.Chibi_Idle, new Vector3(0f, 0.95f) },
-            { SpriteType.Chibi_Attack, new Vector3(-0.4f, 0.95f) },
-            { SpriteType.Chibi_AttackExtra_0, new Vector3(-0.2f, 0.95f) },
-            { SpriteType.Chibi_AttackExtra_1, new Vector3(-0.3f, 0.95f) },
-            { SpriteType.Chibi_Normal, new Vector3(0f, 0.95f) },
-            { SpriteType.Chibi_NormalBlush, new Vector3(0f, 0.95f) },
-            { SpriteType.Chibi_TakingDamage_0, new Vector3(-0.2f, 0.95f) },
-            { SpriteType.Chibi_TakingDamage_1, new Vector3(-0.2f, 0.95f) },
-        };
-
-        public static readonly Dictionary<SpriteType, Vector3> ComboPosition = new Dictionary<SpriteType, Vector3>
-        {
-            { SpriteType.Combo_0, new Vector3(2f, 2f) },
-            { SpriteType.Combo_1, new Vector3(0f, 0.95f) },
-            { SpriteType.Combo_2, new Vector3(0f, 0.95f) },
-            { SpriteType.Combo_3, new Vector3(0f, 0.95f) },
-        };
-
-        public static readonly Dictionary<string, string> HeartsPath = new Dictionary<string, string>
-        {
-            { "HeartGrey_0", "Visual/Heart/HeartGrey_0.png" },
-            { "HeartGrey_1", "Visual/Heart/HeartGrey_0.png" },
-            { "HeartGrey_2", "Visual/Heart/HeartGrey_0.png" },
-            { "HeartNormal_0", "Visual/Heart/HeartNormal_0.png" },
-            { "HeartNormal_1", "Visual/Heart/HeartNormal_0.png" },
-            { "HeartNormal_2", "Visual/Heart/HeartNormal_0.png" },
-        };
-
-        public static readonly Dictionary<string, Vector3> HeartsPosition = new Dictionary<string, Vector3>
-        {
-            { "HeartGrey_0", new Vector3(1.65f, 0.4f) },
-            { "HeartGrey_1", new Vector3(1.25f, 1f) },
-            { "HeartGrey_2", new Vector3(1.65f, 1.6f) },
-            { "HeartNormal_0", new Vector3(1.65f, 0.4f) },
-            { "HeartNormal_1", new Vector3(1.25f, 1f) },
-            { "HeartNormal_2", new Vector3(1.65f, 1.6f) },
-        };
-
-        public static readonly List<string> HentaiSkills = new List<string>
-        {
-            ModItemKeys.Skill_S_Xao_BikiniTime_0,
-            ModItemKeys.Skill_S_Xao_BikiniTime_1,
-            ModItemKeys.Skill_S_Xao_BikiniTime_2,
-            ModItemKeys.Skill_S_Xao_BikiniTime_3,
-            ModItemKeys.Skill_S_Xao_BikiniTime_Love_0,
-            ModItemKeys.Skill_S_Xao_BikiniTime_Love_1,
-            ModItemKeys.Skill_S_Xao_BikiniTime_Love_2,
-            ModItemKeys.Skill_S_Xao_BikiniTime_Love_3,
-
-            ModItemKeys.Skill_S_Xao_CowGirl_0,
-            ModItemKeys.Skill_S_Xao_CowGirl_1,
-            ModItemKeys.Skill_S_Xao_CowGirl_2,
-            ModItemKeys.Skill_S_Xao_CowGirl_Love_0,
-            ModItemKeys.Skill_S_Xao_CowGirl_Love_1,
-            ModItemKeys.Skill_S_Xao_CowGirl_Love_2,
-
-            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_0,
-            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_1,
-            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_2,
-            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0,
-            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_1,
-            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_2,
-
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_0,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_1,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_2,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_3,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_1,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_2,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_3,
-
-            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_0,
-            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_1,
-            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_2,
-            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0,
-            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_1,
-            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_2,
-
-            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_0,
-            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_1,
-            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_2,
-            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0,
-            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_1,
-            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_2,
-
-            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_0,
-            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_1,
-            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2,
-            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0,
-            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_1,
-            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_2,
-
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_0,
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_1,
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_2,
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0,
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1,
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2,
-
-            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0,
-            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01,
-            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1,
-            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2,
-            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3,
-            ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4,
-
-            ModItemKeys.Skill_S_Xao_Rare_SleepSex_0,
-            ModItemKeys.Skill_S_Xao_Rare_SleepSex_01,
-            ModItemKeys.Skill_S_Xao_Rare_SleepSex_1,
-            ModItemKeys.Skill_S_Xao_Rare_SleepSex_2,
-        };
-
-        public static readonly List<string> XaoRandomSkill = new List<string>
-        {
-            ModItemKeys.Skill_S_Xao_BikiniTime_Love_0,
-            ModItemKeys.Skill_S_Xao_CowGirl_Love_0,
-            ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0,
-            ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0,
-            ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0,
-            ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0,
-            ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0,
-            ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0,
-        };
-
-        public static readonly List<string> ChibiNames = new List<string>
-        {
-            "Chibi_Idle",
-            "Chibi_Attack",
-            "Chibi_AttackExtra_0",
-            "Chibi_AttackExtra_1",
-            "Chibi_Normal",
-            "Chibi_NormalBlush",
-            "Chibi_TakingDamage_0",
-            "Chibi_TakingDamage_1",
-        };
-
-        public static readonly List<string> ComboNames = new List<string>
-        {
-            "Combo_0",
-            "Combo_1",
-            "Combo_2",
-            "Combo_3",
-        };
-
-        public static readonly List<string> Hearts = new List<string>
-        {
-            "HeartGrey_0",
-            "HeartGrey_1",
-            "HeartGrey_2",
-            "HeartNormal_0",
-            "HeartNormal_1",
-            "HeartNormal_2",
-        };
-
-        public static readonly Dictionary<string, string> XaoSkillList = new Dictionary<string, string>
-        {
-            { ModItemKeys.Skill_S_Xao_BikiniTime_0, ModItemKeys.Skill_S_Xao_BikiniTime_Love_0},
-            { ModItemKeys.Skill_S_Xao_BikiniTime_1, ModItemKeys.Skill_S_Xao_BikiniTime_Love_1},
-            { ModItemKeys.Skill_S_Xao_BikiniTime_2, ModItemKeys.Skill_S_Xao_BikiniTime_Love_2},
-            { ModItemKeys.Skill_S_Xao_BikiniTime_3, ModItemKeys.Skill_S_Xao_BikiniTime_Love_3},
-            { ModItemKeys.Skill_S_Xao_CowGirl_0, ModItemKeys.Skill_S_Xao_CowGirl_Love_0},
-            { ModItemKeys.Skill_S_Xao_CowGirl_1, ModItemKeys.Skill_S_Xao_CowGirl_Love_1},
-            { ModItemKeys.Skill_S_Xao_CowGirl_2, ModItemKeys.Skill_S_Xao_CowGirl_Love_2},
-            { ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_0, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0},
-            { ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_1, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_1},
-            { ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_2, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_2},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_0, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_1, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_1},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_2, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_2},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlPussy_3, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_3},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_0, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_1, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_1},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_2, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_2},
-            { ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_3, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_3},
-            { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_0, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0},
-            { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_1, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_1},
-            { ModItemKeys.Skill_S_Xao_MikoExperienceAnal_2, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_2},
-            { ModItemKeys.Skill_S_Xao_MikoExperiencePussy_0, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0},
-            { ModItemKeys.Skill_S_Xao_MikoExperiencePussy_1, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_1},
-            { ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_2},
-            { ModItemKeys.Skill_S_Xao_SwimsuitDay_0, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0},
-            { ModItemKeys.Skill_S_Xao_SwimsuitDay_1, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1},
-            { ModItemKeys.Skill_S_Xao_SwimsuitDay_2, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2},
-            { ModItemKeys.Skill_S_Xao_Rare_SleepSex_0, ModItemKeys.Skill_S_Xao_Rare_SleepSex_01},
-            { ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0, ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01},
-            { ModItemKeys.Skill_S_Xao_MaidPanties_0, ModItemKeys.Skill_S_Xao_MaidPanties_Love_0},
-            { ModItemKeys.Skill_S_Xao_MaidPanties_1, ModItemKeys.Skill_S_Xao_MaidPanties_Love_1},
-            { ModItemKeys.Skill_S_Xao_MaidPanties_2, ModItemKeys.Skill_S_Xao_MaidPanties_Love_2},
-        };
-
-        private static int LastTextPositionIndex = -1;
-        private static int LastTextPromptIndex = -1;
-
-        public static void CreateSkill(string skill, BattleChar bchar)
-        {
-            if (bchar == null)
-            {
-                Debug.Log($"[CreateSkill] BattleChar is null for skill {skill}");
-                return;
-            }
-            Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
-            BattleSystem.instance.AllyTeam.Add(newSkill, true);
-        }
-
-        public static Skill CreateSkill(string skill, BattleChar bchar, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0)
-        {
-            if (bchar == null)
-            {
-                Debug.Log($"[CreateSkill] BattleChar is null for skill {skill}");
-                return null;
-            }
-            Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
-            newSkill.isExcept = isExcept;
-            if (isDiscarded) newSkill.AutoDelete = discardedAfter;
-            newSkill.AP = mana;
-            BattleSystem.instance.AllyTeam.Add(newSkill, true);
-            return newSkill;
-        }
-        public static Skill CreateSkill(string skill, BattleChar bchar, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0, bool isNotCount = false)
-        {
-            if (bchar == null)
-            {
-                Debug.Log($"[CreateSkill] BattleChar is null for skill {skill}");
-                return null;
-            }
-            Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
-            newSkill.isExcept = isExcept;
-            if (isDiscarded) newSkill.AutoDelete = discardedAfter;
-            newSkill.AP = mana;
-            newSkill.NotCount = isNotCount;
-            BattleSystem.instance.AllyTeam.Add(newSkill, true);
-            return newSkill;
-        }
-        public static void AddBuff(BattleChar bchar, string buffKey, int buffNum = 1)
-        {
-            for (int i = 0; i < buffNum; i++)
-            {
-                if (bchar == null || buffKey.IsNullOrEmpty()) return;
-                bchar.BuffAdd(buffKey, bchar, false, 0, false, -1, false);
-            }
-        }
-
-        public static void AddDebuff(BattleChar enemy, BattleChar ally, string buffKey, int debuffNum = 1, int percentage = 0)
-        {
-            for (int i = 0; i < debuffNum; i++)
-            {
-                if (enemy == null || buffKey.IsNullOrEmpty() || enemy.Info.Ally) return;
-                enemy.BuffAdd(buffKey, ally, false, percentage, false, -1, false);
-            }
-        }
-
-        public static void getSprite(string path, Image img)
-        {
-            string path2 = ModManager.getModInfo("Xao").assetInfo.ImageFromFile(path);
-            AddressableLoadManager.LoadAsyncAction(path2, AddressableLoadManager.ManageType.None, img);
-        }
-
-        public static Sprite getSprite(string path)
-        {
-            string path2 = ModManager.getModInfo("Xao").assetInfo.ImageFromFile(path);
-            return AddressableLoadManager.LoadAsyncCompletion<Sprite>(path2, AddressableLoadManager.ManageType.None);
-        }
-
-        public static void getSpriteAsync(string path, Action<AsyncOperationHandle> collback)
-        {
-            string path2 = ModManager.getModInfo("Xao").assetInfo.ImageFromFile(path);
-            AddressableLoadManager.LoadAsyncAction(path2, AddressableLoadManager.ManageType.None, collback);
-        }
-
-        public static void LoadSpriteAsync(string path, Action<Sprite> onLoaded)
-        {
-            getSpriteAsync(path, handle =>
-            {
-                Sprite sprite = (Sprite)handle.Result;
-                onLoaded?.Invoke(sprite);
-            });
-        }
-
-        public static T GetAssets<T>(string path, string assetBundlePatch = null) where T : UnityEngine.Object
-        {
-            var mod = ModManager.getModInfo("Xao");
-            if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
-            var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
-            return AddressableLoadManager.LoadAddressableAsset<T>(address);
-        }
-
-        public static T GetAssetsAsync<T>(string path, string assetBundlePatch = null,
-            AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage) where T : UnityEngine.Object
-        {
-            var mod = ModManager.getModInfo("Xao");
-            if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
-            var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
-            return AddressableLoadManager.LoadAsyncCompletion<T>(address, type);
-        }
-
-        public static GameObject CreatGameObject(string name, Transform parent)
-        {
-            //Transform existing = parent.Find(name);
-            //if (existing != null)
-            //{
-            //    UnityEngine.Object.Destroy(existing.gameObject); // удаляем старый, если есть
-            //}
-
-            GameObject gameObject = new GameObject(name);
-            gameObject.SetActive(false);
-            gameObject.transform.SetParent(parent, false);
-            gameObject.transform.localScale = Vector3.one;
-            gameObject.layer = 8;
-            return gameObject;
-        }
-
-        public static GameObject GetChildByName(GameObject obj, string name)
-        {
-            Transform transform = obj.transform.Find(name);
-            bool flag = transform != null;
-            GameObject result;
-            if (flag)
-            {
-                result = transform.gameObject;
-            }
-            else
-            {
-                result = null;
-            }
-            return result;
-        }
-
-        public static void ImageResize(Image img, Vector2 size)
-        {
-            img.rectTransform.anchorMin = new Vector2(0f, 1f);
-            img.rectTransform.anchorMax = new Vector2(0f, 1f);
-            img.rectTransform.sizeDelta = size;
-        }
-        public static void ImageResize(Image img, Vector2 size, Vector2 pos)
-        {
-            img.rectTransform.anchorMin = new Vector2(0f, 1f);
-            img.rectTransform.anchorMax = new Vector2(0f, 1f);
-            img.rectTransform.sizeDelta = size;
-            img.rectTransform.transform.localPosition = pos;
-        }
-
-        public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)
-        {
-            txt.rectTransform.anchorMin = new Vector2(0f, 1f);
-            txt.rectTransform.anchorMax = new Vector2(0f, 1f);
-            txt.rectTransform.sizeDelta = size;
-            txt.rectTransform.transform.localPosition = pos;
-            txt.text = text;
-            txt.fontSize = fontSize;
-            txt.color = Color.white;
-            txt.alignment = TextAlignmentOptions.Left;
-        }
-
-        public static GameObject CreateIcon(BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true, bool isRecast = false)
-        {
-            if (name == null || sprite == null)
-            {
-                return null;
-            }
-
-            //Debug.Log($"[CreateIcon] Creating icon: {name} at {offset} with sprite: {sprite}");
-            Vector3 basePos = bchar.GetTopPos();
-            return CreateIconUi(name, bchar.transform, sprite, size, basePos + offset, isSibling, isRecast);
-        }
-
-        public static GameObject CreateIcon(string name, string sprite, Vector3 offset, Vector3 size, Transform parent, bool isSibling = true, bool isRecast = false)
-        {
-            if (name == null || sprite == null || parent == null)
-            {
-                return null;
-            }
-            return CreateIconUi(name, parent, sprite, size, offset, isSibling, isRecast);
-        }
-
-        public static GameObject CreateIconUi(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos, bool isSibling = true, bool isRecast = false)
-        {
-            GameObject iconObject = Utils.CreatGameObject(name, parent);
-            if (iconObject == null) return null;
-
-            iconObject.transform.position = worldPos;
-
-            //Image oldImage = iconObject.GetComponent<Image>();
-            //if (oldImage != null)
-            //{
-            //    UnityEngine.Object.Destroy(oldImage);
-            //}
-
-            Image image = iconObject.AddComponent<Image>();
-            if (image == null) return null;
-
-            Sprite sprite = Utils.getSprite(spriteNormal);
-            if (sprite == null)
-            {
-                Debug.LogError($"[CreateIconUi] Sprite not found: {spriteNormal}");
-                return null;
-            }
-
-            image.sprite = sprite;
-            image.raycastTarget = isRecast;
-
-            Utils.ImageResize(image, size);
-
-            iconObject.SetActive(true);
-
-            if (isSibling)
-            {
-                iconObject.transform.SetAsFirstSibling();
-            }
-
-            return iconObject;
-        }
-
-
-        public static GameObject CreateComboButton(string name, Transform trans, string spriteNormal, Vector2 size, Vector2 pos)
-        {
-            GameObject newObject = Utils.CreatGameObject(name, trans);
-            if (newObject == null)
-            {
-                return null;
-            }
-
-            newObject.transform.SetParent(trans);
-            newObject.transform.localPosition = pos;
-
-            Image image = newObject.AddComponent<Image>();
-            Sprite sprite = Utils.getSprite(spriteNormal);
-            if (sprite == null)
-            {
-                return null;
-            }
-
-            image.sprite = sprite;
-            Utils.ImageResize(image, size, pos);
-            newObject.SetActive(true);
-
-            return newObject;
-        }
-
-        public static GameObject ReplaceChibiIcon(string chibiName, BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true)
-        {
-            var existing = GameObject.Find(chibiName);
-            if (existing != null)
-            {
-                UnityEngine.Object.Destroy(existing);
-            }
-            return Utils.CreateIcon(bchar, name, sprite, offset, size, isSibling);
-        }
-
-        public static GameObject ReplaceChibiIcon(List<string> chibiNames, BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true)
-        {
-            foreach (var chibiName in chibiNames)
-            {
-                var existing = GameObject.Find(chibiName);
-                if (existing != null)
-                {
-                    UnityEngine.Object.Destroy(existing);
-                }
-            }
-            return Utils.CreateIcon(bchar, name, sprite, offset, size, isSibling);
-        }
-
-        public static void CreateIdleChibi()
-        {
-            if (Xao != null)
-            {
-                CreateIcon(Xao, "Chibi_Idle", Utils.SpritePaths[SpriteType.Chibi_Idle], Utils.ChibiPosition[SpriteType.Chibi_Idle], new Vector3(250f, 250f));
-            }
-        }
-
-        public static GameObject CreateNewCombo(GameObject combo, string comboName, string path, bool isPopout = false)
-        {
-            combo = CreateComboButton(comboName, BattleSystem.instance.ActWindow.transform, path, new Vector2(110f, 110f), new Vector2(-749.7802f, -438.8362f));
-            AddComponent<Xao_Combo_Tooltip>(combo);
-            if (isPopout)
-            {
-                StartComboPopOut(combo);
-            }
-            return combo;
-        }
-
-        public static T AddComponent<T>(GameObject go) where T : Component
-        {
-            return go.AddComponent<T>();
-        }
-
-        public static void UnlockSkillPreview(string key)
-        {
-            if (!SaveManager.NowData.unlockList.SkillPreView.Contains(key))
-            {
-                SaveManager.NowData.unlockList.SkillPreView.Add(key);
-            }
-        }
-
-        public static void DestroyAndNullify(ref GameObject obj)
-        {
-            if (obj != null)
-            {
-                UnityEngine.Object.Destroy(obj);
-                obj = null;
-            }
-        }
-        public static void DestroyObjects(params GameObject[] objects)
-        {
-            foreach (var obj in objects)
-            {
-                if (obj != null)
-                {
-                    UnityEngine.Object.Destroy(obj);
-                }
-            }
-        }
-
-        public static void DestroyObjects(IEnumerable<string> objectNames)
-        {
-            foreach (var objName in objectNames)
-            {
-                var existing = GameObject.Find(objName);
-                if (existing != null)
-                {
-                    UnityEngine.Object.Destroy(existing);
-                }
-            }
-        }
-
-        public static Vector3 GetRandomTextPosition()
-        {
-            if (TextPositions.Count == 0)
-                return Vector3.zero;
-
-            if (TextPositions.Count == 1)
-                return TextPositions[0];
-
-            int index;
-            do
-            {
-                index = UnityEngine.Random.Range(0, TextPositions.Count);
-            } while (index == LastTextPositionIndex);
-
-            LastTextPositionIndex = index;
-            return TextPositions[index];
-        }
-
-        public static string GetRandomText()
-        {
-            if (TextPromt.Count == 0)
-                return "";
-
-            if (TextPromt.Count == 1)
-                return TextPromt[0];
-
-            int index;
-            do
-            {
-                index = UnityEngine.Random.Range(0, TextPromt.Count);
-            } while (index == LastTextPromptIndex);
-
-            LastTextPromptIndex = index;
-            return TextPromt[index];
-        }
-
-        public static void DestroyAndCreateChibi(ref GameObject obj)
-        {
-            if (GameObject.Find("Chibi_Idle") == null)
-            {
-                Utils.DestroyAndNullify(ref obj);
-                Utils.CreateIdleChibi();
-            }
-        }
-        public static void DestroyAndCreateChibi(GameObject obj)
-        {
-            if (GameObject.Find("Chibi_Idle") == null)
-            {
-                Utils.DestroyAndNullify(ref obj);
-                Utils.CreateIdleChibi();
-            }
-        }
-
-        public static void ChibiStartAnimation(GameObject obj, bool isBounce = false, bool isSpin = false, bool isStartRandomEntrance = false)
-        {
-            if (obj != null)
-            {
-                Xao_Chibi_Animations script = obj.GetComponent<Xao_Chibi_Animations>() ?? obj.AddComponent<Xao_Chibi_Animations>();
-
-                if (isStartRandomEntrance)
-                {
-                    script.StartRandomEntrance();
-                }
-                else if (isBounce)
-                {
-                    script.StartBounce();
-                }
-                else if (isSpin)
-                {
-                    script.StartSpin();
-                }
-            }
-        }
-
-        public static void StartComboPopOut(GameObject obj)
-        {
-            if (obj != null)
-            {
-                Xao_Combo_Animations script = obj.GetComponent<Xao_Combo_Animations>() ?? obj.AddComponent<Xao_Combo_Animations>();
-                script?.PlayPopIn();
-            }
-        }
-
-        public static void StartHeartsPopOut(GameObject obj)
-        {
-            if (obj != null)
-            {
-                Xao_Hearts_Animations script = obj.GetComponent<Xao_Hearts_Animations>() ?? obj.AddComponent<Xao_Hearts_Animations>();
-                script.PlayPopIn = true;
-            }
-        }
-
-        public static void StartHeartsGreyPopOut(GameObject obj)
-        {
-            if (obj != null)
-            {
-                Xao_Hearts_Animations script = obj.GetComponent<Xao_Hearts_Animations>() ?? obj.AddComponent<Xao_Hearts_Animations>();
-                script.PlayGreyIn = true;
-            }
-        }
-        public static void StartTextPopOut(GameObject obj)
-        {
-            if (obj != null)
-            {
-                Xao_Text_Animations script = obj.GetComponent<Xao_Text_Animations>() ?? obj.AddComponent<Xao_Text_Animations>();
-                script?.StartScaleUp();
-            }
-        }
-
-        public static void PopHentaiText(BattleChar bchar)
-        {
-            GameObject randomHentaitext = Utils.CreateIcon(bchar, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
-            Utils.StartTextPopOut(randomHentaitext);
-        }
-
-        public static void SkillChange(this Skill changeFrom, Skill changeTo, bool keepID = true, bool keepExtended = true)
-        {
-            if (changeFrom.MyButton != null)
-            {
-                UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
-                UnityEngine.Object.Destroy(obj, 1f);
-            }
-
-            List<Skill_Extended> ExtendedToKeep = new List<Skill_Extended>();
-            ExtendedToKeep.AddRange(changeTo.AllExtendeds.Select(ex => ex.Clone() as Skill_Extended));
-            foreach (Skill_Extended skill_Extended in changeFrom.AllExtendeds)
-            {
-                foreach (string text in changeFrom.MySkill.SkillExtended)
-                {
-                    if (keepExtended && !text.Contains(skill_Extended.Name))
-                    {
-                        ExtendedToKeep.Add(skill_Extended.Clone() as Skill_Extended);
-                    }
-                    skill_Extended.SelfDestroy();
-                }
-            }
-
-            bool createExcept = keepExtended && changeFrom.isExcept;
-            changeFrom.Init(changeTo.MySkill, changeFrom.Master, changeFrom.Master.MyTeam);
-            if (createExcept) changeFrom.isExcept = true;
-
-            foreach (var skill_Extended in ExtendedToKeep)
-            {
-                if (skill_Extended.BattleExtended)
-                {
-                    changeFrom.ExtendedAdd_Battle(skill_Extended);
-                }
-                else
-                {
-                    changeFrom.ExtendedAdd(skill_Extended);
-                }
-            }
-
-            changeFrom.Image_Skill = changeTo.Image_Skill;
-            changeFrom.Image_Button = changeTo.Image_Button;
-            changeFrom.Image_Basic = changeTo.Image_Basic;
-
-            if (changeFrom.CharinfoSkilldata == null) changeFrom.CharinfoSkilldata = new CharInfoSkillData(changeFrom.MySkill);
-
-            changeFrom.CharinfoSkilldata.SkillInfo = changeFrom.MySkill;
-            Skill_Extended oldUpgrade = changeFrom.CharinfoSkilldata.SKillExtended;
-            if (!keepID)
-            {
-                changeFrom.CharinfoSkilldata.CopyData(changeTo.CharinfoSkilldata);
-            }
-            if (keepExtended)
-            {
-                changeFrom.CharinfoSkilldata.SKillExtended = oldUpgrade;
-            }
-            else
-            {
-                changeFrom.CharinfoSkilldata.SKillExtended = changeTo.CharinfoSkilldata.SKillExtended;
-            }
-            BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
-        }
-
-        public static void AllyHentaiText(BattleChar bchar)
-        {
-            if (bchar != Xao && new GDECharacterData(bchar.Info.KeyData).Gender == 1)
-            {
-                PopHentaiText(bchar);
-            }
-        }
-
-        public static void RareSimpleExchange(BattleChar bchar, int rareNum = 1)
-        {
-            Xao_Combo.ComboChange();
-
-            RareNum += rareNum;
-            bool evenCheck = RareNum % 2 == 0;
-            int mana = evenCheck ? 1 : 1; // always cost 1 mana
-
-            int heartNum = 0;
-            bool glitch = evenCheck;
-            string skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0;
-
-            if (RareNum > 8)
-            {
-                skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4;
-                heartNum = 5;
-                glitch = false;
-            }
-            else
-            {
-                switch (RareNum)
-                {
-                    case 1: skillKey = XaoHornyMod() ? ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01 : ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0; break;
-                    case 2:
-                    case 3: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1; heartNum = 2; break;
-                    case 4:
-                    case 5: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2; heartNum = 3; break;
-                    case 6:
-                    case 7: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3; heartNum = 4; break;
-                    case 8: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4; heartNum = 5; break;
-                }
-            }
-            Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana, true);
-
-            if (skill != null)
-            {
-                BattleSystem.DelayInput(IncreaseNumForRare(skill, bchar, glitch, heartNum, evenCheck));
-            }
-        }
-
-        private static IEnumerator IncreaseNumForRare(Skill skill, BattleChar bchar, bool isGlitch = false, int heartNum = 0, bool isComing = false)
-        {
-            yield return null;
-
-            if (isGlitch)
-            {
-                GlitchEffect(skill);
-            }
-
-            PlayXaoVoice(bchar, isComing);
-
-            string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
-            string heartString = GetHeart(bchar, heartNum);
-
-            skill.MySkill.Name = $"{baseName} {heartString} - {RareNum}";
-            skill.MySkill.Description = ModLocalization.Rare_SimpleExchange;
-            skill.MyButton?.InputData(skill, null, false);
-        }
-
-        public static void GlitchEffect(this Skill changeFrom)
-        {
-            if (changeFrom.MyButton != null)
-            {
-                UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
-                UnityEngine.Object.Destroy(obj, 0.5f);
-            }
-        }
-
-        public static void RareSleepSex(BattleChar bchar, string skillKey, int mana = 0, int heartNum = 0)
-        {
-            if (bchar == null || string.IsNullOrEmpty(skillKey)) return;
-
-            Skill skill = CreateSkill(skillKey, bchar, true, true, 2, mana);
-            if (skill != null)
-            {
-                BattleSystem.DelayInput(RareSleepSexDescription(bchar, skill, heartNum));
-            }
-        }
-
-        public static IEnumerator RareSleepSexDescription(BattleChar bchar, Skill skill, int heartNum = 0)
-        {
-            if (skill == null || bchar.IsDead) yield break;
-
-            yield return null;
-
-            GlitchEffect(skill);
-
-            string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
-            string heartString = GetHeart(bchar, heartNum);
-
-            bool coming = heartNum >= 3;
-            PlayXaoVoice(bchar, coming);
-
-            if (skill.MySkill != null)
-            {
-                skill.MySkill.Name = $"{baseName} {heartString}";
-            }
-            skill.MyButton?.InputData(skill, null, false);
-        }
-
-        public static readonly List<string> XaoVoiceEffect = new List<string>
-        {
-            "Xao_Skill_Effect_0",
-            "Xao_Skill_Effect_1",
-            "Xao_Skill_Effect_2",
-            "Xao_Skill_Effect_3",
-            "Xao_Skill_Effect_4",
-            "Xao_Skill_Effect_5",
-        };
-
-        public static readonly List<string> XaoVoiceComing = new List<string>
-        {
-            "Xao_Coming_0",
-            "Xao_Coming_1",
-            "Xao_Coming_2",
-        };
-
-        public static readonly List<string> XaoVoiceMaid = new List<string>
-        {
-            "Xao_Maid_0",
-            "Xao_Maid_1",
-        };
-
-        public static void PlayXaoSound(string sound)
-        {
-            if (string.IsNullOrEmpty(sound) || !XaoVoiceSkills) return;
-
-            string soundToPlay = sound;
-            MasterAudio.StopBus("SE");
-            MasterAudio.PlaySound(soundToPlay, 100f);
-        }
-
-        public static void PlayXaoVoice(BattleChar bchar, bool isComing = false)
-        {
-            if (!XaoVoiceSkills || bchar != Xao) return;
-
-            var list = isComing ? XaoVoiceComing : XaoVoiceEffect;
-            int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, list.Count);
-            string soundToPlay = list[randomIndex];
-
-            MasterAudio.StopBus("SE");
-            MasterAudio.PlaySound(soundToPlay, 100f);
-        }
-
-        public static void PlayXaoVoiceMaid(BattleChar bchar)
-        {
-            if (!XaoVoiceSkills || bchar != Xao) return;
-
-            int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, XaoVoiceMaid.Count);
-            string soundToPlay = XaoVoiceMaid[randomIndex];
-
-            MasterAudio.StopBus("SE");
-            MasterAudio.PlaySound(soundToPlay, 100f);
-        }
-
-        public static void CastingWasteFixed(this BattleActWindow window, CastingSkill cast)
-        {
-            SkillButton[] componentsInChildren = window.CastingGroup.GetComponentsInChildren<SkillButton>();
-            SkillButton skillButton = componentsInChildren.FirstOrDefault(bt => bt.castskill == cast);
-            foreach (IP_SkillCastingQuit ip_SkillCastingQuit in cast.skill.IReturn<IP_SkillCastingQuit>())
-            {
-                if (ip_SkillCastingQuit != null)
-                {
-                    ip_SkillCastingQuit.SkillCastingQuit(cast);
-                }
-            }
-            if (skillButton != null)
-            {
-                skillButton.UseWaste();
-            }
-            window.SetCountSkillVL((window.CastingGroup.GetComponentsInChildren<SkillButton>().Length >= 13) ? 30 : 45);
-        }
-
-        public static IEnumerator HealingParticle(BattleChar target, BattleChar user, int healingNum = 0, bool isHentaiVoice = false)
-        {
-            yield return null;
-            target.Heal(user, healingNum, false, true, null);
-
-            Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Xao_DummyHeal, user, user.MyTeam);
-            healingParticle.PlusHit = true;
-            healingParticle.FreeUse = true;
-
-            target.ParticleOut(healingParticle, target);
-
-            if (isHentaiVoice && user == Xao)
-            {
-                PlayXaoSound("Xao_Maid_0");
-            }
-        }
-
-        public static void BikiniTime(BattleChar bchar)
-        {
-            if (Xao_Combo.CurrentCombo >= 7)
-            {
-                foreach (var ally in AllyTeam.AliveChars)
-                {
-                    AddBuff(ally, ModItemKeys.Buff_B_Xao_WetLust, 2);
-                }
-
-                if (Xao_Combo.CurrentCombo >= 9)
-                {
-                    Xao_Combo.SaveComboBetweenTurns = true;
-                }
-
-                if (Xao_Combo.CurrentCombo >= 11 && XaoHornyMod())
-                {
-                    AddBuff(bchar, ModItemKeys.Buff_B_Xao_WetDream);
-                }
-            }
-        }
-
-
-        public static void MaidFootJob(List<BattleChar> Targets, BattleChar bchar)
-        {
-            if (Xao_Combo.CurrentCombo < 3) return;
-
-            if (Targets[0] is BattleEnemy mainTarget)
-            {
-                List<BattleEnemy> additionalTargets = new List<BattleEnemy>();
-
-                if (mainTarget.istaunt)
-                {
-                    foreach (var enemy in BattleSystem.instance.EnemyList)
-                    {
-                        if (enemy != mainTarget && enemy.istaunt)
-                        {
-                            additionalTargets.Add(enemy);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var enemy in BattleSystem.instance.EnemyList)
-                    {
-                        if (enemy != mainTarget && !enemy.istaunt)
-                        {
-                            additionalTargets.Add(enemy);
-                        }
-                    }
-                }
-                Targets.AddRange(additionalTargets);
-
-
-                string debuff = ModItemKeys.Buff_B_Xao_MistressTouch;
-
-                if (Xao_Combo.CurrentCombo >= 5 && XaoHornyMod())
-                {
-                    foreach (var target in Targets)
-                    {
-                        if (target != null)
-                        {
-                            AddDebuff(target, bchar, debuff, 2);
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void MikoPussy()
-        {
-            if (Xao_Combo.CurrentCombo >= 6)
-            {
-                PlayData.TSavedata._Gold += 250;
-
-                if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
-                {
-                    Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
-                }
-            }
-        }
-
-        public static void MikoAnal()
-        {
-            if (Xao_Combo.CurrentCombo >= 6)
-            {
-                InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
-
-                if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
-                {
-                    Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
-                }
-            }
-        }
-
-
-        public static void MagicalGirlPussy()
-        {
-            if (Xao_Combo.CurrentCombo >= 6)
-            {
-                foreach (var ally in AllyTeam.AliveChars)
-                {
-                    string affection = GetAffectionBuff(ally.Info);
-                    AddBuff(ally, affection);
-
-                    if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
-                    {
-                        AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalEcstasy, 3);
-                    }
-                }
-            }
-        }
-
-
-        public static void MagicalGirlThigh()
-        {
-            if (Xao_Combo.CurrentCombo >= 3)
-            {
-                foreach (var ally in AllyTeam.AliveChars)
-                {
-                    AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalTease, 1);
-
-                    if (Xao_Combo.CurrentCombo >= 5)
-                    {
-                        AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalDesire, 2);
-                    }
-
-                    if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
-                    {
-                        var buffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, true, false).ToList();
-                        foreach (Buff buff in buffs)
-                        {
-                            foreach (StackBuff stackBuff in buff.StackInfo)
-                            {
-                                stackBuff.RemainTime++;
-                            }
-                            //if (!buff.BuffExtended.Any((Buff_Ex p) => p is B_Xao_Ex_MagicalDay))
-                            //{
-
-                            //    buff.AddBuffEx(new B_Xao_Ex_MagicalDay());
-                            //}
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void SwimsuitDay(BattleChar target)
-        {
-            if (target == null || Xao_Combo.CurrentCombo < 4) return;
-
-            var debuffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALL, true, false).ToList();
-
-            foreach (Buff debuff in debuffs)
-            {
-                target.BuffAdd(debuff.BuffData.Key, debuff.Usestate_L, false, 999, false, debuff.StackInfo[debuff.StackInfo.Count - 1].RemainTime, false);
-
-                if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
-                {
-                    foreach (StackBuff stackBuff in debuff.StackInfo)
-                    {
-                        if (stackBuff.RemainTime != 0)
-                        {
-                            stackBuff.RemainTime++;
-                        }
-                    }
-                }
-            }
-        }
-
-
-        public static IEnumerator CowGirl(BattleChar target, BattleChar user)
-        {
-            yield return null;
-
-            if (target.IsDead || target.Info.Ally || Xao_Combo.CurrentCombo < 5) yield break;
-
-            string stun = ModItemKeys.Buff_B_Xao_PleasureLock;
-
-            if (target.BuffReturn(stun, false) == null)
-            {
-                AddDebuff(target, user, stun, 10, 999);
-            }
-
-            if (Xao_Combo.CurrentCombo > 7 && XaoHornyMod())
-            {
-                if (BattleSystem.instance.EnemyCastSkills.Count > 0)
-                {
-                    CastingSkill targetSkill = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.skill.Master == target);
-
-                    if (targetSkill != null)
-                    {
-                        BattleSystem.instance.EnemyCastSkills.Remove(targetSkill);
-                        BattleSystem.instance.ActWindow.CastingWasteFixed(targetSkill);
-                    }
-                }
-            }
-
-            yield break;
-        }
-
-        public static void MaidPanties(BattleChar user)
-        {
-            if (Xao_Combo.CurrentCombo >= 5)
-            {
-                var allyWithLowestHp = AllyTeam.AliveChars.Where(x => x != null && x.HP < x.GetStat.maxhp).OrderBy(x => x.HP).FirstOrDefault();
-
-                if (allyWithLowestHp != null)
-                {
-                    BattleSystem.DelayInput(HealingParticle(allyWithLowestHp, user, 2));
-                }
-            }
-
-            if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
-            {
-                foreach (var ally in AllyTeam.AliveChars)
-                {
-                    var debuffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false);
-                    RemoveDebuff(debuffs);
-                    BattleSystem.DelayInput(HealingParticle(ally, user, 3, true));
-                }
-            }
-        }
-
-        public static void RemoveDebuff(List<Buff> debuffs)
-        {
-            if (debuffs != null && debuffs.Count > 0)
-            {
-                int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, debuffs.Count);
-                var randomDebuff = debuffs[randomIndex];
-                randomDebuff.SelfDestroy();
-            }
-        }
-
-        public static string GetAffectionBuff(Character myChar)
-        {
-            string buff = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
-            if (myChar?.Equip != null && myChar.Equip.Exists(item => item != null && item.itemkey == ModItemKeys.Item_Equip_Equip_Xao_LoveEgg) && myChar.KeyData != Xao.Info.KeyData)
-            {
-                buff = ModItemKeys.Buff_B_Xao_Affection_Ally;
-            }
-            else if (myChar.KeyData == Xao.Info.KeyData)
-            {
-                buff = ModItemKeys.Buff_B_Xao_Affection;
-            }
-            return buff;
-        }
-
-        public static void ChooseBattleChibi(BattleChar bchar, int randomIndex = 4, bool isTakingDamage = false, bool isHealed = false, bool isDealingDamage = false)
-        {
-            string chibiName = "Chibi_Normal";
-            SpriteType sprite = SpriteType.Chibi_Normal;
-            Vector3 chibiSize = new Vector3(235f, 235f);
-            int animationIndex = 3;
-
-            randomIndex = RandomManager.RandomInt(bchar.GetRandomClass().Main, 1, randomIndex);
-
-            if (isTakingDamage)
-            {
-                animationIndex = 2;
-
-                switch (randomIndex)
-                {
-                    case 1: chibiName = "Chibi_TakingDamage_0"; sprite = SpriteType.Chibi_TakingDamage_0; break;
-                    case 2: chibiName = "Chibi_TakingDamage_1"; sprite = SpriteType.Chibi_TakingDamage_1; break;
-                }
-            }
-            else if (isHealed)
-            {
-                switch (randomIndex)
-                {
-                    case 1: chibiName = "Chibi_Normal"; sprite = SpriteType.Chibi_Normal; break;
-                    case 2: chibiName = "Chibi_NormalBlush"; sprite = SpriteType.Chibi_NormalBlush; break;
-                }
-            }
-            else if (isDealingDamage)
-            {
-                switch (randomIndex)
-                {
-                    case 1: chibiName = "Chibi_Attack"; sprite = SpriteType.Chibi_Attack; animationIndex = 2; break;
-                    case 2: chibiName = "Chibi_AttackExtra_0"; sprite = SpriteType.Chibi_AttackExtra_0; break;
-                    case 3: chibiName = "Chibi_AttackExtra_1"; sprite = SpriteType.Chibi_AttackExtra_1; break;
-                    case 4: chibiName = "Chibi_NormalBlush"; sprite = SpriteType.Chibi_NormalBlush; break;
-                }
-            }
-            bchar.StartCoroutine(CreateBattleChibi(bchar, chibiName, sprite, chibiSize, animationIndex));
-        }
-
-        public static IEnumerator CreateBattleChibi(BattleChar bchar, string chibiName, SpriteType chibiType, Vector3 size, int animationIndex = 3)
-        {
-            GameObject chibi = ReplaceChibiIcon(ChibiNames, bchar, chibiName, SpritePaths[chibiType], ChibiPosition[chibiType], size);
-
-            if (chibi != null)
-            {
-                int randomAnim = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, animationIndex);
-                bool isBounce = false;
-                bool isSpin = false;
-                bool isStartRandomEntrance = false;
-
-                switch (randomAnim)
-                {
-                    case 0:
-                        isBounce = true;
-                        break;
-                    case 1:
-                        isSpin = true;
-                        break;
-                    case 2:
-                        isStartRandomEntrance = true;
-                        break;
-                }
-                ChibiStartAnimation(chibi, isBounce, isSpin, isStartRandomEntrance);
-            }
-            yield break;
-        }
-
-        public static IEnumerator ChangeXaoSkills(BattleChar bchar)
-        {
-            yield return null;
-            var team = BattleSystem.instance.AllyTeam;
-            var fixedSkill = (bchar as BattleAlly)?.MyBasicSkill?.buttonData;
-
-            if (fixedSkill?.MySkill != null && Utils.XaoSkillList.TryGetValue(fixedSkill.MySkill.KeyID, out var newSkillID2))
-            {
-                var newSkill = Skill.TempSkill(newSkillID2, fixedSkill.Master, fixedSkill.Master.MyTeam);
-                Skill refillSkill = newSkill.CloneSkill();
-                (bchar as BattleAlly).MyBasicSkill.SkillInput(refillSkill);
-                (bchar as BattleAlly).BattleBasicskillRefill = refillSkill;
-                (bchar as BattleAlly).BasicSkill = refillSkill;
-                int ind = bchar.MyTeam.Chars.IndexOf(bchar);
-                if (ind >= 0)
-                {
-                    bchar.MyTeam.Skills_Basic[ind] = refillSkill;
-                }
-            }
-
-            var allSkillsToChange = team.Skills.Concat(team.Skills_Deck).Concat(team.Skills_UsedDeck).Where(skill => skill?.MySkill != null && Utils.XaoSkillList.ContainsKey(skill.MySkill.KeyID)).ToList();
-
-            foreach (Skill skill in allSkillsToChange)
-            {
-                if (Utils.XaoSkillList.TryGetValue(skill.MySkill.KeyID, out var newSkillID))
-                {
-                    var newSkill = Skill.TempSkill(newSkillID, skill.Master, skill.Master.MyTeam);
-                    skill.SkillChange(newSkill);
-                }
-            }
-            yield break;
-        }
-
-        public static void AffectionSelection(BattleChar bchar, bool isLoveEgg = false)
-        {
-            if (bchar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove)
-            {
-                return;
-            }
-            BattleSystem.DelayInputAfter(SelectionCoroutine(bchar, isLoveEgg));
-        }
-
-        private static IEnumerator SelectionCoroutine(BattleChar bchar, bool isLoveEgg = false)
-        {
-            yield return null;
-
-            List<Skill> dynamicList = new List<Skill>();
-
-            string skillKey = isLoveEgg ? ModItemKeys.Skill_S_Xao_B_LoveEgg : ModItemKeys.Skill_S_Xao_B_Affection_0;
-
-            var skill = Skill.TempSkill(skillKey, bchar, bchar.MyTeam);
-            if (skill != null)
-            {
-                dynamicList.Add(skill);
-            }
-
-            if (dynamicList.Count > 0)
-            {
-                BattleSystem.DelayInput(
-                    BattleSystem.I_OtherSkillSelect(
-                        dynamicList,
-                        new SkillButton.SkillClickDel(btn => OnSkillSelected(btn, bchar)),
-                        ScriptLocalization.System_SkillSelect.EffectSelect,
-                        true,
-                        false
-                    )
-                );
-            }
-        }
-
-        private static void OnSkillSelected(SkillButton myButton, BattleChar bchar)
-        {
-            if (myButton == null || myButton.Myskill == null || myButton.Myskill.MySkill == null)
-            {
-                return;
-            }
-
-            string key = myButton.Myskill.MySkill.KeyID;
-
-            if (key == ModItemKeys.Skill_S_Xao_B_Affection_0)
-            {
-                bchar.Overload = 0;
-
-                string affectionBuff = GetAffectionBuff(bchar.Info);
-
-                if (bchar.BuffReturn(affectionBuff, false) is Buff affection)
-                {
-                    affection?.SelfStackDestroy();
-                }
-
-                if (bchar == Xao)
-                {
-                    Xao_Hearts.HeartsCheck(bchar, -1);
-                }
-                else if (affectionBuff == ModItemKeys.Buff_B_Xao_Affection_Ally)
-                {
-                    Xao_Hearts_Ally.HeartsCheckAlly(bchar, -1);
-                }
-                else
-                {
-                    Xao_Hearts_Ally_Synergy.HeartsCheck(bchar, -1);
-                }
-                PopHentaiText(bchar);
-
-                if (Xao)
-                {
-                    PlayXaoSound("Xao_Affection_0");
-                }
-            }
-            else if (key == ModItemKeys.Skill_S_Xao_B_LoveEgg)
-            {
-                Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
-                if (bchar.BuffReturn(ModItemKeys.Buff_B_Xao_E_LoveEgg, false) is Buff egg)
-                {
-                    egg?.SelfDestroy();
-                }
-
-                if (Xao)
-                {
-                    PlayXaoSound("Xao_LoveEgg");
-                }
-            }
-        }
-    }
+	public static class Utils
+	{
+		public static bool XaoVoice => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice").Value;
+		public static bool XaoVoiceSkills => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice Skills").Value;
+		public static bool KaijuEquip => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Kaiju Equip").Value;
+
+		public static int RareNum;
+		public static bool Equip;
+
+		public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
+		public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
+		public static BattleChar Xao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_Xao);
+		public static bool XaoHornyMod()
+		{
+			return Xao.Info.Passive is P_Xao xao && xao.HornyMod;
+		}
+
+
+		public static string GetHeart(BattleChar bchar, int heartNum = 1)
+		{
+			string heart = (bchar == Xao && XaoHornyMod()) ? "♥" : "♡";
+
+			//if (heartNum < 1)
+			//{
+			//    heartNum = 1;
+			//}
+
+			return string.Concat(Enumerable.Repeat(heart, heartNum));
+		}
+
+		public static void XaoHornyModOff()
+		{
+			if (Xao?.Info?.Passive is P_Xao p)
+			{
+				p.HornyMod = false;
+			}
+		}
+
+		public enum SpriteType
+		{
+			Chibi_Idle,
+			Chibi_Idle_Horny,
+			Chibi_Normal,
+			Chibi_Normal_Horny,
+			Chibi_Blush,
+			Chibi_Blush_Horny,
+			Chibi_Attack_Fire,
+			Chibi_Attack_Clumsy,
+			Chibi_Attack_Sneaky,
+			Chibi_TakingDamage_0,
+			Chibi_TakingDamage_1,
+			Heart_Grey_0,
+			Heart_Grey_1,
+			Heart_Grey_2,
+			Heart_Normal_0,
+			Heart_Normal_1,
+			Heart_Normal_2,
+			HentaiText_0,
+			HentaiText_1,
+			HentaiText_2,
+			HentaiText_3,
+			HentaiText_4,
+			HentaiText_5,
+			HentaiText_6,
+			HentaiText_7,
+			HentaiText_8,
+			Combo_0,
+			Combo_1,
+			Combo_2,
+			Combo_3,
+			XaoFace_BandagePanties,
+			XaoFace_BandagePantiesW,
+			XaoFace_BandAids,
+			XaoFace_Bikini,
+			XaoFace_BlackMaidPantyhose,
+			XaoFace_CuteLaceBow,
+			XaoFace_Kaiju,
+			XaoFace_MagicalTeen,
+			XaoFace_Maid,
+			XaoFace_Miko,
+			XaoFace_Swimsuit,
+			XaoFace_WhiteMaidPantyhose,
+		};
+
+		public static readonly Dictionary<SpriteType, string> SpritePaths = new Dictionary<SpriteType, string>()
+		{
+			{ SpriteType.Chibi_Idle, "Visual/Chibi/Idle.png" },
+			{ SpriteType.Chibi_Idle_Horny, "Visual/Chibi/Idle_Horny.png" },
+			{ SpriteType.Chibi_Normal, "Visual/Chibi/Normal.png" },
+			{ SpriteType.Chibi_Normal_Horny, "Visual/Chibi/Normal_Horny.png" },
+			{ SpriteType.Chibi_Blush, "Visual/Chibi/NormalBlush.png" },
+			{ SpriteType.Chibi_Blush_Horny, "Visual/Chibi/Blush_Horny.png" },
+			{ SpriteType.Chibi_Attack_Fire, "Visual/Chibi/Attack_Fire.png" },
+			{ SpriteType.Chibi_Attack_Clumsy, "Visual/Chibi/Attack_Clumsy.png" },
+			{ SpriteType.Chibi_Attack_Sneaky, "Visual/Chibi/Attack_Sneaky.png" },
+			{ SpriteType.Chibi_TakingDamage_0, "Visual/Chibi/TakingDamage_0.png" },
+			{ SpriteType.Chibi_TakingDamage_1, "Visual/Chibi/TakingDamage_1.png" },
+			{ SpriteType.Heart_Grey_0, "Visual/Heart/HeartGrey_0.png" },
+			{ SpriteType.Heart_Normal_0, "Visual/Heart/Heart_Normal_0.png" },
+			{ SpriteType.HentaiText_0, "Visual/Text/H_text_1_L.png" },
+			{ SpriteType.HentaiText_1, "Visual/Text/H_text_1_M.png" },
+			{ SpriteType.HentaiText_2, "Visual/Text/H_text_1_S.png" },
+			{ SpriteType.HentaiText_3, "Visual/Text/H_text_2_L.png" },
+			{ SpriteType.HentaiText_4, "Visual/Text/H_text_2_M.png" },
+			{ SpriteType.HentaiText_5, "Visual/Text/H_text_2_S.png" },
+			{ SpriteType.HentaiText_6, "Visual/Text/H_text_3_L.png" },
+			{ SpriteType.HentaiText_7, "Visual/Text/H_text_3_M.png" },
+			{ SpriteType.HentaiText_8, "Visual/Text/H_text_3_S.png" },
+			{ SpriteType.Combo_0, "Visual/Combo/Combo_0.png" },
+			{ SpriteType.Combo_1, "Visual/Combo/Combo_1.png" },
+			{ SpriteType.Combo_2, "Visual/Combo/Combo_2.png" },
+			{ SpriteType.Combo_3, "Visual/Combo/Combo_3.png" },
+			{ SpriteType.XaoFace_BandagePanties, "Visual/Faces/BandagePanties.png" },
+			{ SpriteType.XaoFace_BandagePantiesW, "Visual/Faces/BandagePantiesW.png" },
+			{ SpriteType.XaoFace_BandAids , "Visual/Faces/BandAids.png" },
+			{ SpriteType.XaoFace_Bikini , "Visual/Faces/Bikini.png" },
+			{ SpriteType.XaoFace_BlackMaidPantyhose , "Visual/Faces/BlackMaidPantyhose.png" },
+			{ SpriteType.XaoFace_CuteLaceBow , "Visual/Faces/CuteLaceBow.png" },
+			{ SpriteType.XaoFace_Kaiju , "Visual/Faces/Kaiju.png" },
+			{ SpriteType.XaoFace_MagicalTeen , "Visual/Faces/MagicalTeen.png" },
+			{ SpriteType.XaoFace_Maid , "Visual/Faces/Maid.png" },
+			{ SpriteType.XaoFace_Miko , "Visual/Faces/Miko.png" },
+			{ SpriteType.XaoFace_Swimsuit , "Visual/Faces/Swimsuit.png" },
+			{ SpriteType.XaoFace_WhiteMaidPantyhose , "Visual/Faces/WhiteMaidPantyhose.png" },
+		};
+
+		public static readonly List<Vector3> TextPositions = new List<Vector3>
+		{
+			new Vector3(0.4f, -0.4f, 0f),
+			new Vector3(-0.6f, -0.6f, 0f),
+			new Vector3(-1.7f, -0.7f, 0f),
+			new Vector3(0.2f, -0.8f, 0f),
+			new Vector3(1.1f, -0.1f, 0f),
+			new Vector3(1.6f, -0.8f, 0f),
+		};
+
+		public static readonly List<string> TextPromt = new List<string>
+		{
+			"Visual/Text/H_text_1_L.png",
+			"Visual/Text/H_text_1_M.png",
+			"Visual/Text/H_text_1_S.png",
+			"Visual/Text/H_text_2_L.png",
+			"Visual/Text/H_text_2_M.png",
+			"Visual/Text/H_text_2_S.png",
+			"Visual/Text/H_text_3_L.png",
+			"Visual/Text/H_text_3_M.png",
+			"Visual/Text/H_text_3_S.png",
+		};
+
+		public static readonly Dictionary<string, SpriteType> SkinKeyToSpriteType = new Dictionary<string, SpriteType>
+		{
+			{ ModItemKeys.Character_Skin_Xao_Bandage_Panties, SpriteType.XaoFace_BandagePanties },
+			{ ModItemKeys.Character_Skin_Xao_Bandage_Panties_W, SpriteType.XaoFace_BandagePantiesW },
+			{ ModItemKeys.Character_Skin_Xao_Band_Aids, SpriteType.XaoFace_BandAids },
+			{ ModItemKeys.Character_Skin_Xao_Bikini, SpriteType.XaoFace_Bikini },
+			{ ModItemKeys.Character_Skin_Xao_Black_Maid_Pantyhose, SpriteType.XaoFace_BlackMaidPantyhose },
+			{ ModItemKeys.Character_Skin_Xao_Cute_Lace_Bow, SpriteType.XaoFace_CuteLaceBow },
+			{ ModItemKeys.Character_Xao, SpriteType.XaoFace_Kaiju },
+			{ ModItemKeys.Character_Skin_Xao_Magical_Teen, SpriteType.XaoFace_MagicalTeen },
+			{ ModItemKeys.Character_Skin_Xao_Maid, SpriteType.XaoFace_Maid },
+			{ ModItemKeys.Character_Skin_Xao_Miko, SpriteType.XaoFace_Miko },
+			{ ModItemKeys.Character_Skin_Xao_Swimsuit, SpriteType.XaoFace_Swimsuit },
+			{ ModItemKeys.Character_Skin_Xao_White_Maid_Pantyhose, SpriteType.XaoFace_WhiteMaidPantyhose },
+		};
+
+		public static readonly Dictionary<SpriteType, Vector3> ChibiPosition = new Dictionary<SpriteType, Vector3>
+		{
+			{ SpriteType.Chibi_Idle, new Vector3(0f, 0.95f) },
+			{ SpriteType.Chibi_Idle_Horny, new Vector3(0f, 0.95f) },
+			{ SpriteType.Chibi_Normal, new Vector3(0f, 0.95f) },
+			{ SpriteType.Chibi_Normal_Horny, new Vector3(0f, 0.95f) },
+			{ SpriteType.Chibi_Blush, new Vector3(0f, 0.95f) },
+			{ SpriteType.Chibi_Blush_Horny, new Vector3(0f, 0.95f) },
+			{ SpriteType.Chibi_Attack_Fire, new Vector3(-0.4f, 0.95f) },
+			{ SpriteType.Chibi_Attack_Clumsy, new Vector3(-0.2f, 0.95f) },
+			{ SpriteType.Chibi_Attack_Sneaky, new Vector3(-0.3f, 0.95f) },
+			{ SpriteType.Chibi_TakingDamage_0, new Vector3(-0.2f, 0.95f) },
+			{ SpriteType.Chibi_TakingDamage_1, new Vector3(-0.2f, 0.95f) },
+		};
+
+		public static readonly Dictionary<SpriteType, Vector3> ComboPosition = new Dictionary<SpriteType, Vector3>
+		{
+			{ SpriteType.Combo_0, new Vector3(2f, 2f) },
+			{ SpriteType.Combo_1, new Vector3(0f, 0.95f) },
+			{ SpriteType.Combo_2, new Vector3(0f, 0.95f) },
+			{ SpriteType.Combo_3, new Vector3(0f, 0.95f) },
+		};
+
+		public static readonly Dictionary<string, string> HeartsPath = new Dictionary<string, string>
+		{
+			{ "HeartGrey_0", "Visual/Heart/HeartGrey_0.png" },
+			{ "HeartGrey_1", "Visual/Heart/HeartGrey_0.png" },
+			{ "HeartGrey_2", "Visual/Heart/HeartGrey_0.png" },
+			{ "HeartNormal_0", "Visual/Heart/HeartNormal_0.png" },
+			{ "HeartNormal_1", "Visual/Heart/HeartNormal_0.png" },
+			{ "HeartNormal_2", "Visual/Heart/HeartNormal_0.png" },
+		};
+
+		public static readonly Dictionary<string, Vector3> HeartsPosition = new Dictionary<string, Vector3>
+		{
+			{ "HeartGrey_0", new Vector3(1.65f, 0.4f) },
+			{ "HeartGrey_1", new Vector3(1.25f, 1f) },
+			{ "HeartGrey_2", new Vector3(1.65f, 1.6f) },
+			{ "HeartNormal_0", new Vector3(1.65f, 0.4f) },
+			{ "HeartNormal_1", new Vector3(1.25f, 1f) },
+			{ "HeartNormal_2", new Vector3(1.65f, 1.6f) },
+		};
+
+		public static readonly List<string> HentaiSkills = new List<string>
+		{
+			ModItemKeys.Skill_S_Xao_BikiniTime_0,
+			ModItemKeys.Skill_S_Xao_BikiniTime_1,
+			ModItemKeys.Skill_S_Xao_BikiniTime_2,
+			ModItemKeys.Skill_S_Xao_BikiniTime_3,
+			ModItemKeys.Skill_S_Xao_BikiniTime_Love_0,
+			ModItemKeys.Skill_S_Xao_BikiniTime_Love_1,
+			ModItemKeys.Skill_S_Xao_BikiniTime_Love_2,
+			ModItemKeys.Skill_S_Xao_BikiniTime_Love_3,
+
+			ModItemKeys.Skill_S_Xao_CowGirl_0,
+			ModItemKeys.Skill_S_Xao_CowGirl_1,
+			ModItemKeys.Skill_S_Xao_CowGirl_2,
+			ModItemKeys.Skill_S_Xao_CowGirl_Love_0,
+			ModItemKeys.Skill_S_Xao_CowGirl_Love_1,
+			ModItemKeys.Skill_S_Xao_CowGirl_Love_2,
+
+			ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_0,
+			ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_1,
+			ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_2,
+			ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0,
+			ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_1,
+			ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_2,
+
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_0,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_1,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_2,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_3,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_1,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_2,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_3,
+
+			ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_0,
+			ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_1,
+			ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_2,
+			ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0,
+			ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_1,
+			ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_2,
+
+			ModItemKeys.Skill_S_Xao_MikoExperienceAnal_0,
+			ModItemKeys.Skill_S_Xao_MikoExperienceAnal_1,
+			ModItemKeys.Skill_S_Xao_MikoExperienceAnal_2,
+			ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0,
+			ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_1,
+			ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_2,
+
+			ModItemKeys.Skill_S_Xao_MikoExperiencePussy_0,
+			ModItemKeys.Skill_S_Xao_MikoExperiencePussy_1,
+			ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2,
+			ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0,
+			ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_1,
+			ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_2,
+
+			ModItemKeys.Skill_S_Xao_SwimsuitDay_0,
+			ModItemKeys.Skill_S_Xao_SwimsuitDay_1,
+			ModItemKeys.Skill_S_Xao_SwimsuitDay_2,
+			ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0,
+			ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1,
+			ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2,
+
+			ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0,
+			ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01,
+			ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1,
+			ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2,
+			ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3,
+			ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4,
+
+			ModItemKeys.Skill_S_Xao_Rare_SleepSex_0,
+			ModItemKeys.Skill_S_Xao_Rare_SleepSex_01,
+			ModItemKeys.Skill_S_Xao_Rare_SleepSex_1,
+			ModItemKeys.Skill_S_Xao_Rare_SleepSex_2,
+		};
+
+		public static readonly List<string> XaoRandomSkill = new List<string>
+		{
+			ModItemKeys.Skill_S_Xao_BikiniTime_Love_0,
+			ModItemKeys.Skill_S_Xao_CowGirl_Love_0,
+			ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0,
+			ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0,
+			ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0,
+			ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0,
+			ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0,
+			ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0,
+		};
+
+		public static readonly List<string> ChibiNames = new List<string>
+		{
+			"Chibi_Idle",
+			"Chibi_Attack",
+			"Chibi_AttackExtra_0",
+			"Chibi_AttackExtra_1",
+			"Chibi_Normal",
+			"Chibi_NormalBlush",
+			"Chibi_TakingDamage_0",
+			"Chibi_TakingDamage_1",
+			"Chibi_Horny",
+		};
+
+		public static readonly List<string> ComboNames = new List<string>
+		{
+			"Combo_0",
+			"Combo_1",
+			"Combo_2",
+			"Combo_3",
+		};
+
+		public static readonly List<string> Hearts = new List<string>
+		{
+			"HeartGrey_0",
+			"HeartGrey_1",
+			"HeartGrey_2",
+			"HeartNormal_0",
+			"HeartNormal_1",
+			"HeartNormal_2",
+		};
+
+		public static readonly Dictionary<string, string> XaoSkillList = new Dictionary<string, string>
+		{
+			{ ModItemKeys.Skill_S_Xao_BikiniTime_0, ModItemKeys.Skill_S_Xao_BikiniTime_Love_0},
+			{ ModItemKeys.Skill_S_Xao_BikiniTime_1, ModItemKeys.Skill_S_Xao_BikiniTime_Love_1},
+			{ ModItemKeys.Skill_S_Xao_BikiniTime_2, ModItemKeys.Skill_S_Xao_BikiniTime_Love_2},
+			{ ModItemKeys.Skill_S_Xao_BikiniTime_3, ModItemKeys.Skill_S_Xao_BikiniTime_Love_3},
+			{ ModItemKeys.Skill_S_Xao_CowGirl_0, ModItemKeys.Skill_S_Xao_CowGirl_Love_0},
+			{ ModItemKeys.Skill_S_Xao_CowGirl_1, ModItemKeys.Skill_S_Xao_CowGirl_Love_1},
+			{ ModItemKeys.Skill_S_Xao_CowGirl_2, ModItemKeys.Skill_S_Xao_CowGirl_Love_2},
+			{ ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_0, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_0},
+			{ ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_1, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_1},
+			{ ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_2, ModItemKeys.Skill_S_Xao_ExperienceMaidFootjob_Love_2},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlPussy_0, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_0},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlPussy_1, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_1},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlPussy_2, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_2},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlPussy_3, ModItemKeys.Skill_S_Xao_MagicalGirlPussy_Love_3},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_0, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_0},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_1, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_1},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_2, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_2},
+			{ ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_3, ModItemKeys.Skill_S_Xao_MagicalGirlThighjob_Love_3},
+			{ ModItemKeys.Skill_S_Xao_MikoExperienceAnal_0, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_0},
+			{ ModItemKeys.Skill_S_Xao_MikoExperienceAnal_1, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_1},
+			{ ModItemKeys.Skill_S_Xao_MikoExperienceAnal_2, ModItemKeys.Skill_S_Xao_MikoExperienceAnal_Love_2},
+			{ ModItemKeys.Skill_S_Xao_MikoExperiencePussy_0, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_0},
+			{ ModItemKeys.Skill_S_Xao_MikoExperiencePussy_1, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_1},
+			{ ModItemKeys.Skill_S_Xao_MikoExperiencePussy_2, ModItemKeys.Skill_S_Xao_MikoExperiencePussy_Love_2},
+			{ ModItemKeys.Skill_S_Xao_SwimsuitDay_0, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_0},
+			{ ModItemKeys.Skill_S_Xao_SwimsuitDay_1, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_1},
+			{ ModItemKeys.Skill_S_Xao_SwimsuitDay_2, ModItemKeys.Skill_S_Xao_SwimsuitDay_Love_2},
+			{ ModItemKeys.Skill_S_Xao_Rare_SleepSex_0, ModItemKeys.Skill_S_Xao_Rare_SleepSex_01},
+			{ ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0, ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01},
+			{ ModItemKeys.Skill_S_Xao_MaidPanties_0, ModItemKeys.Skill_S_Xao_MaidPanties_Love_0},
+			{ ModItemKeys.Skill_S_Xao_MaidPanties_1, ModItemKeys.Skill_S_Xao_MaidPanties_Love_1},
+			{ ModItemKeys.Skill_S_Xao_MaidPanties_2, ModItemKeys.Skill_S_Xao_MaidPanties_Love_2},
+		};
+
+		private static int LastTextPositionIndex = -1;
+		private static int LastTextPromptIndex = -1;
+
+		public static void CreateSkill(string skill, BattleChar bchar)
+		{
+			if (bchar == null)
+			{
+				Debug.Log($"[CreateSkill] BattleChar is null for skill {skill}");
+				return;
+			}
+			Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
+			BattleSystem.instance.AllyTeam.Add(newSkill, true);
+		}
+
+		public static Skill CreateSkill(string skill, BattleChar bchar, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0)
+		{
+			if (bchar == null)
+			{
+				Debug.Log($"[CreateSkill] BattleChar is null for skill {skill}");
+				return null;
+			}
+			Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
+			newSkill.isExcept = isExcept;
+			if (isDiscarded) newSkill.AutoDelete = discardedAfter;
+			newSkill.AP = mana;
+			BattleSystem.instance.AllyTeam.Add(newSkill, true);
+			return newSkill;
+		}
+		public static Skill CreateSkill(string skill, BattleChar bchar, bool isExcept = false, bool isDiscarded = false, int discardedAfter = 0, int mana = 0, bool isNotCount = false)
+		{
+			if (bchar == null)
+			{
+				Debug.Log($"[CreateSkill] BattleChar is null for skill {skill}");
+				return null;
+			}
+			Skill newSkill = Skill.TempSkill(skill, bchar, bchar.MyTeam);
+			newSkill.isExcept = isExcept;
+			if (isDiscarded) newSkill.AutoDelete = discardedAfter;
+			newSkill.AP = mana;
+			newSkill.NotCount = isNotCount;
+			BattleSystem.instance.AllyTeam.Add(newSkill, true);
+			return newSkill;
+		}
+		public static void AddBuff(BattleChar bchar, string buffKey, int buffNum = 1)
+		{
+			for (int i = 0; i < buffNum; i++)
+			{
+				if (bchar == null || buffKey.IsNullOrEmpty()) return;
+				bchar.BuffAdd(buffKey, bchar, false, 0, false, -1, false);
+			}
+		}
+
+		public static void AddDebuff(BattleChar enemy, BattleChar ally, string buffKey, int debuffNum = 1, int percentage = 0)
+		{
+			for (int i = 0; i < debuffNum; i++)
+			{
+				if (enemy == null || buffKey.IsNullOrEmpty() || enemy.Info.Ally) return;
+				enemy.BuffAdd(buffKey, ally, false, percentage, false, -1, false);
+			}
+		}
+
+		public static void getSprite(string path, Image img)
+		{
+			string path2 = ModManager.getModInfo("Xao").assetInfo.ImageFromFile(path);
+			AddressableLoadManager.LoadAsyncAction(path2, AddressableLoadManager.ManageType.None, img);
+		}
+
+		public static Sprite getSprite(string path)
+		{
+			string path2 = ModManager.getModInfo("Xao").assetInfo.ImageFromFile(path);
+			return AddressableLoadManager.LoadAsyncCompletion<Sprite>(path2, AddressableLoadManager.ManageType.None);
+		}
+
+		public static void getSpriteAsync(string path, Action<AsyncOperationHandle> collback)
+		{
+			string path2 = ModManager.getModInfo("Xao").assetInfo.ImageFromFile(path);
+			AddressableLoadManager.LoadAsyncAction(path2, AddressableLoadManager.ManageType.None, collback);
+		}
+
+		public static void LoadSpriteAsync(string path, Action<Sprite> onLoaded)
+		{
+			getSpriteAsync(path, handle =>
+			{
+				Sprite sprite = (Sprite)handle.Result;
+				onLoaded?.Invoke(sprite);
+			});
+		}
+
+		public static T GetAssets<T>(string path, string assetBundlePatch = null) where T : UnityEngine.Object
+		{
+			var mod = ModManager.getModInfo("Xao");
+			if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
+			var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
+			return AddressableLoadManager.LoadAddressableAsset<T>(address);
+		}
+
+		public static T GetAssetsAsync<T>(string path, string assetBundlePatch = null,
+			AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage) where T : UnityEngine.Object
+		{
+			var mod = ModManager.getModInfo("Xao");
+			if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
+			var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
+			return AddressableLoadManager.LoadAsyncCompletion<T>(address, type);
+		}
+
+		public static GameObject CreatGameObject(string name, Transform parent)
+		{
+			//Transform existing = parent.Find(name);
+			//if (existing != null)
+			//{
+			//    UnityEngine.Object.Destroy(existing.gameObject); // удаляем старый, если есть
+			//}
+
+			GameObject gameObject = new GameObject(name);
+			gameObject.SetActive(false);
+			gameObject.transform.SetParent(parent, false);
+			gameObject.transform.localScale = Vector3.one;
+			gameObject.layer = 8;
+			return gameObject;
+		}
+
+		public static GameObject GetChildByName(GameObject obj, string name)
+		{
+			Transform transform = obj.transform.Find(name);
+			bool flag = transform != null;
+			GameObject result;
+			if (flag)
+			{
+				result = transform.gameObject;
+			}
+			else
+			{
+				result = null;
+			}
+			return result;
+		}
+
+		public static void ImageResize(Image img, Vector2 size)
+		{
+			img.rectTransform.anchorMin = new Vector2(0f, 1f);
+			img.rectTransform.anchorMax = new Vector2(0f, 1f);
+			img.rectTransform.sizeDelta = size;
+		}
+		public static void ImageResize(Image img, Vector2 size, Vector2 pos)
+		{
+			img.rectTransform.anchorMin = new Vector2(0f, 1f);
+			img.rectTransform.anchorMax = new Vector2(0f, 1f);
+			img.rectTransform.sizeDelta = size;
+			img.rectTransform.transform.localPosition = pos;
+		}
+
+		public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)
+		{
+			txt.rectTransform.anchorMin = new Vector2(0f, 1f);
+			txt.rectTransform.anchorMax = new Vector2(0f, 1f);
+			txt.rectTransform.sizeDelta = size;
+			txt.rectTransform.transform.localPosition = pos;
+			txt.text = text;
+			txt.fontSize = fontSize;
+			txt.color = Color.white;
+			txt.alignment = TextAlignmentOptions.Left;
+		}
+
+		public static GameObject CreateIcon(BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true, bool isRecast = false)
+		{
+			if (name == null || sprite == null)
+			{
+				return null;
+			}
+
+			//Debug.Log($"[CreateIcon] Creating icon: {name} at {offset} with sprite: {sprite}");
+			Vector3 basePos = bchar.GetTopPos();
+			return CreateIconUi(name, bchar.transform, sprite, size, basePos + offset, isSibling, isRecast);
+		}
+
+		public static GameObject CreateIcon(string name, string sprite, Vector3 offset, Vector3 size, Transform parent, bool isSibling = true, bool isRecast = false)
+		{
+			if (name == null || sprite == null || parent == null)
+			{
+				return null;
+			}
+			return CreateIconUi(name, parent, sprite, size, offset, isSibling, isRecast);
+		}
+
+		public static GameObject CreateIconUi(string name, Transform parent, string spriteNormal, Vector3 size, Vector3 worldPos, bool isSibling = true, bool isRecast = false)
+		{
+			GameObject iconObject = Utils.CreatGameObject(name, parent);
+			if (iconObject == null) return null;
+
+			iconObject.transform.position = worldPos;
+
+			//Image oldImage = iconObject.GetComponent<Image>();
+			//if (oldImage != null)
+			//{
+			//    UnityEngine.Object.Destroy(oldImage);
+			//}
+
+			Image image = iconObject.AddComponent<Image>();
+			if (image == null) return null;
+
+			Sprite sprite = Utils.getSprite(spriteNormal);
+			if (sprite == null)
+			{
+				Debug.LogError($"[CreateIconUi] Sprite not found: {spriteNormal}");
+				return null;
+			}
+
+			image.sprite = sprite;
+			image.raycastTarget = isRecast;
+
+			Utils.ImageResize(image, size);
+
+			iconObject.SetActive(true);
+
+			if (isSibling)
+			{
+				iconObject.transform.SetAsFirstSibling();
+			}
+
+			return iconObject;
+		}
+
+
+		public static GameObject CreateComboButton(string name, Transform trans, string spriteNormal, Vector2 size, Vector2 pos)
+		{
+			GameObject newObject = Utils.CreatGameObject(name, trans);
+			if (newObject == null)
+			{
+				return null;
+			}
+
+			newObject.transform.SetParent(trans);
+			newObject.transform.localPosition = pos;
+
+			Image image = newObject.AddComponent<Image>();
+			Sprite sprite = Utils.getSprite(spriteNormal);
+			if (sprite == null)
+			{
+				return null;
+			}
+
+			image.sprite = sprite;
+			Utils.ImageResize(image, size, pos);
+			newObject.SetActive(true);
+
+			return newObject;
+		}
+
+		public static GameObject ReplaceChibiIcon(string chibiName, BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true)
+		{
+			var existing = GameObject.Find(chibiName);
+			if (existing != null)
+			{
+				UnityEngine.Object.Destroy(existing);
+			}
+			return Utils.CreateIcon(bchar, name, sprite, offset, size, isSibling);
+		}
+
+		public static GameObject ReplaceChibiIcon(List<string> chibiNames, BattleChar bchar, string name, string sprite, Vector3 offset, Vector3 size, bool isSibling = true)
+		{
+			foreach (var chibiName in chibiNames)
+			{
+				var existing = GameObject.Find(chibiName);
+				if (existing != null)
+				{
+					UnityEngine.Object.Destroy(existing);
+				}
+			}
+			return Utils.CreateIcon(bchar, name, sprite, offset, size, isSibling);
+		}
+
+		public static void CreateIdleChibi()
+		{
+			if (Xao != null)
+			{
+				string chibiName = XaoHornyMod() ? "Chibi_Horny" : "Chibi_Idle";
+				string chibiSprite = XaoHornyMod() ? SpritePaths[SpriteType.Chibi_Idle_Horny] : SpritePaths[SpriteType.Chibi_Idle];
+				Vector3 chibiPosition = XaoHornyMod() ? ChibiPosition[SpriteType.Chibi_Idle_Horny] : ChibiPosition[SpriteType.Chibi_Idle];
+
+				CreateIcon(Xao, chibiName, chibiSprite, chibiPosition, new Vector3(250f, 250f));
+			}
+		}
+
+		public static GameObject CreateNewCombo(GameObject combo, string comboName, string path, bool isPopout = false)
+		{
+			combo = CreateComboButton(comboName, BattleSystem.instance.ActWindow.transform, path, new Vector2(110f, 110f), new Vector2(-749.7802f, -438.8362f));
+			AddComponent<Xao_Combo_Tooltip>(combo);
+			if (isPopout)
+			{
+				StartComboPopOut(combo);
+			}
+			return combo;
+		}
+
+		public static T AddComponent<T>(GameObject go) where T : Component
+		{
+			return go.AddComponent<T>();
+		}
+
+		public static void UnlockSkillPreview(string key)
+		{
+			if (!SaveManager.NowData.unlockList.SkillPreView.Contains(key))
+			{
+				SaveManager.NowData.unlockList.SkillPreView.Add(key);
+			}
+		}
+
+		public static void DestroyAndNullify(ref GameObject obj)
+		{
+			if (obj != null)
+			{
+				UnityEngine.Object.Destroy(obj);
+				obj = null;
+			}
+		}
+		public static void DestroyObjects(params GameObject[] objects)
+		{
+			foreach (var obj in objects)
+			{
+				if (obj != null)
+				{
+					UnityEngine.Object.Destroy(obj);
+				}
+			}
+		}
+
+		public static void DestroyObjects(IEnumerable<string> objectNames)
+		{
+			foreach (var objName in objectNames)
+			{
+				var existing = GameObject.Find(objName);
+				if (existing != null)
+				{
+					UnityEngine.Object.Destroy(existing);
+				}
+			}
+		}
+
+		public static Vector3 GetRandomTextPosition()
+		{
+			if (TextPositions.Count == 0)
+				return Vector3.zero;
+
+			if (TextPositions.Count == 1)
+				return TextPositions[0];
+
+			int index;
+			do
+			{
+				index = UnityEngine.Random.Range(0, TextPositions.Count);
+			} while (index == LastTextPositionIndex);
+
+			LastTextPositionIndex = index;
+			return TextPositions[index];
+		}
+
+		public static string GetRandomText()
+		{
+			if (TextPromt.Count == 0)
+				return "";
+
+			if (TextPromt.Count == 1)
+				return TextPromt[0];
+
+			int index;
+			do
+			{
+				index = UnityEngine.Random.Range(0, TextPromt.Count);
+			} while (index == LastTextPromptIndex);
+
+			LastTextPromptIndex = index;
+			return TextPromt[index];
+		}
+
+		public static void DestroyAndCreateChibi(ref GameObject obj)
+		{
+			if (GameObject.Find("Chibi_Idle") == null)
+			{
+				Utils.DestroyAndNullify(ref obj);
+				Utils.CreateIdleChibi();
+			}
+		}
+		public static void DestroyAndCreateChibi(GameObject obj)
+		{
+			if (GameObject.Find("Chibi_Idle") == null)
+			{
+				Utils.DestroyAndNullify(ref obj);
+				Utils.CreateIdleChibi();
+			}
+		}
+
+		public static void ChibiStartAnimation(GameObject obj, bool isBounce = false, bool isSpin = false, bool isStartRandomEntrance = false)
+		{
+			if (obj != null)
+			{
+				Xao_Chibi_Animations script = obj.GetComponent<Xao_Chibi_Animations>() ?? obj.AddComponent<Xao_Chibi_Animations>();
+
+				if (isStartRandomEntrance)
+				{
+					script.StartRandomEntrance();
+				}
+				else if (isBounce)
+				{
+					script.StartBounce();
+				}
+				else if (isSpin)
+				{
+					script.StartSpin();
+				}
+			}
+		}
+
+		public static void StartComboPopOut(GameObject obj)
+		{
+			if (obj != null)
+			{
+				Xao_Combo_Animations script = obj.GetComponent<Xao_Combo_Animations>() ?? obj.AddComponent<Xao_Combo_Animations>();
+				script?.PlayPopIn();
+			}
+		}
+
+		public static void StartHeartsPopOut(GameObject obj)
+		{
+			if (obj != null)
+			{
+				Xao_Hearts_Animations script = obj.GetComponent<Xao_Hearts_Animations>() ?? obj.AddComponent<Xao_Hearts_Animations>();
+				script.PlayPopIn = true;
+			}
+		}
+
+		public static void StartHeartsGreyPopOut(GameObject obj)
+		{
+			if (obj != null)
+			{
+				Xao_Hearts_Animations script = obj.GetComponent<Xao_Hearts_Animations>() ?? obj.AddComponent<Xao_Hearts_Animations>();
+				script.PlayGreyIn = true;
+			}
+		}
+		public static void StartTextPopOut(GameObject obj)
+		{
+			if (obj != null)
+			{
+				Xao_Text_Animations script = obj.GetComponent<Xao_Text_Animations>() ?? obj.AddComponent<Xao_Text_Animations>();
+				script?.StartScaleUp();
+			}
+		}
+
+		public static void PopHentaiText(BattleChar bchar)
+		{
+			GameObject randomHentaitext = Utils.CreateIcon(bchar, "RandomHentaiText", Utils.GetRandomText(), Utils.GetRandomTextPosition(), new Vector3(100f, 100f), false, false);
+			Utils.StartTextPopOut(randomHentaitext);
+		}
+
+		public static void SkillChange(this Skill changeFrom, Skill changeTo, bool keepID = true, bool keepExtended = true)
+		{
+			if (changeFrom.MyButton != null)
+			{
+				UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
+				UnityEngine.Object.Destroy(obj, 1f);
+			}
+
+			List<Skill_Extended> ExtendedToKeep = new List<Skill_Extended>();
+			ExtendedToKeep.AddRange(changeTo.AllExtendeds.Select(ex => ex.Clone() as Skill_Extended));
+			foreach (Skill_Extended skill_Extended in changeFrom.AllExtendeds)
+			{
+				foreach (string text in changeFrom.MySkill.SkillExtended)
+				{
+					if (keepExtended && !text.Contains(skill_Extended.Name))
+					{
+						ExtendedToKeep.Add(skill_Extended.Clone() as Skill_Extended);
+					}
+					skill_Extended.SelfDestroy();
+				}
+			}
+
+			bool createExcept = keepExtended && changeFrom.isExcept;
+			changeFrom.Init(changeTo.MySkill, changeFrom.Master, changeFrom.Master.MyTeam);
+			if (createExcept) changeFrom.isExcept = true;
+
+			foreach (var skill_Extended in ExtendedToKeep)
+			{
+				if (skill_Extended.BattleExtended)
+				{
+					changeFrom.ExtendedAdd_Battle(skill_Extended);
+				}
+				else
+				{
+					changeFrom.ExtendedAdd(skill_Extended);
+				}
+			}
+
+			changeFrom.Image_Skill = changeTo.Image_Skill;
+			changeFrom.Image_Button = changeTo.Image_Button;
+			changeFrom.Image_Basic = changeTo.Image_Basic;
+
+			if (changeFrom.CharinfoSkilldata == null) changeFrom.CharinfoSkilldata = new CharInfoSkillData(changeFrom.MySkill);
+
+			changeFrom.CharinfoSkilldata.SkillInfo = changeFrom.MySkill;
+			Skill_Extended oldUpgrade = changeFrom.CharinfoSkilldata.SKillExtended;
+			if (!keepID)
+			{
+				changeFrom.CharinfoSkilldata.CopyData(changeTo.CharinfoSkilldata);
+			}
+			if (keepExtended)
+			{
+				changeFrom.CharinfoSkilldata.SKillExtended = oldUpgrade;
+			}
+			else
+			{
+				changeFrom.CharinfoSkilldata.SKillExtended = changeTo.CharinfoSkilldata.SKillExtended;
+			}
+			BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
+		}
+
+		public static void AllyHentaiText(BattleChar bchar)
+		{
+			if (bchar != Xao && new GDECharacterData(bchar.Info.KeyData).Gender == 1)
+			{
+				PopHentaiText(bchar);
+			}
+		}
+
+		public static void RareSimpleExchange(BattleChar bchar, int rareNum = 1)
+		{
+			Xao_Combo.ComboChange();
+
+			if (Xao_Combo.CurrentCombo >= 15)
+			{
+				Xao_Combo.SaveComboBetweenTurns = true;
+			}
+
+			RareNum += rareNum;
+			bool evenCheck = RareNum % 2 == 0;
+			int mana = evenCheck ? 1 : 1; // always cost 1 mana
+
+			int heartNum = 0;
+			bool glitch = evenCheck;
+			string skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0;
+
+			if (RareNum > 8)
+			{
+				skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4;
+				heartNum = 5;
+				glitch = false;
+			}
+			else
+			{
+				switch (RareNum)
+				{
+					case 1: skillKey = XaoHornyMod() ? ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_01 : ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_0; break;
+					case 2:
+					case 3: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_1; heartNum = 2; break;
+					case 4:
+					case 5: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_2; heartNum = 3; break;
+					case 6:
+					case 7: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_3; heartNum = 4; break;
+					case 8: skillKey = ModItemKeys.Skill_S_Xao_Rare_SimpleExchange_4; heartNum = 5; break;
+				}
+			}
+			Skill skill = CreateSkill(skillKey, bchar, true, true, 1, mana, true);
+
+			if (skill != null)
+			{
+				BattleSystem.DelayInput(IncreaseNumForRare(skill, bchar, glitch, heartNum, evenCheck));
+			}
+		}
+
+		private static IEnumerator IncreaseNumForRare(Skill skill, BattleChar bchar, bool isGlitch = false, int heartNum = 0, bool isComing = false)
+		{
+			yield return null;
+
+			if (isGlitch)
+			{
+				GlitchEffect(skill);
+			}
+
+			PlayXaoVoice(bchar, isComing);
+
+			string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
+			string heartString = GetHeart(bchar, heartNum);
+
+			skill.MySkill.Name = $"{baseName} {heartString} - {RareNum}";
+			skill.MySkill.Description = ModLocalization.Rare_SimpleExchange;
+			skill.MyButton?.InputData(skill, null, false);
+		}
+
+		public static void GlitchEffect(this Skill changeFrom)
+		{
+			if (changeFrom.MyButton != null)
+			{
+				UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
+				UnityEngine.Object.Destroy(obj, 0.5f);
+			}
+		}
+
+		public static void RareSleepSex(BattleChar bchar, string skillKey, int mana = 0, int heartNum = 0)
+		{
+			if (bchar == null || string.IsNullOrEmpty(skillKey)) return;
+
+			Skill skill = CreateSkill(skillKey, bchar, true, true, 2, mana);
+			if (skill != null)
+			{
+				BattleSystem.DelayInput(RareSleepSexDescription(bchar, skill, heartNum));
+			}
+		}
+
+		public static IEnumerator RareSleepSexDescription(BattleChar bchar, Skill skill, int heartNum = 0)
+		{
+			if (skill == null || bchar.IsDead) yield break;
+
+			yield return null;
+
+			GlitchEffect(skill);
+
+			string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
+			string heartString = GetHeart(bchar, heartNum);
+
+			bool coming = heartNum >= 3;
+			PlayXaoVoice(bchar, coming);
+
+			if (skill.MySkill != null)
+			{
+				skill.MySkill.Name = $"{baseName} {heartString}";
+			}
+			skill.MyButton?.InputData(skill, null, false);
+		}
+
+		public static readonly List<string> XaoVoiceEffect = new List<string>
+		{
+			"Xao_Skill_Effect_0",
+			"Xao_Skill_Effect_1",
+			"Xao_Skill_Effect_2",
+			"Xao_Skill_Effect_3",
+			"Xao_Skill_Effect_4",
+			"Xao_Skill_Effect_5",
+		};
+
+		public static readonly List<string> XaoVoiceComing = new List<string>
+		{
+			"Xao_Coming_0",
+			"Xao_Coming_1",
+			"Xao_Coming_2",
+		};
+
+		public static readonly List<string> XaoVoiceMaid = new List<string>
+		{
+			"Xao_Maid_0",
+			"Xao_Maid_1",
+		};
+
+		public static void PlayXaoSound(string sound)
+		{
+			if (string.IsNullOrEmpty(sound) || !XaoVoiceSkills) return;
+
+			string soundToPlay = sound;
+			MasterAudio.StopBus("SE");
+			MasterAudio.PlaySound(soundToPlay, 100f);
+		}
+
+		public static void PlayXaoVoice(BattleChar bchar, bool isComing = false)
+		{
+			if (!XaoVoiceSkills || bchar != Xao) return;
+
+			var list = isComing ? XaoVoiceComing : XaoVoiceEffect;
+			int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, list.Count);
+			string soundToPlay = list[randomIndex];
+
+			MasterAudio.StopBus("SE");
+			MasterAudio.PlaySound(soundToPlay, 100f);
+		}
+
+		public static void PlayXaoVoiceMaid(BattleChar bchar)
+		{
+			if (!XaoVoiceSkills || bchar != Xao) return;
+
+			int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, XaoVoiceMaid.Count);
+			string soundToPlay = XaoVoiceMaid[randomIndex];
+
+			MasterAudio.StopBus("SE");
+			MasterAudio.PlaySound(soundToPlay, 100f);
+		}
+
+		public static void CastingWasteFixed(this BattleActWindow window, CastingSkill cast)
+		{
+			SkillButton[] componentsInChildren = window.CastingGroup.GetComponentsInChildren<SkillButton>();
+			SkillButton skillButton = componentsInChildren.FirstOrDefault(bt => bt.castskill == cast);
+			foreach (IP_SkillCastingQuit ip_SkillCastingQuit in cast.skill.IReturn<IP_SkillCastingQuit>())
+			{
+				if (ip_SkillCastingQuit != null)
+				{
+					ip_SkillCastingQuit.SkillCastingQuit(cast);
+				}
+			}
+			if (skillButton != null)
+			{
+				skillButton.UseWaste();
+			}
+			window.SetCountSkillVL((window.CastingGroup.GetComponentsInChildren<SkillButton>().Length >= 13) ? 30 : 45);
+		}
+
+		public static IEnumerator HealingParticle(BattleChar target, BattleChar user, int healingNum = 0, bool isHentaiVoice = false)
+		{
+			yield return null;
+			target.Heal(user, healingNum, false, true, null);
+
+			Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_Xao_DummyHeal, user, user.MyTeam);
+			healingParticle.PlusHit = true;
+			healingParticle.FreeUse = true;
+
+			target.ParticleOut(healingParticle, target);
+
+			if (isHentaiVoice && user == Xao)
+			{
+				PlayXaoSound("Xao_Maid_0");
+			}
+		}
+
+		public static void BikiniTime(BattleChar bchar)
+		{
+			if (Xao_Combo.CurrentCombo >= 8)
+			{
+				foreach (var ally in AllyTeam.AliveChars)
+				{
+					AddBuff(ally, ModItemKeys.Buff_B_Xao_WetLust, 2);
+				}
+
+				if (Xao_Combo.CurrentCombo >= 10)
+				{
+					Xao_Combo.SaveComboBetweenTurns = true;
+				}
+
+				if (Xao_Combo.CurrentCombo >= 12 && XaoHornyMod())
+				{
+					foreach (var ally in AllyTeam.AliveChars)
+					{
+						if (ally != bchar)
+						{
+							AddBuff(ally, ModItemKeys.Buff_B_Xao_WetBliss);
+						}
+					}
+				}
+			}
+		}
+
+
+		public static void MaidFootJob(List<BattleChar> Targets, BattleChar bchar)
+		{
+			if (Xao_Combo.CurrentCombo < 3) return;
+
+			if (Targets[0] is BattleEnemy mainTarget)
+			{
+				List<BattleEnemy> additionalTargets = new List<BattleEnemy>();
+
+				if (mainTarget.istaunt)
+				{
+					foreach (var enemy in BattleSystem.instance.EnemyList)
+					{
+						if (enemy != mainTarget && enemy.istaunt)
+						{
+							additionalTargets.Add(enemy);
+						}
+					}
+				}
+				else
+				{
+					foreach (var enemy in BattleSystem.instance.EnemyList)
+					{
+						if (enemy != mainTarget && !enemy.istaunt)
+						{
+							additionalTargets.Add(enemy);
+						}
+					}
+				}
+				Targets.AddRange(additionalTargets);
+
+
+				string debuff = ModItemKeys.Buff_B_Xao_MistressTouch;
+
+				if (Xao_Combo.CurrentCombo >= 5 && XaoHornyMod())
+				{
+					foreach (var target in Targets)
+					{
+						if (target != null)
+						{
+							AddDebuff(target, bchar, debuff, 2);
+						}
+					}
+				}
+			}
+		}
+
+		public static void MikoPussy()
+		{
+			if (Xao_Combo.CurrentCombo >= 6)
+			{
+				PlayData.TSavedata._Gold += 250;
+
+				if (Xao_Combo.CurrentCombo >= 10 && XaoHornyMod())
+				{
+					PlayData.TSavedata._Gold += 500;
+					//Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
+				}
+			}
+		}
+
+		public static void MikoAnal()
+		{
+			if (Xao_Combo.CurrentCombo >= 6)
+			{
+				InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter, 1));
+
+				if (Xao_Combo.CurrentCombo >= 10 && XaoHornyMod())
+				{
+					InventoryManager.Reward(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookInfinity, 1));
+					//Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
+				}
+			}
+		}
+
+
+		public static void MagicalGirlPussy()
+		{
+			if (Xao_Combo.CurrentCombo >= 6)
+			{
+				foreach (var ally in AllyTeam.AliveChars)
+				{
+					string affection = GetAffectionBuff(ally.Info);
+					AddBuff(ally, affection);
+
+					if (Xao_Combo.CurrentCombo >= 8 && XaoHornyMod())
+					{
+						AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalEcstasy, 3);
+					}
+				}
+			}
+		}
+
+
+		public static void MagicalGirlThigh()
+		{
+			if (Xao_Combo.CurrentCombo >= 3)
+			{
+				foreach (var ally in AllyTeam.AliveChars)
+				{
+					AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalTease, 1);
+
+					if (Xao_Combo.CurrentCombo >= 5)
+					{
+						AddBuff(ally, ModItemKeys.Buff_B_Xao_MagicalDesire, 2);
+					}
+
+					if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
+					{
+						var buffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.BUFF, true, false).ToList();
+						foreach (Buff buff in buffs)
+						{
+							foreach (StackBuff stackBuff in buff.StackInfo)
+							{
+								if (!buff.BuffExtended.Any((Buff_Ex p) => p is B_Xao_Ex_MagicalDay))
+								{
+									stackBuff.RemainTime++;
+								}
+								buff.AddBuffEx(new B_Xao_Ex_MagicalDay());
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public static void SwimsuitDay(BattleChar target)
+		{
+			if (target == null || Xao_Combo.CurrentCombo < 4) return;
+
+			var debuffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALL, true, false).ToList();
+
+			foreach (Buff debuff in debuffs)
+			{
+				target.BuffAdd(debuff.BuffData.Key, debuff.Usestate_L, false, 999, false, debuff.StackInfo[debuff.StackInfo.Count - 1].RemainTime, false);
+
+				if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
+				{
+					foreach (StackBuff stackBuff in debuff.StackInfo)
+					{
+						if (stackBuff.RemainTime != 0)
+						{
+							stackBuff.RemainTime++;
+						}
+					}
+				}
+			}
+		}
+
+
+		public static IEnumerator CowGirl(BattleChar target, BattleChar user)
+		{
+			yield return null;
+
+			if (target.IsDead || target.Info.Ally || Xao_Combo.CurrentCombo < 5) yield break;
+
+			string stun = ModItemKeys.Buff_B_Xao_PleasureLock;
+
+			if (target.BuffReturn(stun, false) == null)
+			{
+				AddDebuff(target, user, stun, 10, 999);
+			}
+
+			if (Xao_Combo.CurrentCombo > 7 && XaoHornyMod())
+			{
+				if (BattleSystem.instance.EnemyCastSkills.Count > 0)
+				{
+					CastingSkill targetSkill = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.skill.Master == target);
+
+					if (targetSkill != null)
+					{
+						BattleSystem.instance.EnemyCastSkills.Remove(targetSkill);
+						BattleSystem.instance.ActWindow.CastingWasteFixed(targetSkill);
+					}
+				}
+			}
+
+			yield break;
+		}
+
+		public static void MaidPanties(BattleChar user)
+		{
+			if (Xao_Combo.CurrentCombo >= 5)
+			{
+				var allyWithLowestHp = AllyTeam.AliveChars.Where(x => x != null && x.HP < x.GetStat.maxhp).OrderBy(x => x.HP).FirstOrDefault();
+
+				if (allyWithLowestHp != null)
+				{
+					BattleSystem.DelayInput(HealingParticle(allyWithLowestHp, user, 2));
+				}
+			}
+
+			if (Xao_Combo.CurrentCombo >= 7 && XaoHornyMod())
+			{
+				foreach (var ally in AllyTeam.AliveChars)
+				{
+					var debuffs = ally.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false);
+					RemoveDebuff(debuffs);
+					BattleSystem.DelayInput(HealingParticle(ally, user, 3, true));
+				}
+			}
+		}
+
+		public static void RemoveDebuff(List<Buff> debuffs)
+		{
+			if (debuffs != null && debuffs.Count > 0)
+			{
+				int randomIndex = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, debuffs.Count);
+				var randomDebuff = debuffs[randomIndex];
+				randomDebuff.SelfDestroy();
+			}
+		}
+
+		public static string GetAffectionBuff(Character myChar)
+		{
+			string buff = ModItemKeys.Buff_B_Xao_Affection_Ally_Synergy;
+			if (myChar?.Equip != null && myChar.Equip.Exists(item => item != null && item.itemkey == ModItemKeys.Item_Equip_Equip_Xao_LoveEgg) && myChar.KeyData != Xao.Info.KeyData)
+			{
+				buff = ModItemKeys.Buff_B_Xao_Affection_Ally;
+			}
+			else if (myChar.KeyData == Xao.Info.KeyData)
+			{
+				buff = ModItemKeys.Buff_B_Xao_Affection;
+			}
+			return buff;
+		}
+
+		//public static void ChooseBattleChibi(BattleChar bchar, int randomIndex = 4, bool isTakingDamage = false, bool isHealed = false, bool isDealingDamage = false)
+		//{
+		//    string chibiName = "Chibi_Normal";
+		//    SpriteType sprite = SpriteType.Chibi_Normal;
+		//    Vector3 chibiSize = new Vector3(235f, 235f);
+		//    int animationIndex = 3;
+
+		//    randomIndex = RandomManager.RandomInt(bchar.GetRandomClass().Main, 1, randomIndex);
+
+		//    if (isTakingDamage)
+		//    {
+		//        animationIndex = 2;
+
+		//        switch (randomIndex)
+		//        {
+		//            case 1: chibiName = "Chibi_TakingDamage_0"; sprite = SpriteType.Chibi_TakingDamage_0; break;
+		//            case 2: chibiName = "Chibi_TakingDamage_1"; sprite = SpriteType.Chibi_TakingDamage_1; break;
+		//        }
+		//    }
+		//    else if (isHealed)
+		//    {
+		//        switch (randomIndex)
+		//        {
+		//            case 1: chibiName = "Chibi_Normal"; sprite = SpriteType.Chibi_Normal; break;
+		//            case 2: chibiName = "Chibi_NormalBlush"; sprite = SpriteType.Chibi_NormalBlush; break;
+		//        }
+		//    }
+		//    else if (isDealingDamage)
+		//    {
+		//        switch (randomIndex)
+		//        {
+		//            case 1: chibiName = "Chibi_Attack"; sprite = SpriteType.Chibi_Attack; animationIndex = 2; break;
+		//            case 2: chibiName = "Chibi_AttackExtra_0"; sprite = SpriteType.Chibi_AttackExtra_0; break;
+		//            case 3: chibiName = "Chibi_AttackExtra_1"; sprite = SpriteType.Chibi_AttackExtra_1; break;
+		//            case 4: chibiName = "Chibi_NormalBlush"; sprite = SpriteType.Chibi_NormalBlush; break;
+		//        }
+		//    }
+		//    bchar.StartCoroutine(CreateBattleChibi(bchar, chibiName, sprite, chibiSize, animationIndex));
+		//}
+
+		public enum ChibiState
+		{
+			TakingDamage,
+			Healed,
+			DealingDamage
+		}
+
+		// Основные варианты чиби
+		public static readonly Dictionary<ChibiState, List<(string name, SpriteType sprite, int anim)>> ChibiVariants = new Dictionary<ChibiState, List<(string, SpriteType, int)>>
+		{
+			[ChibiState.TakingDamage] = new List<(string, SpriteType, int)>
+			{
+				("Chibi_TakingDamage_0", SpriteType.Chibi_TakingDamage_0, 2),
+				("Chibi_TakingDamage_1", SpriteType.Chibi_TakingDamage_1, 2)
+			},
+			[ChibiState.Healed] = new List<(string, SpriteType, int)>
+			{
+				("Chibi_Normal", SpriteType.Chibi_Normal, 3),
+				("Chibi_Blush", SpriteType.Chibi_Blush, 3)
+			},
+			[ChibiState.DealingDamage] = new List<(string, SpriteType, int)>
+			{
+				("Chibi_Attack_Fire", SpriteType.Chibi_Attack_Fire, 2),
+				("Chibi_Attack_Clumsy", SpriteType.Chibi_Attack_Clumsy, 3),
+				("Chibi_Attack_Sneaky", SpriteType.Chibi_Attack_Sneaky, 3),
+				("Chibi_Blush", SpriteType.Chibi_Blush, 3)
+			}
+		};
+
+		// Horny map для подмены имён и спрайтов
+		public static readonly Dictionary<(string, SpriteType), (string, SpriteType)> ChibiHornyMap = new Dictionary<(string, SpriteType), (string, SpriteType)>
+		{
+			{ ("Chibi_Normal", SpriteType.Chibi_Normal), ("Chibi_Normal_Horny", SpriteType.Chibi_Normal_Horny) },
+			{ ("Chibi_Blush", SpriteType.Chibi_Blush), ("Chibi_Blush_Horny", SpriteType.Chibi_Blush_Horny) }
+		};
+
+		public static void ChooseBattleChibi(BattleChar bchar, int randomIndex = 4, bool isTakingDamage = false, bool isHealed = false, bool isDealingDamage = false)
+		{
+			Vector3 chibiSize = new Vector3(235f, 235f);
+			int animationIndex = 3;
+
+			// Определяем текущее состояние
+			ChibiState state;
+			if (isTakingDamage)
+			{
+				state = ChibiState.TakingDamage;
+			}
+			else if (isHealed)
+			{
+				state = ChibiState.Healed;
+			}
+			else if (isDealingDamage)
+			{
+				state = ChibiState.DealingDamage;
+			}
+			else
+			{
+				state = ChibiState.Healed; // дефолт
+			}
+
+			// Получаем список доступных спрайтов
+			if (!ChibiVariants.TryGetValue(state, out var chibiList))
+			{
+				chibiList = ChibiVariants[ChibiState.Healed];
+			}
+
+			// Выбираем случайный спрайт
+			randomIndex = RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, chibiList.Count - 1);
+			var chosen = chibiList[randomIndex];
+
+			string chibiName = chosen.name;
+			SpriteType sprite = chosen.sprite;
+			animationIndex = chosen.anim;
+
+			// Проверяем XaoHornyMod
+			if (XaoHornyMod())
+			{
+				if (ChibiHornyMap.TryGetValue((chibiName, sprite), out var hornyPair))
+				{
+					chibiName = hornyPair.Item1;
+					sprite = hornyPair.Item2;
+				}
+			}
+
+			// Создаём чиби
+			bchar.StartCoroutine(CreateBattleChibi(bchar, chibiName, sprite, chibiSize, animationIndex));
+		}
+
+		public static IEnumerator CreateBattleChibi(BattleChar bchar, string chibiName, SpriteType chibiType, Vector3 size, int animationIndex = 3)
+		{
+			GameObject chibi = ReplaceChibiIcon(ChibiNames, bchar, chibiName, SpritePaths[chibiType], ChibiPosition[chibiType], size);
+
+			if (chibi != null)
+			{
+				int randomAnim = RandomManager.RandomInt(BattleRandom.PassiveItem, 0, animationIndex);
+				bool isBounce = false;
+				bool isSpin = false;
+				bool isStartRandomEntrance = false;
+
+				switch (randomAnim)
+				{
+					case 0:
+						isBounce = true;
+						break;
+					case 1:
+						isSpin = true;
+						break;
+					case 2:
+						isStartRandomEntrance = true;
+						break;
+				}
+				ChibiStartAnimation(chibi, isBounce, isSpin, isStartRandomEntrance);
+			}
+			yield break;
+		}
+
+		public static IEnumerator ChangeXaoSkills(BattleChar bchar)
+		{
+			yield return null;
+			var team = BattleSystem.instance.AllyTeam;
+			var fixedSkill = (bchar as BattleAlly)?.MyBasicSkill?.buttonData;
+
+			if (fixedSkill?.MySkill != null && Utils.XaoSkillList.TryGetValue(fixedSkill.MySkill.KeyID, out var newSkillID2))
+			{
+				var newSkill = Skill.TempSkill(newSkillID2, fixedSkill.Master, fixedSkill.Master.MyTeam);
+				Skill refillSkill = newSkill.CloneSkill();
+				(bchar as BattleAlly).MyBasicSkill.SkillInput(refillSkill);
+				(bchar as BattleAlly).BattleBasicskillRefill = refillSkill;
+				(bchar as BattleAlly).BasicSkill = refillSkill;
+				int ind = bchar.MyTeam.Chars.IndexOf(bchar);
+				if (ind >= 0)
+				{
+					bchar.MyTeam.Skills_Basic[ind] = refillSkill;
+				}
+			}
+
+			var allSkillsToChange = team.Skills.Concat(team.Skills_Deck).Concat(team.Skills_UsedDeck).Where(skill => skill?.MySkill != null && Utils.XaoSkillList.ContainsKey(skill.MySkill.KeyID)).ToList();
+
+			foreach (Skill skill in allSkillsToChange)
+			{
+				if (Utils.XaoSkillList.TryGetValue(skill.MySkill.KeyID, out var newSkillID))
+				{
+					var newSkill = Skill.TempSkill(newSkillID, skill.Master, skill.Master.MyTeam);
+					skill.SkillChange(newSkill);
+				}
+			}
+			yield break;
+		}
+
+		public static void AffectionSelection(BattleChar bchar, bool isLoveEgg = false)
+		{
+			if (bchar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove)
+			{
+				return;
+			}
+			BattleSystem.DelayInputAfter(SelectionCoroutine(bchar, isLoveEgg));
+		}
+
+		private static IEnumerator SelectionCoroutine(BattleChar bchar, bool isLoveEgg = false)
+		{
+			yield return null;
+
+			List<Skill> dynamicList = new List<Skill>();
+
+			string skillKey = isLoveEgg ? ModItemKeys.Skill_S_Xao_B_LoveEgg : ModItemKeys.Skill_S_Xao_B_Affection_0;
+
+			var skill = Skill.TempSkill(skillKey, bchar, bchar.MyTeam);
+			if (skill != null)
+			{
+				dynamicList.Add(skill);
+			}
+
+			if (dynamicList.Count > 0)
+			{
+				BattleSystem.DelayInput(
+					BattleSystem.I_OtherSkillSelect(
+						dynamicList,
+						new SkillButton.SkillClickDel(btn => OnSkillSelected(btn, bchar)),
+						ScriptLocalization.System_SkillSelect.EffectSelect,
+						true,
+						false
+					)
+				);
+			}
+		}
+
+		private static void OnSkillSelected(SkillButton myButton, BattleChar bchar)
+		{
+			if (myButton == null || myButton.Myskill == null || myButton.Myskill.MySkill == null)
+			{
+				return;
+			}
+
+			string key = myButton.Myskill.MySkill.KeyID;
+
+			if (key == ModItemKeys.Skill_S_Xao_B_Affection_0)
+			{
+				bchar.Overload = 0;
+
+				string affectionBuff = GetAffectionBuff(bchar.Info);
+
+				if (bchar.BuffReturn(affectionBuff, false) is Buff affection)
+				{
+					affection?.SelfStackDestroy();
+				}
+
+				if (bchar == Xao)
+				{
+					Xao_Hearts.HeartsCheck(bchar, -1);
+				}
+				else if (affectionBuff == ModItemKeys.Buff_B_Xao_Affection_Ally)
+				{
+					Xao_Hearts_Ally.HeartsCheckAlly(bchar, -1);
+				}
+				else
+				{
+					Xao_Hearts_Ally_Synergy.HeartsCheck(bchar, -1);
+				}
+				PopHentaiText(bchar);
+
+				if (Xao)
+				{
+					PlayXaoSound("Xao_Affection_0");
+				}
+			}
+			else if (key == ModItemKeys.Skill_S_Xao_B_LoveEgg)
+			{
+				Xao_Combo_Rewards.GainRewards(Xao_Combo.CurrentCombo, true);
+				if (bchar.BuffReturn(ModItemKeys.Buff_B_Xao_E_LoveEgg, false) is Buff egg)
+				{
+					egg?.SelfDestroy();
+				}
+
+				if (Xao)
+				{
+					PlayXaoSound("Xao_LoveEgg");
+				}
+			}
+		}
+	}
 }

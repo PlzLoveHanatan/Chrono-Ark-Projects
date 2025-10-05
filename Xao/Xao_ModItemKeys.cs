@@ -81,7 +81,6 @@ namespace Xao
         public static string Buff_B_Xao_S_SimpleExchange = "B_Xao_S_SimpleExchange";
 		/// <summary>
 		/// Wet Bliss
-		/// Whenever playing a skill from hand on an enemy, cast <color=#87CEFA>Wet</color> <color=#d78fe9>Bliss</color> <color=#FF7C34>(20% Attack Power)</color> on the same target.
 		/// </summary>
         public static string Buff_B_Xao_WetBliss = "B_Xao_WetBliss";
 		/// <summary>
@@ -283,8 +282,8 @@ namespace Xao
         public static string Skill_S_Xao_BikiniTime_2 = "S_Xao_BikiniTime_2";
 		/// <summary>
 		/// Bikini Time ♡♡♡♡
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Apply 2 stack of  <color=#FF69B4>Wet Lust</color> to all allies.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>9</color>: Keep your current <color=#87CEFA>Combo</color> for the next turn.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Apply 2 stack of  <color=#FF69B4>Wet Lust</color> to all allies.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>10</color>: Apply <color=#FF69B4>Wet Bliss</color> to all allies.
 		/// </summary>
         public static string Skill_S_Xao_BikiniTime_3 = "S_Xao_BikiniTime_3";
 		/// <summary>
@@ -304,9 +303,9 @@ namespace Xao
         public static string Skill_S_Xao_BikiniTime_Love_2 = "S_Xao_BikiniTime_Love_2";
 		/// <summary>
 		/// Bikini Time Pleasure ♥♥♥♥
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: Apply 2 stack of  <color=#FF69B4>Wet Lust</color> to all allies.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>9</color>: Keep your current <color=#87CEFA>Combo</color> for the next turn.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>11</color>: Gain <color=#4169E1>Wet Dream</color>.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Apply 2 stack of  <color=#FF69B4>Wet Lust</color> to all allies.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>10</color>: Apply <color=#FF69B4>Wet Bliss</color> to all allies.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>12</color>: Keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// </summary>
         public static string Skill_S_Xao_BikiniTime_Love_3 = "S_Xao_BikiniTime_Love_3";
 		/// <summary>
@@ -486,6 +485,7 @@ namespace Xao
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>3</color>: Apply 1 stack of  <color=#00FA9A>Magical Tease</color> to all allies.
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Apply 2 stack of  <color=#FF6EC7>Magical Desire</color> to all allies.
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: All allies buffs remain 1 extra turn.
+		/// Buffs that were extended by this effect cannot be extended again.
 		/// </summary>
         public static string Skill_S_Xao_MagicalGirlThighjob_Love_3 = "S_Xao_MagicalGirlThighjob_Love_3";
 		/// <summary>
@@ -547,7 +547,7 @@ namespace Xao
 		/// <summary>
 		/// Miko Experience Anal Pleasure ♥♥♥
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Gain Skill Book.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Activate all current <color=#87CEFA>Combo</color> rewards.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>10</color>: Gain Infinite Skill Book.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperienceAnal_Love_2 = "S_Xao_MikoExperienceAnal_Love_2";
 		/// <summary>
@@ -578,7 +578,7 @@ namespace Xao
 		/// <summary>
 		/// Miko Experience Pussy Pleasure ♥♥♥
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>6</color>: Gain 250 Gold.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>8</color>: Activate all current <color=#87CEFA>Combo</color> rewards.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>10</color>: Gain 500 Gold.
 		/// </summary>
         public static string Skill_S_Xao_MikoExperiencePussy_Love_2 = "S_Xao_MikoExperiencePussy_Love_2";
 		/// <summary>
@@ -743,10 +743,8 @@ namespace Xao
 		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
 		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
 		/// <color=#87CEFA>Combo</color> Rewards:
-		/// <color=#d78fe9>4</color>: Gain 1 <sprite name="Xao_Heart">
-		/// <color=#d78fe9>6</color>: Restore 1 Mana
-		/// <color=#d78fe9>8</color>: Draw 1 skill
-		/// <color=#d78fe9>10</color>: Reduce cost of all skiils in hand by 1
+		/// <color=#d78fe9>5</color>: Gain 1 <sprite name="Xao_Heart">
+		/// <color=#d78fe9>10</color>: Restore 2 Mana
 		/// <color=#d78fe9>15</color>: Permanently increase Attack Power by 1 for this <b>playthrough</b> (Once per battle)
 		/// <color=#d78fe9>25</color>: Gain relic pouch and expand your Relic inventory by 1 (Once per battle)
 		/// <color=#d78fe9>50</color>: View 3 random <color=#F9D62FFF>Legendary</color> Equipment and select 1 to obtain (Once per battle)
@@ -761,6 +759,7 @@ namespace Xao
 		/// English:
 		/// This skill can be played repeatedly during this turn.
 		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>15</color>: Keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:

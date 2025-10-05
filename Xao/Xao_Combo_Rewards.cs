@@ -13,14 +13,14 @@ namespace Xao
     {
         public static bool AttackPowerOncePerFight;
         public static bool RelicPouchOncePerFight;
-        public static bool Legendary_OncePerFight;
+        public static bool LegendaryOncePerFight;
 
         public static readonly Dictionary<int, Action> СomboRewards = new Dictionary<int, Action>
         {
-            { 4, () => { GainAffection(); } },
-            { 6, () => { RestoreMana(); } },
-            { 8, () => { DrawSkill(); } },
-            { 10, () => { ReduceSkillsCost(); } },
+            { 5, () => { GainAffection(); } },
+            { 10, () => { RestoreMana(); } },
+            //{ 8, () => { DrawSkill(); } },
+            //{ 10, () => { ReduceSkillsCost(); } },
             { 15, () => { IncreaseXaoAttackPower(); } },
             { 25, () => { GainRelicPouch(); } },
             { 50, () => { GainLegendaryEquip(); } },
@@ -28,29 +28,29 @@ namespace Xao
 
         public static void GainRewards(int currentCombo, bool isAdditionalReward = false)
         {
-            if (currentCombo >= 4)
+            if (currentCombo >= 5)
             {
                 GainAffection();
             }
 
-            if (currentCombo >= 6)
+            if (currentCombo >= 10)
             {
                 RestoreMana();
             }
 
-            if (currentCombo >= 8)
-            {
-                DrawSkill();
-            }
+            //if (currentCombo >= 8)
+            //{
+            //    DrawSkill();
+            //}
 
-            if (currentCombo >= 10)
-            {
-                ReduceSkillsCost();
-            }
+            //if (currentCombo >= 10)
+            //{
+            //    ReduceSkillsCost();
+            //}
 
             if (currentCombo >= 15)
             {
-                IncreaseXaoAttackPower();
+                IncreaseXaoAttackPower(isAdditionalReward);
             }
 
             if (currentCombo >= 25)
@@ -71,7 +71,7 @@ namespace Xao
 
         private static void RestoreMana()
         {
-            Utils.AllyTeam.AP += 1;
+            Utils.AllyTeam.AP += 2;
         }
 
         private static void DrawSkill()
@@ -88,9 +88,9 @@ namespace Xao
             }
         }
 
-        private static void IncreaseXaoAttackPower()
+        private static void IncreaseXaoAttackPower(bool isAdditionalReward = false)
         {
-            if (!AttackPowerOncePerFight)
+            if (!AttackPowerOncePerFight || isAdditionalReward)
             {
                 Utils.Xao.Info.OriginStat.atk++;
                 AttackPowerOncePerFight = true;
@@ -113,7 +113,7 @@ namespace Xao
 
         private static void GainLegendaryEquip(bool isAdditionalReward = false)
         {
-            if (!Legendary_OncePerFight || isAdditionalReward)
+            if (!LegendaryOncePerFight || isAdditionalReward)
             {
                 var list = new List<ItemBase>();
 
@@ -126,7 +126,7 @@ namespace Xao
 
                 if (!isAdditionalReward)
                 {
-                    Legendary_OncePerFight = true;
+                    LegendaryOncePerFight = true;
                 }
             } 
         }

@@ -112,7 +112,7 @@ namespace Xao
         {
             Xao_Combo_Rewards.AttackPowerOncePerFight = false;
             Xao_Combo_Rewards.RelicPouchOncePerFight = false;
-            Xao_Combo_Rewards.Legendary_OncePerFight = false;
+            Xao_Combo_Rewards.LegendaryOncePerFight = false;
         }
     }
 }
