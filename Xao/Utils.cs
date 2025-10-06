@@ -311,15 +311,18 @@ namespace Xao
 		public static readonly List<string> ChibiNames = new List<string>
 		{
 			"Chibi_Idle",
-			"Chibi_Attack",
-			"Chibi_AttackExtra_0",
-			"Chibi_AttackExtra_1",
+			"Chibi_Idle_Horny",
 			"Chibi_Normal",
-			"Chibi_NormalBlush",
+			"Chibi_Normal_Horny",
+			"Chibi_Blush",
+			"Chibi_Blush_Horny",
+			"Chibi_Attack_Fire",
+			"Chibi_Attack_Clumsy",
+			"Chibi_Attack_Sneaky",
 			"Chibi_TakingDamage_0",
-			"Chibi_TakingDamage_1",
-			"Chibi_Horny",
+			"Chibi_TakingDamage_1"
 		};
+
 
 		public static readonly List<string> ComboNames = new List<string>
 		{
@@ -650,7 +653,7 @@ namespace Xao
 		{
 			if (Xao != null)
 			{
-				string chibiName = XaoHornyMod() ? "Chibi_Horny" : "Chibi_Idle";
+				string chibiName = XaoHornyMod() ? "Chibi_Idle_Horny" : "Chibi_Idle";
 				string chibiSprite = XaoHornyMod() ? SpritePaths[SpriteType.Chibi_Idle_Horny] : SpritePaths[SpriteType.Chibi_Idle];
 				Vector3 chibiPosition = XaoHornyMod() ? ChibiPosition[SpriteType.Chibi_Idle_Horny] : ChibiPosition[SpriteType.Chibi_Idle];
 
@@ -751,7 +754,7 @@ namespace Xao
 
 		public static void DestroyAndCreateChibi(ref GameObject obj)
 		{
-			if (GameObject.Find("Chibi_Idle") == null)
+			if (GameObject.Find("Chibi_Idle") == null || GameObject.Find("Chibi_Idle_Horny") == null)
 			{
 				Utils.DestroyAndNullify(ref obj);
 				Utils.CreateIdleChibi();
@@ -759,7 +762,7 @@ namespace Xao
 		}
 		public static void DestroyAndCreateChibi(GameObject obj)
 		{
-			if (GameObject.Find("Chibi_Idle") == null)
+			if (GameObject.Find("Chibi_Idle") == null || GameObject.Find("Chibi_Idle_Horny") == null)
 			{
 				Utils.DestroyAndNullify(ref obj);
 				Utils.CreateIdleChibi();

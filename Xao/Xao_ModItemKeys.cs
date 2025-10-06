@@ -288,17 +288,17 @@ namespace Xao
         public static string Skill_S_Xao_BikiniTime_3 = "S_Xao_BikiniTime_3";
 		/// <summary>
 		/// Bikini Time Pleasure ♥
-		/// Create a <color=#d78fe9>Bikini Time ♥♥</color> in hand.
+		/// Create a <color=#d78fe9>Bikini Time Pleasure ♥♥</color> in hand.
 		/// </summary>
         public static string Skill_S_Xao_BikiniTime_Love_0 = "S_Xao_BikiniTime_Love_0";
 		/// <summary>
 		/// Bikini Time Pleasure ♥♥
-		/// Create a <color=#d78fe9>Bikini Time ♥♥♥</color> in hand.
+		/// Create a <color=#d78fe9>Bikini Time Pleasure ♥♥♥</color> in hand.
 		/// </summary>
         public static string Skill_S_Xao_BikiniTime_Love_1 = "S_Xao_BikiniTime_Love_1";
 		/// <summary>
 		/// Bikini Time Pleasure ♥♥♥
-		/// Create a <color=#d78fe9>Bikini Time ♥♥♥♥</color> in hand.
+		/// Create a <color=#d78fe9>Bikini Time Pleasure ♥♥♥♥</color> in hand.
 		/// </summary>
         public static string Skill_S_Xao_BikiniTime_Love_2 = "S_Xao_BikiniTime_Love_2";
 		/// <summary>
@@ -462,7 +462,7 @@ namespace Xao
 		/// <summary>
 		/// Magical Girl Thighjob ♡♡♡♡
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>3</color>: Apply 1 stack of  <color=#00FA9A>Magical Tease</color> to all allies.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Apply 2 stack of  <color=#FF6EC7>Magical Desire</color> to all allies.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Apply 2 stack of  <color=#00FA9A>Magical Desire</color> to all allies.
 		/// </summary>
         public static string Skill_S_Xao_MagicalGirlThighjob_3 = "S_Xao_MagicalGirlThighjob_3";
 		/// <summary>
@@ -483,7 +483,7 @@ namespace Xao
 		/// <summary>
 		/// Magical Girl Thighjob Pleasure ♥♥♥♥
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>3</color>: Apply 1 stack of  <color=#00FA9A>Magical Tease</color> to all allies.
-		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Apply 2 stack of  <color=#FF6EC7>Magical Desire</color> to all allies.
+		/// <color=#87CEFA>Combo</color> <color=#d78fe9>5</color>: Apply 2 stack of  <color=#00FA9A>Magical Desire</color> to all allies.
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>7</color>: All allies buffs remain 1 extra turn.
 		/// Buffs that were extended by this effect cannot be extended again.
 		/// </summary>
@@ -690,55 +690,100 @@ namespace Xao
     {
 		/// <summary>
 		/// Korean:
+		/// <sprite name="Xao_Heart"> 1개를 소모하여 과부하를 제거합니다.
 		/// English:
 		/// Spend 1 <sprite name="Xao_Heart"> to remove Overload.
 		/// Japanese:
+		/// <sprite name="Xao_Heart">を1つ消費してオーバーロードを解除します。
 		/// Chinese:
+		/// 消耗1个<sprite name="Xao_Heart">以移除过载。
 		/// Chinese-TW:
+		/// 消耗1個<sprite name="Xao_Heart">以移除過載。
 		/// </summary>
         public static string Affection_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Affection_0");
 		/// <summary>
 		/// Korean:
+		/// 현재 <color=#87CEFA>콤보</color>는 <color=#d78fe9>&a</color>입니다.
 		/// English:
 		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
 		/// Japanese:
+		/// 現在の<color=#87CEFA>コンボ</color>は<color=#d78fe9>&a</color>です。
 		/// Chinese:
+		/// 当前<color=#87CEFA>连击</color>为<color=#d78fe9>&a</color>。
 		/// Chinese-TW:
+		/// 當前<color=#87CEFA>連擊</color>為<color=#d78fe9>&a</color>。
 		/// </summary>
         public static string Combo_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_0");
 		/// <summary>
 		/// Korean:
+		/// 해냈어!
+		/// 현재 <color=#87CEFA>콤보</color>는 <color=#d78fe9>&a</color>입니다.
 		/// English:
 		/// We did it !
 		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
 		/// Japanese:
+		/// やったね!
+		/// 現在の<color=#87CEFA>コンボ</color>は<color=#d78fe9>&a</color>です。
 		/// Chinese:
+		/// 我们做到了!
+		/// 当前<color=#87CEFA>连击</color>为<color=#d78fe9>&a</color>。
 		/// Chinese-TW:
+		/// 我們做到了!
+		/// 當前<color=#87CEFA>連擊</color>為<color=#d78fe9>&a</color>。
 		/// </summary>
         public static string Combo_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_1");
 		/// <summary>
 		/// Korean:
+		/// 현재 <color=#87CEFA>콤보</color>는 <color=#d78fe9>&a</color>입니다.
+		/// <color=#87CEFA>콤보</color>는 다음 턴 시작 시 초기화되지 않습니다.
 		/// English:
 		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
 		/// <color=#87CEFA>Combo</color> will not reset at the start of the next turn.
 		/// Japanese:
+		/// 現在の<color=#87CEFA>コンボ</color>は<color=#d78fe9>&a</color>です。
+		/// <color=#87CEFA>コンボ</color>は次のターン開始時にリセットされません。
 		/// Chinese:
+		/// 当前<color=#87CEFA>连击</color>为<color=#d78fe9>&a</color>。
+		/// <color=#87CEFA>连击</color>不会在下回合开始时重置。
 		/// Chinese-TW:
+		/// 當前<color=#87CEFA>連擊</color>為<color=#d78fe9>&a</color>。
+		/// <color=#87CEFA>連擊</color>不會在下回合開始時重置。
 		/// </summary>
         public static string Combo_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_2");
 		/// <summary>
 		/// Korean:
+		/// 해냈어!
+		/// 현재 <color=#87CEFA>콤보</color>는 <color=#d78fe9>&a</color>입니다.
+		/// <color=#87CEFA>콤보</color>는 다음 턴 시작 시 초기화되지 않습니다.
 		/// English:
 		/// We did it !
 		/// Current <color=#87CEFA>Combo</color> is <color=#d78fe9>&a</color>.
 		/// <color=#87CEFA>Combo</color> will not reset at the start of the next turn.
 		/// Japanese:
+		/// やったね!
+		/// 現在の<color=#87CEFA>コンボ</color>は<color=#d78fe9>&a</color>です。
+		/// <color=#87CEFA>コンボ</color>は次のターン開始時にリセットされません。
 		/// Chinese:
+		/// 我们做到了!
+		/// 当前<color=#87CEFA>连击</color>为<color=#d78fe9>&a</color>。
+		/// <color=#87CEFA>连击</color>不会在下回合开始时重置。
 		/// Chinese-TW:
+		/// 我們做到了!
+		/// 當前<color=#87CEFA>連擊</color>為<color=#d78fe9>&a</color>。
+		/// <color=#87CEFA>連擊</color>不會在下回合開始時重置。
 		/// </summary>
         public static string Combo_3 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_3");
 		/// <summary>
 		/// Korean:
+		/// 현재 <color=#87CEFA>콤보</color>: <color=#d78fe9>&a</color> 
+		/// 턴 시작 시 <color=#87CEFA>콤보</color>는 0으로 초기화됩니다.
+		/// <color=#87CEFA>콤보</color> 보상:
+		/// <color=#d78fe9>5</color>: <sprite name="Xao_Heart"> 1개 획득
+		/// <color=#d78fe9>10</color>: 마나 2 회복
+		/// <color=#d78fe9>15</color>: 이번 <b>플레이</b>에서 공격력 1 영구 증가 (전투당 1회)
+		/// <color=#d78fe9>25</color>: 유물 주머니를 획득하고 유물 인벤토리를 1 확장 (전투당 1회)
+		/// <color=#d78fe9>50</color>: 무작위 <color=#F9D62FFF>전설</color> 장비 3개 중 1개를 선택하여 획득 (전투당 1회)
+		/// <color=#919191>(턴 사이에 <color=#87CEFA>콤보</color>를 유지하면 다음 턴에 모든 보상이 발동됩니다.)</color>
 		/// English:
 		/// Current <color=#87CEFA>Combo</color>: <color=#d78fe9>&a</color> 
 		/// At the start of each turn, reset <color=#87CEFA>Combo</color> to 0.
@@ -750,41 +795,84 @@ namespace Xao
 		/// <color=#d78fe9>50</color>: View 3 random <color=#F9D62FFF>Legendary</color> Equipment and select 1 to obtain (Once per battle)
 		/// <color=#919191>(Saving <color=#87CEFA>Combo</color> between turns activates all rewards on the next turn.)</color>
 		/// Japanese:
+		/// 現在の<color=#87CEFA>コンボ</color>: <color=#d78fe9>&a</color> 
+		/// 各ターンの開始時に<color=#87CEFA>コンボ</color>は0にリセットされます。
+		/// <color=#87CEFA>コンボ</color>報酬:
+		/// <color=#d78fe9>5</color>: <sprite name="Xao_Heart">を1獲得
+		/// <color=#d78fe9>10</color>: マナを2回復
+		/// <color=#d78fe9>15</color>: この<b>プレイ</b>中、攻撃力が永続的に1上昇（戦闘ごとに1回）
+		/// <color=#d78fe9>25</color>: レリックポーチを獲得し、レリック所持数を1拡張（戦闘ごとに1回）
+		/// <color=#d78fe9>50</color>: ランダムな<color=#F9D62FFF>レジェンダリー</color>装備3つから1つを選んで獲得（戦闘ごとに1回）
+		/// <color=#919191>(ターン間で<color=#87CEFA>コンボ</color>を維持すると、次のターンで全ての報酬が発動します。)</color>
 		/// Chinese:
+		/// 当前<color=#87CEFA>连击</color>: <color=#d78fe9>&a</color> 
+		/// 每回合开始时，<color=#87CEFA>连击</color>会重置为0。
+		/// <color=#87CEFA>连击</color>奖励:
+		/// <color=#d78fe9>5</color>: 获得1个<sprite name="Xao_Heart">
+		/// <color=#d78fe9>10</color>: 恢复2点法力
+		/// <color=#d78fe9>15</color>: 本<b>轮游戏</b>中永久提升攻击力+1（每场战斗一次）
+		/// <color=#d78fe9>25</color>: 获得遗物袋并扩展遗物栏位+1（每场战斗一次）
+		/// <color=#d78fe9>50</color>: 查看3个随机<color=#F9D62FFF>传说</color>装备并选择1个获得（每场战斗一次）
+		/// <color=#919191>(在回合之间保留<color=#87CEFA>连击</color>会在下回合触发所有奖励。)</color>
 		/// Chinese-TW:
+		/// 當前<color=#87CEFA>連擊</color>: <color=#d78fe9>&a</color> 
+		/// 每回合開始時，<color=#87CEFA>連擊</color>會重置為0。
+		/// <color=#87CEFA>連擊</color>獎勵:
+		/// <color=#d78fe9>5</color>: 獲得1個<sprite name="Xao_Heart">
+		/// <color=#d78fe9>10</color>: 回復2點法力
+		/// <color=#d78fe9>15</color>: 本<b>輪遊戲</b>中永久提升攻擊力+1（每場戰鬥一次）
+		/// <color=#d78fe9>25</color>: 獲得遺物袋並擴充遺物欄位+1（每場戰鬥一次）
+		/// <color=#d78fe9>50</color>: 查看3個隨機<color=#F9D62FFF>傳說</color>裝備並選擇1個獲得（每場戰鬥一次）
+		/// <color=#919191>(在回合之間保留<color=#87CEFA>連擊</color>會在下回合觸發所有獎勵。)</color>
 		/// </summary>
         public static string Combo_Description_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Combo_Description_0");
 		/// <summary>
 		/// Korean:
+		/// 이 스킬은 이번 턴 동안 반복해서 사용할 수 있습니다.
+		/// <color=#87CEFA>콤보</color>를 <color=#d78fe9>1</color> 증가시킵니다.
+		/// <color=#87CEFA>콤보</color> <color=#d78fe9>15</color>: 현재의 <color=#87CEFA>콤보</color>를 다음 턴까지 유지합니다.
 		/// English:
 		/// This skill can be played repeatedly during this turn.
 		/// Increase <color=#87CEFA>Combo</color> by <color=#d78fe9>1</color>.
 		/// <color=#87CEFA>Combo</color> <color=#d78fe9>15</color>: Keep your current <color=#87CEFA>Combo</color> for the next turn.
 		/// Japanese:
+		/// このスキルはこのターン中に繰り返し使用できます。
+		/// <color=#87CEFA>コンボ</color>を<color=#d78fe9>1</color>増加させます。
+		/// <color=#87CEFA>コンボ</color> <color=#d78fe9>15</color>: 現在の<color=#87CEFA>コンボ</color>を次のターンまで維持します。
 		/// Chinese:
+		/// 此技能在本回合中可重复使用。
+		/// <color=#87CEFA>连击</color>增加<color=#d78fe9>1</color>。
+		/// <color=#87CEFA>连击</color> <color=#d78fe9>15</color>: 保留当前<color=#87CEFA>连击</color>直到下回合。
 		/// Chinese-TW:
+		/// 此技能在本回合中可重複使用。
+		/// <color=#87CEFA>連擊</color>增加<color=#d78fe9>1</color>。
+		/// <color=#87CEFA>連擊</color> <color=#d78fe9>15</color>: 保留當前<color=#87CEFA>連擊</color>直到下回合。
 		/// </summary>
         public static string Rare_SimpleExchange => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Rare_SimpleExchange");
 		/// <summary>
 		/// Korean:
+		/// <color=#87CEFA>젖은</color> <color=#d78fe9>환희</color>
 		/// English:
 		/// <color=#87CEFA>Wet</color> <color=#d78fe9>Bliss</color>
 		/// Japanese:
+		/// <color=#87CEFA>ウェット</color> <color=#d78fe9>ブリス</color>
 		/// Chinese:
+		/// <color=#87CEFA>湿</color> <color=#d78fe9>极乐</color>
 		/// Chinese-TW:
+		/// <color=#87CEFA>濕</color> <color=#d78fe9>極樂</color>
 		/// </summary>
         public static string WetBliss => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("WetBliss");
 		/// <summary>
 		/// Korean:
-		/// 만나서 반가워요. 잘 부탁드려요.
+		/// 처음 뵙겠습니다  잘 부탁드려요.
 		/// English:
 		/// Nice to meet you  Please take care of me.
 		/// Japanese:
-		/// よろしくお願いします
+		/// はじめまして  よろしくお願いします。
 		/// Chinese:
-		/// 很高兴见到你。请多关照。
+		/// 初次见面  请多关照。
 		/// Chinese-TW:
-		/// 很高興見到你。請多關照。
+		/// 初次見面  請多關照。
 		/// </summary>
         public static string Xao_BattleStart_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_BattleStart_0");
 		/// <summary>
@@ -793,244 +881,307 @@ namespace Xao
 		/// English:
 		/// Please do your best.
 		/// Japanese:
-		/// 頑張ってください
+		/// 頑張ってください。
 		/// Chinese:
-		/// 请尽全力。
+		/// 请加油。
 		/// Chinese-TW:
-		/// 請盡全力。
+		/// 請加油。
 		/// </summary>
         public static string Xao_BattleStart_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_BattleStart_1");
 		/// <summary>
 		/// Korean:
-		/// 짜증 나…
+		/// 짜증나...
 		/// English:
 		/// So annoying...
 		/// Japanese:
-		/// めんどくさーい
+		/// うるさいな…
 		/// Chinese:
-		/// 真烦人…
+		/// 好烦啊……
 		/// Chinese-TW:
-		/// 真煩人…
+		/// 好煩啊……
 		/// </summary>
         public static string Xao_BattleStart_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_BattleStart_2");
 		/// <summary>
 		/// Korean:
+		/// 최근 결과가 좋아서 예상보다 더 많은 휴식을 받았어요.
 		/// English:
 		/// Since the recent results were good, we got more time off than expected.
 		/// Japanese:
-		/// ここ最近の成績が良かったから思ったより休みをもらった
+		/// 最近の結果が良かったので、思ったより多くの休暇をもらえました。
 		/// Chinese:
+		/// 因为最近表现不错，所以得到了比预期更多的休息时间。
 		/// Chinese-TW:
+		/// 因為最近表現不錯，所以得到了比預期更多的休息時間。
 		/// </summary>
         public static string Xao_Chest => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Chest");
 		/// <summary>
 		/// Korean:
+		/// 여기요.
 		/// English:
 		/// Here you go.
 		/// Japanese:
-		/// どうぞ
+		/// どうぞ。
 		/// Chinese:
+		/// 给你。
 		/// Chinese-TW:
+		/// 給你。
 		/// </summary>
         public static string Xao_Cri => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Cri");
 		/// <summary>
 		/// Korean:
+		/// 간지러워요.
 		/// English:
 		/// That tickles.
 		/// Japanese:
 		/// くすぐったい。
 		/// Chinese:
+		/// 好痒。
 		/// Chinese-TW:
+		/// 好癢。
 		/// </summary>
         public static string Xao_Curse_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Curse_0");
 		/// <summary>
 		/// Korean:
+		/// 깜짝 놀랐어요.
 		/// English:
 		/// That surprised me.
 		/// Japanese:
 		/// びっくりした。
 		/// Chinese:
+		/// 吓到我了。
 		/// Chinese-TW:
+		/// 嚇到我了。
 		/// </summary>
         public static string Xao_Curse_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Curse_1");
 		/// <summary>
 		/// Korean:
+		/// 괜찮아요?
 		/// English:
 		/// Are you okay?
 		/// Japanese:
-		/// 大丈夫ですか?
+		/// 大丈夫ですか？
 		/// Chinese:
+		/// 你还好吗？
 		/// Chinese-TW:
+		/// 你還好嗎？
 		/// </summary>
         public static string Xao_DeathDoorAlly_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoorAlly_0");
 		/// <summary>
 		/// Korean:
+		/// 여기서 쓰러지면 지금까지의 노력이 모두 헛수고가 됩니다.
 		/// English:
 		/// If you collapse here, all your effort until now will go to waste.
 		/// Japanese:
-		/// ここで倒れたら、今までの努力がパーになってしまうよ。
+		/// ここで倒れると今までの努力が無駄になります。
 		/// Chinese:
+		/// 如果在这里倒下，你之前的努力就白费了。
 		/// Chinese-TW:
+		/// 如果在這裡倒下，你之前的努力就白費了。
 		/// </summary>
         public static string Xao_DeathDoorAlly_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoorAlly_1");
 		/// <summary>
 		/// Korean:
+		/// 움직일 수 없어요.
 		/// English:
 		/// I can't move.
 		/// Japanese:
-		/// 動けなーい
+		/// 動けません。
 		/// Chinese:
+		/// 我动不了了。
 		/// Chinese-TW:
+		/// 我動不了了。
 		/// </summary>
         public static string Xao_DeathDoor_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoor_0");
 		/// <summary>
 		/// Korean:
+		/// 피곤해요...
 		/// English:
 		/// I'm tired...
 		/// Japanese:
-		/// 疲れた...
+		/// 疲れました…
 		/// Chinese:
+		/// 我累了……
 		/// Chinese-TW:
+		/// 我累了……
 		/// </summary>
         public static string Xao_DeathDoor_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_DeathDoor_1");
 		/// <summary>
 		/// Korean:
+		/// 기분이 좋아요...
 		/// English:
 		/// It feels good...
 		/// Japanese:
-		/// 気持ちいい...
+		/// 気持ちいい…
 		/// Chinese:
+		/// 感觉真好……
 		/// Chinese-TW:
+		/// 感覺真好……
 		/// </summary>
         public static string Xao_Healed => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Healed");
 		/// <summary>
 		/// Korean:
+		/// 피곤하면 침대에서 쉬세요.
 		/// English:
 		/// If you're tired, please rest in bed.
 		/// Japanese:
 		/// 疲れたらベッドで休んでください。
 		/// Chinese:
+		/// 如果累了，请在床上休息。
 		/// Chinese-TW:
+		/// 如果累了，請在床上休息。
 		/// </summary>
         public static string Xao_Idling_in_Battle_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Battle_0");
 		/// <summary>
 		/// Korean:
+		/// 잠깐 쉴래?
 		/// English:
 		/// Want to take a break?
 		/// Japanese:
-		/// 休憩する?
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
         public static string Xao_Idling_in_Battle_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Battle_1");
 		/// <summary>
 		/// Korean:
+		/// 너무 무리하고 있어요.
 		/// English:
 		/// You're pushing yourself too hard.
 		/// Japanese:
-		/// あんたは自分を追い込みすぎている。
+		/// 無理しすぎです。
 		/// Chinese:
+		/// 你太勉强自己了。
 		/// Chinese-TW:
+		/// 你太勉強自己了。
 		/// </summary>
         public static string Xao_Idling_in_Battle_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Battle_2");
 		/// <summary>
 		/// Korean:
+		/// 하고 싶은 일이 있거나 이루고 싶은 목표가 있다면, 해보세요. 그렇죠?
 		/// English:
 		/// If you've got something you want to do, some goal to reach—then do it, won't you?
 		/// Japanese:
-		/// やりたいことがあって達成したい目標があるならやれば?
+		/// やりたいこと、達成したい目標があるなら、やってみたらどう？
 		/// Chinese:
+		/// 如果有想做的事，有想达到的目标——那就去做吧，好吗？
 		/// Chinese-TW:
+		/// 如果有想做的事，有想達到的目標——那就去做吧，好嗎？
 		/// </summary>
         public static string Xao_Idling_in_Field_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Field_0");
 		/// <summary>
 		/// Korean:
+		/// 당신은 나를 멀리 데려가서 새로운 경험을 하게 하고, 이전과는 다른 풍경을 보여주겠다고 했죠.
 		/// English:
 		/// You said you'd take me somewhere far, let me experience something new, and show me different scenery than before.
 		/// Japanese:
-		/// 遠くへ遊びに行こうとか新しいものに触れようとか今までとは違う景色を見せてあげるよって言ってくれたじゃん
+		/// 遠くに連れて行って、新しい体験をさせて、今までと違う景色を見せてくれるって言ってたよね。
 		/// Chinese:
+		/// 你说过要带我去远一点的地方，让我体验新的事物，看看不同的风景。
 		/// Chinese-TW:
+		/// 你說過要帶我去遠一點的地方，讓我體驗新的事物，看看不同的風景。
 		/// </summary>
         public static string Xao_Idling_in_Field_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Field_1");
 		/// <summary>
 		/// Korean:
+		/// 이번에도 열심히 했네요, 수고했어요.
 		/// English:
 		/// You worked hard again this time, good job.
 		/// Japanese:
-		/// 今回も頑張ってくれて お疲れ様
+		/// 今回もよく頑張りましたね、お疲れさま。
 		/// Chinese:
+		/// 这次你也辛苦了，干得好。
 		/// Chinese-TW:
+		/// 這次你也辛苦了，做得好。
 		/// </summary>
         public static string Xao_Idling_in_Field_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Idling_in_Field_2");
 		/// <summary>
 		/// Korean:
+		/// 끝났나요?
 		/// English:
 		/// Is it over?
 		/// Japanese:
-		/// 終わった?
+		/// 終わりましたか？
 		/// Chinese:
+		/// 结束了吗？
 		/// Chinese-TW:
+		/// 結束了嗎？
 		/// </summary>
         public static string Xao_Killing_Enemy_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Killing_Enemy_0");
 		/// <summary>
 		/// Korean:
+		/// 자, 이걸 받으세요.
 		/// English:
 		/// Here, take this.
 		/// Japanese:
-		/// これあげる。
+		/// はい、これをどうぞ。
 		/// Chinese:
+		/// 来，拿这个。
 		/// Chinese-TW:
+		/// 來，拿這個。
 		/// </summary>
         public static string Xao_Killing_Enemy_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Killing_Enemy_1");
 		/// <summary>
 		/// Korean:
+		/// 실패하더라도, 혹은 중간에 게을러지고 싶더라도 괜찮아요.
 		/// English:
 		/// Even if you fail, or feel like slacking off along the way, it's fine.
 		/// Japanese:
-		/// 失敗しても途中でサボりたくなっても大丈夫。
+		/// 途中で失敗しても、怠けたくなっても大丈夫。
 		/// Chinese:
+		/// 即使失败了，或者中途想偷懒也没关系。
 		/// Chinese-TW:
+		/// 即使失敗了，或者中途想偷懶也沒關係。
 		/// </summary>
         public static string Xao_Master => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Master");
 		/// <summary>
 		/// Korean:
+		/// 이상한 느낌이에요.
 		/// English:
 		/// Feels strange.
 		/// Japanese:
-		/// 変な感じ
+		/// 変な感じ。
 		/// Chinese:
+		/// 感觉有点奇怪。
 		/// Chinese-TW:
+		/// 感覺有點奇怪。
 		/// </summary>
         public static string Xao_Pharos_0 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Pharos_0");
 		/// <summary>
 		/// Korean:
+		/// 섹스할래요?
 		/// English:
 		/// Do you want to have sex?
 		/// Japanese:
-		/// セックスしたいの?
+		/// セックスしたい？
 		/// Chinese:
+		/// 想做爱吗？
 		/// Chinese-TW:
+		/// 想做愛嗎？
 		/// </summary>
         public static string Xao_Pharos_1 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Pharos_1");
 		/// <summary>
 		/// Korean:
+		/// 지쳤어요...
 		/// English:
 		/// I'm worn out...
 		/// Japanese:
-		/// へとへと…
+		/// 疲れた…
 		/// Chinese:
+		/// 我累坏了……
 		/// Chinese-TW:
+		/// 我累壞了……
 		/// </summary>
         public static string Xao_Pharos_2 => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Pharos_2");
 		/// <summary>
 		/// Korean:
+		/// 아침식사?
 		/// English:
 		/// Breakfast?
 		/// Japanese:
-		/// 朝ごはん?
+		/// 朝ごはん？
 		/// Chinese:
+		/// 早餐？
 		/// Chinese-TW:
+		/// 早餐？
 		/// </summary>
         public static string Xao_Potion => ModManager.getModInfo("Xao").localizationInfo.SystemLocalizationUpdate("Xao_Potion");
 
