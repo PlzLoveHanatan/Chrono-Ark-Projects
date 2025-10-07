@@ -38,7 +38,7 @@ namespace XiaoLOR
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("EGOHit", 100f, null, 0f, null, null, false, false);
+            XiaoUtils.PlaySound("EGOHit");
 
             var target = Targets[0];
             Utils.ApplyBurn(target, this.BChar, 2);

@@ -22,13 +22,13 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Fiery", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("Fiery");
 
             foreach (var target in Targets)
             {
                 if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
                 {
-                    Utils.ApplyBurn(target, this.BChar, 3);
+                    Utils.ApplyBurn(target, BChar, 4);
                 }
             }
         }

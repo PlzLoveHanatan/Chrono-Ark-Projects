@@ -17,12 +17,15 @@ namespace XiaoLOR
     /// <summary>
     /// Bù Miè Xīn Lián
     /// </summary>
-    public class B_XiaoLOR_BùMièXīnLián : Buff, IP_DamageTake, IP_DamageTakeChange
+    public class B_XiaoLOR_BùMièXīnLián : Buff, IP_DamageTake
     {
         public override void BuffStat()
         {
             PlusStat.def = 15f;
+            PlusStat.DMGTaken = -15;
+            PlusStat.AggroPer = 50;
         }
+
         public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
         {
             if (Dmg > 0)
@@ -32,18 +35,6 @@ namespace XiaoLOR
                     Utils.ApplyBurn(BattleSystem.instance.EnemyList.Random(this.BChar.GetRandomClass().Main), this.BChar, 2);
                 }
             }
-        }
-        public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
-        {
-            if (!Preview && Dmg >= 1)
-            {
-                Dmg = (int)(Dmg * 0.85f);
-            }
-            if (Dmg <= 1)
-            {
-                Dmg = 1;
-            }
-            return Dmg;
         }
     }
 }

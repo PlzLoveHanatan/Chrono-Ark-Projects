@@ -27,19 +27,19 @@ namespace XiaoLOR
             {
                 if (BChar.EmotionLevel() >= 1)
                 {
-                    return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f) * BChar.EmotionLevel()).ToString());
+                    return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.5f) * BChar.EmotionLevel()).ToString());
                 }
                 else if (BChar.EmotionLevel() >= 5)
                 {
-                    return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f) * 5).ToString());
+                    return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.5f) * 5).ToString());
                 }
             }
 
-            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f)).ToString());
+            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.5f)).ToString());
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Turbulence", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("Turbulence");
 
             Utils.ApplyBurn(Targets[0], this.BChar, 2);
 

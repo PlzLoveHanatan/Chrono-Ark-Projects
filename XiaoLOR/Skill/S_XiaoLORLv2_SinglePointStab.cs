@@ -20,7 +20,7 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Stab", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("Stab");
 
             BattleSystem.instance.AllyTeam.AP += 1;
             var target = Targets[0];

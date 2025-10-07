@@ -34,7 +34,7 @@ namespace XiaoLOR
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("EGOHit", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("EGOHit");
 
             //BattleSystem.instance.Reward.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, 100));
 

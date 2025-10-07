@@ -25,8 +25,7 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("StormStrong", 100f, null, 0f, null, null, false, false);
-
+			XiaoUtils.PlaySound("StormStrong");
             BattleSystem.DelayInput(this.Damage(Targets));
 
             foreach (var target in Targets)

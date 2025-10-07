@@ -32,20 +32,13 @@ namespace XiaoLOR
                 }
             }
         }
-        //public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-        //{
-        //    if (SP.SkillData.IsDamage && SP.SkillData.Master == this.BChar
-        //        && hit != null && !hit.Info.Ally && !hit.Dummy && !SP.SkillData.FreeUse)
-        //    {
-        //        BattleSystem.DelayInput(this.Effect(hit));
-        //        SelfStackDestroy();
-        //    }
-        //}
+
         public IEnumerator AdditionalAttack(BattleChar Target)
         {
             yield return new WaitForSeconds(0.06f);
-            if (Target.IsDead) yield break;
-            if (base.StackNum == 0) yield break;
+
+            if (Target.IsDead || StackNum == 0) yield break;
+
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_XiaoLORUnique_YǐngYàn, this.BChar, this.BChar.MyTeam);
             skill.PlusHit = true;
 

@@ -43,8 +43,7 @@ namespace XiaoLOR
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Bi", 100f, null, 0f, null, null, false, false);
-
+			XiaoUtils.PlaySound("Bi");
             Utils.ApplyBurn(Targets[0], this.BChar, 2);
 
             if (BChar.EmotionLevel() >= 3)

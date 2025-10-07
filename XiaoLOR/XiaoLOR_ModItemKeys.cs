@@ -25,13 +25,11 @@ namespace XiaoLOR
         public static string Buff_B_XiaoLOR_AFighterthatNeverRetreats = "B_XiaoLOR_AFighterthatNeverRetreats";
 		/// <summary>
 		/// Bù Miè Xīn Lián
-		/// All incoming damage is reduced by 15%.
 		/// When taking damage, inflict 2 <color=#f8181c>Burn</color> to a random enemy.
 		/// </summary>
         public static string Buff_B_XiaoLOR_BùMièXīnLián = "B_XiaoLOR_BùMièXīnLián";
 		/// <summary>
 		/// Firm as a Great Mountain
-		/// When taking damage, gain +5% Armor (up to 4 times).
 		/// </summary>
         public static string Buff_B_XiaoLOR_FirmasaGreatMountain = "B_XiaoLOR_FirmasaGreatMountain";
 		/// <summary>
@@ -66,7 +64,6 @@ namespace XiaoLOR
         public static string Buff_B_XiaoLOR_LièYànXīnLián = "B_XiaoLOR_LièYànXīnLián";
 		/// <summary>
 		/// Remain Vigilant in Peace
-		/// When taking damage, gain +5% Armor (up to 2 times).
 		/// </summary>
         public static string Buff_B_XiaoLOR_RemainVigilantinPeace = "B_XiaoLOR_RemainVigilantinPeace";
 		/// <summary>
@@ -102,8 +99,8 @@ namespace XiaoLOR
         public static string SkillExtended_Ex_XiaoLOR_YānLièSùMíng = "Ex_XiaoLOR_YānLièSùMíng";
 		/// <summary>
 		/// Liáo Fēng
-		/// Attacks inflict 2 <color=#f8181c>Burn</color>.
-		/// At Emotional Level 3 or higher, inflict 1 additional <color=#f8181c>Burn</color>. 
+		/// Attacks inflict 1 <color=#f8181c>Burn</color>.
+		/// At Emotional Level 3 or higher, inflict 2 additional <color=#f8181c>Burn</color>. 
 		/// <color=#919191>The spear's flame, forever burdened by lost love, burns and rages in the anguish of its absence.</color>
 		/// </summary>
         public static string Item_Equip_Item_XiaoLOR_LiáoFēng = "Item_XiaoLOR_LiáoFēng";
@@ -140,7 +137,7 @@ namespace XiaoLOR
 		/// </summary>
         public static string SkillKeyword_KeyWord_XiaoLORForceofaWildfire = "KeyWord_XiaoLORForceofaWildfire";
 		/// <summary>
-		/// XiaoLOR Unique Skill
+		/// Xiao Unique Skill
 		/// <color=#919191>Cannot be acquired through skill books.
 		/// Becomes available for use only upon reaching Emotion Level 2.</color>
 		/// </summary>
@@ -155,7 +152,7 @@ namespace XiaoLOR
         public static string SkillKeyword_KeyWord_XiaoLORYǐngYàn = "KeyWord_XiaoLORYǐngYàn";
 		/// <summary>
 		/// Yí Hàn Zhī Shí
-		/// At the start of each turn all allies gain 1~2 random emotional coins.
+		/// At the start of each turn all allies gain 1~3 random emotional coins.
 		/// <color=#919191>The wind takes away the warmth of the meal, yet cannot carry away the guilt within my heart.</color>
 		/// </summary>
         public static string Item_Passive_Relic_XiaoLOR_YíHànZhīShí = "Relic_XiaoLOR_YíHànZhīShí";
@@ -299,11 +296,11 @@ namespace XiaoLOR
         public static string Skill_S_XiaoLORLv1_ViolentFlame = "S_XiaoLORLv1_ViolentFlame";
 		/// <summary>
 		/// All-out War
-		/// If the target doesn't have Taunt status :
+		/// If the target doesn't have Taunt status:
 		/// Apply Taunt status on the target, and 
 		/// Gain 3 random Emotional Coins.
-		/// If the target has Taunt status : Remove it. All allies gain 3 random Emotional Coins.
-		/// At Emotional Level 3 or higher, create a party barrier (&a) equal to half of the user's Armor (Max 15).
+		/// If the target has Taunt status: Remove it. All allies gain 3 random Emotional Coins.
+		/// At Emotional Level 3 or higher, create a party barrier (&a) <color=#FF7C34>(50% Armor)</color> (Max 20).
 		/// </summary>
         public static string Skill_S_XiaoLORLv2_AlloutWar = "S_XiaoLORLv2_AlloutWar";
 		/// <summary>
@@ -322,10 +319,10 @@ namespace XiaoLOR
         public static string Skill_S_XiaoLORLv2_BìÀn = "S_XiaoLORLv2_BìÀn";
 		/// <summary>
 		/// Fervid Emotions
-		/// Inflict 4 <color=#f8181c>Burn</color>.
-		/// If the target has fewer than 8 <color=#f8181c>Burn</color>, inflict 4 additional <color=#f8181c>Burn</color>.
-		/// Gain 1 Negative Emotional Coin for each enemy.
-		/// At Emotional Level 3 or higher, inflict 2 additional <color=#f8181c>Burn</color>.
+		/// Inflict 3 <color=#f8181c>Burn</color>.
+		/// If the target has fewer than 6 <color=#f8181c>Burn</color>, inflict 3 additional <color=#f8181c>Burn</color>.
+		/// Gain 1 Negative Emotional Coin to all allies for each enemy.
+		/// At Emotional Level 3 or higher, inflict 3 additional <color=#f8181c>Burn</color>.
 		/// </summary>
         public static string Skill_S_XiaoLORLv2_FervidEmotions = "S_XiaoLORLv2_FervidEmotions";
 		/// <summary>
@@ -346,7 +343,7 @@ namespace XiaoLOR
 		/// <summary>
 		/// Iron Wall
 		/// Apply Taunt status on the target.
-		/// At Emotional Level 3 or higher, create a barrier (&a) equal to the user's Armor (Max 20).
+		/// At Emotional Level 3 or higher, create a barrier (&a) <color=#FF7C34>(50% Armor)</color> (Max 10).
 		/// At Emotional Level 4 or higher, cost is reduced by 1 if this skill is a fixed ability.
 		/// </summary>
         public static string Skill_S_XiaoLORLv2_IronWall = "S_XiaoLORLv2_IronWall";
@@ -363,7 +360,7 @@ namespace XiaoLOR
         public static string Skill_S_XiaoLORLv2_SinglePointStab = "S_XiaoLORLv2_SinglePointStab";
 		/// <summary>
 		/// Chī Wěn
-		/// Inflict 3 <color=#f8181c>Burn</color>.
+		/// Inflict 4 <color=#f8181c>Burn</color>.
 		/// </summary>
         public static string Skill_S_XiaoLORRareLv1_ChīWěn = "S_XiaoLORRareLv1_ChīWěn";
 		/// <summary>
@@ -373,22 +370,22 @@ namespace XiaoLOR
         public static string Skill_S_XiaoLORRareLv1_FlamingDragonFist = "S_XiaoLORRareLv1_FlamingDragonFist";
 		/// <summary>
 		/// Jīn Ní
-		/// Inflict 3 <color=#f8181c>Burn</color>.
-		/// If facing 1 enemy, inflict 3 additional <color=#f8181c>Burn</color>.
+		/// Inflict 4 <color=#f8181c>Burn</color>.
+		/// If facing 1 enemy, inflict 4 additional <color=#f8181c>Burn</color>.
 		/// Cost is reduced by 1 at Emotional Level 3 or higher.
 		/// </summary>
         public static string Skill_S_XiaoLORRareLv2_JīnNí = "S_XiaoLORRareLv2_JīnNí";
 		/// <summary>
 		/// Tiěshānkào
-		/// Inflict 3 + &a <color=#f8181c>Burn</color> (equal to Emotional Level * 3).
+		/// Inflict 3 + &a <color=#f8181c>Burn</color> <color=#FF7C34>(Emotional Level * 3)</color>.
 		/// At Emotional Level 3 or higher, increase this skill's damage by 2 for each stack of <color=#f8181c>Burn</color> on the target.
 		/// </summary>
         public static string Skill_S_XiaoLORRareLv2_Tiěshānkào = "S_XiaoLORRareLv2_Tiěshānkào";
 		/// <summary>
 		/// Emotional Turbulence
 		/// Inflict 2 <color=#f8181c>Burn</color>.
-		/// Damage is increased by &a, based on the user's Attack Power and current Emotional Level.
-		/// At Emotional Level 3 or higher, if the target has Taunt : Remove it and draw this skill again.
+		/// Damage is increased by &a <color=#FF7C34>(50% Attack Power * Emotional Level)</color>.
+		/// At Emotional Level 3 or higher, if the target has Taunt: Remove it and draw this skill again.
 		/// </summary>
         public static string Skill_S_XiaoLORRare_EmotionalTurbulence = "S_XiaoLORRare_EmotionalTurbulence";
 		/// <summary>
@@ -425,15 +422,16 @@ namespace XiaoLOR
 		/// <summary>
 		/// Xiao
 		/// Passive:
-		/// Emotional Level :
-		/// Level 1: Attacks inflict 1 <color=#f8181c>Burn</color>.
-		/// Level 2: Manifest E.G.O., enhance skills.
-		/// At the start of each turn apply 2 <color=#f8181c>Burn</color> to all enemies.
-		/// Level 3: All attacks damage is increased by 15%.
-		/// Level 4: Enhance E.G.O.
-		/// At the start of each turn 2 random attack skills in hand inflict 2 <color=#f8181c>Burn</color>.
-		/// Level 5: Attacks inflict 1 additional <color=#f8181c>Burn</color>.
-		/// At the start of each turn apply 1 additional <color=#f8181c>Burn</color> to all enemies.
+		/// Increase Faint Resist by 5 for each Xiao Level.  
+		/// <color=#3CB371>Emotional</color> <color=#DC143C>Level</color>:  
+		/// <color=#DC143C>1</color>: Attacks inflict 1 <color=#f8181c>Burn</color>.  
+		/// <color=#DC143C>2</color>: Manifest E.G.O. and enhance skills.  
+		/// At the start of each turn apply 1 <color=#f8181c>Burn</color> to all enemies.  
+		/// <color=#DC143C>3</color>: All attacks damage is increased by 15%.  
+		/// <color=#DC143C>4</color>: Enhance E.G.O.  
+		/// At the start of each turn 2 random attack skills in hand inflict 2 <color=#f8181c>Burn</color>.  
+		/// <color=#DC143C>5</color>: Attacks inflict 2 additional <color=#f8181c>Burn</color>.  
+		/// At the start of each turn apply 2 additional <color=#f8181c>Burn</color> to all enemies.  
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_XiaoLOR = "XiaoLOR";

@@ -29,7 +29,7 @@ namespace XiaoLOR
             }
             base.SkillUseSingle(SkillD, Targets);
 
-            MasterAudio.PlaySound("Fervid", 100f, null, 0f, null, null, false, false);
+            XiaoUtils.PlaySound("Fervid");
 
             if (OneTarget)
             {
@@ -37,7 +37,7 @@ namespace XiaoLOR
                 {
                     if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
                     {
-                        Utils.ApplyBurn(target, this.BChar, 3);
+                        Utils.ApplyBurn(target, this.BChar, 4);
                     }
                 }
             }
@@ -47,7 +47,7 @@ namespace XiaoLOR
                 {
                     if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
                     {
-                        Utils.ApplyBurn(target, this.BChar, 6);
+                        Utils.ApplyBurn(target, this.BChar, 8);
                     }
                 }
             }

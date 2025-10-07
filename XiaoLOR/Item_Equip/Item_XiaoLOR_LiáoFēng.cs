@@ -27,16 +27,16 @@ namespace XiaoLOR
             this.PlusStat.HIT_DOT = 20f;
             base.Init();
         }
+
         public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
         {
-            if (SP.SkillData.IsDamage && SP.SkillData.Master == this.BChar && !SP.SkillData.FreeUse
-                && hit != null && !hit.Info.Ally && !hit.Dummy)
+            if (SP.SkillData.IsDamage && SP.SkillData.Master == this.BChar && !SP.SkillData.FreeUse && hit != null && !hit.Info.Ally && !hit.Dummy)
             {
-                Utils.ApplyBurn(hit, this.BChar, 2);
+                Utils.ApplyBurn(hit, BChar);
 
                 if (BChar.EmotionLevel() >= 3)
                 {
-                    Utils.ApplyBurn(hit, this.BChar);
+                    Utils.ApplyBurn(hit, BChar, 2);
                 }
             }
         }

@@ -17,10 +17,11 @@ namespace XiaoLOR
     /// <summary>
     /// Furious Fire Rending the Skies
     /// </summary>
-    public class B_XiaoLOR_FuriousFireRendingtheSkies : Buff, IP_PlayerTurn_1
+    public class B_XiaoLOR_FuriousFireRendingtheSkies : Buff, IP_PlayerTurn
     {
         private int EnhancedAttacks;
-        public void Turn1()
+
+        public void Turn()
         {
             EnhancedAttacks = 0;
 

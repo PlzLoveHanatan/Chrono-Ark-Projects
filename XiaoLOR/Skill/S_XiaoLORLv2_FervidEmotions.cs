@@ -37,25 +37,29 @@ namespace XiaoLOR
         //}
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Fervid", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("Fervid");
 
             foreach (var target in Targets)
             {
                 if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
                 {
-                    Utils.ApplyBurn(target, this.BChar, 4);
-                    BChar.GetNegEmotion(target.GetPosUI());
+                    Utils.ApplyBurn(target, this.BChar, 3);
+
+                    foreach (var ally in XiaoUtils.AllyTeam.AliveChars)
+                    {
+						ally.GetNegEmotion(target.GetPosUI());
+					}
 
                     var burnStacks = target.BuffReturn(EmotionalSystem.ModItemKeys.Buff_B_Xiao_Burn, false) as B_Xiao_Burn;
 
-                    if (burnStacks?.Burn < 8 || burnStacks?.Burn == 0)
+                    if (burnStacks?.Burn < 6 || burnStacks?.Burn == 0)
                     {
-                        Utils.ApplyBurn(target, this.BChar, 4);
+                        Utils.ApplyBurn(target, BChar, 3);
                     }
 
-                    if (BChar.EmotionLevel() >= 2)
+                    if (BChar.EmotionLevel() >= 3)
                     {
-                        Utils.ApplyBurn(target, this.BChar, 2);
+                        Utils.ApplyBurn(target, BChar, 3);
                     }
                 }
             }          

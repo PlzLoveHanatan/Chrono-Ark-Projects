@@ -16,31 +16,13 @@ namespace XiaoLOR
 	/// <summary>
 	/// Remain Vigilant in Peace
 	/// </summary>
-    public class B_XiaoLOR_RemainVigilantinPeace : Buff, IP_DamageTake
+    public class B_XiaoLOR_RemainVigilantinPeace : Buff
     {
-        private int MaxArmor;
         public override void Init()
         {
-            OnePassive = true;
             PlusStat.Strength = true;
             PlusStat.AggroPer = 20;
             PlusStat.def = 5;
-        }
-
-        public override void BuffStat()
-        {
-            PlusStat.Strength = true;
-            PlusStat.AggroPer = 20;
-            PlusStat.def = 5 + Math.Min(MaxArmor, 2) * 5;
-        }
-
-        public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
-        {
-            if (Dmg > 0 && MaxArmor < 2)
-            {
-                PlusStat.def += 5;
-                MaxArmor++;
-            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("FleetEdge", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("FleetEdge");
 
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_XiaoLORLv2_FleetEdge, this.BChar, this.BChar.MyTeam);
             BattleSystem.instance.AllyTeam.Add(skill, true);

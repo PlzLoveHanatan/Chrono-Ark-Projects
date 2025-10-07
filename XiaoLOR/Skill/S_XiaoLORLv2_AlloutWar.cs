@@ -23,13 +23,13 @@ namespace XiaoLOR
         public override string DescExtended(string desc)
         {
             int barrierValue = (int)(BChar.GetStat.def * 0.5f);
-            int barrierGain = Math.Min(barrierValue, 30);
+            int barrierGain = Math.Min(barrierValue, 20);
 
             return base.DescExtended(desc).Replace("&a", barrierGain.ToString());
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("NormalHit", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("NormalHit");
 
             var target = Targets[0];
 
@@ -55,7 +55,7 @@ namespace XiaoLOR
             if (BChar.EmotionLevel() >= 3)
             {
                 int barrierValue = (int)(BChar.GetStat.def * 0.5f);
-                int barrierGain = Math.Min(barrierValue, 15);
+                int barrierGain = Math.Min(barrierValue, 20);
 
                 BChar.MyTeam.partybarrier.BarrierHP += barrierGain;
 

@@ -26,28 +26,28 @@ namespace XiaoLOR
             base.Init();
             this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
         }
+
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
-            if (BChar.EmotionLevel() >= 4)
+            if (BChar.EmotionLevel() >= 3)
             {
-                this.MySkill.APChange = -1;
-                base.SkillParticleOn();
-                return;
-            }
-            else if (BChar.EmotionLevel() >= 3)
+                SkillParticleOn();
+
+				if (BChar.EmotionLevel() >= 4)
+				{
+					MySkill.APChange = -1;
+				}
+			}
+            else
             {
-                base.SkillParticleOn();
-                return;
-            }
-            base.SkillParticleOff();
+				SkillParticleOff();
+			}
         }
 
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Bi", 100f, null, 0f, null, null, false, false);
-
+			XiaoUtils.PlaySound("Bi");
             Utils.ApplyBurn(Targets[0], this.BChar, 2);
 
             if (BChar.EmotionLevel() >= 3)

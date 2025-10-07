@@ -23,7 +23,7 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Kick", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("Kick");
 
             var burnStacks = Targets[0].BuffReturn(EmotionalSystem.ModItemKeys.Buff_B_Xiao_Burn, false) as B_Xiao_Burn;
 

@@ -17,68 +17,77 @@ namespace XiaoLOR
 {
     public static class XiaoUtils
     {
-        private static ModInfo modInfo = ModManager.getModInfo("XiaoLOR");
-        public static ToggleSetting IronLotusSongSetting => modInfo.GetSetting<ToggleSetting>("Iron Lotus");
-        public static ToggleSetting IronLotusSongKeyIngredientSetting => modInfo.GetSetting<ToggleSetting>("Iron Lotus Key");
+        private static readonly ModInfo Modinfo = ModManager.getModInfo("XiaoLOR");
+        public static bool IronLotusSong => Modinfo.GetSetting<ToggleSetting>("Iron Lotus Song").Value;
+        public static bool IronLotusKeySong => Modinfo.GetSetting<ToggleSetting>("Key Ingredient Song").Value;
+        public static bool XiaoSkillSounds => Modinfo.GetSetting<ToggleSetting>("Xiao Skill Sounds").Value;
+		public static bool LiuAssociationEquip => Modinfo.GetSetting<ToggleSetting>("Liu Association Equip").Value;
 
-        public static bool IronLotusSong
-        {
-            get => IronLotusSongSetting.Value;
-            set
-            {
-                if (value)
-                {
-                    IronLotusSongKeyIngredientSetting.Value = false;
-                }
-                IronLotusSongSetting.Value = value;
-            }
-        }
+		public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
+        public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
+		public static BattleChar Xiao => AllyTeam.AliveChars.FirstOrDefault(x => x?.Info.KeyData == ModItemKeys.Character_XiaoLOR);
+		public static Character XiaoChar => PlayData.TSavedata.Party.FirstOrDefault(x => x.KeyData == ModItemKeys.Character_XiaoLOR);
 
-        public static bool IronLotusSongKeyIngredient
-        {
-            get => IronLotusSongKeyIngredientSetting.Value;
-            set
-            {
-                if (value)
-                {
-                    IronLotusSongSetting.Value = false;
-                }
-                IronLotusSongKeyIngredientSetting.Value = value;
-            }
-        }
+		public static void AddBuff(BattleChar user, BattleChar target, string buffKey, int buffNum = 1)
+		{
+			for (int i = 0; i < buffNum; i++)
+			{
+				if (user == null || buffKey.IsNullOrEmpty()) return;
+				target.BuffAdd(buffKey, target, false, 0, false, -1, false);
+			}
+		}
 
-        public static void XiaoSongStart()
+		public static void AddDebuff(BattleChar target, BattleChar user, string buffKey, int debuffNum = 1, int percentage = 0)
+		{
+			for (int i = 0; i < debuffNum; i++)
+			{
+				if (target == null || buffKey.IsNullOrEmpty() || target.Info.Ally) return;
+				user.BuffAdd(buffKey, user, false, percentage, false, -1, false);
+			}
+		}
+
+		public static void StartXiaoSong()
         {
             string song = "";
-            if (XiaoUtils.IronLotusSong)
-               song = "IronLotus";
 
-            else if (XiaoUtils.IronLotusSongKeyIngredient)
-              song = "IronLotusKey";
+            if (IronLotusKeySong && IronLotusKeySong)
+            {
+                bool randomSong = RandomManager.RandomInt(BattleSystem.instance.AllyTeam.DummyChar.GetRandomClass().Main, 0, 2) == 0;
+                song = randomSong ? "IronLotus" : "IronLotusKey";
+            }
+            else if (IronLotusSong)
+            {
+                song = "IronLotus";
+            }
+            else if (IronLotusKeySong)
+            {
+                song = "IronLotusKey";
 
-            if (string.IsNullOrEmpty(song))
-                return;
-
-            MasterAudio.StopBus("BGM");
-            //MasterAudio.StopBus("BattleBGM");
-            MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
-            MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, null, false, false);
-            MasterAudio.PlaySound(song, 100f, null, 0f, null, null, false, false);
+			}
+             
+            if (!string.IsNullOrEmpty(song))
+            {
+                MasterAudio.FadeBusToVolume("FieldBGM", 0f, 1f, null, false, false);
+                MasterAudio.FadeBusToVolume("BattleBGM", 0f, 1f, null, false, false);
+                MasterAudio.StopBus("BGM");
+                MasterAudio.StopBus("BGM");
+                MasterAudio.StopBus("StoryBGM");
+                MasterAudio.PlaySound(song, 100f, null, 0f, null, null, false, false);
+            }
         }
 
-        public static IEnumerator XiaoSongEnd()
+        public static void StopXiaoSong()
         {
-            yield return new WaitForFixedUpdate();
             MasterAudio.StopBus("BGM");
-            MasterAudio.FadeBusToVolume("BGM", 1f, 1f, null, false, false);
-
-            yield return null;
-
-            //Action completionCallback = delegate ()
-            //{
-            //    MasterAudio.StopBus("BattleBGM");
-            //};
-            //MasterAudio.FadeBusToVolume("BattleBGM", 0f, 0.5f, completionCallback, true, true);
+            MasterAudio.FadeBusToVolume("BGM", 0f, 1f, null, false, false);
+            FieldSystem.FieldBGMOn();
         }
+
+        public static void PlaySound(string sound)
+        {
+            if (!XiaoSkillSounds || string.IsNullOrEmpty(sound)) return;
+
+			MasterAudio.PlaySound(sound, 100f, null, 0f, null, null, false, false);
+		}
     }
 }

@@ -22,8 +22,7 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("RushDown", 100f, null, 0f, null, null, false, false);
-
+			XiaoUtils.PlaySound("RushDown");
             Utils.ApplyBurn(Targets[0], this.BChar, 3);
         }
     }

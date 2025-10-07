@@ -21,7 +21,7 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("NormalHit", 100f, null, 0f, null, null, false, false);
+			XiaoUtils.PlaySound("NormalHit");
 
             Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_XiaoLORLv1_RushDown_0, this.BChar, this.BChar.MyTeam);
             BattleSystem.instance.AllyTeam.Add(skill, true);

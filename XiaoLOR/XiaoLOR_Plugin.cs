@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -32,8 +32,6 @@ namespace XiaoLOR
 
         Harmony harmony = new Harmony("XiaoLOR");
 
-        public static ModInfo ThisMod => ModManager.getModInfo(modname);
-
         public override void Dispose()
         {
             if (harmony != null)
@@ -53,35 +51,65 @@ namespace XiaoLOR
                 Debug.Log("XiaoLOR: Patch Catch: " + e.ToString());
             }
         }
-        public static bool XiaoInParty()
-        {
-            foreach (var character in PlayData.TSavedata.Party)
-            {
-                if (character.KeyData == ModItemKeys.Character_XiaoLOR)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
-        [HarmonyPatch(typeof(BattleSystem))]
-        [HarmonyPatch(nameof(BattleSystem.CustomBGM))]
-        public class BGMPatch
-        {
-            [HarmonyPostfix]
-            private static void Postfix()
-            {
-                if (!XiaoInParty() && !XiaoUtils.IronLotusSong) return;
+		public static bool XiaoInParty()
+		{
+			return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_XiaoLOR);
+		}
 
-                if (PlayData.BattleQueue == GDEItemKeys.EnemyQueue_LastBoss_MasterBattle_1)
-                {
-                    Debug.Log("[BGMPatch] Stopping default boss music due to IronLotusSong override.");
-                    MasterAudio.StopAllOfSound("ProgramMaster_Boss_Theme_Phase1_(Intro)");
-                    MasterAudio.StopAllOfSound("ProgramMaster_Boss_Theme_Phase1_(Loop)");
-                    MasterAudio.StopAllOfSound("Challenge_Loop");
-                }
-            }
-        }        
-    }
+		[HarmonyPatch(typeof(FieldSystem), "StageStart")]
+		public static class StagePatch
+		{
+			[HarmonyPostfix]
+			public static void StageStartPostfix()
+			{
+				if (XiaoInParty())
+				{
+					EnsureXiaoEquip();
+
+					var faintResist = PlayData.TSavedata.GetCustomValue<XiaoLOR_Value>();
+
+					if (PlayData.TSavedata.StageNum >= 0)
+					{
+						if (XiaoUtils.LiuAssociationEquip && !HasXiaoEquip())
+						{
+							PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_Item_XiaoLOR_LiáoFēng));
+							PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_Item_XiaoLOR_YànLiánZhuāng));
+							PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Passive_Relic_XiaoLOR_YíHànZhīShí));
+							SetXiaoEquipFlag(true);
+						}
+
+						if (faintResist.IncreaseFaintResist)
+						{
+							XiaoLOR_Scripts.IncreaseStats(XiaoUtils.XiaoChar);
+							faintResist.IncreaseFaintResist = false;
+						}
+					}
+				}
+			}
+		}
+
+		public static bool HasXiaoEquip() => PlayData.TSavedata.GetCustomValue<XiaoLOR_Value>()?.GainXiaoEquip ?? false;
+
+		public static void EnsureXiaoEquip()
+		{
+			var equip = PlayData.TSavedata.GetCustomValue<XiaoLOR_Value>();
+			if (equip == null)
+			{
+				equip = new XiaoLOR_Value { GainXiaoEquip = false };
+				PlayData.TSavedata.AddCustomValue(equip);
+			}
+		}
+
+		public static void SetXiaoEquipFlag(bool value)
+		{
+			var equip = PlayData.TSavedata.GetCustomValue<XiaoLOR_Value>();
+			if (equip == null)
+			{
+				equip = new XiaoLOR_Value();
+				PlayData.TSavedata.AddCustomValue(equip);
+			}
+			equip.GainXiaoEquip = value;
+		}
+	}
 }

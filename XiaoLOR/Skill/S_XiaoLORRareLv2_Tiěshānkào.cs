@@ -35,8 +35,7 @@ namespace XiaoLOR
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("Stab", 100f, null, 0f, null, null, false, false);
-
+			XiaoUtils.PlaySound("Stab");
             BattleSystem.DelayInput(this.ApplyBurn(Targets[0]));
         }
         public IEnumerator ApplyBurn(BattleChar Target)

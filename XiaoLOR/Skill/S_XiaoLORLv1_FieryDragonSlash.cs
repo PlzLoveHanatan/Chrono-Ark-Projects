@@ -21,8 +21,7 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            MasterAudio.PlaySound("NormalHit2", 100f, null, 0f, null, null, false, false);
-
+			XiaoUtils.PlaySound("NormalHit2");
             Utils.ApplyBurn(Targets[0], this.BChar);
         }
     }
