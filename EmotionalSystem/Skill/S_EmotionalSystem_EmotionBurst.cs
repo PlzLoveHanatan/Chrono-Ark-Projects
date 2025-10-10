@@ -22,6 +22,7 @@ namespace EmotionalSystem
         {
             return base.DescExtended(desc).Replace("&a", Damage.ToString());
         }
+
         public override void Init()
         {
             base.Init();

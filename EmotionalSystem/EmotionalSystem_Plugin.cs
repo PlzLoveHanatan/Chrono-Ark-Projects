@@ -35,11 +35,11 @@ namespace EmotionalSystem
             // This patch will switch the hand back if EGO is active when turn ends
             public static IEnumerator Postfix(IEnumerator result, bool EndButton)
             {
-                if (EGO_System.instance != null && EGO_System.instance.egoActive)
+                if (EmotionalSystem_EGO_Button.instance != null && EmotionalSystem_EGO_Button.instance.egoActive)
                 {
                     try
                     {
-                        EGO_System.instance.SwitchToNormal();
+                        EmotionalSystem_EGO_Button.instance.SwitchToNormal();
                     }
                     catch { }
                     yield return new WaitForSecondsRealtime(0.2f);
@@ -84,25 +84,33 @@ namespace EmotionalSystem
                 __instance.BloodyMistObj.SetActive(true);
                 Sprite sprite = AddressableLoadManager.LoadAsyncCompletion<Sprite>(new GDEImageDatasData(GDEItemKeys.ImageDatas_Image_BloodyMist).Sprites_Path[3], AddressableLoadManager.ManageType.Stage);
                 __instance.BloodyMistImage.sprite = sprite;
-                string newText = "Emotional System";
+                string text = "Emotional System";
                 if (PlayData.TSavedata.bMist != null)
                 {
-                    newText = ScriptLocalization.System_Mode.BloodyMist + " " + PlayData.TSavedata.bMist.Level.ToString() + "\n" + newText;
+                    text += ScriptLocalization.System_Mode.BloodyMist + " " + PlayData.TSavedata.bMist.Level.ToString() + "\n" + text;
                 }
-                if (EmotionalSystem.B_EnemyEmotionalLevel.EnemyEmotionOn)
+                if (Utils.EnemyEmotions)
                 {
-                    newText += "\n+Enemy Emotions";
+                    text += "\n+Enemy Emotions";
                 }
-                if (EmotionalSystem.AllLibraryFloors.Floor == FloorCode.Technological)
+                else if (!Utils.EnemyEmotions)
                 {
-                    newText += "\n+Floor of Technological Sciences";
+                    text += "\n+Emotionless Enemies";
                 }
-                if (EmotionalSystem.AllLibraryFloors.Floor == FloorCode.History)
+                if (!Utils.AllyEmotions)
                 {
-                    newText += "\n+Floor of History";
+                    text += "\n+Emotionless Allies";
                 }
+                //if (EmotionalSystem_Library.CurrentFloor == FloorCode.Technological)
+                //{
+                //    text += "\n+Floor of Technological Sciences";
+                //}
+                //else if (AllLibraryFloors.Floor == FloorCode.History)
+                //{
+                //    text += "\n+Floor of History";
+                //}
 
-                __instance.BloodyMistText.text = newText;
+                __instance.BloodyMistText.text += text;
             }
         }
 
@@ -120,6 +128,21 @@ namespace EmotionalSystem
                     {
                         ip_BuffObject_Updata.BuffObject_Updata(__instance);
                     }
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(EventBattle_TrialofTime))]
+        [HarmonyPatch(nameof(EventBattle_TrialofTime.BattleStartUIOnBefore))]
+        class TimeTrialPatch
+        {
+            [HarmonyPostfix]
+            static void Postfix()
+            {
+                if (Utils.EnemyEmotions)
+                {
+                    PlayData.TSavedata.Timer *= 1.3f;
                 }
             }
         }

@@ -18,15 +18,13 @@ namespace EmotionalSystem
     public class EmotionalSystem_ModDefinition : ModDefinition
     {
         public override Type ModItemKeysType => typeof(ModItemKeys);
-        
-
         public override List<object> BattleSystem_ModIReturn()
         {
             var list = base.BattleSystem_ModIReturn();
 
             list.Add(new ModIReturn());
 
-            if (B_EnemyEmotionalLevel.EnemyEmotionOn)
+            if (Utils.EnemyEmotions)
             {
                 list.Add(B_EnemyTeamEmotionalLevel.Instance);
             }
@@ -43,11 +41,13 @@ namespace EmotionalSystem
                     Utils.EmotionalSystemTutorial = false;
                     InitTutorial("Assets/ModAssets/EmotionalSystemTutorial.asset");
                 }
-
-                BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_LucyEmotionalLevel, BattleSystem.instance.AllyTeam.LucyAlly, false, 0, false, -1, false);
-                foreach (BattleChar battleChar in Ins.AllyTeam.AliveChars)
+                if (Utils.AllyEmotions)
                 {
-                    battleChar.BuffAdd(ModItemKeys.Buff_B_EmotionalLevel, battleChar, false, 0, false, -1, false);
+                    BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_LucyEmotionalLevel, BattleSystem.instance.AllyTeam.LucyAlly, false, 0, false, -1, false);
+                    foreach (BattleChar battleChar in Ins.AllyTeam.AliveChars)
+                    {
+                        battleChar.BuffAdd(ModItemKeys.Buff_B_EmotionalLevel, battleChar, false, 0, false, -1, false);
+                    }
                 }
             }
 
@@ -84,26 +84,30 @@ namespace EmotionalSystem
 
             public void BattleStartUIOnBefore(BattleSystem Ins)
             {
-                createIconButton(
+                Utils.EmotionsCheck();
+
+                if (Utils.AllyEmotions)
+                {
+                    CreateIconButton(
                     "EGO_Button",
                     BattleSystem.instance.ActWindow.transform,
                     "EGO_Active.png",
                     new Vector2(160f, 160f),
-                    new Vector2(-324.6328f, 300.5991f)
-                );
+                    new Vector2(-324.6328f, 300.5991f));
+                }
             }
 
             public void EnemyAwake(BattleChar Enemy)
             {
-                if (B_EnemyEmotionalLevel.EnemyEmotionOn)
+                if (Utils.EnemyEmotions)
                 {
                     Enemy.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel, Enemy);
                 }
             }
 
-            private void createIconButton(string name, Transform trans, string spriteNormal, Vector2 size, Vector2 pos)
+            private void CreateIconButton(string name, Transform trans, string spriteNormal, Vector2 size, Vector2 pos)
             {
-                GameObject egoButton = Utils.creatGameObject(name, trans);
+                GameObject egoButton = Utils.CreatGameObject(name, trans);
                 if (egoButton == null)
                 {
                     return;
@@ -113,7 +117,7 @@ namespace EmotionalSystem
                 egoButton.transform.localPosition = pos;
 
                 Image image = egoButton.AddComponent<Image>();
-                Sprite sprite = Utils.getSprite(spriteNormal);
+                Sprite sprite = Utils.GetSprite(spriteNormal);
                 if (sprite == null)
                 {
                     return;
@@ -122,10 +126,10 @@ namespace EmotionalSystem
                 image.sprite = sprite;
                 Utils.ImageResize(image, size, pos);
 
-                EGO_System egoSystem = egoButton.AddComponent<EGO_System>();
-                egoButton.AddComponent<EGO_ButtonScript>();
+                EmotionalSystem_EGO_Button egoSystem = egoButton.AddComponent<EmotionalSystem_EGO_Button>();
+                egoButton.AddComponent<EmotionalSystem_EGO_Button_Script>();
 
-                EGO_System.instance = egoSystem;
+                EmotionalSystem_EGO_Button.instance = egoSystem;
 
                 egoButton.SetActive(true);
             }

@@ -112,7 +112,7 @@ namespace EmotionalSystem
             {
                 if (!Removed)
                 {
-                    EGO_System.instance?.RemoveEGOSkill(MySkill);
+                    EmotionalSystem_EGO_Button.instance?.RemoveEGOSkill(MySkill);
                     Removed = true;
                 }
             }
