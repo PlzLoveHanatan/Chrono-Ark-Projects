@@ -21,7 +21,7 @@ namespace EmotionalSystem
 		public override void Init()
 		{
 			PlusStat.cri = 20;
-			PlusStat.spd = 2;
+			PlusStat.PlusCriDmg = 20;
 		}
 
 		public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)

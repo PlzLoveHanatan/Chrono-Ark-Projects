@@ -105,6 +105,19 @@ namespace EmotionalSystem
 			return buff;
 		}
 
+		public static void InsertSkillInDeck(BattleChar bchar, Skill skill, int createSkills = 1)
+		{
+			for (int i = 0; i < createSkills; i++)
+			{
+				bchar.MyTeam.Skills_Deck.Insert(RandomDeckIndex(bchar), skill);
+			}
+		}
+
+		public static int RandomDeckIndex(BattleChar bchar)
+		{
+			return RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, bchar.MyTeam.Skills_Deck.Count + 1);
+		}
+
 		public static void PlaySound(string sound)
 		{
 			if (!string.IsNullOrEmpty(sound))
@@ -130,13 +143,11 @@ namespace EmotionalSystem
 			if (target.Info.Ally || target == null) return;
 
 
-			if (target.BuffReturn(ModItemKeys.Buff_B_EmotionalSystem_Bleed) is B_EmotionalSystem_Bleed bleed && bleed != null)
+			var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionalSystem_Bleed) as B_EmotionalSystem_Bleed;
+
+			if (bleed != null)
 			{
 				bleed.Bleed += stack;
-			}
-			else
-			{
-				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionalSystem_Bleed);
 			}
 		}
 

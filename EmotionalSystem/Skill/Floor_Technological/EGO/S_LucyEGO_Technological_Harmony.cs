@@ -11,17 +11,23 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using Steamworks;
 namespace EmotionalSystem
 {
 	/// <summary>
-	/// Pulse of the Machine
+	/// <color=#ffc500>Harmony</color>
 	/// </summary>
-    public class B_Abnormality_TechnologicalLv3_Music : Buff
+    public class S_LucyEGO_Technological_Harmony : Ex_EmotionalSystem_EGO
     {
-        public override void BuffStat()
+        public override void Init()
         {
-            PlusPerStat.Damage = 80;
-            PlusStat.DMGTaken = 80;
+            base.Init();
+            Cooldown = 3;
         }
-    }
+
+		public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+		{
+			Utils.PlaySound("Floor_Technological_Harmony");
+		}
+	}
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -17,11 +17,16 @@ namespace EmotionalSystem
 	/// <summary>
 	/// Mirror Adjustment
 	/// </summary>
-    public class B_EnemyAbnormality_MirrorAdjustment : Buff, IP_Hit, IP_PlayerTurn
+    public class B_EnemyAbnormality_MirrorAdjustment : Buff, IP_Hit, IP_PlayerTurn, IP_Awake
     {
         private bool ReflectedDamage;
 
-        public override string DescExtended()
+		public void Awake()
+		{
+			Utils.AddBuff(BChar, ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment_0);
+		}
+
+		public override string DescExtended()
         {
             string text = ReflectedDamage ? "Inactive" : "Active";
             return base.DescExtended().Replace("&a", text.ToString());
@@ -30,7 +35,8 @@ namespace EmotionalSystem
         public void Turn()
         {
             ReflectedDamage = false;
-        }
+			Utils.AddBuff(BChar, ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment_0);
+		}
 
         public void Hit(SkillParticle SP, int Dmg, bool Cri)
         {
@@ -42,8 +48,11 @@ namespace EmotionalSystem
 
                 SP.UseStatus.Damage(SP.UseStatus, damage, false, true, false, 0, false, false, false);
                 BChar.ParticleOut(skill, SP.UseStatus);
+                Utils.RemoveBuff(BChar, ModItemKeys.Buff_B_EnemyAbnormality_MirrorAdjustment_0, true);
                 ReflectedDamage = true;
             }
         }
-    }
+
+		
+	}
 }

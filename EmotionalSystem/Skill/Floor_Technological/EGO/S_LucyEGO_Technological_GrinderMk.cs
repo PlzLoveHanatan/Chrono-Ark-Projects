@@ -11,6 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
+using NLog.Targets;
 namespace EmotionalSystem
 {
     /// <summary>
@@ -23,23 +24,13 @@ namespace EmotionalSystem
         public override void Init()
         {
             base.Init();
-            Countdown = 3;
+            Cooldown = 3;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            foreach (var target in Targets)
-            {
-                if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
-                {
-                    Utils.ApplyBleed(target, this.BChar, 10);
-
-                    if (target.IsDead)
-                    {
-                        BattleSystem.instance.AllyTeam.AP += 1;
-                    }
-                }
-            }
-        }
+            Utils.PlaySound("Floor_Technological_Clean");
+            Utils.ApplyBleed(Targets[0], BChar, 15);
+		}
     }
 }

@@ -38,7 +38,7 @@ namespace EmotionalSystem
 
         public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
         {
-            if (!eternal && !View)
+            if (!eternal && !View && SkillD.IsDamage)
             {
                 BattleSystem.DelayInputAfter(DelayDestory());
             }

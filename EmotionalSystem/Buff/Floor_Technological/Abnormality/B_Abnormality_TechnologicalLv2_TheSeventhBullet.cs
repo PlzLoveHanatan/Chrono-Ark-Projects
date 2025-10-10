@@ -35,6 +35,8 @@ namespace EmotionalSystem
         {
             if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse)
             {
+                Utils.PlaySound("Floor_Technological_TheSeventhBullet");
+
                 AttackUses++;
 
                 if (AttackUses == 2)

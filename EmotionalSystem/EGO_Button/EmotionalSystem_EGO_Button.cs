@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Markup;
 using Dialogical;
 using EmotionalSystem;
 using GameDataEditor;
@@ -8,131 +9,145 @@ using UnityEngine;
 
 namespace EmotionalSystem
 {
-    public class EmotionalSystem_EGO_Button : MonoBehaviour
-    {
-        public static EmotionalSystem_EGO_Button instance;
+	public class EmotionalSystem_EGO_Button : MonoBehaviour
+	{
+		public static EmotionalSystem_EGO_Button instance;
 
-        public List<Skill> dynamicAvailableEGOskills = new List<Skill>();
+		public List<Skill> EGOHand = new List<Skill>();
 
-        private List<Skill> Hand = new List<Skill>();
-        private List<Skill> DrawPile = new List<Skill>();
-        private List<Skill> DiscardPile = new List<Skill>();
-        private int ExchangeNum = 0;
+		private List<Skill> Hand = new List<Skill>();
+		private List<Skill> DrawPile = new List<Skill>();
+		private List<Skill> DiscardPile = new List<Skill>();
 
-        public bool egoActive = false;
+		private int ExchangeNum = 0;
 
-        public bool hasEGOSkill => dynamicAvailableEGOskills.Count > 0;
+		public bool ActiveEGOHand = false;
 
-        public void Awake()
-        {
-            instance = this;
-        }
+		public bool HasEGOSkill => EGOHand.Count > 0;
 
+		public void Awake()
+		{
+			instance = this;
+		}
 
-        public void OnDestroy()
-        {
-            if (instance == this)
-            {
-                instance = null;
-            }
-        }
+		public void OnDestroy()
+		{
+			if (instance == this)
+			{
+				instance = null;
+			}
+		}
 
-        public void TurnUpdate()
-        {
-            foreach (var skill in dynamicAvailableEGOskills)
-            {
-                var ex = skill.ExtendedFind<Ex_EmotionalSystem_EGO>();
-                ex?.TurnUpdate();
-            }
-        }
+		public void TurnUpdate()
+		{
+			UpdateEGOCountdown();
+		}
 
-        public void AddEGOSkill(Skill skill)
-        {
-            // skill.ExtendedAdd(ModItemKeys.SkillExtended_Ex_EmotionalSystem_EGO);
-            dynamicAvailableEGOskills.Add(skill);
-            GetComponent<EmotionalSystem_EGO_Button_Script>()?.StartRotation();
-        }
+		public void AddEGOSkill(Skill skill)
+		{
+			EGOHand.Add(skill);
+			GetComponent<EmotionalSystem_EGO_Button_Script>()?.StartRotation();
+		}
 
-        public void RemoveEGOSkill(Skill skill)
-        {
-            dynamicAvailableEGOskills.Remove(skill);
-        }
+		public void RemoveEGOSkill(Skill skill)
+		{
+			EGOHand.Remove(skill);
+		}
 
-        public void SwitchToEGO()
-        {
-            GetComponent<EmotionalSystem_EGO_Button_Script>()?.ResetRotation();
-            var team = BattleSystem.instance.AllyTeam;
+		public void ChangeHand(bool changeToEGO = false)
+		{
+			GetComponent<EmotionalSystem_EGO_Button_Script>()?.ResetRotation();
 
-            Hand.Clear();
-            DrawPile.Clear();
-            DiscardPile.Clear();
+			if (changeToEGO)
+			{
+				ChangeToEGO();
+			}
+			else
+			{
+				ChangeToNormal();
+			}
+		}
 
-            Hand.AddRange(team.Skills);
-            DrawPile.AddRange(team.Skills_Deck);
-            DiscardPile.AddRange(team.Skills_UsedDeck);
+		private void ChangeToEGO()
+		{
+			Hand.Clear();
+			DrawPile.Clear();
+			DiscardPile.Clear();
 
-            for (int i = team.Skills.Count - 1; i >= 0; i--)
-            {
-                Skill skill = team.Skills[i];
-                skill.Remove();
-                if (skill.MySkill.KeyID == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard)
-                {
-                    dynamicAvailableEGOskills.Add(skill);
-                }
-            }
+			Hand.AddRange(Utils.AllyTeam.Skills);
+			DrawPile.AddRange(Utils.AllyTeam.Skills_Deck);
+			DiscardPile.AddRange(Utils.AllyTeam.Skills_UsedDeck);
 
-            team.Skills_Deck.Clear();
-            team.Skills_UsedDeck.Clear();
+			for (int i = Utils.AllyTeam.Skills.Count - 1; i >= 0; i--)
+			{
+				var skill = Utils.AllyTeam.Skills[i];
+				skill.Remove();
 
-            foreach (Skill skill in dynamicAvailableEGOskills.Where(sk => !sk.Master.IsDead))
-            {
-                BattleSystem.instance.StartCoroutine(team.AddSkillNoDrawEffect(skill, -1));
-            }
+				if (EmotionalSystem_DataStore.ExceptSkills.Contains(skill.MySkill.KeyID))
+				{
+					EGOHand.Add(skill);
+				}
+			}
 
-            egoActive = true;
+			Utils.AllyTeam.Skills_Deck.Clear();
+			Utils.AllyTeam.Skills_UsedDeck.Clear();
 
-            // don't allow exchange in EGO skills
-            ExchangeNum = team.DiscardCount;
-            team.DiscardCount = 0;
-        }
+			foreach (var skill in EGOHand.Where(sk => !sk.Master.IsDead))
+			{
+				BattleSystem.instance.StartCoroutine(Utils.AllyTeam.AddSkillNoDrawEffect(skill, -1));
+			}
 
-        public void SwitchToNormal()
-        {
-            GetComponent<EmotionalSystem_EGO_Button_Script>()?.ResetRotation();
-            var team = BattleSystem.instance.AllyTeam;
+			ActiveEGOHand = true;
 
-            for (int j = team.Skills.Count - 1; j >= 0; j--)
-            {
-                Skill skill = team.Skills[j];
-                if (!dynamicAvailableEGOskills.Contains(skill))
-                {
-                    Hand.Add(skill);
-                }
+			// don't allow exchange in EGO skills
+			ExchangeNum = Utils.AllyTeam.DiscardCount;
+			Utils.AllyTeam.DiscardCount = 0;
+		}
 
-                if (skill.MySkill.KeyID == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard)
-                {
-                    dynamicAvailableEGOskills.Remove(skill);
-                }
+		private void ChangeToNormal()
+		{
+			for (int j = Utils.AllyTeam.Skills.Count - 1; j >= 0; j--)
+			{
+				var skill = Utils.AllyTeam.Skills[j];
 
-                skill.Remove();
-            }
+				if (!EGOHand.Contains(skill))
+				{
+					Hand.Add(skill);
+				}
 
-            team.Skills.Clear();
-            team.Skills_Deck.Clear();
-            team.Skills_UsedDeck.Clear();
+				if (skill.MySkill.KeyID == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard)
+				{
+					EGOHand.Remove(skill);
+				}
 
-            team.Skills_Deck.AddRange(DrawPile);
-            team.Skills_UsedDeck.AddRange(DiscardPile);
+				skill.Remove();
+			}
 
-            foreach (var skill in Hand)
-            {
-                BattleSystem.instance.StartCoroutine(team.AddSkillNoDrawEffect(skill, -1));
-            }
+			Utils.AllyTeam.Skills.Clear();
+			Utils.AllyTeam.Skills_Deck.Clear();
+			Utils.AllyTeam.Skills_UsedDeck.Clear();
 
-            egoActive = false;
+			Utils.AllyTeam.Skills_Deck.AddRange(DrawPile);
+			Utils.AllyTeam.Skills_UsedDeck.AddRange(DiscardPile);
 
-            // return back the exchange count
-            team.DiscardCount = ExchangeNum;
-        }
-    }
+			foreach (var skill in Hand)
+			{
+				BattleSystem.instance.StartCoroutine(Utils.AllyTeam.AddSkillNoDrawEffect(skill, -1));
+			}
+
+			ActiveEGOHand = false;
+
+			// return back the exchange count
+			Utils.AllyTeam.DiscardCount = ExchangeNum;
+		}
+
+		public void UpdateEGOCountdown()
+		{
+			foreach (var skill in EGOHand)
+			{
+				var ex = skill.ExtendedFind<Ex_EmotionalSystem_EGO>();
+				ex?.TurnUpdate();
+			}
+		}
+	}
 }

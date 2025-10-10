@@ -20,7 +20,7 @@ namespace EmotionalSystem
     {
 		public void Awake()
 		{
-            Utils.AddBuff(BChar, GDEItemKeys.Buff_B_Taunt);
+            Utils.AddBuff(BChar, GDEItemKeys.Buff_B_EnemyTaunt);
 		}
 
 		public void HPChange(BattleChar Char, bool Healed)

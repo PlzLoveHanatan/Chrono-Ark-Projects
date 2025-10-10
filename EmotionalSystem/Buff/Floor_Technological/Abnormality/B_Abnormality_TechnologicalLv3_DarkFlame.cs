@@ -16,26 +16,20 @@ namespace EmotionalSystem
 	/// <summary>
 	/// Tödlicher Akkord
 	/// </summary>
-    public class B_Abnormality_TechnologicalLv3_DarkFlame : Buff, IP_PlayerTurn
+    public class B_Abnormality_TechnologicalLv3_DarkFlame : Buff, IP_Awake
     {
-        public override void BuffStat()
-        {
-            PlusPerStat.Damage = 35;
-        }
-        public void Turn()
-        {
-            var enemy = BattleSystem.instance.EnemyTeam.AliveChars_Vanish;
-            var buff = ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_DarkFlame;
-            if (enemy != null)
-            {
-                foreach (var character in enemy)
-                {
-                    if (character?.BuffReturn(buff, false) == null)
-                    {
-                        character.BuffAdd(buff, this.BChar, false, 0, false, -1, false);
-                    }
-                }
-            }
-        }
+		public override void Init()
+		{
+			PlusPerStat.Damage = 40;
+			PlusStat.spd = 2;
+		}
+
+		public void Awake()
+		{
+			foreach (var target in Utils.AllyTeam.AliveChars.Concat(Utils.EnemyTeam.AliveChars_Vanish))
+			{
+                Utils.AddBuff(target, ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_DarkFlame_0);
+			}
+		}
     }
 }

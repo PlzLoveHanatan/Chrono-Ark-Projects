@@ -17,136 +17,95 @@ namespace EmotionalSystem
 {
     public class Ex_EmotionalSystem_EGO : Skill_Extended
     {
-        private bool Removed;
-        public bool Once;
-        public int Countdown;
-        public int NowCountdown;
+		//private bool Removed;
+        public bool OncePerFight;
+        public int Cooldown;
+        public int NowCooldown;
+
+        public string EGO_Once => ModLocalization.EGO_Skill_Once ?? "";
+        public string EGO_Cooldown => ModLocalization.EGO_Skill_Cooldown ?? "";
+
         public override void Init()
         {
             base.Init();
-            Removed = false;
-            Countdown = 3;
-            NowCountdown = 0;
+            Cooldown = 3;
+            NowCooldown = 0;
         }
 
-        public override bool Terms()
+		public override string DescExtended(string desc)
+		{
+			return CooldownText + "" + base.DescExtended(desc);
+		}
+
+		public override bool Terms()
         {
-            if (NowCountdown > 0)
-            {
-                return false;
-            }
-            return true;
+            return NowCooldown <= 0;
         }
 
-        public void TurnUpdate()
+		public override void SkillUseHand(BattleChar Target)
+		{
+			UseEGO();
+		}
+
+		public void TurnUpdate()
         {
-            if (NowCountdown > 0)
+            if (NowCooldown > 0)
             {
-                NowCountdown--;
-                BattleSystem.DelayInput(ExUpdate());
+                NowCooldown--;
+                BattleSystem.DelayInput(UpdateExtended());
             }
         }
 
-        public IEnumerator ExUpdate()
+        public IEnumerator UpdateExtended()
         {
-            if (NowCountdown == 0) yield break;
-
-            var exFind = MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_EmotionalSystem_CoolDown) as Ex_EmotionalSystem_CoolDown;
-            if (exFind == null)
+            if (NowCooldown > 0)
             {
-                var ex = MySkill.ExtendedAdd(ModItemKeys.SkillExtended_Ex_EmotionalSystem_CoolDown) as Ex_EmotionalSystem_CoolDown;
-                ex.MainEx = this;
-                //ex.CoolDownUpdate();
-            }
-
+				var exFind = MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_EmotionalSystem_CoolDown) as Ex_EmotionalSystem_CoolDown;
+				if (exFind == null)
+				{
+					var ex = MySkill.ExtendedAdd(ModItemKeys.SkillExtended_Ex_EmotionalSystem_CoolDown) as Ex_EmotionalSystem_CoolDown;
+					ex.EGO_Extended = this;
+				}
+			}
             yield return null;
-            //else
-            //{
-            //    exFind.CoolDownUpdate();
-            //}
         }
 
-        public override string DescExtended(string desc)
-        {
-            return CountdownText + "" + base.DescExtended(desc);
-        }
-
-        public string CountdownText
+        public string CooldownText
         {
             get
             {
                 var text = "";
 
-                if (Once)
+                if (OncePerFight)
                 {
-                    return ModLocalization.EgoOnce + "\n";
+                    text = EGO_Once + "\n";
                 }
-                else if (NowCountdown > 0)
+                else if (NowCooldown > 0)
                 {
-                    text = ModLocalization.EgoCountdown.Replace("&a", NowCountdown.ToString()) + "\n";
-                    //text = ModLocalization.EgoCountdown + " &a ".Replace("&a", NowCountdown.ToString()) + ModLocalization.EgoCountdown_0 + "\n";
-                    return text;
-                }
+                    text = EGO_Cooldown.Replace("&a", NowCooldown.ToString()) + "\n";
+				}
                 return text;
             }
         }
 
-        //public override string ExtendedDes()
-        //{
-        //    if (Once)
-        //    {
-        //        return "Can only be used once"; // change this to localized text later
-        //    }
-        //    var text = base.ExtendedDes();
-        //    text.Replace("&a", Countdown.ToString());
-        //    if (NowCountdown > 0)
-        //    {
-        //        text += "\n" + "Can be used after &b turn(s).".Replace("&b", NowCountdown.ToString()); // change this to localized text later
-        //    }
-        //    return text;
-        //}
-
         public void UseEGO()
         {
-            if (Once)
+            if (OncePerFight)
             {
-                if (!Removed)
-                {
-                    EmotionalSystem_EGO_Button.instance?.RemoveEGOSkill(MySkill);
-                    Removed = true;
-                }
+				EmotionalSystem_EGO_Button.instance?.RemoveEGOSkill(MySkill);
             }
             else
             {
-                NowCountdown = Countdown;
-
-                BattleSystem.DelayInput(ExUpdate());
+                NowCooldown = Cooldown;
+                BattleSystem.DelayInput(UpdateExtended());
             }
+            BattleSystem.DelayInput(ChangeHand());
         }
 
-        public override void SkillUseHand(BattleChar Target)
+        public IEnumerator ChangeHand()
         {
-            UseEGO();
-        }
-
-        //public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-        //{
-        //    UseEGO();
-        //    if (!Removed)
-        //    {
-        //        EGO_System.instance?.RemoveEGOSkill(SkillD);
-        //        Removed = true;
-        //    }
-        //}
-
-        //public void SkillCasting(CastingSkill ThisSkill)
-        //{
-        //    UseEGO();
-        //    if (!Removed)
-        //    {
-        //        EGO_System.instance?.RemoveEGOSkill(ThisSkill.skill);
-        //        Removed = true;
-        //    }
-        //}
+			yield return null;
+			EmotionalSystem_EGO_Button.instance.ChangeHand();
+		}
     }
 }

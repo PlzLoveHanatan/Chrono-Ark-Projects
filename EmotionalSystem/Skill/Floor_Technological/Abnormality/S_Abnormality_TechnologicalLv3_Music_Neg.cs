@@ -14,14 +14,15 @@ using Debug = UnityEngine.Debug;
 namespace EmotionalSystem
 {
 	/// <summary>
-	/// Pulse of the Machine
+	/// <color=#DC143C>Music</color>
+	/// <color=#919191>But nothing could compare to the music it makes when it eats a human.</color>
 	/// </summary>
-    public class B_Abnormality_TechnologicalLv3_Music : Buff
+    public class S_Abnormality_TechnologicalLv3_Music_Neg : Skill_Extended
     {
-        public override void BuffStat()
-        {
-            PlusPerStat.Damage = 80;
-            PlusStat.DMGTaken = 80;
-        }
-    }
+		public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+		{
+			Utils.PlaySound("Floor_Technological_Music");
+		}
+
+	}
 }

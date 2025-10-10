@@ -15,7 +15,7 @@ namespace EmotionalSystem
 {
     public class B_Abnormality_TechnologicalLv3_DarkFlame_0 : Buff
     {
-        public override void BuffStat()
+        public override void Init()
         {
             PlusStat.RES_CC = -300;
             PlusStat.RES_DEBUFF = -300;

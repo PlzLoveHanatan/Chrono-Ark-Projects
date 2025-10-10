@@ -21,7 +21,7 @@ namespace EmotionalSystem
 		public override void Init()
 		{
 			base.Init();
-			Countdown = 3;
+			Cooldown = 3;
 		}
 
 		public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)

@@ -18,6 +18,12 @@ namespace EmotionalSystem
 	/// </summary>
 	public class B_Abnormality_TechnologicalLv1_Lament : Buff, IP_TurnEnd
 	{
+		public override string DescExtended()
+		{
+			int damage = (int)(BChar.GetStat.maxhp * 0.2f);
+			return base.DescExtended().Replace("&a", damage.ToString());
+		}
+
 		public override void Init()
 		{
 			PlusPerStat.Damage = 20;

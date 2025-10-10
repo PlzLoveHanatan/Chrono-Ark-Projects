@@ -19,26 +19,18 @@ namespace EmotionalSystem
     /// </summary>
     public class Ex_EmotionalSystem_CoolDown : Skill_Extended
     {
-        public Ex_EmotionalSystem_EGO MainEx;
+        public Ex_EmotionalSystem_EGO EGO_Extended;
 
         public override void FixedUpdate()
         {
-            if (MainEx == null || MainEx.NowCountdown == 0)
+            if (EGO_Extended == null || EGO_Extended.Cooldown == 0)
             {
                 SelfDestroy();
             }
-            else if (MainEx != null)
+            else if (EGO_Extended != null)
             {
-                BuffIconStackNum = MainEx.NowCountdown;
+                BuffIconStackNum = EGO_Extended.NowCooldown;
             }
         }
-
-        //public void CoolDownUpdate()
-        //{
-        //    if (MainEx != null)
-        //    {
-        //        BuffIconStackNum = MainEx.NowCountdown;
-        //    }
-        //}
     }
 }

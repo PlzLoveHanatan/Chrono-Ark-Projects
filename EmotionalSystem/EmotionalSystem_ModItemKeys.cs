@@ -137,7 +137,7 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_Clean = "B_Abnormality_TechnologicalLv2_Clean";
 		/// <summary>
 		/// Eternal Rest
-		/// Whenever damage exceed 20% of the target's Max Health, apply stun (Base <sprite=2>100%) to the target's.
+		/// Whenever damage exceed 20% of the target's Max Health, apply stun (Base <sprite=2>100%) to the target's. Adds the wearer's CC accuracy to stun chance. Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_EternalRest = "B_Abnormality_TechnologicalLv2_EternalRest";
 		/// <summary>
@@ -151,15 +151,14 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_Recharge = "B_Abnormality_TechnologicalLv2_Recharge";
 		/// <summary>
 		/// The Seventh Bullet
-		/// Every 3rd Attack target a random character, except user. Attacks Played: (&a).
+		/// Every 3rd Attack target a random character, except user. Attacks Played: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_TheSeventhBullet = "B_Abnormality_TechnologicalLv2_TheSeventhBullet";
         public static string Buff_B_Abnormality_TechnologicalLv2_TheSeventhBullet_0 = "B_Abnormality_TechnologicalLv2_TheSeventhBullet_0";
         public static string Buff_B_Abnormality_TechnologicalLv2_TheSeventhBullet_1 = "B_Abnormality_TechnologicalLv2_TheSeventhBullet_1";
 		/// <summary>
 		/// Coffin
-		/// If target's have less then 90% of their Max HP (45% for Bosses), destroy enemy Action Point. Only activates once per turn.
-		/// Current Status : &a.
+		/// Destroy target's Action Point. Only activates once per turn. Current Status: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv3_Coffin = "B_Abnormality_TechnologicalLv3_Coffin";
 		/// <summary>
@@ -172,8 +171,6 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_TechnologicalLv3_DarkFlame_0 = "B_Abnormality_TechnologicalLv3_DarkFlame_0";
 		/// <summary>
 		/// Pulse of the Machine
-		/// All incoming damage is increased by 35%.
-		/// Ally Heal 20% of all damage dealt.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv3_Music = "B_Abnormality_TechnologicalLv3_Music";
 		/// <summary>
@@ -219,11 +216,12 @@ namespace EmotionalSystem
         public static string Buff_B_EnemyAbnormality_EnergyConversion = "B_EnemyAbnormality_EnergyConversion";
 		/// <summary>
 		/// Mirror Adjustment
-		/// Attacker takes <color=purple>Pain damage</color> equal <color=#FF7C34>(50% damage dealt.)</color>.
+		/// Attacker takes <color=purple>Pain damage</color> equal <color=#FF7C34>(50% damage dealt)</color>.
 		/// Only activates once per turn.
 		/// Current Abnormality status: &a.
 		/// </summary>
         public static string Buff_B_EnemyAbnormality_MirrorAdjustment = "B_EnemyAbnormality_MirrorAdjustment";
+        public static string Buff_B_EnemyAbnormality_MirrorAdjustment_0 = "B_EnemyAbnormality_MirrorAdjustment_0";
 		/// <summary>
 		/// Shelter from the 27th of March
 		/// Upon reaching 0 health, this character gain a buff that grants invincibility for 1 turn to all allies.
@@ -276,7 +274,6 @@ namespace EmotionalSystem
 		/// Synchronized with Der Freischütz.
 		/// </summary>
         public static string Buff_B_LucyEGO_Technological_MagicBullet = "B_LucyEGO_Technological_MagicBullet";
-        public static string Buff_B_LucyEGO_Technological_MagicBullet_0 = "B_LucyEGO_Technological_MagicBullet_0";
         public static string Buff_B_LucyEmotionalLevel = "B_LucyEmotionalLevel";
 		/// <summary>
 		/// E.G.O. Cooldown
@@ -322,10 +319,19 @@ namespace EmotionalSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_AbnormalityLevel_III = "KeyWord_AbnormalityLevel_III";
 		/// <summary>
-		/// Desynchronizes
-		/// <color=#919191>Remove all unique user skills from the deck and replace them with the previous skills.</color>
+		/// E.G.O.
 		/// </summary>
-        public static string SkillKeyword_KeyWord_Desynchronizes = "KeyWord_Desynchronizes";
+        public static string SkillKeyword_KeyWord_EGO = "KeyWord_EGO";
+		/// <summary>
+		/// Desynchronize
+		/// Remove all unique pages from the deck and restore all user skills.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_EGO_Desynchronize = "KeyWord_EGO_Desynchronize";
+		/// <summary>
+		/// Synchronize E.G.O
+		/// Remove all user skills from the deck, shuffle 8 unique pages into the deck, and change the fixed ability to the Desynchronize skill.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_EGO_Synchronize = "KeyWord_EGO_Synchronize";
 		/// <summary>
 		/// <color=red>Bleed</color>
 		/// Base<sprite=1> 100%
@@ -346,7 +352,8 @@ namespace EmotionalSystem
         public static string SkillKeyword_KeyWord_Entangled = "KeyWord_Entangled";
 		/// <summary>
 		/// Gebrochener Pakt
-		/// <color=#919191>Debuff Resist -300%</color>
+		/// <color=#919191>Debuff Resist -300%
+		/// Cannot be disabled</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_GebrochenerPakt = "KeyWord_GebrochenerPakt";
 		/// <summary>
@@ -355,10 +362,6 @@ namespace EmotionalSystem
 		/// Healing Power +40%</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_Loyality = "KeyWord_Loyality";
-		/// <summary>
-		/// E.G.O.
-		/// </summary>
-        public static string SkillKeyword_KeyWord_LucyEGO = "KeyWord_LucyEGO";
 		/// <summary>
 		/// <color=#F0FF64>Paralysis</color>
 		/// <color=#919191>Attack Power -20%
@@ -378,11 +381,6 @@ namespace EmotionalSystem
 		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_RequestedTarget = "KeyWord_RequestedTarget";
-		/// <summary>
-		/// Synchronize
-		/// <color=#919191>Remove all user skills from the deck, add unique skills to hand, and change fixed ability to "Desynchronize".</color>
-		/// </summary>
-        public static string SkillKeyword_KeyWord_Synchronize = "KeyWord_Synchronize";
         public static string SkillEffect_SE_Tick_B_Abnormality_HistoryLv1_Matchlight = "SE_Tick_B_Abnormality_HistoryLv1_Matchlight";
         public static string SkillEffect_SE_Tick_B_EmotionalSystem_Bleed = "SE_Tick_B_EmotionalSystem_Bleed";
         public static string SkillEffect_SE_Tick_B_EnemyAbnormality_EnergyConversion_0 = "SE_Tick_B_EnemyAbnormality_EnergyConversion_0";
@@ -586,7 +584,7 @@ namespace EmotionalSystem
         public static string Skill_S_Abnormality_TechnologicalLv3_Coffin_Pos = "S_Abnormality_TechnologicalLv3_Coffin_Pos";
 		/// <summary>
 		/// <color=#DC143C>Dark Flame</color>
-		/// Apply "Gebrochener Pakt" to all targets except selected ally.
+		/// Apply 'Gebrochener Pakt' to all targets on a field.
 		/// <color=#919191>One day, the marksman realized the Devil no longer followed him. He pondered why, then realized that his soul had already fallen to Hell from the beginning.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv3_DarkFlame_Neg = "S_Abnormality_TechnologicalLv3_DarkFlame_Neg";
@@ -649,8 +647,7 @@ namespace EmotionalSystem
         public static string Skill_S_LucyEGO_History_Wingbeat = "S_LucyEGO_History_Wingbeat";
 		/// <summary>
 		/// <color=#ffc500>Grinder Mk. 5-2</color>
-		/// Inflict 10 <color=red>Bleed</color>.
-		/// If this skill defeat an enemy restore 1 Mana.
+		/// Inflict 15 <color=red>Bleed</color>.
 		/// </summary>
         public static string Skill_S_LucyEGO_Technological_GrinderMk = "S_LucyEGO_Technological_GrinderMk";
 		/// <summary>
@@ -659,19 +656,17 @@ namespace EmotionalSystem
         public static string Skill_S_LucyEGO_Technological_Harmony = "S_LucyEGO_Technological_Harmony";
 		/// <summary>
 		/// <color=#ffc500>Magic Bullet</color>
-		/// The selected ally synchronizes with Der Freischütz for 3 Turns.
+		/// Synchronize with Der Freischütz for the next 3 Scenes and draw 2 skills.
 		/// </summary>
         public static string Skill_S_LucyEGO_Technological_MagicBullet = "S_LucyEGO_Technological_MagicBullet";
 		/// <summary>
 		/// <color=#ffc500>Regret</color>
-		/// Recast this skill 2 times.
-		/// Apply Stun (Base <sprite=2>100%) to the target.
-		/// If the target is already Stunned, destroy their Action Points.
+		/// Recast this skill 2 times. If the target is Stunned, destroy the target Action Points.
 		/// </summary>
         public static string Skill_S_LucyEGO_Technological_Regret = "S_LucyEGO_Technological_Regret";
 		/// <summary>
 		/// <color=#ffc500>Solemn Lament</color>
-		/// Recast this skill 6 times.
+		/// Recast this skill 8 times.
 		/// </summary>
         public static string Skill_S_LucyEGO_Technological_SolemnLament = "S_LucyEGO_Technological_SolemnLament";
 		/// <summary>
@@ -681,13 +676,13 @@ namespace EmotionalSystem
         public static string Skill_S_Synchronize_Technological_Desynchronize = "S_Synchronize_Technological_Desynchronize";
 		/// <summary>
 		/// <color=#ffc500>Flooding Bullets</color>
-		/// Cast this skill again.
+		/// Recast this skill 2 times.
 		/// </summary>
         public static string Skill_S_Synchronize_Technological_FloodingBullets = "S_Synchronize_Technological_FloodingBullets";
         public static string Skill_S_Synchronize_Technological_FloodingBullets_0 = "S_Synchronize_Technological_FloodingBullets_0";
 		/// <summary>
 		/// <color=#3c8dbc>Inevitable Bullet</color>
-		/// This skill can be played repeatedly during this turn.
+		/// This skill cannot be dodged.
 		/// </summary>
         public static string Skill_S_Synchronize_Technological_InevitableBullet = "S_Synchronize_Technological_InevitableBullet";
 		/// <summary>
@@ -705,6 +700,11 @@ namespace EmotionalSystem
 		/// Passive:
 		/// </summary>
         public static string Character_Technological_Floor = "Technological_Floor";
+		/// <summary>
+		/// Unique Page
+		/// Becomes available for use only while Synchronized.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_UniqueSynchronized = "KeyWord_UniqueSynchronized";
 
     }
 
@@ -712,95 +712,69 @@ namespace EmotionalSystem
     {
 		/// <summary>
 		/// Korean:
-		/// 사용 가능한 E.G.O. 스킬이 없습니다.
+		/// 스킬을 E.G.O. 손으로 전환합니다.
 		/// English:
-		/// No E.G.O. skills are available.
+		/// Change skills to E.G.O. Hand.
 		/// Japanese:
-		/// 使用可能なE.G.O.スキルはありません。
+		/// スキルをE.G.O.の手札に切り替えます。
 		/// Chinese:
-		/// 目前没有可使用的E.G.O.技能。
+		/// 将技能切换为E.G.O.手牌。
 		/// Chinese-TW:
-		/// 目前沒有可使用的E.G.O.技能。
+		/// 將技能切換為E.G.O.手牌。
 		/// </summary>
-        public static string EGO_NoEGO => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_NoEGO");
+        public static string EGO_Button_ChangeToEGOHand => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_ChangeToEGOHand");
 		/// <summary>
 		/// Korean:
-		/// E.G.O. 스킬로 전환하려면 누르세요.
+		/// E.G.O. 손을 일반 스킬로 전환합니다.
 		/// English:
-		/// Press to switch to E.G.O. skills.
+		/// Change E.G.O. Hand to skills.
 		/// Japanese:
-		/// E.G.O.スキルに切り替えるには押してください。
+		/// E.G.O.の手札をスキルに切り替えます。
 		/// Chinese:
-		/// 按此按钮以切换至E.G.O.技能栏
+		/// 将E.G.O.手牌切换为技能。
 		/// Chinese-TW:
-		/// 按此按鈕以切換至E.G.O.技能欄
+		/// 將E.G.O.手牌切換為技能。
 		/// </summary>
-        public static string EGO_SwitchEGO => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchEGO");
+        public static string EGO_Button_ChangeToHand => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_ChangeToHand");
 		/// <summary>
 		/// Korean:
-		/// E.G.O. 스킬로 전환하려면 누르거나 [S]를 누르세요.
+		/// E.G.O. 스킬을 사용할 수 없습니다.
 		/// English:
-		/// Press to switch to E.G.O. skills or press [S].
+		/// E.G.O. skills are not available.
 		/// Japanese:
-		/// E.G.O.スキルに切り替えるには押すか、[S]を押してください。
+		/// E.G.O.スキルは使用できません。
 		/// Chinese:
-		/// 按此按钮或快捷键 S 以切换至E.G.O.技能栏
+		/// 无法使用E.G.O.技能。
 		/// Chinese-TW:
-		/// 按此按鈕或快捷鍵 S 以切換至E.G.O.技能欄
+		/// 無法使用E.G.O.技能。
 		/// </summary>
-        public static string EGO_SwitchEGOHotkey => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchEGOHotkey");
+        public static string EGO_Button_Empty => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_Empty");
 		/// <summary>
 		/// Korean:
-		/// 손으로 돌아가려면 누르세요.
+		/// &a턴 후에 다시 사용할 수 있습니다.
 		/// English:
-		/// Press to switch back to your hand.
+		/// Can be used again after &a turn(s).
 		/// Japanese:
-		/// 手札に戻るには押してください。
+		/// &aターン後に再使用できます。
 		/// Chinese:
-		/// 按此按钮以切换至原本的手中技能栏
+		/// &a回合后可再次使用。
 		/// Chinese-TW:
-		/// 按此按鈕以切換至原本的手中技能欄
+		/// &a回合後可再次使用。
 		/// </summary>
-        public static string EGO_SwitchHand => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchHand");
+        public static string EGO_Skill_Cooldown => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_Skill_Cooldown");
 		/// <summary>
 		/// Korean:
-		/// 손으로 돌아가려면 누르거나 [S]를 누르세요.
+		/// 전투당 한 번만 사용할 수 있습니다.
 		/// English:
-		/// Press to switch back to your hand or press [S].
+		/// Can be used once per battle.
 		/// Japanese:
-		/// 手札に戻るには押すか、[S]を押してください。
+		/// 戦闘中に1回のみ使用可能です。
 		/// Chinese:
-		/// 按此按钮或快捷键 S 以切换至原本的手中技能栏
+		/// 每场战斗只能使用一次。
 		/// Chinese-TW:
-		/// 按此按鈕或快捷鍵 S 以切換至原本的手中技能欄
+		/// 每場戰鬥只能使用一次。
 		/// </summary>
-        public static string EGO_SwitchHandHotkey => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_SwitchHandHotkey");
-		/// <summary>
-		/// Korean:
-		/// &a턴 후 다시 사용 가능합니다.
-		/// English:
-		/// Can be used after &a turn(s).
-		/// Japanese:
-		/// &aターン後に再使用可能。
-		/// Chinese:
-		/// 可于&a回合后再度使用。
-		/// Chinese-TW:
-		/// 可於&a回合後再度使用。
-		/// </summary>
-        public static string EgoCountdown => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoCountdown");
-		/// <summary>
-		/// Korean:
-		/// 한 번만 사용할 수 있습니다.
-		/// English:
-		/// Can only be used once.
-		/// Japanese:
-		/// 一度だけ使用可能。
-		/// Chinese:
-		/// 只能使用一次。
-		/// Chinese-TW:
-		/// 只能使用一次。
-		/// </summary>
-        public static string EgoOnce => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EgoOnce");
+        public static string EGO_Skill_Once => ModManager.getModInfo("EmotionalSystem").localizationInfo.SystemLocalizationUpdate("EGO_Skill_Once");
 		/// <summary>
 		/// Korean:
 		/// Library of Ruina의 감정 시스템 소개

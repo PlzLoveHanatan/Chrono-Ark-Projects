@@ -24,7 +24,7 @@ namespace EmotionalSystem
         {
             base.Init();
             SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
-            Countdown = 3;
+            Cooldown = 3;
         }
 
 		public override void FixedUpdate()

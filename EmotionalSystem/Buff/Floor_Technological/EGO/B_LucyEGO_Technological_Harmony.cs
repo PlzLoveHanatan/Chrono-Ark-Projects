@@ -17,8 +17,7 @@ namespace EmotionalSystem
     {
         public override void BuffStat()
         {
-            PlusStat.def = -25f;
-            PlusStat.crihit = 25;
+            PlusStat.DMGTaken = 25;
             PlusStat.CRIGetDMG = 25;
         }
     }

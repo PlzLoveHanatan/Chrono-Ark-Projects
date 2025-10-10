@@ -35,11 +35,11 @@ namespace EmotionalSystem
             // This patch will switch the hand back if EGO is active when turn ends
             public static IEnumerator Postfix(IEnumerator result, bool EndButton)
             {
-                if (EmotionalSystem_EGO_Button.instance != null && EmotionalSystem_EGO_Button.instance.egoActive)
+                if (EmotionalSystem_EGO_Button.instance != null && EmotionalSystem_EGO_Button.instance.ActiveEGOHand)
                 {
                     try
                     {
-                        EmotionalSystem_EGO_Button.instance.SwitchToNormal();
+                        EmotionalSystem_EGO_Button.instance.ChangeHand();
                     }
                     catch { }
                     yield return new WaitForSecondsRealtime(0.2f);

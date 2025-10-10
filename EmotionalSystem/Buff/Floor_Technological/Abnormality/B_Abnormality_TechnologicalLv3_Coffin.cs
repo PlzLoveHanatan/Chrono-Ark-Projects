@@ -16,59 +16,29 @@ namespace EmotionalSystem
     /// <summary>
     /// Coffin
     /// </summary>
-    public class B_Abnormality_TechnologicalLv3_Coffin : Buff, IP_SkillUse_User, IP_Awake, IP_PlayerTurn
+    public class B_Abnormality_TechnologicalLv3_Coffin : Buff, IP_SkillUse_User, IP_PlayerTurn
     {
         private bool OncePerTurn;
 
-        public override string DescExtended()
-        {
-            if (OncePerTurn)
-            {
-                return base.DescExtended().Replace("&a", "The wings tremble on the verge of collapse".ToString());
-            }
-            return base.DescExtended().Replace("&a", "The wings have crumbled to ash".ToString());
-        }
+		public override string DescExtended()
+		{
+			string text = OncePerTurn ? "Inactive" : "Active";
+			return base.DescExtended().Replace("&a", text.ToString());
+		}
 
-        public void Awake()
-        {
-            OncePerTurn = true;
-        }
         public void Turn()
         {
-            OncePerTurn = true;
+            OncePerTurn = false;
         }
 
         public void SkillUse(Skill SkillD, List<BattleChar> Targets)
         {
-            if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.PlusHit && OncePerTurn)
+            if (SkillD.IsDamage && SkillD.Master == BChar && !OncePerTurn)
             {
-                foreach (var target in Targets)
-                {
-                    if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
-                    {
-                        if (target is BattleEnemy enemy && enemy.Boss)
-                        {
-                            if (target.HP <= target.GetStat.maxhp * 0.45f)
-                            {
-                                var bossSkill = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.Usestate == target);
-                                BattleSystem.instance.EnemyCastSkills.Remove(bossSkill);
-                                BattleSystem.instance.ActWindow.CastingWasteFixed(bossSkill);
-                                OncePerTurn = false;
-                            }
-                        }
-                        else
-                        {
-                            if (target.HP <= target.GetStat.maxhp * 0.9f)
-                            {
-                                var enemySkill = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.Usestate == target);
-                                BattleSystem.instance.EnemyCastSkills.Remove(enemySkill);
-                                BattleSystem.instance.ActWindow.CastingWasteFixed(enemySkill);
-                                OncePerTurn = false;
-                            }
-                        }
-                    }
-                }
-            }
+                EmotionalSystem_Scripts.DestroyActions(Targets[0]);
+                Utils.PlaySound("Floor_Technological_Coffin");
+                OncePerTurn = true;
+			}
         }
     }
 }

@@ -14,19 +14,20 @@ using Debug = UnityEngine.Debug;
 namespace EmotionalSystem
 {
     /// <summary>
-    /// <color=#ffc500>Hornet</color>
+    /// <color=#ffc500>Solemn Lament</color>
+    /// Recast this skill 8 times.
     /// </summary>
-    public class S_LucyEGO_History_Hornet : Ex_EmotionalSystem_EGO
+    public class S_LucyEGO_Technological_SolemnLament : Skill_Extended
     {
         public override void Init()
         {
             base.Init();
-			Cooldown = 3;
+			//Cooldown = 3;
         }
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Utils.PlaySound("Floor_History_Hornet");
+            BattleSystem.DelayInput(EmotionalSystem_Scripts.RecastSkill(Targets[0], BChar, MySkill.MySkill.KeyID, 8));
         }
     }
 }

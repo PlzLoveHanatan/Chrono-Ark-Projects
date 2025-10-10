@@ -18,7 +18,7 @@ namespace EmotionalSystem
 		public override void Init()
 		{
 			PlusStat.cri = 20;
-			PlusStat.hit = 20;
+			//PlusStat.hit = 20;
 		}
 
 		public void KillEffect(SkillParticle SP)

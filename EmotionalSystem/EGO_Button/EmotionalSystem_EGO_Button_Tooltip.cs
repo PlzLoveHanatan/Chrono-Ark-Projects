@@ -8,73 +8,53 @@ namespace EmotionalSystem
 {
     public class EmotionalSystem_EGO_Button_Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        private EmotionalSystem_EGO_Button EGO;
+        private EmotionalSystem_EGO_Button EGO_Button;
         public int Width = 180;
         public int TextSize = 20;
+        public string Text_NoEGO => ModLocalization.EGO_Button_Empty ?? "";
+        public string Text_SwitchEGO => ModLocalization.EGO_Button_ChangeToEGOHand;
+		public string Text_SwitchHand => ModLocalization.EGO_Button_ChangeToHand;
 
-        // change these to translatable texts if available
-        //public string Text_NoEGO => "No EGO skill is available";
-        //public string Text_SwitchEGO => "Switch to EGO skills";
-        //public string Text_SwitchHand => "Switch back to hand";
-
-        public void Awake()
+		public void Awake()
         {
-            EGO = gameObject.GetComponent<EmotionalSystem_EGO_Button>();
+			EGO_Button = gameObject.GetComponent<EmotionalSystem_EGO_Button>();
         }
 
-        public string TooltipText
-        {
-            get
-            {
-                var SwitchEGO = ModLocalization.EGO_SwitchEGO;
-                var SwitchEGOHotkey = ModLocalization.EGO_SwitchEGOHotkey;
-                var SwitchHand = ModLocalization.EGO_SwitchHand;
-                var SwitchHandHotkey = ModLocalization.EGO_SwitchHandHotkey;
-                var NoEGO = ModLocalization.EGO_NoEGO;
-                string text = "";
 
-                if (EGO != null)
-                {
-                    if (EGO.egoActive)
-                    {
-                        if (Utils.EGOButtonHotkey)
-                        {
-                            text = SwitchHandHotkey;
-                        }
-                        else
-                            text = SwitchHand;
-                    }
-                    else
-                    {
-                        if (EGO.hasEGOSkill)
-                        {
-                            if (Utils.EGOButtonHotkey)
-                            {
-                                text = SwitchHandHotkey;
-                            }
-                            else
-                                text = SwitchEGO;
-                        }
-                        else
-                        {
-                            text = NoEGO;
-                        }
-                    }
-                    return text;
-                }
-                else
-                {
-                    return "";
-                }
-            }
-        }
+		public string TooltipText
+		{
+			get
+			{
+				if (EGO_Button == null)
+				{
+					return "";
+				}
 
-        public void OnPointerEnter(PointerEventData eventData)
+				string text;
+
+				if (EGO_Button.ActiveEGOHand)
+				{
+					text = Text_SwitchHand;
+				}
+				else if (EGO_Button.HasEGOSkill)
+				{
+					text = Text_SwitchEGO;
+				}
+				else
+				{
+					text = Text_NoEGO;
+				}
+				return text;
+			}
+		}
+
+
+		public void OnPointerEnter(PointerEventData eventData)
         {
-            if (EGO != null)
+            if (EGO_Button != null)
             {
                 var tooltip = ToolTipWindow.NewToolTip(transform, TooltipText, Width,
-                    new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0f));
+                new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0f));
 
                 tooltip.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 20);
 
@@ -100,7 +80,7 @@ namespace EmotionalSystem
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (EGO != null)
+            if (EGO_Button != null)
             {
                 ToolTipWindow.ToolTipDestroy();
             }

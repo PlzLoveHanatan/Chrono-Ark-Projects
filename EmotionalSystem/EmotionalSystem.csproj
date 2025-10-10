@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionalSystem10102025102617</AssemblyName>
+    <AssemblyName>EmotionalSystem10102025230607</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -408,15 +408,18 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                            <!-- Compile ItemGroup Start-->
+  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionalSystem_Abnomality.cs" />
+    <Compile Include="EmotionalSystem_DataStore.cs" />
     <Compile Include="EmotionalSystem_LibraryFloor.cs" />
     <Compile Include="EmotionalSystem_ModDefinition.cs" />
     <Compile Include="EmotionalSystem_ModItemKeys.cs" />
     <Compile Include="EmotionalSystem_Plugin.cs" />
     <Compile Include="EmotionalSystem_Scripts.cs" />
     <Compile Include="IP_BuffObject_Updata.cs" />
+    <Compile Include="Skill\Floor_Technological\Abnormality\S_Abnormality_TechnologicalLv3_DarkFlame_Neg.cs" />
+    <Compile Include="Skill\Floor_Technological\Abnormality\S_Abnormality_TechnologicalLv3_Music_Neg.cs" />
     <Compile Include="TutorialLocalizer.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Buff\B_EmotionalLevel.cs" />
@@ -482,32 +485,30 @@
     <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv3_Music.cs" />
     <Compile Include="Buff\Floor_Technological\EGO\B_LucyEGO_Technological_Harmony.cs" />
     <Compile Include="Buff\Floor_Technological\EGO\B_LucyEGO_Technological_MagicBullet.cs" />
-    <Compile Include="Buff\Floor_Technological\EGO\B_LucyEGO_Technological_MagicBullet_0.cs" />
     <Compile Include="EGO_Button\EmotionalSystem_EGO_Button.cs" />
     <Compile Include="EGO_Button\EmotionalSystem_EGO_Button_Script.cs" />
     <Compile Include="EGO_Button\EmotionalSystem_EGO_Button_Tooltip.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Include="Skill\S_Abnormality_TechnologicalLv3_DarkFlame_Neg.cs" />
     <Compile Include="Skill\S_Boss_Witch_Curse.cs" />
     <Compile Include="Skill\S_Boss_Witch_Curse_0.cs" />
     <Compile Include="Skill\S_EmotionalSystem_EmotionBurst.cs" />
     <Compile Include="Skill\S_EmotionalSystem_RevengeStrike.cs" />
-    <Compile Include="Skill\S_LucyEGO_Technological_GrinderMk.cs" />
-    <Compile Include="Skill\S_LucyEGO_Technological_Harmony.cs" />
-    <Compile Include="Skill\S_LucyEGO_Technological_MagicBullet.cs" />
-    <Compile Include="Skill\S_LucyEGO_Technological_Regret.cs" />
-    <Compile Include="Skill\S_LucyEGO_Technological_SolemnLament.cs" />
-    <Compile Include="Skill\S_Synchronize_Technological_Desynchronize.cs" />
-    <Compile Include="Skill\S_Synchronize_Technological_FloodingBullets.cs" />
-    <Compile Include="Skill\S_Synchronize_Technological_InevitableBullet.cs" />
-    <Compile Include="Skill\S_Synchronize_Technological_MagicBullet.cs" />
-    <Compile Include="Skill\S_Synchronize_Technological_SilentBullet.cs" />
     <Compile Include="Skill\Floor_History\Abnormality\S_Abnormality_HistoryLv3_Loyalty_Neg.cs" />
     <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_FourthMatchFlame.cs" />
     <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_GreenStem.cs" />
     <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_Hornet.cs" />
     <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_TheForgotten.cs" />
     <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_Wingbeat.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_GrinderMk.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_Harmony.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_MagicBullet.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_Regret.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_SolemnLament.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_Desynchronize.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_FloodingBullets.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_InevitableBullet.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_MagicBullet.cs" />
+    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_SilentBullet.cs" />
     <Compile Include="SkillExtended\Ex_EmotionalSystem_CoolDown.cs" />
     <Compile Include="SkillExtended\Ex_EmotionalSystem_Draw.cs" />
     <Compile Include="SkillExtended\Ex_EmotionalSystem_EGO.cs" />
@@ -516,6 +517,7 @@
     <Compile Include="SkillExtended\Ex_EmotionalSystem_PainDamage.cs" />
     <Compile Include="SkillExtended\Ex_EmotionalSystem_TheSeventhBullet.cs" />
   </ItemGroup>
+  <ItemGroup />
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

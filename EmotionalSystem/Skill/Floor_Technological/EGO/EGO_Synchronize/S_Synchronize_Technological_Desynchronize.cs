@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -15,18 +15,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 namespace EmotionalSystem
 {
     /// <summary>
-    /// <color=#ffc500>Magic Bullet</color>
+    /// <color=#ffc500>Desynchronize</color>
     /// </summary>
-    public class S_LucyEGO_Technological_MagicBullet : Ex_EmotionalSystem_EGO
+    public class S_Synchronize_Technological_Desynchronize : Skill_Extended
     {
-        public override void Init()
-        {
-            base.Init();
-            Countdown = 3;
-        }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Targets[0].BuffAdd(ModItemKeys.Buff_B_LucyEGO_Technological_MagicBullet_0, this.BChar, false, 100, false, -1, false);
-        }
+			EmotionalSystem_Scripts.DeSynchronize(BChar);
+		}
     }
 }

@@ -25,6 +25,8 @@ namespace EmotionalSystem
 
 		private int EmotionsGainThisTurn;
 
+		private bool IsSummon;
+
 		public static List<int> CoinsToLevelUp = new List<int> { 3, 3, 5, 7, 9 };
 
 		public static GameObject EmotionPrefab
@@ -41,6 +43,7 @@ namespace EmotionalSystem
 
 		public void Awake()
 		{
+			IsSummon = true;
 			EmotionsGainThisTurn = 0;
 
 			Emotion = BChar.UI.transform.GetChild(0)?.GetComponentInChildren<CharEmotion>();
@@ -71,6 +74,7 @@ namespace EmotionalSystem
 				var turnObj = enemy.MyUIObject.transform.Find("EnemyTurnList");
 				if (turnObj != null) turnObj.localPosition += new Vector3(0f, -30f, 0f);
 			}
+			IsSummon = false;
 		}
 
 		public void Turn()
@@ -142,8 +146,8 @@ namespace EmotionalSystem
 
 				switch (nextLevel)
 				{
-					case 3:
-						GainEmotionalBuffs(BChar, 3);
+					case 4:
+						GainEmotionalBuffs(BChar, 4);
 						GainEmotionalHeal(BChar);
 						break;
 
@@ -167,11 +171,13 @@ namespace EmotionalSystem
 
 		public void GainEmotionalHeal(BattleChar bchar)
 		{
-			float percentage = 0.2f;
+			if (IsSummon) return;
+
+			float percentage = 0.1f;
 
 			if (bchar is BattleEnemy enemy && enemy.Boss)
 			{
-				percentage = 0.1f;
+				percentage = 0.05f;
 			}
 
 			int heal = (int)(bchar.GetStat.maxhp * percentage);
@@ -183,7 +189,7 @@ namespace EmotionalSystem
 		{
 			Utils.AddBuff(bchar, ModItemKeys.Buff_B_EnemyEmotionalLevel_Light);
 
-			if (level == 3)
+			if (level == 4)
 			{
 				Utils.AddBuff(BChar, ModItemKeys.Buff_B_EnemyEmotionalLevel_Dice);
 			}

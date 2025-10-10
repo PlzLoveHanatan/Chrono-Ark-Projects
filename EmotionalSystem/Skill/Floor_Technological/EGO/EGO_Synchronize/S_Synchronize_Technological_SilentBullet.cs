@@ -20,19 +20,7 @@ namespace EmotionalSystem
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            foreach (var target in Targets)
-            {
-                if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
-                {
-                    var skillToRemove = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.Usestate == target);
-
-                    if (skillToRemove != null)
-                    {
-                        BattleSystem.instance.EnemyCastSkills.Remove(skillToRemove);
-                        BattleSystem.instance.ActWindow.CastingWasteFixed(skillToRemove);
-                    }
-                }
-            }
+            EmotionalSystem_Scripts.DestroyActions(Targets[0]);
         }
     }
 }

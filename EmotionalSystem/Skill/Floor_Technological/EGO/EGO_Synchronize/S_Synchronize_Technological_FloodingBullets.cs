@@ -13,15 +13,14 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 namespace EmotionalSystem
 {
-	/// <summary>
-	/// <color=#ffc500>Harmony</color>
-	/// </summary>
-    public class S_LucyEGO_Technological_Harmony : Ex_EmotionalSystem_EGO
+    /// <summary>
+    /// Flooding Bullets
+    /// </summary>
+    public class S_Synchronize_Technological_FloodingBullets : Skill_Extended
     {
-        public override void Init()
+        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            base.Init();
-            Countdown = 3;
+            BattleSystem.DelayInput(EmotionalSystem_Scripts.RecastSkill(Targets[0], BChar, MySkill.MySkill.KeyID, 2));
         }
     }
 }

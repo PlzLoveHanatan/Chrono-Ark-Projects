@@ -20,10 +20,7 @@ namespace EmotionalSystem
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Synchronize_Technological_InevitableBullet, this.BChar, this.BChar.MyTeam);
-            BattleSystem.instance.AllyTeam.Add(skill, true);
-            skill.AutoDelete = 1;
-            skill.isExcept = true;
+
         }
     }
 }
