@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionalSystem10102025230607</AssemblyName>
+    <AssemblyName>EmotionalSystem10112025200835</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -410,6 +410,8 @@
   </ItemGroup>
   <!-- Compile ItemGroup Start-->
   <ItemGroup>
+    <Compile Include="Buff\Enemy_Abnormaly\B_Abnormality_EnemyLv1_Strengthen.cs" />
+    <Compile Include="Buff\Enemy_Abnormaly\B_Abnormality_EnemyLv1_Stress.cs" />
     <Compile Include="EmotionalSystem_Abnomality.cs" />
     <Compile Include="EmotionalSystem_DataStore.cs" />
     <Compile Include="EmotionalSystem_LibraryFloor.cs" />

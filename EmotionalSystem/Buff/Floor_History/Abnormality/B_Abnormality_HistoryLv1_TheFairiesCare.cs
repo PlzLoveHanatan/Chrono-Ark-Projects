@@ -35,7 +35,7 @@ namespace EmotionalSystem
 		{
 			Utils.PlaySound("Floor_History_FairiesCare");
 			int heal = (int)(BChar.GetStat.maxhp * 0.2f);
-			BattleSystem.DelayInputAfter(Utils.HealingParticle(BChar, BattleSystem.instance.DummyChar, heal, true));
+			BattleSystem.DelayInputAfter(Utils.HealingParticle(BChar, BattleSystem.instance.DummyChar, heal, true, true));
 		}
 	}
 }

@@ -58,7 +58,7 @@ namespace EmotionalSystem
 		{
 			yield return new WaitForSecondsRealtime(0.3f);
 			Utils.PlaySound("Floor_History_Wingbeat");
-			yield return Utils.HealingParticle(BChar, BattleSystem.instance.DummyChar, 8, true, true, true);
+			yield return Utils.HealingParticle(BChar, BattleSystem.instance.DummyChar, 8, true, true, true, true, true);
 		}
 	}
 }

@@ -16,16 +16,11 @@ using NLog.Targets;
 using Steamworks;
 namespace EmotionalSystem
 {
-    public class B_Abnormality_TechnologicalLv1_Request : Buff, IP_PlayerTurn_1, IP_Awake
+    public class B_Abnormality_TechnologicalLv1_Request : Buff, IP_PlayerTurn_1
     {
 		public override void Init()
 		{
 			PlusPerStat.Damage = 10;
-		}
-
-		public void Awake()
-		{
-			ApplyRequestedTarget();
 		}
 
 		public void Turn1()

@@ -16,11 +16,22 @@ namespace EmotionalSystem
 	/// <summary>
 	/// Shelter from the 27th of March
 	/// </summary>
-    public class B_EnemyAbnormality_Shelter : Buff, IP_HPChange, IP_Awake
+    public class B_EnemyAbnormality_Shelter : Buff, IP_HPChange, IP_Awake, IP_DamageTake, IP_PlayerTurn
     {
+        private bool canBeRemoved;
+
 		public void Awake()
 		{
             Utils.AddBuff(BChar, GDEItemKeys.Buff_B_EnemyTaunt);
+		}
+
+		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
+		{
+            if (Dmg >= 25 && canBeRemoved)
+            {
+                SelfDestroy();
+                BChar.Dead();
+            }
 		}
 
 		public void HPChange(BattleChar Char, bool Healed)
@@ -30,9 +41,18 @@ namespace EmotionalSystem
                 Char.HP = 1;
                 Char.IsDead = false;
                 EffectView.SimpleTextout(Char.GetPos(), ScriptLocalization.UI_Battle.Endure, true, 1f, false, 1f);
-                Utils.EnemyTeam.AliveChars.ForEach(e => Utils.AddBuff(e, BChar, ModItemKeys.Buff_B_EnemyAbnormality_Shelter_0));
-                SelfDestroy(false);
-            }
+				canBeRemoved = true;
+				//Utils.EnemyTeam.AliveChars.ForEach(e => Utils.AddBuff(e, BChar, ModItemKeys.Buff_B_EnemyAbnormality_Shelter_0));
+				//SelfDestroy(false);
+			}
         }
-    }
+
+		public void Turn()
+		{
+			if (canBeRemoved)
+			{
+				SelfDestroy();
+			}
+		}
+	}
 }

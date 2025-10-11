@@ -111,9 +111,6 @@ namespace EmotionalSystem
 			yield break;
 		}
 
-		// Вот это единственный общий экземпляр, который используется всегда
-		private static EmotionalSystem_DataStore DataStore = new EmotionalSystem_DataStore();
-
 		public static void SynchronizeWithEGO(BattleChar bchar, string desynchronizeSkill, List<string> skillsToSync)
 		{
 			if (bchar == null || skillsToSync == null || skillsToSync.Count == 0 || string.IsNullOrEmpty(desynchronizeSkill))
@@ -168,7 +165,7 @@ namespace EmotionalSystem
 			}
 
 			// Сохраняем данные персонажа
-			DataStore.SavedSkills[bchar] = data;
+			EmotionalSystem_DataStore.Instance.SavedSkills[bchar] = data;
 		}
 
 		public static void DeSynchronize(BattleChar bchar)
@@ -178,12 +175,12 @@ namespace EmotionalSystem
 				return;
 			}
 
-			if (!DataStore.SavedSkills.ContainsKey(bchar))
+			if (!EmotionalSystem_DataStore.Instance.SavedSkills.ContainsKey(bchar))
 			{
 				return;
 			}
 
-			var data = DataStore.SavedSkills[bchar];
+			var data = EmotionalSystem_DataStore.Instance.SavedSkills[bchar];
 
 			// Удаляем все текущие скиллы персонажа
 			for (int i = Utils.AllyTeam.Skills.Count - 1; i >= 0; i--)
@@ -220,7 +217,7 @@ namespace EmotionalSystem
 			}
 
 			// Удаляем данные персонажа после восстановления
-			DataStore.SavedSkills.Remove(bchar);
+			EmotionalSystem_DataStore.Instance.SavedSkills.Remove(bchar);
 		}
 	}
 }

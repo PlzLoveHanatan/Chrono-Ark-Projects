@@ -151,9 +151,11 @@ namespace EmotionalSystem
 			}
 		}
 
-		public static IEnumerator HealingParticle(BattleChar target, BattleChar user, int healingNum = 0, bool isHealing = false, bool isParticleOut = false, bool isHealLowestAlly = false)
+		public static IEnumerator HealingParticle(BattleChar target, BattleChar user, int healingNum = 0, bool isHealing = false, bool isParticleOut = false, bool isHealLowestAlly = false, bool isPlusHit = false, bool isFreeUse = false)
 		{
 			yield return null;
+
+			if (target == null) yield break;
 			
 			if (isHealing)
 			{
@@ -172,8 +174,8 @@ namespace EmotionalSystem
 			if (isParticleOut)
 			{
 				Skill healingParticle = Skill.TempSkill(ModItemKeys.Skill_S_EmotionalSystem_DummyHeal, user, user.MyTeam);
-				//healingParticle.PlusHit = true;
-				healingParticle.FreeUse = true;
+				healingParticle.PlusHit = isPlusHit;
+				healingParticle.FreeUse = isFreeUse;
 
 				target.ParticleOut(healingParticle, target);
 			}

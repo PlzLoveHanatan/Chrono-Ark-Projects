@@ -26,8 +26,12 @@ namespace EmotionalSystem
 
 		public void TurnEnd()
 		{
-            int heal = 30;
-            Utils.EnemyTeam.AliveChars.ForEach(e => BattleSystem.DelayInput(Utils.HealingParticle(e, BChar, heal, true, true)));
+			int heal = 30;
+
+			foreach (var item in BChar.MyTeam.AliveChars)
+			{
+				BattleSystem.DelayInput(Utils.HealingParticle(item, BattleSystem.instance.DummyChar, heal, true, true, true));
+			}
 		}
     }
 }

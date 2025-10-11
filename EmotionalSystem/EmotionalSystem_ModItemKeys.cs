@@ -4,6 +4,16 @@ namespace EmotionalSystem
     public static class ModItemKeys
     {
 		/// <summary>
+		/// Strengthen
+		/// Attack increased by &a <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// </summary>
+        public static string Buff_B_Abnormality_EnemyLv1_Strengthen = "B_Abnormality_EnemyLv1_Strengthen";
+		/// <summary>
+		/// Stress
+		/// Defenese increased by &a <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// </summary>
+        public static string Buff_B_Abnormality_EnemyLv1_Stress = "B_Abnormality_EnemyLv1_Stress";
+		/// <summary>
 		/// Ashes
 		/// Attacks inflict 1 <color=#FC6178>Burn</color>.
 		/// </summary>
@@ -210,7 +220,7 @@ namespace EmotionalSystem
         public static string Buff_B_EnemyAbnormality_Despair = "B_EnemyAbnormality_Despair";
 		/// <summary>
 		/// Energy Conversion
-		/// When this character loses 50% of its Max HP (20% for bosses), lose 1 Mana for the turn.
+		/// When this character loses 50% of its Max HP (25% for bosses), lose 1 Mana for the turn.
 		/// Remaining damage: &a.
 		/// </summary>
         public static string Buff_B_EnemyAbnormality_EnergyConversion = "B_EnemyAbnormality_EnergyConversion";
@@ -224,7 +234,7 @@ namespace EmotionalSystem
         public static string Buff_B_EnemyAbnormality_MirrorAdjustment_0 = "B_EnemyAbnormality_MirrorAdjustment_0";
 		/// <summary>
 		/// Shelter from the 27th of March
-		/// Upon reaching 0 health, this character gain a buff that grants invincibility for 1 turn to all allies.
+		/// Upon reaching 0 health, this character cannot die this turn until taking 25 or more Damage this turn. Remove this buff at the start of the next turn.
 		/// </summary>
         public static string Buff_B_EnemyAbnormality_Shelter = "B_EnemyAbnormality_Shelter";
 		/// <summary>
@@ -275,6 +285,10 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Buff_B_LucyEGO_Technological_MagicBullet = "B_LucyEGO_Technological_MagicBullet";
         public static string Buff_B_LucyEmotionalLevel = "B_LucyEmotionalLevel";
+		/// <summary>
+		/// Passive:
+		/// </summary>
+        public static string Character_Emotional_System_Guests = "Emotional_System_Guests";
 		/// <summary>
 		/// E.G.O. Cooldown
 		/// </summary>
@@ -381,6 +395,13 @@ namespace EmotionalSystem
 		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.</color>
 		/// </summary>
         public static string SkillKeyword_KeyWord_RequestedTarget = "KeyWord_RequestedTarget";
+		/// <summary>
+		/// Unique Page
+		/// Becomes available for use only while Synchronized.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_UniqueSynchronized = "KeyWord_UniqueSynchronized";
+        public static string SkillEffect_SE_S_S_Abnormality_EnemyLv1_Strengthen_Pos = "SE_S_S_Abnormality_EnemyLv1_Strengthen_Pos";
+        public static string SkillEffect_SE_S_S_Abnormality_EnemyLv1_Stress_Neg = "SE_S_S_Abnormality_EnemyLv1_Stress_Neg";
         public static string SkillEffect_SE_Tick_B_Abnormality_HistoryLv1_Matchlight = "SE_Tick_B_Abnormality_HistoryLv1_Matchlight";
         public static string SkillEffect_SE_Tick_B_EmotionalSystem_Bleed = "SE_Tick_B_EmotionalSystem_Bleed";
         public static string SkillEffect_SE_Tick_B_EnemyAbnormality_EnergyConversion_0 = "SE_Tick_B_EnemyAbnormality_EnergyConversion_0";
@@ -440,6 +461,14 @@ namespace EmotionalSystem
         public static string SkillEffect_SE_T_S_Synchronize_Technological_MagicBullet = "SE_T_S_Synchronize_Technological_MagicBullet";
         public static string SkillEffect_SE_T_S_Synchronize_Technological_SilentBullet = "SE_T_S_Synchronize_Technological_SilentBullet";
         public static string SkillEffect_SE_T_S_WitchCurse = "SE_T_S_WitchCurse";
+		/// <summary>
+		/// Strengthen
+		/// </summary>
+        public static string Skill_S_Abnormality_EnemyLv1_Strengthen_Pos = "S_Abnormality_EnemyLv1_Strengthen_Pos";
+		/// <summary>
+		/// Stress
+		/// </summary>
+        public static string Skill_S_Abnormality_EnemyLv1_Stress_Neg = "S_Abnormality_EnemyLv1_Stress_Neg";
 		/// <summary>
 		/// <color=#3CB371>Ashes</color>
 		/// <color=#919191>The charred body represents the child's crumbled hope, while the ever blazing flame represents the obsession for affection.</color>
@@ -700,11 +729,6 @@ namespace EmotionalSystem
 		/// Passive:
 		/// </summary>
         public static string Character_Technological_Floor = "Technological_Floor";
-		/// <summary>
-		/// Unique Page
-		/// Becomes available for use only while Synchronized.
-		/// </summary>
-        public static string SkillKeyword_KeyWord_UniqueSynchronized = "KeyWord_UniqueSynchronized";
 
     }
 

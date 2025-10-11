@@ -9,6 +9,20 @@ namespace EmotionalSystem
 {
 	public class EmotionalSystem_DataStore
 	{
+		private static EmotionalSystem_DataStore _instance;
+
+		public static EmotionalSystem_DataStore Instance
+		{
+			get
+			{
+				if (_instance == null)
+				{
+					_instance = new EmotionalSystem_DataStore();
+				}
+				return _instance;
+			}
+		}
+
 		public static List<string> ExceptSkills = new List<string>
 		{
 			GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard,

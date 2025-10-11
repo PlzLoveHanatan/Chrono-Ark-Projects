@@ -20,7 +20,7 @@ namespace EmotionalSystem
     {
 		public override void Init()
 		{
-			PlusStat.DMGTaken = -20f;
+			PlusStat.DMGTaken = -10f;
 		}
     }
 }

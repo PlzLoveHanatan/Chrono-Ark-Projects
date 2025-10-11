@@ -27,7 +27,6 @@ namespace EmotionalSystem
 
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            EmotionalSystem_Scripts.DeSynchronize(BChar);
             Utils.AllyTeam.Draw(2);
         }
     }
