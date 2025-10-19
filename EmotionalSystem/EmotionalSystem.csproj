@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionalSystem10112025200835</AssemblyName>
+    <AssemblyName>EmotionalSystem10192025094945</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -410,114 +410,39 @@
   </ItemGroup>
   <!-- Compile ItemGroup Start-->
   <ItemGroup>
-    <Compile Include="Buff\Enemy_Abnormaly\B_Abnormality_EnemyLv1_Strengthen.cs" />
-    <Compile Include="Buff\Enemy_Abnormaly\B_Abnormality_EnemyLv1_Stress.cs" />
-    <Compile Include="EmotionalSystem_Abnomality.cs" />
-    <Compile Include="EmotionalSystem_DataStore.cs" />
-    <Compile Include="EmotionalSystem_LibraryFloor.cs" />
+    <Compile Include="Emotional_System\Emotional_Manager.cs" />
+    <Compile Include="Emotional_System\Abnomality.cs" />
+    <Compile Include="Emotional_System\Utilities\Utils_Extensions.cs" />
+    <Compile Include="Emotional_System_Buff\Emotional_Buffs.cs" />
+    <Compile Include="Emotional_System_Buff\Emotions_Lucy.cs" />
+    <Compile Include="Emotional_System_Buff\Emotional_Debuffs.cs" />
+    <Compile Include="Emotional_System_Buff\Floor_Literature.cs" />
+    <Compile Include="Emotional_System\Data_Store.cs" />
+    <Compile Include="Emotional_System_EGO_Button\EmotionalSystem_EGO_Button.cs" />
+    <Compile Include="Emotional_System_EGO_Button\EmotionalSystem_EGO_Button_Script.cs" />
+    <Compile Include="Emotional_System_EGO_Button\EmotionalSystem_EGO_Button_Tooltip.cs" />
+    <Compile Include="Emotional_System\Library_Floor.cs" />
     <Compile Include="EmotionalSystem_ModDefinition.cs" />
     <Compile Include="EmotionalSystem_ModItemKeys.cs" />
+    <Compile Include="Emotional_System\Scripts.cs" />
     <Compile Include="EmotionalSystem_Plugin.cs" />
-    <Compile Include="EmotionalSystem_Scripts.cs" />
+    <Compile Include="Emotional_System_Skill\Floor_Technological.cs" />
+    <Compile Include="Emotional_System_Skill\Guest.cs" />
+    <Compile Include="Emotional_System_Skill\Lucy_Skills.cs" />
+    <Compile Include="Emotional_System_Skill\Potions.cs" />
+    <Compile Include="Emotional_System\Invitation_Manager.cs" />
     <Compile Include="IP_BuffObject_Updata.cs" />
-    <Compile Include="Skill\Floor_Technological\Abnormality\S_Abnormality_TechnologicalLv3_DarkFlame_Neg.cs" />
-    <Compile Include="Skill\Floor_Technological\Abnormality\S_Abnormality_TechnologicalLv3_Music_Neg.cs" />
     <Compile Include="TutorialLocalizer.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="Buff\B_EmotionalLevel.cs" />
-    <Compile Include="Buff\B_EmotionalSystem_Draw.cs" />
-    <Compile Include="Buff\B_EmotionalSystem_ManaReduction.cs" />
-    <Compile Include="Buff\B_EnemyEmotionalLevel.cs" />
-    <Compile Include="Buff\B_EnemyEmotionalLevel_Dice.cs" />
-    <Compile Include="Buff\B_EnemyEmotionalLevel_Light.cs" />
-    <Compile Include="Buff\B_EnemyTeamEmotionalLevel.cs" />
-    <Compile Include="Buff\B_LucyEmotionalLevel.cs" />
-    <Compile Include="Buff\EmotionalSystem_Debuffs\B_EmotionalSystem_Bleed.cs" />
-    <Compile Include="Buff\EmotionalSystem_Debuffs\B_EmotionalSystem_Burn.cs" />
-    <Compile Include="Buff\EmotionalSystem_Debuffs\B_EmotionalSystem_Paralysis.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EmotionalSystem_ColorlessDepth.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_BehaviorAdjustment.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_Despair.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_EnergyConversion.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_MirrorAdjustment.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_Shelter.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_Shelter_0.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_Strengthen.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_Stress.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_Unity.cs" />
-    <Compile Include="Buff\Enemies_Abnormality\B_EnemyAbnormality_YouMustBeHappy.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv1_Ashes.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv1_DisplayofAffection.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv1_HappyMemories.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv1_HappyMemories_0.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv1_Matchlight.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv1_NostalgicEmbraceoftheOldDays.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv1_TheFairiesCare.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_Footfalls.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_Gluttony.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_Predation.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_Spores.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_Vines.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_Vines_0.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_Vines_1.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_WorkerBee.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv2_WorkerBee_0.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv3_BarrierofThorns.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv3_Loyalty.cs" />
-    <Compile Include="Buff\Floor_History\Abnormality\B_Abnormality_HistoryLv3_Malice.cs" />
-    <Compile Include="Buff\Floor_History\EGO\B_LucyEGO_History_HornetsSting.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv1_Lament.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv1_MetallicRinging.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv1_RepetitivePatternRecognition.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv1_Request.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv1_Request_0.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv1_Rhythm.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv1_Violence.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_ChainedWrath.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_Clean.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_EternalRest.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_MusicalAddiction.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_Recharge.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_TheSeventhBullet.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_TheSeventhBullet_0.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv2_TheSeventhBullet_1.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv3_Coffin.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv3_DarkFlame.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv3_DarkFlame_0.cs" />
-    <Compile Include="Buff\Floor_Technological\Abnormality\B_Abnormality_TechnologicalLv3_Music.cs" />
-    <Compile Include="Buff\Floor_Technological\EGO\B_LucyEGO_Technological_Harmony.cs" />
-    <Compile Include="Buff\Floor_Technological\EGO\B_LucyEGO_Technological_MagicBullet.cs" />
-    <Compile Include="EGO_Button\EmotionalSystem_EGO_Button.cs" />
-    <Compile Include="EGO_Button\EmotionalSystem_EGO_Button_Script.cs" />
-    <Compile Include="EGO_Button\EmotionalSystem_EGO_Button_Tooltip.cs" />
+    <Compile Include="Emotional_System\Utilities\Utils.cs" />
+    <Compile Include="Emotional_System_Buff\Guest_Abnormality.cs" />
+    <Compile Include="Emotional_System_Buff\Emotions_Ally.cs" />
+    <Compile Include="Emotional_System_Buff\Emotions_Enemy.cs" />
+    <Compile Include="Emotional_System_Buff\Floor_History.cs" />
+    <Compile Include="Emotional_System_Buff\Floor_Technological.cs" />
+    <Compile Include="Emotional_System_Skill\Floor_History.cs" />
+    <Compile Include="Emotional_System_Skill_Extended\SkillExtended.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Include="Skill\S_Boss_Witch_Curse.cs" />
-    <Compile Include="Skill\S_Boss_Witch_Curse_0.cs" />
-    <Compile Include="Skill\S_EmotionalSystem_EmotionBurst.cs" />
-    <Compile Include="Skill\S_EmotionalSystem_RevengeStrike.cs" />
-    <Compile Include="Skill\Floor_History\Abnormality\S_Abnormality_HistoryLv3_Loyalty_Neg.cs" />
-    <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_FourthMatchFlame.cs" />
-    <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_GreenStem.cs" />
-    <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_Hornet.cs" />
-    <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_TheForgotten.cs" />
-    <Compile Include="Skill\Floor_History\EGO\S_LucyEGO_History_Wingbeat.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_GrinderMk.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_Harmony.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_MagicBullet.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_Regret.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\S_LucyEGO_Technological_SolemnLament.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_Desynchronize.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_FloodingBullets.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_InevitableBullet.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_MagicBullet.cs" />
-    <Compile Include="Skill\Floor_Technological\EGO\EGO_Synchronize\S_Synchronize_Technological_SilentBullet.cs" />
-    <Compile Include="SkillExtended\Ex_EmotionalSystem_CoolDown.cs" />
-    <Compile Include="SkillExtended\Ex_EmotionalSystem_Draw.cs" />
-    <Compile Include="SkillExtended\Ex_EmotionalSystem_EGO.cs" />
-    <Compile Include="SkillExtended\Ex_EmotionalSystem_HappyMemories.cs" />
-    <Compile Include="SkillExtended\Ex_EmotionalSystem_ManaReduction.cs" />
-    <Compile Include="SkillExtended\Ex_EmotionalSystem_PainDamage.cs" />
-    <Compile Include="SkillExtended\Ex_EmotionalSystem_TheSeventhBullet.cs" />
+    <Compile Include="Emotional_System\Utilities\Utils_Ui.cs" />
   </ItemGroup>
   <ItemGroup />
   <!-- Compile ItemGroup End-->

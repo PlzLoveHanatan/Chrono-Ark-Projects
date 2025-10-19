@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -13,126 +13,118 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using EmotionalSystem;
+using static EmotionalSystemBuff.EmotionsEnemy;
 namespace EmotionalSystem
 {
-    public class EmotionalSystem_ModDefinition : ModDefinition
-    {
-        public override Type ModItemKeysType => typeof(ModItemKeys);
-        public override List<object> BattleSystem_ModIReturn()
-        {
-            var list = base.BattleSystem_ModIReturn();
+	public class EmotionalSystem_ModDefinition : ModDefinition
+	{
+		public override Type ModItemKeysType => typeof(ModItemKeys);
+		public override List<object> BattleSystem_ModIReturn()
+		{
+			var list = base.BattleSystem_ModIReturn();
 
-            list.Add(new ModIReturn());
+			list.Add(new ModIReturn());
 
-            if (Utils.EnemyEmotions)
-            {
-                list.Add(B_EnemyTeamEmotionalLevel.Instance);
-            }
+			if (Utils.EnemyEmotions)
+			{
+				list.Add(EnemyTeamLevel.Instance);
+			}
+			return list;
+		}
 
-            return list;
-        }
+		public class ModIReturn : IP_BattleStart_UIOnBefore, IP_BattleStart_Ones, IP_EnemyAwake
+		{
+			public void BattleStart(BattleSystem Ins)
+			{
+				if (Utils.EmotionalSystemTutorial)
+				{
+					//StartTutorial();
+				}
 
-        public class ModIReturn : IP_BattleStart_UIOnBefore, IP_BattleStart_Ones, IP_EnemyAwake
-        {
-            public void BattleStart(BattleSystem Ins)
-            {
-                if (Utils.EmotionalSystemTutorial)
-                {
-                    Utils.EmotionalSystemTutorial = false;
-                    InitTutorial("Assets/ModAssets/EmotionalSystemTutorial.asset");
-                }
-                if (Utils.AllyEmotions)
-                {
-                    BattleSystem.instance.AllyTeam.LucyAlly.BuffAdd(ModItemKeys.Buff_B_LucyEmotionalLevel, BattleSystem.instance.AllyTeam.LucyAlly, false, 0, false, -1, false);
-                    foreach (BattleChar battleChar in Ins.AllyTeam.AliveChars)
-                    {
-                        battleChar.BuffAdd(ModItemKeys.Buff_B_EmotionalLevel, battleChar, false, 0, false, -1, false);
-                    }
-                }
-            }
+				if (Utils.AllyEmotions)
+				{
+					Utils.AddBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level);
+					Utils.AllyTeam.AliveChars.ForEach(a => Utils.AddBuff(a, ModItemKeys.Buff_B_Ally_Emotional_Level));
+				}
+			}
 
-            public static void InitTutorial(string tutorialPath)
-            {
-                var tutorial = Utils.GetAssets<Tutorial>(tutorialPath, "tutorial");
-                if (tutorial == null)
-                {
-                    Debug.Log("Tutorial not found");
-                    return;
-                }
+			public void BattleStartUIOnBefore(BattleSystem Ins)
+			{
+				if (Utils.AllyEmotions)
+				{
+					CreateEGOButton();
+				}
+			}
 
-                var obj = UIManager.InstantiateActiveAddressable(UIManager.inst.AR_TutorialUI, AddressableLoadManager.ManageType.Stage).GetComponent<TutorialObject>();
-                obj.transform.Find("Window").localPosition += new Vector3(0, 100, 0);
-                obj.transform.Find("Window/VideoImage").localPosition += new Vector3(0, 60, 0);
-                obj.transform.Find("Window/TextPos").localPosition += new Vector3(0, 120, 0);
-                obj.gameObject.AddComponent<TutorialLocalizer>().Init(obj);
-                obj.Init(tutorial);
+			public void EnemyAwake(BattleChar Enemy)
+			{
+				if (Utils.EnemyEmotions)
+				{
+					Utils.AddBuff(Enemy, ModItemKeys.Buff_B_Enemy_Emotional_Level);
+				}
+			}
 
+			//public void BattleEnd()
+			//{
+			//	if (PlayData.TSavedata.StageNum == 4 && Utils.BossInvitations && InvitationManager.Instance.SetWaves)
+			//	{
+			//		FieldSystem instance = FieldSystem.instance;
+			//		instance.BattleAfterDelegate = (FieldSystem.BattleAfterDel)Delegate.Combine(instance.BattleAfterDelegate, new FieldSystem.BattleAfterDel(() =>
+			//		InvitationManager.Instance.StartNewReception(GDEItemKeys.EnemyQueue_Queue_S3_Reaper)));
+			//	}
+			//}
 
-                //var obj = UIManager.InstantiateActiveAddressable(
-                //    UIManager.inst.AR_TutorialUI,
-                //    AddressableLoadManager.ManageType.Stage
-                //).GetComponent<TutorialObject>();
+			private void CreateEGOButton()
+			{
+				// Родительский объект (окно действий)
+				Transform parent = BattleSystem.instance.ActWindow.transform;
 
-                //obj.transform.Find("Window").localPosition += new Vector3(0, 100, 0);
+				// Создаём кнопку
+				GameObject egoButton = Utils_Ui.CreatGameObject("EGO_Button", parent);
+				if (egoButton == null)
+				{
+					return;
+				}
 
-                //var windowRect = obj.transform.Find("Window").GetComponent<RectTransform>();
-                //var videoImageRect = obj.transform.Find("Window/VideoImage").GetComponent<RectTransform>();
-                //Utils.FitRectTransformToTarget(videoImageRect, windowRect, new Vector3());
-                //obj.gameObject.AddComponent<TutorialLocalizer>().Init(obj);
-                //obj.Init(tutorial);
-            }
+				egoButton.transform.SetParent(parent);
+				egoButton.transform.localPosition = new Vector2(-324.6328f, 300.5991f);
 
-            public void BattleStartUIOnBefore(BattleSystem Ins)
-            {
-                Utils.EmotionsCheck();
+				// Добавляем и настраиваем изображение
+				Image image = egoButton.AddComponent<Image>();
+				Sprite sprite = Utils_Ui.GetSprite("EGO_Active.png");
+				if (sprite == null)
+				{
+					return;
+				}
 
-                if (Utils.AllyEmotions)
-                {
-                    CreateIconButton(
-                    "EGO_Button",
-                    BattleSystem.instance.ActWindow.transform,
-                    "EGO_Active.png",
-                    new Vector2(160f, 160f),
-                    new Vector2(-324.6328f, 300.5991f));
-                }
-            }
+				image.sprite = sprite;
+				Utils_Ui.ImageResize(image, new Vector2(160f, 160f), new Vector2(-324.6328f, 300.5991f));
 
-            public void EnemyAwake(BattleChar Enemy)
-            {
-                if (Utils.EnemyEmotions)
-                {
-                    Enemy.BuffAdd(ModItemKeys.Buff_B_EnemyEmotionalLevel, Enemy);
-                }
-            }
+				// Добавляем логику EGO кнопки
+				EmotionalSystem_EGO_Button egoSystem = egoButton.AddComponent<EmotionalSystem_EGO_Button>();
+				egoButton.AddComponent<EmotionalSystem_EGO_Button_Script>();
 
-            private void CreateIconButton(string name, Transform trans, string spriteNormal, Vector2 size, Vector2 pos)
-            {
-                GameObject egoButton = Utils.CreatGameObject(name, trans);
-                if (egoButton == null)
-                {
-                    return;
-                }
+				// Сохраняем ссылку на экземпляр
+				EmotionalSystem_EGO_Button.instance = egoSystem;
 
-                egoButton.transform.SetParent(trans);
-                egoButton.transform.localPosition = pos;
+				egoButton.SetActive(true);
+			}
 
-                Image image = egoButton.AddComponent<Image>();
-                Sprite sprite = Utils.GetSprite(spriteNormal);
-                if (sprite == null)
-                {
-                    return;
-                }
+			public static void StartTutorial()
+			{
+				var tutorial = Utils_Ui.GetAssets<Tutorial>("Assets/ModAssets/EmotionalSystemTutorial.asset", "tutorial");
 
-                image.sprite = sprite;
-                Utils.ImageResize(image, size, pos);
-
-                EmotionalSystem_EGO_Button egoSystem = egoButton.AddComponent<EmotionalSystem_EGO_Button>();
-                egoButton.AddComponent<EmotionalSystem_EGO_Button_Script>();
-
-                EmotionalSystem_EGO_Button.instance = egoSystem;
-
-                egoButton.SetActive(true);
-            }
-        }
-    }
+				if (tutorial != null)
+				{
+					var obj = UIManager.InstantiateActiveAddressable(UIManager.inst.AR_TutorialUI, AddressableLoadManager.ManageType.Stage).GetComponent<TutorialObject>();
+					obj.transform.Find("Window").localPosition += new Vector3(0, 100, 0);
+					obj.transform.Find("Window/VideoImage").localPosition += new Vector3(0, 60, 0);
+					obj.transform.Find("Window/TextPos").localPosition += new Vector3(0, 120, 0);
+					obj.gameObject.AddComponent<TutorialLocalizer>().Init(obj);
+					obj.Init(tutorial);
+					Utils.EmotionalSystemTutorial = false;
+				}
+			}
+		}
+	}
 }

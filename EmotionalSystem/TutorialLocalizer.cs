@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using EmotionalSystem;
 
 namespace EmotionalSystem
 {
@@ -31,7 +32,7 @@ namespace EmotionalSystem
                         var content = tutorial.Contents[num];
                         var key = content.Text_I2.mTerm;
                         var text = Tut.GetField<TextMeshProUGUI>("TextUI");
-                        text.text = Utils.GetTranslation(key);
+                        text.text = Utils_Extensions.GetTranslation(key);
                     }
                 }
             }
