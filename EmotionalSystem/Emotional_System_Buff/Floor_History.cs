@@ -173,7 +173,7 @@ namespace EmotionalSystemBuff
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 					{
-						if (SP.SkillData.Master == BChar	&& !OncePerTurn)
+						if (SP.SkillData.Master == BChar && !OncePerTurn)
 						{
 							bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
 
@@ -215,6 +215,11 @@ namespace EmotionalSystemBuff
 			{
 				public class Footfalls : Buff, IP_SkillUse_Target
 				{
+					public override void Init()
+					{
+						PlusPerStat.Damage = 40;
+					}
+
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 					{
 						bool lowHp = BChar.HP <= BChar.GetStat.maxhp * 0.2f;
@@ -241,7 +246,7 @@ namespace EmotionalSystemBuff
 						Utils.ApplyBurn(hit, BChar, 10);
 						Utils.PlaySound("Floor_History_Explode");
 						BChar.Dead();
-						ChargeLucyNeck(BChar);
+						ChargeLucyNeck();
 						yield return BackgroundOff();
 					}
 
@@ -255,10 +260,9 @@ namespace EmotionalSystemBuff
 
 				public class Gluttony : Buff, IP_DealDamage
 				{
-					public override void BuffStat()
+					public override void Init()
 					{
-						PlusStat.cri = 20f;
-						PlusStat.PlusCriDmg = 20;
+						PlusStat.PlusCriDmg = 20f;
 					}
 
 					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
@@ -279,7 +283,7 @@ namespace EmotionalSystemBuff
 						return base.DescExtended().Replace("&a", damage.ToString());
 					}
 
-					public override void BuffStat()
+					public override void Init()
 					{
 						PlusPerStat.Damage = 40;
 						PlusStat.PlusCriDmg = 40;
@@ -301,7 +305,7 @@ namespace EmotionalSystemBuff
 						return base.DescExtended().Replace("&a", chance.ToString());
 					}
 
-					public override void BuffStat()
+					public override void Init()
 					{
 						PlusStat.Strength = true;
 						PlusStat.AggroPer = 60;
@@ -331,8 +335,14 @@ namespace EmotionalSystemBuff
 					}
 				}
 
-				public class Vines : Buff, IP_PlayerTurn_1
+				public class Vines : Buff, IP_PlayerTurn
 				{
+					public override string DescExtended()
+					{
+						int chance = (int)(BChar.GetStat.HIT_CC + 100);
+						return base.DescExtended().Replace("&a", chance.ToString());
+					}
+
 					public override void Init()
 					{
 						PlusStat.DMGTaken = -20;
@@ -341,37 +351,16 @@ namespace EmotionalSystemBuff
 						PlusStat.RES_DOT = 20f;
 					}
 
-					public void Turn1()
-					{
-						ApplyVines();
-					}
-
-					public void ApplyVines()
-					{
-						var enemies = Utils.EnemyTeam.AliveChars;
-						int index = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, enemies.Count);
-						var randomEnemy = enemies[index];
-
-						Utils.PlaySound("Floor_History_Vines");
-						Utils.AddDebuff(randomEnemy, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv2_Vines_0);
-					}
-				}
-
-				public class Vines_0 : Buff, IP_PlayerTurn
-				{
-					public override void BuffStat()
-					{
-						PlusStat.IgnoreTaunt_EnemySelf = true;
-						PlusStat.dod = -20;
-					}
-
 					public void Turn()
 					{
-						SelfDestroy();
+						foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+						{
+							Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionalSystem_Bind);
+						}
 					}
 				}
 
-				public class Vines_1 : Buff
+				public class Vines_0 : Buff
 				{
 					public override void Init()
 					{
@@ -382,6 +371,12 @@ namespace EmotionalSystemBuff
 
 				public class WorkerBee : Buff, IP_Hit, IP_Dodge
 				{
+					public override string DescExtended()
+					{
+						int chance = (int)(BChar.GetStat.HIT_DEBUFF + 150);
+						return base.DescExtended().Replace("&a", chance.ToString());
+					}
+
 					public override void BuffStat()
 					{
 						PlusStat.DMGTaken = 20f;
@@ -412,16 +407,11 @@ namespace EmotionalSystemBuff
 					}
 				}
 
-				public class WorkerBee_0 : Buff, IP_PlayerTurn
+				public class WorkerBee_0 : Buff
 				{
 					public override void BuffStat()
 					{
 						PlusStat.DMGTaken = 40f * StackNum;
-					}
-
-					public void Turn()
-					{
-						SelfDestroy();
 					}
 				}
 			}

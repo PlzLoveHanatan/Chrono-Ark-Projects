@@ -20,6 +20,11 @@ namespace EmotionalSystemSkill
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					Utils.PlaySound("Floor_Technological_DarkFlame");
+
+					foreach (var target in Utils.AllyTeam.AliveChars.Concat(Utils.EnemyTeam.AliveChars))
+					{
+						Utils.AddBuff(target, ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_DarkFlame_0);
+					}
 				}
 			}
 
@@ -48,7 +53,7 @@ namespace EmotionalSystemSkill
 
 					foreach (var target in Targets)
 					{
-						Utils.ApplyBleed(target, BChar, 15);
+						Utils.ApplyBleed(target, BChar, 10);
 					}
 				}
 			}

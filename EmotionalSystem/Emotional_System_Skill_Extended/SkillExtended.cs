@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EmotionalSystem;
 using EmotionalSystemBuff;
+using UnityEngine;
 using static EmotionalSystemBuff.EmotionsAlly;
 
 namespace EmotionalSystemSkillExtended
@@ -24,6 +25,16 @@ namespace EmotionalSystemSkillExtended
 		public class SeventhBullet : BuffSkillExHand
 		{
 
+		}
+
+		public class Friend : Skill_Extended
+		{
+			public override void Init()
+			{
+				PlusSkillPerFinal.Heal = 80;
+				PlusSkillPerFinal.Damage = 80;
+				MySkill.AutoDelete = 1;
+			}
 		}
 	}
 
@@ -105,7 +116,7 @@ namespace EmotionalSystemSkillExtended
 				UseEGO();
 			}
 
-			public void TurnUpdate()
+			public override void TurnUpdate()
 			{
 				if (NowCooldown > 0)
 				{
@@ -148,16 +159,23 @@ namespace EmotionalSystemSkillExtended
 
 			public void UseEGO()
 			{
-				if (OncePerFight)
+				try
 				{
-					EmotionalSystem_EGO_Button.instance?.RemoveEGOSkill(MySkill);
+					if (OncePerFight)
+					{
+						EmotionalSystem_EGO_Button.instance?.RemoveEGOSkill(MySkill);
+					}
+					else
+					{
+						NowCooldown = Cooldown;
+						BattleSystem.DelayInput(UpdateExtended());
+					}
+					BattleSystem.DelayInput(ChangeHand());
 				}
-				else
+				catch (Exception e)
 				{
-					NowCooldown = Cooldown;
-					BattleSystem.DelayInput(UpdateExtended());
+					Debug.Log(e.ToString());
 				}
-				BattleSystem.DelayInput(ChangeHand());
 			}
 
 			public IEnumerator ChangeHand()

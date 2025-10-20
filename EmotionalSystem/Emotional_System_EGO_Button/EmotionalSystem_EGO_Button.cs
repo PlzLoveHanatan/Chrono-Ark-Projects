@@ -7,7 +7,6 @@ using GameDataEditor;
 using Spine;
 using UnityEngine;
 using static EmotionalSystemSkillExtended.ExEGO;
-using static EmotionalSystem.DataStore;
 
 namespace EmotionalSystem
 {
@@ -85,7 +84,7 @@ namespace EmotionalSystem
 				var skill = Utils.AllyTeam.Skills[i];
 				skill.Remove();
 
-				if (ExceptSkills.Contains(skill.MySkill.KeyID))
+				if (DataStore.Instance.ExceptSkills.Contains(skill.MySkill.KeyID))
 				{
 					EGOHand.Add(skill);
 				}
@@ -117,7 +116,7 @@ namespace EmotionalSystem
 					Hand.Add(skill);
 				}
 
-				if (ExceptSkills.Contains(skill.MySkill.KeyID))
+				if (DataStore.Instance.ExceptSkills.Contains(skill.MySkill.KeyID))
 				{
 					EGOHand.Add(skill);
 				}

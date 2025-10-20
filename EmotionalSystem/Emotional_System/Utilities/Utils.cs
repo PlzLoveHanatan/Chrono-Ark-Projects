@@ -18,7 +18,6 @@ using DarkTonic.MasterAudio;
 using static EmotionalSystemBuff.Debuffs;
 using EmotionalSystemBuff;
 using UnityEngine.Playables;
-using static EmotionalSystem.DataStore;
 using static EmotionalSystem.LibraryFloor;
 
 
@@ -380,12 +379,16 @@ namespace EmotionalSystem
 
 		public static List<string> GetAllyAbnormalitySkill()
 		{
+			var instance = DataStore.Instance;
+
 			switch (CurrentFloorType)
 			{
 				case LibraryFloorType.History:
-					return AbnormalityData.HistoryKeys;
+					return instance.Abnormalities.HistoryKeys;
 				case LibraryFloorType.Technological:
-					return AbnormalityData.TechnologicalKeys;
+					return instance.Abnormalities.TechnologicalKeys;
+				case LibraryFloorType.Literature:
+					return instance.Abnormalities.LiteratureKeys;
 				default:
 					return new List<string>();
 			}
@@ -393,17 +396,21 @@ namespace EmotionalSystem
 
 		public static List<string> GetEnemyAbnormalitySkill()
 		{
-			return EnemyData.EnemyAbnormalityKeyList;
+			return DataStore.Instance.Enemies.EnemyAbnormalityKeyList;
 		}
 
 		public static List<string> GetEgoSkill()
 		{
+			var instance = DataStore.Instance;
+
 			switch (CurrentFloorType)
 			{
 				case LibraryFloorType.History:
-					return EGOData.HistoryKeyList;
+					return instance.EGO.HistoryKeyList;
 				case LibraryFloorType.Technological:
-					return EGOData.TechnologicalKeyList;
+					return instance.EGO.TechnologicalKeyList;
+				case LibraryFloorType.Literature:
+					return instance.EGO.LiteratureKeyList;
 				default:
 					return new List<string>();
 			}

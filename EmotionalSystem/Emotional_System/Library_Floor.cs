@@ -7,7 +7,7 @@ using EmotionalSystem;
 
 namespace EmotionalSystem
 {
-	public static class LibraryFloor
+	public class LibraryFloor
 	{
 		public static LibraryFloorType CurrentFloorType => (LibraryFloorType)ModManager.getModInfo("EmotionalSystem").GetSetting<DropdownSetting>("Library Floor").Value;
 
@@ -21,16 +21,24 @@ namespace EmotionalSystem
 			{
 				LibraryFloorType.History, new LibraryFloorData
 				{
-					Abnormalities = DataStore.AbnormalityData.History,
-					Egos = DataStore.EGOData.HistoryKeyList,
+					Abnormalities = DataStore.Instance.Abnormalities.History,
+					Egos = DataStore.Instance.EGO.HistoryKeyList,
 				}
 			},
 
 			{
 				LibraryFloorType.Technological, new LibraryFloorData
 				{
-					Abnormalities = DataStore.AbnormalityData.Technological,
-					Egos = DataStore.EGOData.TechnologicalKeyList,
+					Abnormalities = DataStore.Instance.Abnormalities.Technological,
+					Egos = DataStore.Instance.EGO.TechnologicalKeyList,
+				}
+			},
+
+			{
+				LibraryFloorType.Literature, new LibraryFloorData
+				{
+					Abnormalities = DataStore.Instance.Abnormalities.Literature,
+					Egos = DataStore.Instance.EGO.LiteratureKeyList,
 				}
 			},
 		};
@@ -39,7 +47,8 @@ namespace EmotionalSystem
 	public enum LibraryFloorType
 	{
 		History = 0,
-		Technological = 1
+		Technological = 1,
+		Literature = 2
 	}
 
 	public class LibraryFloorData

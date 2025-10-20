@@ -130,15 +130,16 @@ namespace EmotionalSystem
 		public static void AddEmotionLevel(this BattleChar bc, bool isForceLevelUp = false)
 		{
 			var emotion = bc.MyEmotion();
+			var emotionalLevel = Utils.ReturnBuff(bc, ModItemKeys.Buff_B_Ally_Emotional_Level) as EmotionalLevelAlly;
 
-			if (Utils.ReturnBuff(bc, ModItemKeys.Buff_B_Ally_Emotional_Level) is EmotionalLevelAlly buff)
+			if (emotionalLevel != null)
 			{
 				if (isForceLevelUp)
 				{
-					buff.EmotionsGainThisTurn--;
+					emotionalLevel.EmotionsCap = false;
 					emotion.CanGetCoin = true;
 				}
-				else if (buff.EmotionsGainThisTurn >= 2)
+				else if (emotionalLevel.EmotionsGainThisTurn >= 2)
 				{
 					return;
 				}
@@ -151,6 +152,11 @@ namespace EmotionalSystem
 			{
 				bc.GetPosEmotion();
 			}
+
+			if (emotionalLevel != null)
+			{
+				emotionalLevel.EmotionsCap = true;
+			}	
 		}
 
 		public static void ResetEmotionTurn(this BattleChar bc, int amount = 1)

@@ -96,6 +96,7 @@ namespace EmotionalSystemBuff
 			DynamicEGOList.AddRange(LibraryFloor.CurrentFloor.Egos);
 		}
 
+
 		public override void Init()
 		{
 			OnePassive = true;
@@ -136,13 +137,9 @@ namespace EmotionalSystemBuff
 			}
 		}
 
-		public IEnumerator LucyEmotionLevelUp(int level, bool? getPositiveOnly = null, bool? getNegativeOnly = null)
+		public IEnumerator LucyEmotionLevelUp(int level, bool? getPositiveOnly = null, bool? getNegativeOnly = null, bool? getRandomAbnormality = null)
 		{
-			// Если аргументы null, определяем по монетам
-			bool positive = getPositiveOnly ?? (AllPosCoinNum > AllNegCoinNum);
-			bool negative = getNegativeOnly ?? (AllPosCoinNum < AllNegCoinNum);
-
-			List<Abnormality> selectionList = GetAbnormalitiesByLevel(level, positive, negative);
+			List<Abnormality> selectionList = GetAbnormalitiesByLevel(level, getPositiveOnly, getNegativeOnly, getRandomAbnormality);
 
 			if (selectionList == null || selectionList.Count == 0)
 			{
@@ -156,101 +153,92 @@ namespace EmotionalSystemBuff
 				new SkillButton.SkillClickDel(GainAbnormality), ModLocalization.Select_Abnormality, false, false, true, false, true);
 		}
 
-		private List<Abnormality> GetAbnormalitiesByLevel(int level, bool getPositiveOnly = false, bool getNegativeOnly = false)
+		private List<Abnormality> GetAbnormalitiesByLevel(int level, bool? getPositiveOnly = null, bool? getNegativeOnly = null, bool? randomAbnormality = null)
 		{
 			List<Abnormality> list = new List<Abnormality>();
 
-			// Берем все аномалии до третьего уровня включительно
-			List<Abnormality> available = DynamicAbnormalityList.FindAll(abno => abno.Level <= 3);
+			int posAbnoCount = 0, negAbnoCount = 0; int AbnoLevel = 0;
 
-			int posCount = 0, negCount = 0;
-			int maxTotal = 3;
-
-			// Определяем ограничения по количеству аномалий для уровня
-			switch (level)
+			if (getPositiveOnly == true)
 			{
-				case 1:
-					available = available.FindAll(abno => abno.Level == 1);
-					posCount = negCount = 3;
-					break;
-				case 2:
-					available = available.FindAll(abno => abno.Level == 1 || abno.Level == 2);
-					posCount = 2; // lvl1
-					negCount = 1; // lvl2
-					break;
-				case 3:
-					available = available.FindAll(abno => abno.Level == 1 || abno.Level == 2);
-					posCount = 1; // lvl1
-					negCount = 2; // lvl2
-					break;
-				case 4:
-					available = available.FindAll(abno => abno.Level == 2);
-					posCount = negCount = available.Count; // берём все доступные
-					break;
-				case 5:
-					available = available.FindAll(abno => abno.Level == 3);
-					posCount = negCount = available.Count; // берём все доступные
-					break;
-			}
-
-			if (available.Count == 0)
-			{
-				Debug.LogWarning($"[LucyEmotion] Нет доступных аномалий для уровня {level}");
+				var allPositiveAbnormality = DynamicAbnormalityList.FindAll(a => a.Level == level && a.Type == AbnoType.Pos);
+				list.AddRange(allPositiveAbnormality);
 				return list;
 			}
-
-			// Если явно выбран Pos или Neg
-			if (getPositiveOnly)
+			else if (getNegativeOnly == true)
 			{
-				List<Abnormality> availablePos = available.FindAll(a => a.Type == AbnoType.Pos);
-				list.AddRange(availablePos.Random(BChar.GetRandomClass().SkillSelect, Math.Min(3, availablePos.Count)));
+				var allNegativeAbnormality = DynamicAbnormalityList.FindAll(a => a.Level == level && a.Type == AbnoType.Neg);
+				list.AddRange(allNegativeAbnormality);
+				return list;
 			}
-			else if (getNegativeOnly)
+			else if (randomAbnormality == true)
 			{
-				List<Abnormality> availableNeg = available.FindAll(a => a.Type == AbnoType.Neg);
-				list.AddRange(availableNeg.Random(BChar.GetRandomClass().SkillSelect, Math.Min(3, availableNeg.Count)));
+				var allRandomAbnormality = DynamicAbnormalityList.FindAll(a => a.Level == level && (a.Type == AbnoType.Neg || a.Type == AbnoType.Pos));
+				list.AddRange(allRandomAbnormality);
+				return list;
 			}
 			else
 			{
-				// Обычная селекция по монетам
-				List<Abnormality> availablePos = available.FindAll(a => a.Type == AbnoType.Pos);
-				List<Abnormality> availableNeg = available.FindAll(a => a.Type == AbnoType.Neg);
+				switch (level)
+				{
+					case 1: posAbnoCount = negAbnoCount = 3; AbnoLevel = 1; break;
+					case 2: posAbnoCount = 2; negAbnoCount = 1; AbnoLevel = 1; break;
+					case 3: posAbnoCount = 2; negAbnoCount = 1; AbnoLevel = 2; break;
+					case 4: posAbnoCount = negAbnoCount = 3; AbnoLevel = 2; break;
+					case 5: posAbnoCount = negAbnoCount = 3; AbnoLevel = 3; break;
+				}
 
+				// Определяем доступные аномалии по типу для текущего AbnoLevel
+				var availablePos = DynamicAbnormalityList.Where(a => a.Level == AbnoLevel && a.Type == AbnoType.Pos).ToList();
+				var availableNeg = DynamicAbnormalityList.Where(a => a.Level == AbnoLevel && a.Type == AbnoType.Neg).ToList();
+				var randomSeed = BChar.GetRandomClass().SkillSelect;
+
+				// Селекция
 				if (AllPosCoinNum >= AllNegCoinNum)
 				{
-					// Добавляем положительные аномалии
-					list.AddRange(availablePos.Random(BChar.GetRandomClass().SkillSelect, Math.Min(posCount, availablePos.Count)));
+					list.AddRange(availablePos.Random(randomSeed, Math.Min(posAbnoCount, availablePos.Count)));
 
-					// Если после добавления положительных меньше 3, добавляем отрицательные, но не больше нужного
 					if (list.Count < 3)
 					{
-						list.AddRange(availableNeg.Random(BChar.GetRandomClass().SkillSelect, Math.Min(3 - list.Count, availableNeg.Count)));
+						list.AddRange(availableNeg.Random(randomSeed, Math.Min(3 - list.Count, availableNeg.Count)));
 					}
 				}
 				else
 				{
-					// Переворачиваем порядок: сначала отрицательные
-					list.AddRange(availableNeg.Random(BChar.GetRandomClass().SkillSelect, Math.Min(negCount, availableNeg.Count)));
+					if (level == 2 || level == 3)
+					{
+						negAbnoCount = posAbnoCount;
+					}
+
+					list.AddRange(availableNeg.Random(randomSeed, Math.Min(negAbnoCount, availableNeg.Count)));
 
 					if (list.Count < 3)
 					{
-						list.AddRange(availablePos.Random(BChar.GetRandomClass().SkillSelect, Math.Min(3 - list.Count, availablePos.Count)));
+						list.AddRange(availablePos.Random(randomSeed, Math.Min(3 - list.Count, availablePos.Count)));
 					}
 				}
 
-			}
-
-			// Дозабор до 3 абнормалити
-			if (list.Count < 3)
-			{
-				List<Abnormality> remaining = available.Except(list).ToList();
-				if (remaining.Count > 0)
+				if (list.Count < 3)
 				{
-					list.AddRange(remaining.Random(BChar.GetRandomClass().SkillSelect, Math.Min(3 - list.Count, remaining.Count)));
+					FillAbnormalityList(list);
 				}
 			}
 
 			return list;
+		}
+
+		private void FillAbnormalityList(List<Abnormality> list)
+		{
+			if (list.Count >= 3) return;
+
+			var remaining = DynamicAbnormalityList.Where(a => a.Level <= 2 && !list.Contains(a)).ToList();
+
+			while (list.Count < 3 && list.Count > 0)
+			{
+				var pick = remaining.Random(1).First();
+				list.Add(pick);
+				remaining.Remove(pick);
+			}
 		}
 
 		private void SelectEgoOwner(SkillButton button)
@@ -279,6 +267,7 @@ namespace EmotionalSystemBuff
 			{
 				ModItemKeys.Skill_S_Abnormality_HistoryLv2_WorkerBee,
 				ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_Music,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv3_LovingFamily,
 			};
 
 			if (instantCastAbnormalities.Contains(key))

@@ -80,6 +80,36 @@ namespace EmotionalSystem
 			}
 		}
 
+		[HarmonyPatch(typeof(FieldSystem), "StageStart")]
+		public static class StagePatch
+		{
+			[HarmonyPostfix]
+			public static void StageStartPostfix()
+			{
+				if (IsCamp)
+				{
+					Scripts.ChargeLucyNeck();
+				}
+			}
+		}
+
+		public static bool IsCamp
+		{
+			get
+			{
+				StageSystem instance = StageSystem.instance;
+				string key = instance?.StageData?.Key;
+				return IsCampKey(key);
+			}
+		}
+
+		public static bool IsCampKey(string key)
+		{
+			return key == GDEItemKeys.Stage_Stage_Camp ||
+				   key == GDEItemKeys.Stage_Stage2_Camp ||
+				   key == GDEItemKeys.Stage_Stage3_Camp;
+		}
+
 		[HarmonyPatch(typeof(ResultUI))]
 		[HarmonyPatch(nameof(ResultUI.Init))]
 		class ResultScreenPatch
@@ -213,24 +243,18 @@ namespace EmotionalSystem
 				{
 					var instance = InvitationManager.Instance;
 
-					if (__instance.BossBattle && instance.InvitationActive && !instance.SpecialCase)
+					if (instance.InvitationActive)
 					{
 						int rewardsNum = instance.RewardMultiplier;
-
-						Debug.Log($"Current stage is {PlayData.TSavedata.StageNum}");
-
-						if (PlayData.TSavedata.StageNum == 4)
-						{
-							rewardsNum = 3;
-						}
-
 						instance.PrepareReceptionRewards(rewardsNum);
 						var rewards = instance.ReceptionRewards;
 						__instance.Reward.AddRange(rewards);
+						instance.InvitationActive = false;
 					}
 				}
 			}
 		}
+
 
 		[HarmonyPatch(typeof(BloodyMist), "DoubleBattle")]
 		public static class WhiteGrave
@@ -238,28 +262,32 @@ namespace EmotionalSystem
 			[HarmonyPrefix]
 			public static bool Prefix(BloodyMist __instance)
 			{
-				if (Utils.BossInvitations && PlayData.TSavedata.bMist != null && PlayData.TSavedata.bMist.Level == 4)
+				if (Utils.BossInvitations)
 				{
 					__instance.Level4DoubleBoss = true;
 
-					List<ItemBase> blooMist4Rewards = new List<ItemBase>
-					{
-						ItemBase.GetItem(GDEItemKeys.Item_Consume_ArtifactPouch),
-						ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy)
-					};
-					InventoryManager.Reward(blooMist4Rewards);
+					var instance = InvitationManager.Instance;
+					List<ItemBase> items = new List<ItemBase>();
 
 					if (InvitationManager.Instance.SpecialCase)
 					{
-						InvitationManager.Instance.StartNewReception(GDEItemKeys.EnemyQueue_Queue_S3_Reaper);
 						InvitationManager.Instance.SpecialCase = false;
+						instance.PrepareReceptionRewards(3);
+						var rewards = instance.ReceptionRewards;
+						items.AddRange(rewards);
+						InvitationManager.Instance.StartNewReception(GDEItemKeys.EnemyQueue_Queue_S3_Reaper);
 					}
+
+					if (items.Count > 0)
+					{
+						InventoryManager.Reward(items);
+					}
+					
 					return false;
 				}
 				return true;
 			}
 		}
-
 
 		[HarmonyPatch(typeof(Buff), nameof(Buff.SelfDestroy))]
 		public static class ReceptionCleaing

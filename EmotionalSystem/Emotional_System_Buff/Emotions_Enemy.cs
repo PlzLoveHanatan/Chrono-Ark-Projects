@@ -20,7 +20,6 @@ using static BattleChar;
 using System.Reflection;
 using Steamworks;
 using static EmotionalSystemBuff.EmotionsAlly;
-using static EmotionalSystem.DataStore;
 using EmotionalSystem;
 
 namespace EmotionalSystemBuff
@@ -60,7 +59,7 @@ namespace EmotionalSystemBuff
 				{
 					EnemyTeamLevel.Instance.LastEmotionalLevel = 0;
 					EnemyTeamLevel.Instance.AbnormalityList.Clear();
-					EnemyTeamLevel.Instance.AbnormalityList.AddRange(EnemyData.AbnormalityEnemy);
+					EnemyTeamLevel.Instance.AbnormalityList.AddRange(DataStore.Instance.Enemies.AbnormalityEnemy);
 				}
 
 				Emotion = BChar.UI.transform.GetChild(0)?.GetComponentInChildren<CharEmotion>();
@@ -160,11 +159,11 @@ namespace EmotionalSystemBuff
 					}
 				}
 
-				if (DeadChar == BChar && DeadChar.EmotionLevel() >= 4 && DeadChar is BattleEnemy enemy && enemy.Boss)
-				{
-					//int randomNum = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
-					BattleSystem.instance.Reward.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, 1));
-				}
+				//if (DeadChar == BChar && DeadChar.EmotionLevel() >= 4 && DeadChar is BattleEnemy enemy && enemy.Boss)
+				//{
+				//	//int randomNum = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 3);
+				//	BattleSystem.instance.Reward.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, 1));
+				//}
 			}
 
 			public void Dodge(BattleChar Char, SkillParticle SP)
@@ -254,10 +253,10 @@ namespace EmotionalSystemBuff
 				{
 					Skill skill;
 
-					if (EnemyData.BossActions.ContainsKey(BChar.Info.KeyData))
+					if (DataStore.Instance.Enemies.BossActions.ContainsKey(BChar.Info.KeyData))
 					{
 						// predefined action for original game's enemies
-						var actions = EnemyData.BossActions[BChar.Info.KeyData];
+						var actions = DataStore.Instance.Enemies.BossActions[BChar.Info.KeyData];
 						var action = actions.Random(BChar.GetRandomClass().SkillSelect);
 						skill = Skill.TempSkill(action, BChar, BChar.MyTeam);
 					}
@@ -385,7 +384,7 @@ namespace EmotionalSystemBuff
 				HighestEmotionLevel = 0;
 				BS = bs;
 				AbnormalityList.Clear();
-				AbnormalityList.AddRange(EnemyData.AbnormalityEnemy);
+				AbnormalityList.AddRange(DataStore.Instance.Enemies.AbnormalityEnemy);
 			}
 
 			public List<Abnormality> AbnormalityList = new List<Abnormality>();
@@ -557,7 +556,7 @@ namespace EmotionalSystemBuff
 				{
 					if (enemy.Boss)
 					{
-						if (EnemyData.BannedBossAbnormality.TryGetValue(bc.Info.KeyData, out var bannedList))
+						if (DataStore.Instance.Enemies.BannedBossAbnormality.TryGetValue(bc.Info.KeyData, out var bannedList))
 						{
 							return bannedList.Contains(abnoName);
 						}
@@ -565,7 +564,7 @@ namespace EmotionalSystemBuff
 					}
 					else
 					{
-						if (EnemyData.BannedEnemyAbnormality.TryGetValue(bc.Info.KeyData, out var bannedList))
+						if (DataStore.Instance.Enemies.BannedEnemyAbnormality.TryGetValue(bc.Info.KeyData, out var bannedList))
 						{
 							return bannedList.Contains(abnoName);
 						}

@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using EmotionalSystem;
 using EmotionSystem;
+using Unity.Collections.LowLevel.Unsafe;
 
 namespace EmotionalSystemBuff
 {
 	public class Debuffs
 	{
-		public class Bleed : Buff, IP_BuffObject_Updata
+		public class Bleed : Buff, IP_BuffObject_Updata, IP_TurnEnd
 		{
 			public int CurrentBleed;
 
@@ -33,6 +34,14 @@ namespace EmotionalSystemBuff
 			public override void Init()
 			{
 				isStackDestroy = true;
+			}
+
+			public void TurnEnd()
+			{
+				if (CurrentBleed <= 1)
+				{
+					SelfDestroy();
+				}
 			}
 
 			public override void TurnUpdate()
@@ -68,7 +77,6 @@ namespace EmotionalSystemBuff
 
 			public override void Init()
 			{
-				OnePassive = true;
 				isStackDestroy = true;
 			}
 
@@ -80,18 +88,18 @@ namespace EmotionalSystemBuff
 				{
 					CurrentBurn -= CurrentBurn / 3;
 				}
-				else
+				else if (CurrentBurn <= 1)
 				{
-					CurrentBurn = 1;
+					SelfDestroy();
 				}
 			}
 		}
 
 		public class Paralysis : Buff, IP_SkillUse_User_After
 		{
-			public override void Init()
+			public override void BuffStat()
 			{
-				PlusPerStat.Damage = -20;
+				PlusPerStat.Damage = -10 * StackNum;
 			}
 
 			public void SkillUseAfter(Skill SkillD)
@@ -100,6 +108,52 @@ namespace EmotionalSystemBuff
 				{
 					SelfDestroy();
 				}
+			}
+		}
+
+		public class Bind : Buff, IP_PlayerTurn
+		{
+			public override void BuffStat()
+			{
+				PlusStat.spd = 1;
+				PlusStat.dod = -10 * StackNum;
+			}
+
+			public void Turn()
+			{
+				SelfStackDestroy();
+			}
+		}
+
+		public class Fragile : Buff, IP_DamageTake
+		{
+			public override void BuffStat()
+			{
+				PlusStat.DMGTaken = 10 * StackNum;
+			}
+
+			public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
+			{
+				if (Dmg >= 1)
+				{
+					SelfStackDestroy();
+				}
+			}
+		}
+
+		public class Disarm : Buff
+		{
+			public override void BuffStat()
+			{
+				PlusStat.def = -10 * StackNum;
+			}
+		}
+
+		public class Feeble : Buff
+		{
+			public override void BuffStat()
+			{
+				PlusPerStat.Damage = -10 * StackNum;
 			}
 		}
 
@@ -112,7 +166,6 @@ namespace EmotionalSystemBuff
 					SelfDestroy();
 				}
 			}
-
 
 			public override void Init()
 			{

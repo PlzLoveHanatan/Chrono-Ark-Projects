@@ -165,24 +165,25 @@ namespace EmotionalSystemBuff
 
 				public void Dodge(BattleChar Char, SkillParticle SP)
 				{
-					bool inflictDebuff = false;
+					//bool inflictDebuff = false;
 
-					foreach (var buff in SP.SkillData.ReturnTargetBuffs())
-					{
-						if (buff == null || buff.BuffData == null) continue;
+					//foreach (var buff in SP.SkillData.ReturnTargetBuffs())
+					//{
+					//	if (buff == null || buff.BuffData == null) continue;
 
-						GDEBuffData gdebuffData = new GDEBuffData(buff.BuffData.Key);
+					//	GDEBuffData gdebuffData = new GDEBuffData(buff.BuffData.Key);
 
-						if (gdebuffData.BuffTag.Key != "null" && gdebuffData.Debuff)
-						{
-							inflictDebuff = true;
-							break;
-						}
-					}
+					//	if (gdebuffData.BuffTag.Key != "null" && gdebuffData.Debuff)
+					//	{
+					//		inflictDebuff = true;
+					//		break;
+
+					//	}
+					//}
 
 					if (Char == BChar)
 					{
-						if (SP.SkillData.IsDamage && !SP.UseStatus.IsLucy && !SP.UseStatus.Dummy && !inflictDebuff)
+						if (SP.SkillData.IsDamage && !SP.UseStatus.IsLucy && !SP.UseStatus.Dummy)
 						{
 							ChangeBoolState();
 							SelfDestroy();
@@ -366,13 +367,13 @@ namespace EmotionalSystemBuff
 
 				public override string DescExtended()
 				{
-					int thershold = BChar.EmotionLevel() * 20;
+					int thershold = BChar.EmotionLevel() * 15;
 					return base.DescExtended().Replace("&a", thershold.ToString()).Replace("&b", turnsBeforeRemove.ToString());
 				}
 
 				public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 				{
-					int thershold = BChar.EmotionLevel() * 20;
+					int thershold = BChar.EmotionLevel() * 15;
 
 					if (Dmg >= thershold)
 					{

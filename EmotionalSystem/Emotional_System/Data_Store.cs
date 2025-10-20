@@ -24,7 +24,11 @@ namespace EmotionalSystem
 			}
 		}
 
-		public Synchronize Sync { get; } = new Synchronize();
+		public Synchronize Synchronization { get; } = new Synchronize();
+		public AbnormalityData Abnormalities { get; } = new AbnormalityData();
+		public EGOData EGO { get; } = new EGOData();
+		public EnemyData Enemies { get; } = new EnemyData();
+		public VisualUi Visual { get; } = new VisualUi();
 
 		public class Synchronize
 		{
@@ -38,7 +42,7 @@ namespace EmotionalSystem
 				public List<string> FixedAbility { get; } = new List<string>();
 			}
 
-			public static readonly List<string> DerSkills = new List<string>
+			public readonly List<string> DerSkills = new List<string>
 			{
 				ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_FloodingBullets,
 				ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_FloodingBullets,
@@ -53,7 +57,7 @@ namespace EmotionalSystem
 
 		public class AbnormalityData
 		{
-			public static readonly List<Abnormality> History = new List<Abnormality>
+			public readonly List<Abnormality> History = new List<Abnormality>
 			{
 				// Lv1 — Positive
 				new Abnormality(ModItemKeys.Skill_S_Abnormality_HistoryLv1_Ashes, AbnoType.Pos, 1),
@@ -81,7 +85,7 @@ namespace EmotionalSystem
 				new Abnormality(ModItemKeys.Skill_S_Abnormality_HistoryLv3_Loyalty, AbnoType.Neg, 3),
 			};
 
-			public static List<string> HistoryKeys = new List<string>
+			public readonly List<string> HistoryKeys = new List<string>
 			{
 				// Lv1 — Positive
 				ModItemKeys.Skill_S_Abnormality_HistoryLv1_Ashes,
@@ -109,7 +113,7 @@ namespace EmotionalSystem
 				ModItemKeys.Skill_S_Abnormality_HistoryLv3_Loyalty,
 			};
 
-			public static readonly List<Abnormality> Technological = new List<Abnormality>
+			public readonly List<Abnormality> Technological = new List<Abnormality>
 			{
 				// Lv1 — Positive
 				new Abnormality(ModItemKeys.Skill_S_Abnormality_TechnologicalLv1_MetallicRinging, AbnoType.Pos, 1),
@@ -137,12 +141,12 @@ namespace EmotionalSystem
 				new Abnormality(ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_DarkFlame, AbnoType.Neg, 3),
 			};
 
-			public static List<string> TechnologicalKeys = new List<string>
+			public readonly List<string> TechnologicalKeys = new List<string>
 			{
 				// Lv1 — Positive
 				ModItemKeys.Skill_S_Abnormality_TechnologicalLv1_MetallicRinging,
 				ModItemKeys.Skill_S_Abnormality_TechnologicalLv1_RepetitivePattern,
-				ModItemKeys.Buff_B_Abnormality_TechnologicalLv1_Request,
+				ModItemKeys.Skill_S_Abnormality_TechnologicalLv1_Request,
 
 				// Lv1 — Negative
 				ModItemKeys.Skill_S_Abnormality_TechnologicalLv1_Lament,
@@ -164,11 +168,67 @@ namespace EmotionalSystem
 				ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_Music,
 				ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_DarkFlame,
 			};
+
+			public readonly List<Abnormality> Literature = new List<Abnormality>
+			{
+				// Lv1 — Positive
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv1_Cocoon, AbnoType.Pos, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv1_SocialDistancing, AbnoType.Pos, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv1_SurpriseGift, AbnoType.Pos, 1),
+
+				// Lv1 — Negative
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv1_Axe, AbnoType.Neg, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv1_Glitter, AbnoType.Neg, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv1_LookDay, AbnoType.Neg, 1),
+
+				// Lv2 — Positive
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Alertness, AbnoType.Pos, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Meal, AbnoType.Pos, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Shyness, AbnoType.Pos, 2),
+
+				// Lv2 — Negative
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Friend, AbnoType.Neg, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv2_FunnyPrank, AbnoType.Neg, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Obsession, AbnoType.Neg, 2),
+				
+				// Lv3
+				new Abnormality(ModItemKeys.Buff_B_Abnormality_LiteratureLv3_GooeyWaste, AbnoType.Pos, 3),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv3_LovingFamily, AbnoType.Pos, 3),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv3_WornParasol, AbnoType.Neg, 3),
+			};
+
+			public readonly List<string> LiteratureKeys = new List<string>
+			{
+				// Lv1 — Positive
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv1_Cocoon,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv1_SocialDistancing,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv1_SurpriseGift,
+
+				// Lv1 — Negative
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv1_Axe,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv1_Glitter,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv1_LookDay,
+				
+				// Lv2 — Positive
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Alertness,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Meal,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Shyness,
+
+				// Lv2 — Negative
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Friend,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv2_FunnyPrank,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Obsession,
+				
+				// Lv3
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv3_GooeyWaste,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv3_LovingFamily,
+				ModItemKeys.Skill_S_Abnormality_Literature_Lv3_WornParasol,
+			};
 		}
 
 		public class EGOData
 		{
-			public static readonly List<string> HistoryKeyList = new List<string>
+			public readonly List<string> HistoryKeyList = new List<string>
 			{
 				ModItemKeys.Skill_S_EGO_History_FourthMatchFlame,
 				ModItemKeys.Skill_S_EGO_History_GreenStem,
@@ -177,7 +237,7 @@ namespace EmotionalSystem
 				ModItemKeys.Skill_S_EGO_History_Wingbeat,
 			};
 
-			public static readonly List<string> TechnologicalKeyList = new List<string>
+			public readonly List<string> TechnologicalKeyList = new List<string>
 			{
 				ModItemKeys.Skill_S_EGO_Technological_GrinderMk,
 				ModItemKeys.Skill_S_EGO_Technological_Harmony,
@@ -185,12 +245,21 @@ namespace EmotionalSystem
 				ModItemKeys.Skill_S_EGO_Technological_Regret,
 				ModItemKeys.Skill_S_EGO_Technological_SolemnLament,
 			};
+
+			public readonly List<string> LiteratureKeyList = new List<string>
+			{
+				ModItemKeys.Skill_S_EGO_Literature_BlackSwan,
+				ModItemKeys.Skill_S_EGO_Literature_Laetitia,
+				ModItemKeys.Skill_S_EGO_Literature_RedEyes,
+				ModItemKeys.Skill_S_EGO_Literature_SanguineDesire,
+				ModItemKeys.Skill_S_EGO_Literature_TodayExpression,
+			};
 		}
 
 
 		public class EnemyData
 		{
-			public static readonly List<Abnormality> AbnormalityEnemy = new List<Abnormality>
+			public readonly List<Abnormality> AbnormalityEnemy = new List<Abnormality>
 			{
 				new Abnormality(ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair, AbnoType.Neg, 1),
 				new Abnormality(ModItemKeys.Buff_B_Abnormality_GuestLv1_Stress, AbnoType.Neg, 1),
@@ -213,7 +282,7 @@ namespace EmotionalSystem
 				new Abnormality(ModItemKeys.Buff_B_Abnormality_GuestLv3_CycleCurse, AbnoType.Neg, 3),
 			};
 
-			public static readonly Dictionary<string, List<string>> BossActions = new Dictionary<string, List<string>>()
+			public readonly Dictionary<string, List<string>> BossActions = new Dictionary<string, List<string>>()
 			{
 				{ GDEItemKeys.Enemy_MBoss_0, new List<string> { GDEItemKeys.Skill_S_MBoss_0, GDEItemKeys.Skill_S_MBoss_1, GDEItemKeys.Skill_S_MBoss_2 } },
 				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { GDEItemKeys.Skill_S_Armor_0, GDEItemKeys.Skill_S_Armor_2, GDEItemKeys.Skill_S_Armor_3 } },
@@ -239,7 +308,7 @@ namespace EmotionalSystem
 				{ GDEItemKeys.Enemy_ProgramMaster_0, new List<string> { GDEItemKeys.Skill_S_ProgramMaster_0_Bomb } },
 			};
 
-			public static readonly Dictionary<string, List<string>> BannedBossAbnormality = new Dictionary<string, List<string>>()
+			public readonly Dictionary<string, List<string>> BannedBossAbnormality = new Dictionary<string, List<string>>()
 			{
 				{ GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
 				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
@@ -264,7 +333,7 @@ namespace EmotionalSystem
 				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
 			};
 
-			public static readonly Dictionary<string, List<string>> BannedEnemyAbnormality = new Dictionary<string, List<string>>()
+			public readonly Dictionary<string, List<string>> BannedEnemyAbnormality = new Dictionary<string, List<string>>()
 			{
 				{ GDEItemKeys.Enemy_S2_Ballon, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_S2_BoomBalloon, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
@@ -284,7 +353,7 @@ namespace EmotionalSystem
 			//	ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity,
 			//};
 
-			public static List<string> EnemyAbnormalityKeyList = new List<string>
+			public readonly List<string> EnemyAbnormalityKeyList = new List<string>
 			{
 				// Lv1 — Positive
 				ModItemKeys.Skill_S_Abnormality_GuestLv1_GiantMushroom,
@@ -315,13 +384,43 @@ namespace EmotionalSystem
 
 		}
 
-		public static List<string> ExceptSkills = new List<string>
+		public class VisualUi
+		{
+			public enum SpriteTypeFace
+			{
+				Face_VeryHappy,
+				Face_Happy,
+				Face_Normal,
+				Face_Angry,
+				Face_VeryAngry,
+			}
+
+			public readonly Dictionary<SpriteTypeFace, string> SpritePathsFace = new Dictionary<SpriteTypeFace, string>()
+			{
+				{ SpriteTypeFace.Face_VeryHappy, "Visual/Face/VeryHappy.png" },
+				{ SpriteTypeFace.Face_Happy, "Visual/Face/Happy.png" },
+				{ SpriteTypeFace.Face_Normal, "Visual/Face/Normal.png" },
+				{ SpriteTypeFace.Face_Angry, "Visual/Face/Angry.png" },
+				{ SpriteTypeFace.Face_VeryAngry, "Visual/Face/VeryAngry.png" },
+			};
+
+			public readonly List<string> FaceKeys = new List<string>
+			{
+				"Face_VeryHappy",
+				"Face_Happy",
+				"Face_Normal",
+				"Face_Angry",
+				"Face_VeryAngry",
+			};
+		}
+
+		public readonly List<string> ExceptSkills = new List<string>
 		{
 			GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard,
 			//GDEItemKeys.Skill_S_Momori_P
 		};
 
-		public static List<string> LucyNecklace = new List<string>
+		public readonly List<string> LucyNecklace = new List<string>
 		{
 			GDEItemKeys.Item_Active_LucysNecklace,
 			GDEItemKeys.Item_Active_LucysNecklace2,

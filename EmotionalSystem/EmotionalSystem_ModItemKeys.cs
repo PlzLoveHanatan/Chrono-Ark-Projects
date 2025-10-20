@@ -154,21 +154,16 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_HistoryLv2_Spores = "B_Abnormality_HistoryLv2_Spores";
 		/// <summary>
 		/// Vines
-		/// At the start of each turn, apply <color=#C3CBD8>Entangled</color> to a random enemy.
+		/// At the start of each turn, apply <color=orange>Bind</color> (<sprite=2> &a%) to all enemies.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_Vines = "B_Abnormality_HistoryLv2_Vines";
 		/// <summary>
-		/// <color=#C3CBD8>Entangled</color>
-		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.
+		/// Vines of Despair
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_Vines_0 = "B_Abnormality_HistoryLv2_Vines_0";
 		/// <summary>
-		/// Vines of Despair
-		/// </summary>
-        public static string Buff_B_Abnormality_HistoryLv2_Vines_1 = "B_Abnormality_HistoryLv2_Vines_1";
-		/// <summary>
 		/// Worker Bee
-		/// Inflict <color=red>Pollen</color> to the attacker.
+		/// Inflict <color=red>Pollen</color> (<sprite=0> &a%) to the attacker.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_WorkerBee = "B_Abnormality_HistoryLv2_WorkerBee";
 		/// <summary>
@@ -188,8 +183,87 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv3_Malice = "B_Abnormality_HistoryLv3_Malice";
 		/// <summary>
+		/// Axe
+		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(10% Max Health)</color> if you don't deal any damage this turn.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv1_Axe = "B_Abnormality_LiteratureLv1_Axe";
+		/// <summary>
+		/// Cocoon
+		/// Attacks inflict <color=#F0FF64>Paralysis</color> (<sprite=0> &a%), <color=red>Fragile</color> (<sprite=0> &a%) and <color=orange>Bind</color> (<sprite=2> &b%) to the target's. Only activates once per turn.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv1_Cocoon = "B_Abnormality_LiteratureLv1_Cocoon";
+		/// <summary>
+		/// Glitter
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv1_Glitter = "B_Abnormality_LiteratureLv1_Glitter";
+		/// <summary>
+		/// Look of the Day
+		/// Increase Attack Power depending on the curent face (Min -40%, Max +40%).
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv1_LookDay = "B_Abnormality_LiteratureLv1_LookDay";
+		/// <summary>
+		/// Social Distancing
+		/// When attacked, counter attack for &a <color=#FF7C34>(50% Armor)</color> (Max 15).
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv1_SocialDistancing = "B_Abnormality_LiteratureLv1_SocialDistancing";
+		/// <summary>
+		/// Surprise Gift
+		/// Attacks inflict 'Surprise Gift'.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv1_SurpriseGift = "B_Abnormality_LiteratureLv1_SurpriseGift";
+		/// <summary>
+		/// Surprise Gift
+		/// At 2 stacks gain 1 <color=red>Bleed</color>.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv1_SurpriseGift_0 = "B_Abnormality_LiteratureLv1_SurpriseGift_0";
+		/// <summary>
+		/// Alertness
+		/// Attacks inflict <color=#F0FF64>Paralysis</color> (<sprite=0> &a%), <color=red>Fragile</color> (<sprite=0> &a%) and  <color=orange>Bind</color> (<sprite=2> &b%) to the target's. Only activates twice per turn.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv2_Alertness = "B_Abnormality_LiteratureLv2_Alertness";
+		/// <summary>
+		/// Friend
+		/// At the start of each Scene apply 'Friend' (Discarded after 1 turn, damage/healing increased by 80%) status to 2 random pages in hand.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv2_Friend = "B_Abnormality_LiteratureLv2_Friend";
+		/// <summary>
+		/// Funny Prank
+		/// Attacks have 50% to gain guaranteed critical.
+		/// Take non-lethal <color=purple>&a Pain damage</color> <color=#FF7C34>(20% Max Health)</color> when the attack is not critical.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv2_FunnyPrank = "B_Abnormality_LiteratureLv2_FunnyPrank";
+		/// <summary>
+		/// Meal
+		/// Heal 20% of all damage dealt.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv2_Meal = "B_Abnormality_LiteratureLv2_Meal";
+		/// <summary>
+		/// Obsession
+		/// Attack inflict 2 <color=red>Bleed</color>.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv2_Obsession = "B_Abnormality_LiteratureLv2_Obsession";
+		/// <summary>
+		/// Shyness
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv2_Shyness = "B_Abnormality_LiteratureLv2_Shyness";
+		/// <summary>
+		/// Gooey Waste
+		/// Attacks inflict <color=#F0FF64>Paralysis</color> (<sprite=0> &a%), <color=red>Fragile</color> (<sprite=0> &a%), <color=orange>Bind</color> (<sprite=2> &b%) and <color=red>Bleed</color> (<sprite=1> &c%) to the target's.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv3_GooeyWaste = "B_Abnormality_LiteratureLv3_GooeyWaste";
+		/// <summary>
+		/// Loving Family
+		/// Nullify incoming damage and remove 1 stack.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv3_LovingFamily = "B_Abnormality_LiteratureLv3_LovingFamily";
+		/// <summary>
+		/// Well-worn Parasol
+		/// Gain 50% chance to nullify incoming damage and reflect double damage to the attacker.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv3_WornParasol = "B_Abnormality_LiteratureLv3_WornParasol";
+		/// <summary>
 		/// Lament
-		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> equal <color=#FF7C34>(10% Max Health)</color>.
+		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(10% Max Health)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv1_Lament = "B_Abnormality_TechnologicalLv1_Lament";
 		/// <summary>
@@ -218,7 +292,7 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_TechnologicalLv1_Rhythm = "B_Abnormality_TechnologicalLv1_Rhythm";
 		/// <summary>
 		/// Violence
-		/// Attack deal 50~250% of damage.
+		/// Attack deal 0~300% of damage.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv1_Violence = "B_Abnormality_TechnologicalLv1_Violence";
 		/// <summary>
@@ -227,12 +301,12 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_ChainedWrath = "B_Abnormality_TechnologicalLv2_ChainedWrath";
 		/// <summary>
 		/// Clean
-		/// Deal 20% more damage if the target's doesn't have Action Count or Action Count 9+.
+		/// Restore 1 Mana upon landing a critical hit. Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_Clean = "B_Abnormality_TechnologicalLv2_Clean";
 		/// <summary>
 		/// Eternal Rest
-		/// whener you hit more then 10% damage of the target's Max Health, apply stun (<sprite=2>&a%) to the target's. Only activates once per turn.
+		/// Whenever you deal more than 10% of the target's Max Health as damage, apply Stun (<sprite=2>&a%) to the target.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_EternalRest = "B_Abnormality_TechnologicalLv2_EternalRest";
 		/// <summary>
@@ -241,7 +315,7 @@ namespace EmotionalSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_MusicalAddiction = "B_Abnormality_TechnologicalLv2_MusicalAddiction";
 		/// <summary>
 		/// Recharge
-		/// Gain 2 Mana whenever you defeat an enemy.
+		/// Gain 1 Mana at the start of each turn.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_Recharge = "B_Abnormality_TechnologicalLv2_Recharge";
 		/// <summary>
@@ -288,6 +362,11 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Buff_B_EGO_Technological_MagicBullet = "B_EGO_Technological_MagicBullet";
 		/// <summary>
+		/// <color=orange>Bind</color>
+		/// Removed at the start of the next turn.
+		/// </summary>
+        public static string Buff_B_EmotionalSystem_Bind = "B_EmotionalSystem_Bind";
+		/// <summary>
 		/// <color=red>Bleed</color>
 		/// Description
 		/// </summary>
@@ -297,6 +376,19 @@ namespace EmotionalSystem
 		/// Description
 		/// </summary>
         public static string Buff_B_EmotionalSystem_Burn = "B_EmotionalSystem_Burn";
+		/// <summary>
+		/// Disarm
+		/// </summary>
+        public static string Buff_B_EmotionalSystem_Disarm = "B_EmotionalSystem_Disarm";
+		/// <summary>
+		/// Feeble
+		/// </summary>
+        public static string Buff_B_EmotionalSystem_Feeble = "B_EmotionalSystem_Feeble";
+		/// <summary>
+		/// <color=red>Fragile</color>
+		/// Remove 1 stack when taking damage.
+		/// </summary>
+        public static string Buff_B_EmotionalSystem_Fragile = "B_EmotionalSystem_Fragile";
 		/// <summary>
 		/// <color=#F0FF64>Paralysis</color>
 		/// The effect remains until next attack.
@@ -335,9 +427,18 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Buff_B_Potion_PureTune = "B_Potion_PureTune";
 		/// <summary>
+		/// Dreaming Current
+		/// Learn 1 <color=#00FFFF>Unique</color>  Lucy draw skill.
+		/// </summary>
+        public static string Item_Consume_C_EmotionalSystem_DreamingCurrent = "C_EmotionalSystem_DreamingCurrent";
+		/// <summary>
 		/// Passive:
 		/// </summary>
         public static string Character_EmotionalSystem_Floor_History = "EmotionalSystem_Floor_History";
+		/// <summary>
+		/// Passive:
+		/// </summary>
+        public static string Character_EmotionalSystem_Floor_Literature = "EmotionalSystem_Floor_Literature";
 		/// <summary>
 		/// Passive:
 		/// </summary>
@@ -346,6 +447,11 @@ namespace EmotionalSystem
 		/// Passive:
 		/// </summary>
         public static string Character_EmotionalSystem_Guest = "EmotionalSystem_Guest";
+		/// <summary>
+		/// Friend
+		/// This skill's damage/healing is increased by 80%.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_Friend = "Ex_Abnormality_Friend";
 		/// <summary>
 		/// Happy Memories
 		/// The first skill played from hand costs 1 less.
@@ -404,10 +510,15 @@ namespace EmotionalSystem
         public static string SkillKeyword_Keyword_Abnormality_Lv3 = "Keyword_Abnormality_Lv3";
 		/// <summary>
 		/// <color=#6291EC>Requested Target</color>
-		/// Evade -10%
+		/// Receiving Damage +10%
 		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_Request = "KeyWord_Abnormality_Request";
+		/// <summary>
+		/// Surprise Gift
+		/// At 2 stacks gain 1 <color=red>Bleed</color>.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Abnormality_SurpriseGift = "KeyWord_Abnormality_SurpriseGift";
 		/// <summary>
 		/// <color=#C3CBD8>Entangled</color>
 		/// Evade -20%
@@ -417,10 +528,16 @@ namespace EmotionalSystem
 		/// <summary>
 		/// <color=red>Pollen</color>
 		/// Receiving Damage +40%
-		/// Removed at the start of the next turn.
 		/// Max 3 stacks
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_WorkerBee = "KeyWord_Abnormality_WorkerBee";
+		/// <summary>
+		/// <color=orange>Bind</color>
+		/// Speed +1 (Max 1)
+		/// Evade -20%
+		/// Max 5 stacks.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Bind = "KeyWord_Bind";
 		/// <summary>
 		/// <color=red>Bleed</color>
 		/// Base<sprite=1> 100%
@@ -434,7 +551,8 @@ namespace EmotionalSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_Burn = "KeyWord_Burn";
 		/// <summary>
-		/// E.G.O.
+		/// <color=#FFDF00>E.G.O.</color>
+		/// Cannot be dodged.
 		/// </summary>
         public static string SkillKeyword_KeyWord_EGO = "KeyWord_EGO";
 		/// <summary>
@@ -453,9 +571,17 @@ namespace EmotionalSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_EGO_Synchronize_Skill = "KeyWord_EGO_Synchronize_Skill";
 		/// <summary>
+		/// <color=red>Fragile</color>
+		/// Receiving damage +10%
+		/// Remove 1 stack when taking damage.
+		/// Max 5 stacks.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Fragile = "KeyWord_Fragile";
+		/// <summary>
 		/// <color=#F0FF64>Paralysis</color>
-		/// Attack Power -20%
+		/// Attack Power -10%
 		/// The effect remains until next attack.
+		/// Max 5 stacks.
 		/// </summary>
         public static string SkillKeyword_KeyWord_Paralysis = "KeyWord_Paralysis";
 		/// <summary>
@@ -495,6 +621,13 @@ namespace EmotionalSystem
 		/// <color=#919191>Wind up the spring, and cure the ailing mind.</color>
 		/// </summary>
         public static string Item_Potions_P_EmotionalSystem_PureTune = "P_EmotionalSystem_PureTune";
+		/// <summary>
+		/// Golden Sound
+		/// At the start of the turn draw 1 additional skill.
+		/// All allies gain 2 <color=green>Positive</color> Emotional Coins.
+		/// <color=#919191>Remember this melody? With love, Theresia.</color>
+		/// </summary>
+        public static string Item_Passive_R_EmotionalSystem_GoldenSound = "R_EmotionalSystem_GoldenSound";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_Despair = "SE_S_S_Abnormality_GuestLv1_Despair";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_GiantMushroom = "SE_S_S_Abnormality_GuestLv1_GiantMushroom";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_RainbowSea = "SE_S_S_Abnormality_GuestLv1_RainbowSea";
@@ -511,6 +644,7 @@ namespace EmotionalSystem
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv3_Bait = "SE_S_S_Abnormality_GuestLv3_Bait";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv3_CycleCurse = "SE_S_S_Abnormality_GuestLv3_CycleCurse";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv3_DimensionalRefraction = "SE_S_S_Abnormality_GuestLv3_DimensionalRefraction";
+        public static string SkillEffect_SE_S_S_Abnormality_Literature_Lv1_LookDay = "SE_S_S_Abnormality_Literature_Lv1_LookDay";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv1_MetallicRinging = "SE_S_S_Abnormality_TechnologicalLv1_MetallicRinging";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv1_RepetitivePattern = "SE_S_S_Abnormality_TechnologicalLv1_RepetitivePattern";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv1_Request = "SE_S_S_Abnormality_TechnologicalLv1_Request";
@@ -537,6 +671,21 @@ namespace EmotionalSystem
         public static string SkillEffect_SE_T_S_Abnormality_HistoryLv3_BarrierThorns = "SE_T_S_Abnormality_HistoryLv3_BarrierThorns";
         public static string SkillEffect_SE_T_S_Abnormality_HistoryLv3_Loyalty = "SE_T_S_Abnormality_HistoryLv3_Loyalty";
         public static string SkillEffect_SE_T_S_Abnormality_HistoryLv3_Malice = "SE_T_S_Abnormality_HistoryLv3_Malice";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv1_Axe = "SE_T_S_Abnormality_Literature_Lv1_Axe";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv1_Cocoon = "SE_T_S_Abnormality_Literature_Lv1_Cocoon";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv1_Glitter = "SE_T_S_Abnormality_Literature_Lv1_Glitter";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv1_LookDay = "SE_T_S_Abnormality_Literature_Lv1_LookDay";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv1_SocialDistancing = "SE_T_S_Abnormality_Literature_Lv1_SocialDistancing";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv1_SurpriseGift = "SE_T_S_Abnormality_Literature_Lv1_SurpriseGift";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv2_Alertness = "SE_T_S_Abnormality_Literature_Lv2_Alertness";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv2_Friend = "SE_T_S_Abnormality_Literature_Lv2_Friend";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv2_FunnyPrank = "SE_T_S_Abnormality_Literature_Lv2_FunnyPrank";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv2_Meal = "SE_T_S_Abnormality_Literature_Lv2_Meal";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv2_Obsession = "SE_T_S_Abnormality_Literature_Lv2_Obsession";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv2_Shyness = "SE_T_S_Abnormality_Literature_Lv2_Shyness";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv3_GooeyWaste = "SE_T_S_Abnormality_Literature_Lv3_GooeyWaste";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv3_LovingFamily = "SE_T_S_Abnormality_Literature_Lv3_LovingFamily";
+        public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv3_WornParasol = "SE_T_S_Abnormality_Literature_Lv3_WornParasol";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv1_Lament = "SE_T_S_Abnormality_TechnologicalLv1_Lament";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv1_MetallicRinging = "SE_T_S_Abnormality_TechnologicalLv1_MetallicRinging";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv1_RepetitivePattern = "SE_T_S_Abnormality_TechnologicalLv1_RepetitivePattern";
@@ -557,6 +706,11 @@ namespace EmotionalSystem
         public static string SkillEffect_SE_T_S_EGO_History_Hornet = "SE_T_S_EGO_History_Hornet";
         public static string SkillEffect_SE_T_S_EGO_History_TheForgotten = "SE_T_S_EGO_History_TheForgotten";
         public static string SkillEffect_SE_T_S_EGO_History_Wingbeat = "SE_T_S_EGO_History_Wingbeat";
+        public static string SkillEffect_SE_T_S_EGO_Literature_BlackSwan = "SE_T_S_EGO_Literature_BlackSwan";
+        public static string SkillEffect_SE_T_S_EGO_Literature_Laetitia = "SE_T_S_EGO_Literature_Laetitia";
+        public static string SkillEffect_SE_T_S_EGO_Literature_RedEyes = "SE_T_S_EGO_Literature_RedEyes";
+        public static string SkillEffect_SE_T_S_EGO_Literature_SanguineDesire = "SE_T_S_EGO_Literature_SanguineDesire";
+        public static string SkillEffect_SE_T_S_EGO_Literature_TodayExpression = "SE_T_S_EGO_Literature_TodayExpression";
         public static string SkillEffect_SE_T_S_EGO_Synchronize_MagicBullet_FloodingBullets = "SE_T_S_EGO_Synchronize_MagicBullet_FloodingBullets";
         public static string SkillEffect_SE_T_S_EGO_Synchronize_MagicBullet_InevitableBullet = "SE_T_S_EGO_Synchronize_MagicBullet_InevitableBullet";
         public static string SkillEffect_SE_T_S_EGO_Synchronize_MagicBullet_MagicBullet = "SE_T_S_EGO_Synchronize_MagicBullet_MagicBullet";
@@ -568,6 +722,7 @@ namespace EmotionalSystem
         public static string SkillEffect_SE_T_S_EmotionalSystem_Lucy_MusicBox = "SE_T_S_EmotionalSystem_Lucy_MusicBox";
         public static string SkillEffect_SE_T_S_Potion_DarkTune = "SE_T_S_Potion_DarkTune";
         public static string SkillEffect_SE_T_S_Potion_DistilledSuffering = "SE_T_S_Potion_DistilledSuffering";
+        public static string SkillEffect_SE_T_S_Potion_DistortionFragment = "SE_T_S_Potion_DistortionFragment";
         public static string SkillEffect_SE_T_S_Potion_EssenceTranquility = "SE_T_S_Potion_EssenceTranquility";
         public static string SkillEffect_SE_T_S_Potion_EssenceWrath = "SE_T_S_Potion_EssenceWrath";
         public static string SkillEffect_SE_T_S_Potion_IgnitedRemorse = "SE_T_S_Potion_IgnitedRemorse";
@@ -578,12 +733,12 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv1_Despair = "S_Abnormality_GuestLv1_Despair";
 		/// <summary>
-		/// <color=#32CD32>Giant Mushroom</color>
+		/// <color=green>Giant Mushroom</color>
 		/// <color=#919191>If you can only perceive this abnormality as a giant mushroom, that's because you're seeing with clouded eyes.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv1_GiantMushroom = "S_Abnormality_GuestLv1_GiantMushroom";
 		/// <summary>
-		/// <color=#32CD32>Strengthen</color>
+		/// <color=green>Strengthen</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv1_Strengthen = "S_Abnormality_GuestLv1_Strengthen";
 		/// <summary>
@@ -591,7 +746,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv1_Stress = "S_Abnormality_GuestLv1_Stress";
 		/// <summary>
-		/// <color=#32CD32>Unity</color>
+		/// <color=green>Unity</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv1_Unity = "S_Abnormality_GuestLv1_Unity";
 		/// <summary>
@@ -600,7 +755,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv1_YouMustbeHappy = "S_Abnormality_GuestLv1_YouMustbeHappy";
 		/// <summary>
-		/// <color=#32CD32>Behaviour Adjustment</color>
+		/// <color=green>Behaviour Adjustment</color>
 		/// <color=#919191>It readjusts everyone to become righteous, no matter how wicked, evil, and arrogant they may be.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv2_BehaviourAdjustment = "S_Abnormality_GuestLv2_BehaviourAdjustment";
@@ -615,13 +770,13 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv2_MirrorAdjustment = "S_Abnormality_GuestLv2_MirrorAdjustment";
 		/// <summary>
-		/// <color=#32CD32>Present</color>
+		/// <color=green>Present</color>
 		/// When drawn random ally takes non-lethal <color=purple>10 Pain Damage</color>.
 		/// <color=#919191>With my infinite hatred, I give you this <color=red>gift</color>.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv2_Present = "S_Abnormality_GuestLv2_Present";
 		/// <summary>
-		/// <color=#32CD32>Shelter</color>
+		/// <color=green>Shelter</color>
 		/// <color=#919191>However, this shelter, while perfectly safe on the inside, alters the reality of the outside to be even more hopeless.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv2_Shelter = "S_Abnormality_GuestLv2_Shelter";
@@ -631,7 +786,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv2_Storytime = "S_Abnormality_GuestLv2_Storytime";
 		/// <summary>
-		/// <color=#32CD32>Bait</color>
+		/// <color=green>Bait</color>
 		/// <color=#919191>The bud is glowing, it's amazing. It's so bright, other employees came over to look at the flower too. </color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv3_Bait = "S_Abnormality_GuestLv3_Bait";
@@ -661,7 +816,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_Guest_Storytime = "S_Abnormality_Guest_Storytime";
 		/// <summary>
-		/// <color=#32CD32>Ashes</color>
+		/// <color=green>Ashes</color>
 		/// <color=#919191>The charred body represents the child's crumbled hope, while the ever blazing flame represents the obsession for affection.
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv1_Ashes = "S_Abnormality_HistoryLv1_Ashes";
@@ -676,7 +831,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv1_FairiesCare = "S_Abnormality_HistoryLv1_FairiesCare";
 		/// <summary>
-		/// <color=#32CD32>Happy Memories</color>
+		/// <color=green>Happy Memories</color>
 		/// <color=#919191>But, you see, Teddy never wanted to be separate from its owner ever again.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv1_HappyMemories = "S_Abnormality_HistoryLv1_HappyMemories";
@@ -686,7 +841,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv1_Matchlight = "S_Abnormality_HistoryLv1_Matchlight";
 		/// <summary>
-		/// <color=#32CD32>Nostalgic Embrace of the Old Days</color>
+		/// <color=green>Nostalgic Embrace of the Old Days</color>
 		/// <color=#919191>Teddy was hugging someone tightly. Teddy loved hugs. But something was odd.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv1_NostalgicEmbrace = "S_Abnormality_HistoryLv1_NostalgicEmbrace";
@@ -696,7 +851,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv2_Footfalls = "S_Abnormality_HistoryLv2_Footfalls";
 		/// <summary>
-		/// <color=#32CD32>Gluttony</color>
+		/// <color=green>Gluttony</color>
 		/// <color=#919191>The fairies were no more than carnivorous monsters, and their <b>protection</b> was their method to keep the meat fresh.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv2_Gluttony = "S_Abnormality_HistoryLv2_Gluttony";
@@ -706,12 +861,12 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv2_Predation = "S_Abnormality_HistoryLv2_Predation";
 		/// <summary>
-		/// <color=#32CD32>Spores</color>
+		/// <color=green>Spores</color>
 		/// <color=#919191>It has been confirmed that the spores carry drone eggs that hatch inside a living host.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv2_Spores = "S_Abnormality_HistoryLv2_Spores";
 		/// <summary>
-		/// <color=#32CD32>Vines</color>
+		/// <color=green>Vines</color>
 		/// <color=#919191>One day, a branch grew from it. The leaves and branches were already withered and dry, but it continued to grow.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv2_Vines = "S_Abnormality_HistoryLv2_Vines";
@@ -721,7 +876,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv2_WorkerBee = "S_Abnormality_HistoryLv2_WorkerBee";
 		/// <summary>
-		/// <color=#32CD32>Barrier of Thorns</color>
+		/// <color=green>Barrier of Thorns</color>
 		/// <color=#919191>The apple that dropped from Snow White's hand after a single bite could never be happy. The apple, full of loneliness and hatred towards the princess, waited for the day it would rot away and return to the earth.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv3_BarrierThorns = "S_Abnormality_HistoryLv3_BarrierThorns";
@@ -732,27 +887,102 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv3_Loyalty = "S_Abnormality_HistoryLv3_Loyalty";
 		/// <summary>
-		/// <color=#32CD32>Malice</color>
+		/// <color=green>Malice</color>
 		/// <color=#919191>The inherent malice caused all life to crumble as soon as it bloomed.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv3_Malice = "S_Abnormality_HistoryLv3_Malice";
+		/// <summary>
+		/// <color=red>Axe</color>
+		/// <color=#919191>At some point, <b>Redacted</b> was wearing the shoes, grinning from ear to ear. It was uh, well it was quite strange. That wasn't a smile. It was...</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv1_Axe = "S_Abnormality_Literature_Lv1_Axe";
+		/// <summary>
+		/// <color=green>Cocoon</color>
+		/// <color=#919191>Unsurprisingly, not a single employee volunteered to retrieve the corpse of their cocooned colleague.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv1_Cocoon = "S_Abnormality_Literature_Lv1_Cocoon";
+		/// <summary>
+		/// <color=red>Glitter</color>
+		/// <color=#919191>The shoes were colorless.
+		/// They will soon turn red.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv1_Glitter = "S_Abnormality_Literature_Lv1_Glitter";
+		/// <summary>
+		/// <color=red>Look of the Day</color>
+		/// <color=#919191>One sunny day, just like that day they sincerely dried the laundry, they dried their own skin.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv1_LookDay = "S_Abnormality_Literature_Lv1_LookDay";
+		/// <summary>
+		/// <color=green>Social Distancing</color>
+		/// <color=#919191>If one tries to look at the face behind the skin, the result will not be pretty. The space behind their skin is the only personal space they have left. Leaving it uninvaded is the last bit of generosity the City can offer.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv1_SocialDistancing = "S_Abnormality_Literature_Lv1_SocialDistancing";
+		/// <summary>
+		/// <color=green>Surprise Gift</color>
+		/// <color=#919191>And when the kid meets someone she likes, she will give them a gift made all by herself. The gift's content is a secret though!</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv1_SurpriseGift = "S_Abnormality_Literature_Lv1_SurpriseGift";
+		/// <summary>
+		/// <color=green>Alertness</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv2_Alertness = "S_Abnormality_Literature_Lv2_Alertness";
+		/// <summary>
+		/// <color=red>Friend</color>
+		/// <color=#919191>She was so sad that she had to leave her dear friends behind, so she came up with a brilliant idea!</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv2_Friend = "S_Abnormality_Literature_Lv2_Friend";
+		/// <summary>
+		/// <color=red>Funny Prank</color>
+		/// <color=#919191>So this little lady has made a decision! To stay here and never leave until laughter is restored to this place!</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv2_FunnyPrank = "S_Abnormality_Literature_Lv2_FunnyPrank";
+		/// <summary>
+		/// <color=green>Meal</color>
+		/// <color=#919191>Peter was dragged to the ceiling in only a moment. The cocooned employee hanging off the ceiling of the Containment Unit will be a healthy meal for the spider's offspring.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv2_Meal = "S_Abnormality_Literature_Lv2_Meal";
+		/// <summary>
+		/// <color=red>Obsession</color>
+		/// <color=#919191>I'll break your legs, then you won't be able to dance ever again.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv2_Obsession = "S_Abnormality_Literature_Lv2_Obsession";
+		/// <summary>
+		/// <color=green>Shyness</color>
+		/// <color=#919191>The inability to show one's face is perhaps a form of shyness. When throbbing emotions surge up from time to time, it's best to simply cover the face.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv2_Shyness = "S_Abnormality_Literature_Lv2_Shyness";
+		/// <summary>
+		/// <color=green>Gooey Waste</color>
+		/// <color=#919191>Elijah fell to her knees and finally started to puke up the thing everyone else was vomiting.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv3_GooeyWaste = "S_Abnormality_Literature_Lv3_GooeyWaste";
+		/// <summary>
+		/// <color=green>Loving Family</color>
+		/// <color=#919191>She began to look for her brothers. Her family who needed to wear the nettle clothing to be free from the curse. Ones whom she shared happy dreams with.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv3_LovingFamily = "S_Abnormality_Literature_Lv3_LovingFamily";
+		/// <summary>
+		/// <color=red>Well-worn Parasol</color>
+		/// <color=#919191>Believing that it would turn white, the black swan wanted to lift the curse by weaving together nettles. All that was left is a worn parasol it once treasured.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Literature_Lv3_WornParasol = "S_Abnormality_Literature_Lv3_WornParasol";
 		/// <summary>
 		/// <color=red>Lament</color>
 		/// <color=#919191>They say the mourner with a huge luggage on his back had come to be a savior to all.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv1_Lament = "S_Abnormality_TechnologicalLv1_Lament";
 		/// <summary>
-		/// <color=#32CD32>Metallic Ringing</color>
+		/// <color=green>Metallic Ringing</color>
 		/// <color=#919191>My head... turning into metal... folds in my brain, being flattened...</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv1_MetallicRinging = "S_Abnormality_TechnologicalLv1_MetallicRinging";
 		/// <summary>
-		/// <color=#32CD32>Repetitive Pattern-Recognition</color>
+		/// <color=green>Repetitive Pattern-Recognition</color>
 		/// <color=#919191>The day I was sent to a new home for the first time, I gave them the gift they wanted so earnestly.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv1_RepetitivePattern = "S_Abnormality_TechnologicalLv1_RepetitivePattern";
 		/// <summary>
-		/// <color=#32CD32>Request</color>
+		/// <color=green>Request</color>
 		/// <color=#919191>Just as the Devil said, the bullets will puncture anything you please. Forever.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv1_Request = "S_Abnormality_TechnologicalLv1_Request";
@@ -772,12 +1002,12 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_ChainedWrath = "S_Abnormality_TechnologicalLv2_ChainedWrath";
 		/// <summary>
-		/// <color=#32CD32>Clean</color>
+		/// <color=green>Clean</color>
 		/// <color=#919191>It recognizes a bad mood as a sign that the surroundings are dirty, and promptly enters cleaning mode.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_Clean = "S_Abnormality_TechnologicalLv2_Clean";
 		/// <summary>
-		/// <color=#32CD32>Eternal Rest</color>
+		/// <color=green>Eternal Rest</color>
 		/// <color=#919191>People believed that they would become beautiful beings with small wings when they died. It's a silly story. Nonsensical too.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_EternalRest = "S_Abnormality_TechnologicalLv2_EternalRest";
@@ -787,7 +1017,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_MusicalAddiction = "S_Abnormality_TechnologicalLv2_MusicalAddiction";
 		/// <summary>
-		/// <color=#32CD32>Recharge</color>
+		/// <color=green>Recharge</color>
 		/// <color=#919191>However, the limbs were equipped with sharp instruments instead of cleaning supplies.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_Recharge = "S_Abnormality_TechnologicalLv2_Recharge";
@@ -797,7 +1027,7 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv2_SeventhBullet = "S_Abnormality_TechnologicalLv2_SeventhBullet";
 		/// <summary>
-		/// <color=#32CD32>Coffin</color>
+		/// <color=green>Coffin</color>
 		/// <color=#919191>He's carrying a coffin. A large coffin to pay tribute to the employees who have nowhere else to go. It is still too small to comfort those innocent sacrifices.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv3_Coffin = "S_Abnormality_TechnologicalLv3_Coffin";
@@ -838,6 +1068,28 @@ namespace EmotionalSystem
 		/// </summary>
         public static string Skill_S_EGO_History_Wingbeat = "S_EGO_History_Wingbeat";
 		/// <summary>
+		/// <color=#FFDF00>Black Swan</color>
+		/// </summary>
+        public static string Skill_S_EGO_Literature_BlackSwan = "S_EGO_Literature_BlackSwan";
+		/// <summary>
+		/// <color=#FFDF00>Laetitia</color>
+		/// Apply 'Friend' (Discarded after 1 turn, damage/healing increased by 80%) status to 4 random pages in hand.
+		/// </summary>
+        public static string Skill_S_EGO_Literature_Laetitia = "S_EGO_Literature_Laetitia";
+		/// <summary>
+		/// <color=#FFDF00>Red Eyes</color>
+		/// </summary>
+        public static string Skill_S_EGO_Literature_RedEyes = "S_EGO_Literature_RedEyes";
+		/// <summary>
+		/// <color=#FFDF00>Sanguine Desire</color>
+		/// Inflict 30 <color=red>Bleed</color>.
+		/// </summary>
+        public static string Skill_S_EGO_Literature_SanguineDesire = "S_EGO_Literature_SanguineDesire";
+		/// <summary>
+		/// <color=#FFDF00>Today's Expression</color>
+		/// </summary>
+        public static string Skill_S_EGO_Literature_TodayExpression = "S_EGO_Literature_TodayExpression";
+		/// <summary>
 		/// <color=#FFDF00>Desynchronize</color>
 		/// Desynchronizes with Der Freischütz.
 		/// </summary>
@@ -864,7 +1116,7 @@ namespace EmotionalSystem
         public static string Skill_S_EGO_Synchronize_MagicBullet_SilentBullet = "S_EGO_Synchronize_MagicBullet_SilentBullet";
 		/// <summary>
 		/// <color=#FFDF00>Grinder Mk. 5-2</color>
-		/// Inflict 15 <color=red>Bleed</color>.
+		/// Inflict 10 <color=red>Bleed</color>.
 		/// </summary>
         public static string Skill_S_EGO_Technological_GrinderMk = "S_EGO_Technological_GrinderMk";
 		/// <summary>
@@ -897,14 +1149,13 @@ namespace EmotionalSystem
 		/// <summary>
 		/// <color=#00FFFF>Hippity-Hop</color>
 		/// Draw 2 skills.
-		/// All allies gain 3 <color=#90EE90>Positive</color> Emotional Coins.
+		/// All allies gain 3 <color=green>Positive</color> Emotional Coins.
 		/// <color=#919191>Though the only thing the child could do was run around inside a cramped lab instead of a grass field under the sun, his steps were shaky but filled with enthusiasm.</color>
 		/// </summary>
         public static string Skill_S_EmotionalSystem_Lucy_HippityHop = "S_EmotionalSystem_Lucy_HippityHop";
 		/// <summary>
 		/// Music Box
 		/// Draw 1 skill.
-		/// All allies gain additional Emotional Coins for 2 turns.
 		/// <color=#919191>Do you remember this melody? The professor used to play this song when the students were sleepy. Happy birthday.</color>
 		/// </summary>
         public static string Skill_S_EmotionalSystem_Lucy_MusicBox = "S_EmotionalSystem_Lucy_MusicBox";

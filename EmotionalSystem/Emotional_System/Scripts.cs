@@ -18,26 +18,26 @@ namespace EmotionalSystem
 {
 	public class Scripts
 	{
-		public static void ChargeLucyNeck(BattleChar bchar, bool isShowText = false)
+		public static void ChargeLucyNeck()
 		{
-			if (PartyInventory.InvenM.InventoryItems.FirstOrDefault(a => a != null && DataStore.LucyNecklace.Contains(a.itemkey)) is Item_Active neck)
+			if (PartyInventory.InvenM.InventoryItems.FirstOrDefault(a => a != null && DataStore.Instance.LucyNecklace.Contains(a.itemkey)) is Item_Active neck)
 			{
 				neck.ChargeNow++;
 			}
 
-			if (isShowText)
-			{
-				GameObject gameObject = Misc.UIInst(bchar.BattleInfo.EffectViewOb);
-				if (bchar.Info.Ally)
-				{
-					gameObject.transform.position = bchar.GetPos();
-				}
-				else
-				{
-					gameObject.transform.position = bchar.GetTopPos();
-				}
-				gameObject.GetComponent<EffectView>().TextOut(bchar.Info.Ally, "Recharged");
-			}
+			//if (isShowText)
+			//{
+			//	GameObject gameObject = Misc.UIInst(bchar.BattleInfo.EffectViewOb);
+			//	if (bchar.Info.Ally)
+			//	{
+			//		gameObject.transform.position = bchar.GetPos();
+			//	}
+			//	else
+			//	{
+			//		gameObject.transform.position = bchar.GetTopPos();
+			//	}
+			//	gameObject.GetComponent<EffectView>().TextOut(bchar.Info.Ally, "Recharged");
+			//}
 		}
 
 		public static void AttackRedirect(BattleChar bchar, Skill skillD, List<BattleChar> targets, int damage = 0)
@@ -183,7 +183,7 @@ namespace EmotionalSystem
 			}
 
 			// Сохраняем данные персонажа
-			DataStore.Instance.Sync.SavedSkills[bchar] = data;
+			DataStore.Instance.Synchronization.SavedSkills[bchar] = data;
 		}
 
 		public static void DeSynchronize(BattleChar bchar)
@@ -193,12 +193,12 @@ namespace EmotionalSystem
 				return;
 			}
 
-			if (!DataStore.Instance.Sync.SavedSkills.ContainsKey(bchar))
+			if (!DataStore.Instance.Synchronization.SavedSkills.ContainsKey(bchar))
 			{
 				return;
 			}
 
-			var data = DataStore.Instance.Sync.SavedSkills[bchar];
+			var data = DataStore.Instance.Synchronization.SavedSkills[bchar];
 
 			// Удаляем все текущие скиллы персонажа
 			for (int i = Utils.AllyTeam.Skills.Count - 1; i >= 0; i--)
@@ -235,7 +235,7 @@ namespace EmotionalSystem
 			}
 
 			// Удаляем данные персонажа после восстановления
-			DataStore.Instance.Sync.SavedSkills.Remove(bchar);
+			DataStore.Instance.Synchronization.SavedSkills.Remove(bchar);
 		}
 	}
 }

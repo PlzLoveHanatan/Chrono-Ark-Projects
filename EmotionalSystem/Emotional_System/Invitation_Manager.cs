@@ -92,13 +92,13 @@ namespace EmotionalSystem
 
 			if (currentBoss == GDEItemKeys.EnemyQueue_Queue_FanaticBoss)
 			{
-				Debug.Log("[Invitation] FanaticBoss defeated — starting new stage sequence.");
+				Debug.Log("[ApplyReception] Fighting Fanatic.");
 				SpecialCase = true;
 
 				system.EnemyWaveData = new WaveData();
 				system.MainQueueData.Wave2 = null;
 				system.MainQueueData.Wave3 = null;
-				RewardMultiplier = 0;
+				RewardMultiplier = 1;
 
 				return;
 			}
@@ -229,12 +229,13 @@ namespace EmotionalSystem
 		{
 			ReceptionRewards.Clear();
 
-			int soulStones = 1;
+			int soulStones = 2;
 			int timeMoney = PlayData.TSavedata.StageNum + 2;
 
 			AddReward(GDEItemKeys.Item_Misc_TimeMoney, timeMoney, totalRewards);
 			AddReward(GDEItemKeys.Item_Misc_Soul, soulStones, totalRewards);
 			AddReward(GDEItemKeys.Item_Consume_SkillBookCharacter, 1, totalRewards);
+			AddReward(ModItemKeys.Item_Consume_C_EmotionalSystem_DreamingCurrent, 1);
 
 			if (PlayData.TSavedata.StageNum <= 4)
 			{
@@ -335,6 +336,7 @@ namespace EmotionalSystem
 			CleanSkill(GDEItemKeys.Skill_S_Witch_2);
 			CleanDebuff(GDEItemKeys.Buff_B_Witch_P_0_T);
 			CleanDebuff(GDEItemKeys.Buff_B_Witch_2_T);
+			CleanDebuff(GDEItemKeys.Buff_B_Maid_T_1);
 			CleanMusic();
 		}
 
@@ -363,6 +365,9 @@ namespace EmotionalSystem
 		{
 			CleanSkill(GDEItemKeys.Skill_S_Joker_0);
 			CleanDebuff(GDEItemKeys.Buff_B_Joker_1_T);
+			CleanDebuff(GDEItemKeys.Buff_B_Pierrot_Bat_0_T);
+			CleanDebuff(GDEItemKeys.Buff_B_Pierrot_Bat_1_T);
+			CleanDebuff(GDEItemKeys.Buff_B_Pierrot_Bat_2_T);
 			CleanMinions();
 			CleanMusic();
 		}

@@ -7,6 +7,7 @@ using EmotionalSystem;
 using EmotionalSystemSkillExtended;
 using GameDataEditor;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 using static EmotionalSystem.DataStore.Synchronize;
 using static EmotionalSystem.Scripts;
 using static EmotionalSystemSkillExtended.ExAbnormality;
@@ -30,7 +31,9 @@ namespace EmotionalSystemBuff
 					public override void Init()
 					{
 						PlusPerStat.Damage = 20;
-						PlusStat.cri = 20;
+						PlusStat.HIT_CC = 20f;
+						PlusStat.HIT_DEBUFF = 20f;
+						PlusStat.HIT_DOT = 20f;
 					}
 
 					public void TurnEnd()
@@ -51,9 +54,7 @@ namespace EmotionalSystemBuff
 
 					public override void Init()
 					{
-						PlusStat.HIT_CC = 10f;
-						PlusStat.HIT_DEBUFF = 10f;
-						PlusStat.HIT_DOT = 10f;
+						PlusPerStat.Damage = 10;
 					}
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
@@ -98,7 +99,7 @@ namespace EmotionalSystemBuff
 				{
 					public override void Init()
 					{
-						PlusPerStat.Damage = 10;
+						PlusStat.hit = 10;
 					}
 
 					public void Turn1()
@@ -122,7 +123,7 @@ namespace EmotionalSystemBuff
 					public override void Init()
 					{
 						PlusStat.IgnoreTaunt_EnemySelf = true;
-						PlusStat.dod = -10;
+						PlusStat.DMGTaken = 10;
 					}
 
 					public void Turn()
@@ -153,21 +154,23 @@ namespace EmotionalSystemBuff
 				{
 					public override void Init()
 					{
-						OnePassive = true;
+						PlusPerStat.Damage = 20;
 					}
 
 					public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
 					{
 						if (SkillD.IsDamage && SkillD.Master == BChar)
 						{
-							int randomNum = RandomManager.RandomInt(BChar.GetRandomClass().Target, 0, 5);
+							int randomNum = RandomManager.RandomInt(BChar.GetRandomClass().Target, 0, 7);
 
 							switch (randomNum)
 							{
-								case 0: Damage = (int)(Damage * 0.5f); break;
-								case 1: Damage = (int)(Damage * 1.5f); break;
-								case 2: Damage = (int)(Damage * 2f); break;
-								case 3: Damage = (int)(Damage * 2.5f); break;
+								case 0: Damage = (Damage * 0); break;
+								case 1: Damage = (int)(Damage * 0.5f); break;
+								case 2: Damage = (int)(Damage * 1.5f); break;
+								case 3: Damage = (int)(Damage * 2f); break;
+								case 4: Damage = (int)(Damage * 2.5f); break;
+								case 5: Damage = (int)(Damage * 3f); break;
 								default:
 									// No damage change
 									break;
@@ -205,27 +208,13 @@ namespace EmotionalSystemBuff
 					}
 				}
 
-				public class Clean : Buff, IP_DamageChange, IP_SkillUse_User
+				public class Clean : Buff, IP_SkillUse_User, IP_DealDamage, IP_PlayerTurn
 				{
+					private bool oncePerturn;
+
 					public override void Init()
 					{
-						OnePassive = true;
 						PlusStat.cri = 20;
-						PlusStat.PlusCriDmg = 20;
-					}
-
-					public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
-					{
-						if (SkillD.IsDamage && SkillD.Master == BChar && Target is BattleEnemy enemy)
-						{
-							BattleEnemy battleEnemy = Target as BattleEnemy;
-
-							if (enemy.SkillQueue.Count <= 0 || battleEnemy.SkillQueue[0].CastSpeed >= 9)
-							{
-								Damage += (int)(Damage * 0.2);
-							}
-						}
-						return Damage;
 					}
 
 					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
@@ -234,6 +223,20 @@ namespace EmotionalSystemBuff
 						{
 							Utils.PlaySound("Floor_Technological_Clean");
 						}
+					}
+
+					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
+					{
+						if (IsCri && !oncePerturn)
+						{
+							Utils.AllyTeam.AP += 1;
+							oncePerturn = true;
+						}
+					}
+
+					public void Turn()
+					{
+						oncePerturn = false;
 					}
 				}
 
@@ -247,7 +250,9 @@ namespace EmotionalSystemBuff
 
 					public override void Init()
 					{
-						PlusPerStat.Damage = 20;
+						PlusStat.HIT_CC = 20f;
+						PlusStat.HIT_DEBUFF = 20f;
+						PlusStat.HIT_DOT = 20f;
 					}
 
 					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
@@ -272,6 +277,7 @@ namespace EmotionalSystemBuff
 					{
 						PlusPerStat.Damage = 40;
 						PlusStat.DMGTaken = 40;
+						PlusStat.PlusCriDmg = 40;
 					}
 
 					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
@@ -283,7 +289,7 @@ namespace EmotionalSystemBuff
 					}
 				}
 
-				public class Recharge : Buff, IP_Kill
+				public class Recharge : Buff, IP_PlayerTurn, IP_Awake
 				{
 					public override void Init()
 					{
@@ -291,16 +297,28 @@ namespace EmotionalSystemBuff
 						//PlusStat.hit = 20;
 					}
 
+					public void Turn()
+					{
+						Utils.PlaySound("Floor_Technological_Repetitive");
+						Utils.AllyTeam.AP += 1;
+					}
+
 					public void KillEffect(SkillParticle SP)
 					{
 						foreach (var target in SP.TargetChar)
 						{
-							if (target is BattleEnemy enemy && enemy.IsDead)
+							if (target is BattleEnemy enemy && enemy.IsDead && SP.SkillData.Master == BChar)
 							{
 								Utils.PlaySound("Floor_Technological_Repetitive");
 								Utils.AllyTeam.AP += 2;
 							}
 						}
+					}
+
+					public void Awake()
+					{
+						Utils.PlaySound("Floor_Technological_Repetitive");
+						Utils.AllyTeam.AP += 1;
 					}
 				}
 
@@ -316,6 +334,8 @@ namespace EmotionalSystemBuff
 					public override void Init()
 					{
 						PlusPerStat.Damage = 40;
+						PlusStat.hit = 40;
+						PlusStat.HitMaximum = true;
 					}
 
 					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
@@ -406,7 +426,8 @@ namespace EmotionalSystemBuff
 				{
 					public override void Init()
 					{
-						PlusPerStat.Damage = 40;
+						PlusPerStat.Damage = 80;
+						PlusStat.hit = 80;
 					}
 
 					public void Awake()
@@ -450,14 +471,17 @@ namespace EmotionalSystemBuff
 				}
 			}
 
-			public class MagicBullet : Buff, IP_Awake, IP_TurnEnd, IP_PlayerTurn, IP_SkillUse_User
+			public class MagicBullet : Buff, IP_Awake, IP_SkillUse_User
 			{
-				private int synchronizedTurns = 3;
+				public override void SelfdestroyPlus()
+				{
+					DeSynchronize(BChar);
+					SelfDestroy();
+				}
 
 				public void Awake()
 				{
-					synchronizedTurns = 3;
-					SynchronizeWithEGO(BChar, ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_Desynchronize, DerSkills);
+					SynchronizeWithEGO(BChar, ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_Desynchronize, DataStore.Instance.Synchronization.DerSkills);
 				}
 
 				public void SkillUse(Skill SkillD, List<BattleChar> Targets)
@@ -466,20 +490,6 @@ namespace EmotionalSystemBuff
 					{
 						Utils.PlaySound("Floor_Technological_Request");
 					}
-				}
-
-				public void Turn()
-				{
-					if (synchronizedTurns <= 0)
-					{
-						DeSynchronize(BChar);
-						SelfDestroy();
-					}
-				}
-
-				public void TurnEnd()
-				{
-					synchronizedTurns--;
 				}
 			}
 		}

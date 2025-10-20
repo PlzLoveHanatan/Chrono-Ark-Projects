@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionalSystem10192025094945</AssemblyName>
+    <AssemblyName>EmotionalSystem10202025235115</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -426,10 +426,11 @@
     <Compile Include="EmotionalSystem_ModItemKeys.cs" />
     <Compile Include="Emotional_System\Scripts.cs" />
     <Compile Include="EmotionalSystem_Plugin.cs" />
+    <Compile Include="Emotional_System_Skill\Floor_Literature.cs" />
     <Compile Include="Emotional_System_Skill\Floor_Technological.cs" />
     <Compile Include="Emotional_System_Skill\Guest.cs" />
     <Compile Include="Emotional_System_Skill\Lucy_Skills.cs" />
-    <Compile Include="Emotional_System_Skill\Potions.cs" />
+    <Compile Include="Emotional_System_Skill\Misc_Skills.cs" />
     <Compile Include="Emotional_System\Invitation_Manager.cs" />
     <Compile Include="IP_BuffObject_Updata.cs" />
     <Compile Include="TutorialLocalizer.cs" />

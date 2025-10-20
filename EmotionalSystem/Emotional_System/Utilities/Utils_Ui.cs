@@ -40,6 +40,15 @@ namespace EmotionalSystem
 			return AddressableLoadManager.LoadAddressableAsset<T>(address);
 		}
 
+		public static void LoadSpriteAsync(string path, Action<Sprite> onLoaded)
+		{
+			GetSpriteAsync(path, handle =>
+			{
+				Sprite sprite = (Sprite)handle.Result;
+				onLoaded?.Invoke(sprite);
+			});
+		}
+
 		public static GameObject CreatGameObject(string name, Transform parent)
 		{
 			GameObject gameObject = new GameObject(name);
@@ -74,6 +83,13 @@ namespace EmotionalSystem
 			img.rectTransform.transform.localPosition = pos;
 		}
 
+		//public static void ImageResize(Image img, Vector2 size)
+		//{
+		//	img.rectTransform.anchorMin = new Vector2(0f, 1f);
+		//	img.rectTransform.anchorMax = new Vector2(0f, 1f);
+		//	img.rectTransform.sizeDelta = size;
+		//}
+
 		public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)
 		{
 			txt.rectTransform.anchorMin = new Vector2(0f, 1f);
@@ -86,25 +102,88 @@ namespace EmotionalSystem
 			txt.alignment = TextAlignmentOptions.Left;
 		}
 
-		public static void FitRectTransformToTarget(RectTransform toFit, RectTransform target, Vector3 localPositionOffset)
+		//public static GameObject CreateUIImage(string name, Transform parent, string spritePath, Vector2 size, Vector3 localPos, bool setAsFirstSibling = true)
+		//{
+		//	// Создаём объект
+		//	GameObject go = new GameObject(name);
+		//	go.SetActive(false);
+		//	if (parent != null) go.transform.SetParent(parent, false);
+
+		//	go.transform.localPosition = localPos;
+		//	go.transform.localScale = Vector3.one;
+		//	go.layer = 8;
+
+		//	// Добавляем Image
+		//	Image img = go.AddComponent<Image>();
+		//	if (img == null)
+		//	{
+		//		Debug.LogWarning($"[CreateUIImage] Не удалось добавить компонент Image на {name}");
+		//		return go;
+		//	}
+
+		//	// Загружаем спрайт через ваш метод
+		//	try
+		//	{
+		//		GetSprite(spritePath, img);
+		//		Debug.Log($"[CreateUIImage] Спрайт '{spritePath}' подгружен на {name}");
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		Debug.LogWarning($"[CreateUIImage] Ошибка при подгрузке спрайта '{spritePath}': {ex.Message}");
+		//	}
+
+		//	// Размер
+		//	RectTransform rt = go.GetComponent<RectTransform>();
+		//	if (rt != null) rt.sizeDelta = size;
+
+		//	// Ставим первым в иерархии, если нужно
+		//	if (setAsFirstSibling) go.transform.SetAsFirstSibling();
+
+		//	go.SetActive(true);
+		//	return go;
+		//}
+
+		public static GameObject CreateUIImage(string name, Transform parent, Sprite sprite, Vector2 size, Vector3 localPos, bool setAsFirstSibling = true)
 		{
-			if (toFit == null || target == null)
+			GameObject go = new GameObject(name);
+			go.SetActive(false);
+			if (parent != null) go.transform.SetParent(parent, false);
+
+			go.transform.localPosition = localPos;
+			go.transform.localScale = Vector3.one;
+			go.layer = 8;
+
+			Image img = go.AddComponent<Image>();
+			if (img == null) return go;
+
+			img.sprite = sprite;
+
+			RectTransform rt = go.GetComponent<RectTransform>();
+			if (rt != null) rt.sizeDelta = size;
+
+			if (setAsFirstSibling) go.transform.SetAsFirstSibling();
+			go.SetActive(true);
+			return go;
+		}
+
+		public static void DestroyObjects(IEnumerable<string> objectNames)
+		{
+			foreach (var objName in objectNames)
 			{
-				Debug.LogWarning("RectTransform is null!");
-				return;
+				var existing = GameObject.Find(objName);
+				if (existing != null)
+				{
+					UnityEngine.Object.Destroy(existing);
+				}
 			}
+		}
 
-			// Stretch across the parent (full width and height)
-			toFit.anchorMin = new Vector2(0f, 0f);
-			toFit.anchorMax = new Vector2(1f, 1f);
-			toFit.pivot = target.pivot;
-
-			// Add padding of 20 pixels on all sides
-			toFit.offsetMin = new Vector2(10f, 80f);   // Left and bottom
-			toFit.offsetMax = new Vector2(-10f, -35f); // Right and top
-
-			// Additional manual offset (if you want to move the image further)
-			toFit.localPosition += localPositionOffset;
+		public static void DestroyObject(GameObject obj)
+		{
+			if (obj != null)
+			{
+				UnityEngine.Object.Destroy(obj);
+			}
 		}
 	}
 }
