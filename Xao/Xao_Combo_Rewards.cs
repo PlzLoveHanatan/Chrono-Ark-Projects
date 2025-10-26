@@ -90,6 +90,8 @@ namespace Xao
 
         private static void IncreaseXaoAttackPower(bool isAdditionalReward = false)
         {
+            if (!Utils.XaoAttackPower) return;
+
             if (!AttackPowerOncePerFight || isAdditionalReward)
             {
                 Utils.Xao.Info.OriginStat.atk++;

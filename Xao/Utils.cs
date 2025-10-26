@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 namespace Xao
 {
 	public static class Utils
@@ -18,6 +19,7 @@ namespace Xao
 		public static bool XaoVoice => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice").Value;
 		public static bool XaoVoiceSkills => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Voice Skills").Value;
 		public static bool KaijuEquip => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Kaiju Equip").Value;
+		public static bool XaoAttackPower => ModManager.getModInfo("Xao").GetSetting<ToggleSetting>("Xao Attack Power").Value;
 
 		public static int RareNum;
 		public static bool Equip;
@@ -421,6 +423,7 @@ namespace Xao
 			BattleSystem.instance.AllyTeam.Add(newSkill, true);
 			return newSkill;
 		}
+
 		public static void AddBuff(BattleChar bchar, string buffKey, int buffNum = 1)
 		{
 			for (int i = 0; i < buffNum; i++)
@@ -521,6 +524,7 @@ namespace Xao
 			img.rectTransform.anchorMax = new Vector2(0f, 1f);
 			img.rectTransform.sizeDelta = size;
 		}
+
 		public static void ImageResize(Image img, Vector2 size, Vector2 pos)
 		{
 			img.rectTransform.anchorMin = new Vector2(0f, 1f);
