@@ -86,12 +86,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_Storytime_0 = "B_Abnormality_GuestLv2_Storytime_0";
 		/// <summary>
 		/// Bait
-		/// At the start of each turn remove 1 random skill from hand and shuffle it into draw pile and lose 1 Mana.
+		/// At the start of each turn remove 1 random skill from hand and shuffle it into draw pile and lose 2 Mana.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_Bait = "B_Abnormality_GuestLv3_Bait";
 		/// <summary>
 		/// Cycle of the Curse
-		/// At the start of each turn select one skill from hand to exclude from current fight. Skill owner takes non-lethal <color=purple>20 Pain Damage</color>. If skill owner is Lucy lose 2 Mana instead.
+		/// At the start of each turn select one skill from hand to exclude from current fight. Skill owner takes non-lethal <color=purple>20 Pain Damage</color>. If skill owner is Lucy lose 3 Mana instead.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_CycleCurse = "B_Abnormality_GuestLv3_CycleCurse";
 		/// <summary>
@@ -124,7 +124,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// Matchlight
 		/// Attacks inflict 2 <color=#FC6178>Burn</color> (<sprite=1> &b%).
-		/// Gain 20% chance to take non-lethal <color=purple>&a Pain damage</color> <color=#FF7C34>(10% Max Health)</color>.
+		/// Gain 20% chance to take non-lethal <color=purple>&a Pain damage</color> <color=#FF7C34>(15% Max Health)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv1_Matchlight = "B_Abnormality_HistoryLv1_Matchlight";
 		/// <summary>
@@ -184,7 +184,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv3_Malice = "B_Abnormality_HistoryLv3_Malice";
 		/// <summary>
 		/// Axe
-		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(10% Max Health)</color> if you don't deal any damage this turn.
+		/// Attacks inflict 1 <color=red>Bleed</color> (<sprite=1> &a%).
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv1_Axe = "B_Abnormality_LiteratureLv1_Axe";
 		/// <summary>
@@ -194,6 +194,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv1_Cocoon = "B_Abnormality_LiteratureLv1_Cocoon";
 		/// <summary>
 		/// Glitter
+		/// Attacks inflict 1 <color=red>Bleed</color> (<sprite=1> &a%).
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv1_Glitter = "B_Abnormality_LiteratureLv1_Glitter";
 		/// <summary>
@@ -203,19 +204,13 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv1_LookDay = "B_Abnormality_LiteratureLv1_LookDay";
 		/// <summary>
 		/// Social Distancing
-		/// When attacked, counter attack for &a <color=#FF7C34>(50% Armor)</color> (Max 15).
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv1_SocialDistancing = "B_Abnormality_LiteratureLv1_SocialDistancing";
 		/// <summary>
 		/// Surprise Gift
-		/// Attacks inflict 'Surprise Gift'.
+		/// At the start of each Scene apply <color=green>Friend</color> (Damage/healing increased by 40%) status to 1 random page in hand.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv1_SurpriseGift = "B_Abnormality_LiteratureLv1_SurpriseGift";
-		/// <summary>
-		/// Surprise Gift
-		/// At 2 stacks gain 1 <color=red>Bleed</color>.
-		/// </summary>
-        public static string Buff_B_Abnormality_LiteratureLv1_SurpriseGift_0 = "B_Abnormality_LiteratureLv1_SurpriseGift_0";
 		/// <summary>
 		/// Alertness
 		/// Attacks inflict <color=#F0FF64>Paralysis</color> (<sprite=0> &a%), <color=red>Fragile</color> (<sprite=0> &a%) and  <color=orange>Bind</color> (<sprite=2> &b%) to the target's. Only activates twice per turn.
@@ -223,13 +218,13 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv2_Alertness = "B_Abnormality_LiteratureLv2_Alertness";
 		/// <summary>
 		/// Friend
-		/// At the start of each Scene apply 'Friend' (Discarded after 1 turn, damage/healing increased by 80%) status to 2 random pages in hand.
+		/// At the start of each Scene apply <color=red>Friend</color> (Discarded after 1 turn, damage/healing increased by 80%) status to 2 random pages in hand.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_Friend = "B_Abnormality_LiteratureLv2_Friend";
 		/// <summary>
 		/// Funny Prank
 		/// Attacks have 50% to gain guaranteed critical.
-		/// Take non-lethal <color=purple>&a Pain damage</color> <color=#FF7C34>(20% Max Health)</color> when the attack is not critical.
+		/// Take non-lethal <color=purple>&a Pain damage</color> <color=#FF7C34>(40% Max Health)</color> when the attack is not critical.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_FunnyPrank = "B_Abnormality_LiteratureLv2_FunnyPrank";
 		/// <summary>
@@ -244,6 +239,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv2_Obsession = "B_Abnormality_LiteratureLv2_Obsession";
 		/// <summary>
 		/// Shyness
+		/// When attacked, counter attack for &a <color=#FF7C34>(50% Armor)</color> (Max 30).
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_Shyness = "B_Abnormality_LiteratureLv2_Shyness";
 		/// <summary>
@@ -253,17 +249,21 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv3_GooeyWaste = "B_Abnormality_LiteratureLv3_GooeyWaste";
 		/// <summary>
 		/// Loving Family
-		/// Nullify incoming damage and remove 1 stack.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv3_LovingFamily = "B_Abnormality_LiteratureLv3_LovingFamily";
 		/// <summary>
+		/// Nettle Clothing
+		/// Reduce the next received damage to 0 and remove 1 stack.
+		/// </summary>
+        public static string Buff_B_Abnormality_LiteratureLv3_LovingFamily_0 = "B_Abnormality_LiteratureLv3_LovingFamily_0";
+		/// <summary>
 		/// Well-worn Parasol
-		/// Gain 50% chance to nullify incoming damage and reflect double damage to the attacker.
+		/// Gain 50% chance to reduce the next received damage to 0 and reflect double damage to the attacker.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv3_WornParasol = "B_Abnormality_LiteratureLv3_WornParasol";
 		/// <summary>
 		/// Lament
-		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(10% Max Health)</color>.
+		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(15% Max Health)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv1_Lament = "B_Abnormality_TechnologicalLv1_Lament";
 		/// <summary>
@@ -301,7 +301,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_ChainedWrath = "B_Abnormality_TechnologicalLv2_ChainedWrath";
 		/// <summary>
 		/// Clean
-		/// Restore 1 Mana upon landing a critical hit. Only activates once per turn.
+		/// Restore 1 Mana upon landing a critical hit. Only activates twice per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_Clean = "B_Abnormality_TechnologicalLv2_Clean";
 		/// <summary>
@@ -347,6 +347,11 @@ namespace EmotionSystem
 		/// </summary>
         public static string Buff_B_EGO_History_HornetSting = "B_EGO_History_HornetSting";
 		/// <summary>
+		/// Sanguine Desire
+		/// Attacks inflict 1 <color=red>Bleed</color> (<sprite=1> &a%).
+		/// </summary>
+        public static string Buff_B_EGO_Literature_SanguineDesire = "B_EGO_Literature_SanguineDesire";
+		/// <summary>
 		/// Harmony
 		/// </summary>
         public static string Buff_B_EGO_Technological_Harmony = "B_EGO_Technological_Harmony";
@@ -357,7 +362,7 @@ namespace EmotionSystem
         public static string Buff_B_EGO_Technological_MagicBullet = "B_EGO_Technological_MagicBullet";
 		/// <summary>
 		/// <color=orange>Bind</color>
-		/// Removed at the start of the next turn.
+		/// Remove 1 stack at the start of the next turn.
 		/// </summary>
         public static string Buff_B_EmotionSystem_Bind = "B_EmotionSystem_Bind";
 		/// <summary>
@@ -380,7 +385,7 @@ namespace EmotionSystem
         public static string Buff_B_EmotionSystem_Feeble = "B_EmotionSystem_Feeble";
 		/// <summary>
 		/// <color=red>Fragile</color>
-		/// Remove 1 stack when taking damage.
+		/// Removed when receive Critical hit.
 		/// </summary>
         public static string Buff_B_EmotionSystem_Fragile = "B_EmotionSystem_Fragile";
 		/// <summary>
@@ -448,10 +453,15 @@ namespace EmotionSystem
 		/// </summary>
         public static string Character_EmotionSystem_Guest = "EmotionSystem_Guest";
 		/// <summary>
-		/// Friend
-		/// This skill's damage/healing is increased by 80%.
+		/// <color=green>Friend</color>
+		/// This skill's damage/healing is increased by 40%.
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_Friend = "Ex_Abnormality_Friend";
+		/// <summary>
+		/// <color=red>Friend</color>
+		/// This skill's damage/healing is increased by 80%.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_Friend_0 = "Ex_Abnormality_Friend_0";
 		/// <summary>
 		/// Happy Memories
 		/// The first skill played from hand costs 1 less.
@@ -528,12 +538,12 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=red>Pollen</color>
 		/// Receiving Damage +40%
-		/// Max 3 stacks
+		/// Max 2 stacks
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_WorkerBee = "KeyWord_Abnormality_WorkerBee";
 		/// <summary>
 		/// <color=orange>Bind</color>
-		/// Speed +1 (Max 1)
+		/// Speed -2 (Max 2)
 		/// Evade -20%
 		/// Max 5 stacks.
 		/// </summary>
@@ -556,6 +566,11 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_EGO = "KeyWord_EGO";
 		/// <summary>
+		/// Nettle Clothing
+		/// Reduce the next received damage to 0 and remove 1 stack.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_EGO_BlackSwan = "KeyWord_EGO_BlackSwan";
+		/// <summary>
 		/// Desynchronizes
 		/// Remove all unique user skills from the deck and replace them with the previous skills.
 		/// </summary>
@@ -572,8 +587,8 @@ namespace EmotionSystem
         public static string SkillKeyword_KeyWord_EGO_Synchronize_Skill = "KeyWord_EGO_Synchronize_Skill";
 		/// <summary>
 		/// <color=red>Fragile</color>
-		/// Receiving damage +10%
-		/// Remove 1 stack when taking damage.
+		/// Receiving Critical +10%
+		/// Removed when receive Critical hit.
 		/// Max 5 stacks.
 		/// </summary>
         public static string SkillKeyword_KeyWord_Fragile = "KeyWord_Fragile";
@@ -623,7 +638,7 @@ namespace EmotionSystem
         public static string Item_Potions_P_EmotionSystem_PureTune = "P_EmotionSystem_PureTune";
 		/// <summary>
 		/// Golden Sound
-		/// At the start of the turn all allies gain 3 <color=green>Positive</color> Emotional Coins.
+		/// At the start of the turn all allies gain 3 <color=green>Positive</color> Emotion Points.
 		/// <color=#919191>Remember this melody? With love, Theresia.</color>
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_GoldenSound = "R_EmotionSystem_GoldenSound";
@@ -887,7 +902,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_HistoryLv3_BarrierThorns = "S_Abnormality_HistoryLv3_BarrierThorns";
 		/// <summary>
 		/// <color=red>Loyalty</color>
-		/// Kill the selected Investigator. Apply <color=red>Loyalty</color> to all allies.
+		/// Kill the selected ally. Apply <color=red>Loyalty</color> to all allies.
 		/// <color=#919191>The loyalty of bees is a naturInvestigator developed instinct. If we discover a way to draw forth that instinct, many things could change.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv3_Loyalty = "S_Abnormality_HistoryLv3_Loyalty";
@@ -929,6 +944,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_Literature_Lv1_SurpriseGift = "S_Abnormality_Literature_Lv1_SurpriseGift";
 		/// <summary>
 		/// <color=green>Alertness</color>
+		/// <color=#919191>The eyes shone in the dark, searching for prey to feed to its spiderlings.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_Literature_Lv2_Alertness = "S_Abnormality_Literature_Lv2_Alertness";
 		/// <summary>
@@ -1096,22 +1112,24 @@ namespace EmotionSystem
         public static string Skill_S_EGO_History_Hornet = "S_EGO_History_Hornet";
 		/// <summary>
 		/// <color=#FFDF00>The Forgotten</color>
-		/// Destroy 2 target's Action Points.
+		/// Destroy 3 target's Action Points.
 		/// </summary>
         public static string Skill_S_EGO_History_TheForgotten = "S_EGO_History_TheForgotten";
 		/// <summary>
 		/// <color=#FFDF00>Wingbeat</color>
-		/// Recast this skill 2 times.
+		/// Recast this skill 3 times.
 		/// Heal the Investigator with the lowest health by 8.
 		/// </summary>
         public static string Skill_S_EGO_History_Wingbeat = "S_EGO_History_Wingbeat";
 		/// <summary>
 		/// <color=#FFDF00>Black Swan</color>
+		/// Inflict 5 <color=#F0FF64>Paralysis</color> (<sprite=0> &a%), 5 <color=red>Fragile</color> (<sprite=0> &a%), and 5 <color=red>Bleed</color> to the target's.
+		/// All allies gain 1 stack of 'Nettle Clothing'.
 		/// </summary>
         public static string Skill_S_EGO_Literature_BlackSwan = "S_EGO_Literature_BlackSwan";
 		/// <summary>
 		/// <color=#FFDF00>Laetitia</color>
-		/// Apply 'Friend' (Discarded after 1 turn, damage/healing increased by 80%) status to 4 random pages in hand.
+		/// Apply <color=green>Friend</color> (Damage/healing increased by 40%) status 5 times to a random pages in hand.
 		/// </summary>
         public static string Skill_S_EGO_Literature_Laetitia = "S_EGO_Literature_Laetitia";
 		/// <summary>
@@ -1120,7 +1138,8 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Literature_RedEyes = "S_EGO_Literature_RedEyes";
 		/// <summary>
 		/// <color=#FFDF00>Sanguine Desire</color>
-		/// Inflict 30 <color=red>Bleed</color>.
+		/// Inflict 10 <color=red>Bleed</color>.
+		/// While this skill is counting, allies attacks inflict 1 <color=red>Bleed</color>.
 		/// </summary>
         public static string Skill_S_EGO_Literature_SanguineDesire = "S_EGO_Literature_SanguineDesire";
 		/// <summary>
@@ -1139,7 +1158,7 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Synchronize_MagicBullet_FloodingBullets = "S_EGO_Synchronize_MagicBullet_FloodingBullets";
 		/// <summary>
 		/// <color=#6291EC>Inevitable Bullet</color>
-		/// This skill cannot be dodged.
+		/// This attack cannot be dodged.
 		/// </summary>
         public static string Skill_S_EGO_Synchronize_MagicBullet_InevitableBullet = "S_EGO_Synchronize_MagicBullet_InevitableBullet";
 		/// <summary>
@@ -1149,7 +1168,6 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Synchronize_MagicBullet_MagicBullet = "S_EGO_Synchronize_MagicBullet_MagicBullet";
 		/// <summary>
 		/// <color=#6291EC>Silent Bullet</color>
-		/// Destroy target's Action Point.
 		/// </summary>
         public static string Skill_S_EGO_Synchronize_MagicBullet_SilentBullet = "S_EGO_Synchronize_MagicBullet_SilentBullet";
 		/// <summary>
@@ -1168,7 +1186,7 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Technological_MagicBullet = "S_EGO_Technological_MagicBullet";
 		/// <summary>
 		/// <color=#FFDF00>Regret</color>
-		/// When played if the target is Stunned, destroy the target Action Points. Recast this skill 2 times.
+		/// Recast this skill 3 times.
 		/// </summary>
         public static string Skill_S_EGO_Technological_Regret = "S_EGO_Technological_Regret";
 		/// <summary>
@@ -1187,12 +1205,12 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#00FFFF>Hippity-Hop</color>
 		/// Draw 2 skills.
-		/// All allies gain 3 <color=green>Positive</color> Emotional Coins.
+		/// All allies gain 3 <color=green>Positive</color> Emotion Points.
 		/// <color=#919191>Though the only thing the child could do was run around inside a cramped lab instead of a grass field under the sun, his steps were shaky but filled with enthusiasm.</color>
 		/// </summary>
         public static string Skill_S_EmotionSystem_Lucy_HippityHop = "S_EmotionSystem_Lucy_HippityHop";
 		/// <summary>
-		/// Music Box
+		/// <color=#FFDF00>Music Box</color>
 		/// Draw 1 skill.
 		/// <color=#919191>Do you remember this melody? The professor used to play this song when the students were sleepy. Happy birthday.</color>
 		/// </summary>
@@ -1256,7 +1274,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// 스킬을 E.G.O. 손으로 전환합니다.
 		/// English:
-		/// Change skills to E.G.O. Hand.
+		/// Change skills to <color=#FFDF00>E.G.O.</color> Hand.
 		/// Japanese:
 		/// スキルをE.G.O.の手札に切り替えます。
 		/// Chinese:
@@ -1269,7 +1287,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// E.G.O. 손을 일반 스킬로 전환합니다.
 		/// English:
-		/// Change E.G.O. Hand to skills.
+		/// Change <color=#FFDF00>E.G.O.</color> Hand to skills.
 		/// Japanese:
 		/// E.G.O.の手札をスキルに切り替えます。
 		/// Chinese:
@@ -1282,7 +1300,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// E.G.O. 스킬을 사용할 수 없습니다.
 		/// English:
-		/// E.G.O. skills are not available.
+		/// <color=#FFDF00>E.G.O.</color> skills are not available.
 		/// Japanese:
 		/// E.G.O.スキルは使用できません。
 		/// Chinese:
@@ -1320,7 +1338,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Emotional System
+		/// Emotion System
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -1330,7 +1348,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// Library of Ruina의 감정 시스템 소개
 		/// English:
-		/// Introduce the Emotional System from Library of Ruina.
+		/// Introduce the Emotion System from Library of Ruina.
 		/// Japanese:
 		/// Library of Ruinaの感情システムを紹介
 		/// Chinese:
@@ -1343,7 +1361,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// 전투 중에 두 가지 종류의 감정 코인(긍정, 부정)을 얻을 수 있습니다.
 		/// English:
-		/// During battles, you can obtain two types of Emotional Coins: Positive and Negative.
+		/// During battles, you can obtain two types of Emotion Points: <color=green>Positive</color> and <color-red>Negative</color>.
 		/// Japanese:
 		/// 戦闘中、ポジティブとネガティブの2種類の感情コインを獲得できます。
 		/// Chinese:
@@ -1356,7 +1374,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// 감정 코인을 모으고 감정 레벨을 올리면 이점을 얻습니다.
 		/// English:
-		/// By collecting Emotional Coins and raising your Emotional Level, you will gain benefits.
+		/// By collecting Emotion Points and raising your Emotion Level, you will gain benefits.
 		/// Japanese:
 		/// 感情コインを集め、感情レベルを上げることで恩恵を受けられます。
 		/// Chinese:
@@ -1382,7 +1400,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// 평균 감정 레벨이 3 이상일 때 EGO 스킬을 얻을 수 있습니다.
 		/// English:
-		/// You can obtain EGO skills when average emotion level reaches 3 and above.
+		/// You can obtain EGO skills when average Emotion Level reaches 3 and above.
 		/// Japanese:
 		/// 平均感情レベルが3以上になるとEGOスキルを獲得できます。
 		/// Chinese:
@@ -1465,6 +1483,15 @@ namespace EmotionSystem
 		/// Chinese-TW:
 		/// </summary>
         public static string EmotionSystem_Floor_History => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_History");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Floor of Literature
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionSystem_Floor_Literature => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Literature");
 		/// <summary>
 		/// Korean:
 		/// English:

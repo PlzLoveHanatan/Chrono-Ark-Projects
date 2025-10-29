@@ -27,6 +27,7 @@ namespace EmotionSystem
 		public bool InvitationActive = false;
 		public int RewardMultiplier = 1;
 		public bool SpecialCase = false;
+		public bool SpecialReward = false;
 
 		public bool FirstGuestInvitation = false;
 		public bool SecondGuestInvitation = false;
@@ -94,7 +95,16 @@ namespace EmotionSystem
 		public void StartNewReception(string nextQueue)
 		{
 			Debug.Log($"[Invitation] Restarting battle immediately for next guest: {nextQueue}");
-			FieldSystem.instance.BattleStart(new GDEEnemyQueueData(nextQueue), StageSystem.instance.StageData.BattleMap.Key, false, false, "", "", false);
+			FieldSystem.instance.BattleStart(new GDEEnemyQueueData(nextQueue), 
+				StageSystem.instance.StageData.BattleMap.Key, false, false, "", "", false);
+		}
+
+		public void DoubleBattle()
+		{
+			Debug.Log("[Invitation] DoubleBattle triggered — starting next reception (Reaper).");
+
+			StartNewReception(GDEItemKeys.EnemyQueue_Queue_S3_Reaper);
+			FieldSystem.instance.BattleAfterDelegate = null;
 		}
 	}
 }

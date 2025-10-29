@@ -16,14 +16,14 @@ namespace EmotionSystem
 		{
 			string currentBoss = system.MainQueueData.Key;
 
-			if (system == null || system.MainQueueData == null || !ReceptionChains.ContainsKey(currentBoss))
+			if (currentBoss == GDEItemKeys.EnemyQueue_Queue_FanaticBoss)
 			{
+				ClearWaves(system);
 				return;
 			}
 
-			if (currentBoss == GDEItemKeys.EnemyQueue_Queue_FanaticBoss)
+			if (system == null || system.MainQueueData == null || !ReceptionChains.ContainsKey(currentBoss))
 			{
-				ClearWaves();
 				return;
 			}
 
@@ -60,8 +60,8 @@ namespace EmotionSystem
 				system.EnemyWaveData = new WaveData();
 			}
 
-			SetWave(ref system.MainQueueData.Wave2, sequence.FirstGuest, 99, sequence.FogTurn);
-			SetWave(ref system.MainQueueData.Wave3, sequence.SecondGuest, 99, sequence.FogTurn);
+			SetWave(ref system.MainQueueData.Wave2, sequence.FirstGuest, 99, sequence.FogTurn, 2);
+			SetWave(ref system.MainQueueData.Wave3, sequence.SecondGuest, 99, sequence.FogTurn, 3);
 
 			if (sequence.FogTurn > 0)
 			{
@@ -98,25 +98,38 @@ namespace EmotionSystem
 			return result;
 		}
 
-		private void SetWave(ref List<GDEEnemyData> wave, string key, int turn, int fogTurn)
+		private void SetWave(ref List<GDEEnemyData> wave, string key, int turn, int fogTurn, int waveIndex)
 		{
 			if (string.IsNullOrEmpty(key)) return;
 
 			wave = LoadWave(key);
 			BattleSystem.instance.MainQueueData.CustomeFogTurn = fogTurn;
-			BattleSystem.instance.EnemyWaveData.wave2turn = turn;
-			BattleSystem.instance.EnemyWaveData.wave2out = false;
+
+			if (waveIndex == 2)
+			{
+				BattleSystem.instance.EnemyWaveData.wave2turn = turn;
+				BattleSystem.instance.EnemyWaveData.wave2out = false;
+			}
+			else if (waveIndex == 3)
+			{
+				BattleSystem.instance.EnemyWaveData.wave3turn = turn;
+				BattleSystem.instance.EnemyWaveData.wave3out = false;
+			}
+
 			Debug.Log($"[Invitation] Wave loaded: {key}");
 		}
 
-		private void ClearWaves()
+
+		private void ClearWaves(BattleSystem system)
 		{
 			SpecialCase = true;
 
-			BattleSystem.instance.EnemyWaveData = new WaveData();
-			BattleSystem.instance.MainQueueData.Wave2 = null;
-			BattleSystem.instance.MainQueueData.Wave3 = null;
+			system.EnemyWaveData = new WaveData();
+			system.MainQueueData.Wave2 = null;
+			system.MainQueueData.Wave3 = null;
 			RewardMultiplier = 1;
+
+			Debug.Log("[Invitation] Waves cleared, SpecialCase = true");
 		}
 	}
 }

@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using static EmotionSystem.DataStore;
+using static EmotionSystem.Extended.EGO;
 
 namespace EmotionSystem
 {
@@ -21,6 +22,85 @@ namespace EmotionSystem
 		{
 			public class Lv1
 			{
+				public class Axe : Buff, IP_SkillUse_Target
+				{
+					public override string DescExtended()
+					{
+						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
+						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+					}
+
+					public override void Init()
+					{
+						PlusPerStat.Damage = 20;
+						PlusStat.DMGTaken = 20;
+					}
+
+					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					{
+						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
+						{
+							Utils.ApplyBleed(hit, BChar);
+						}
+					}
+				}
+
+				public class Cocoon : Buff, IP_SkillUse_Target, IP_PlayerTurn
+				{
+					private bool oncePerTurn;
+
+					public override string DescExtended()
+					{
+						int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
+						int chanceCC = (int)(BChar.GetStat.HIT_CC + 100);
+						return base.DescExtended().Replace("&a", chanceWeak.ToString()).Replace("&b", chanceCC.ToString());
+					}
+
+					public override void Init()
+					{
+						PlusStat.hit = 10;
+					}
+
+					public void Turn()
+					{
+						oncePerTurn = false;
+					}
+
+					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					{
+						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !oncePerTurn)
+						{
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
+							oncePerTurn = true;
+						}
+					}
+				}
+
+				public class Glitter : Buff, IP_SkillUse_Target
+				{
+					public override string DescExtended()
+					{
+						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
+						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+					}
+
+					public override void Init()
+					{
+						PlusPerStat.Damage = 20;
+						PlusStat.AggroPer = 100;
+					}
+
+					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					{
+						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
+						{
+							Utils.ApplyBleed(hit, BChar);
+						}
+					}
+				}
+
 				public class LookDay : Buff, IP_Awake, IP_SomeOneDead
 				{
 					private float timer = 0f;
@@ -76,7 +156,7 @@ namespace EmotionSystem
 
 					private void LoadFaceSprites()
 					{
-						foreach (var kvp in DataStore.Instance.LookDay.SpritePathsFace)
+						foreach (var kvp in DataStore.Instance.Visual.LookDay.SpritePathsFace)
 						{
 							Utils_Ui.LoadSpriteAsync(kvp.Value, sprite =>
 							{
@@ -102,192 +182,31 @@ namespace EmotionSystem
 					}
 				}
 
-				public class SocialDistancing : Buff, IP_Hit, IP_Dodge
+				public class SocialDistancing : Buff
 				{
-					public override string DescExtended()
-					{
-						int damage = (int)(BChar.GetStat.def * 0.5);
-						return base.DescExtended().Replace("&a", damage.ToString());
-					}
-
 					public override void Init()
 					{
 						PlusStat.def = 10;
-					}
-
-					public void Dodge(BattleChar Char, SkillParticle SP)
-					{
-						DealDamage(SP.SkillData.Master);
-					}
-
-					public void Hit(SkillParticle SP, int Dmg, bool Cri)
-					{
-						DealDamage(SP.SkillData.Master);
-					}
-
-					private void DealDamage(BattleChar target)
-					{
-						int damage = (int)(BChar.GetStat.def * 0.5);
-						int finalDamage = Math.Min(damage, 15);
-						target.Damage(BChar, finalDamage, false, true);
+						PlusStat.Strength = true;
 					}
 				}
 
-				public class Glitter : Buff
-				{
-					public override void Init()
-					{
-						PlusPerStat.Damage = 20;
-						PlusStat.cri = 20;
-						PlusStat.AggroPer = 60;
-					}
-				}
-
-				public class Axe : Buff, IP_TurnEnd, IP_DealDamage
-				{
-					private bool damageDealt;
-
-					public override string DescExtended()
-					{
-						int damage = (int)(BChar.GetStat.maxhp * 0.1f);
-						return base.DescExtended().Replace("&a", damage.ToString());
-					}
-
-					public override void Init()
-					{
-						PlusPerStat.Damage = 20;
-						PlusStat.cri = 20;
-					}
-
-					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
-					{
-						if (Damage >= 1)
-						{
-							damageDealt = true;
-						}
-					}
-
-					public void TurnEnd()
-					{
-						if (!damageDealt)
-						{
-							int damage = (int)(BChar.GetStat.maxhp * 0.1f);
-							Utils.TakeNonLethalDamage(BChar, damage);
-						}
-						else
-						{
-							damageDealt = false;
-						}
-					}
-				}
-
-				public class Cocoon : Buff, IP_SkillUse_Target, IP_PlayerTurn
-				{
-					private bool oncePerTurn;
-
-					public override string DescExtended()
-					{
-						int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-						int chanceCC = (int)(BChar.GetStat.HIT_CC + 100);
-						return base.DescExtended().Replace("&a", chanceWeak.ToString()).Replace("&b", chanceCC.ToString());
-					}
-
-					public override void Init()
-					{
-						PlusStat.hit = 10;
-					}
-
-					public void Turn()
-					{
-						oncePerTurn = false;
-					}
-
-					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-					{
-						if (SP.SkillData.Master == BChar && !oncePerTurn)
-						{
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
-							oncePerTurn = true;
-						}
-					}
-				}
-
-				public class SurpriseGift : Buff, IP_SkillUse_Target
+				public class SurpriseGift : Buff, IP_PlayerTurn_1
 				{
 					public override void Init()
 					{
 						PlusStat.PlusCriDmg = 10;
 					}
 
-					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					public void Turn1()
 					{
-						if (SP.SkillData.Master == BChar)
-						{
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_Abnormality_LiteratureLv1_SurpriseGift_0);
-						}
-					}
-				}
-
-				public class SurpriseGift_0 : Buff
-				{
-					public override void Init()
-					{
-						if (BattleSystem.instance != null && StackNum >= 2)
-						{
-							Utils.ApplyBleed(BChar, Usestate_F);
-							SelfDestroy();
-						}
+						Utils.ApplyExtended(BChar.MyTeam.Skills, ModItemKeys.SkillExtended_Ex_Abnormality_Friend, true, true, true, 1, true);
 					}
 				}
 			}
 
 			public class Lv2
 			{
-				public class Shyness : Buff
-				{
-					public override void Init()
-					{
-						PlusStat.def = 20;
-						PlusStat.Strength = true;
-					}
-				}
-
-				public class Obsession : Buff, IP_SkillUse_Target
-				{
-					public override void Init()
-					{
-						PlusStat.DMGTaken = 40;
-						PlusPerStat.Damage = 40;
-						PlusStat.cri = 40;
-					}
-
-					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-					{
-						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
-						{
-							Utils.ApplyBleed(hit, BChar, 2);
-						}
-					}
-				}
-
-				public class Meal : Buff, IP_DealDamage
-				{
-					public override void Init()
-					{
-						PlusStat.hit = 20;
-					}
-
-					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
-					{
-						if (Damage >= 1)
-						{
-							BChar.Heal(BChar, (int)(Damage * 0.2), false, false, null);
-						}
-					}
-				}
-
 				public class Alertness : Buff, IP_SkillUse_Target, IP_PlayerTurn
 				{
 					private int attackPlayed;
@@ -311,44 +230,12 @@ namespace EmotionSystem
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 					{
-						if (SP.SkillData.Master == BChar && attackPlayed < 2)
+						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && attackPlayed < 2)
 						{
 							attackPlayed++;
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
-						}
-					}
-				}
-
-				public class FunnyPrank : Buff, IP_SkillUse_Target
-				{
-					public override string DescExtended()
-					{
-						int damage = (int)(BChar.GetStat.maxhp * 0.2f);
-						return base.DescExtended().Replace("&a", damage.ToString());
-					}
-
-					public override void Init()
-					{
-						PlusStat.PlusCriDmg = 40;
-					}
-
-					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-					{
-						if (SP.SkillData.Master == BChar)
-						{
-							bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
-
-							if (alwaysLucky)
-							{
-								Cri = true;
-							}
-							else
-							{
-								int damage = (int)(BChar.GetStat.maxhp * 0.2f);
-								Utils.TakeNonLethalDamage(BChar, damage);
-							}
 						}
 					}
 				}
@@ -362,25 +249,111 @@ namespace EmotionSystem
 
 					public void Turn1()
 					{
-						var skillList = BattleSystem.instance.AllyTeam.Skills.Where(s => s.IsDamage || s.IsHeal).ToList();
-						var allSkill = Utils.AllyTeam.Skills.ToList();
+						Utils.ApplyExtended(BChar.MyTeam.Skills, ModItemKeys.SkillExtended_Ex_Abnormality_Friend_0, true, true, true, 2, true);
+					}
+				}
 
-						if (skillList == null || skillList.Count == 0)
+				public class FunnyPrank : Buff, IP_SkillUse_Target
+				{
+					public override string DescExtended()
+					{
+						int damage = (int)(BChar.GetStat.maxhp * 0.4f);
+						return base.DescExtended().Replace("&a", damage.ToString());
+					}
+
+					public override void Init()
+					{
+						PlusStat.PlusCriDmg = 40;
+					}
+
+					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					{
+						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !Cri)
 						{
-							skillList = allSkill;
-						}
+							bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
 
-						int limit = Math.Min(2, skillList.Count);
-
-						for (int i = 0; i < limit; i++)
-						{
-							var skill = skillList[i];
-
-							if (skill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Abnormality_Friend) == null)
+							if (alwaysLucky)
 							{
-								skill.ExtendedAdd(ModItemKeys.SkillExtended_Ex_Abnormality_Friend);
+								Cri = true;
+							}
+							else
+							{
+								int damage = (int)(BChar.GetStat.maxhp * 0.4f);
+								Utils.TakeNonLethalDamage(BChar, damage);
 							}
 						}
+					}
+				}
+
+				public class Meal : Buff, IP_DealDamage
+				{
+					public override void Init()
+					{
+						PlusStat.hit = 20;
+						PlusStat.HIT_CC = 20;
+						PlusStat.HIT_DEBUFF = 20;
+						PlusStat.HIT_DOT = 20;
+					}
+
+					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
+					{
+						if (Damage >= 1)
+						{
+							BChar.Heal(BChar, (int)(Damage * 0.2), false, false, null);
+						}
+					}
+				}
+
+				public class Obsession : Buff, IP_SkillUse_Target
+				{
+					public override void Init()
+					{
+						PlusStat.DMGTaken = 40;
+						PlusPerStat.Damage = 40;
+					}
+
+					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					{
+						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
+						{
+							Utils.ApplyBleed(hit, BChar, 2);
+						}
+					}
+				}
+
+				public class Shyness : Buff, IP_Hit, IP_Dodge
+				{
+					public override string DescExtended()
+					{
+						int damage = (int)(BChar.GetStat.def * 0.5);
+						return base.DescExtended().Replace("&a", damage.ToString());
+					}
+
+					public override void Init()
+					{
+						PlusStat.def = 20;
+						PlusStat.RES_CC = 20;
+						PlusStat.RES_DEBUFF = 20;
+						PlusStat.RES_DOT = 20;
+					}
+
+					public void Dodge(BattleChar Char, SkillParticle SP)
+					{
+						DealDamage(SP.SkillData.Master);
+					}
+
+					public void Hit(SkillParticle SP, int Dmg, bool Cri)
+					{
+						DealDamage(SP.SkillData.Master);
+					}
+
+					private void DealDamage(BattleChar target)
+					{
+						if (target.Info.Ally) return;
+
+						int damage = (int)(BChar.GetStat.def * 0.5);
+						int finalDamage = Math.Min(damage, 15);
+						target.Damage(BChar, finalDamage, false, true);
 					}
 				}
 			}
@@ -406,7 +379,7 @@ namespace EmotionSystem
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 					{
-						if (SP.SkillData.Master == BChar)
+						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
@@ -420,7 +393,6 @@ namespace EmotionSystem
 				{
 					public override void Init()
 					{
-						PlusStat.DeadImmune = 40;
 						PlusStat.AggroPer = 100;
 					}
 
@@ -428,7 +400,7 @@ namespace EmotionSystem
 					{
 						bool alwaysLucky = RandomManager.RandomPer(BChar.GetRandomClass().Target, 100, 50);
 
-						if (alwaysLucky && !Cri)
+						if (alwaysLucky)
 						{
 							resist = true;
 							User.Damage(BChar, Dmg * 2, false, true);
@@ -437,6 +409,14 @@ namespace EmotionSystem
 				}
 
 				public class LovingFamily : Buff
+				{
+					public override void Init()
+					{
+						PlusStat.DMGTaken = -20;
+					}
+				}
+
+				public class LovingFamily_0 : Buff, IP_DamageTake
 				{
 					public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 					{
@@ -451,7 +431,22 @@ namespace EmotionSystem
 
 			public class EGO
 			{
-				
+				public class SanguineDesire : Buff, IP_SkillUse_Target
+				{
+					public override string DescExtended()
+					{
+						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
+						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+					}
+
+					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					{
+						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
+						{
+							Utils.ApplyBleed(hit, BChar);
+						}
+					}
+				}
 			}
 		}
 	}

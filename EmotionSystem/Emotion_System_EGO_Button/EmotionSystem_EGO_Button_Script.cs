@@ -1,154 +1,162 @@
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using EmotionSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
+using static EmotionSystem.DataStore;
 
 namespace EmotionSystem
 {
 	public class EmotionSystem_EGO_Button_Script : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerClickHandler
 	{
-		/// <summary>
-		/// Sprite when no EGO is available
-		/// </summary>
-		public Sprite SpriteOff;
-		public const string SpriteOffPath = "EGO_Button.png";
-
-		/// <summary>
-		/// Sprite when EGO is available
-		/// </summary>
-		public Sprite SpriteOn;
-		public const string SpriteOnPath = "EGO_Active.png";
-
-		/// <summary>
-		/// Sprite when EGO hand is active
-		/// </summary>
-		public Sprite SpriteActive;
-		public const string SpriteActivePath = "BattleIcon_EgoOn.png";
-
 		public Image Img;
 		public EmotionSystem_EGO_Button EGO_Button;
-		public bool interactable;
 
+		[Header("Interaction Colors")]
+		public Color normalColor = Color.white;
+		public Color hoverColor = new Color(0.8f, 0.8f, 0.8f);
+		public Color pressedColor = new Color(0.9f, 0.9f, 0.9f);
+		public Color disabledColor = new Color(1f, 1f, 1f, 0.5f);
+
+		public bool interactable;
+		public bool Rotation;
+
+		[Header("Rotation Settings")]
 		public float rotationAmplitude = 10f;
 		public float rotationFrequency = 2f;
 		private float initialRotationZ;
-		public bool RotationOn;
+
+		private readonly Dictionary<VisualUi.EGOUi.SpriteTypeEGOButton, Sprite> EgoSprites = new Dictionary<VisualUi.EGOUi.SpriteTypeEGOButton, Sprite>();
 
 		public void Awake()
 		{
 			initialRotationZ = transform.eulerAngles.z;
-
-			Utils_Ui.GetSpriteAsync(SpriteOffPath, delegate (AsyncOperationHandle handle)
-			{
-				SpriteOff = (Sprite)handle.Result;
-			});
-			Utils_Ui.GetSpriteAsync(SpriteOnPath, delegate (AsyncOperationHandle handle)
-			{
-				SpriteOn = (Sprite)handle.Result;
-			});
-			Utils_Ui.GetSpriteAsync(SpriteActivePath, delegate (AsyncOperationHandle handle)
-			{
-				SpriteActive = (Sprite)handle.Result;
-			});
-			Img = gameObject.GetComponent<Image>();
-			EGO_Button = gameObject.GetComponent<EmotionSystem_EGO_Button>();
+			Img = GetComponent<Image>();
+			EGO_Button = GetComponent<EmotionSystem_EGO_Button>();
 			gameObject.AddComponent<EmotionSystem_EGO_Button_Tooltip>();
+
+			LoadEGOSprites();
+		}
+
+		private void LoadEGOSprites()
+		{
+			var floorType = DataStore.LibraryFloor.CurrentFloorType;
+			var setType = DataStore.Instance.Visual.EGOButton.GetSetForFloor(floorType);
+			var spriteDict = DataStore.Instance.Visual.EGOButton.SpriteSets[setType];
+
+			foreach (var kvp in spriteDict)
+			{
+				var key = kvp.Key;
+				var data = kvp.Value;
+
+				Utils_Ui.GetSpriteAsync(data.Path, (AsyncOperationHandle handle) =>
+				{
+					if (handle.Result is Sprite sprite)
+					{
+						EgoSprites[key] = sprite;
+						Debug.Log($"[EGO_UI] Loaded sprite: {key} from {data.Path}");
+					}
+					else
+					{
+						Debug.LogWarning($"[EGO_UI] Failed to load sprite at {data.Path}");
+					}
+				});
+			}
 		}
 
 		public void Update()
 		{
-			if (EGO_Button != null && Img != null)
+			if (Img == null || EGO_Button == null) return;
+
+			VisualUi.EGOUi.SpriteTypeEGOButton spriteType;
+
+			if (EGO_Button.OpenEGOHand)
 			{
-				if (EGO_Button.ActiveEGOHand)
-				{
-					Img.sprite = SpriteActive;
-					interactable = true;
-				}
-				else if (EGO_Button.HasEGOSkill)
-				{
-					Img.sprite = SpriteOn;
-					interactable = true;
-				}
-				else
-				{
-					Img.sprite = SpriteOff;
-					interactable = false;
-				}
+				spriteType = VisualUi.EGOUi.SpriteTypeEGOButton.EGO_Normal_Open;
+				interactable = true;
+			}
+			else if (EGO_Button.HasEGOSkill)
+			{
+				spriteType = VisualUi.EGOUi.SpriteTypeEGOButton.EGO_Normal_Active;
+				interactable = true;
+			}
+			else
+			{
+				spriteType = VisualUi.EGOUi.SpriteTypeEGOButton.EGO_Normal_Empty;
+				interactable = false;
+			}
 
-				if (RotationOn)
-				{
-					float angle = Mathf.Sin(Time.time * rotationFrequency * Mathf.PI * 2) * rotationAmplitude;
-					transform.rotation = Quaternion.Euler(0f, 0f, initialRotationZ + angle);
-				}
+			Img.color = interactable ? normalColor : disabledColor;
 
-				//if (interactable && BattleSystem.instance.ActWindow.CanAnyMove && Utils.EGOButtonHotkey && Input.GetKeyDown(KeyCode.S))
-				//{
-				//	if (EGO_Button.ActiveEGOHand)
-				//	{
-				//		EGO_Button.ChangeHand();
-				//	}
-				//	else
-				//	{
-				//		EGO_Button.ChangeHand(true);
-				//	}
-				//}
+			// обновляем Image
+			if (EgoSprites.TryGetValue(spriteType, out var sprite) && sprite != null)
+			{
+				if (Img.sprite != sprite) // чтобы не перезаписывать без надобности
+				{
+					Img.sprite = sprite;
+				}
+			}
+
+			if (Rotation)
+			{
+				float angle = Mathf.Sin(Time.time * rotationFrequency * Mathf.PI * 2f) * rotationAmplitude;
+				transform.rotation = Quaternion.Euler(0f, 0f, initialRotationZ + angle);
+			}
+			else
+			{
+				transform.rotation = Quaternion.Euler(0f, 0f, initialRotationZ);
 			}
 		}
 
 		public void StartRotation()
 		{
-			RotationOn = true;
+			Rotation = true;
 		}
 
-		public void ResetRotation()
-		{
-			RotationOn = false;
+		public void StopRotation()
+		{ 
+			Rotation = false;
 			transform.rotation = Quaternion.Euler(0f, 0f, initialRotationZ);
 		}
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			ResetRotation();
+			StopRotation();
 
 			if (!interactable || !BattleSystem.instance.ActWindow.CanAnyMove) return;
-
 			Img.rectTransform.localScale = 1.1f * Vector3.one;
-			Img.color = new Color(1f, 1f, 1f, 0.8f);
+			Img.color = interactable ? hoverColor : disabledColor;
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			if (!interactable || !BattleSystem.instance.ActWindow.CanAnyMove) return;
-
 			Img.rectTransform.localScale = Vector3.one;
-			Img.color = new Color(1f, 1f, 1f, 1f);
+			Img.color = interactable ? normalColor : disabledColor;
 		}
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
 			if (!interactable || !BattleSystem.instance.ActWindow.CanAnyMove) return;
-
-			Img.rectTransform.localScale = Vector3.one;
-			Img.color = new Color(1f, 1f, 1f, 1f);
+			Img.color = interactable ? pressedColor : disabledColor;
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			if (!interactable || !BattleSystem.instance.ActWindow.CanAnyMove || EGO_Button == null) return;
 
-			if (EGO_Button.ActiveEGOHand)
+			if (EGO_Button.OpenEGOHand)
 			{
-				EGO_Button.ChangeHand(); // clicked when EGO hand is active, switch back to normal hand
+				EGO_Button.ChangeHand();
 			}
 			else
 			{
-				EGO_Button.ChangeHand(true); // clicked when EGO hand is not active, switch to EGO hand
+				EGO_Button.ChangeHand(true);
 			}
 
-			Img.rectTransform.localScale = 1.1f * Vector3.one;
-			Img.color = new Color(1f, 1f, 1f, 0.8f);
+			Img.color = interactable ? hoverColor : disabledColor;
 		}
 	}
 }

@@ -38,105 +38,106 @@ namespace EmotionSystem
 				}
 			}
 		}
-	}
 
-	public class EGO
-	{
-		public class FourthMatchFlame : Ex_EGO
+
+		public class EGO
 		{
-			public override void Init()
+			public class FourthMatchFlame : Ex_EGO
 			{
-				base.Init();
-				SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
-				Cooldown = 3;
-			}
-
-			public override void FixedUpdate()
-			{
-				if (BattleSystem.instance.EnemyList.Count == 1)
+				public override void Init()
 				{
-					SkillParticleOn();
+					base.Init();
+					SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
+					Cooldown = 3;
 				}
-				else
-				{
-					SkillParticleOff();
-				}
-			}
 
-			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-			{
-				Utils.PlaySound("Floor_History_Matchlight");
-
-				if (Targets.Count == 1)
+				public override void FixedUpdate()
 				{
-					Utils.ApplyBurn(Targets[0], BChar, 20);
-				}
-				else
-				{
-					foreach (var target in Targets)
+					if (BattleSystem.instance.EnemyList.Count == 1)
 					{
-						Utils.ApplyBurn(target, BChar, 10);
+						SkillParticleOn();
+					}
+					else
+					{
+						SkillParticleOff();
+					}
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_History_Matchlight");
+
+					if (Targets.Count == 1)
+					{
+						Utils.ApplyBurn(Targets[0], BChar, 20);
+					}
+					else
+					{
+						foreach (var target in Targets)
+						{
+							Utils.ApplyBurn(target, BChar, 10);
+						}
 					}
 				}
 			}
-		}
 
-		public class GreenStem : Ex_EGO
-		{
-			public override void Init()
+			public class GreenStem : Ex_EGO
 			{
-				base.Init();
-				Cooldown = 3;
+				public override void Init()
+				{
+					base.Init();
+					Cooldown = 3;
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_History_Malice");
+				}
 			}
 
-			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			public class Hornet : Ex_EGO
 			{
-				Utils.PlaySound("Floor_History_Malice");
-			}
-		}
+				public override void Init()
+				{
+					base.Init();
+					Cooldown = 3;
+				}
 
-		public class Hornet : Ex_EGO
-		{
-			public override void Init()
-			{
-				base.Init();
-				Cooldown = 3;
-			}
-
-			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-			{
-				Utils.PlaySound("Floor_History_Hornet");
-			}
-		}
-
-		public class TheForgotten : Ex_EGO
-		{
-			public override void Init()
-			{
-				base.Init();
-				Cooldown = 3;
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_History_Hornet");
+				}
 			}
 
-			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			public class TheForgotten : Ex_EGO
 			{
-				Utils.PlaySound("Floor_History_Forgotten");
-				DestroyActions(Targets[0], 2);
-			}
-		}
+				public override void Init()
+				{
+					base.Init();
+					Cooldown = 3;
+				}
 
-		public class Wingbeat : Ex_EGO
-		{
-			public override void Init()
-			{
-				base.Init();
-				Cooldown = 3;
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_History_Forgotten");
+					DestroyActions(Targets[0], 3);
+				}
 			}
 
-			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			public class Wingbeat : Ex_EGO
 			{
-				Utils.PlaySound("Floor_History_Wingbeat");
-				BattleSystem.DelayInput(WingBeatHeal(BChar));
-				BattleSystem.DelayInput(RecastSkill(Targets[0], BChar, ModItemKeys.Skill_S_EGO_History_Wingbeat, 2, true));
+				public override void Init()
+				{
+					base.Init();
+					Cooldown = 3;
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_History_Wingbeat");
+					BattleSystem.DelayInput(WingBeatHeal(BChar));
+					BattleSystem.DelayInput(RecastSkill(Targets[0], BChar, ModItemKeys.Skill_S_EGO_History_Wingbeat, 3, true));
+				}
 			}
 		}
 	}

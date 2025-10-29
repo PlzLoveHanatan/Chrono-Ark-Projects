@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -83,65 +83,16 @@ namespace EmotionSystem
 			img.rectTransform.transform.localPosition = pos;
 		}
 
-		//public static void ImageResize(Image img, Vector2 size)
-		//{
-		//	img.rectTransform.anchorMin = new Vector2(0f, 1f);
-		//	img.rectTransform.anchorMax = new Vector2(0f, 1f);
-		//	img.rectTransform.sizeDelta = size;
-		//}
-
 		public static void TextResize(TextMeshProUGUI txt, Vector2 size, Vector2 pos, string text, float fontSize)
 		{
 			txt.rectTransform.anchorMin = new Vector2(0f, 1f);
 			txt.rectTransform.anchorMax = new Vector2(0f, 1f);
-			txt.rectTransform.sizeDelta = size;
-			txt.rectTransform.transform.localPosition = pos;
+			txt.rectTransform.sizeDelta = size; txt.rectTransform.transform.localPosition = pos;
 			txt.text = text;
 			txt.fontSize = fontSize;
 			txt.color = Color.white;
 			txt.alignment = TextAlignmentOptions.Left;
 		}
-
-		//public static GameObject CreateUIImage(string name, Transform parent, string spritePath, Vector2 size, Vector3 localPos, bool setAsFirstSibling = true)
-		//{
-		//	// Создаём объект
-		//	GameObject go = new GameObject(name);
-		//	go.SetActive(false);
-		//	if (parent != null) go.transform.SetParent(parent, false);
-
-		//	go.transform.localPosition = localPos;
-		//	go.transform.localScale = Vector3.one;
-		//	go.layer = 8;
-
-		//	// Добавляем Image
-		//	Image img = go.AddComponent<Image>();
-		//	if (img == null)
-		//	{
-		//		Debug.LogWarning($"[CreateUIImage] Не удалось добавить компонент Image на {name}");
-		//		return go;
-		//	}
-
-		//	// Загружаем спрайт через ваш метод
-		//	try
-		//	{
-		//		GetSprite(spritePath, img);
-		//		Debug.Log($"[CreateUIImage] Спрайт '{spritePath}' подгружен на {name}");
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		Debug.LogWarning($"[CreateUIImage] Ошибка при подгрузке спрайта '{spritePath}': {ex.Message}");
-		//	}
-
-		//	// Размер
-		//	RectTransform rt = go.GetComponent<RectTransform>();
-		//	if (rt != null) rt.sizeDelta = size;
-
-		//	// Ставим первым в иерархии, если нужно
-		//	if (setAsFirstSibling) go.transform.SetAsFirstSibling();
-
-		//	go.SetActive(true);
-		//	return go;
-		//}
 
 		public static GameObject CreateUIImage(string name, Transform parent, Sprite sprite, Vector2 size, Vector3 localPos, bool setAsFirstSibling = true)
 		{
@@ -157,6 +108,7 @@ namespace EmotionSystem
 			if (img == null) return go;
 
 			img.sprite = sprite;
+			img.preserveAspect = true;
 
 			RectTransform rt = go.GetComponent<RectTransform>();
 			if (rt != null) rt.sizeDelta = size;

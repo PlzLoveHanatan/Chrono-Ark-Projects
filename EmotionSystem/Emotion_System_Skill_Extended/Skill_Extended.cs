@@ -31,6 +31,15 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
+					PlusSkillPerFinal.Heal = 40;
+					PlusSkillPerFinal.Damage = 40;
+				}
+			}
+
+			public class Friend_0 : Skill_Extended
+			{
+				public override void Init()
+				{
 					PlusSkillPerFinal.Heal = 80;
 					PlusSkillPerFinal.Damage = 80;
 					MySkill.AutoDelete = 1;
@@ -182,7 +191,7 @@ namespace EmotionSystem
 				{
 					yield return null;
 
-					if (EmotionSystem_EGO_Button.instance.ActiveEGOHand)
+					if (EmotionSystem_EGO_Button.instance.OpenEGOHand)
 					{
 						EmotionSystem_EGO_Button.instance.ChangeHand();
 					}

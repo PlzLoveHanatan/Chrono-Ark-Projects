@@ -22,7 +22,7 @@ namespace EmotionSystem
 
 		private int ExchangeNum = 0;
 
-		public bool ActiveEGOHand = false;
+		public bool OpenEGOHand = false;
 
 		public bool HasEGOSkill => EGOHand.Count > 0;
 
@@ -57,7 +57,7 @@ namespace EmotionSystem
 
 		public void ChangeHand(bool changeToEGO = false)
 		{
-			GetComponent<EmotionSystem_EGO_Button_Script>()?.ResetRotation();
+			GetComponent<EmotionSystem_EGO_Button_Script>()?.StopRotation();
 
 			if (changeToEGO)
 			{
@@ -98,7 +98,7 @@ namespace EmotionSystem
 				BattleSystem.instance.StartCoroutine(Utils.AllyTeam.AddSkillNoDrawEffect(skill, -1));
 			}
 
-			ActiveEGOHand = true;
+			OpenEGOHand = true;
 
 			// don't allow exchange in EGO skills
 			ExchangeNum = Utils.AllyTeam.DiscardCount;
@@ -136,7 +136,7 @@ namespace EmotionSystem
 				BattleSystem.instance.StartCoroutine(Utils.AllyTeam.AddSkillNoDrawEffect(skill, -1));
 			}
 
-			ActiveEGOHand = false;
+			OpenEGOHand = false;
 
 			// return back the exchange count
 			Utils.AllyTeam.DiscardCount = ExchangeNum;

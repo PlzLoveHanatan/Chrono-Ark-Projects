@@ -145,7 +145,7 @@ namespace EmotionSystem
 				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv2_Obsession, AbnoType.Neg, 2),
 				
 				// Lv3
-				new Abnormality(ModItemKeys.Buff_B_Abnormality_LiteratureLv3_GooeyWaste, AbnoType.Pos, 3),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv3_GooeyWaste, AbnoType.Pos, 3),
 				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv3_LovingFamily, AbnoType.Pos, 3),
 				new Abnormality(ModItemKeys.Skill_S_Abnormality_Literature_Lv3_WornParasol, AbnoType.Neg, 3),
 			};

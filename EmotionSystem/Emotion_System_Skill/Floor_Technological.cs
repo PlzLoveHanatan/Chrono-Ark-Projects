@@ -102,7 +102,7 @@ namespace EmotionSystem
 					{
 						DestroyActions(Targets[0], 1);
 					}
-					BattleSystem.DelayInput(RecastSkill(Targets[0], BChar, MySkill.MySkill.KeyID, 2));
+					BattleSystem.DelayInput(RecastSkill(Targets[0], BChar, MySkill.MySkill.KeyID, 3));
 				}
 			}
 
@@ -159,7 +159,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					DestroyActions(Targets[0]);
+					//DestroyActions(Targets[0]);
 				}
 			}
 		}

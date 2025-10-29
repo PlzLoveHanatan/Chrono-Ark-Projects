@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using ChronoArkMod;
 using TMPro;
 using UnityEngine;
@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using DarkTonic.MasterAudio;
 using UnityEngine.Playables;
 using static EmotionSystem.DataStore.LibraryFloor;
+using Spine;
 
 
 namespace EmotionSystem
@@ -197,6 +198,74 @@ namespace EmotionSystem
 			}
 		}
 
+		public static void ApplyExtended(Skill skill, string extendedKey, bool isMultipleExtended = false)
+		{
+			if (skill == null || string.IsNullOrEmpty(extendedKey)) return;
+
+			var existing = skill.ExtendedFind_DataName(extendedKey);
+
+			if (isMultipleExtended || existing == null)
+			{
+				skill.ExtendedAdd(extendedKey);
+			}
+		}
+
+		public static void ApplyExtended(List<Skill> skillList, string extendedKey, bool? isHealingSkill = null, bool? isDamageSkill = null, bool isMultipleExtended = false, int extendedNum = 2, bool isRandomSkills = false)
+		{
+			if (skillList == null && skillList.Count == 0 && string.IsNullOrEmpty(extendedKey)) return;
+
+			IEnumerable<Skill> filtered = skillList;
+
+			if (isHealingSkill == true && isDamageSkill == true)
+			{
+				filtered = filtered.Where(s => s.IsHeal || s.IsDamage);
+			}
+			else if (isHealingSkill == true)
+			{
+				filtered = filtered.Where(s => s.IsHeal);
+			}
+			else if (isDamageSkill == true)
+			{
+				filtered = filtered.Where(s => s.IsDamage);
+			}
+
+			var list = filtered.ToList();
+
+			if (list.Count == 0)
+			{
+				list = new List<Skill>(skillList);
+			}
+
+			if (!isRandomSkills)
+			{
+				foreach (var skill in list.Take(Math.Min(extendedNum, list.Count)))
+				{
+					ApplyExtendedToSkill(skill, extendedKey, isMultipleExtended);
+				}
+			}
+			else
+			{
+				for (int i = 0; i < extendedNum; i++)
+				{
+					int randomIndex = RandomManager.RandomInt(DummyChar.GetRandomClass().SkillSelect, 0, list.Count);
+					ApplyExtendedToSkill(list[randomIndex], extendedKey, isMultipleExtended);
+				}
+			}
+		}
+
+		public static void ApplyExtendedToSkill(Skill skill, string extendedKey, bool isMultipleExtended)
+		{
+			if (skill != null)
+			{
+				var existing = skill.ExtendedFind_DataName(extendedKey);
+
+				if (isMultipleExtended || existing == null)
+				{
+					skill.ExtendedAdd(extendedKey);
+				}
+			}
+		}
+
 		public static void ApplyBurn(BattleChar target, BattleChar user, int stack = 1)
 		{
 			if (target.Info.Ally || target == null) return;
@@ -327,7 +396,7 @@ namespace EmotionSystem
 
 		}
 
-		
+
 		public static void CastingWasteFixed(this BattleActWindow window, CastingSkill cast)
 		{
 			SkillButton[] componentsInChildren = window.CastingGroup.GetComponentsInChildren<SkillButton>();

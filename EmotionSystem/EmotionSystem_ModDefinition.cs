@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -134,32 +134,21 @@ namespace EmotionSystem
 			{
 				Transform parent = BattleSystem.instance.ActWindow.transform;
 
-				GameObject egoButton = Utils_Ui.CreatGameObject("EGO_Button", parent);
-				if (egoButton == null)
-				{
-					return;
-				}
+				var floorType = DataStore.LibraryFloor.CurrentFloorType;
+				var setType = DataStore.Instance.Visual.EGOButton.GetSetForFloor(floorType);
+				var defaultType = DataStore.Instance.Visual.EGOButton.GetDefault(setType);
+				var visualData = DataStore.Instance.Visual.EGOButton.GetData(setType, defaultType.Value);
 
-				egoButton.transform.SetParent(parent);
-				egoButton.transform.localPosition = new Vector2(-324.6328f, 300.5991f);
+				Sprite sprite = Utils_Ui.GetSprite(visualData.Path);
+				GameObject egoButton = Utils_Ui.CreateUIImage("EGO_Button", parent, sprite, visualData.Size, visualData.Position, true);
 
-				Image image = egoButton.AddComponent<Image>();
-				Sprite sprite = Utils_Ui.GetSprite("EGO_Active.png");
-				if (sprite == null)
-				{
-					return;
-				}
-
-				image.sprite = sprite;
-				Utils_Ui.ImageResize(image, new Vector2(160f, 160f), new Vector2(-324.6328f, 300.5991f));
-
-				EmotionSystem_EGO_Button egoSystem = egoButton.AddComponent<EmotionSystem_EGO_Button>();
+				var egoSystem = egoButton.AddComponent<EmotionSystem_EGO_Button>();
 				egoButton.AddComponent<EmotionSystem_EGO_Button_Script>();
-
 				EmotionSystem_EGO_Button.instance = egoSystem;
 
 				egoButton.SetActive(true);
 			}
+
 
 			public static void StartTutorial()
 			{

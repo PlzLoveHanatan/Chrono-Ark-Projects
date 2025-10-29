@@ -117,7 +117,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int damage = (int)(BChar.GetStat.maxhp * 0.1f);
+						int damage = (int)(BChar.GetStat.maxhp * 0.15f);
 						int chance = (int)(BChar.GetStat.HIT_DOT + 100);
 						return base.DescExtended().Replace("&a", damage.ToString()).Replace("&b", chance.ToString());
 					}
@@ -141,7 +141,7 @@ namespace EmotionSystem
 
 							if (neverLucky)
 							{
-								int damage = (int)(BChar.GetStat.maxhp * 0.1f);
+								int damage = (int)(BChar.GetStat.maxhp * 0.15f);
 								Utils.TakeNonLethalDamage(BChar, damage);
 								Utils.PlaySound("Floor_History_Explode");
 							}

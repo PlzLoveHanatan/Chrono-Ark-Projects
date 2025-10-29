@@ -367,7 +367,7 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Storytime : Buff, IP_PlayerTurn_1, IP_Awake
+				public class Storytime : Buff, IP_Awake, IP_PlayerTurn_1
 				{
 					public void Awake()
 					{
@@ -418,19 +418,19 @@ namespace EmotionSystem
 
 			public class Lv3
 			{
-				public class DimensionalRefraction : Buff, IP_PlayerTurn_1, IP_Awake, IP_DrawNumChange
+				public class DimensionalRefraction : Buff, IP_PlayerTurn_1, IP_DrawNumChange, IP_Awake
 				{
 					private Skill SavedSkill;
 					private Skill DimensionSkill;
 
-					public override void SelfdestroyPlus()
-					{
-						Utils.RemoveSkill(DimensionSkill);
-					}
-
 					public void Awake()
 					{
 						ChangeSkill();
+					}
+
+					public override void SelfdestroyPlus()
+					{
+						Utils.RemoveSkill(DimensionSkill);
 					}
 
 					public void DrawNumChange(int DrawNum, out int OutNum)
@@ -502,7 +502,7 @@ namespace EmotionSystem
 
 					private void DiscardSkill()
 					{
-						Utils.AllyTeam.AP -= 1;
+						Utils.AllyTeam.AP -= 2;
 
 						var skillList = Utils.AllyTeam.Skills?.ToList();
 						int randomIndex = RandomManager.RandomInt(BChar.GetRandomClass().SkillSelect, 0, skillList.Count);
@@ -539,7 +539,7 @@ namespace EmotionSystem
 
 							if (selectedSkill.CharData == Utils.AllyTeam.LucyAlly)
 							{
-								Utils.AllyTeam.AP -= 2;
+								Utils.AllyTeam.AP -= 3;
 							}
 							else
 							{

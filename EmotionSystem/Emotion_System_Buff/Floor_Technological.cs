@@ -22,7 +22,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int damage = (int)(BChar.GetStat.maxhp * 0.1f);
+						int damage = (int)(BChar.GetStat.maxhp * 0.15f);
 						return base.DescExtended().Replace("&a", damage.ToString());
 					}
 
@@ -37,7 +37,7 @@ namespace EmotionSystem
 					public void TurnEnd()
 					{
 						Utils.PlaySound("Floor_Technological_Lament");
-						int damage = (int)(BChar.GetStat.maxhp * 0.1f);
+						int damage = (int)(BChar.GetStat.maxhp * 0.15f);
 						Utils.TakeNonLethalDamage(BChar, damage);
 					}
 				}
@@ -206,35 +206,32 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Clean : Buff, IP_SkillUse_User, IP_DealDamage, IP_PlayerTurn
+				public class Clean : Buff, IP_DealDamage, IP_PlayerTurn
 				{
-					private bool oncePerturn;
+					private int critsPerTurn;
 
 					public override void Init()
 					{
 						PlusStat.cri = 20;
 					}
 
-					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
-					{
-						if (SkillD.Master == BChar && SkillD.IsDamage)
-						{
-							Utils.PlaySound("Floor_Technological_Clean");
-						}
-					}
-
 					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
 					{
-						if (IsCri && !oncePerturn)
+						if (IsCri)
 						{
-							Utils.AllyTeam.AP += 1;
-							oncePerturn = true;
+							Utils.PlaySound("Floor_Technological_Clean");
+
+							if (critsPerTurn >= 2)
+							{
+								Utils.AllyTeam.AP += 1;
+								critsPerTurn++;
+							}
 						}
 					}
 
 					public void Turn()
 					{
-						oncePerturn = false;
+						critsPerTurn = 0;
 					}
 				}
 

@@ -15,17 +15,21 @@ namespace EmotionSystem
 		{
 			ReceptionRewards.Clear();
 
-			int soulStones = 2;
+			int soulStones = 1;
 			int timeMoney = PlayData.TSavedata.StageNum + 2;
 
 			AddReward(GDEItemKeys.Item_Misc_TimeMoney, timeMoney, totalRewards);
 			AddReward(GDEItemKeys.Item_Misc_Soul, soulStones, totalRewards);
-			AddReward(GDEItemKeys.Item_Consume_SkillBookCharacter, 1, totalRewards);
 			AddReward(ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent, 1);
 
 			if (PlayData.TSavedata.StageNum <= 4)
 			{
 				AddReward(GDEItemKeys.Item_Consume_FriendShipPouch, 1, totalRewards);
+			}
+
+			if (RandomManager.RandomPer(RandomClassKey.BattleClear, 100, 25))
+			{
+				AddReward(GDEItemKeys.Item_Consume_SkillBookCharacter, 1, totalRewards);
 			}
 
 			if (RandomManager.RandomPer(RandomClassKey.BattleClear, 100, 25))
@@ -36,6 +40,13 @@ namespace EmotionSystem
 			if (RandomManager.RandomPer(RandomClassKey.BattleClear, 100, 15))
 			{
 				AddReward(GDEItemKeys.Item_Consume_ArtifactPouch, 1, totalRewards);
+			}
+
+			if (PlayData.TSavedata.StageNum == 4 && PlayData.TSavedata.bMist.Level >= 4 && !Instance.SpecialReward)
+			{
+				AddReward(GDEItemKeys.Item_Consume_SkillBookLucy, 1);
+				AddReward(GDEItemKeys.Item_Consume_ArtifactPouch, 1);
+				SpecialReward = true;
 			}
 		}
 

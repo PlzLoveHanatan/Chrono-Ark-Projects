@@ -112,7 +112,7 @@ namespace EmotionSystem
 		{
 			public override void BuffStat()
 			{
-				PlusStat.spd = 1;
+				PlusStat.spd = Math.Min(StackNum, 2);
 				PlusStat.dod = -10 * StackNum;
 			}
 
@@ -126,14 +126,14 @@ namespace EmotionSystem
 		{
 			public override void BuffStat()
 			{
-				PlusStat.DMGTaken = 10 * StackNum;
+				PlusStat.crihit = 10 * StackNum;
 			}
 
 			public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 			{
-				if (Dmg >= 1)
+				if (Dmg >= 1 && Cri)
 				{
-					SelfStackDestroy();
+					SelfDestroy();
 				}
 			}
 		}

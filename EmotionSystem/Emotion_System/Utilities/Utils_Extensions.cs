@@ -25,8 +25,8 @@ namespace EmotionSystem
 		{
 			try
 			{
-				return ModManager.getModInfo(EmotionSystem_Plugin.modname).localizationInfo.
-					SystemLocalizationUpdate(EmotionSystem_Plugin.modname + "/" + key);
+				return ModManager.getModInfo(EmotionlSystem_Plugin.modname).localizationInfo.
+					SystemLocalizationUpdate(EmotionlSystem_Plugin.modname + "/" + key);
 			}
 			catch
 			{

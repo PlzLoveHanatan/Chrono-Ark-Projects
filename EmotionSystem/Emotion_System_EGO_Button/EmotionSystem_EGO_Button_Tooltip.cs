@@ -32,7 +32,7 @@ namespace EmotionSystem
 
 				string text;
 
-				if (EGO_Button.ActiveEGOHand)
+				if (EGO_Button.OpenEGOHand)
 				{
 					text = Text_SwitchHand;
 				}
