@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
     /// <summary>
@@ -26,10 +26,9 @@ namespace XiaoLOR
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
 			XiaoUtils.PlaySound("NormalHit");
-
             var target = Targets[0];
             target.BuffAdd(GDEItemKeys.Buff_B_EnemyTaunt, this.BChar, false, 0, false, -1, false);
-            Utils.GiveEmotionsToChar(this.BChar, 2, SkillD.GetPosUI());
+			EmotionalManager.GetNegEmotion(BChar, SkillD.GetPosUI(), 2);
         }
     }
 }

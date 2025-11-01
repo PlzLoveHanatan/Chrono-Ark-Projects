@@ -13,7 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using HarmonyLib;
-using EmotionalSystem;
+using EmotionSystem;
 using System.Diagnostics.Eventing.Reader;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;

@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
 	/// <summary>
@@ -27,20 +27,17 @@ namespace XiaoLOR
 
         public override void FixedUpdate()
         {
-            if (BChar.EmotionLevel() >= 3 && this.MySkill.BasicSkill)
+            if (BChar.EmotionLevel() >= 3)
             {
                 this.MySkill.APChange = -1;
                 base.SkillParticleOn();
                 return;
             }
-            base.SkillParticleOff();
+            else
+            {
+				base.SkillParticleOff();
+			}
+            
         }
-        //public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-        //{
-        //    if (BChar.EmotionLevel() >= 3)
-        //    {
-        //        Utils.ApplyBurn(Targets[0], this.BChar, 2);
-        //    }
-        //}
     }
 }

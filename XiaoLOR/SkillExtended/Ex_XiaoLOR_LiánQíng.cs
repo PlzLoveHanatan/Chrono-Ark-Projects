@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
     public class Ex_XiaoLOR_LiánQíng : Skill_Extended
@@ -31,12 +31,10 @@ namespace XiaoLOR
         {
             if (SkillD.Master == BChar)
             {
-                Utils.GiveEmotionsToAllies(3, SkillD.GetPosUI());
-
-                if (BChar.EmotionLevel() >= 3)
+                foreach (var ally  in Utils.AllyTeam.AliveChars)
                 {
-                    Utils.GiveEmotionsToAllies(3, SkillD.GetPosUI());
-                }
+					EmotionalManager.GetNegEmotion(ally, SkillD.GetPosUI(), 3);
+				}
             }
         }
     }

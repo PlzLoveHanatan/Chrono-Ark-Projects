@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
     public class S_XiaoLORLv1_RushDown_0 : Skill_Extended

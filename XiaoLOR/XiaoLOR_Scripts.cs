@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EmotionalSystem;
+using EmotionSystem;
 using UnityEngine;
 
 namespace XiaoLOR
@@ -18,7 +18,7 @@ namespace XiaoLOR
 				var skill = Skill.TempSkill(key, bchar);
 				if (skill != null)
 				{
-					EGO_System.instance?.AddEGOSkill(skill);
+					EmotionSystem_EGO_Button.instance?.AddEGOSkill(skill);
 					Utils.UnlockSkillPreview(key);
 				}
 			}
@@ -78,9 +78,9 @@ namespace XiaoLOR
 
 		private static void CheckEGOHand()
 		{
-			if (EGO_System.instance != null && EGO_System.instance.egoActive)
+			if (EmotionSystem_EGO_Button.instance != null && EmotionSystem_EGO_Button.instance.OpenEGOHand)
 			{
-				EGO_System.instance.SwitchToNormal();
+				EmotionSystem_EGO_Button.instance.ChangeHand();
 			}
 		}
 

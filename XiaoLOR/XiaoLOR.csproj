@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>XiaoLOR10072025102050</AssemblyName>
+    <AssemblyName>XiaoLOR11012025234624</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -31,9 +31,8 @@
     <Reference Include="DOTween">
       <Private>False</Private>
     </Reference>
-    <Reference Include="EmotionalSystem, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\EmotionalSystem\Assemblies\EmotionalSystem.dll</HintPath>
+    <Reference Include="EmotionSystem">
+      <HintPath>..\..\EmotionSystem\Assemblies\EmotionSystem.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Security">
       <Private>False</Private>
@@ -413,7 +412,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                      <!-- Compile ItemGroup Start-->
+                              <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="XiaoLORCharacter.cs" />
     <Compile Include="XiaoLOR_DataStore.cs" />
@@ -425,6 +424,7 @@
     <Compile Include="XiaoLOR_Scripts.cs" />
     <Compile Include="XiaoLOR_Value.cs" />
     <Compile Include="XiaoUtils.cs" />
+    <Compile Include="Buff\B_XiaoLOREGO_Burn.cs" />
     <Compile Include="Buff\B_XiaoLOREGO_JuéLì.cs" />
     <Compile Include="Buff\B_XiaoLOREGO_LièYànZhīYì.cs" />
     <Compile Include="Buff\B_XiaoLOREGO_SuìJiǎ.cs" />
@@ -434,7 +434,6 @@
     <Compile Include="Buff\B_XiaoLOR_FirmasaGreatMountain.cs" />
     <Compile Include="Buff\B_XiaoLOR_ForceofaWildfire.cs" />
     <Compile Include="Buff\B_XiaoLOR_ForceofaWildfire_0.cs" />
-    <Compile Include="Buff\B_XiaoLOR_FuriousFireRendingtheSkies.cs" />
     <Compile Include="Buff\B_XiaoLOR_HuǒLiè.cs" />
     <Compile Include="Buff\B_XiaoLOR_HuǒYǐng.cs" />
     <Compile Include="Buff\B_XiaoLOR_LièYànXīnLián.cs" />
@@ -480,7 +479,6 @@
     <Compile Include="Skill\S_XiaoLOR_CoordinatedAssault.cs" />
     <Compile Include="SkillExtended\Ex_XiaoLOR_FuriousFireRendingtheSkies.cs" />
     <Compile Include="SkillExtended\Ex_XiaoLOR_LiánQíng.cs" />
-    <Compile Include="SkillExtended\Ex_XiaoLOR_SouloftheLotus.cs" />
     <Compile Include="SkillExtended\Ex_XiaoLOR_YānLièSùMíng.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->

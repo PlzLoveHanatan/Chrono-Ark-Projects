@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
     /// <summary>
@@ -19,22 +19,6 @@ namespace XiaoLOR
     /// </summary>
     public class S_XiaoLORLv2_FervidEmotions : Skill_Extended
     {
-        //public override string DescExtended(string desc)
-        //{
-        //    if (BattleSystem.instance != null)
-        //    {
-        //        if (BChar.EmotionLevel() >= 2)
-        //        {
-        //            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.2f) * BChar.EmotionLevel()).ToString());
-        //        }
-        //        else if (BChar.EmotionLevel() >= 4)
-        //        {
-        //            return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.4f)).ToString());
-        //        }
-        //    }
-
-        //    return base.DescExtended(desc).Replace("&a", ((int)(this.BChar.GetStat.atk * 0.2f)).ToString());
-        //}
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
 			XiaoUtils.PlaySound("Fervid");
@@ -45,14 +29,9 @@ namespace XiaoLOR
                 {
                     Utils.ApplyBurn(target, this.BChar, 3);
 
-                    foreach (var ally in XiaoUtils.AllyTeam.AliveChars)
-                    {
-						ally.GetNegEmotion(target.GetPosUI());
-					}
+                    var burnStacks = target.BuffReturn(EmotionSystem.ModItemKeys.Buff_B_EmotionSystem_Burn, false) as Debuffs.Burn;
 
-                    var burnStacks = target.BuffReturn(EmotionalSystem.ModItemKeys.Buff_B_Xiao_Burn, false) as B_Xiao_Burn;
-
-                    if (burnStacks?.Burn < 6 || burnStacks?.Burn == 0)
+                    if (burnStacks?.CurrentBurn < 6 || burnStacks?.CurrentBurn == 0)
                     {
                         Utils.ApplyBurn(target, BChar, 3);
                     }
@@ -62,20 +41,12 @@ namespace XiaoLOR
                         Utils.ApplyBurn(target, BChar, 3);
                     }
                 }
-            }          
-        }
+            }
 
-        //public void DamageChange_sumoperation(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View, ref int PlusDamage)
-        //{
-        //    if (BChar.EmotionLevel() >= 2 && SkillD.MySkill.KeyID == ModItemKeys.Skill_S_XiaoLORLv2_FervidEmotions)
-        //    {
-        //        PlusDamage += (int)(this.BChar.GetStat.atk * 0.2f);
-        //    }
-
-        //    else if (BChar.EmotionLevel() >= 4 && SkillD.MySkill.KeyID == ModItemKeys.Skill_S_XiaoLORLv2_FervidEmotions)
-        //    {
-        //        PlusDamage += (int)(this.BChar.GetStat.atk * 0.4f);
-        //    }
-        //}
+			foreach (var ally in Utils.AllyTeam.AliveChars)
+			{
+				EmotionalManager.GetNegEmotion(ally, SkillD.GetPosUI(), 2);
+			}
+		}
     }
 }

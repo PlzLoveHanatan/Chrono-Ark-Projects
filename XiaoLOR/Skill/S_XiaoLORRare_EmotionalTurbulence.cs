@@ -12,7 +12,7 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using NLog.Targets;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
 	/// <summary>

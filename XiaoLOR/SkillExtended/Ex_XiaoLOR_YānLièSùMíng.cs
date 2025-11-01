@@ -11,7 +11,8 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
+using NLog.Targets;
 namespace XiaoLOR
 {
 	/// <summary>
@@ -27,29 +28,18 @@ namespace XiaoLOR
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            this.PlusSkillPerFinal.Damage = 15;
+            PlusSkillPerFinal.Damage = 20;
 
             if (SkillD.Master == BChar)
             {
-                foreach (var target in Targets)
-                {
-                    if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
-                    {
-                        Utils.ApplyBurn(target, this.BChar, 3);
+				Utils.ApplyBurn(Targets, BChar, 5);
 
-                        if (BChar.EmotionLevel() >= 3)
-                        {
-                            Utils.ApplyBurn(target, this.BChar, 3);
-                        }
-                    }
-                }
+				if (BChar.EmotionLevel() >= 3)
+				{
+					Utils.ApplyBurn(Targets, BChar, 5);
+				}
 
-                Utils.GiveEmotionsToChar(this.BChar, 2, SkillD.GetPosUI());
-
-                if (BChar.EmotionLevel() >= 3)
-                {
-                    Utils.GiveEmotionsToChar(this.BChar, 2, SkillD.GetPosUI());
-                }
+				EmotionalManager.GetNegEmotion(BChar, SkillD.GetPosUI(), 3);
             }
         }
     }

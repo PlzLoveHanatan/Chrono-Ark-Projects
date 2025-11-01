@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
     /// <summary>
@@ -26,22 +26,23 @@ namespace XiaoLOR
         }
         public override void FixedUpdate()
         {
-            if (BChar.EmotionLevel() >= 4 && this.MySkill.BasicSkill)
+            if (BChar.EmotionLevel() >= 4)
             {
                 this.MySkill.APChange = -1;
                 base.SkillParticleOn();
-                return;
             }
-            base.SkillParticleOff();
+            else
+            {
+				base.SkillParticleOff();
+			}
         }
 
         public override string DescExtended(string desc)
         {
             int barrierValue = (int)(BChar.GetStat.def * 0.5f);
-            int barrierGain = Math.Min(barrierValue, 15);
-
-            return base.DescExtended(desc).Replace("&a", barrierGain.ToString());
+            return base.DescExtended(desc).Replace("&a", barrierValue.ToString());
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
 			XiaoUtils.PlaySound("Guard");
@@ -52,16 +53,7 @@ namespace XiaoLOR
             if (BChar.EmotionLevel() >= 3)
             {
                 int barrierValue = (int)BChar.GetStat.def;
-                int barrierGain = Math.Min(barrierValue, 10);
-
-                BChar.BuffAdd(GDEItemKeys.Buff_B_Control_12_0_T, this.BChar, false, 0, false, -1, false).BarrierHP += barrierGain;
-
-                //var debuffs = this.BChar.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false);
-
-                //if (debuffs.Any())
-                //{
-                //    this.BChar.BuffRemove(debuffs.Random(this.BChar.GetRandomClass().Main).BuffData.Key, false);
-                //}
+                BChar.BuffAdd(GDEItemKeys.Buff_B_Control_12_0_T, this.BChar, false, 0, false, -1, false).BarrierHP += barrierValue;
             }
         }
     }

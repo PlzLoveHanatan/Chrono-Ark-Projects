@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 using NLog.Targets;
 namespace XiaoLOR
 {
@@ -24,9 +24,9 @@ namespace XiaoLOR
         {
 			XiaoUtils.PlaySound("Kick");
 
-            var burnStacks = Targets[0].BuffReturn(EmotionalSystem.ModItemKeys.Buff_B_Xiao_Burn, false) as B_Xiao_Burn;
+            var burnStacks = Targets[0].BuffReturn(EmotionSystem.ModItemKeys.Buff_B_EmotionSystem_Burn, false) as Debuffs.Burn;
 
-            if (burnStacks?.Burn >= 4)
+            if (burnStacks?.CurrentBurn >= 4)
             {
                 BattleSystem.DelayInput(this.PlusAttack(Targets[0]));
             }

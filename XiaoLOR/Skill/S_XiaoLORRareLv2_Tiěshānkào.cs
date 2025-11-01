@@ -13,7 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using NLog.Targets;
 using ChronoArkMod.ModEditor;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
     /// <summary>
@@ -56,12 +56,12 @@ namespace XiaoLOR
 
         public void DamageChange_sumoperation(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View, ref int PlusDamage)
         {
-            var burnStacks = Target.BuffReturn(EmotionalSystem.ModItemKeys.Buff_B_Xiao_Burn, false) as B_Xiao_Burn;
+            var burnStacks = Target.BuffReturn(EmotionSystem.ModItemKeys.Buff_B_EmotionSystem_Burn, false) as Debuffs.Burn;
             int burn = 0;
 
             if (burnStacks != null)
             {
-                burn = burnStacks.Burn;
+                burn = burnStacks.CurrentBurn;
             }
 
             if (BChar.EmotionLevel() >= 3 && SkillD.Master == BChar && SkillD.MySkill.KeyID == ModItemKeys.Skill_S_XiaoLORRareLv2_Tiěshānkào)

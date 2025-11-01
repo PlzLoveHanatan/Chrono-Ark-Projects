@@ -11,20 +11,22 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
+using static EmotionSystem.Extended.EGO;
 namespace XiaoLOR
 {
     /// <summary>
     /// Yá Zì
     /// </summary>
-    public class S_XiaoLOREGO_YáZì : Ex_EmotionalSystem_EGO
+    public class S_XiaoLOREGO_YáZì : Ex_EGO
     {
         public override void Init()
         {
             base.Init();
-            Once = true;
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
+            OncePerFight = true;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
         }
+
         public override void FixedUpdate()
         {
             if (BChar.EmotionLevel() >= 4)
@@ -34,6 +36,7 @@ namespace XiaoLOR
             }
             base.SkillParticleOff();
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
 			XiaoUtils.PlaySound("EGOHit");
@@ -48,7 +51,7 @@ namespace XiaoLOR
 
             if (BChar.EmotionLevel() >= 4)
             {
-                this.BChar.BuffAdd(ModItemKeys.Buff_B_XiaoLOREGO_LièYànZhīYì, this.BChar, false, 0, false, -1, false);
+                BChar.BuffAdd(ModItemKeys.Buff_B_XiaoLOREGO_LièYànZhīYì, this.BChar, false, 0, false, -1, false);
             }
         }
     }

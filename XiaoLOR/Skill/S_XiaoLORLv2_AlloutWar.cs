@@ -9,7 +9,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 using NLog.Targets;
 using DarkTonic.MasterAudio;
 
@@ -23,9 +23,7 @@ namespace XiaoLOR
         public override string DescExtended(string desc)
         {
             int barrierValue = (int)(BChar.GetStat.def * 0.5f);
-            int barrierGain = Math.Min(barrierValue, 20);
-
-            return base.DescExtended(desc).Replace("&a", barrierGain.ToString());
+            return base.DescExtended(desc).Replace("&a", barrierValue.ToString());
         }
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
@@ -43,29 +41,21 @@ namespace XiaoLOR
                     }
                 }
 
-                Utils.GiveEmotionsToAllies(3, SkillD.GetPosUI());
+                foreach (var ally in Utils.AllyTeam.AliveChars)
+                {
+					EmotionalManager.GetNegEmotion(ally, SkillD.GetPosUI(), 3);
+				}
             }
-
             else
             {
                 target.BuffAdd(GDEItemKeys.Buff_B_EnemyTaunt, this.BChar, false, 0, false, -1, false);
-                Utils.GiveEmotionsToChar(this.BChar, 3, SkillD.GetPosUI());
+				EmotionalManager.GetNegEmotion(BChar, SkillD.GetPosUI(), 3);
             }
 
             if (BChar.EmotionLevel() >= 3)
             {
                 int barrierValue = (int)(BChar.GetStat.def * 0.5f);
-                int barrierGain = Math.Min(barrierValue, 20);
-
-                BChar.MyTeam.partybarrier.BarrierHP += barrierGain;
-
-                //foreach (var ally in BattleSystem.instance.AllyTeam.AliveChars)
-                //{
-                //    int barrierValue = (int)(BChar.GetStat.def * 0.5f);
-                //    int barrierGain = Math.Min(barrierValue, 20);
-
-                //    ally.BuffAdd(GDEItemKeys.Buff_B_Control_12_0_T, this.BChar, false, 0, false, -1, false).BarrierHP += barrierGain;
-                //}
+                BChar.MyTeam.partybarrier.BarrierHP += barrierValue;
             }
         }
     }

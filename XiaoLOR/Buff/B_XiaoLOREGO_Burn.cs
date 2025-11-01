@@ -15,14 +15,17 @@ using EmotionSystem;
 namespace XiaoLOR
 {
 	/// <summary>
-	/// Flow of the Sword
+	/// Burn
+	/// Description
 	/// </summary>
-    public class S_XiaoLORLv1_FlowoftheSword : Skill_Extended
-    {
-        public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-        {
-			XiaoUtils.PlaySound("NormalHit2");
-            Utils.ApplyBurn(Targets[0], this.BChar, 2);
-        }
-    }
+	public class B_XiaoLOREGO_Burn : Debuffs.Burn, IP_BuffAddAfter
+	{
+		public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
+		{
+			if (addedbuff == this)
+			{
+				SelfDestroy();
+			}
+		}
+	}
 }

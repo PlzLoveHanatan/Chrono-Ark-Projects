@@ -11,39 +11,42 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
+using static EmotionSystem.Extended.EGO;
 namespace XiaoLOR
 {
     /// <summary>
     /// At the start of the next turn, create a 0-cost "Raging Storm Harm" in hand.
     /// </summary>
-    public class S_XiaoLORUnique_FormingStorm : Ex_EmotionalSystem_EGO
+    public class S_XiaoLORUnique_FormingStorm : Ex_EGO
     {
         public override void Init()
         {
             base.Init();
-            Once = true;
-            this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
+            OncePerFight = true;
+            SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
         }
+
         public override void FixedUpdate()
         {
             if (BChar.EmotionLevel() >= 3)
             {
-                this.MySkill.APChange = -1;
-                base.SkillParticleOn();
+                MySkill.APChange = -1;
+                SkillParticleOn();
                 return;
             }
-            base.SkillParticleOff();
+            SkillParticleOff();
         }
+
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            this.BChar.BuffAdd(ModItemKeys.Buff_B_XiaoLORUnique_ForminStorm, this.BChar, false, 0, false, -1, false);
+            BChar.BuffAdd(ModItemKeys.Buff_B_XiaoLORUnique_ForminStorm, BChar, false, 0, false, -1, false);
 
             foreach (var target in Targets)
             {
                 if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
                 {
-                    Utils.ApplyBurn(target, this.BChar, 3);
+                    Utils.ApplyBurn(target, BChar, 3);
                 }
             }
         }

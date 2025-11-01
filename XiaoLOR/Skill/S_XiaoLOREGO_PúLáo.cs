@@ -11,20 +11,21 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 using NLog.Targets;
+using static EmotionSystem.Extended.EGO;
 namespace XiaoLOR
 {
     /// <summary>
     /// PúLáo
     /// </summary>
-    public class S_XiaoLOREGO_PúLáo : Ex_EmotionalSystem_EGO
+    public class S_XiaoLOREGO_PúLáo : Ex_EGO
     {
         public override void Init()
         {
             base.Init();
-            Countdown = 3;
-            Once = true;
+            Cooldown = 3;
+            OncePerFight = true;
             this.SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
         }
         public override void FixedUpdate()

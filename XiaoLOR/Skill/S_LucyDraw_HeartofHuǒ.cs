@@ -13,7 +13,6 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using EmotionSystem;
 using static EnemyCastingLineV2;
-using EmotionalSystem;
 namespace XiaoLOR
 {
     /// <summary>
@@ -23,28 +22,23 @@ namespace XiaoLOR
     {
         public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
         {
-            BattleSystem.instance.AllyTeam.Draw(2);
+            bool isMaxLv = BattleSystem.instance.AllyTeam.AliveChars.All(bc => bc.EmotionLevel() >= 5);
+            int burnNum = isMaxLv ? 5 : 2;
+            int drawNum = isMaxLv ? 3 : 2;
 
-            if (BattleSystem.instance.AllyTeam.AliveChars.All(bc => bc.EmotionLevel() >= 5))
-            {
-                BattleSystem.instance.AllyTeam.Draw();
-                BattleSystem.instance.AllyTeam.AP += 1;
+			BattleSystem.instance.AllyTeam.Draw(drawNum);
 
-                foreach (BattleEnemy battleEnemy in BattleSystem.instance.EnemyList)
-                {
-                    Utils.ApplyBurn(battleEnemy, this.BChar, 4);
-                }
-                    return;
-            }
 
             foreach (BattleEnemy battleEnemy in BattleSystem.instance.EnemyList)
             {
-                Utils.ApplyBurn(battleEnemy, this.BChar, 2);
+                Utils.ApplyBurn(battleEnemy, this.BChar, burnNum);
             }
+
+            if (isMaxLv) return;
 
             foreach (BattleChar ally in BattleSystem.instance.AllyTeam.AliveChars)
             {
-                Utils.GiveEmotionsToChar(ally, 3);
+				EmotionalManager.GetNegEmotion(ally, null, 3);
             }
         }
     }

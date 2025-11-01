@@ -23,7 +23,7 @@ namespace XiaoLOR
         {
             if (BattleSystem.instance != null && base.StackNum == 4)
             {
-                this.BChar.BuffAdd(GDEItemKeys.Buff_B_Common_Rest, this.BChar, false, 150, false, -1, false);
+                this.BChar.BuffAdd(GDEItemKeys.Buff_B_Common_Rest, Usestate_L, false, 125, false, -1, false);
                 SelfDestroy();
             }
         }

@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
 	/// <summary>
@@ -40,22 +40,5 @@ namespace XiaoLOR
                 }
             }
         }
-        //public void SkillUse(Skill SkillD, List<BattleChar> Targets)
-        //{
-        //    if (SkillD.IsDamage && SkillD.Master == BChar)
-        //    {
-        //        foreach (var target in Targets)
-        //        {
-        //            if (target != null && !target.Info.Ally && !target.Dummy && !target.IsDead)
-        //            {
-        //                Utils.ApplyBurn(target, this.BChar);
-        //            }
-        //            if (BChar.EmotionLevel() >= 3)
-        //            {
-        //                Utils.ApplyBurn(target, this.BChar);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

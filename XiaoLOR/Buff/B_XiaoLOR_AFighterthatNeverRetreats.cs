@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
     /// <summary>
@@ -21,23 +21,14 @@ namespace XiaoLOR
     /// At Emotional Level 3 or higher inflict 1 additional <color=#f8181c>Burn</color>. 
     /// </summary>
     public class B_XiaoLOR_AFighterthatNeverRetreats : Buff, IP_SkillUse_Target, IP_DamageChange_Hit_sumoperation, IP_Dodge
-    {
-        private int MaxBurn;
-        public override void Init()
-        {
-            MaxBurn = 0;
-        }
+    {        
         public override void BuffStat()
         {
             PlusPerStat.Damage = 15;
             PlusStat.def = 15;
-            //PlusStat.DMGTaken = -30f;            
-            //PlusStat.RES_DOT = 30f;
-            //PlusStat.RES_CC = 30f;
-            //PlusStat.RES_DEBUFF = 30f;
-            //PlusStat.DeadImmune = 30;
             PlusStat.Strength = true;
         }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -48,7 +39,7 @@ namespace XiaoLOR
         }
         public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
         {
-            if (!hit.Info.Ally && hit.HP >= 1 && SP.SkillData.IsDamage && !SP.SkillData.PlusHit && MaxBurn < 5)
+            if (!hit.Info.Ally && hit.HP >= 1 && SP.SkillData.IsDamage && !SP.SkillData.PlusHit)
             {
                 Utils.ApplyBurn(hit, this.BChar);
 
@@ -56,8 +47,6 @@ namespace XiaoLOR
                 {
                     Utils.ApplyBurn(hit, this.BChar);
                 }
-
-                MaxBurn++;
             }
         }
         public void DamageChange_Hit_sumoperation(Skill SkillD, int Damage, ref bool Cri, bool View, ref int PlusDamage)

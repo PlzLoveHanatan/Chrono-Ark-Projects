@@ -11,7 +11,7 @@ using ChronoArkMod;
 using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
-using EmotionalSystem;
+using EmotionSystem;
 namespace XiaoLOR
 {
 	/// <summary>
@@ -28,9 +28,7 @@ namespace XiaoLOR
         {
             foreach (var b in BattleSystem.instance.AllyTeam.AliveChars)
             {
-                //BattleChar battleChar = BattleSystem.instance.AllyTeam.AliveChars.Random(BattleRandom.PassiveItem);
-                int random = RandomManager.RandomInt(BattleRandom.PassiveItem, 1, 4);
-                Utils.GiveEmotionsToChar(b, random);
+				EmotionalManager.GetNegEmotion(b, null, 3);
             }
         }
     }
