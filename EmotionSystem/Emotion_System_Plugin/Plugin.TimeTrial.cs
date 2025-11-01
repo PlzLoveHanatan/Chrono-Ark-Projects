@@ -23,6 +23,11 @@ namespace EmotionSystem
 					if (Utils.BossInvitations)
 					{
 						timer = 1.9f;
+
+						if (Utils.DistortedBosses)
+						{
+							timer = 2.3f;
+						}
 					}
 
 					PlayData.TSavedata.Timer *= timer;

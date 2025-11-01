@@ -22,15 +22,16 @@ namespace EmotionSystem
 {
 	public static class Utils
 	{
-		public static bool EmotionCoinPaticles => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Emotion Coin Paticles").Value;
+		public static bool EmotionPointsParticles => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Emotion Points Particles").Value;
 		public static bool EGOButtonHotkey => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("EGO Button Hotkey").Value;
 
 		public static bool InvestigatorEmotions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Investigator Emotions").Value;
 		public static bool GuestEmotions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Guest Emotions").Value;
 		public static bool BossInvitations => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Boss Invitations").Value;
 		public static bool EmotionalSounds => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Emotional Sounds").Value;
-		public static bool AdditionalSkill => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Additional Skill").Value;
-		public static bool CursedBosses => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Cursed Bosses").Value;
+		public static bool DistortedBosses => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Distorted Bosses").Value;
+		public static bool Distortions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Distortions").Value;
+		public static bool ChibiAngela => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Chibi Angela").Value;
 
 		public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
 		public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
@@ -164,19 +165,19 @@ namespace EmotionSystem
 			return buff;
 		}
 
-		public static void InsertSkillInDeck(BattleChar bchar, Skill skill, int createSkills = 1)
+		public static void InsertSkillInDeck(Skill skill, int createSkills = 1)
 		{
 			if (skill == null) return;
 
 			for (int i = 0; i < createSkills; i++)
 			{
-				bchar.MyTeam.Skills_Deck.Insert(RandomDeckIndex(bchar), skill);
+				AllyTeam.Skills_Deck.Insert(RandomDeckIndex(), skill);
 			}
 		}
 
-		public static int RandomDeckIndex(BattleChar bchar)
+		public static int RandomDeckIndex()
 		{
-			return RandomManager.RandomInt(bchar.GetRandomClass().Main, 0, bchar.MyTeam.Skills_Deck.Count + 1);
+			return RandomManager.RandomInt(RandomClassKey.AllSkill, 0, AllyTeam.Skills_Deck.Count + 1);
 		}
 
 		public static void PlaySound(string sound)
@@ -233,7 +234,7 @@ namespace EmotionSystem
 
 			if (list.Count == 0)
 			{
-				list = new List<Skill>(skillList);
+				list = new List<Skill>(AllyTeam.Skills);
 			}
 
 			if (!isRandomSkills)
@@ -278,16 +279,45 @@ namespace EmotionSystem
 			}
 		}
 
+		public static void ApplyBurn(List<BattleChar> Targets, BattleChar user, int stack = 1)
+		{
+			foreach (var target in Targets)
+			{
+				if (target.Info.Ally || target == null) return;
+
+				var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn) as Debuffs.Burn;
+
+				if (burn != null)
+				{
+					burn.CurrentBurn += stack;
+				}
+			}
+		}
+
 		public static void ApplyBleed(BattleChar target, BattleChar user, int stack = 1)
 		{
 			if (target.Info.Ally || target == null) return;
-
 
 			var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed) as Debuffs.Bleed;
 
 			if (bleed != null)
 			{
 				bleed.CurrentBleed += stack;
+			}
+		}
+
+		public static void ApplyBleed(List<BattleChar> Targets, BattleChar user, int stack = 1)
+		{
+			foreach (var target in Targets)
+			{
+				if (target.Info.Ally || target == null) return;
+
+				var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed) as Debuffs.Bleed;
+
+				if (bleed != null)
+				{
+					bleed.CurrentBleed += stack;
+				}
 			}
 		}
 
@@ -423,27 +453,33 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void UnlockSkillPreview(bool isAllyAbnormality = false, bool isEnemyAbnormality = false, bool isEgo = false)
+		public static void UnlockSkillPreview(bool isAllyAbnormality = false, bool isEnemyAbnormality = false, bool isEgo = false, bool isLucy = false)
 		{
+			List<IEnumerable<string>> skillLists = new List<IEnumerable<string>>();
+
 			if (isAllyAbnormality)
 			{
-				foreach (var skill in GetAllyAbnormalitySkill())
-				{
-					UnlockSkillPreview(skill);
-				}
+				skillLists.Add(GetAllyAbnormalitySkill());
 			}
 
 			if (isEnemyAbnormality)
 			{
-				foreach (var skill in GetEnemyAbnormalitySkill())
-				{
-					UnlockSkillPreview(skill);
-				}
+				skillLists.Add(GetEnemyAbnormalitySkill());
 			}
 
 			if (isEgo)
 			{
-				foreach (var skill in GetEgoSkill())
+				skillLists.Add(GetEgoSkill());
+			}
+
+			if (isLucy)
+			{
+				skillLists.Add(GetLucySkill());
+			}
+
+			foreach (IEnumerable<string> list in skillLists)
+			{
+				foreach (string skill in list)
 				{
 					UnlockSkillPreview(skill);
 				}
@@ -470,6 +506,11 @@ namespace EmotionSystem
 		public static List<string> GetEnemyAbnormalitySkill()
 		{
 			return DataStore.Instance.Guest.AbnormalityKeyList;
+		}
+
+		public static List<string> GetLucySkill()
+		{
+			return DataStore.Instance.LucyKeyList;
 		}
 
 		public static List<string> GetEgoSkill()
@@ -545,10 +586,9 @@ namespace EmotionSystem
 		{
 			if (skill == null) return;
 
-			BattleSystem.instance.AllyTeam.Skills.Remove(skill);
-			BattleSystem.instance.AllyTeam.Skills_Deck.Remove(skill);
-			BattleSystem.instance.AllyTeam.Skills_UsedDeck.Remove(skill);
-			BattleSystem.instance.ActWindow.Draw(skill.Master.MyTeam, false);
+			AllyTeam.Skills.Remove(skill);
+			AllyTeam.Skills_Deck.Remove(skill);
+			AllyTeam.Skills_UsedDeck.Remove(skill);
 		}
 
 		public static IEnumerator RemoveSkillCoroutine(Skill skill, bool isExclude = true)

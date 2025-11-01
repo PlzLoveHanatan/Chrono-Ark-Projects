@@ -43,5 +43,13 @@ namespace EmotionSystem
 			GDEItemKeys.Item_Active_LucysNecklace3,
 			GDEItemKeys.Item_Active_LucysNecklace4
 		};
+
+		public readonly List<string> LucyKeyList = new List<string>
+		{
+			ModItemKeys.Skill_S_EmotionSystem_Lucy_Candy,
+			ModItemKeys.Skill_S_EmotionSystem_Lucy_HippityHop,
+			ModItemKeys.Skill_S_EmotionSystem_Lucy_RainbowSea,
+			ModItemKeys.Skill_S_EmotionSystem_Lucy_MusicBox,
+		};
 	}
 }

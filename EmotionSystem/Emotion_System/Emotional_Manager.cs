@@ -33,7 +33,7 @@ namespace EmotionSystem
 		{
 			var emotion = bc.MyEmotion();
 			if (emotion == null) return;
-			if (Utils.EmotionCoinPaticles && source != null)
+			if (Utils.EmotionPointsParticles && source != null)
 			{
 				GameObject prefab;
 				if (isPos)

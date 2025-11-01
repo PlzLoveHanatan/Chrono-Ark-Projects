@@ -1,79 +1,15 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EmotionSystem;
 using UnityEngine;
 
 namespace EmotionSystem
 {
-	public class Extended
+	public partial class Extended
 	{
-		public class Abnormality
-		{
-			public class HappyMemories : BuffSkillExHand
-			{
-				public override void Init()
-				{
-					base.Init();
-					APChange = -1;
-				}
-			}
-
-			public class SeventhBullet : BuffSkillExHand
-			{
-
-			}
-
-			public class Friend : Skill_Extended
-			{
-				public override void Init()
-				{
-					PlusSkillPerFinal.Heal = 40;
-					PlusSkillPerFinal.Damage = 40;
-				}
-			}
-
-			public class Friend_0 : Skill_Extended
-			{
-				public override void Init()
-				{
-					PlusSkillPerFinal.Heal = 80;
-					PlusSkillPerFinal.Damage = 80;
-					MySkill.AutoDelete = 1;
-				}
-			}
-		}
-
-		public class Emotion
-		{
-			public class Draw : BuffSkillExHand
-			{
-				public override void FixedUpdate()
-				{
-					base.FixedUpdate();
-
-					var mainBuff = (Investigators.EmotionBuff.Draw)MainBuff;
-
-					if (mainBuff != null)
-					{
-						BuffIconStackNum = ((Investigators.EmotionBuff.Draw)MainBuff).skillUse;
-					}
-				}
-			}
-
-			public class ManaReduction : BuffSkillExHand
-			{
-				public override void Init()
-				{
-					base.Init();
-					APChange = -1;
-				}
-			}
-		}
-
 		public class EGO
 		{
 			public class Cooldown : Skill_Extended
@@ -189,12 +125,12 @@ namespace EmotionSystem
 
 				public IEnumerator ChangeHand()
 				{
-					yield return null;
-
 					if (EmotionSystem_EGO_Button.instance.OpenEGOHand)
 					{
 						EmotionSystem_EGO_Button.instance.ChangeHand();
 					}
+
+					yield break;
 				}
 			}
 		}

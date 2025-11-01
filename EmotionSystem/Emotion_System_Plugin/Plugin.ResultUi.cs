@@ -49,15 +49,20 @@ namespace EmotionSystem
 					sb.AppendLine("+" + ModLocalization.EmotionSystem_EmotionsGuest);
 				}
 
+				string floorName = GetLibraryFloor();
+				if (CurrentFloor != null && !string.IsNullOrEmpty(floorName))
+				{
+					sb.AppendLine("+" + floorName);
+				}
+
 				if (Utils.BossInvitations)
 				{
 					sb.AppendLine("+" + ModLocalization.EmotionSystem_Boss_Invitations);
 				}
 
-				string floorName = GetLibraryFloor();
-				if (CurrentFloor != null && !string.IsNullOrEmpty(floorName))
+				if (Utils.DistortedBosses)
 				{
-					sb.AppendLine("+" + floorName);
+					sb.AppendLine("+" + ModLocalization.EmotionSystem_Distorted_Bosses);
 				}
 
 				string originalText = __instance.BloodyMistText.text;

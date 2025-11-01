@@ -40,6 +40,7 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
+							Utils.PlaySound("Floor_Literature_Axe");
 							Utils.ApplyBleed(hit, BChar);
 						}
 					}
@@ -70,6 +71,7 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !oncePerTurn)
 						{
+							Utils.PlaySound("Floor_Literature_Cocoon");
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
@@ -96,6 +98,7 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
+							Utils.PlaySound("Floor_Literature_Glitter");
 							Utils.ApplyBleed(hit, BChar);
 						}
 					}
@@ -109,6 +112,7 @@ namespace EmotionSystem
 
 					public void Awake()
 					{
+						Utils.PlaySound("Floor_Literature_LookDay");
 						LoadFaceSprites();
 					}
 
@@ -182,8 +186,13 @@ namespace EmotionSystem
 					}
 				}
 
-				public class SocialDistancing : Buff
+				public class SocialDistancing : Buff, IP_Awake
 				{
+					public void Awake()
+					{
+						Utils.PlaySound("Floor_Literature_SocialDistancing");
+					}
+
 					public override void Init()
 					{
 						PlusStat.def = 10;
@@ -196,11 +205,13 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusStat.PlusCriDmg = 10;
+						PlusStat.PlusCriHeal = 10;
 					}
 
 					public void Turn1()
 					{
-						Utils.ApplyExtended(BChar.MyTeam.Skills, ModItemKeys.SkillExtended_Ex_Abnormality_Friend, true, true, true, 1, true);
+						Utils.PlaySound("Floor_Literature_SurpriseGift");
+						Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend, true, true, true, 1, true);
 					}
 				}
 			}
@@ -233,6 +244,7 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && attackPlayed < 2)
 						{
 							attackPlayed++;
+							Utils.PlaySound("Floor_Literature_Alertness");
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
@@ -245,11 +257,13 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusStat.PlusCriDmg = 40;
+						PlusStat.PlusCriHeal = 40;
 					}
 
 					public void Turn1()
 					{
-						Utils.ApplyExtended(BChar.MyTeam.Skills, ModItemKeys.SkillExtended_Ex_Abnormality_Friend_0, true, true, true, 2, true);
+						Utils.PlaySound("Floor_Literature_SurpriseGift");
+						Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend_0, true, true, true, 2, true);
 					}
 				}
 
@@ -274,10 +288,13 @@ namespace EmotionSystem
 
 							if (alwaysLucky)
 							{
+								Utils.PlaySound("Floor_Literature_FunnyPrank");
 								Cri = true;
+
 							}
 							else
 							{
+								Utils.PlaySound("Floor_Literature_FunnyPrank_0");
 								int damage = (int)(BChar.GetStat.maxhp * 0.4f);
 								Utils.TakeNonLethalDamage(BChar, damage);
 							}
@@ -299,6 +316,7 @@ namespace EmotionSystem
 					{
 						if (Damage >= 1)
 						{
+							Utils.PlaySound("Floor_Literature_FunnyPrank_0");
 							BChar.Heal(BChar, (int)(Damage * 0.2), false, false, null);
 						}
 					}
@@ -306,6 +324,12 @@ namespace EmotionSystem
 
 				public class Obsession : Buff, IP_SkillUse_Target
 				{
+					public override string DescExtended()
+					{
+						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
+						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+					}
+					
 					public override void Init()
 					{
 						PlusStat.DMGTaken = 40;
@@ -316,6 +340,7 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
+							Utils.PlaySound("Floor_Literature_Obsession");
 							Utils.ApplyBleed(hit, BChar, 2);
 						}
 					}
@@ -339,7 +364,10 @@ namespace EmotionSystem
 
 					public void Dodge(BattleChar Char, SkillParticle SP)
 					{
-						DealDamage(SP.SkillData.Master);
+						if (Char == BChar)
+						{
+							DealDamage(SP.SkillData.Master);
+						}
 					}
 
 					public void Hit(SkillParticle SP, int Dmg, bool Cri)
@@ -351,9 +379,9 @@ namespace EmotionSystem
 					{
 						if (target.Info.Ally) return;
 
+						Utils.PlaySound("Floor_Literature_SocialDistancing");
 						int damage = (int)(BChar.GetStat.def * 0.5);
-						int finalDamage = Math.Min(damage, 15);
-						target.Damage(BChar, finalDamage, false, true);
+						target.Damage(BChar, damage, false, true);
 					}
 				}
 			}
@@ -381,6 +409,7 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
+							Utils.PlaySound("Floor_Literature_GooeyWaste");
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
@@ -402,6 +431,7 @@ namespace EmotionSystem
 
 						if (alwaysLucky)
 						{
+							Utils.PlaySound("Floor_Literature_WornParasol");
 							resist = true;
 							User.Damage(BChar, Dmg * 2, false, true);
 						}
@@ -422,6 +452,7 @@ namespace EmotionSystem
 					{
 						if (Dmg >= 1)
 						{
+							Utils.PlaySound("Floor_Literature_LovingFamily");
 							resist = true;
 							SelfStackDestroy();
 						}
@@ -443,6 +474,7 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
+							Utils.PlaySound("Floor_Literature_Glitter");
 							Utils.ApplyBleed(hit, BChar);
 						}
 					}

@@ -302,7 +302,7 @@ namespace EmotionSystem
 					public void ShufflePresent()
 					{
 						var skill = Utils.CreateSkill(Utils.AllyTeam.LucyAlly, ModItemKeys.Skill_S_Abnormality_Guest_Present, false);
-						Utils.InsertSkillInDeck(Utils.AllyTeam.LucyAlly, skill);
+						Utils.InsertSkillInDeck(skill);
 					}
 				}
 
@@ -418,7 +418,7 @@ namespace EmotionSystem
 
 			public class Lv3
 			{
-				public class DimensionalRefraction : Buff, IP_PlayerTurn_1, IP_DrawNumChange, IP_Awake
+				public class DimensionalRefraction : Buff, IP_PlayerTurn_1, IP_Awake
 				{
 					private Skill SavedSkill;
 					private Skill DimensionSkill;
@@ -430,12 +430,15 @@ namespace EmotionSystem
 
 					public override void SelfdestroyPlus()
 					{
-						Utils.RemoveSkill(DimensionSkill);
-					}
+						var index = 0;
+						var dimensionSkill = Utils.AllyTeam.Skills.Where(s => s?.MySkill == DimensionSkill?.MySkill).FirstOrDefault();
 
-					public void DrawNumChange(int DrawNum, out int OutNum)
-					{
-						OutNum = DrawNum - 1;
+						if (dimensionSkill != null)
+						{
+							index = Utils.AllyTeam.Skills.IndexOf(DimensionSkill);
+							BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(DimensionSkill, true));
+							Utils.CreateSkill(SavedSkill.Master, SavedSkill.MySkill.KeyID, false, true, index);
+						}
 					}
 
 					public void Turn1()
@@ -447,6 +450,8 @@ namespace EmotionSystem
 					{
 						try
 						{
+							Utils.AllyTeam.AP -= 1;
+
 							var index = 0;
 							var dimensionSkill = Utils.AllyTeam.Skills.Where(s => s?.MySkill == DimensionSkill?.MySkill).FirstOrDefault();
 
@@ -502,19 +507,25 @@ namespace EmotionSystem
 
 					private void DiscardSkill()
 					{
-						Utils.AllyTeam.AP -= 2;
+						Utils.AllyTeam.AP -= 1;
 
 						var skillList = Utils.AllyTeam.Skills?.ToList();
 						int randomIndex = RandomManager.RandomInt(BChar.GetRandomClass().SkillSelect, 0, skillList.Count);
 						var skill = skillList[randomIndex];
 
 						Utils.RemoveSkill(skill);
-						Utils.InsertSkillInDeck(skill.Master, skill);
+						Utils.InsertSkillInDeck(skill);
 					}
 				}
 
 				public class CycleCurse : Buff, IP_PlayerTurn_1, IP_Awake
 				{
+					public override string DescExtended()
+					{
+						int damage = 5 + (PlayData.TSavedata.StageNum * 5);
+						return base.DescExtended().Replace("&a", damage.ToString());
+					}
+
 					public void Awake()
 					{
 						RemoveSkill();
@@ -527,8 +538,9 @@ namespace EmotionSystem
 
 					private void RemoveSkill()
 					{
+						int damage = 5 + (PlayData.TSavedata.StageNum * 5);
 						var skillList = Utils.AllyTeam.Skills?.ToList();
-						BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(skillList, new SkillButton.SkillClickDel(Selection), ModLocalization.Abnormality_Guest_CycleCurse, false, true, true, false, true));
+						BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(skillList, new SkillButton.SkillClickDel(Selection), ModLocalization.Abnormality_Guest_CycleCurse.Replace("&a", damage.ToString()), false, true, true, false, true));
 					}
 
 					private void Selection(SkillButton selectedSkill)
@@ -539,11 +551,12 @@ namespace EmotionSystem
 
 							if (selectedSkill.CharData == Utils.AllyTeam.LucyAlly)
 							{
-								Utils.AllyTeam.AP -= 3;
+								Utils.AllyTeam.AP -= 2;
 							}
 							else
 							{
-								Utils.TakeNonLethalDamage(selectedSkill.CharData, 20, true);
+								int damage = 5 + (PlayData.TSavedata.StageNum * 5);
+								Utils.TakeNonLethalDamage(selectedSkill.CharData, damage, true);
 							}
 						}
 					}

@@ -26,7 +26,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// Unity
 		/// Apply Taunt status to all allies except self.
-		/// At the end of each turn heal all allies by &a <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// At the end of the turn heal all allies by &a <color=#FF7C34>(Emotional Level * 5)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv1_Unity = "B_Abnormality_GuestLv1_Unity";
 		/// <summary>
@@ -61,7 +61,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_MirrorAdjustment_0 = "B_Abnormality_GuestLv2_MirrorAdjustment_0";
 		/// <summary>
 		/// <color=red>Present</color>
-		/// At the start of each turn shuffle 1 <color=red>Present</color> into your deck.
+		/// At the start of the turn shuffle 1 <color=red>Present</color> into your deck.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Present = "B_Abnormality_GuestLv2_Present";
 		/// <summary>
@@ -71,12 +71,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_Shelter = "B_Abnormality_GuestLv2_Shelter";
 		/// <summary>
 		/// Shelter
-		/// This character dies while taking &a damage <color=#FF7C34>(Emotional Level * 20)</color> or more damage from a single hit this Scene. Removed after &b turn(s).
+		/// This character dies while taking &a damage <color=#FF7C34>(Emotional Level * 15)</color> or more damage from a single hit this Scene. Removed after &b turn(s).
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Shelter_0 = "B_Abnormality_GuestLv2_Shelter_0";
 		/// <summary>
 		/// Storytime
-		/// Select a party member at the start of each turn. Apply <color=#5A6A8B>Solitude</color> (<sprite=2> 125%) to the character and make them unable to act. <color=#5A6A8B>Solitude</color> can be removed by healing or taking damage.
+		/// Select a party member at the start of the turn. Apply <color=#5A6A8B>Solitude</color> (<sprite=2> 125%) to the character and make them unable to act. <color=#5A6A8B>Solitude</color> can be removed by healing or taking damage.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Storytime = "B_Abnormality_GuestLv2_Storytime";
 		/// <summary>
@@ -86,17 +86,17 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_Storytime_0 = "B_Abnormality_GuestLv2_Storytime_0";
 		/// <summary>
 		/// Bait
-		/// At the start of each turn remove 1 random skill from hand and shuffle it into draw pile and lose 2 Mana.
+		/// At the start of the turn remove 1 random skill from hand and shuffle it into draw pile and lose 1 Mana.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_Bait = "B_Abnormality_GuestLv3_Bait";
 		/// <summary>
 		/// Cycle of the Curse
-		/// At the start of each turn select one skill from hand to exclude from current fight. Skill owner takes non-lethal <color=purple>20 Pain Damage</color>. If skill owner is Lucy lose 3 Mana instead.
+		/// At the start of the turn select one skill from hand to exclude from current fight. Skill owner takes non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Current Stage * 5 + 5)</color>. If skill owner is Lucy lose 2 Mana instead.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_CycleCurse = "B_Abnormality_GuestLv3_CycleCurse";
 		/// <summary>
 		/// Dimensional Refraction
-		/// At the start of each Scene, draw 1 less skill. Random skill in hand becomes <color=#A6B0FF>Blurred</color> for the rest of the Scene.
+		/// At the start of each Scene, lose 1 Mana. Random skill in hand becomes <color=#A6B0FF>Blurred</color> for the rest of the Scene.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_DimensionalRefraction = "B_Abnormality_GuestLv3_DimensionalRefraction";
 		/// <summary>
@@ -112,7 +112,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv1_DisplayAffection = "B_Abnormality_HistoryLv1_DisplayAffection";
 		/// <summary>
 		/// The Fairies' Care
-		/// At the end of each turn restore &a health <color=#FF7C34>(20% Max Health)</color>.
+		/// At the end of the turn restore &a health <color=#FF7C34>(20% Max Health)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv1_FairiesCare = "B_Abnormality_HistoryLv1_FairiesCare";
 		/// <summary>
@@ -129,12 +129,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv1_Matchlight = "B_Abnormality_HistoryLv1_Matchlight";
 		/// <summary>
 		/// Nostalgic Embrace of the Old Days
-		/// Whenever you damage an Guest, gain 50% chance to apply stun (<sprite=2>&a%) to the Guest. Only activates once per turn.
+		/// Whenever you damage an enemy, gain 50% chance to apply stun (<sprite=2>&a%) to the Guest. Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv1_NostalgicEmbrace = "B_Abnormality_HistoryLv1_NostalgicEmbrace";
 		/// <summary>
 		/// Footfalls
-		/// When you damage an Guest while your HP is 20% or lower, deal <color=purple>Pain damage</color> equal to 80% of the target's Max HP (up to 100), inflict 10 <color=#FC6178>Burn</color>, <b>die</b> and gain 1 Lucy's Neckless charge.
+		/// When you damage an enemy while your HP is 20% or lower, deal <color=purple>Pain damage</color> equal to 80% of the target's Max HP (up to 100), inflict 10 <color=#FC6178>Burn</color>, <b>die</b> and gain 1 Lucy's Neckless charge.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_Footfalls = "B_Abnormality_HistoryLv2_Footfalls";
 		/// <summary>
@@ -144,7 +144,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv2_Gluttony = "B_Abnormality_HistoryLv2_Gluttony";
 		/// <summary>
 		/// Predation
-		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> equal <color=#FF7C34>(20% Max Health)</color>.
+		/// At the end of the turn take non-lethal <color=purple>&a Pain Damage</color> equal <color=#FF7C34>(30% Max Health)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_Predation = "B_Abnormality_HistoryLv2_Predation";
 		/// <summary>
@@ -154,7 +154,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv2_Spores = "B_Abnormality_HistoryLv2_Spores";
 		/// <summary>
 		/// Vines
-		/// At the start of each turn, apply <color=orange>Bind</color> (<sprite=2> &a%) to all enemies.
+		/// At the start of the turn, apply <color=orange>Bind</color> (<sprite=2> &a%) to all enemies.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_Vines = "B_Abnormality_HistoryLv2_Vines";
 		/// <summary>
@@ -208,7 +208,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv1_SocialDistancing = "B_Abnormality_LiteratureLv1_SocialDistancing";
 		/// <summary>
 		/// Surprise Gift
-		/// At the start of each Scene apply <color=green>Friend</color> (Damage/healing increased by 40%) status to 1 random page in hand.
+		/// At the start of each Scene apply <color=green>Friend</color> (Damage/healing increased by 40%) status to 1 random page in hand, prioritizing the owner pages.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv1_SurpriseGift = "B_Abnormality_LiteratureLv1_SurpriseGift";
 		/// <summary>
@@ -218,7 +218,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv2_Alertness = "B_Abnormality_LiteratureLv2_Alertness";
 		/// <summary>
 		/// Friend
-		/// At the start of each Scene apply <color=red>Friend</color> (Discarded after 1 turn, damage/healing increased by 80%) status to 2 random pages in hand.
+		/// At the start of each Scene apply <color=red>Friend</color> (Discarded after 1 turn, damage/healing increased by 80%) status to 2 random pages in hand, prioritizing the owner pages.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_Friend = "B_Abnormality_LiteratureLv2_Friend";
 		/// <summary>
@@ -234,12 +234,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv2_Meal = "B_Abnormality_LiteratureLv2_Meal";
 		/// <summary>
 		/// Obsession
-		/// Attack inflict 2 <color=red>Bleed</color>.
+		/// Attack inflict 2 <color=red>Bleed</color> (<sprite=1> &a%).
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_Obsession = "B_Abnormality_LiteratureLv2_Obsession";
 		/// <summary>
 		/// Shyness
-		/// When attacked, counter attack for &a <color=#FF7C34>(50% Armor)</color> (Max 30).
+		/// Deal <color=purple>&a Pain Damage</color> <color=#FF7C34>(50% Armor)</color> to the attacker.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_Shyness = "B_Abnormality_LiteratureLv2_Shyness";
 		/// <summary>
@@ -263,7 +263,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv3_WornParasol = "B_Abnormality_LiteratureLv3_WornParasol";
 		/// <summary>
 		/// Lament
-		/// At the end of each turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(15% Max Health)</color>.
+		/// At the end of the turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(15% Max Health)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv1_Lament = "B_Abnormality_TechnologicalLv1_Lament";
 		/// <summary>
@@ -278,7 +278,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_TechnologicalLv1_RepetitivePattern = "B_Abnormality_TechnologicalLv1_RepetitivePattern";
 		/// <summary>
 		/// Request
-		/// At the start of each turn, apply <color=#6291EC>Requested Target</color> to a random Guest.
+		/// At the start of the turn, apply <color=#6291EC>Requested Target</color> to a random enemy.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv1_Request = "B_Abnormality_TechnologicalLv1_Request";
 		/// <summary>
@@ -315,7 +315,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_MusicalAddiction = "B_Abnormality_TechnologicalLv2_MusicalAddiction";
 		/// <summary>
 		/// Recharge
-		/// Gain 1 Mana at the start of each turn.
+		/// Gain 1 Mana at the start of the turn.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_Recharge = "B_Abnormality_TechnologicalLv2_Recharge";
 		/// <summary>
@@ -398,6 +398,40 @@ namespace EmotionSystem
 		/// Gain 1 action count.
 		/// </summary>
         public static string Buff_B_Guest_Dice = "B_Guest_Dice";
+		/// <summary>
+		/// <color=red>Distortion: Marauding</color>
+		/// Gain 2 action points.
+		/// </summary>
+        public static string Buff_B_Guest_Distortion_0 = "B_Guest_Distortion_0";
+        public static string Buff_B_Guest_Distortion_0_0 = "B_Guest_Distortion_0_0";
+		/// <summary>
+		/// <color=red>Distortion: Colossal</color>
+		/// Gain 1 action point.
+		/// </summary>
+        public static string Buff_B_Guest_Distortion_1 = "B_Guest_Distortion_1";
+		/// <summary>
+		/// <color=red>Distortion: Robust</color>
+		/// Gain 1 action point.
+		/// Block one incoming attack every turn.
+		/// </summary>
+        public static string Buff_B_Guest_Distortion_2 = "B_Guest_Distortion_2";
+		/// <summary>
+		/// <color=red>Distortion: Horrifying</color>
+		/// Gain 1 action point.
+		/// Remove 1 Mana.
+		/// </summary>
+        public static string Buff_B_Guest_Distortion_3 = "B_Guest_Distortion_3";
+		/// <summary>
+		/// <color=red>Distortion: Executioner</color>
+		/// Gain 1 action point.
+		/// After ending your turn, all characters below 0 health will faint.
+		/// </summary>
+        public static string Buff_B_Guest_Distortion_4 = "B_Guest_Distortion_4";
+		/// <summary>
+		/// <color=red>Distortion: Unstoppable</color>
+		/// Gain 1 action point.
+		/// </summary>
+        public static string Buff_B_Guest_Distortion_5 = "B_Guest_Distortion_5";
         public static string Buff_B_Guest_Emotional_Level = "B_Guest_Emotional_Level";
 		/// <summary>
 		/// Light
@@ -418,22 +452,22 @@ namespace EmotionSystem
         public static string Buff_B_Lucy_Emotional_Level = "B_Lucy_Emotional_Level";
 		/// <summary>
 		/// Music Box
-		/// Gain additional Emotional Coins (except additional sources). Remove turn cap.
+		/// Gain additional Emotion Points (except additional sources). Remove turn cap.
 		/// </summary>
         public static string Buff_B_Lucy_MusicBox = "B_Lucy_MusicBox";
 		/// <summary>
 		/// <color=#8A2BE2>Dark Melody</color>
-		/// Cannot gain Emotional Coins
+		/// Cannot gain Emotion Points.
 		/// </summary>
         public static string Buff_B_Potion_DarkTune = "B_Potion_DarkTune";
 		/// <summary>
 		/// <color=#FFDF00>Golden Melody</color>
-		/// Gain additional Emotional Coins (except additional sources). Remove turn cap.
+		/// Gain additional Emotion Points (except additional sources). Remove turn cap.
 		/// </summary>
         public static string Buff_B_Potion_PureTune = "B_Potion_PureTune";
 		/// <summary>
 		/// Dreaming Current
-		/// Learn 1 <color=#00FFFF>Unique</color>  Lucy draw skill.
+		/// Learn 1 <color=#00FFFF>unique</color>  Lucy draw skill.
 		/// </summary>
         public static string Item_Consume_C_EmotionSystem_DreamingCurrent = "C_EmotionSystem_DreamingCurrent";
 		/// <summary>
@@ -462,6 +496,11 @@ namespace EmotionSystem
 		/// This skill's damage/healing is increased by 80%.
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_Friend_0 = "Ex_Abnormality_Friend_0";
+		/// <summary>
+		/// <color=#FFDF00>Friend</color>
+		/// This skill's damage/healing is increased by 80%.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_Friend_1 = "Ex_Abnormality_Friend_1";
 		/// <summary>
 		/// Happy Memories
 		/// The first skill played from hand costs 1 less.
@@ -525,11 +564,6 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_Request = "KeyWord_Abnormality_Request";
 		/// <summary>
-		/// Surprise Gift
-		/// At 2 stacks gain 1 <color=red>Bleed</color>.
-		/// </summary>
-        public static string SkillKeyword_KeyWord_Abnormality_SurpriseGift = "KeyWord_Abnormality_SurpriseGift";
-		/// <summary>
 		/// <color=#C3CBD8>Entangled</color>
 		/// Evade -20%
 		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.
@@ -543,8 +577,8 @@ namespace EmotionSystem
         public static string SkillKeyword_KeyWord_Abnormality_WorkerBee = "KeyWord_Abnormality_WorkerBee";
 		/// <summary>
 		/// <color=orange>Bind</color>
-		/// Speed -2 (Max 2)
-		/// Evade -20%
+		/// Speed -1 (Max 1)
+		/// Evade -10%
 		/// Max 5 stacks.
 		/// </summary>
         public static string SkillKeyword_KeyWord_Bind = "KeyWord_Bind";
@@ -586,8 +620,13 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_EGO_Synchronize_Skill = "KeyWord_EGO_Synchronize_Skill";
 		/// <summary>
+		/// <color=#C067EF>Emotion Burst</color>
+		/// Activates if all allies are at Emotion Level 5.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Emotion_Burst = "KeyWord_Emotion_Burst";
+		/// <summary>
 		/// <color=red>Fragile</color>
-		/// Receiving Critical +10%
+		/// Receiving Critical Chance +10%
 		/// Removed when receive Critical hit.
 		/// Max 5 stacks.
 		/// </summary>
@@ -601,7 +640,7 @@ namespace EmotionSystem
         public static string SkillKeyword_KeyWord_Paralysis = "KeyWord_Paralysis";
 		/// <summary>
 		/// Dark Tune
-		/// Apply <color=#8A2BE2>Dark Melody</color> to all enemies (cannot gain Emotional Coins) for 1 turn.
+		/// Apply <color=#8A2BE2>Dark Melody</color> to all enemies (cannot gain Emotion Points) for 1 turn.
 		/// <color=#919191>Why is it that macabre can be felt in this melody?</color>
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_DarkTune = "P_EmotionSystem_DarkTune";
@@ -612,17 +651,17 @@ namespace EmotionSystem
         public static string Item_Potions_P_EmotionSystem_DistilledSuffering = "P_EmotionSystem_DistilledSuffering";
 		/// <summary>
 		/// Distortion Fragment
-		/// View 2 <color=#FFDF00>E.G.O.</color> skills and select 1 to add into E.G.O. Hand.
+		/// View 2 <color=#FFDF00>E.G.O.</color> skills and select 1 to add into <color=#FFDF00>E.G.O.</color> Hand.
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_DistortionFragment = "P_EmotionSystem_DistortionFragment";
 		/// <summary>
 		/// Essence of Tranquility
-		/// View 3 <color=#32CD32>Positive</color> Level II Abnormalities and select 1 to apply to an Investigator.
+		/// View 3 <color=#32CD32>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_EssenceTranquility = "P_EmotionSystem_EssenceTranquility";
 		/// <summary>
 		/// Essence of Wrath
-		/// View 3 <color=red>Negative</color> Level II Abnormalities and select 1 to apply to an Investigator.
+		/// View 3 <color=red>Negative</color> Level II Abnormalities and select 1 to apply to an ally.
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_EssenceWrath = "P_EmotionSystem_EssenceWrath";
 		/// <summary>
@@ -632,7 +671,7 @@ namespace EmotionSystem
         public static string Item_Potions_P_EmotionSystem_IgnitedRemorse = "P_EmotionSystem_IgnitedRemorse";
 		/// <summary>
 		/// Pure Tune
-		/// Apply <color=#FFDF00>Golden Melody</color> to all allies (gain additional Emotional Coins. Remove turn cap) for 1 turn.
+		/// Apply <color=#FFDF00>Golden Melody</color> to all allies (gain additional Emotion Points. Remove turn cap) for 1 turn.
 		/// <color=#919191>Wind up the spring, and cure the ailing mind.</color>
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_PureTune = "P_EmotionSystem_PureTune";
@@ -668,12 +707,11 @@ namespace EmotionSystem
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv2_Clean = "SE_S_S_Abnormality_TechnologicalLv2_Clean";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv2_EternalRest = "SE_S_S_Abnormality_TechnologicalLv2_EternalRest";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv2_MusicalAddiction = "SE_S_S_Abnormality_TechnologicalLv2_MusicalAddiction";
-        public static string SkillEffect_SE_S_S_CurseSelection_0 = "SE_S_S_CurseSelection_0";
-        public static string SkillEffect_SE_S_S_CurseSelection_1 = "SE_S_S_CurseSelection_1";
-        public static string SkillEffect_SE_S_S_CurseSelection_2 = "SE_S_S_CurseSelection_2";
-        public static string SkillEffect_SE_S_S_CurseSelection_3 = "SE_S_S_CurseSelection_3";
-        public static string SkillEffect_SE_S_S_CurseSelection_4 = "SE_S_S_CurseSelection_4";
-        public static string SkillEffect_SE_S_S_CurseSelection_5 = "SE_S_S_CurseSelection_5";
+        public static string SkillEffect_SE_S_S_Distortion_Selection_0 = "SE_S_S_Distortion_Selection_0";
+        public static string SkillEffect_SE_S_S_Distortion_Selection_1 = "SE_S_S_Distortion_Selection_1";
+        public static string SkillEffect_SE_S_S_Distortion_Selection_2 = "SE_S_S_Distortion_Selection_2";
+        public static string SkillEffect_SE_S_S_Distortion_Selection_3 = "SE_S_S_Distortion_Selection_3";
+        public static string SkillEffect_SE_S_S_Distortion_Selection_4 = "SE_S_S_Distortion_Selection_4";
         public static string SkillEffect_SE_S_S_EGO_Technological_MagicBullet = "SE_S_S_EGO_Technological_MagicBullet";
         public static string SkillEffect_SE_T_S_Abnormality_Guest_Storytime = "SE_T_S_Abnormality_Guest_Storytime";
         public static string SkillEffect_SE_T_S_Abnormality_HistoryLv1_Ashes = "SE_T_S_Abnormality_HistoryLv1_Ashes";
@@ -721,6 +759,12 @@ namespace EmotionSystem
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv3_Coffin = "SE_T_S_Abnormality_TechnologicalLv3_Coffin";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv3_DarkFlame = "SE_T_S_Abnormality_TechnologicalLv3_DarkFlame";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv3_Music = "SE_T_S_Abnormality_TechnologicalLv3_Music";
+        public static string SkillEffect_SE_T_S_Distortion_Selection_0 = "SE_T_S_Distortion_Selection_0";
+        public static string SkillEffect_SE_T_S_Distortion_Selection_1 = "SE_T_S_Distortion_Selection_1";
+        public static string SkillEffect_SE_T_S_Distortion_Selection_2 = "SE_T_S_Distortion_Selection_2";
+        public static string SkillEffect_SE_T_S_Distortion_Selection_3 = "SE_T_S_Distortion_Selection_3";
+        public static string SkillEffect_SE_T_S_Distortion_Selection_4 = "SE_T_S_Distortion_Selection_4";
+        public static string SkillEffect_SE_T_S_Distortion_Selection_5 = "SE_T_S_Distortion_Selection_5";
         public static string SkillEffect_SE_T_S_EGO_History_FourthMatchFlame = "SE_T_S_EGO_History_FourthMatchFlame";
         public static string SkillEffect_SE_T_S_EGO_History_GreenStem = "SE_T_S_EGO_History_GreenStem";
         public static string SkillEffect_SE_T_S_EGO_History_Hornet = "SE_T_S_EGO_History_Hornet";
@@ -791,7 +835,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_GuestLv2_MirrorAdjustment = "S_Abnormality_GuestLv2_MirrorAdjustment";
 		/// <summary>
 		/// <color=green>Present</color>
-		/// When drawn random Investigator takes non-lethal <color=purple>10 Pain Damage</color>.
+		/// When drawn random ally takes non-lethal <color=purple>10 Pain Damage</color>.
 		/// <color=#919191>With my infinite hatred, I give you this <color=red>gift</color>.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv2_Present = "S_Abnormality_GuestLv2_Present";
@@ -812,7 +856,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_GuestLv3_Bait = "S_Abnormality_GuestLv3_Bait";
 		/// <summary>
 		/// <color=red>Cycle of the Curse</color>
-		/// <color=#919191>However, the curse continues eternInvestigator, never broken.</color>
+		/// <color=#919191>However, the curse continues eternally, never broken.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv3_CycleCurse = "S_Abnormality_GuestLv3_CycleCurse";
 		/// <summary>
@@ -827,7 +871,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_Guest_Mirror = "S_Abnormality_Guest_Mirror";
 		/// <summary>
 		/// <color=red>Present</color>
-		/// When drawn deal non-lethal <color=purple>10 Pain Damage</color> to a random Investigator and draw 1 skill.
+		/// When drawn deal non-lethal <color=purple>10 Pain Damage</color> to a random ally and draw 1 skill.
 		/// <color=#919191>With my infinite hatred, I give you this <color=red>gift</color>.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_Guest_Present = "S_Abnormality_Guest_Present";
@@ -903,7 +947,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=red>Loyalty</color>
 		/// Kill the selected ally. Apply <color=red>Loyalty</color> to all allies.
-		/// <color=#919191>The loyalty of bees is a naturInvestigator developed instinct. If we discover a way to draw forth that instinct, many things could change.</color>
+		/// <color=#919191>The loyalty of bees is a naturally developed instinct. If we discover a way to draw forth that instinct, many things could change.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv3_Loyalty = "S_Abnormality_HistoryLv3_Loyalty";
 		/// <summary>
@@ -974,7 +1018,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_Literature_Lv2_Shyness = "S_Abnormality_Literature_Lv2_Shyness";
 		/// <summary>
 		/// <color=green>Gooey Waste</color>
-		/// <color=#919191>Elijah fell to her knees and finInvestigator started to puke up the thing everyone else was vomiting.</color>
+		/// <color=#919191>Elijah fell to her knees and finally started to puke up the thing everyone else was vomiting.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_Literature_Lv3_GooeyWaste = "S_Abnormality_Literature_Lv3_GooeyWaste";
 		/// <summary>
@@ -1014,7 +1058,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_TechnologicalLv1_Rhythm = "S_Abnormality_TechnologicalLv1_Rhythm";
 		/// <summary>
 		/// <color=red>Violence</color>
-		/// <color=#919191>What's reInvestigator pitiful is people like you dying to the likes of me.</color>
+		/// <color=#919191>What's really pitiful is people like you dying to the likes of me.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv1_Violence = "S_Abnormality_TechnologicalLv1_Violence";
 		/// <summary>
@@ -1064,42 +1108,33 @@ namespace EmotionSystem
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv3_Music = "S_Abnormality_TechnologicalLv3_Music";
 		/// <summary>
-		/// <color=red>Marauding</color>
-		/// Gain 2 action counts.
+		/// <color=red>Distortion: Marauding</color>
 		/// </summary>
-        public static string Skill_S_CurseSelection_0 = "S_CurseSelection_0";
+        public static string Skill_S_Distortion_Selection_0 = "S_Distortion_Selection_0";
 		/// <summary>
-		/// <color=red>Colossal</color>
-		/// Gain 1 action count.
+		/// <color=red>Distortion: Colossal</color>
 		/// </summary>
-        public static string Skill_S_CurseSelection_1 = "S_CurseSelection_1";
+        public static string Skill_S_Distortion_Selection_1 = "S_Distortion_Selection_1";
 		/// <summary>
-		/// <color=red>Robust</color>
-		/// Gain 1 action count.
-		/// Block one incoming attack every turn.
+		/// <color=red>Distortion: Robust</color>
 		/// </summary>
-        public static string Skill_S_CurseSelection_2 = "S_CurseSelection_2";
+        public static string Skill_S_Distortion_Selection_2 = "S_Distortion_Selection_2";
 		/// <summary>
-		/// <color=red>Horrifying</color>
-		/// Gain 1 action count.
-		/// Remove 1 Mana.
+		/// <color=red>Distortion: Horrifying</color>
 		/// </summary>
-        public static string Skill_S_CurseSelection_3 = "S_CurseSelection_3";
+        public static string Skill_S_Distortion_Selection_3 = "S_Distortion_Selection_3";
 		/// <summary>
-		/// <color=red>Executioner</color>
-		/// Gain 1 action count.
-		/// After ending your turn, all characters below 0 health will faint.
+		/// <color=red>Distortion: Executioner</color>
 		/// </summary>
-        public static string Skill_S_CurseSelection_4 = "S_CurseSelection_4";
+        public static string Skill_S_Distortion_Selection_4 = "S_Distortion_Selection_4";
 		/// <summary>
-		/// <color=red>Unstoppable</color>
-		/// Gain 1 action count.
+		/// <color=red>Distortion: Unstoppable</color>
 		/// </summary>
-        public static string Skill_S_CurseSelection_5 = "S_CurseSelection_5";
+        public static string Skill_S_Distortion_Selection_5 = "S_Distortion_Selection_5";
 		/// <summary>
 		/// <color=#FFDF00>Fourth Match Flame</color>
 		/// Inflict 10 <color=#FC6178>Burn</color>.
-		/// If facing 1 Guest, inflict 10 additional <color=#FC6178>Burn</color>. 
+		/// If facing 1 enemy, inflict 10 additional <color=#FC6178>Burn</color>. 
 		/// </summary>
         public static string Skill_S_EGO_History_FourthMatchFlame = "S_EGO_History_FourthMatchFlame";
 		/// <summary>
@@ -1118,7 +1153,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#FFDF00>Wingbeat</color>
 		/// Recast this skill 3 times.
-		/// Heal the Investigator with the lowest health by 8.
+		/// Heal the ally with the lowest health by 8.
 		/// </summary>
         public static string Skill_S_EGO_History_Wingbeat = "S_EGO_History_Wingbeat";
 		/// <summary>
@@ -1129,7 +1164,7 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Literature_BlackSwan = "S_EGO_Literature_BlackSwan";
 		/// <summary>
 		/// <color=#FFDF00>Laetitia</color>
-		/// Apply <color=green>Friend</color> (Damage/healing increased by 40%) status 5 times to a random pages in hand.
+		/// Apply <color=#FFDF00>Friend</color> (Damage/healing increased by 80%) status 3 times to a random pages in hand, prioritizing the owner pages.
 		/// </summary>
         public static string Skill_S_EGO_Literature_Laetitia = "S_EGO_Literature_Laetitia";
 		/// <summary>
@@ -1198,7 +1233,8 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#00FFFF>Candy</color>
 		/// Draw 2 skills.
-		/// The Investigator with the lowest Emotional Level gains 1 Emotional Level (ignore turn cap).
+		/// The ally with the lowest Emotion Level gains +1 Emotion Level (ignores turn cap).
+		/// <color=#C067EF>Emotion Burst</color>: View remaining Level I Abnormalities and select 1 to apply to an ally.
 		/// <color=#919191>Tell the kid today's treat is going to be grape-flavored candy. It's his favorite.</color>
 		/// </summary>
         public static string Skill_S_EmotionSystem_Lucy_Candy = "S_EmotionSystem_Lucy_Candy";
@@ -1206,6 +1242,7 @@ namespace EmotionSystem
 		/// <color=#00FFFF>Hippity-Hop</color>
 		/// Draw 2 skills.
 		/// All allies gain 3 <color=green>Positive</color> Emotion Points.
+		/// <color=#C067EF>Emotion Burst</color>: Draw 2 additional skills.
 		/// <color=#919191>Though the only thing the child could do was run around inside a cramped lab instead of a grass field under the sun, his steps were shaky but filled with enthusiasm.</color>
 		/// </summary>
         public static string Skill_S_EmotionSystem_Lucy_HippityHop = "S_EmotionSystem_Lucy_HippityHop";
@@ -1217,8 +1254,9 @@ namespace EmotionSystem
         public static string Skill_S_EmotionSystem_Lucy_MusicBox = "S_EmotionSystem_Lucy_MusicBox";
 		/// <summary>
 		/// <color=#FF00FF>R</color><color=#FF007F>a</color><color=#FF7F00>i</color><color=#FFFF00>n</color><color=#00FF00>b</color><color=#00FFFF>o</color><color=#007FFF>w</color> <color=#FF00AA>S</color><color=#FF5500>e</color><color=#AAFF00>a</color>
-		/// Draw 3 skills and restore 2 mana.
-		/// All enemies gain 3 <color=red>Negative</color> Emotional Coins.
+		/// Draw 3 skills and restore 2 Mana.
+		/// All enemies gain 3 <color=red>Negative</color> Emotion Points.
+		/// <color=#C067EF>Emotion Burst</color>: Restore 2 additional Mana.
 		/// <color=#919191>Instead of visiting the ocean, the child was given candy which let him see the ocean. Many colorful nights and days passed.</color>
 		/// </summary>
         public static string Skill_S_EmotionSystem_Lucy_RainbowSea = "S_EmotionSystem_Lucy_RainbowSea";
@@ -1263,59 +1301,63 @@ namespace EmotionSystem
     {
 		/// <summary>
 		/// Korean:
+		/// 현재 전투에서 제외할 스킬을 선택하십시오. 스킬 소유자는 치명적이지 않은 <color=purple>&a 고통 피해</color>를 받습니다. 스킬 소유자가 루시일 경우 대신 마나 2를 잃습니다.
 		/// English:
-		/// Select skill to exclude from current fight. Skill owner takes non-lethal <color=purple> 20 Pain Damage</color>. If skill owner is Lucy lose 2 Mana instead.
+		/// Select skill to exclude from current fight. Skill owner takes non-lethal <color=purple>&a Pain Damage</color>. If skill owner is Lucy lose 2 Mana instead.
 		/// Japanese:
+		/// 現在の戦闘から除外するスキルを選択してください。スキルの所有者は致命的ではない <color=purple>&a 痛みダメージ</color>を受けます。スキル所有者がルーシーの場合、代わりにマナを2失います。
 		/// Chinese:
+		/// 选择要从当前战斗中排除的技能。技能持有者受到非致命的 <color=purple>&a 疼痛伤害</color>。如果技能持有者是露西，则改为失去2点法力。
 		/// Chinese-TW:
+		/// 選擇要從當前戰鬥中排除的技能。技能持有者受到非致命的 <color=purple>&a 疼痛傷害</color>。如果技能持有者是露西，則改為失去2點法力。
 		/// </summary>
         public static string Abnormality_Guest_CycleCurse => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("Abnormality_Guest_CycleCurse");
 		/// <summary>
 		/// Korean:
-		/// 스킬을 E.G.O. 손으로 전환합니다.
+		/// 스킬을 <color=#FFDF00>E.G.O.</color> 손패로 변경합니다.
 		/// English:
 		/// Change skills to <color=#FFDF00>E.G.O.</color> Hand.
 		/// Japanese:
-		/// スキルをE.G.O.の手札に切り替えます。
+		/// スキルを<color=#FFDF00>E.G.O.</color>ハンドに変更します。
 		/// Chinese:
-		/// 将技能切换为E.G.O.手牌。
+		/// 将技能变为<color=#FFDF00>E.G.O.</color>手牌。
 		/// Chinese-TW:
-		/// 將技能切換為E.G.O.手牌。
+		/// 將技能變為<color=#FFDF00>E.G.O.</color>手牌。
 		/// </summary>
         public static string EGO_Button_ChangeToEGOHand => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_ChangeToEGOHand");
 		/// <summary>
 		/// Korean:
-		/// E.G.O. 손을 일반 스킬로 전환합니다.
+		/// <color=#FFDF00>E.G.O.</color> 손패를 스킬로 변경합니다.
 		/// English:
 		/// Change <color=#FFDF00>E.G.O.</color> Hand to skills.
 		/// Japanese:
-		/// E.G.O.の手札をスキルに切り替えます。
+		/// <color=#FFDF00>E.G.O.</color>ハンドをスキルに変更します。
 		/// Chinese:
-		/// 将E.G.O.手牌切换为技能。
+		/// 将<color=#FFDF00>E.G.O.</color>手牌变回技能。
 		/// Chinese-TW:
-		/// 將E.G.O.手牌切換為技能。
+		/// 將<color=#FFDF00>E.G.O.</color>手牌變回技能。
 		/// </summary>
         public static string EGO_Button_ChangeToHand => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_ChangeToHand");
 		/// <summary>
 		/// Korean:
-		/// E.G.O. 스킬을 사용할 수 없습니다.
+		/// <color=#FFDF00>E.G.O.</color> 스킬은 사용할 수 없습니다.
 		/// English:
 		/// <color=#FFDF00>E.G.O.</color> skills are not available.
 		/// Japanese:
-		/// E.G.O.スキルは使用できません。
+		/// <color=#FFDF00>E.G.O.</color>スキルは使用できません。
 		/// Chinese:
-		/// 无法使用E.G.O.技能。
+		/// <color=#FFDF00>E.G.O.</color>技能不可用。
 		/// Chinese-TW:
-		/// 無法使用E.G.O.技能。
+		/// <color=#FFDF00>E.G.O.</color>技能無法使用。
 		/// </summary>
         public static string EGO_Button_Empty => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_Empty");
 		/// <summary>
 		/// Korean:
-		/// &a턴 후에 다시 사용할 수 있습니다.
+		/// &a턴 후 다시 사용할 수 있습니다.
 		/// English:
 		/// Can be used again after &a turn(s).
 		/// Japanese:
-		/// &aターン後に再使用できます。
+		/// &aターン後に再使用可能。
 		/// Chinese:
 		/// &a回合后可再次使用。
 		/// Chinese-TW:
@@ -1328,7 +1370,7 @@ namespace EmotionSystem
 		/// English:
 		/// Can be used once per battle.
 		/// Japanese:
-		/// 戦闘中に1回のみ使用可能です。
+		/// 戦闘ごとに1回のみ使用可能。
 		/// Chinese:
 		/// 每场战斗只能使用一次。
 		/// Chinese-TW:
@@ -1337,220 +1379,298 @@ namespace EmotionSystem
         public static string EGO_Skill_Once => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Skill_Once");
 		/// <summary>
 		/// Korean:
+		/// 감정 시스템
 		/// English:
 		/// Emotion System
 		/// Japanese:
+		/// 感情システム
 		/// Chinese:
+		/// 情绪系统
 		/// Chinese-TW:
+		/// 情緒系統
 		/// </summary>
         public static string EmotionSystem => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem");
 		/// <summary>
 		/// Korean:
-		/// Library of Ruina의 감정 시스템 소개
+		/// Library of Ruina의 감정 시스템을 도입합니다.
 		/// English:
 		/// Introduce the Emotion System from Library of Ruina.
 		/// Japanese:
-		/// Library of Ruinaの感情システムを紹介
+		/// Library of Ruinaの感情システムを導入します。
 		/// Chinese:
-		/// 向您介绍引用自《Library of Ruina（废墟图书馆）》的「情感系统」。
+		/// 引入来自《Library of Ruina》的情绪系统。
 		/// Chinese-TW:
-		/// 向您介紹引用自《Library of Ruina（廢墟圖書館）》的「情感系統」。
+		/// 引入來自《Library of Ruina》的情緒系統。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_0");
 		/// <summary>
 		/// Korean:
-		/// 전투 중에 두 가지 종류의 감정 코인(긍정, 부정)을 얻을 수 있습니다.
+		/// 전투 중 두 가지 종류의 감정 포인트, <color=green>긍정적</color>과 <color-red>부정적</color>을 얻을 수 있습니다.
 		/// English:
 		/// During battles, you can obtain two types of Emotion Points: <color=green>Positive</color> and <color-red>Negative</color>.
 		/// Japanese:
-		/// 戦闘中、ポジティブとネガティブの2種類の感情コインを獲得できます。
+		/// 戦闘中、<color=green>ポジティブ</color>と<color-red>ネガティブ</color>の2種類の感情ポイントを獲得できます。
 		/// Chinese:
-		/// 战斗中，您将取得「正面」或「负面」的「情感点数」。
+		/// 在战斗中，你可以获得两种情绪点：<color=green>积极</color>和<color-red>消极</color>。
 		/// Chinese-TW:
-		/// 戰鬥中，您將取得「正面」或「負面」的「情感點數」。
+		/// 在戰鬥中，你可以獲得兩種情緒點：<color=green>正面</color>與<color-red>負面</color>。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_1");
 		/// <summary>
 		/// Korean:
-		/// 감정 코인을 모으고 감정 레벨을 올리면 이점을 얻습니다.
+		/// 감정 포인트를 모아 감정 레벨을 올리면 이점을 얻을 수 있습니다.
 		/// English:
 		/// By collecting Emotion Points and raising your Emotion Level, you will gain benefits.
 		/// Japanese:
-		/// 感情コインを集め、感情レベルを上げることで恩恵を受けられます。
+		/// 感情ポイントを集め、感情レベルを上げることで恩恵を得ます。
 		/// Chinese:
-		/// 藉由情感点数，您的「情感等级」将会提升，并从中获得增益。
+		/// 通过收集情绪点并提升情绪等级，你将获得增益。
 		/// Chinese-TW:
-		/// 藉由情感點數，您的「情感等級」將會提升，並從中獲得增益。
+		/// 透過收集情緒點並提升情緒等級，你將獲得增益。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_2 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_2");
 		/// <summary>
 		/// Korean:
-		/// EGO 스킬은 손 근처의 이 버튼을 통해 접근할 수 있습니다.
+		/// <color=#FFDF00>E.G.O.</color> 스킬은 손 근처의 이 버튼을 통해 접근할 수 있습니다.
 		/// English:
-		/// EGO skill can be accessed through this button near your hand.
+		/// <color=#FFDF00>E.G.O.</color> skill can be accessed through this button near your hand.
 		/// Japanese:
-		/// EGOスキルは手札の近くにあるこのボタンからアクセス可能です。
+		/// <color=#FFDF00>E.G.O.</color>スキルは手札付近のボタンからアクセスできます。
 		/// Chinese:
-		/// E.G.O.技能将透过这个按钮储存。
+		/// <color=#FFDF00>E.G.O.</color>技能可通过手牌旁的按钮访问。
 		/// Chinese-TW:
-		/// E.G.O.技能將透過這個按鈕儲存。
+		/// <color=#FFDF00>E.G.O.</color>技能可透過手牌旁的按鈕使用。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_3 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_3");
 		/// <summary>
 		/// Korean:
-		/// 평균 감정 레벨이 3 이상일 때 EGO 스킬을 얻을 수 있습니다.
+		/// 평균 감정 레벨이 3 이상이 되면 <color=#FFDF00>E.G.O.</color> 스킬을 얻을 수 있습니다.
 		/// English:
-		/// You can obtain EGO skills when average Emotion Level reaches 3 and above.
+		/// You can obtain <color=#FFDF00>E.G.O.</color> skills when average Emotion Level reaches 3 and above.
 		/// Japanese:
-		/// 平均感情レベルが3以上になるとEGOスキルを獲得できます。
+		/// 平均感情レベルが3以上になると、<color=#FFDF00>E.G.O.</color>スキルを獲得できます。
 		/// Chinese:
-		/// 队伍平均情感等级达到 3 级以上，您便能获得E.G.O.技能。
+		/// 当平均情绪等级达到3及以上时，可以获得<color=#FFDF00>E.G.O.</color>技能。
 		/// Chinese-TW:
-		/// 隊伍平均情感等級達到 3 級以上，您便能獲得E.G.O.技能。
+		/// 當平均情緒等級達到3及以上時，可以獲得<color=#FFDF00>E.G.O.</color>技能。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_4 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_4");
 		/// <summary>
 		/// Korean:
+		/// 현재 &a <color=red>출혈</color>.
+		/// 행동 시마다 <color=purple>&b 고통 피해</color> <color=#FF7C34>(출혈 * 3)</color>를 받고 <color=red>출혈</color> 중첩의 1/3을 감소시킵니다. (올림)
 		/// English:
 		/// Current &a <color=red>Bleed</color>.
 		/// Take <color=purple>&b Pain damage</color> <color=#FF7C34>(Bleed * 3)</color> and subtract 1/3rd of the <color=red>Bleed</color> stacks every time the character perform an action. (Rounds up)
 		/// Japanese:
+		/// 現在 &a <color=red>出血</color>。
+		/// 行動ごとに <color=purple>&b 痛みダメージ</color> <color=#FF7C34>(出血 * 3)</color> を受け、<color=red>出血</color>スタックの1/3を減らします。（切り上げ）
 		/// Chinese:
+		/// 当前 &a <color=red>流血</color>。
+		/// 每次行动时，受到 <color=purple>&b 疼痛伤害</color> <color=#FF7C34>(流血 * 3)</color>，并减少 <color=red>流血</color> 层数的1/3（向上取整）。
 		/// Chinese-TW:
+		/// 當前 &a <color=red>流血</color>。
+		/// 每次行動時，受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(流血 * 3)</color>，並減少 <color=red>流血</color> 層數的1/3（向上取整）。
 		/// </summary>
         public static string EmotionSystem_Bleed_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Bleed_0");
 		/// <summary>
 		/// Korean:
+		/// 행동 시마다 <color=purple>&b 고통 피해</color> <color=#FF7C34>(출혈 * 3)</color>를 받고 <color=red>출혈</color> 중첩의 1/3을 감소시킵니다. (올림)
 		/// English:
 		/// Take <color=purple>&b Pain damage</color> <color=#FF7C34>(Bleed * 3)</color> and subtract 1/3rd of the <color=red>Bleed</color> stacks every time the character perform an action. (Rounds up)
 		/// Japanese:
+		/// 行動ごとに <color=purple>&b 痛みダメージ</color> <color=#FF7C34>(出血 * 3)</color> を受け、<color=red>出血</color>スタックの1/3を減らします。（切り上げ）
 		/// Chinese:
+		/// 每次行动时，受到 <color=purple>&b 疼痛伤害</color> <color=#FF7C34>(流血 * 3)</color>，并减少 <color=red>流血</color> 层数的1/3（向上取整）。
 		/// Chinese-TW:
+		/// 每次行動時，受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(流血 * 3)</color>，並減少 <color=red>流血</color> 層數的1/3（向上取整）。
 		/// </summary>
         public static string EmotionSystem_Bleed_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Bleed_1");
 		/// <summary>
 		/// Korean:
+		/// 보스 초대장
 		/// English:
 		/// Boss Invitations
 		/// Japanese:
+		/// ボス招待
 		/// Chinese:
+		/// Boss 邀请
 		/// Chinese-TW:
+		/// Boss 邀請
 		/// </summary>
         public static string EmotionSystem_Boss_Invitations => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Boss_Invitations");
 		/// <summary>
 		/// Korean:
+		/// 현재 &a <color=#FC6178>화상</color>.
+		/// 장면 종료 시 <color=purple>&b 고통 피해</color> <color=#FF7C34>(화상 * 2)</color>를 받고 <color=#FC6178>화상</color> 중첩의 1/3을 감소시킵니다. (내림)
 		/// English:
 		/// Current &a <color=#FC6178>Burn</color>.
 		/// At the end of the Scene, take <color=purple>&b Pain damage</color> <color=#FF7C34>(Burn * 2)</color> and subtract 1/3rd of the <color=#FC6178>Burn</color> stack. (Rounds down)
 		/// Japanese:
+		/// 現在 &a <color=#FC6178>火傷</color>。
+		/// シーン終了時に <color=purple>&b 痛みダメージ</color> <color=#FF7C34>(火傷 * 2)</color> を受け、<color=#FC6178>火傷</color>スタックの1/3を減らします。（切り捨て）
 		/// Chinese:
+		/// 当前 &a <color=#FC6178>灼烧</color>。
+		/// 在场景结束时，受到 <color=purple>&b 疼痛伤害</color> <color=#FF7C34>(灼烧 * 2)</color>，并减少 <color=#FC6178>灼烧</color> 层数的1/3（向下取整）。
 		/// Chinese-TW:
+		/// 當前 &a <color=#FC6178>灼燒</color>。
+		/// 在場景結束時，受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(灼燒 * 2)</color>，並減少 <color=#FC6178>灼燒</color> 層數的1/3（向下取整）。
 		/// </summary>
         public static string EmotionSystem_Burn_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Burn_0");
 		/// <summary>
 		/// Korean:
+		/// 장면 종료 시 <color=purple>&b 고통 피해</color> <color=#FF7C34>(화상 * 2)</color>를 받고 <color=#FC6178>화상</color> 중첩의 1/3을 감소시킵니다. (내림)
 		/// English:
 		/// At the end of the Scene, take <color=purple>&b Pain damage</color> <color=#FF7C34>(Burn * 2)</color> and subtract 1/3rd of the <color=#FC6178>Burn</color> stack. (Rounds down)
 		/// Japanese:
+		/// シーン終了時に <color=purple>&b 痛みダメージ</color> <color=#FF7C34>(火傷 * 2)</color> を受け、<color=#FC6178>火傷</color>スタックの1/3を減らします。（切り捨て）
 		/// Chinese:
+		/// 在场景结束时，受到 <color=purple>&b 疼痛伤害</color> <color=#FF7C34>(灼烧 * 2)</color>，并减少 <color=#FC6178>灼烧</color> 层数的1/3（向下取整）。
 		/// Chinese-TW:
+		/// 在場景結束時，受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(灼燒 * 2)</color>，並減少 <color=#FC6178>灼燒</color> 層數的1/3（向下取整）。
 		/// </summary>
         public static string EmotionSystem_Burn_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Burn_1");
 		/// <summary>
 		/// Korean:
+		/// <color=red>왜곡된</color> 보스
+		/// English:
+		/// <color=red>Distorted</color> Bosses
+		/// Japanese:
+		/// <color=red>歪んだ</color>ボス
+		/// Chinese:
+		/// <color=red>扭曲的</color>Boss
+		/// Chinese-TW:
+		/// <color=red>扭曲的</color>Boss
+		/// </summary>
+        public static string EmotionSystem_Distorted_Bosses => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Distorted_Bosses");
+		/// <summary>
+		/// Korean:
+		/// 보스에게 적용할 <color=red>왜곡</color>을 선택하십시오.
+		/// English:
+		/// Select <color=red>distortion</color> to apply to the Boss.
+		/// Japanese:
+		/// ボスに適用する<color=red>歪曲</color>を選択してください。
+		/// Chinese:
+		/// 选择要应用于Boss的<color=red>扭曲</color>。
+		/// Chinese-TW:
+		/// 選擇要套用於Boss的<color=red>扭曲</color>。
+		/// </summary>
+        public static string EmotionSystem_Distortion_Selection => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Distortion_Selection");
+		/// <summary>
+		/// Korean:
+		/// 게스트 감정
 		/// English:
 		/// Guest Emotions
 		/// Japanese:
+		/// ゲストの感情
 		/// Chinese:
+		/// 客人情绪
 		/// Chinese-TW:
+		/// 訪客情緒
 		/// </summary>
         public static string EmotionSystem_EmotionsGuest => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_EmotionsGuest");
 		/// <summary>
 		/// Korean:
+		/// 조사관 감정
 		/// English:
 		/// Investigator Emotions
 		/// Japanese:
+		/// 調査員の感情
 		/// Chinese:
+		/// 调查员情绪
 		/// Chinese-TW:
+		/// 調查員情緒
 		/// </summary>
         public static string EmotionSystem_EmotionsInvestigator => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_EmotionsInvestigator");
 		/// <summary>
 		/// Korean:
+		/// 역사의 층
 		/// English:
 		/// Floor of History
 		/// Japanese:
+		/// 歴史の階層
 		/// Chinese:
+		/// 历史层
 		/// Chinese-TW:
+		/// 歷史層
 		/// </summary>
         public static string EmotionSystem_Floor_History => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_History");
 		/// <summary>
 		/// Korean:
+		/// 문학의 층
 		/// English:
 		/// Floor of Literature
 		/// Japanese:
+		/// 文学の階層
 		/// Chinese:
+		/// 文学层
 		/// Chinese-TW:
+		/// 文學層
 		/// </summary>
         public static string EmotionSystem_Floor_Literature => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Literature");
 		/// <summary>
 		/// Korean:
+		/// 기술 과학의 층
 		/// English:
 		/// Floor of Technological Sciences
 		/// Japanese:
+		/// 技術科学の階層
 		/// Chinese:
+		/// 技术科学层
 		/// Chinese-TW:
+		/// 技術科學層
 		/// </summary>
         public static string EmotionSystem_Floor_Technological => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Technological");
 		/// <summary>
 		/// Korean:
-		/// 환상체 페이지를 받을 조사원을 선택하세요.
+		/// 이상현상 페이지를 받을 조사관을 선택하십시오.
 		/// English:
 		/// Select investigator to receive Abnormality Page.
 		/// Japanese:
-		/// 異常体ページを受け取る調査員を選択してください。
+		/// アブノーマリティページを受け取る調査員を選択してください。
 		/// Chinese:
-		/// 选择将接收异常体页面的调查员。
+		/// 选择要获得异常页面的调查员。
 		/// Chinese-TW:
-		/// 選擇將接收異常體頁面的調查員。
+		/// 選擇要獲得異常頁面的調查員。
 		/// </summary>
         public static string SelectOwner_Abnormality => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("SelectOwner_Abnormality");
 		/// <summary>
 		/// Korean:
-		/// E.G.O를 받을 조사원을 선택하세요.
+		/// <color=#FFDF00>E.G.O.</color>를 받을 조사관을 선택하십시오.
 		/// English:
-		/// Select investigator to receive E.G.O.
+		/// Select investigator to receive <color=#FFDF00>E.G.O.</color>
 		/// Japanese:
-		/// E.G.Oを受け取る調査員を選択してください。
+		/// <color=#FFDF00>E.G.O.</color>を受け取る調査員を選択してください。
 		/// Chinese:
-		/// 选择将接收 E.G.O 的调查员。
+		/// 选择要获得<color=#FFDF00>E.G.O.</color>的调查员。
 		/// Chinese-TW:
-		/// 選擇將接收 E.G.O 的調查員。
+		/// 選擇要獲得<color=#FFDF00>E.G.O.</color>的調查員。
 		/// </summary>
         public static string SelectOwner_EGO => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("SelectOwner_EGO");
 		/// <summary>
 		/// Korean:
-		/// 환상체 페이지를 선택하세요.
+		/// 이상현상 페이지를 선택하십시오.
 		/// English:
 		/// Select Abnormality Page.
 		/// Japanese:
-		/// 異常体ページを選択してください。
+		/// アブノーマリティページを選択してください。
 		/// Chinese:
-		/// 选择异常体页面。
+		/// 选择异常页面。
 		/// Chinese-TW:
-		/// 選擇異常體頁面。
+		/// 選擇異常頁面。
 		/// </summary>
         public static string Select_Abnormality => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("Select_Abnormality");
 		/// <summary>
 		/// Korean:
-		/// E.G.O 페이지를 선택하세요.
+		/// <color=#FFDF00>E.G.O.</color> 페이지를 선택하십시오.
 		/// English:
-		/// Select E.G.O. Page.
+		/// Select <color=#FFDF00>E.G.O.</color> Page.
 		/// Japanese:
-		/// E.G.Oページを選択してください。
+		/// <color=#FFDF00>E.G.O.</color>ページを選択してください。
 		/// Chinese:
-		/// 选择 E.G.O 页面。
+		/// 选择<color=#FFDF00>E.G.O.</color>页面。
 		/// Chinese-TW:
-		/// 選擇 E.G.O 頁面。
+		/// 選擇<color=#FFDF00>E.G.O.</color>頁面。
 		/// </summary>
         public static string Select_EGO => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("Select_EGO");
 

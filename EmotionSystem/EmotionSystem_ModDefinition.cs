@@ -13,6 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using EmotionSystem;
+using TileTypes;
 namespace EmotionSystem
 {
 	public class EmotionSystem_ModDefinition : ModDefinition
@@ -44,6 +45,7 @@ namespace EmotionSystem
 				{
 					Utils.AddBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level);
 					Utils.AllyTeam.AliveChars.ForEach(a => Utils.AddBuff(a, ModItemKeys.Buff_B_Investigator_Emotional_Level));
+					Utils.UnlockSkillPreview(false, false, false, true);
 				}
 			}
 
@@ -65,23 +67,19 @@ namespace EmotionSystem
 
 			public void Turn()
 			{
-				if (Utils.CursedBosses)
+				if (Utils.DistortedBosses)
 				{
 					foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars)
 					{
 						if (e != null && e is BattleEnemy enemy && enemy.Boss)
 						{
-							if (DataStore.Instance.Guest.GuestCurses.Any(curse => enemy.BuffReturn(curse) != null))
-							{
-								return;
-							}
+							if (DataStore.Instance.Guest.GuestCurses.Any(curse => enemy.BuffReturn(curse) != null)) return;
+
 							BattleSystem.DelayInputAfter(CurseSelection(enemy));
 						}
 					}
 				}
 			}
-
-
 
 			public IEnumerator CurseSelection(BattleEnemy boss)
 			{
@@ -90,43 +88,55 @@ namespace EmotionSystem
 				List<Skill> list = new List<Skill>();
 				var curseList = new List<string>(DataStore.Instance.Guest.CurseSelectionList);
 
-				int countToAdd = Mathf.Min(2, curseList.Count);
+				int countToAdd = Mathf.Min(1, curseList.Count); // how much add curses to selection
 
 				for (int i = 0; i < countToAdd; i++)
 				{
 					int randomIndex = RandomManager.RandomInt(RandomClassKey.Curse, 0, curseList.Count);
 					string key = curseList[randomIndex];
 					curseList.RemoveAt(randomIndex);
+					var skill = Skill.TempSkill(key, Utils.DummyChar, Utils.DummyChar.MyTeam);
+					if (skill == null || skill.MySkill == null) continue;
 
-					try
-					{
-						var skill = Skill.TempSkill(key, boss, boss.MyTeam);
-						if (skill == null || skill.MySkill == null)
-						{
-							Debug.LogWarning($"[CurseSelection] Skill {key} returned null, skipping.");
-							continue;
-						}
-
-						list.Add(skill);
-					}
-					catch (Exception ex)
-					{
-						Debug.LogError($"[CurseSelection] Error while loading skill {key}: {ex.Message}");
-						continue;
-					}
+					list.Add(skill);
 				}
 
 				if (list.Count > 0)
 				{
-					BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect
-						(list, ApplyCurse, "", false, false, false, true, true));
+					BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(list, button => ApplyCurse(button, boss), ModLocalization.EmotionSystem_Distortion_Selection, false, false, true, false, true));
 				}
 			}
 
-			private void ApplyCurse(SkillButton button)
+			private void ApplyCurse(SkillButton button, BattleEnemy boss)
 			{
+				if (button == null || button.Myskill?.MySkill == null || boss == null) return;
+
+				string key = button.Myskill.MySkill.KeyID;
+
+				if (DataStore.Instance.Guest.CurseMap.TryGetValue(key, out string curse))
+				{
+					Utils.AddBuff(boss, curse); // Apply the selected curse buff to the boss
+
+					if (curse == ModItemKeys.Buff_B_Guest_Distortion_0)
+					{
+						Utils.AddBuff(boss, ModItemKeys.Buff_B_Guest_Distortion_0_0);
+					}
+
+					if (curse == ModItemKeys.Buff_B_Guest_Distortion_2)
+					{
+						Utils.AddBuff(boss, GDEItemKeys.Buff_B_Armor_P_1);
+					}
+					else if (curse == ModItemKeys.Buff_B_Guest_Distortion_3)
+					{
+						BattleSystem.instance.AllyTeam.AP -= 1;
+					}
+					else if (curse == ModItemKeys.Buff_B_Guest_Distortion_5)
+					{
+						Utils.AddBuff(boss, GDEItemKeys.Buff_B_Blockdebuff);
+					}
+				}
+
 				button.Myskill.isExcept = true;
-				BattleSystem.instance.StartCoroutine(BattleSystem.instance.ForceAction(button.Myskill, button.Myskill.Master, false, false, true, null));
 			}
 
 
@@ -135,7 +145,12 @@ namespace EmotionSystem
 				Transform parent = BattleSystem.instance.ActWindow.transform;
 
 				var floorType = DataStore.LibraryFloor.CurrentFloorType;
-				var setType = DataStore.Instance.Visual.EGOButton.GetSetForFloor(floorType);
+
+				// Проверяем — включена ли "Chibi Angela"
+				var setType = Utils.ChibiAngela
+					? DataStore.VisualUi.EGOUi.SpriteSetType.Angela
+					: DataStore.Instance.Visual.EGOButton.GetSetForFloor(floorType);
+
 				var defaultType = DataStore.Instance.Visual.EGOButton.GetDefault(setType);
 				var visualData = DataStore.Instance.Visual.EGOButton.GetData(setType, defaultType.Value);
 
@@ -148,7 +163,6 @@ namespace EmotionSystem
 
 				egoButton.SetActive(true);
 			}
-
 
 			public static void StartTutorial()
 			{

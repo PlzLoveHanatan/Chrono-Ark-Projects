@@ -24,6 +24,11 @@ namespace EmotionSystem
 				{
 					Cooldown = 3;
 				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_Literature_LookDay");
+				}
 			}
 
 			public class SanguineDesire : Ex_EGO, IP_SkillCastingStart, IP_SkillCastingQuit
@@ -35,6 +40,7 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					Utils.PlaySound("Floor_Literature_SanguineDesire");
 					Utils.ApplyBleed(Targets[0], BChar, 10);
 				}
 
@@ -80,6 +86,11 @@ namespace EmotionSystem
 				{
 					Cooldown = 3;
 				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_Literature_RedEyes");
+				}
 			}
 
 			public class Laetitia : Ex_EGO
@@ -91,7 +102,8 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					Utils.ApplyExtended(BChar.MyTeam.Skills, ModItemKeys.SkillExtended_Ex_Abnormality_Friend, true, true, true, 5, true);
+					Utils.PlaySound("Floor_Literature_Laetitia");
+					Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend_1, true, true, true, 3, true);
 				}
 			}
 
@@ -110,6 +122,8 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					Utils.PlaySound("Floor_Literature_BlackSwan");
+
 					foreach (var enemy in Targets)
 					{
 						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 5);
@@ -119,7 +133,7 @@ namespace EmotionSystem
 
 					foreach (var ally in Utils.AllyTeam.AliveChars)
 					{
-						Utils.AddBuff(BChar, ally, ModItemKeys.Buff_B_Abnormality_LiteratureLv3_LovingFamily);
+						Utils.AddBuff(BChar, ally, ModItemKeys.Buff_B_Abnormality_LiteratureLv3_LovingFamily_0);
 					}
 				}
 			}

@@ -60,6 +60,11 @@ namespace EmotionSystem
 				system.EnemyWaveData = new WaveData();
 			}
 
+			if (Utils.DistortedBosses)
+			{
+				sequence.FogTurn += (int)(sequence.FogTurn * 0.3f);
+			}
+
 			SetWave(ref system.MainQueueData.Wave2, sequence.FirstGuest, 99, sequence.FogTurn, 2);
 			SetWave(ref system.MainQueueData.Wave3, sequence.SecondGuest, 99, sequence.FogTurn, 3);
 

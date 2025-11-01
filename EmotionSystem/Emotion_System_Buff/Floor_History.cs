@@ -277,7 +277,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int damage = (int)(BChar.GetStat.maxhp * 0.2f);
+						int damage = (int)(BChar.GetStat.maxhp * 0.3f);
 						return base.DescExtended().Replace("&a", damage.ToString());
 					}
 
@@ -290,7 +290,7 @@ namespace EmotionSystem
 					public void TurnEnd()
 					{
 						Utils.PlaySound("Floor_History_Predation");
-						int damage = (int)(BChar.GetStat.maxhp * 0.2f);
+						int damage = (int)(BChar.GetStat.maxhp * 0.3f);
 						Utils.TakeNonLethalDamage(BChar, damage);
 					}
 				}

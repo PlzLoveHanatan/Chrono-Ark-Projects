@@ -112,7 +112,7 @@ namespace EmotionSystem
 		{
 			public override void BuffStat()
 			{
-				PlusStat.spd = Math.Min(StackNum, 2);
+				PlusStat.spd = -1;
 				PlusStat.dod = -10 * StackNum;
 			}
 

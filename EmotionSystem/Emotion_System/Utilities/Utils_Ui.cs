@@ -36,7 +36,6 @@ namespace EmotionSystem
 			var mod = ModManager.getModInfo("EmotionSystem");
 			if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
 			var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
-			//Debug.Log($"[EmotionSystem] Getting asset address: {address}");
 			return AddressableLoadManager.LoadAddressableAsset<T>(address);
 		}
 

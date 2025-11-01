@@ -62,10 +62,10 @@ namespace EmotionSystem
 
 			public readonly Dictionary<string, List<string>> BannedBossAbnormality = new Dictionary<string, List<string>>()
 			{
-				{ GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
-				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
-				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Strengthen, ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair, ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity} },
-				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
+				{ GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Strengthen, ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair } },
+				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv3_DimensionalRefraction } },
 				{ GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
 				{ GDEItemKeys.Enemy_MBoss2_0, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_Joker, new List<string> { } },
@@ -75,7 +75,7 @@ namespace EmotionSystem
 				{ GDEItemKeys.Enemy_S2_MainBoss_1_1, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_BombClownBoss, new List<string> { } },
 				{ GDEItemKeys.Enemy_MBoss2_1, new List<string> { } },
-				{ GDEItemKeys.Enemy_SR_GunManBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
+				{ GDEItemKeys.Enemy_SR_GunManBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_S3_Boss_Pope, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
 				{ GDEItemKeys.Enemy_S3_Boss_TheLight, new List<string> { } },
 				{ GDEItemKeys.Enemy_S3_Boss_Reaper, new List<string> { } },
@@ -126,32 +126,32 @@ namespace EmotionSystem
 
 			public readonly List<string> GuestCurses = new List<string>
 			{
-				GDEItemKeys.Buff_B_CursedMob_0,
-				GDEItemKeys.Buff_B_CursedMob_1,
-				GDEItemKeys.Buff_B_CursedMob_2,
-				GDEItemKeys.Buff_B_CursedMob_3,
-				GDEItemKeys.Buff_B_CursedMob_4,
-				GDEItemKeys.Buff_B_CursedMob_5,
+				ModItemKeys.Buff_B_Guest_Distortion_0,
+				ModItemKeys.Buff_B_Guest_Distortion_1,
+				ModItemKeys.Buff_B_Guest_Distortion_2,
+				ModItemKeys.Buff_B_Guest_Distortion_3,
+				ModItemKeys.Buff_B_Guest_Distortion_4,
+				ModItemKeys.Buff_B_Guest_Distortion_5,
 			};
 
 			public readonly List<string> CurseSelectionList = new List<string>
 			{
-				ModItemKeys.Skill_S_CurseSelection_0,
-				ModItemKeys.Skill_S_CurseSelection_1,
-				ModItemKeys.Skill_S_CurseSelection_2,
-				ModItemKeys.Skill_S_CurseSelection_3,
-				ModItemKeys.Skill_S_CurseSelection_4,
-				ModItemKeys.Skill_S_CurseSelection_5,
+				ModItemKeys.Skill_S_Distortion_Selection_0,
+				ModItemKeys.Skill_S_Distortion_Selection_1,
+				ModItemKeys.Skill_S_Distortion_Selection_2,
+				ModItemKeys.Skill_S_Distortion_Selection_3,
+				ModItemKeys.Skill_S_Distortion_Selection_4,
+				ModItemKeys.Skill_S_Distortion_Selection_5,
 			};
 
-			public static readonly Dictionary<string, string> CurseMap = new Dictionary<string, string>
+			public readonly Dictionary<string, string> CurseMap = new Dictionary<string, string>
 			{
-				{ ModItemKeys.Skill_S_CurseSelection_0, GDEItemKeys.Buff_B_CursedMob_0 },
-				{ ModItemKeys.Skill_S_CurseSelection_1, GDEItemKeys.Buff_B_CursedMob_1 },
-				{ ModItemKeys.Skill_S_CurseSelection_2, GDEItemKeys.Buff_B_CursedMob_2 },
-				{ ModItemKeys.Skill_S_CurseSelection_3, GDEItemKeys.Buff_B_CursedMob_3 },
-				{ ModItemKeys.Skill_S_CurseSelection_4, GDEItemKeys.Buff_B_CursedMob_4 },
-				{ ModItemKeys.Skill_S_CurseSelection_5, GDEItemKeys.Buff_B_CursedMob_5 },
+				{ ModItemKeys.Skill_S_Distortion_Selection_0, ModItemKeys.Buff_B_Guest_Distortion_0},
+				{ ModItemKeys.Skill_S_Distortion_Selection_1, ModItemKeys.Buff_B_Guest_Distortion_1},
+				{ ModItemKeys.Skill_S_Distortion_Selection_2, ModItemKeys.Buff_B_Guest_Distortion_2},
+				{ ModItemKeys.Skill_S_Distortion_Selection_3, ModItemKeys.Buff_B_Guest_Distortion_3},
+				{ ModItemKeys.Skill_S_Distortion_Selection_4, ModItemKeys.Buff_B_Guest_Distortion_4},
+				{ ModItemKeys.Skill_S_Distortion_Selection_5, ModItemKeys.Buff_B_Guest_Distortion_5},
 			};
 		}
 	}

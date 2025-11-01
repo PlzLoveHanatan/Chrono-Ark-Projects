@@ -94,9 +94,7 @@ namespace EmotionSystem
 
 		public void StartNewReception(string nextQueue)
 		{
-			Debug.Log($"[Invitation] Restarting battle immediately for next guest: {nextQueue}");
-			FieldSystem.instance.BattleStart(new GDEEnemyQueueData(nextQueue), 
-				StageSystem.instance.StageData.BattleMap.Key, false, false, "", "", false);
+			FieldSystem.instance.BattleStart(new GDEEnemyQueueData(nextQueue), StageSystem.instance.StageData.BattleMap.Key, false, false, "", "", false);
 		}
 
 		public void DoubleBattle()

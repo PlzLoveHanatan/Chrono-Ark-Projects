@@ -43,7 +43,11 @@ namespace EmotionSystem
 		private void LoadEGOSprites()
 		{
 			var floorType = DataStore.LibraryFloor.CurrentFloorType;
-			var setType = DataStore.Instance.Visual.EGOButton.GetSetForFloor(floorType);
+
+			var setType = Utils.ChibiAngela
+		? DataStore.VisualUi.EGOUi.SpriteSetType.Angela
+		: DataStore.Instance.Visual.EGOButton.GetSetForFloor(floorType);
+
 			var spriteDict = DataStore.Instance.Visual.EGOButton.SpriteSets[setType];
 
 			foreach (var kvp in spriteDict)
@@ -56,7 +60,6 @@ namespace EmotionSystem
 					if (handle.Result is Sprite sprite)
 					{
 						EgoSprites[key] = sprite;
-						Debug.Log($"[EGO_UI] Loaded sprite: {key} from {data.Path}");
 					}
 					else
 					{

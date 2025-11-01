@@ -242,6 +242,11 @@ namespace EmotionSystem
 					{
 						ally.GetPosEmotion(null, 3);
 					}
+
+					if (Utils.AllyTeam.AliveChars.All(bc => bc.EmotionLevel() >= 5))
+					{
+						Utils.AllyTeam.Draw(2);
+					}
 				}
 			}
 
@@ -251,9 +256,18 @@ namespace EmotionSystem
 				{
 					Utils.AllyTeam.Draw(2);
 
-					var ally = Utils.AllyTeam.AliveChars.Where(a => a != null).OrderBy(a => a.MyEmotion().Level).ThenBy(a => a.MyEmotion().CoinNum).FirstOrDefault();
-
-					ally?.AddEmotionLevel(true);
+					if (Utils.AllyTeam.AliveChars.All(bc => bc.EmotionLevel() >= 5))
+					{
+						if (Utils.ReturnBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level) is Investigators.EmotionLucy lucyEmotion)
+						{
+							BattleSystem.DelayInputAfter(lucyEmotion.LucyEmotionLevelUp(1, null, null, true));
+						}
+					}
+					else
+					{
+						var ally = Utils.AllyTeam.AliveChars.Where(a => a != null).OrderBy(a => a.MyEmotion().Level).ThenBy(a => a.MyEmotion().CoinNum).FirstOrDefault();
+						ally?.AddEmotionLevel(true);
+					}
 				}
 			}
 
@@ -270,6 +284,11 @@ namespace EmotionSystem
 						{
 							enemy.GetNegEmotion(null, 3);
 						}
+					}
+
+					if (Utils.AllyTeam.AliveChars.All(bc => bc.EmotionLevel() >= 5))
+					{
+						Utils.AllyTeam.AP += 2;
 					}
 				}
 			}

@@ -16,6 +16,17 @@ namespace EmotionSystem
 			[HarmonyPostfix]
 			public static void StageStartPostfix()
 			{
+				if (PlayData.TSavedata.StageNum >= 0 && Utils.BossInvitations && Utils.DistortedBosses)
+				{
+					var data = GetOrCreateEmotionData();
+
+					if (!data.startingBonus)
+					{
+						GainEmotionReward();
+						data.startingBonus = true;
+					}
+				}
+
 				if (IsCamp)
 				{
 					Scripts.ChargeLucyNeck();
@@ -39,6 +50,24 @@ namespace EmotionSystem
 				   key == GDEItemKeys.Stage_Stage2_Camp ||
 				   key == GDEItemKeys.Stage_Stage3_Camp ||
 				   key == GDEItemKeys.Stage_Stage4_Camp;
+		}
+
+		private static Value GetOrCreateEmotionData()
+		{
+			var data = PlayData.TSavedata.GetCustomValue<Value>();
+			if (data == null)
+			{
+				data = new Value();
+				PlayData.TSavedata.AddCustomValue(data);
+			}
+			return data;
+		}
+
+		private static void GainEmotionReward()
+		{
+			PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Consume_SmallChest));
+			PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Consume_SmallChest));
+			PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy_Rare, 1));
 		}
 	}
 }

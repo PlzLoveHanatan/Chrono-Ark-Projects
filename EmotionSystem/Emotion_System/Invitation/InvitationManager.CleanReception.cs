@@ -16,25 +16,28 @@ namespace EmotionSystem
 		{
 			if (string.IsNullOrEmpty(skillKey)) return;
 
-			var skillDeck = Utils.AllyTeam.Skills_Deck.Where(s => s.MySkill.KeyID == skillKey).ToList();
-
-			foreach (var skill in skillDeck)
+			// --- Deck ---
+			Skill skillDeck = Utils.AllyTeam.Skills_Deck.Find(s => s.MySkill.KeyID == skillKey);
+			while (skillDeck != null)
 			{
-				Utils.RemoveSkill(skill);
+				Utils.RemoveSkill(skillDeck);
+				skillDeck = Utils.AllyTeam.Skills_Deck.Find(s => s.MySkill.KeyID == skillKey);
 			}
 
-			var skillDiscard = Utils.AllyTeam.Skills_UsedDeck.Where(s => s.MySkill.KeyID == skillKey).ToList();
-
-			foreach (var skill in skillDiscard)
+			// --- Used Deck ---
+			Skill skillDiscard = Utils.AllyTeam.Skills_UsedDeck.Find(s => s.MySkill.KeyID == skillKey);
+			while (skillDiscard != null)
 			{
-				Utils.RemoveSkill(skill);
+				Utils.RemoveSkill(skillDiscard);
+				skillDiscard = Utils.AllyTeam.Skills_UsedDeck.Find(s => s.MySkill.KeyID == skillKey);
 			}
 
-			var skillHand = Utils.AllyTeam.Skills.Where(s => s.MySkill.KeyID == skillKey).ToList();
-
-			foreach (var skill in skillHand)
+			// --- Hand ---
+			Skill skillHand = Utils.AllyTeam.Skills.Find(s => s.MySkill.KeyID == skillKey);
+			while (skillHand != null)
 			{
-				Utils.RemoveSkill(skill, isExclude);
+				Utils.RemoveSkill(skillHand, isExclude);
+				skillHand = Utils.AllyTeam.Skills.Find(s => s.MySkill.KeyID == skillKey);
 			}
 		}
 
@@ -120,14 +123,24 @@ namespace EmotionSystem
 			{
 				CanKillBurningStake = true;
 				ally.HP = 0;
-				ally?.Dead(true, true);
 
-				if (!ally.IsDead)
+				int safetyCounter = 0;
+				while (!ally.IsDead && safetyCounter < 10)
 				{
+					ally.Info.G_get_stat.DeadImmune = -999;
+					ally.Info.ForceGetStat();
 					ally.Dead(true, true);
-					CanKillBurningStake = false;
+					safetyCounter++;
+				}
+
+				CanKillBurningStake = false;
+
+				if (safetyCounter >= 10)
+				{
+					Debug.LogWarning($"[BURNING_STAKE] {ally.Info?.KeyData} не умер после 10 попыток!");
 				}
 			}
+
 		}
 
 		private void CleanAfterDealer()

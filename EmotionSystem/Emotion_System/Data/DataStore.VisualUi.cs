@@ -74,7 +74,7 @@ namespace EmotionSystem
 				{
 					{ DataStore.LibraryFloorType.History, SpriteSetType.Normal },
 					{ DataStore.LibraryFloorType.Technological, SpriteSetType.Normal },
-					{ DataStore.LibraryFloorType.Literature, SpriteSetType.Angela },
+					{ DataStore.LibraryFloorType.Literature, SpriteSetType.Normal },
 				};
 
 				public EGOButtonVisualData GetData(SpriteSetType set, SpriteTypeEGOButton type)
@@ -106,7 +106,6 @@ namespace EmotionSystem
 						return setType;
 					}
 
-					Debug.LogWarning($"[EGO_UI] Не найден спрайтсет для этажа {floor}, возвращаю Normal");
 					return SpriteSetType.Normal;
 				}
 			}

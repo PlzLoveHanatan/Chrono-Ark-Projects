@@ -205,12 +205,12 @@ namespace EmotionSystem
 
 					if (bchar is BattleEnemy enemy && enemy.Boss)
 					{
-						percentage = 0.025f;
+						percentage = 0.05f;
 					}
 
 					int heal = (int)(bchar.GetStat.maxhp * percentage);
 
-					BattleSystem.DelayInput(Utils.HealingParticle(bchar, Utils.DummyChar, heal, true, true));
+					//BattleSystem.DelayInput(Utils.HealingParticle(bchar, Utils.DummyChar, heal, true, true));
 				}
 
 				public void GainEmotionalBuffs(BattleChar bchar, int level = 0)

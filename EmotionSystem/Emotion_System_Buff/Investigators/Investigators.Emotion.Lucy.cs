@@ -135,10 +135,13 @@ namespace EmotionSystem
 					yield break;
 				}
 
+				bool isCancel = (getNegativeOnly.GetValueOrDefault() || getPositiveOnly.GetValueOrDefault() || getRandomAbnormality.GetValueOrDefault());
+
+
 				var skillList = selectionList.Select(x => Skill.TempSkill(x.Name, BChar, BChar.MyTeam)).ToList();
 
 				yield return BattleSystem.I_OtherSkillSelect(skillList,
-					new SkillButton.SkillClickDel(GainAbnormality), ModLocalization.Select_Abnormality, false, false, true, false, true);
+					new SkillButton.SkillClickDel(GainAbnormality), ModLocalization.Select_Abnormality, isCancel, false, true, false, true);
 			}
 
 			private List<DataStore.Abnormality> GetAbnormalitiesByLevel(int level, bool? getPositiveOnly = null, bool? getNegativeOnly = null, bool? randomAbnormality = null)

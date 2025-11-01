@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionSystem10302025002823</AssemblyName>
+    <AssemblyName>EmotionSystem11012025233341</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -409,10 +409,11 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                            <!-- Compile ItemGroup Start-->
+                                                                                      <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionSystem_ModDefinition.cs" />
     <Compile Include="EmotionSystem_ModItemKeys.cs" />
+    <Compile Include="EmotionSystem_Value.cs" />
     <Compile Include="IP_BuffObject_Updata.cs" />
     <Compile Include="TutorialLocalizer.cs" />
     <Compile Include="Emotion_System\Emotional_Manager.cs" />
@@ -438,6 +439,7 @@
     <Compile Include="Emotion_System_Buff\Floor_History.cs" />
     <Compile Include="Emotion_System_Buff\Floor_Literature.cs" />
     <Compile Include="Emotion_System_Buff\Floor_Technological.cs" />
+    <Compile Include="Emotion_System_Buff\Guests\Guest.Distortions.cs" />
     <Compile Include="Emotion_System_Buff\Guests\Guests.Abnormalities.cs" />
     <Compile Include="Emotion_System_Buff\Guests\Guests.Dice.cs" />
     <Compile Include="Emotion_System_Buff\Guests\Guests.Emotion.cs" />
@@ -452,6 +454,7 @@
     <Compile Include="Emotion_System_EGO_Button\EmotionSystem_EGO_Button_Script.cs" />
     <Compile Include="Emotion_System_EGO_Button\EmotionSystem_EGO_Button_Tooltip.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.BuffObject.cs" />
+    <Compile Include="Emotion_System_Plugin\Plugin.Distortions.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.Invitastion.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.ResultUi.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.StageStart.cs" />
@@ -463,7 +466,9 @@
     <Compile Include="Emotion_System_Skill\Floor_Technological.cs" />
     <Compile Include="Emotion_System_Skill\Misc.cs" />
     <Compile Include="Emotion_System_Skill\Skills.cs" />
-    <Compile Include="Emotion_System_Skill_Extended\Skill_Extended.cs" />
+    <Compile Include="Emotion_System_Skill_Extended\Extended.Abnormality.cs" />
+    <Compile Include="Emotion_System_Skill_Extended\Extended.EGO.cs" />
+    <Compile Include="Emotion_System_Skill_Extended\_Extended.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->

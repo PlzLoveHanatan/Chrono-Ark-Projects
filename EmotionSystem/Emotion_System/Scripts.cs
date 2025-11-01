@@ -177,7 +177,7 @@ namespace EmotionSystem
 				var skill = Skill.TempSkill(key, bchar);
 				if (skill != null)
 				{
-					Utils.InsertSkillInDeck(bchar, skill);
+					Utils.InsertSkillInDeck(skill);
 					Utils.UnlockSkillPreview(key);
 				}
 			}
