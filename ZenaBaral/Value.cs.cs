@@ -9,5 +9,6 @@ namespace ZenaBaral
 	public class Value : CustomValue
 	{
 		public bool GainHeadEquip = false;
+		public bool FirstLevelStat = false;
 	}
 }

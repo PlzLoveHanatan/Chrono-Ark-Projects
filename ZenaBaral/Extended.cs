@@ -28,8 +28,6 @@ namespace ZenaBaral
 			public override void Init()
 			{
 				PlusSkillStat.cri = 100;
-				PlusSkillStat.PlusCriDmg = 50;
-				PlusSkillStat.PlusCriHeal = 50;
 			}
 		}
 	}

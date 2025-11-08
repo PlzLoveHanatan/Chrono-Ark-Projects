@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EmotionSystem;
 
 namespace ZenaBaral
 {
@@ -46,6 +47,22 @@ namespace ZenaBaral
 			{
 				User.Damage(BChar, Dmg, false, true);
 				resist = true;
+			}
+		}
+
+		public class Precision : Buff, IP_EmotionLvUpBefore
+		{
+			public void EmotionLvUp(CharEmotion charEmotion, int nextLevel)
+			{
+				if (charEmotion == BChar)
+				{
+					Init();
+				}
+			}
+
+			public override void Init()
+			{
+				PlusStat.PlusCriDmg = BChar.GetStat.PlusCriDmg;
 			}
 		}
 	}

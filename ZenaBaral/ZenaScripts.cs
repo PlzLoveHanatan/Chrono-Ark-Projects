@@ -28,5 +28,10 @@ namespace ZenaBaral
 				PlaySounds("Zena_Lucy_Directive");
 			}
 		}
+
+		public static void IncreaseStats(Character character)
+		{
+			character.OriginStat.PlusCriDmg += 5;
+		}
 	}
 }

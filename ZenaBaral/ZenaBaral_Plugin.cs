@@ -50,16 +50,26 @@ namespace ZenaBaral
 			[HarmonyPostfix]
 			public static void StageStartPostfix()
 			{
-				if (!ZenaInParty() || !ZenaUtils.HeadEquip) return;
+				if (!ZenaInParty()) return;
 
 				var data = GetOrCreateZenaData();
 
 				if (PlayData.TSavedata.StageNum >= 0)
 				{
-					if (!data.GainHeadEquip)
+					if (!data.GainHeadEquip && ZenaUtils.HeadEquip)
 					{
 						ZenaReward();
 						data.GainHeadEquip = true;
+					}
+
+					if (!data.FirstLevelStat)
+					{
+						var zena = PlayData.TSavedata.Party.Find(c => c.KeyData == ModItemKeys.Character_Zena);
+						if (zena != null)
+						{
+							ZenaScripts.IncreaseStats(zena);
+							data.FirstLevelStat = true;
+						}
 					}
 				}
 			}

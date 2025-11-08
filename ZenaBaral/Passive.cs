@@ -9,21 +9,25 @@ using UnityEngine;
 
 namespace ZenaBaral
 {
-	public class Passive : Passive_Char, IP_PlayerTurn_1
+	public class Passive : Passive_Char, IP_PlayerTurn_1, IP_LevelUp
 	{
 		public override void Init()
 		{
 			OnePassive = true;
 		}
 
-		public override void FixedUpdate()
+		public void LevelUp()
 		{
-			int plusStat = BChar.EmotionLevel() * 5;
-			PlusStat.PlusCriDmg = plusStat;
+			ZenaScripts.IncreaseStats(MyChar);
 		}
 
 		public void Turn1()
 		{
+			if (Utils.ReturnBuff(BChar, ModItemKeys.Buff_B_Zena_Precision) == null)
+			{
+				Utils.AddBuff(BChar, ModItemKeys.Buff_B_Zena_Precision);
+			}
+
 			int skills = Utils.AllyTeam.Skills.Count;
 			//Utils.AllyTeam.AP += 1;
 			if (skills >= 6) return;

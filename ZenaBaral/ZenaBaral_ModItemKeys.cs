@@ -35,6 +35,10 @@ namespace ZenaBaral
 		/// </summary>
         public static string Buff_B_Zena_JudgmentManifest = "B_Zena_JudgmentManifest";
 		/// <summary>
+		/// Arbiter's Precision
+		/// </summary>
+        public static string Buff_B_Zena_Precision = "B_Zena_Precision";
+		/// <summary>
 		/// Singularity Protocol I
 		/// </summary>
         public static string Buff_B_Zena_Protocol = "B_Zena_Protocol";
@@ -52,8 +56,6 @@ namespace ZenaBaral
         public static string SkillExtended_Ex_Zena_0 = "Ex_Zena_0";
 		/// <summary>
 		/// Critical Chance +100%
-		/// Critical Damage +50%
-		/// Critical Healing +50%
 		/// </summary>
         public static string SkillExtended_Ex_Zena_1 = "Ex_Zena_1";
 		/// <summary>
@@ -97,7 +99,7 @@ namespace ZenaBaral
         public static string SkillEffect_SE_T_S_Zena_Rare_Shockwave = "SE_T_S_Zena_Rare_Shockwave";
 		/// <summary>
 		/// <color=#8B4513>Extirpation</color>
-		/// Deal <color=purple>Pain Damage</color> <color=#FF7C34>(4% of Max HP)</color> to the target's.
+		/// Deal <color=purple>Pain Damage</color> <color=#FF7C34>(5% of Max HP)</color> to the target's.
 		/// </summary>
         public static string Skill_S_Baral_Extirpation = "S_Baral_Extirpation";
 		/// <summary>
@@ -155,8 +157,9 @@ namespace ZenaBaral
 		/// <summary>
 		/// Zena
 		/// Passive:
-		/// Increase Critical Damage by 5% for each Emotion Level.
+		/// Increase Critical Damage by 5% for each Zena's Level.
 		/// At the start of the turn, draw until you have 6 skills in hand.
+		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Zena = "Zena";
 
