@@ -61,7 +61,7 @@ namespace ZenaBaral
 				{
 					if (target.Info.Ally) continue;
 
-					int damage = (int)(target.GetStat.maxhp * 0.05f);
+					int damage = (int)(target.GetStat.maxhp * 0.1f);
 					target.Damage(Utils.DummyChar, damage, false, true);
 				}
 			}

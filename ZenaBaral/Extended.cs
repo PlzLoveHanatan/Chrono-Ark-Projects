@@ -29,6 +29,11 @@ namespace ZenaBaral
 			{
 				PlusSkillStat.cri = 100;
 			}
+
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(BChar.MyTeam.Skills, button => ZenaScripts.Selection(button), ModLocalization.Zena_Lucy, false, true));
+			}
 		}
 	}
 }

@@ -39,23 +39,15 @@ namespace ZenaBaral
 		/// </summary>
         public static string Buff_B_Zena_Precision = "B_Zena_Precision";
 		/// <summary>
-		/// Singularity Protocol I
+		/// Singularity Protocol
 		/// </summary>
         public static string Buff_B_Zena_Protocol = "B_Zena_Protocol";
 		/// <summary>
-		/// Singularity Protocol II
-		/// </summary>
-        public static string Buff_B_Zena_Protocol_0 = "B_Zena_Protocol_0";
-		/// <summary>
-		/// Singularity Protocol III
-		/// </summary>
-        public static string Buff_B_Zena_Protocol_1 = "B_Zena_Protocol_1";
-		/// <summary>
-		/// Draw 1 skill. Select skill to remove from current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
+		/// Draw 1 skill. Select skill from hand to Exclude  from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// </summary>
         public static string SkillExtended_Ex_Zena_0 = "Ex_Zena_0";
 		/// <summary>
-		/// Critical Chance +100%
+		/// Critical Chance +100%. When played, select skill from hand to Exclude from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// </summary>
         public static string SkillExtended_Ex_Zena_1 = "Ex_Zena_1";
 		/// <summary>
@@ -99,7 +91,7 @@ namespace ZenaBaral
         public static string SkillEffect_SE_T_S_Zena_Rare_Shockwave = "SE_T_S_Zena_Rare_Shockwave";
 		/// <summary>
 		/// <color=#8B4513>Extirpation</color>
-		/// Deal <color=purple>Pain Damage</color> <color=#FF7C34>(5% of Max HP)</color> to the target's.
+		/// Deal additional <color=purple>Pain Damage</color> equal to 10% of the target's Max Health.
 		/// </summary>
         public static string Skill_S_Baral_Extirpation = "S_Baral_Extirpation";
 		/// <summary>
@@ -125,14 +117,15 @@ namespace ZenaBaral
         public static string Skill_S_Baral_Trail = "S_Baral_Trail";
 		/// <summary>
 		/// <color=#8B4513>Extraction Directive</color>
-		/// Draw 2 skills. Select skill to remove from current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
+		/// Draw 2 skills. Select skill from hand to Exclude from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// </summary>
         public static string Skill_S_Lucy_Directive = "S_Lucy_Directive";
 		/// <summary>
 		/// <color=#FFD700>Arbiter's Verdict</color>
-		/// Draw 2 skills. All enemies lose 25% of their Max HP.
+		/// All enemies lose 25% of their Max HP.
 		/// </summary>
         public static string Skill_S_Lucy_Verdict = "S_Lucy_Verdict";
+        public static string Skill_S_Lucy_Verdict_0 = "S_Lucy_Verdict_0";
 		/// <summary>
 		/// <color=#FFD700>Line</color>
 		/// </summary>
@@ -170,7 +163,7 @@ namespace ZenaBaral
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Select skill to remove from current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
+		/// Select skill to Exclude from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:

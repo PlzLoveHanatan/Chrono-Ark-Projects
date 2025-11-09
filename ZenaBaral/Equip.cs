@@ -21,8 +21,8 @@ namespace ZenaBaral
 		{
 			public override void Init()
 			{
-				PlusStat.PlusCriDmg = 50;
-				PlusStat.cri = 25;
+				PlusStat.PlusCriDmg = 40;
+				PlusStat.cri = 20;
 			}
 		}
 	}

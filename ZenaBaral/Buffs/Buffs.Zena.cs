@@ -13,26 +13,8 @@ namespace ZenaBaral
 		{
 			public override void Init()
 			{
-				PlusStat.cri = 10;
-				PlusStat.PlusCriDmg = 10;
-			}
-		}
-
-		public class Protocol_0 : Buff
-		{
-			public override void Init()
-			{
-				PlusStat.cri = 20;
-				PlusStat.PlusCriDmg = 20;
-			}
-		}
-
-		public class Protocol_1 : Buff
-		{
-			public override void Init()
-			{
-				PlusStat.cri = 30;
-				PlusStat.PlusCriDmg = 30;
+				PlusStat.PlusCriDmg = 15;
+				PlusStat.cri = 15;
 			}
 		}
 
@@ -50,16 +32,8 @@ namespace ZenaBaral
 			}
 		}
 
-		public class Precision : Buff, IP_EmotionLvUpBefore
+		public class Precision : Buff
 		{
-			public void EmotionLvUp(CharEmotion charEmotion, int nextLevel)
-			{
-				if (charEmotion == BChar)
-				{
-					Init();
-				}
-			}
-
 			public override void Init()
 			{
 				PlusStat.PlusCriDmg = BChar.GetStat.PlusCriDmg;
