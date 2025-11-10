@@ -49,7 +49,7 @@ namespace ZenaBaral
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				Utils.ApplyBleed(Targets, BChar, 10);
+				Utils.ApplyBleed(Targets, BChar, 10, 150);
 			}
 		}
 

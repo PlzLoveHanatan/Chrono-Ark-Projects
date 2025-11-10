@@ -43,11 +43,11 @@ namespace ZenaBaral
 		/// </summary>
         public static string Buff_B_Zena_Protocol = "B_Zena_Protocol";
 		/// <summary>
-		/// Draw 1 skill. Select skill from hand to Exclude  from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
+		/// Draw 1 skill. Select skill from hand to remove from the deck for this battle. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// </summary>
         public static string SkillExtended_Ex_Zena_0 = "Ex_Zena_0";
 		/// <summary>
-		/// Critical Chance +100%. When played, select skill from hand to Exclude from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
+		/// Critical Chance +100%. When played, select skill from hand to remove from the deck for this battle. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// </summary>
         public static string SkillExtended_Ex_Zena_1 = "Ex_Zena_1";
 		/// <summary>
@@ -89,6 +89,9 @@ namespace ZenaBaral
         public static string SkillEffect_SE_T_S_Zena_Line_1 = "SE_T_S_Zena_Line_1";
         public static string SkillEffect_SE_T_S_Zena_Rare_BirdCage = "SE_T_S_Zena_Rare_BirdCage";
         public static string SkillEffect_SE_T_S_Zena_Rare_Shockwave = "SE_T_S_Zena_Rare_Shockwave";
+        public static string Character_Skin_Skin_Zena_Casual = "Skin_Zena_Casual";
+        public static string Character_Skin_Skin_Zena_Ruina = "Skin_Zena_Ruina";
+        public static string Character_Skin_Skin_Zena_Swimsuit = "Skin_Zena_Swimsuit";
 		/// <summary>
 		/// <color=#8B4513>Extirpation</color>
 		/// Deal additional <color=purple>Pain Damage</color> equal to 10% of the target's Max Health.
@@ -117,7 +120,7 @@ namespace ZenaBaral
         public static string Skill_S_Baral_Trail = "S_Baral_Trail";
 		/// <summary>
 		/// <color=#8B4513>Extraction Directive</color>
-		/// Draw 2 skills. Select skill from hand to Exclude from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
+		/// Draw 2 skills. Select skill from hand to remove from the deck for this battle. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// </summary>
         public static string Skill_S_Lucy_Directive = "S_Lucy_Directive";
 		/// <summary>
@@ -162,11 +165,15 @@ namespace ZenaBaral
     {
 		/// <summary>
 		/// Korean:
+		/// 이번 전투에서 덱에서 제거할 스킬을 선택하십시오. 선택된 스킬의 <b>기본</b> 마나 비용 × 2만큼 마나를 회복합니다.
 		/// English:
-		/// Select skill to Exclude from the current fight. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
+		/// Select skill to remove from the deck for this battle. Restore Mana equal selected skill <b>base</b> Mana Cost * 2.
 		/// Japanese:
+		/// この戦闘でデッキから除外するスキルを選択してください。選ばれたスキルの<b>基本</b>マナコスト×2分のマナを回復します。
 		/// Chinese:
+		/// 选择要在本场战斗中从牌组移除的技能。恢复等于所选技能<b>基础</b>法力消耗×2的法力值。
 		/// Chinese-TW:
+		/// 選擇要在本場戰鬥中從牌組移除的技能。恢復等於所選技能<b>基礎</b>法力消耗×2的法力值。
 		/// </summary>
         public static string Zena_Lucy => ModManager.getModInfo("ZenaBaral").localizationInfo.SystemLocalizationUpdate("Zena_Lucy");
 
