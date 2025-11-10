@@ -102,7 +102,7 @@ namespace EmotionSystem
 						foreach (var ally in BChar.MyTeam.AliveChars)
 						{
 							int heal = BChar.EmotionLevel() * 5;
-							Utils.HealingParticle(ally, BChar, heal, true, true);
+							BattleSystem.DelayInput(Utils.HealingParticle(ally, Utils.DummyChar, heal, true, false));
 						}
 					}
 				}

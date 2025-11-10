@@ -25,16 +25,6 @@ namespace EmotionSystem
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					Utils.PlaySound("Floor_History_Loyality");
-
-					foreach (var ally in Utils.AllyTeam.AliveChars)
-					{
-						//if (ally != BChar)
-						//{
-
-						//}
-						Utils.AddBuff(BChar, ally, ModItemKeys.Buff_B_Abnormality_HistoryLv3_Loyalty);
-					}
-					Targets[0].Dead(false, true);
 				}
 			}
 		}

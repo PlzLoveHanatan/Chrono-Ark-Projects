@@ -17,7 +17,7 @@ namespace EmotionSystem
 
 		public const string version = "1.0";
 
-		public const string author = "Midana && surprise4u";
+		public const string author = "Midana";
 
 		public static ModInfo ThisMod => ModManager.getModInfo(modname);
 

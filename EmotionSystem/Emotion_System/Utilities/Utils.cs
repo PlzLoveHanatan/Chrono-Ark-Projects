@@ -153,9 +153,9 @@ namespace EmotionSystem
 			}
 		}
 
-		public static Buff GetOrAddBuff(BattleChar target, BattleChar user, string buffKey)
+		public static Buff GetOrAddBuff(BattleChar target, BattleChar user, string buffKey, int percentage = 0)
 		{
-			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, user, false, 0, false, -1, false);
+			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
 			return buff;
 		}
 
@@ -267,11 +267,11 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void ApplyBurn(BattleChar target, BattleChar user, int stack = 1)
+		public static void ApplyBurn(BattleChar target, BattleChar user, int stack = 1, int percentage = 0)
 		{
 			if (target.Info.Ally || target == null) return;
 
-			var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn) as Debuffs.Burn;
+			var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, percentage) as Debuffs.Burn;
 
 			if (burn != null)
 			{
@@ -279,13 +279,13 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void ApplyBurn(List<BattleChar> Targets, BattleChar user, int stack = 1)
+		public static void ApplyBurn(List<BattleChar> Targets, BattleChar user, int stack = 1, int percentage = 0)
 		{
 			foreach (var target in Targets)
 			{
 				if (target.Info.Ally || target == null) return;
 
-				var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn) as Debuffs.Burn;
+				var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, percentage) as Debuffs.Burn;
 
 				if (burn != null)
 				{
@@ -294,11 +294,11 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void ApplyBleed(BattleChar target, BattleChar user, int stack = 1)
+		public static void ApplyBleed(BattleChar target, BattleChar user, int stack = 1, int percentage = 0)
 		{
 			if (target.Info.Ally || target == null) return;
 
-			var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed) as Debuffs.Bleed;
+			var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, percentage) as Debuffs.Bleed;
 
 			if (bleed != null)
 			{
@@ -306,13 +306,13 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void ApplyBleed(List<BattleChar> Targets, BattleChar user, int stack = 1)
+		public static void ApplyBleed(List<BattleChar> Targets, BattleChar user, int stack = 1, int percentage = 0)
 		{
 			foreach (var target in Targets)
 			{
 				if (target.Info.Ally || target == null) return;
 
-				var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed) as Debuffs.Bleed;
+				var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, percentage) as Debuffs.Bleed;
 
 				if (bleed != null)
 				{

@@ -124,8 +124,10 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void AddEmotionLevel(this BattleChar bc, bool isForceLevelUp = false)
+		public static void AddEmotionLevel(this BattleChar bc, bool isForceLevelUp = false, bool isNegativePoints = false)
 		{
+			if (bc.EmotionLevel() >= 5 || !Utils.InvestigatorEmotions) return;
+
 			var emotion = bc.MyEmotion();
 			var emotionalLevel = Utils.ReturnBuff(bc, ModItemKeys.Buff_B_Investigator_Emotional_Level) as Investigators.Emotion.Level;
 
@@ -143,11 +145,18 @@ namespace EmotionSystem
 			}
 
 			int currentLevel = emotion.Level;
-			int coinsNeeded = Investigators.Emotion.Level.CoinsToLevelUp[currentLevel];
+			int pointsNeeded = Investigators.Emotion.Level.CoinsToLevelUp[currentLevel];
 
-			for (int i = 0; i < coinsNeeded; i++)
+			for (int i = 0; i < pointsNeeded; i++)
 			{
-				bc.GetPosEmotion();
+				if (isNegativePoints)
+				{
+					bc.GetNegEmotion();
+				}
+				else
+				{
+					bc.GetPosEmotion();
+				}
 			}
 
 			if (emotionalLevel != null)

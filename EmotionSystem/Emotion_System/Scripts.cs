@@ -79,16 +79,43 @@ namespace EmotionSystem
 
 		public static void DestroyActions(BattleChar target, int actions = 1)
 		{
-			if (BattleSystem.instance.EnemyCastSkills.Count > 0 && !target.Info.Ally)
+			if (target == null || target.Info.Ally) return;
+
+			if (BattleSystem.instance.EnemyCastSkills.Count == 0) return;
+
+			for (int i = 0; i < actions; i++)
 			{
+				var targetSkill = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.Usestate == target);
+
+				if (targetSkill == null) break;
+
+				BattleSystem.instance.EnemyCastSkills.Remove(targetSkill);
+				BattleSystem.instance.ActWindow.CastingWasteFixed(targetSkill);
+			}
+		}
+
+		public static void DestroyActions(List<BattleChar> targets, int actions = 1)
+		{
+			if (targets == null || targets.Count == 0) return;
+
+			if (BattleSystem.instance.EnemyCastSkills.Count == 0) return;
+
+			foreach (var target in targets)
+			{
+				if (target == null || target.Info.Ally) continue;
+
 				for (int i = 0; i < actions; i++)
 				{
-					var targetSkill = BattleSystem.instance.EnemyCastSkills.Where(skill => skill.Usestate == target).FirstOrDefault();
+					var targetSkill = BattleSystem.instance.EnemyCastSkills.FirstOrDefault(skill => skill.Usestate == target);
+
+					if (targetSkill == null) break;
+
 					BattleSystem.instance.EnemyCastSkills.Remove(targetSkill);
 					BattleSystem.instance.ActWindow.CastingWasteFixed(targetSkill);
 				}
 			}
 		}
+
 
 		public static IEnumerator RecastSkill(BattleChar Target, BattleChar user, string skillKey, int recastNum = 1, bool isWingBeat = false)
 		{

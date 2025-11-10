@@ -86,7 +86,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					Utils.ApplyBleed(Targets[0], Utils.DummyChar, 6);
+					Utils.ApplyBleed(Targets[0], Utils.DummyChar, 8);
 				}
 			}
 
@@ -94,7 +94,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					Utils.ApplyBurn(Targets[0], Utils.DummyChar, 8);
+					Utils.ApplyBurn(Targets[0], Utils.DummyChar, 12);
 				}
 			}
 

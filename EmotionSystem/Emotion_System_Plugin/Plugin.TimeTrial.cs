@@ -26,7 +26,7 @@ namespace EmotionSystem
 
 						if (Utils.DistortedBosses)
 						{
-							timer = 2.3f;
+							timer = 2.6f;
 						}
 					}
 

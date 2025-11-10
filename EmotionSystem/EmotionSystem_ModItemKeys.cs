@@ -5,28 +5,28 @@ namespace EmotionSystem
     {
 		/// <summary>
 		/// Despair
-		/// Critical is increased by &a <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// Critical is increased by &a% <color=#FF7C34>(Emotion Level * 5)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv1_Despair = "B_Abnormality_GuestLv1_Despair";
 		/// <summary>
 		/// Giant Mushroom
-		/// Debuff Resistance is increased by &a <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// Debuff Resistance is increased by &a% <color=#FF7C34>(Emotion Level * 5)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv1_GiantMushroom = "B_Abnormality_GuestLv1_GiantMushroom";
 		/// <summary>
 		/// Strengthen
-		/// Attack Power is increased by &a% <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// Attack Power is increased by &a% <color=#FF7C34>(Emotion Level * 5)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv1_Strengthen = "B_Abnormality_GuestLv1_Strengthen";
 		/// <summary>
 		/// Stress
-		/// Defense is increased by &a <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// Defense is increased by &a% <color=#FF7C34>(Emotion Level * 5)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv1_Stress = "B_Abnormality_GuestLv1_Stress";
 		/// <summary>
 		/// Unity
 		/// Apply Taunt status to all allies except self.
-		/// At the end of the turn heal all allies by &a <color=#FF7C34>(Emotional Level * 5)</color>.
+		/// At the end of the turn heal all allies by &a <color=#FF7C34>(Emotion Level * 5)</color>.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv1_Unity = "B_Abnormality_GuestLv1_Unity";
 		/// <summary>
@@ -35,7 +35,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv1_YouMustbeHappy = "B_Abnormality_GuestLv1_YouMustbeHappy";
 		/// <summary>
 		/// Behaviour Adjustment
-		/// Every turn dodge the first skill (except Lucy skills) or block 1 debuff. Abnormality status: &a.
+		/// Every turn dodge the first attack (except Lucy skills) or block 1 debuff. Current Abnormality status: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_BehaviourAdjustment = "B_Abnormality_GuestLv2_BehaviourAdjustment";
 		/// <summary>
@@ -45,13 +45,13 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_BehaviourAdjustment_0 = "B_Abnormality_GuestLv2_BehaviourAdjustment_0";
 		/// <summary>
 		/// Energy Conversion
-		/// When this character loses 50% of its Max HP (20% for bosses), lose 1 Mana for the turn.
+		/// When this character loses 50% of its Max HP (20% for bosses), lose 1 Mana for the current turn.
 		/// Remaining damage: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_EnergyConversion = "B_Abnormality_GuestLv2_EnergyConversion";
 		/// <summary>
 		/// Mirror Adjustment
-		/// Every turn reflect 1 attack (except Lucy and additonal attacks). Current Abnormality status: &a.
+		/// Every turn reflect 1 attack that deals more than 1 damage (except Lucy and additonal attacks). Current Abnormality status: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_MirrorAdjustment = "B_Abnormality_GuestLv2_MirrorAdjustment";
 		/// <summary>
@@ -61,17 +61,17 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_MirrorAdjustment_0 = "B_Abnormality_GuestLv2_MirrorAdjustment_0";
 		/// <summary>
 		/// <color=red>Present</color>
-		/// At the start of the turn shuffle 1 <color=red>Present</color> into your deck.
+		/// At the start of the turn shuffle 1 <color=red>Present</color> into deck.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Present = "B_Abnormality_GuestLv2_Present";
 		/// <summary>
 		/// Shelter
-		/// Upon reaching 0 health, this character receives a buff that grants invincibility for 2 turns.
+		/// Upon reaching 0 health, this character receives a buff that grants invincibility for 2 player turns.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Shelter = "B_Abnormality_GuestLv2_Shelter";
 		/// <summary>
 		/// Shelter
-		/// This character dies while taking &a damage <color=#FF7C34>(Emotional Level * 15)</color> or more damage from a single hit this Scene. Removed after &b turn(s).
+		/// This character dies while taking &a damage <color=#FF7C34>(Emotion Level * 15)</color> or more damage from a single hit this Scene. Removed after &b turn(s).
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Shelter_0 = "B_Abnormality_GuestLv2_Shelter_0";
 		/// <summary>
@@ -86,17 +86,17 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_Storytime_0 = "B_Abnormality_GuestLv2_Storytime_0";
 		/// <summary>
 		/// Bait
-		/// At the start of the turn remove 1 random skill from hand and shuffle it into draw pile and lose 1 Mana.
+		/// At the start of the turn remove 1 random skill from hand, shuffle it into draw pile and lose 1 Mana.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_Bait = "B_Abnormality_GuestLv3_Bait";
 		/// <summary>
 		/// Cycle of the Curse
-		/// At the start of the turn select one skill from hand to exclude from current fight. Skill owner takes non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Current Stage * 5 + 5)</color>. If skill owner is Lucy lose 2 Mana instead.
+		/// At the start of the turn select skill from hand to remove from the deck for this battle. Skill owner takes non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Current Stage * 5 + 5)</color>. If skill owner is Lucy lose 2 Mana instead.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_CycleCurse = "B_Abnormality_GuestLv3_CycleCurse";
 		/// <summary>
 		/// Dimensional Refraction
-		/// At the start of each Scene, lose 1 Mana. Random skill in hand becomes <color=#A6B0FF>Blurred</color> for the rest of the Scene.
+		/// At the start of the turn lose 1 Mana. Random skill in hand becomes <color=#A6B0FF>Blurred</color> for the current turn.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_DimensionalRefraction = "B_Abnormality_GuestLv3_DimensionalRefraction";
 		/// <summary>
@@ -129,7 +129,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv1_Matchlight = "B_Abnormality_HistoryLv1_Matchlight";
 		/// <summary>
 		/// Nostalgic Embrace of the Old Days
-		/// Whenever you damage an enemy, gain 50% chance to apply stun (<sprite=2>&a%) to the Guest. Only activates once per turn.
+		/// Whenever you damage an enemy, gain 50% chance to apply stun (<sprite=2>&a%). Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv1_NostalgicEmbrace = "B_Abnormality_HistoryLv1_NostalgicEmbrace";
 		/// <summary>
@@ -208,7 +208,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv1_SocialDistancing = "B_Abnormality_LiteratureLv1_SocialDistancing";
 		/// <summary>
 		/// Surprise Gift
-		/// At the start of each Scene apply <color=green>Friend</color> (Damage/healing increased by 40%) status to 1 random page in hand, prioritizing the owner pages.
+		/// At the start of the turn apply <color=green>Friend</color> (Damage/healing increased by 40%) to 1 random skill in hand, prioritizing the user skills.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv1_SurpriseGift = "B_Abnormality_LiteratureLv1_SurpriseGift";
 		/// <summary>
@@ -218,13 +218,13 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv2_Alertness = "B_Abnormality_LiteratureLv2_Alertness";
 		/// <summary>
 		/// Friend
-		/// At the start of each Scene apply <color=red>Friend</color> (Discarded after 1 turn, damage/healing increased by 80%) status to 2 random pages in hand, prioritizing the owner pages.
+		/// At the start of the turn apply <color=red>Friend</color> (Discarded after 1 turn, damage/healing increased by 80%) to 2 random skills in hand, prioritizing the user skills.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_Friend = "B_Abnormality_LiteratureLv2_Friend";
 		/// <summary>
 		/// Funny Prank
-		/// Attacks have 50% to gain guaranteed critical.
-		/// Take non-lethal <color=purple>&a Pain damage</color> <color=#FF7C34>(40% Max Health)</color> when the attack is not critical.
+		/// Attack/Healing skills gain 50% to become guaranteed Сritical.
+		/// Take non-lethal <color=purple>&a Pain damage</color> <color=#FF7C34>(30% Max Health)</color> when the skill is not Сritical.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_FunnyPrank = "B_Abnormality_LiteratureLv2_FunnyPrank";
 		/// <summary>
@@ -320,14 +320,14 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_Recharge = "B_Abnormality_TechnologicalLv2_Recharge";
 		/// <summary>
 		/// The Seventh Bullet
-		/// Every 7th Attack target a random character, except user. Attacks Played: &a.
+		/// Every 7th attack target a random character, except user. Attacks Played: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_SeventhBullet = "B_Abnormality_TechnologicalLv2_SeventhBullet";
         public static string Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_0 = "B_Abnormality_TechnologicalLv2_SeventhBullet_0";
         public static string Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_1 = "B_Abnormality_TechnologicalLv2_SeventhBullet_1";
 		/// <summary>
 		/// Coffin
-		/// Attack skills destroys target's Action Point. Only activates once per turn. Current Status: &a.
+		/// Attack skills destroys target's Action Point. Only activates once per turn. Current Abnormality Status: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv3_Coffin = "B_Abnormality_TechnologicalLv3_Coffin";
 		/// <summary>
@@ -533,18 +533,10 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_DarkFlame = "KeyWord_Abnormality_DarkFlame";
 		/// <summary>
-		/// Blurred
-		/// Cannot be used this Scene.
+		/// <color=#A6B0FF>Blurred</color>
+		/// Cannot be used this turn.
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_DimensionalRefraction = "KeyWord_Abnormality_DimensionalRefraction";
-		/// <summary>
-		/// <color=red>Loyality</color>
-		/// Attack Power +40%
-		/// Healing Power +40%
-		/// Critical Damage +40%
-		/// Critical Healing +40%
-		/// </summary>
-        public static string SkillKeyword_KeyWord_Abnormality_Loyality = "KeyWord_Abnormality_Loyality";
 		/// <summary>
 		/// Abnormality Level I
 		/// </summary>
@@ -611,7 +603,7 @@ namespace EmotionSystem
         public static string SkillKeyword_KeyWord_EGO_Desynchronizes = "KeyWord_EGO_Desynchronizes";
 		/// <summary>
 		/// Synchronize E.G.O.
-		/// Remove all user skills from the deck, shuffle 8 unique pages to the deck, and change fixed ability to 'Desynchronize'.
+		/// Remove all user skills from the deck, shuffle 8 unique skills to the deck, and change fixed ability to 'Desynchronize'.
 		/// </summary>
         public static string SkillKeyword_KeyWord_EGO_Synchronize = "KeyWord_EGO_Synchronize";
 		/// <summary>
@@ -646,7 +638,7 @@ namespace EmotionSystem
         public static string Item_Potions_P_EmotionSystem_DarkTune = "P_EmotionSystem_DarkTune";
 		/// <summary>
 		/// Distilled Suffering
-		/// Inflict 6 <color=red>Bleed</color> to the target.
+		/// Inflict 8 <color=red>Bleed</color> to the target.
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_DistilledSuffering = "P_EmotionSystem_DistilledSuffering";
 		/// <summary>
@@ -666,7 +658,7 @@ namespace EmotionSystem
         public static string Item_Potions_P_EmotionSystem_EssenceWrath = "P_EmotionSystem_EssenceWrath";
 		/// <summary>
 		/// Ignited Remorse
-		/// Inflict 8 <color=#FC6178>Burn</color> to the target.
+		/// Inflict 15 <color=#FC6178>Burn</color> to the target.
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_IgnitedRemorse = "P_EmotionSystem_IgnitedRemorse";
 		/// <summary>
@@ -835,7 +827,6 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_GuestLv2_MirrorAdjustment = "S_Abnormality_GuestLv2_MirrorAdjustment";
 		/// <summary>
 		/// <color=green>Present</color>
-		/// When drawn random ally takes non-lethal <color=purple>10 Pain Damage</color>.
 		/// <color=#919191>With my infinite hatred, I give you this <color=red>gift</color>.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_GuestLv2_Present = "S_Abnormality_GuestLv2_Present";
@@ -872,7 +863,6 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=red>Present</color>
 		/// When drawn deal non-lethal <color=purple>10 Pain Damage</color> to a random ally and draw 1 skill.
-		/// <color=#919191>With my infinite hatred, I give you this <color=red>gift</color>.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_Guest_Present = "S_Abnormality_Guest_Present";
 		/// <summary>
@@ -946,7 +936,6 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_HistoryLv3_BarrierThorns = "S_Abnormality_HistoryLv3_BarrierThorns";
 		/// <summary>
 		/// <color=red>Loyalty</color>
-		/// Kill the selected ally. Apply <color=red>Loyalty</color> to all allies.
 		/// <color=#919191>The loyalty of bees is a naturally developed instinct. If we discover a way to draw forth that instinct, many things could change.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_HistoryLv3_Loyalty = "S_Abnormality_HistoryLv3_Loyalty";
@@ -1098,7 +1087,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_TechnologicalLv3_Coffin = "S_Abnormality_TechnologicalLv3_Coffin";
 		/// <summary>
 		/// <color=red>Dark Flame</color>
-		/// Apply <color=red>Gebrochener Pakt</color> to all targets on a field.
+		/// Apply <color=red>Gebrochener Pakt</color> to all alive targets.
 		/// <color=#919191>One day, the marksman realized the Devil no longer followed him. He pondered why, then realized that his soul had already fallen to Hell from the beginning.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv3_DarkFlame = "S_Abnormality_TechnologicalLv3_DarkFlame";
@@ -1108,27 +1097,33 @@ namespace EmotionSystem
 		/// </summary>
         public static string Skill_S_Abnormality_TechnologicalLv3_Music = "S_Abnormality_TechnologicalLv3_Music";
 		/// <summary>
-		/// <color=red>Distortion: Marauding</color>
+		/// Select Buff 
+		/// Apply this buff to the Boss for this battle.
 		/// </summary>
         public static string Skill_S_Distortion_Selection_0 = "S_Distortion_Selection_0";
 		/// <summary>
-		/// <color=red>Distortion: Colossal</color>
+		/// Select Buff 
+		/// Apply this buff to the Boss for this battle.
 		/// </summary>
         public static string Skill_S_Distortion_Selection_1 = "S_Distortion_Selection_1";
 		/// <summary>
-		/// <color=red>Distortion: Robust</color>
+		/// Select Buff
+		/// Apply this buff to the Boss for this battle.
 		/// </summary>
         public static string Skill_S_Distortion_Selection_2 = "S_Distortion_Selection_2";
 		/// <summary>
-		/// <color=red>Distortion: Horrifying</color>
+		/// Select Buff
+		/// Apply this buff to the Boss for this battle.
 		/// </summary>
         public static string Skill_S_Distortion_Selection_3 = "S_Distortion_Selection_3";
 		/// <summary>
-		/// <color=red>Distortion: Executioner</color>
+		/// Select Buff
+		/// Apply this buff to the Boss for this battle.
 		/// </summary>
         public static string Skill_S_Distortion_Selection_4 = "S_Distortion_Selection_4";
 		/// <summary>
-		/// <color=red>Distortion: Unstoppable</color>
+		/// Select Buff
+		/// Apply this buff to the Boss for this battle.
 		/// </summary>
         public static string Skill_S_Distortion_Selection_5 = "S_Distortion_Selection_5";
 		/// <summary>
@@ -1164,7 +1159,7 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Literature_BlackSwan = "S_EGO_Literature_BlackSwan";
 		/// <summary>
 		/// <color=#FFDF00>Laetitia</color>
-		/// Apply <color=#FFDF00>Friend</color> (Damage/healing increased by 80%) status 3 times to a random pages in hand, prioritizing the owner pages.
+		/// Apply <color=#FFDF00>Friend</color> (Damage/healing increased by 80%) 3 times to a random skills in hand, prioritizing the user skills.
 		/// </summary>
         public static string Skill_S_EGO_Literature_Laetitia = "S_EGO_Literature_Laetitia";
 		/// <summary>
@@ -1216,7 +1211,7 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Technological_Harmony = "S_EGO_Technological_Harmony";
 		/// <summary>
 		/// <color=#FFDF00>Magic Bullet</color>
-		/// Synchronize with Der Freischütz for the next 3 Scenes and draw 2 skills.
+		/// Synchronize with Der Freischütz for 3 turns and draw 2 skills.
 		/// </summary>
         public static string Skill_S_EGO_Technological_MagicBullet = "S_EGO_Technological_MagicBullet";
 		/// <summary>
@@ -1303,7 +1298,7 @@ namespace EmotionSystem
 		/// Korean:
 		/// 현재 전투에서 제외할 스킬을 선택하십시오. 스킬 소유자는 치명적이지 않은 <color=purple>&a 고통 피해</color>를 받습니다. 스킬 소유자가 루시일 경우 대신 마나 2를 잃습니다.
 		/// English:
-		/// Select skill to exclude from current fight. Skill owner takes non-lethal <color=purple>&a Pain Damage</color>. If skill owner is Lucy lose 2 Mana instead.
+		/// Select skill to remove from the deck for this battle. Skill owner takes non-lethal <color=purple>&a Pain Damage</color>. If skill owner is Lucy lose 2 Mana instead.
 		/// Japanese:
 		/// 現在の戦闘から除外するスキルを選択してください。スキルの所有者は致命的ではない <color=purple>&a 痛みダメージ</color>を受けます。スキル所有者がルーシーの場合、代わりにマナを2失います。
 		/// Chinese:

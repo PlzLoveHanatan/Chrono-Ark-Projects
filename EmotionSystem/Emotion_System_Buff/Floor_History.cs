@@ -454,10 +454,10 @@ namespace EmotionSystem
 				{
 					public override void BuffStat()
 					{
-						PlusPerStat.Damage = 40;
-						PlusPerStat.Heal = 40;
-						PlusStat.PlusCriDmg = 40;
-						PlusStat.PlusCriHeal = 40;
+						PlusStat.DMGTaken = 40;
+						PlusPerStat.Damage = 80;
+						PlusPerStat.Heal = 80;
+						PlusStat.Strength = true;
 					}
 				}
 				public class Malice : Buff, IP_SkillUse_User

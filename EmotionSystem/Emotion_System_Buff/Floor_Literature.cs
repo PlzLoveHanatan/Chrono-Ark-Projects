@@ -122,7 +122,7 @@ namespace EmotionSystem
 
 						timer += Time.deltaTime;
 
-						if (timer < 1.5f) return;
+						if (timer < 1.5f || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 						timer = 0f;
 
 						int[] possibleValues = { -40, -20, 0, 20, 40 };
@@ -271,18 +271,19 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int damage = (int)(BChar.GetStat.maxhp * 0.4f);
+						int damage = (int)(BChar.GetStat.maxhp * 0.3f);
 						return base.DescExtended().Replace("&a", damage.ToString());
 					}
 
 					public override void Init()
 					{
 						PlusStat.PlusCriDmg = 40;
+						PlusStat.PlusCriHeal = 40;
 					}
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 					{
-						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !Cri)
+						if (SP.SkillData.Master == BChar && !Cri && (SP.SkillData.IsDamage || SP.SkillData.IsHeal))
 						{
 							bool alwaysLucky = RandomManager.RandomPer(BattleRandom.PassiveItem, 100, 50);
 
@@ -295,7 +296,7 @@ namespace EmotionSystem
 							else
 							{
 								Utils.PlaySound("Floor_Literature_FunnyPrank_0");
-								int damage = (int)(BChar.GetStat.maxhp * 0.4f);
+								int damage = (int)(BChar.GetStat.maxhp * 0.3f);
 								Utils.TakeNonLethalDamage(BChar, damage);
 							}
 						}
@@ -443,6 +444,7 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusStat.DMGTaken = -20;
+						PlusStat.Strength = true;
 					}
 				}
 

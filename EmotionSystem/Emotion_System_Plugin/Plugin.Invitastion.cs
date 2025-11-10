@@ -33,7 +33,7 @@ namespace EmotionSystem
 		{
 			public static void Postfix(BattleSystem __instance)
 			{
-				if (Utils.BossInvitations)
+				if (Utils.BossInvitations && __instance.BossBattle)
 				{
 					if (InvitationManager.Instance.InvitationActive)
 					{
@@ -59,7 +59,16 @@ namespace EmotionSystem
 						InvitationManager.Instance.SpecialCase = false;
 						InvitationManager.Instance.SpecialReward = false;
 						__instance.RuleChange.Shuffle = false;
-						__instance.Level4DoubleBoss = true;
+
+						foreach (var ally  in PlayData.TSavedata.Party)
+						{
+							if (ally.Incapacitated)
+							{
+								ally.Incapacitated = false;
+								ally.Hp = (int)(ally.get_stat.maxhp * 0.5);
+							}
+						}
+						//__instance.Level4DoubleBoss = true;
 					}
 					return false; // skip original BattleEnd
 				}

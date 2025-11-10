@@ -50,7 +50,7 @@ namespace EmotionSystem
 				}
 
 				string floorName = GetLibraryFloor();
-				if (CurrentFloor != null && !string.IsNullOrEmpty(floorName))
+				if (CurrentFloor != null && !string.IsNullOrEmpty(floorName) && Utils.InvestigatorEmotions)
 				{
 					sb.AppendLine("+" + floorName);
 				}
