@@ -75,6 +75,7 @@ namespace EmotionSystem
 					{ DataStore.LibraryFloorType.History, SpriteSetType.Normal },
 					{ DataStore.LibraryFloorType.Technological, SpriteSetType.Normal },
 					{ DataStore.LibraryFloorType.Literature, SpriteSetType.Normal },
+					{ DataStore.LibraryFloorType.Art, SpriteSetType.Normal },
 				};
 
 				public EGOButtonVisualData GetData(SpriteSetType set, SpriteTypeEGOButton type)

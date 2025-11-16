@@ -177,6 +177,63 @@ namespace EmotionSystem
 				ModItemKeys.Skill_S_Abnormality_Literature_Lv3_LovingFamily,
 				ModItemKeys.Skill_S_Abnormality_Literature_Lv3_WornParasol,
 			};
+
+			public readonly List<Abnormality> Art = new List<Abnormality>
+			{
+				// Lv1 — Positive
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv1_Echoes, AbnoType.Pos, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv1_Tentacles, AbnoType.Pos, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv1_Thorns, AbnoType.Pos, 1),
+
+				// Lv1 — Negative
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv1_Elation, AbnoType.Neg, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv1_Powder, AbnoType.Neg, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv1_Pebble, AbnoType.Neg, 1),
+
+				// Lv2 — Positive
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv2_Token, AbnoType.Pos, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv2_Performance, AbnoType.Pos, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv2_Incomprehensible, AbnoType.Pos, 2),
+
+				// Lv2 — Negative
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv2_Autumns, AbnoType.Neg, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv2_Petals, AbnoType.Neg, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv2_Teardrop, AbnoType.Neg, 2),
+
+				// Lv3
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv3_Adoration, AbnoType.Neg, 3),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv3_Genesis, AbnoType.Pos, 3),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_ArtLv3_Finale, AbnoType.Pos, 3),
+			};
+
+
+			public readonly List<string> ArtKeys = new List<string>
+			{
+				// Lv1 — Positive
+				ModItemKeys.Skill_S_Abnormality_ArtLv1_Echoes,
+				ModItemKeys.Skill_S_Abnormality_ArtLv1_Tentacles,
+				ModItemKeys.Skill_S_Abnormality_ArtLv1_Thorns,
+
+				// Lv1 — Negative
+				ModItemKeys.Skill_S_Abnormality_ArtLv1_Elation,
+				ModItemKeys.Skill_S_Abnormality_ArtLv1_Powder,
+				ModItemKeys.Skill_S_Abnormality_ArtLv1_Pebble,
+
+				// Lv2 — Positive
+				ModItemKeys.Skill_S_Abnormality_ArtLv2_Token,
+				ModItemKeys.Skill_S_Abnormality_ArtLv2_Performance,
+				ModItemKeys.Skill_S_Abnormality_ArtLv2_Incomprehensible,
+
+				// Lv2 — Negative
+				ModItemKeys.Skill_S_Abnormality_ArtLv2_Autumns,
+				ModItemKeys.Skill_S_Abnormality_ArtLv2_Petals,
+				ModItemKeys.Skill_S_Abnormality_ArtLv2_Teardrop,
+
+				// Lv3
+				ModItemKeys.Skill_S_Abnormality_ArtLv3_Adoration,
+				ModItemKeys.Skill_S_Abnormality_ArtLv3_Genesis,
+				ModItemKeys.Skill_S_Abnormality_ArtLv3_Finale,
+			};
 		}
 	}
 }

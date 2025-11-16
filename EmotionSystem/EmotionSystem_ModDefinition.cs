@@ -38,7 +38,7 @@ namespace EmotionSystem
 			{
 				if (Utils.EmotionSystemTutorial)
 				{
-					//StartTutorial();
+					StartTutorial();
 				}
 
 				if (Utils.InvestigatorEmotions)
@@ -88,7 +88,7 @@ namespace EmotionSystem
 				List<Skill> list = new List<Skill>();
 				var curseList = new List<string>(DataStore.Instance.Guest.CurseSelectionList);
 
-				int countToAdd = Mathf.Min(1, curseList.Count); // how much add curses to selection
+				int countToAdd = Mathf.Min(2, curseList.Count); // how much add curses to selection
 
 				for (int i = 0; i < countToAdd; i++)
 				{

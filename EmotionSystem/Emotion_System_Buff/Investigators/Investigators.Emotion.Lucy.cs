@@ -259,6 +259,10 @@ namespace EmotionSystem
 					ModItemKeys.Skill_S_Abnormality_HistoryLv2_WorkerBee,
 					ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_Music,
 					ModItemKeys.Skill_S_Abnormality_Literature_Lv3_LovingFamily,
+					ModItemKeys.Skill_S_Abnormality_ArtLv2_Autumns,
+					ModItemKeys.Skill_S_Abnormality_ArtLv3_Genesis,
+					ModItemKeys.Skill_S_Abnormality_ArtLv3_Adoration,
+					ModItemKeys.Skill_S_Abnormality_ArtLv3_Finale,
 				};
 
 				if (instantCastAbnormalities.Contains(key))
@@ -270,7 +274,7 @@ namespace EmotionSystem
 					SelectAbnormalityOwner(button);
 				}
 			}
-
+	
 			private void SelectAbnormalityOwner(SkillButton button)
 			{
 				var alliesList = Utils.AlliesPreview(button.Myskill.MySkill.KeyID);
@@ -285,8 +289,34 @@ namespace EmotionSystem
 			private void ForceSkillCast(Skill skill)
 			{
 				skill.isExcept = true;
-				BattleSystem.instance.StartCoroutine(BattleSystem.instance.ForceAction(skill, skill.Master, false, false, true, null));
+				var target = skill.Master;
+
+				if (GlobalAbnormalities.TryGetValue(skill.MySkill.KeyID, out var buffKey))
+				{
+					Utils.AddBuff(Utils.AllyTeam.LucyAlly, buffKey);
+
+					if (EdgeCaseAbnormalities.Contains(skill.MySkill.KeyID))
+					{
+						return;
+					}
+				}
+
+				BattleSystem.instance.StartCoroutine(BattleSystem.instance.ForceAction(skill, target, false, false, true, null));
 			}
+
+			private readonly Dictionary<string, string> GlobalAbnormalities = new Dictionary<string, string>
+			{
+				{ ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_DarkFlame, ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_DarkFlame_1 },
+				{ ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_Music, ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_Music_0 },
+				{ ModItemKeys.Skill_S_Abnormality_ArtLv3_Adoration, ModItemKeys.Buff_B_Abnormality_ArtLv3_Adoration_0 },
+				{ ModItemKeys.Skill_S_Abnormality_ArtLv3_Finale, ModItemKeys.Buff_B_Abnormality_ArtLv3_Finale}
+			};
+
+			private readonly List<string> EdgeCaseAbnormalities = new List<string>
+			{
+				ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_DarkFlame,
+				ModItemKeys.Skill_S_Abnormality_ArtLv3_Finale,
+			};
 		}
 	}
 }

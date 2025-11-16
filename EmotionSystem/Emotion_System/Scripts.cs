@@ -12,6 +12,7 @@ using static CharacterDocument;
 using System.Collections;
 using Spine;
 using System.Web;
+using System.Drawing;
 
 
 namespace EmotionSystem
@@ -116,8 +117,7 @@ namespace EmotionSystem
 			}
 		}
 
-
-		public static IEnumerator RecastSkill(BattleChar Target, BattleChar user, string skillKey, int recastNum = 1, bool isWingBeat = false)
+		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, int recastNum = 1)
 		{
 			for (int i = 0; i < recastNum; i++)
 			{
@@ -127,22 +127,96 @@ namespace EmotionSystem
 				skill.PlusHit = true;
 				skill.FreeUse = true;
 
-				if (Target.IsDead)
+				if (target.IsDead)
+				{
+					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
+				}
+				else
+				{
+					user.ParticleOut(skill, target);
+				}
+			}
+			yield break;
+		}
+
+		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, int recastNum = 1, int healingNum = 0, bool isHealLowestAlly = false, bool isPrimaryHeal = false)
+		{
+			if (isPrimaryHeal)
+			{
+				yield return Utils.HealingParticle(user, Utils.DummyChar, healingNum, true, false, isHealLowestAlly, true, true);
+			}
+
+			for (int i = 0; i < recastNum; i++)
+			{
+				yield return new WaitForSecondsRealtime(0.2f);
+				yield return Utils.HealingParticle(user, Utils.DummyChar, healingNum, true, false, isHealLowestAlly, true, true);
+
+				Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
+				skill.PlusHit = true;
+				skill.FreeUse = true;
+
+				if (target.IsDead)
+				{
+					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
+				}
+				else
+				{
+					user.ParticleOut(skill, target);
+				}
+			}
+			yield break;
+		}
+
+		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, string debuffKey, int recastNum = 1, int percentage = 0)
+		{
+			for (int i = 0; i < recastNum; i++)
+			{
+				yield return new WaitForSecondsRealtime(0.3f);
+
+				Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
+				skill.PlusHit = true;
+				skill.FreeUse = true;
+
+				if (target.IsDead)
+				{
+					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
+					Utils.AddDebuff(target, user, debuffKey, percentage);
+				}
+				else
+				{
+					user.ParticleOut(skill, target);
+					Utils.AddDebuff(target, user, debuffKey, percentage);
+				}
+			}
+			yield break;
+		}
+
+		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, int recastNum = 1, bool isInflictBleed = false, int bleedNum = 1, int percentage = 0)
+		{
+			for (int i = 0; i < recastNum; i++)
+			{
+				yield return new WaitForSecondsRealtime(0.3f);
+
+				Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
+				skill.PlusHit = true;
+				skill.FreeUse = true;
+
+				if (target.IsDead)
 				{
 					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
 
-					if (isWingBeat)
+					if (isInflictBleed)
 					{
-						yield return WingBeatHeal(user);
+						Utils.ApplyBleed(target, user, bleedNum, percentage);
 					}
 				}
 				else
 				{
-					user.ParticleOut(skill, Target);
+					user.ParticleOut(skill, target);
 
-					if (isWingBeat)
+					if (isInflictBleed)
 					{
-						yield return WingBeatHeal(user);
+						Utils.ApplyBleed(target, user, bleedNum, percentage);
 					}
 				}
 			}
@@ -263,6 +337,57 @@ namespace EmotionSystem
 
 			// Удаляем данные персонажа после восстановления
 			DataStore.Instance.Synchronization.SavedSkills.Remove(bchar);
+		}
+
+		public static IEnumerator ForceTurnEnd()
+		{
+			var bs = BattleSystem.instance;
+			bs.TargetSelectCancel();
+			var selectors = GameObject.FindObjectsOfType<TargetSelect>();
+			foreach (var sel in selectors)
+			{
+				GameObject.Destroy(sel.gameObject);
+			}
+
+			var enemySkills = bs.EnemyCastSkills.ToList();
+			foreach (var skill in enemySkills)
+			{
+				bs.ActWindow.CastingWasteFixed(skill);
+				bs.EnemyCastSkills.Remove(skill);
+			}
+
+			bs.ActWindow.WasteButton?.Quit();
+			bs.ActWindow.On = false;
+			bs.ActWindow.TurnEndFlag = true;
+
+			ChildClear.Clear(bs.ActWindow.ItemSkillView);
+			bs.CastSkills.Clear();
+			bs.SaveSkill.Clear();
+
+			bs.StartCoroutine(bs.EnemyTurn(true));
+
+			yield break;
+		}
+
+		public static void GlobalAbnormalitiesCheck(string buffKey, string soundKey = null, bool isAllyTeam = false, bool isEnemyTeam = false, int percentage = 999)
+		{
+			Utils.PlaySound(soundKey);
+
+			List<BattleChar> team = new List<BattleChar>();
+
+			if (isAllyTeam)
+			{
+				team.AddRange(Utils.AllyTeam.AliveChars_Vanish);
+			}
+			if (isEnemyTeam)
+			{
+				team.AddRange(Utils.EnemyTeam.AliveChars_Vanish);
+			}
+
+			foreach (var target in team)
+			{
+				Utils.GetOrAddBuff(target, buffKey, percentage);
+			}
 		}
 	}
 }

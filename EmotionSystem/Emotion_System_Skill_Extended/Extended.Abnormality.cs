@@ -51,6 +51,20 @@ namespace EmotionSystem
 					PlusSkillPerFinal.Damage = 80;
 				}
 			}
+
+			public class Peeble : Skill_Extended
+			{
+				public override void Init()
+				{
+					//MySkill.MySkill.Disposable = true;
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					BChar.StartCoroutine(Utils.HealingParticle(null, BChar, 10, true, true, true, true, true));
+					Utils.RemoveSkill(MySkill, true);
+				}
+			}
 		}
 	}
 }

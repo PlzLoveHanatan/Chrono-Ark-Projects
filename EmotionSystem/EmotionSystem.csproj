@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionSystem11102025121402</AssemblyName>
+    <AssemblyName>EmotionSystem11162025123849</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -409,7 +409,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                              <!-- Compile ItemGroup Start-->
+                                                                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionSystem_ModDefinition.cs" />
     <Compile Include="EmotionSystem_ModItemKeys.cs" />
@@ -436,6 +436,7 @@
     <Compile Include="Emotion_System\Utilities\Utils_Ui.cs" />
     <Compile Include="Emotion_System_Buff\Emotion_Buffs.cs" />
     <Compile Include="Emotion_System_Buff\Emotion_Debuffs.cs" />
+    <Compile Include="Emotion_System_Buff\Floor_Art.cs" />
     <Compile Include="Emotion_System_Buff\Floor_History.cs" />
     <Compile Include="Emotion_System_Buff\Floor_Literature.cs" />
     <Compile Include="Emotion_System_Buff\Floor_Technological.cs" />
@@ -461,15 +462,29 @@
     <Compile Include="Emotion_System_Plugin\Plugin.TimeTrial.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.TurnEnd.cs" />
     <Compile Include="Emotion_System_Plugin\_Plugin.cs" />
+    <Compile Include="Emotion_System_Skill\Floor_Art.cs" />
     <Compile Include="Emotion_System_Skill\Floor_History.cs" />
     <Compile Include="Emotion_System_Skill\Floor_Literature.cs" />
     <Compile Include="Emotion_System_Skill\Floor_Technological.cs" />
-    <Compile Include="Emotion_System_Skill\Misc.cs" />
-    <Compile Include="Emotion_System_Skill\Skills.cs" />
+    <Compile Include="Emotion_System_Skill\Skills Various\Skills.Guest.cs" />
+    <Compile Include="Emotion_System_Skill\Skills Various\Skills.Lucy.cs" />
+    <Compile Include="Emotion_System_Skill\Skills Various\Skills.Misc.cs" />
+    <Compile Include="Emotion_System_Skill\Skills Various\Skills.Potion.cs" />
+    <Compile Include="Emotion_System_Skill\Skills Various\_Skills.cs" />
     <Compile Include="Emotion_System_Skill_Extended\Extended.Abnormality.cs" />
     <Compile Include="Emotion_System_Skill_Extended\Extended.EGO.cs" />
     <Compile Include="Emotion_System_Skill_Extended\_Extended.cs" />
+    <Compile Include="Equip\Equip.Art.cs" />
+    <Compile Include="Equip\Equip.History.cs" />
+    <Compile Include="Equip\Equip.Literature.cs" />
+    <Compile Include="Equip\Equip.Technological.cs" />
+    <Compile Include="Equip\_Equip.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="Relic\Relic.Art.cs" />
+    <Compile Include="Relic\Relic.History.cs" />
+    <Compile Include="Relic\Relic.Literature.cs" />
+    <Compile Include="Relic\Relic.Technological.cs" />
+    <Compile Include="Relic\_Relic.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

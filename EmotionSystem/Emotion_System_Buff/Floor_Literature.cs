@@ -211,7 +211,7 @@ namespace EmotionSystem
 					public void Turn1()
 					{
 						Utils.PlaySound("Floor_Literature_SurpriseGift");
-						Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend, true, true, true, 1, true);
+						Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend, true, true, true, 1);
 					}
 				}
 			}
@@ -263,7 +263,7 @@ namespace EmotionSystem
 					public void Turn1()
 					{
 						Utils.PlaySound("Floor_Literature_SurpriseGift");
-						Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend_0, true, true, true, 2, true);
+						Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend_0, true, true, true, 2);
 					}
 				}
 
@@ -317,7 +317,7 @@ namespace EmotionSystem
 					{
 						if (Damage >= 1)
 						{
-							Utils.PlaySound("Floor_Literature_FunnyPrank_0");
+							Utils.PlaySound("Floor_Literature_Meal");
 							BChar.Heal(BChar, (int)(Damage * 0.2), false, false, null);
 						}
 					}
@@ -434,7 +434,10 @@ namespace EmotionSystem
 						{
 							Utils.PlaySound("Floor_Literature_WornParasol");
 							resist = true;
-							User.Damage(BChar, Dmg * 2, false, true);
+							if (!User.Info.Ally)
+							{
+								User.Damage(BChar, Dmg * 2, false, true);
+							}
 						}
 					}
 				}
@@ -456,7 +459,7 @@ namespace EmotionSystem
 						{
 							Utils.PlaySound("Floor_Literature_LovingFamily");
 							resist = true;
-							SelfStackDestroy();
+							SelfDestroy();
 						}
 					}
 				}

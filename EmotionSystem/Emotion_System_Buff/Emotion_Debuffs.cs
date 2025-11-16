@@ -39,6 +39,10 @@ namespace EmotionSystem
 				{
 					SelfDestroy();
 				}
+				else if (CurrentBleed == 2)
+				{
+					CurrentBleed = 1;
+				}
 			}
 
 			public override void TurnUpdate()

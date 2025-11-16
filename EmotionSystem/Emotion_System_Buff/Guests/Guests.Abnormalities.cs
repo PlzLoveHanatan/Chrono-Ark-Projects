@@ -129,7 +129,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						string text = DodgedOrDebuffBlocked ? "Inactive" : "Active";
+						string text = DodgedOrDebuffBlocked ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
 						return base.DescExtended().Replace("&a", text.ToString());
 					}
 
@@ -249,7 +249,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						string text = ReflectedDamage ? "Inactive" : "Active";
+						string text = ReflectedDamage ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
 						return base.DescExtended().Replace("&a", text.ToString());
 					}
 
@@ -423,11 +423,6 @@ namespace EmotionSystem
 					private Skill SavedSkill;
 					private Skill DimensionSkill;
 
-					public void Awake()
-					{
-						ChangeSkill();
-					}
-
 					public override void SelfdestroyPlus()
 					{
 						var index = 0;
@@ -439,6 +434,11 @@ namespace EmotionSystem
 							BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(DimensionSkill, true));
 							Utils.CreateSkill(SavedSkill.Master, SavedSkill.MySkill.KeyID, false, true, index);
 						}
+					}
+
+					public void Awake()
+					{
+						ChangeSkill();
 					}
 
 					public void Turn1()

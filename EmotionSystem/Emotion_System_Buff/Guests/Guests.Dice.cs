@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EmotionSystem;
+using GameDataEditor;
 using UnityEngine;
 
 namespace EmotionSystem
@@ -23,12 +24,19 @@ namespace EmotionSystem
 						// predefined action for original game's enemies
 						var actions = DataStore.Instance.Guest.BossActions[BChar.Info.KeyData];
 						var action = actions.Random(BChar.GetRandomClass().SkillSelect);
+
+						// witch curse selection
+						if (BChar.Info.KeyData == GDEItemKeys.Enemy_S1_WitchBoss)
+						{
+							bool randomCurse = RandomManager.RandomPer(RandomClassKey.Boss, 100, 25); //25% chance for weak curse
+							action = randomCurse ? ModItemKeys.Skill_S_Guest_CurseWeak : ModItemKeys.Skill_S_Guest_CursePain;
+						}
 						skill = Skill.TempSkill(action, BChar, BChar.MyTeam);
 					}
 					else if (enemy.Boss)
 					{
 						// predefined action for undefined bosses (likely mod bosses)
-						skill = Skill.TempSkill(ModItemKeys.Skill_S_EmotionSystem_DummyHeal, BChar, BChar.MyTeam);
+						skill = Skill.TempSkill(ModItemKeys.Skill_S_Abnormality_Guest_EmotionBurst, BChar, BChar.MyTeam);
 					}
 					else  // random action for undefined regular enemies
 					{

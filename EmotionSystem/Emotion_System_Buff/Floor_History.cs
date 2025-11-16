@@ -77,16 +77,16 @@ namespace EmotionSystem
 					}
 				}
 
-				public class HappyMemories : Buff, IP_PlayerTurn, IP_Awake
+				public class HappyMemories : Buff, IP_PlayerTurn_1
 				{
-					public void Awake()
+					public override void Init()
 					{
-						Utils.AddBuff(BChar, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv1_HappyMemories_0);
+						PlusStat.hit = 10;
 					}
 
-					public void Turn()
+					public void Turn1()
 					{
-						Utils.AddBuff(BChar, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv1_HappyMemories_0);
+						Utils.AddBuff(BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv1_HappyMemories_0);
 					}
 				}
 
@@ -186,29 +186,17 @@ namespace EmotionSystem
 					}
 				}
 
-				public class FairiesCare : Buff, IP_TurnEnd
+				public class FairiesCare : Buff
 				{
-					public override string DescExtended()
-					{
-						int heal = (int)(BChar.GetStat.maxhp * 0.2f);
-						return base.DescExtended().Replace("&a", heal.ToString());
-					}
-
 					public override void Init()
 					{
-						PlusStat.RES_DOT = -20f;
-						PlusStat.RES_CC = -20f;
-						PlusStat.RES_DEBUFF = -20f;
-					}
-
-					public void TurnEnd()
-					{
-						Utils.PlaySound("Floor_History_FairiesCare");
-						int heal = (int)(BChar.GetStat.maxhp * 0.2f);
-						BattleSystem.DelayInputAfter(Utils.HealingParticle(BChar, BattleSystem.instance.DummyChar, heal, true, true));
+						PlusStat.DMGTaken = 20;
+						PlusPerStat.Damage = 20;
+						PlusStat.PlusCriDmg = 20;
 					}
 				}
 			}
+
 			public class Lv2
 			{
 				public class Footfalls : Buff, IP_SkillUse_Target
@@ -216,6 +204,9 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusPerStat.Damage = 40;
+						PlusStat.HIT_CC = 40f;
+						PlusStat.HIT_DEBUFF = 40f;
+						PlusStat.HIT_DOT = 40f;
 					}
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
@@ -273,25 +264,13 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Predation : Buff, IP_TurnEnd
+				public class Predation : Buff
 				{
-					public override string DescExtended()
-					{
-						int damage = (int)(BChar.GetStat.maxhp * 0.3f);
-						return base.DescExtended().Replace("&a", damage.ToString());
-					}
-
 					public override void Init()
 					{
 						PlusPerStat.Damage = 40;
 						PlusStat.PlusCriDmg = 40;
-					}
-
-					public void TurnEnd()
-					{
-						Utils.PlaySound("Floor_History_Predation");
-						int damage = (int)(BChar.GetStat.maxhp * 0.3f);
-						Utils.TakeNonLethalDamage(BChar, damage);
+						PlusStat.DMGTaken = 40;
 					}
 				}
 
@@ -333,37 +312,14 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Vines : Buff, IP_PlayerTurn_1
+				public class Vines : Buff
 				{
-					public override string DescExtended()
-					{
-						int chance = (int)(BChar.GetStat.HIT_CC + 100);
-						return base.DescExtended().Replace("&a", chance.ToString());
-					}
-
 					public override void Init()
 					{
 						PlusStat.DMGTaken = -20;
 						PlusStat.RES_CC = 20f;
 						PlusStat.RES_DEBUFF = 20f;
 						PlusStat.RES_DOT = 20f;
-					}
-
-					public void Turn1()
-					{
-						foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
-						{
-							Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
-						}
-					}
-				}
-
-				public class Vines_0 : Buff
-				{
-					public override void Init()
-					{
-						PlusPerStat.Damage = -25;
-						PlusStat.def = -25;
 					}
 				}
 
@@ -401,7 +357,6 @@ namespace EmotionSystem
 					{
 						Utils.PlaySound("Floor_History_WorkerBee");
 						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv2_WorkerBee_0);
-						Utils.PlaySound("Floor_History_WorkerBee");
 					}
 				}
 
@@ -416,37 +371,19 @@ namespace EmotionSystem
 
 			public class Lv3
 			{
-				public class BarrierThorns : Buff, IP_Hit, IP_Dodge
+				public class BarrierThorns : Buff, IP_Awake
 				{
-					public override void BuffStat()
+					public override void Init()
 					{
 						PlusStat.DMGTaken = -40;
-						PlusStat.DeadImmune = 40;
 						PlusStat.RES_CC = 40f;
 						PlusStat.RES_DEBUFF = 40f;
 						PlusStat.RES_DOT = 40f;
 					}
 
-					public void Hit(SkillParticle SP, int Dmg, bool Cri)
-					{
-						if (SP.SkillData.IsDamage)
-						{
-							ApplyDebuffs(SP.UseStatus);
-						}
-					}
-
-					public void Dodge(BattleChar Char, SkillParticle SP)
-					{
-						if (Char == BChar && SP.SkillData.IsDamage)
-						{
-							ApplyDebuffs(SP.UseStatus);
-						}
-					}
-
-					private void ApplyDebuffs(BattleChar enemy)
+					public void Awake()
 					{
 						Utils.PlaySound("Floor_History_BarrierThorns");
-						Utils.AddDebuff(enemy, BChar, "");
 					}
 				}
 
@@ -465,7 +402,6 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusPerStat.Damage = 40;
-						PlusStat.PlusCriDmg = 40;
 						PlusStat.cri = 40;
 					}
 
@@ -487,6 +423,15 @@ namespace EmotionSystem
 				public override void BuffStat()
 				{
 					PlusStat.def = -50;
+				}
+			}
+
+			public class GreenStem : Buff
+			{
+				public override void Init()
+				{
+					PlusPerStat.Damage = -25;
+					PlusStat.def = -25;
 				}
 			}
 		}

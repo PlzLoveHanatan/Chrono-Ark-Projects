@@ -37,6 +37,12 @@ namespace EmotionSystem
 					__instance.BloodyMistText.text = "";
 				}
 
+				RectTransform textRect = __instance.BloodyMistText.GetComponent<RectTransform>();
+				if (textRect != null)
+				{
+					textRect.anchoredPosition += new Vector2(0, 80);
+				}
+
 				StringBuilder sb = new StringBuilder();
 
 				if (Utils.InvestigatorEmotions)
@@ -79,6 +85,8 @@ namespace EmotionSystem
 						return ModLocalization.EmotionSystem_Floor_Technological;
 					case DataStore.LibraryFloorType.Literature:
 						return ModLocalization.EmotionSystem_Floor_Literature;
+					case DataStore.LibraryFloorType.Art:
+						return ModLocalization.EmotionSystem_Floor_Art;
 					default:
 						return "";
 				}

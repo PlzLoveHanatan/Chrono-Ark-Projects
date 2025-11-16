@@ -12,7 +12,6 @@ using GameDataEditor;
 using static CharacterDocument;
 using UnityEngine;
 using static EmotionSystem.Extended.EGO;
-using static EmotionSystem.Scripts;
 
 namespace EmotionSystem
 {
@@ -110,12 +109,18 @@ namespace EmotionSystem
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					Utils.PlaySound("Floor_History_Forgotten");
-					DestroyActions(Targets[0], 3);
+					Scripts.DestroyActions(Targets, 4);
 				}
 			}
 
 			public class Wingbeat : Ex_EGO
 			{
+				public override string DescExtended(string desc)
+				{
+					int heal = (int)(BChar.GetStat.atk / 2);
+					return base.DescExtended(desc).Replace("&a", heal.ToString());
+				}
+
 				public override void Init()
 				{
 					base.Init();
@@ -125,8 +130,8 @@ namespace EmotionSystem
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					Utils.PlaySound("Floor_History_Wingbeat");
-					BattleSystem.DelayInput(WingBeatHeal(BChar));
-					BattleSystem.DelayInput(RecastSkill(Targets[0], BChar, ModItemKeys.Skill_S_EGO_History_Wingbeat, 3, true));
+					int heal = (int)(BChar.GetStat.atk / 2);
+					BattleSystem.DelayInput(Scripts.RecastSkill(Targets[0], BChar, ModItemKeys.Skill_S_EGO_History_Wingbeat, 2, heal, true, true));
 				}
 			}
 		}

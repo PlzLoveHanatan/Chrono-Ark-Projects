@@ -159,6 +159,12 @@ namespace EmotionSystem
 			return buff;
 		}
 
+		public static Buff GetOrAddBuff(BattleChar target, string buffKey, int percentage = 0)
+		{
+			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, DummyChar, false, percentage, false, -1, false);
+			return buff;
+		}
+
 		public static Buff ReturnBuff(BattleChar bchar, string buffKey)
 		{
 			var buff = bchar.BuffReturn(buffKey, false) ?? null;
@@ -182,11 +188,23 @@ namespace EmotionSystem
 
 		public static void PlaySound(string sound)
 		{
-			if (!string.IsNullOrEmpty(sound) && EmotionalSounds)
+			if (string.IsNullOrEmpty(sound) || !EmotionalSounds) return;
+
+			float volume = MasterAudio.MasterVolumeLevel;
+			MasterAudio.PlaySound(sound, volume, null, 0f, null, null, false, false);
+		}
+
+		public static void PlaySound(string sound, bool isStopOldBus = true)
+		{
+			if (string.IsNullOrEmpty(sound) || !EmotionalSounds) return;
+
+			if (isStopOldBus)
 			{
-				float volume = MasterAudio.MasterVolumeLevel;
-				MasterAudio.PlaySound(sound, volume, null, 0f, null, null, false, false);
+				MasterAudio.StopBus("SE");
 			}
+
+			float volume = MasterAudio.MasterVolumeLevel;
+			MasterAudio.PlaySound(sound, volume, null, 0f, null, null, false, false);
 		}
 
 		public static void TakeNonLethalDamage(BattleChar bchar, int damage = 0, bool isPain = true)
@@ -211,7 +229,7 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void ApplyExtended(List<Skill> skillList, string extendedKey, bool? isHealingSkill = null, bool? isDamageSkill = null, bool isMultipleExtended = false, int extendedNum = 2, bool isRandomSkills = false)
+		public static void ApplyExtended(List<Skill> skillList, string extendedKey, bool? isHealingSkill = null, bool? isDamageSkill = null, bool isMultipleExtended = false, int extendedNum = 2, bool isRandomSkills = false, bool isBattleExtended = false)
 		{
 			if (skillList == null && skillList.Count == 0 && string.IsNullOrEmpty(extendedKey)) return;
 
@@ -241,7 +259,7 @@ namespace EmotionSystem
 			{
 				foreach (var skill in list.Take(Math.Min(extendedNum, list.Count)))
 				{
-					ApplyExtendedToSkill(skill, extendedKey, isMultipleExtended);
+					ApplyExtendedToSkill(skill, extendedKey, isMultipleExtended, isBattleExtended);
 				}
 			}
 			else
@@ -249,12 +267,12 @@ namespace EmotionSystem
 				for (int i = 0; i < extendedNum; i++)
 				{
 					int randomIndex = RandomManager.RandomInt(DummyChar.GetRandomClass().SkillSelect, 0, list.Count);
-					ApplyExtendedToSkill(list[randomIndex], extendedKey, isMultipleExtended);
+					ApplyExtendedToSkill(list[randomIndex], extendedKey, isMultipleExtended, isBattleExtended);
 				}
 			}
 		}
 
-		public static void ApplyExtendedToSkill(Skill skill, string extendedKey, bool isMultipleExtended)
+		public static void ApplyExtendedToSkill(Skill skill, string extendedKey, bool isMultipleExtended, bool isBattleExtended = false)
 		{
 			if (skill != null)
 			{
@@ -262,7 +280,14 @@ namespace EmotionSystem
 
 				if (isMultipleExtended || existing == null)
 				{
-					skill.ExtendedAdd(extendedKey);
+					if (isBattleExtended)
+					{
+						skill.ExtendedAdd_Battle(extendedKey);
+					}
+					else
+					{
+						skill.ExtendedAdd(extendedKey);
+					}
 				}
 			}
 		}
@@ -324,8 +349,6 @@ namespace EmotionSystem
 		public static IEnumerator HealingParticle(BattleChar target, BattleChar user, int healingNum = 0, bool isHealing = false, bool isParticleOut = false, bool isHealLowestAlly = false, bool isPlusHit = false, bool isFreeUse = false)
 		{
 			yield return null;
-
-			if (target == null) yield break;
 
 			if (isHealing)
 			{
@@ -498,6 +521,8 @@ namespace EmotionSystem
 					return instance.Abnormalities.TechnologicalKeys;
 				case DataStore.LibraryFloorType.Literature:
 					return instance.Abnormalities.LiteratureKeys;
+				case DataStore.LibraryFloorType.Art:
+					return instance.Abnormalities.ArtKeys;
 				default:
 					return new List<string>();
 			}
@@ -525,6 +550,8 @@ namespace EmotionSystem
 					return instance.EGO.TechnologicalKeyList;
 				case DataStore.LibraryFloorType.Literature:
 					return instance.EGO.LiteratureKeyList;
+				case DataStore.LibraryFloorType.Art:
+					return instance.EGO.ArtKeyList;
 				default:
 					return new List<string>();
 			}

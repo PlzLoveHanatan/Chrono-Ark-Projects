@@ -103,7 +103,7 @@ namespace EmotionSystem
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					Utils.PlaySound("Floor_Literature_Laetitia");
-					Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend_1, true, true, true, 3, true);
+					Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend_1, true, true, true, 3);
 				}
 			}
 

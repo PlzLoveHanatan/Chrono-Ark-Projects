@@ -8,7 +8,6 @@ using GameDataEditor;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 using static EmotionSystem.DataStore.Synchronize;
-using static EmotionSystem.Scripts;
 
 namespace EmotionSystem
 {
@@ -284,7 +283,7 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Recharge : Buff, IP_PlayerTurn, IP_Awake
+				public class Recharge : Buff, IP_PlayerTurn_1
 				{
 					public override void Init()
 					{
@@ -292,27 +291,9 @@ namespace EmotionSystem
 						//PlusStat.hit = 20;
 					}
 
-					public void Turn()
+					public void Turn1()
 					{
-						Utils.PlaySound("Floor_Technological_Repetitive");
-						Utils.AllyTeam.AP += 1;
-					}
-
-					public void KillEffect(SkillParticle SP)
-					{
-						foreach (var target in SP.TargetChar)
-						{
-							if (target is BattleEnemy enemy && enemy.IsDead && SP.SkillData.Master == BChar)
-							{
-								Utils.PlaySound("Floor_Technological_Repetitive");
-								Utils.AllyTeam.AP += 2;
-							}
-						}
-					}
-
-					public void Awake()
-					{
-						Utils.PlaySound("Floor_Technological_Repetitive");
+						Utils.PlaySound("Floor_Technological_Repetitive", false);
 						Utils.AllyTeam.AP += 1;
 					}
 				}
@@ -347,7 +328,7 @@ namespace EmotionSystem
 							if (AttackUses >= 7)
 							{
 								Utils.PlaySound("Floor_Technological_TheSeventhBullet");
-								AttackRedirect(BChar, SkillD, Targets, SkillD.TargetDamage);
+								Scripts.AttackRedirect(BChar, SkillD, Targets, SkillD.TargetDamage);
 								Utils.RemoveBuff(BChar, ModItemKeys.Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_0, true);
 								AttackUses = 0;
 							}
@@ -397,7 +378,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						string text = OncePerTurn ? "Inactive" : "Active";
+						string text = OncePerTurn ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
 						return base.DescExtended().Replace("&a", text.ToString());
 					}
 
@@ -410,27 +391,19 @@ namespace EmotionSystem
 					{
 						if (SkillD.IsDamage && SkillD.Master == BChar && !OncePerTurn)
 						{
-							DestroyActions(Targets[0]);
-							Utils.PlaySound("Floor_Technological_Coffin");
 							OncePerTurn = true;
+							Scripts.DestroyActions(Targets);
+							Utils.PlaySound("Floor_Technological_Coffin");
 						}
 					}
 				}
 
-				public class DarkFlame : Buff, IP_Awake
+				public class DarkFlame : Buff
 				{
 					public override void Init()
 					{
 						PlusPerStat.Damage = 80;
 						PlusStat.hit = 80;
-					}
-
-					public void Awake()
-					{
-						foreach (var target in Utils.AllyTeam.AliveChars.Concat(Utils.EnemyTeam.AliveChars_Vanish))
-						{
-							Utils.AddBuff(target, ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_DarkFlame_0);
-						}
 					}
 				}
 
@@ -444,12 +417,29 @@ namespace EmotionSystem
 					}
 				}
 
+				public class DarkFlame_1 : Buff, IP_PlayerTurn_1
+				{
+					public void Turn1()
+					{
+						Scripts.GlobalAbnormalitiesCheck(ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_DarkFlame_0, "Floor_Technological_DarkFlame", true, true);
+					}
+				}
+
 				public class Music : Buff
 				{
 					public override void Init()
 					{
 						PlusPerStat.Damage = 80;
 						PlusStat.DMGTaken = 80;
+						PlusStat.PlusCriDmg = 80;
+					}
+				}
+
+				public class Music_0 : Buff, IP_PlayerTurn_1
+				{
+					public void Turn1()
+					{
+						Scripts.GlobalAbnormalitiesCheck(ModItemKeys.Buff_B_Abnormality_TechnologicalLv3_Music, "Floor_Technological_Music", true, true);
 					}
 				}
 			}
@@ -470,13 +460,13 @@ namespace EmotionSystem
 			{
 				public override void SelfdestroyPlus()
 				{
-					DeSynchronize(BChar);
+					Scripts.DeSynchronize(BChar);
 					SelfDestroy();
 				}
 
 				public void Awake()
 				{
-					SynchronizeWithEGO(BChar, ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_Desynchronize, DataStore.Instance.Synchronization.DerSkills);
+					Scripts.SynchronizeWithEGO(BChar, ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_Desynchronize, DataStore.Instance.Synchronization.DerSkills);
 				}
 
 				public void SkillUse(Skill SkillD, List<BattleChar> Targets)

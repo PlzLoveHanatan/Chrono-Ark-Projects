@@ -36,6 +36,15 @@ namespace EmotionSystem
 				ModItemKeys.Skill_S_EGO_Literature_SanguineDesire,
 				ModItemKeys.Skill_S_EGO_Literature_TodayExpression,
 			};
+
+			public readonly List<string> ArtKeyList = new List<string>
+			{
+				ModItemKeys.Skill_S_EGO_Art_Aroma,
+				ModItemKeys.Skill_S_EGO_Art_DaCapo,
+				ModItemKeys.Skill_S_EGO_Art_Fragments,
+				ModItemKeys.Skill_S_EGO_Art_Galaxy,
+				ModItemKeys.Skill_S_EGO_Art_Pleasure,
+			};
 		}
 	}
 }

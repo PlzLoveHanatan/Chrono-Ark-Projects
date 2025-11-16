@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Miscellaneous
+	public partial class Relic
 	{
-		public class Relic
+		public class History
 		{
-			public class GoldenSound : PassiveItemBase, IP_PlayerTurn
+			public class Ember : PassiveItemBase, IP_PlayerTurn
 			{
 				public override void Init()
 				{
@@ -19,11 +19,11 @@ namespace EmotionSystem
 
 				public void Turn()
 				{
-					//Utils.AllyTeam.Draw();
+					ShinyEffect();
 
-					foreach (var ally in Utils.AllyTeam.AliveChars)
+					foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
 					{
-						EmotionalManager.GetPosEmotion(ally, null, 3);
+						Utils.ApplyBurn(enemy, Utils.DummyChar, 3);
 					}
 				}
 			}

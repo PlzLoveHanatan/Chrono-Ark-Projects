@@ -66,7 +66,7 @@ namespace EmotionSystem
 				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Strengthen, ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair } },
 				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv3_DimensionalRefraction } },
-				{ GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
+				{ GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_MBoss2_0, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_Joker, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_Shiranui, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
@@ -82,7 +82,7 @@ namespace EmotionSystem
 				{ GDEItemKeys.Enemy_S3_FanaticBoss, new List<string> { } },
 				{ GDEItemKeys.Enemy_LBossFirst, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_S4_King_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
-				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
+				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 			};
 
 			public readonly Dictionary<string, List<string>> BannedAbnormality = new Dictionary<string, List<string>>()
