@@ -15,8 +15,8 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					PlusPerStat.Heal = 40;
-					PlusStat.dod = 40;
+					PlusPerStat.Heal = 30;
+					PlusStat.dod = 30;
 				}
 			}
 
@@ -24,8 +24,8 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					PlusPerStat.Damage = 40;
-					PlusStat.PlusCriDmg = 40;
+					PlusPerStat.Damage = 30;
+					PlusStat.PlusCriDmg = 30;
 				}
 			}
 		}

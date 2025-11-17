@@ -30,12 +30,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					//EmotionalManager.GetNegEmotion(Targets[0], null, 5);
-
-					if (Utils.ReturnBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level) is Investigators.EmotionLucy lucyEmotion)
-					{
-						BattleSystem.DelayInputAfter(lucyEmotion.LucyEmotionLevelUp(2, false, true));
-					}
+					EmotionalManager.AbnormalitySelection(2, false, true);
 				}
 			}
 
@@ -43,12 +38,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					//EmotionalManager.GetPosEmotion(Targets[0], null, 5);
-
-					if (Utils.ReturnBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level) is Investigators.EmotionLucy lucyEmotion)
-					{
-						BattleSystem.DelayInputAfter(lucyEmotion.LucyEmotionLevelUp(2, true));
-					}
+					EmotionalManager.AbnormalitySelection(2, true);
 				}
 			}
 
@@ -56,10 +46,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					if (Utils.ReturnBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level) is Investigators.EmotionLucy lucyEmotion)
-					{
-						BattleSystem.DelayInputAfter(lucyEmotion.SelectEGO());
-					}
+					EmotionalManager.EGOSelection();
 				}
 			}
 

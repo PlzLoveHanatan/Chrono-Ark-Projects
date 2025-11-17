@@ -11,30 +11,30 @@ namespace EmotionSystem
 {
 	public partial class Extended
 	{
-		public class Emotion
+		public class Ex_PosAbnoSelection : Skill_Extended
 		{
-			public class Draw : BuffSkillExHand
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				public override void FixedUpdate()
-				{
-					base.FixedUpdate();
-
-					var mainBuff = (Investigators.EmotionBuff.Draw)MainBuff;
-
-					if (mainBuff != null)
-					{
-						BuffIconStackNum = ((Investigators.EmotionBuff.Draw)MainBuff).skillUse;
-					}
-				}
+				EmotionalManager.AbnormalitySelection(2, true);
+				SelfDestroy();
 			}
-
-			public class ManaReduction : BuffSkillExHand
+		}
+		
+		public class Ex_NegAbnoSelection : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				public override void Init()
-				{
-					base.Init();
-					APChange = -1;
-				}
+				EmotionalManager.AbnormalitySelection(2, false, true);
+				SelfDestroy();
+			}
+		}
+
+		public class Ex_EgoSelection : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				EmotionalManager.EGOSelection();
+				SelfDestroy();
 			}
 		}
 	}

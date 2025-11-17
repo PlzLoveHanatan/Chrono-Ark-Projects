@@ -162,7 +162,7 @@ namespace EmotionSystem
 			if (emotionalLevel != null)
 			{
 				emotionalLevel.EmotionsCap = true;
-			}	
+			}
 		}
 
 		public static void ResetEmotionTurn(this BattleChar bc, int amount = 1)
@@ -226,6 +226,22 @@ namespace EmotionSystem
 				}
 			}
 			return null;
+		}
+
+		public static void AbnormalitySelection(int level, bool? getPositiveOnly = null, bool? getNegativeOnly = null, bool? getRandomAbnormality = null)
+		{
+			if (Utils.ReturnBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level) is Investigators.EmotionLucy lucyEmotion)
+			{
+				BattleSystem.DelayInputAfter(lucyEmotion.LucyEmotionLevelUp(level, getPositiveOnly, getNegativeOnly, getRandomAbnormality));
+			}
+		}
+
+		public static void EGOSelection()
+		{
+			if (Utils.ReturnBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level) is Investigators.EmotionLucy lucyEmotion)
+			{
+				BattleSystem.DelayInputAfter(lucyEmotion.SelectEGO());
+			}
 		}
 	}
 }

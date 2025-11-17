@@ -25,10 +25,6 @@ namespace EmotionSystem
 					{
 						Utils.PlaySound("Floor_Literature_WornParasol");
 						resist = true;
-						if (!User.Info.Ally)
-						{
-							User.Damage(BChar, Dmg * 2, false, true);
-						}
 					}
 				}
 			}
@@ -37,7 +33,7 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					PlusStat.DMGTaken = -20;
+					PlusStat.DMGTaken = -15;
 					PlusStat.Strength = true;
 				}
 

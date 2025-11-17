@@ -356,6 +356,13 @@ namespace EmotionSystem
 				bs.EnemyCastSkills.Remove(skill);
 			}
 
+			var allySkills = bs.CastSkills.ToList();
+			foreach (var skill in allySkills)
+			{
+				bs.ActWindow.CastingWasteFixed(skill);
+				bs.EnemyCastSkills.Remove(skill);
+			}
+
 			bs.ActWindow.WasteButton?.Quit();
 			bs.ActWindow.On = false;
 			bs.ActWindow.TurnEndFlag = true;

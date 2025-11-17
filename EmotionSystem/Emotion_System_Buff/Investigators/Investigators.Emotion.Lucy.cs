@@ -165,7 +165,15 @@ namespace EmotionSystem
 				else if (randomAbnormality == true)
 				{
 					var allRandomAbnormality = DynamicAbnormalityList.FindAll(a => a.Level == level && (a.Type == DataStore.AbnoType.Neg || a.Type == DataStore.AbnoType.Pos));
-					list.AddRange(allRandomAbnormality);
+					int count = Mathf.Min(3, allRandomAbnormality.Count);
+
+					for (int i = 0; i < count; i++)
+					{
+						int index = UnityEngine.Random.Range(0, allRandomAbnormality.Count);
+						list.Add(allRandomAbnormality[index]);
+						allRandomAbnormality.RemoveAt(index); // чтобы не дублировать
+					}
+					//list.AddRange(allRandomAbnormality);
 					return list;
 				}
 				else

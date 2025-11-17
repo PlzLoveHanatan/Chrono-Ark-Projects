@@ -23,7 +23,7 @@ namespace EmotionSystem
 
 					foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
 					{
-						Utils.ApplyBurn(enemy, Utils.DummyChar, 3);
+						Utils.ApplyBurn(enemy, Utils.DummyChar, 4);
 					}
 				}
 			}

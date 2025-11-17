@@ -373,7 +373,10 @@ namespace EmotionSystem
 
 					public void Hit(SkillParticle SP, int Dmg, bool Cri)
 					{
-						DealDamage(SP.SkillData.Master);
+						if (Dmg >= 1)
+						{
+							DealDamage(SP.SkillData.Master);
+						}						
 					}
 
 					private void DealDamage(BattleChar target)

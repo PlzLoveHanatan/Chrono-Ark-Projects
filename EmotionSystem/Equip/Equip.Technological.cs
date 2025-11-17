@@ -17,9 +17,9 @@ namespace EmotionSystem
 
 				public override void Init()
 				{
-					PlusStat.HIT_CC = 40;
-					PlusStat.HIT_DEBUFF = 40;
-					PlusStat.HIT_DOT = 40;
+					PlusStat.HIT_CC = 30;
+					PlusStat.HIT_DEBUFF = 30;
+					PlusStat.HIT_DOT = 30;
 				}
 
 				public override string DescExtended(string desc)
@@ -47,8 +47,8 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					PlusPerStat.Damage = 40;
-					PlusStat.hit = 40;
+					PlusPerStat.Damage = 30;
+					PlusStat.hit = 30;
 					PlusStat.HitMaximum = true;
 				}
 			}

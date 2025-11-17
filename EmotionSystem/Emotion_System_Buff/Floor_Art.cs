@@ -59,7 +59,8 @@ namespace EmotionSystem
 
 							if (neverLucky)
 							{
-								Utils.PlaySound("Floor_Art_Elation_Dead");
+								Utils.PlaySound("Floor_Art_Elation_Dead");								
+								Utils.ApplyBleed(hit, BChar, 10);
 								BChar.Dead(false, true);
 								Scripts.ChargeLucyNeck();
 							}
@@ -306,7 +307,7 @@ namespace EmotionSystem
 
 					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 					{
-						bool alwaysLucky = RandomManager.RandomPer(RandomClassKey.Active, 100, 66);
+						bool alwaysLucky = RandomManager.RandomPer(RandomClassKey.Active, 100, 50);
 
 						if (SkillD.Master != BChar || !alwaysLucky) return;
 

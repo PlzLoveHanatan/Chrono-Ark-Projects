@@ -22,7 +22,7 @@ namespace EmotionSystem
 					if (BattleSystem.instance.TurnNum % 2 == 0)
 					{
 						ShinyEffect();
-						Utils.AllyTeam.AP += 2;
+						Utils.AllyTeam.AP += 1;
 					}
 				}
 			}

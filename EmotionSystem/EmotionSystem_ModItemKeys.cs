@@ -10,12 +10,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_ArtLv1_Echoes = "B_Abnormality_ArtLv1_Echoes";
 		/// <summary>
 		/// Elation
-		/// Attacks inflict 2 <color=red>Bleed</color> (<sprite=1> &a%) to the target's. Gain a 1% chance to <b>die</b> and gain 1 Lucy's Necklace charge whenever attacking an enemy.
+		/// Attacks inflict 2 <color=red>Bleed</color> (<sprite=1> &a%) to the target's. Gain a 1% chance to inflict 10 <color=red>Bleed</color> to the target's, <b>die</b> and gain 1 Lucy's Necklace charge whenever attacking an enemy.
 		/// </summary>
         public static string Buff_B_Abnormality_ArtLv1_Elation = "B_Abnormality_ArtLv1_Elation";
 		/// <summary>
 		/// Pebble
-		/// At the start of the turn apply <color=red>Pebble</color> (When played overheal the ally with the lowest health by 10 and remove this skill from the deck for this battle) to a random skill in hand.
+		/// At the start of the turn, apply <color=red>Pebble</color> (When played overheal the ally with the lowest health by 10 and remove this skill from the deck for this battle) to a random skill in hand.
 		/// </summary>
         public static string Buff_B_Abnormality_ArtLv1_Pebble = "B_Abnormality_ArtLv1_Pebble";
 		/// <summary>
@@ -58,7 +58,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_ArtLv2_Petals = "B_Abnormality_ArtLv2_Petals";
 		/// <summary>
 		/// Teardrop
-		/// Lose 2 Mana whenever reaches death's door.
+		/// Lose 2 Mana whenever reaches or taking damage at death's door.
 		/// </summary>
         public static string Buff_B_Abnormality_ArtLv2_Teardrop = "B_Abnormality_ArtLv2_Teardrop";
 		/// <summary>
@@ -68,12 +68,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_ArtLv2_Token = "B_Abnormality_ArtLv2_Token";
 		/// <summary>
 		/// <color=red>Adoration</color>
-		/// Has a 66% chance to switch target (including allies and self) whenever using skill.
+		/// Has a 50% chance to switch target (including allies and self) whenever using skill.
 		/// </summary>
         public static string Buff_B_Abnormality_ArtLv3_Adoration = "B_Abnormality_ArtLv3_Adoration";
 		/// <summary>
 		/// Adoration
-		/// At the start of the turn apply <color=red>Adoration</color> to all alive enemies.
+		/// At the start of the turn, apply <color=red>Adoration</color> to all alive enemies.
 		/// <color=#919191>To the audience who shall walk into their seat upon hearing the choked up performance.</color>
 		/// </summary>
         public static string Buff_B_Abnormality_ArtLv3_Adoration_0 = "B_Abnormality_ArtLv3_Adoration_0";
@@ -145,7 +145,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_MirrorAdjustment_0 = "B_Abnormality_GuestLv2_MirrorAdjustment_0";
 		/// <summary>
 		/// <color=red>Present</color>
-		/// At the start of the turn shuffle 1 <color=red>Present</color> into deck.
+		/// At the start of the turn, shuffle 1 <color=red>Present</color> into deck.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Present = "B_Abnormality_GuestLv2_Present";
 		/// <summary>
@@ -170,17 +170,17 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_Storytime_0 = "B_Abnormality_GuestLv2_Storytime_0";
 		/// <summary>
 		/// Bait
-		/// At the start of the turn remove 1 random skill from hand, shuffle it into draw pile and lose 1 Mana.
+		/// At the start of the turn, remove 1 random skill from hand, shuffle it into draw pile and lose 1 Mana.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_Bait = "B_Abnormality_GuestLv3_Bait";
 		/// <summary>
 		/// Cycle of the Curse
-		/// At the start of the turn select skill from hand to remove from the deck for this battle. Skill owner takes non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Current Stage * 5 + 5)</color>. If skill owner is Lucy lose 2 Mana instead.
+		/// At the start of the turn, select skill from hand to remove from the deck for this battle. Skill owner takes non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(Current Stage * 5 + 5)</color>. If skill owner is Lucy lose 2 Mana instead.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_CycleCurse = "B_Abnormality_GuestLv3_CycleCurse";
 		/// <summary>
 		/// Dimensional Refraction
-		/// At the start of the turn lose 1 Mana. Random skill in hand becomes <color=#A6B0FF>Blurred</color> for the current turn.
+		/// At the start of the turn, lose 1 Mana. Random skill in hand becomes <color=#A6B0FF>Blurred</color> for the current turn.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv3_DimensionalRefraction = "B_Abnormality_GuestLv3_DimensionalRefraction";
 		/// <summary>
@@ -217,7 +217,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv1_NostalgicEmbrace = "B_Abnormality_HistoryLv1_NostalgicEmbrace";
 		/// <summary>
 		/// Footfalls
-		/// When you damage an enemy while your HP is 20% or lower, deal <color=purple>Pain damage</color> equal to 80% of the target's Max HP (up to 100), inflict 10 <color=#FC6178>Burn</color> to the target's, <b>die</b> and gain 1 Lucy's Neckless charge.
+		/// When you damage an enemy while your HP is 20% or lower, deal <color=purple>Pain damage</color> equal to 80% of the target's Max HP (up to 100), inflict 20 <color=#FC6178>Burn</color> to the target's, <b>die</b> and gain 1 Lucy's Necklace charge.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_Footfalls = "B_Abnormality_HistoryLv2_Footfalls";
 		/// <summary>
@@ -285,7 +285,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv1_SocialDistancing = "B_Abnormality_LiteratureLv1_SocialDistancing";
 		/// <summary>
 		/// Surprise Gift
-		/// At the start of the turn apply <color=green>Friend</color> (Damage/healing increased by 40%) to 1 random skill in hand, prioritizing the user skills.
+		/// At the start of the turn, apply <color=green>Friend</color> (Damage/healing increased by 40%) to 1 random skill in hand, prioritizing the user skills.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv1_SurpriseGift = "B_Abnormality_LiteratureLv1_SurpriseGift";
 		/// <summary>
@@ -295,7 +295,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv2_Alertness = "B_Abnormality_LiteratureLv2_Alertness";
 		/// <summary>
 		/// Friend
-		/// At the start of the turn apply <color=red>Friend</color> (Discarded after 1 turn, damage/healing increased by 80%) to 2 random skills in hand, prioritizing the user skills.
+		/// At the start of the turn, apply <color=red>Friend</color> (Discarded after 1 turn, damage/healing increased by 80%) to 2 random skills in hand, prioritizing the user skills.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv2_Friend = "B_Abnormality_LiteratureLv2_Friend";
 		/// <summary>
@@ -417,7 +417,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_TechnologicalLv3_DarkFlame_0 = "B_Abnormality_TechnologicalLv3_DarkFlame_0";
 		/// <summary>
 		/// Dark Flame
-		/// At the start of the turn apply <color=red>Gebrochener Pakt</color> to all alive targets.
+		/// At the start of the turn, apply <color=red>Gebrochener Pakt</color> to all alive targets.
 		/// <color=#919191>The despair shall linger around you at all times.</color>
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv3_DarkFlame_1 = "B_Abnormality_TechnologicalLv3_DarkFlame_1";
@@ -427,7 +427,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_TechnologicalLv3_Music = "B_Abnormality_TechnologicalLv3_Music";
 		/// <summary>
 		/// Music
-		/// At the start of the turn apply <color=red>Music</color> to all alive targets.
+		/// At the start of the turn, apply <color=red>Music</color> to all alive targets.
 		/// <color=#919191>People all carry musical talent in them.</color>
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv3_Music_0 = "B_Abnormality_TechnologicalLv3_Music_0";
@@ -564,6 +564,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#8A2BE2>Dark Melody</color>
 		/// Cannot gain Emotion Points.
+		/// Removed at the start of the next turn.
 		/// </summary>
         public static string Buff_B_Potion_DarkTune = "B_Potion_DarkTune";
 		/// <summary>
@@ -622,6 +623,16 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_Pebble = "Ex_Abnormality_Pebble";
 		/// <summary>
+		/// When cast, view 3 <color=red>Negative</color> Level II Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_Selection_Neg = "Ex_Abnormality_Selection_Neg";
+		/// <summary>
+		/// When cast, view 3 <color=#32CD32>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_Selection_Pos = "Ex_Abnormality_Selection_Pos";
+		/// <summary>
 		/// The Seventh Bullet
 		/// This Attack target a random character, except user.
 		/// </summary>
@@ -631,6 +642,11 @@ namespace EmotionSystem
 		/// E.G.O. Cooldown
 		/// </summary>
         public static string SkillExtended_Ex_EGO_Cooldown = "Ex_EGO_Cooldown";
+		/// <summary>
+		/// When cast, view 2 <color=#FFDF00>E.G.O.</color> skills and select 1 to add into <color=#FFDF00>E.G.O.</color> Hand.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Ego_Selection = "Ex_Ego_Selection";
 		/// <summary>
 		/// Emotional Level 5
 		/// At 2 stacks, draw 1 skill.
@@ -664,7 +680,7 @@ namespace EmotionSystem
         public static string Item_Equip_E_EmotionSystem_Millarca = "E_EmotionSystem_Millarca";
 		/// <summary>
 		/// Rags
-		/// At the start of the turn gain 'Nettle Clothing'.
+		/// At the start of the turn, gain 'Nettle Clothing'.
 		/// </summary>
         public static string Item_Equip_E_EmotionSystem_Rags = "E_EmotionSystem_Rags";
 		/// <summary>
@@ -673,7 +689,7 @@ namespace EmotionSystem
         public static string Item_Equip_E_EmotionSystem_Thrill = "E_EmotionSystem_Thrill";
 		/// <summary>
 		/// Ragged Umbrella
-		/// Gain 50% chance to reduce the next received damage to 0 and reflect double damage to the attacker.
+		/// Gain 50% chance to reduce the next received damage to 0.
 		/// </summary>
         public static string Item_Equip_E_EmotionSystem_Umbrella = "E_EmotionSystem_Umbrella";
 		/// <summary>
@@ -820,7 +836,7 @@ namespace EmotionSystem
         public static string Item_Potions_P_EmotionSystem_DistortionFragment = "P_EmotionSystem_DistortionFragment";
 		/// <summary>
 		/// Essence of Tranquility
-		/// View 3 <color=#32CD32>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
+		/// View 3 <color=green>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_EssenceTranquility = "P_EmotionSystem_EssenceTranquility";
 		/// <summary>
@@ -841,19 +857,19 @@ namespace EmotionSystem
         public static string Item_Potions_P_EmotionSystem_PureTune = "P_EmotionSystem_PureTune";
 		/// <summary>
 		/// Artistic Sense
-		/// At the start of the battle select Emotion Points to obtain in this battle.
-		/// At the start of the turn all allies gain 3 &a Emotion Points.
+		/// At the start of the battle, select Emotion Points to obtain in this battle.
+		/// At the start of the turn, all allies gain 3 &a Emotion Points.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Artistic = "R_EmotionSystem_Artistic";
 		/// <summary>
 		/// Bloody Mist
-		/// At the start of the turn shuffle 1 Blood Mist into deck.
+		/// At the start of the turn, shuffle 1 Blood Mist into deck.
 		/// Draw 1 skill and Restore 2 Mana whenever you draw a Lucy Curse Skill.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Bloody = "R_EmotionSystem_Bloody";
 		/// <summary>
 		/// Unhatched Embers
-		/// At the start of the turn infclit 3 <color=#FC6178>Burn</color> (<sprite=1> 100%) to all enemies.
+		/// At the start of the turn, inflict 4 <color=#FC6178>Burn</color> (<sprite=1> 100%) to all enemies.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Ember = "R_EmotionSystem_Ember";
 		/// <summary>
@@ -863,12 +879,12 @@ namespace EmotionSystem
         public static string Item_Passive_R_EmotionSystem_Rest = "R_EmotionSystem_Rest";
 		/// <summary>
 		/// Black Sheet Music
-		/// Gain 2 Mana at the start of the even turn.
+		/// Gain 1 Mana at the start of the even turn.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Sheet = "R_EmotionSystem_Sheet";
 		/// <summary>
 		/// Haunted Shoes
-		/// At the start of the turn infclit 2 <color=red>Bleed</color> (<sprite=1> 100%) to all enemies.
+		/// At the start of the turn, infclit 2 <color=red>Bleed</color> (<sprite=1> 100%) to all enemies.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Shoes = "R_EmotionSystem_Shoes";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_Despair = "SE_S_S_Abnormality_GuestLv1_Despair";
@@ -1072,7 +1088,7 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_ArtLv3_Adoration = "S_Abnormality_ArtLv3_Adoration";
 		/// <summary>
 		/// <color=green>Finale</color>
-		/// All allies restore 100% of their Max HP. All enemies lose 50% of their Max HP.
+		/// All allies restore 100% of their Max HP. All enemies take <color=purple>Pain Damage</color> equal of 50% their Max HP.
 		/// <color=#919191>The music shall perforate your entire being.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_ArtLv3_Finale = "S_Abnormality_ArtLv3_Finale";

@@ -65,7 +65,7 @@ namespace EmotionSystem
 				{ GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Strengthen, ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair } },
-				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv3_DimensionalRefraction } },
+				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter, ModItemKeys.Buff_B_Abnormality_GuestLv3_DimensionalRefraction } },
 				{ GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_MBoss2_0, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_Joker, new List<string> { } },

@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EmotionSystem;
+using GameDataEditor;
 
 namespace EmotionSystem
 {
@@ -65,12 +67,25 @@ namespace EmotionSystem
 					if (Dmg >= 1)
 					{
 						BChar.GetNegEmotion();
+						DeathDoorCheck();
 
 						if (Cri)
 						{
 							BChar.GetNegEmotion();
 						}
 					}
+				}
+
+				private IEnumerator DeathDoorCheck()
+				{
+					if (Utils.ReturnBuff(BChar, GDEItemKeys.Buff_B_Neardeath) != null)
+					{
+						foreach (var ally in BChar.MyTeam.AliveChars_Vanish)
+						{
+							ally.GetNegEmotion();
+						}
+					}
+					yield break;
 				}
 
 				public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
@@ -98,11 +113,16 @@ namespace EmotionSystem
 				
 			}
 
-			public class DarkTune : Buff
+			public class DarkTune : Buff, IP_PlayerTurn
 			{
 				public override void SelfdestroyPlus()
 				{
 					EmotionalManager.SetEmotionCapGuest(BChar, false);
+				}
+
+				public void Turn()
+				{
+					SelfDestroy();
 				}
 			}
 		}

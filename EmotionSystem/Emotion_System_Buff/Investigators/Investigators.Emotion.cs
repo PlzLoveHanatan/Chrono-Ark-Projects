@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameDataEditor;
 using UnityEngine;
 
 namespace EmotionSystem
@@ -126,12 +128,25 @@ namespace EmotionSystem
 					if (Dmg >= 1)
 					{
 						BChar.GetNegEmotion(User.GetPosUI());
+						DeathDoorCheck();
 
 						if (Cri)
 						{
 							BChar.GetNegEmotion(User.GetPosUI());
 						}
 					}
+				}
+
+				private IEnumerator DeathDoorCheck()
+				{
+					if (Utils.ReturnBuff(BChar, GDEItemKeys.Buff_B_Neardeath) != null)
+					{
+						foreach (var ally in BChar.MyTeam.AliveChars_Vanish)
+						{
+							ally.GetNegEmotion();
+						}
+					}
+					yield break;
 				}
 
 				public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)

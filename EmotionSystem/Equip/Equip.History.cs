@@ -14,10 +14,10 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					PlusStat.DMGTaken = -40;
-					PlusStat.RES_CC = 40f;
-					PlusStat.RES_DEBUFF = 40f;
-					PlusStat.RES_DOT = 40f;
+					PlusStat.DMGTaken = -30;
+					PlusStat.RES_CC = 30f;
+					PlusStat.RES_DEBUFF = 30f;
+					PlusStat.RES_DOT = 30f;
 				}
 			}
 
@@ -25,8 +25,8 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					PlusPerStat.Damage = 40;
-					PlusStat.cri = 40;
+					PlusPerStat.Damage = 30;
+					PlusStat.cri = 30;
 				}
 			}
 		}

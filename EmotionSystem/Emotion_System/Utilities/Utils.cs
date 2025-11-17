@@ -196,15 +196,11 @@ namespace EmotionSystem
 
 		public static void PlaySound(string sound, bool isStopOldBus = true)
 		{
-			if (string.IsNullOrEmpty(sound) || !EmotionalSounds) return;
-
 			if (isStopOldBus)
 			{
 				MasterAudio.StopBus("SE");
 			}
-
-			float volume = MasterAudio.MasterVolumeLevel;
-			MasterAudio.PlaySound(sound, volume, null, 0f, null, null, false, false);
+			PlaySound(sound);
 		}
 
 		public static void TakeNonLethalDamage(BattleChar bchar, int damage = 0, bool isPain = true)
@@ -448,7 +444,6 @@ namespace EmotionSystem
 			BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
 
 		}
-
 
 		public static void CastingWasteFixed(this BattleActWindow window, CastingSkill cast)
 		{

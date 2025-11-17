@@ -164,9 +164,9 @@ namespace EmotionSystem
 				public override void Init()
 				{
 					PlusPerStat.MaxHP += 60;
-					PlusStat.RES_CC += 30f;
-					PlusStat.RES_DEBUFF += 30f;
-					PlusStat.RES_DOT += 30f;
+					PlusStat.RES_CC += 40f;
+					PlusStat.RES_DEBUFF += 40f;
+					PlusStat.RES_DOT += 40f;
 					AddRewards(3, 1);
 					RegisterRewardsToView();
 				}

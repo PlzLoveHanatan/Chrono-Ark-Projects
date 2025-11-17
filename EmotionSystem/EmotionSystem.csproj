@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionSystem11162025123849</AssemblyName>
+    <AssemblyName>EmotionSystem11172025180126</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -409,13 +409,14 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                  <!-- Compile ItemGroup Start-->
+                                          <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionSystem_ModDefinition.cs" />
     <Compile Include="EmotionSystem_ModItemKeys.cs" />
     <Compile Include="EmotionSystem_Value.cs" />
     <Compile Include="IP_BuffObject_Updata.cs" />
     <Compile Include="TutorialLocalizer.cs" />
+    <Compile Include="Buff\B_Abnormality_LiteratureLv1_SurpriseGift.cs" />
     <Compile Include="Emotion_System\Emotional_Manager.cs" />
     <Compile Include="Emotion_System\Scripts.cs" />
     <Compile Include="Emotion_System\Data\DataStore.Abnormality.cs" />
@@ -473,6 +474,7 @@
     <Compile Include="Emotion_System_Skill\Skills Various\_Skills.cs" />
     <Compile Include="Emotion_System_Skill_Extended\Extended.Abnormality.cs" />
     <Compile Include="Emotion_System_Skill_Extended\Extended.EGO.cs" />
+    <Compile Include="Emotion_System_Skill_Extended\Extended.Emotion.cs" />
     <Compile Include="Emotion_System_Skill_Extended\_Extended.cs" />
     <Compile Include="Equip\Equip.Art.cs" />
     <Compile Include="Equip\Equip.History.cs" />

@@ -232,7 +232,7 @@ namespace EmotionSystem
 					{
 						int damage = Mathf.Min(80, (int)(hit.GetStat.maxhp * 0.8f));
 						hit.Damage(BChar, damage, false, true, false, 0, false, false, false);
-						Utils.ApplyBurn(hit, BChar, 10);
+						Utils.ApplyBurn(hit, BChar, 20);
 						Utils.PlaySound("Floor_History_Explode");
 						BChar.Dead();
 						ChargeLucyNeck();

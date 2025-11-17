@@ -198,7 +198,7 @@ namespace EmotionSystem
 						this.OnePassive = true;
 
 						int hp = BChar.GetStat.maxhp;
-						int step = hp / (BChar is BattleEnemy enemy && enemy.Boss ? 4 : 2);
+						int step = hp / (BChar is BattleEnemy enemy && enemy.Boss ? 5 : 2);
 						int damageTaken = BChar.GetStat.maxhp - BChar.HP;
 
 						threshold = damageTaken < step ? step - damageTaken : 1;
