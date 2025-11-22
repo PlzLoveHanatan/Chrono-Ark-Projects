@@ -20,7 +20,7 @@ namespace EmotionSystem
 					{
 						if (ally != null)
 						{
-							EmotionalManager.SetEmotionCapInvestigator(ally);
+							EmotionManager.SetEmotionCapInvestigator(ally);
 						}
 					}
 				}

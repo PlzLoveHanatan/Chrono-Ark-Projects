@@ -265,6 +265,7 @@ namespace EmotionSystem
 				var instantCastAbnormalities = new[]
 				{
 					ModItemKeys.Skill_S_Abnormality_HistoryLv2_WorkerBee,
+					ModItemKeys.Skill_S_Abnormality_HistoryLv3_Loyalty,
 					ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_Music,
 					ModItemKeys.Skill_S_Abnormality_Literature_Lv3_LovingFamily,
 					ModItemKeys.Skill_S_Abnormality_ArtLv2_Autumns,

@@ -87,6 +87,8 @@ namespace EmotionSystem
 						return ModLocalization.EmotionSystem_Floor_Literature;
 					case DataStore.LibraryFloorType.Art:
 						return ModLocalization.EmotionSystem_Floor_Art;
+					case DataStore.LibraryFloorType.Natural:
+						return ModLocalization.EmotionSystem_Floor_Natural;
 					default:
 						return "";
 				}

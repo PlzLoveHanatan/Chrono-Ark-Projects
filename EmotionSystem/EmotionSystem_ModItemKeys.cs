@@ -68,7 +68,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_ArtLv2_Token = "B_Abnormality_ArtLv2_Token";
 		/// <summary>
 		/// <color=red>Adoration</color>
-		/// Has a 50% chance to switch target (including allies and self) whenever using skill.
+		/// Has a 50% chance to switch target to allies and self whenever using skill.
 		/// </summary>
         public static string Buff_B_Abnormality_ArtLv3_Adoration = "B_Abnormality_ArtLv3_Adoration";
 		/// <summary>
@@ -212,11 +212,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_HistoryLv1_Matchlight = "B_Abnormality_HistoryLv1_Matchlight";
 		/// <summary>
 		/// Nostalgic Embrace of the Old Days
-		/// Whenever you damage an enemy, gain 50% chance to apply Stun (<sprite=2>&a%). Only activates once per turn.
+		/// Whenever you damage an enemy, apply Stun (<sprite=2>&a%). Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv1_NostalgicEmbrace = "B_Abnormality_HistoryLv1_NostalgicEmbrace";
 		/// <summary>
 		/// Footfalls
+		/// Attacks inflict 2 <color=#FC6178>Burn</color> (<sprite=1> &a%) to the target's.
 		/// When you damage an enemy while your HP is 20% or lower, deal <color=purple>Pain damage</color> equal to 80% of the target's Max HP (up to 100), inflict 20 <color=#FC6178>Burn</color> to the target's, <b>die</b> and gain 1 Lucy's Necklace charge.
 		/// </summary>
         public static string Buff_B_Abnormality_HistoryLv2_Footfalls = "B_Abnormality_HistoryLv2_Footfalls";
@@ -339,6 +340,101 @@ namespace EmotionSystem
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv3_WornParasol = "B_Abnormality_LiteratureLv3_WornParasol";
 		/// <summary>
+		/// Blades Whetted by Teardrops
+		/// Attacks inflict 1 <color=red>Fragile</color> (<sprite=0> &a%) to the target's.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Blades = "B_Abnormality_NaturalLv1_Blades";
+		/// <summary>
+		/// Blessing
+		/// Can only gain <color=red>Negative</color> Points (except additional sources).
+		/// Upon landing a critical hit, restore &a health <color=#FF7C34>(50% Attack Power)</color>. Only activates once per turn.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Blessing = "B_Abnormality_NaturalLv1_Blessing";
+		/// <summary>
+		/// Despair
+		/// Can only gain <color=red>Negative</color> Points (except additional sources).
+		/// Attacks inflict 2 <color=red>Fragile</color> (<sprite=0> &a%) to the target's.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Despair = "B_Abnormality_NaturalLv1_Despair";
+		/// <summary>
+		/// Hate
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Hate = "B_Abnormality_NaturalLv1_Hate";
+		/// <summary>
+		/// In the name of Hate ♡
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Hate_0 = "B_Abnormality_NaturalLv1_Hate_0";
+		/// <summary>
+		/// Justice
+		/// The first attack played from hand apply <color=#BD2DC2>Villain</color> status to the target's.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Justice = "B_Abnormality_NaturalLv1_Justice";
+		/// <summary>
+		/// <color=#BD2DC2>Villain</color> 
+		/// Removed at the start of the next turn.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Justice_0 = "B_Abnormality_NaturalLv1_Justice_0";
+        public static string Buff_B_Abnormality_NaturalLv1_Justice_1 = "B_Abnormality_NaturalLv1_Justice_1";
+		/// <summary>
+		/// Love
+		/// If user plays an Attack this turn, overheal an ally with the lowest health by &a <color=#FF7C34>(30% Healing Power)</color>. Only activates once per turn.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv1_Love = "B_Abnormality_NaturalLv1_Love";
+		/// <summary>
+		/// Companion
+		/// At the start of the turn restore 1 Mana and draw 1 skill if all allies are alive.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv2_Companion = "B_Abnormality_NaturalLv2_Companion";
+		/// <summary>
+		/// Greed
+		/// Allows <b>single-target</b> damage skills to be cast on an ally.
+		/// Gain 40 Gold on every attack (before reaching Black Fog).
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv2_Greed = "B_Abnormality_NaturalLv2_Greed";
+		/// <summary>
+		/// Intemperance
+		/// Allows <b>single-target</b> damage skills to be cast on an ally.
+		/// Gain 20 Gold on every attack (before reaching Black Fog).
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv2_Intemperance = "B_Abnormality_NaturalLv2_Intemperance";
+		/// <summary>
+		/// Magical Girls
+		/// Inflict 1 <color=#90EE90>Erosion</color> (<sprite=0> &a%) to the attacker.
+		/// When taking damage reduce all user skill's in hand cost by 1 for this turn.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv2_Magical = "B_Abnormality_NaturalLv2_Magical";
+		/// <summary>
+		/// Road to Happiness
+		/// Allows <b>single-target</b> damage skills to be cast on an ally.
+		/// Gain 20 Gold on every attack (before reaching Black Fog).
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv2_Road = "B_Abnormality_NaturalLv2_Road";
+		/// <summary>
+		/// Golden Bliss
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv2_Road_0 = "B_Abnormality_NaturalLv2_Road_0";
+		/// <summary>
+		/// Wrath
+		/// Has a 30% chance to target a random ally (except the user) when playing an attack skill from hand.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv2_Wrath = "B_Abnormality_NaturalLv2_Wrath";
+		/// <summary>
+		/// Acidic Sludge
+		/// Attacks inflict 2 <color=#90EE90>Erosion</color> (<sprite=0> &a%) to the target's.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv3_Acidic = "B_Abnormality_NaturalLv3_Acidic";
+		/// <summary>
+		/// Nix
+		/// At the start of the turn, inflict 5 'Feeble' (<sprite=0> &a%), 5 'Disarm' (<sprite=0> &a%) and 5 <color=orange>Bind</color> (<sprite=2> &a%) to all enemies.
+		/// 'Greed', 'Hate', 'Despair', and 'Wrath' lose their drawbacks.
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv3_Nix = "B_Abnormality_NaturalLv3_Nix";
+		/// <summary>
+		/// Void
+		/// <color=#919191>If you're confused because there doesn't seem to be a correct method at the moment, just trust your intuition!</color>
+		/// </summary>
+        public static string Buff_B_Abnormality_NaturalLv3_Void = "B_Abnormality_NaturalLv3_Void";
+		/// <summary>
 		/// Lament
 		/// At the end of the turn take non-lethal <color=purple>&a Pain Damage</color> <color=#FF7C34>(15% Max Health)</color>.
 		/// </summary>
@@ -397,7 +493,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_TechnologicalLv2_Recharge = "B_Abnormality_TechnologicalLv2_Recharge";
 		/// <summary>
 		/// The Seventh Bullet
-		/// Every 7th attack target a random character, except user. Attacks Played: &a.
+		/// Every 7th attack targets a random character (except the user). Attacks played: &a.
 		/// </summary>
         public static string Buff_B_Abnormality_TechnologicalLv2_SeventhBullet = "B_Abnormality_TechnologicalLv2_SeventhBullet";
         public static string Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_0 = "B_Abnormality_TechnologicalLv2_SeventhBullet_0";
@@ -485,6 +581,11 @@ namespace EmotionSystem
 		/// Disarm
 		/// </summary>
         public static string Buff_B_EmotionSystem_Disarm = "B_EmotionSystem_Disarm";
+		/// <summary>
+		/// <color=#90EE90>Erosion</color>
+		/// Description
+		/// </summary>
+        public static string Buff_B_EmotionSystem_Erosion = "B_EmotionSystem_Erosion";
 		/// <summary>
 		/// Feeble
 		/// </summary>
@@ -592,6 +693,10 @@ namespace EmotionSystem
 		/// <summary>
 		/// Passive:
 		/// </summary>
+        public static string Character_EmotionSystem_Floor_Natural = "EmotionSystem_Floor_Natural";
+		/// <summary>
+		/// Passive:
+		/// </summary>
         public static string Character_EmotionSystem_Floor_Technological = "EmotionSystem_Floor_Technological";
 		/// <summary>
 		/// Passive:
@@ -617,6 +722,18 @@ namespace EmotionSystem
 		/// The first skill played from hand costs 1 less.
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_HappyMemories = "Ex_Abnormality_HappyMemories";
+		/// <summary>
+		/// Justice
+		/// Apply <color=#BD2DC2>Villain</color> to the target's.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_Justice = "Ex_Abnormality_Justice";
+		/// <summary>
+		/// <color=#ffc440>Greed</color>
+		/// Allows <b>single-target</b> damage skills to be cast on an ally.
+		/// Gain 20 Gold on every attack.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_KingGreed = "Ex_Abnormality_KingGreed";
+        public static string SkillExtended_Ex_Abnormality_MagicalGirls = "Ex_Abnormality_MagicalGirls";
 		/// <summary>
 		/// <color=red>Pebble</color>
 		/// When played overheal the ally with the lowest health by 10 and remove this skill from the deck for this battle.
@@ -702,6 +819,17 @@ namespace EmotionSystem
 		/// Cannot be used this turn.
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_DimensionalRefraction = "KeyWord_Abnormality_DimensionalRefraction";
+		/// <summary>
+		/// <color=#BD2DC2>Villain</color>
+		/// Receiving Damage +10%
+		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Abnormality_Justice = "KeyWord_Abnormality_Justice";
+		/// <summary>
+		/// <color=#ffc550>Golden Desire</color>
+		/// Spend <color=#ffc550>X</color> Gold to cast the skill.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Abnormality_KingGreed = "KeyWord_Abnormality_KingGreed";
 		/// <summary>
 		/// Abnormality Level I
 		/// </summary>
@@ -799,6 +927,12 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillKeyword_KeyWord_Emotion_Burst = "KeyWord_Emotion_Burst";
 		/// <summary>
+		/// <color=#90EE90>Erosion</color>
+		/// When taking damage, increase that damage by <color=#FF7C34>(Current Erosion)</color>.
+		/// Remove 1 <color=#90EE90>Erosion</color> at the start of the next turn.
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Erosion = "KeyWord_Erosion";
+		/// <summary>
 		/// Feeble
 		/// Attack Power -10%
 		/// Max 5 stacks
@@ -884,7 +1018,7 @@ namespace EmotionSystem
         public static string Item_Passive_R_EmotionSystem_Sheet = "R_EmotionSystem_Sheet";
 		/// <summary>
 		/// Haunted Shoes
-		/// At the start of the turn, infclit 2 <color=red>Bleed</color> (<sprite=1> 100%) to all enemies.
+		/// At the start of the turn, inflict 2 <color=red>Bleed</color> (<sprite=1> 100%) to all enemies.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Shoes = "R_EmotionSystem_Shoes";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_Despair = "SE_S_S_Abnormality_GuestLv1_Despair";
@@ -904,6 +1038,8 @@ namespace EmotionSystem
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv3_CycleCurse = "SE_S_S_Abnormality_GuestLv3_CycleCurse";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv3_DimensionalRefraction = "SE_S_S_Abnormality_GuestLv3_DimensionalRefraction";
         public static string SkillEffect_SE_S_S_Abnormality_Literature_Lv1_LookDay = "SE_S_S_Abnormality_Literature_Lv1_LookDay";
+        public static string SkillEffect_SE_S_S_Abnormality_Natural_Hate = "SE_S_S_Abnormality_Natural_Hate";
+        public static string SkillEffect_SE_S_S_Abnormality_Natural_Void = "SE_S_S_Abnormality_Natural_Void";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv1_MetallicRinging = "SE_S_S_Abnormality_TechnologicalLv1_MetallicRinging";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv1_RepetitivePattern = "SE_S_S_Abnormality_TechnologicalLv1_RepetitivePattern";
         public static string SkillEffect_SE_S_S_Abnormality_TechnologicalLv1_Request = "SE_S_S_Abnormality_TechnologicalLv1_Request";
@@ -967,6 +1103,25 @@ namespace EmotionSystem
         public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv3_GooeyWaste = "SE_T_S_Abnormality_Literature_Lv3_GooeyWaste";
         public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv3_LovingFamily = "SE_T_S_Abnormality_Literature_Lv3_LovingFamily";
         public static string SkillEffect_SE_T_S_Abnormality_Literature_Lv3_WornParasol = "SE_T_S_Abnormality_Literature_Lv3_WornParasol";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv1_Blades = "SE_T_S_Abnormality_NaturalLv1_Blades";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv1_Blessing = "SE_T_S_Abnormality_NaturalLv1_Blessing";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv1_Despair = "SE_T_S_Abnormality_NaturalLv1_Despair";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv1_Hate = "SE_T_S_Abnormality_NaturalLv1_Hate";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv1_Justice = "SE_T_S_Abnormality_NaturalLv1_Justice";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv1_Love = "SE_T_S_Abnormality_NaturalLv1_Love";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv2_Companion = "SE_T_S_Abnormality_NaturalLv2_Companion";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv2_Greed = "SE_T_S_Abnormality_NaturalLv2_Greed";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv2_Intemperance = "SE_T_S_Abnormality_NaturalLv2_Intemperance";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv2_Magical = "SE_T_S_Abnormality_NaturalLv2_Magical";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv2_Road = "SE_T_S_Abnormality_NaturalLv2_Road";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv2_Wrath = "SE_T_S_Abnormality_NaturalLv2_Wrath";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv3_Acidic = "SE_T_S_Abnormality_NaturalLv3_Acidic";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv3_Nix = "SE_T_S_Abnormality_NaturalLv3_Nix";
+        public static string SkillEffect_SE_T_S_Abnormality_NaturalLv3_Void = "SE_T_S_Abnormality_NaturalLv3_Void";
+        public static string SkillEffect_SE_T_S_Abnormality_Natural_Hate = "SE_T_S_Abnormality_Natural_Hate";
+        public static string SkillEffect_SE_T_S_Abnormality_Natural_Intemperance = "SE_T_S_Abnormality_Natural_Intemperance";
+        public static string SkillEffect_SE_T_S_Abnormality_Natural_Road = "SE_T_S_Abnormality_Natural_Road";
+        public static string SkillEffect_SE_T_S_Abnormality_Natural_Void = "SE_T_S_Abnormality_Natural_Void";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv1_Lament = "SE_T_S_Abnormality_TechnologicalLv1_Lament";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv1_MetallicRinging = "SE_T_S_Abnormality_TechnologicalLv1_MetallicRinging";
         public static string SkillEffect_SE_T_S_Abnormality_TechnologicalLv1_RepetitivePattern = "SE_T_S_Abnormality_TechnologicalLv1_RepetitivePattern";
@@ -1003,6 +1158,11 @@ namespace EmotionSystem
         public static string SkillEffect_SE_T_S_EGO_Literature_RedEyes = "SE_T_S_EGO_Literature_RedEyes";
         public static string SkillEffect_SE_T_S_EGO_Literature_SanguineDesire = "SE_T_S_EGO_Literature_SanguineDesire";
         public static string SkillEffect_SE_T_S_EGO_Literature_TodayExpression = "SE_T_S_EGO_Literature_TodayExpression";
+        public static string SkillEffect_SE_T_S_EGO_Natural_Gold = "SE_T_S_EGO_Natural_Gold";
+        public static string SkillEffect_SE_T_S_EGO_Natural_Hate = "SE_T_S_EGO_Natural_Hate";
+        public static string SkillEffect_SE_T_S_EGO_Natural_Nihil = "SE_T_S_EGO_Natural_Nihil";
+        public static string SkillEffect_SE_T_S_EGO_Natural_Rage = "SE_T_S_EGO_Natural_Rage";
+        public static string SkillEffect_SE_T_S_EGO_Natural_Sword = "SE_T_S_EGO_Natural_Sword";
         public static string SkillEffect_SE_T_S_EGO_Synchronize_MagicBullet_FloodingBullets = "SE_T_S_EGO_Synchronize_MagicBullet_FloodingBullets";
         public static string SkillEffect_SE_T_S_EGO_Synchronize_MagicBullet_InevitableBullet = "SE_T_S_EGO_Synchronize_MagicBullet_InevitableBullet";
         public static string SkillEffect_SE_T_S_EGO_Synchronize_MagicBullet_MagicBullet = "SE_T_S_EGO_Synchronize_MagicBullet_MagicBullet";
@@ -1350,6 +1510,109 @@ namespace EmotionSystem
 		/// </summary>
         public static string Skill_S_Abnormality_Literature_Lv3_WornParasol = "S_Abnormality_Literature_Lv3_WornParasol";
 		/// <summary>
+		/// <color=green>Blades Whetted by Teardrops</color>
+		/// <color=#919191>When Justice turns its back once more, several dozen blades will rove without a purpose. The swords will eventually point at those she could not protect.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv1_Blades = "S_Abnormality_NaturalLv1_Blades";
+		/// <summary>
+		/// <color=red>Blessing</color>
+		/// <color=#919191>The will to protect seems to remain unchanged after all this time; even in containment, it is still obsessed with the act of protection.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv1_Blessing = "S_Abnormality_NaturalLv1_Blessing";
+		/// <summary>
+		/// <color=red>Despair</color>
+		/// <color=#919191>As with sorrow, perhaps sharing the burden will blunt the edge.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv1_Despair = "S_Abnormality_NaturalLv1_Despair";
+		/// <summary>
+		/// <color=red>Hate</color>
+		/// Adds a <color=#BD2DC2>In the Name of Hate ♡</color> to <color=#ffc550>E.G.O.</color> Hand.
+		/// <color=#919191>She vowed to love everything in the world, but all that was left was a collapsing heart.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv1_Hate = "S_Abnormality_NaturalLv1_Hate";
+		/// <summary>
+		/// <color=green>Justice</color>
+		/// <color=#919191>If I am on the side of good, then someone has to be on the side of evil. Without someone to play the villain, I can't exist.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv1_Justice = "S_Abnormality_NaturalLv1_Justice";
+		/// <summary>
+		/// <color=green>Love</color>
+		/// <color=#919191>In the name of Love and Justice~ Here comes Magical Girl!</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv1_Love = "S_Abnormality_NaturalLv1_Love";
+		/// <summary>
+		/// <color=green>Companion</color>
+		/// <color=#919191>The Servant of Wrath valued justice and balance more than anyone, but she began sharing knowledge with the Hermit—an enemy of her realm—becoming friends with her in secret.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv2_Companion = "S_Abnormality_NaturalLv2_Companion";
+		/// <summary>
+		/// <color=red>Greed</color>
+		/// Adds a <color=#ffc550>Intemperance</color> and <color=#ffc550>Fragment of Bliss</color> to <color=#ffc550>E.G.O.</color> Hand.
+		/// <color=#919191>The magical girl, who was no longer a magical girl, ate many things. Authority, money, fame, and many other forms of pleasure. She ended up eating away anything in her sight. Now, only visceral greed remains.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv2_Greed = "S_Abnormality_NaturalLv2_Greed";
+		/// <summary>
+		/// <color=green>Intemperance</color>
+		/// Adds a <color=#ffc550>Intemperance</color> to <color=#ffc550>E.G.O.</color> Hand.
+		/// <color=#919191>The first seed of desire originated from the pure yearning for happiness. The tiny seed grew larger and larger, hungering for more. Over time, the seed hardened and turned into a piece of shiny gem.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv2_Intemperance = "S_Abnormality_NaturalLv2_Intemperance";
+		/// <summary>
+		/// <color=red>Magical Girls</color>
+		/// <color=#919191>The jester retraced the steps of a path everybody would've taken. The jester always found itself at the end of that road. There was no way to know if they had gathered to become the jester, or if the jester had come to resemble them.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv2_Magical = "S_Abnormality_NaturalLv2_Magical";
+		/// <summary>
+		/// <color=green>Road to Happiness</color>
+		/// Adds a <color=#ffc550>Fragment of Bliss</color> to <color=#ffc550>E.G.O.</color> Hand.
+		/// <color=#919191>Happiness became obsession, obsession became greed, and the greed forever solidified to become a golden amber. The happiness in the beginning, still holding a smile, dwells inside.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv2_Road = "S_Abnormality_NaturalLv2_Road";
+		/// <summary>
+		/// <color=red>Wrath</color>
+		/// <color=#919191>The Servant was betrayed after abandoning her principles and ingenuously trusting someone with her whole heart. Now, she is dominated by the anger towards herself for what she had done.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv2_Wrath = "S_Abnormality_NaturalLv2_Wrath";
+		/// <summary>
+		/// <color=green>Acidic Sludge</color>
+		/// <color=#919191>When the two met at last, the Hermit brought countless minions to destroy the Servant's world.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv3_Acidic = "S_Abnormality_NaturalLv3_Acidic";
+		/// <summary>
+		/// <color=red>Nix</color>
+		/// This abnormality is only effective if the investigator possesses all four of the following Abnormalities: 'Greed', 'Hate' , 'Despair', and 'Wrath' (regardless of the order in which they are obtained).
+		/// <color=#919191>Having decided to trust its own intuition, the jester spake the names of everyone it had met on that path with each step it took.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv3_Nix = "S_Abnormality_NaturalLv3_Nix";
+		/// <summary>
+		/// <color=red>Void</color>
+		/// Add a <color=red>All Returns to the Void</color> to the <color=#ffc440>E.G.O.</color> Hand.
+		/// <color=#919191>The jester was deeper in thought, that poor jester. Without the brave puppy to lead the way, it walks with meaningless steps.</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_NaturalLv3_Void = "S_Abnormality_NaturalLv3_Void";
+		/// <summary>
+		/// <color=#BD2DC2>In the Name of Hate ♡</color>
+		/// Can only be used by support characters.
+		/// </summary>
+        public static string Skill_S_Abnormality_Natural_Hate = "S_Abnormality_Natural_Hate";
+		/// <summary>
+		/// <color=#ffc550>Intemperance</color>
+		/// <color=#ffc550>[Golden Desire 1000]</color>
+		/// Destroy <b>all</b> target's Action Points.
+		/// </summary>
+        public static string Skill_S_Abnormality_Natural_Intemperance = "S_Abnormality_Natural_Intemperance";
+		/// <summary>
+		/// <color=#ffc550>Fragment of Bliss</color>
+		/// <color=#ffc550>[Golden Desire 800]</color>
+		/// </summary>
+        public static string Skill_S_Abnormality_Natural_Road = "S_Abnormality_Natural_Road";
+		/// <summary>
+		/// <color=red>All Returns to the Void</color>
+		/// Remove all skills in hand for the current fight. Gain 2 Attack Power, 2 Healing Power and 5% Defense for each removed skill.
+		/// Add a <color=red>All Returns to the Void</color> to the <color=#ffc440>E.G.O.</color> Hand.
+		/// </summary>
+        public static string Skill_S_Abnormality_Natural_Void = "S_Abnormality_Natural_Void";
+		/// <summary>
 		/// <color=red>Lament</color>
 		/// <color=#919191>They say the mourner with a huge luggage on his back had come to be a savior to all.</color>
 		/// </summary>
@@ -1484,7 +1747,7 @@ namespace EmotionSystem
         public static string Skill_S_EGO_Art_Pleasure = "S_EGO_Art_Pleasure";
 		/// <summary>
 		/// <color=#FFDF00>Fourth Match Flame</color>
-		/// Inflict 10 <color=#FC6178>Burn</color>.
+		/// Inflict 15 <color=#FC6178>Burn</color>.
 		/// If facing 1 enemy, inflict 10 additional <color=#FC6178>Burn</color>. 
 		/// </summary>
         public static string Skill_S_EGO_History_FourthMatchFlame = "S_EGO_History_FourthMatchFlame";
@@ -1532,6 +1795,35 @@ namespace EmotionSystem
 		/// <color=#FFDF00>Today's Expression</color>
 		/// </summary>
         public static string Skill_S_EGO_Literature_TodayExpression = "S_EGO_Literature_TodayExpression";
+		/// <summary>
+		/// <color=#ffc550>Gold Rush</color>
+		/// Additionaly attack 1 random enemy.
+		/// Gain 500 Gold if this skill defeats an enemy.
+		/// </summary>
+        public static string Skill_S_EGO_Natural_Gold = "S_EGO_Natural_Gold";
+		/// <summary>
+		/// <color=#ffc550>In the Name of Love and Hate</color>
+		/// Damage is increased by 50% if a <color=#BD2DC2>Villain</color> is alive.
+		/// </summary>
+        public static string Skill_S_EGO_Natural_Hate = "S_EGO_Natural_Hate";
+		/// <summary>
+		/// <color=#ffc550>Nihil</color>
+		/// Draw 4 skills if you have no skills in hand.
+		/// </summary>
+        public static string Skill_S_EGO_Natural_Nihil = "S_EGO_Natural_Nihil";
+		/// <summary>
+		/// <color=#ffc550>Blind Rage</color>
+		/// Inflict 5 <color=#90EE90>Erosion</color> to the target's.
+		/// Recast this skill 3 times.
+		/// Has a 30% chance to target a random ally (except the user).
+		/// </summary>
+        public static string Skill_S_EGO_Natural_Rage = "S_EGO_Natural_Rage";
+		/// <summary>
+		/// <color=#ffc550>The Sword Sharpened with Tears</color>
+		/// Destroy the target's Action Point.
+		/// If this skill Crits, destroy 1 additional Action Point.
+		/// </summary>
+        public static string Skill_S_EGO_Natural_Sword = "S_EGO_Natural_Sword";
 		/// <summary>
 		/// <color=#FFDF00>Desynchronize</color>
 		/// Desynchronizes with Der Freischütz.
@@ -1668,9 +1960,11 @@ namespace EmotionSystem
 		/// Japanese:
 		/// この戦闘でデッキから除外するスキルを選択してください。スキルの使用者は非致死の <color=purple>&a 苦痛ダメージ</color>を受けます。使用者がルーシーの場合、代わりにマナを2失います。
 		/// Chinese:
-		/// 选择在本场战斗中从牌库移除的技能。技能持有者将受到非致死的 <color=purple>&a 伤痛伤害</color>。若技能持有者是露西，则改为损失2点法力。
+		/// 选择技能放逐，持有者受到<color=purple>&a点痛苦伤害</color>（不会陷入无法战斗状态）。
+		/// 若持有者为露西，则失去 2 点法力值。
 		/// Chinese-TW:
-		/// 選擇要在本場戰鬥中從牌庫移除的技能。技能持有者會受到非致死的 <color=purple>&a 疼痛傷害</color>。若技能持有者為露西，則改為損失 2 點法力。
+		/// 選擇技能放逐，持有者受到<color=purple>&a點痛苦傷害</color>（不會陷入無法戰鬥狀態）。
+		/// 若持有者為露西，則失去 2 點法力值。
 		/// </summary>
         public static string Abnormality_Guest_CycleCurse => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("Abnormality_Guest_CycleCurse");
 		/// <summary>
@@ -1681,9 +1975,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// スキルを <color=#FFDF00>E.G.O.</color> 手札に変更します。
 		/// Chinese:
-		/// 将技能转换为 <color=#FFDF00>E.G.O.</color> 手牌。
+		/// 确认<color=#FFDF00>E.G.O.</color>手牌。
 		/// Chinese-TW:
-		/// 將技能轉換為 <color=#FFDF00>E.G.O.</color> 手牌。
+		/// 確認<color=#FFDF00>E.G.O.</color>手牌。
 		/// </summary>
         public static string EGO_Button_ChangeToEGOHand => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_ChangeToEGOHand");
 		/// <summary>
@@ -1694,9 +1988,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=#FFDF00>E.G.O.</color> 手札をスキルに変更します。
 		/// Chinese:
-		/// 将 <color=#FFDF00>E.G.O.</color> 手牌转换为技能。
+		/// 确认原有的手牌。
 		/// Chinese-TW:
-		/// 將 <color=#FFDF00>E.G.O.</color> 手牌轉回技能。
+		/// 確認原有的手牌。
 		/// </summary>
         public static string EGO_Button_ChangeToHand => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_ChangeToHand");
 		/// <summary>
@@ -1707,9 +2001,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=#FFDF00>E.G.O.</color> スキルは使用できません。
 		/// Chinese:
-		/// <color=#FFDF00>E.G.O.</color> 技能不可用。
+		/// <color=#FFDF00>E.G.O.</color>技能无法使用。
 		/// Chinese-TW:
-		/// <color=#FFDF00>E.G.O.</color> 技能無法使用。
+		/// <color=#FFDF00>E.G.O.</color>技能無法使用。
 		/// </summary>
         public static string EGO_Button_Empty => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Button_Empty");
 		/// <summary>
@@ -1720,9 +2014,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// &aターン後に再使用可能になります。
 		/// Chinese:
-		/// &a 回合后可再次使用。
+		/// &a回合后可再次使用。
 		/// Chinese-TW:
-		/// &a 回合後可再次使用。
+		/// &a回合後可再次使用。
 		/// </summary>
         public static string EGO_Skill_Cooldown => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Skill_Cooldown");
 		/// <summary>
@@ -1733,9 +2027,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 戦闘ごとに一度のみ使用可能です。
 		/// Chinese:
-		/// 每场战斗仅能使用一次。
+		/// 每场战斗只能使用一次。
 		/// Chinese-TW:
-		/// 每場戰鬥僅能使用一次。
+		/// 每場戰鬥只能使用一次。
 		/// </summary>
         public static string EGO_Skill_Once => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EGO_Skill_Once");
 		/// <summary>
@@ -1746,9 +2040,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 感情システム
 		/// Chinese:
-		/// 情绪系统
+		/// 情感系统
 		/// Chinese-TW:
-		/// 情緒系統
+		/// 情感系統
 		/// </summary>
         public static string EmotionSystem => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem");
 		/// <summary>
@@ -1759,9 +2053,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// Library of Ruina の感情システムを導入します。
 		/// Chinese:
-		/// 引入来自《Library of Ruina》的情绪系统。
+		/// 引用自《废墟图书馆(Library of Ruina)》的情感系统的介绍。
 		/// Chinese-TW:
-		/// 引入來自《Library of Ruina》的情緒系統。
+		/// 引用自《廢墟圖書館(Library of Ruina)》的情感系統的介紹。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_0");
 		/// <summary>
@@ -1772,9 +2066,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 戦闘中、<color=green>肯定</color> と <color-red>否定</color> の2種類の感情ポイントを獲得できます。
 		/// Chinese:
-		/// 战斗中，你可以获得两种情绪点数：<color=green>正面</color> 与 <color-red>负面</color>。
+		/// 在战斗中，你可以获得<color=green>正面</color>或<color-red>负面</color>的情感点数。
 		/// Chinese-TW:
-		/// 戰鬥中，你可以獲得兩種類型的情緒點數：<color=green>正面</color> 與 <color-red>負面</color>。
+		/// 在戰鬥中，你可以獲得<color=green>正面</color>或<color-red>負面</color>的情感點數。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_1");
 		/// <summary>
@@ -1785,9 +2079,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 感情ポイントを集めて感情レベルを上げることで恩恵を得られます。
 		/// Chinese:
-		/// 收集情绪点数并提升情绪等级后，你将获得增益效果。
+		/// 藉由累积情感点数以提升情感等级，能从中获得特殊效果。
 		/// Chinese-TW:
-		/// 透過收集情緒點數並提升情緒等級，你將獲得增益效果。
+		/// 藉由累積情感點數以提升情感等級，能從中獲得特殊效果。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_2 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_2");
 		/// <summary>
@@ -1798,9 +2092,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=#FFDF00>E.G.O.</color> スキルは手札近くのこのボタンからアクセスできます。
 		/// Chinese:
-		/// 可通过手牌旁的此按钮使用 <color=#FFDF00>E.G.O.</color> 技能。
+		/// 可透过手牌旁的按钮确认<color=#FFDF00>E.G.O.</color>技能。
 		/// Chinese-TW:
-		/// 你可透過手牌旁的此按鈕使用 <color=#FFDF00>E.G.O.</color> 技能。
+		/// 可透過手牌旁的按鈕確認<color=#FFDF00>E.G.O.</color>技能。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_3 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_3");
 		/// <summary>
@@ -1811,9 +2105,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 平均感情レベルが3以上に達すると <color=#FFDF00>E.G.O.</color> スキルを獲得できます。
 		/// Chinese:
-		/// 当平均情绪等级达到3以上时，可获得 <color=#FFDF00>E.G.O.</color> 技能。
+		/// 情感等级的平均值达到 3 以上时，能够获得<color=#FFDF00>E.G.O.</color>技能。
 		/// Chinese-TW:
-		/// 當平均情緒等級達到 3 以上時，可獲得 <color=#FFDF00>E.G.O.</color> 技能。
+		/// 情感等級的平均值達到 3 以上時，能夠獲得<color=#FFDF00>E.G.O.</color>技能。
 		/// </summary>
         public static string EmotionSystemEmotionSystemTutorial_4 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_4");
 		/// <summary>
@@ -1827,11 +2121,11 @@ namespace EmotionSystem
 		/// 現在 &a <color=red>出血</color>。
 		/// 行動のたびに <color=purple>&b 苦痛ダメージ</color> <color=#FF7C34>(出血 * 3)</color> を受け、<color=red>出血</color> スタックの1/3を減少させます。（切り上げ）
 		/// Chinese:
-		/// 当前 &a <color=red>流血</color>。
-		/// 每次行动都会受到 <color=purple>&b 伤痛伤害</color> <color=#FF7C34>(流血 * 3)</color>，并减少 <color=red>流血</color> 层数的 1/3。（向上取整）
+		/// <color=red>流血</color>层数：&a
+		/// 每当自身行动时，受到<color=purple>&b点痛苦伤害</color>(层数 x 3)，并移除1/3的层数（向上取整）。
 		/// Chinese-TW:
-		/// 當前 &a <color=red>流血</color>。
-		/// 每次行動都會受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(流血 * 3)</color>，並減少 <color=red>流血</color> 層數的 1/3。（向上取整）
+		/// <color=red>流血</color>層數：&a
+		/// 每當自身行動時，受到<color=purple>&b點痛苦傷害</color>(層數 x 3)，並移除1/3的層數（向上取整）。
 		/// </summary>
         public static string EmotionSystem_Bleed_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Bleed_0");
 		/// <summary>
@@ -1842,9 +2136,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 行動のたびに <color=purple>&b 苦痛ダメージ</color> <color=#FF7C34>(出血 * 3)</color> を受け、<color=red>出血</color> スタックの1/3を減少させます。（切り上げ）
 		/// Chinese:
-		/// 每次行动都会受到 <color=purple>&b 伤痛伤害</color> <color=#FF7C34>(流血 * 3)</color>，并减少 <color=red>流血</color> 层数的 1/3。（向上取整）
+		/// 每当自身行动时，受到<color=purple>&b点痛苦伤害</color>(层数 x 3)，并移除1/3的层数（向上取整）。
 		/// Chinese-TW:
-		/// 每次行動都會受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(流血 * 3)</color>，並減少 <color=red>流血</color> 層數的 1/3。（向上取整）
+		/// 每當自身行動時，受到<color=purple>&b點痛苦傷害</color>(層數 x 3)，並移除1/3的層數（向上取整）。
 		/// </summary>
         public static string EmotionSystem_Bleed_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Bleed_1");
 		/// <summary>
@@ -1855,9 +2149,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// ボス招待
 		/// Chinese:
-		/// Boss 邀请函
+		/// Boss的邀请函
 		/// Chinese-TW:
-		/// Boss 邀請函
+		/// Boss的邀請函
 		/// </summary>
         public static string EmotionSystem_Boss_Invitations => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Boss_Invitations");
 		/// <summary>
@@ -1871,11 +2165,11 @@ namespace EmotionSystem
 		/// 現在 &a <color=#FC6178>火傷</color>。
 		/// ターン終了時に <color=purple>&b 苦痛ダメージ</color> <color=#FF7C34>(火傷 * 2)</color> を受け、<color=#FC6178>火傷</color> スタックの1/3を減少させます。（切り捨て）
 		/// Chinese:
-		/// 当前 &a <color=#FC6178>灼烧</color>。
-		/// 回合结束时受到 <color=purple>&b 伤痛伤害</color> <color=#FF7C34>(灼烧 * 2)</color>，并减少 <color=#FC6178>灼烧</color> 层数的 1/3。（向下取整）
+		/// <color=#FC6178>烧伤</color>层数：&a
+		/// 回合结束时，受到<color=purple>&b点痛苦伤害</color>(层数 x 2)，并移除1/3的层数（向下取整）。
 		/// Chinese-TW:
-		/// 當前 &a <color=#FC6178>灼燒</color>。
-		/// 回合結束時受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(灼燒 * 2)</color>，並減少 <color=#FC6178>灼燒</color> 層數的 1/3。（向下取整）
+		/// <color=#FC6178>燒傷</color>層數：&a
+		/// 回合結束時，受到<color=purple>&b點痛苦傷害</color>(層數 x 2)，並移除1/3的層數（向下取整）。
 		/// </summary>
         public static string EmotionSystem_Burn_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Burn_0");
 		/// <summary>
@@ -1886,9 +2180,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// ターン終了時に <color=purple>&b 苦痛ダメージ</color> <color=#FF7C34>(火傷 * 2)</color> を受け、<color=#FC6178>火傷</color> スタックの1/3を減少させます。（切り捨て）
 		/// Chinese:
-		/// 回合结束时受到 <color=purple>&b 伤痛伤害</color> <color=#FF7C34>(灼烧 * 2)</color>，并减少 <color=#FC6178>灼烧</color> 层数的 1/3。（向下取整）
+		/// 回合结束时，受到<color=purple>&b点痛苦伤害</color>(层数 x 2)，并移除1/3的层数（向下取整）。
 		/// Chinese-TW:
-		/// 回合結束時受到 <color=purple>&b 疼痛傷害</color> <color=#FF7C34>(灼燒 * 2)</color>，並減少 <color=#FC6178>灼燒</color> 層數的 1/3。（向下取整）
+		/// 回合結束時，受到<color=purple>&b點痛苦傷害</color>(層數 x 2)，並移除1/3的層數（向下取整）。
 		/// </summary>
         public static string EmotionSystem_Burn_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Burn_1");
 		/// <summary>
@@ -1899,9 +2193,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=red>歪んだ</color> ボス
 		/// Chinese:
-		/// <color=red>扭曲</color> Boss
+		/// <color=red>扭曲的</color>Boss
 		/// Chinese-TW:
-		/// <color=red>扭曲</color> Boss
+		/// <color=red>扭曲的</color>Boss
 		/// </summary>
         public static string EmotionSystem_Distorted_Bosses => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Distorted_Bosses");
 		/// <summary>
@@ -1912,9 +2206,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// ボスに適用する <color=red>歪曲</color> を選択してください。
 		/// Chinese:
-		/// 选择要对 Boss 施加的 <color=red>扭曲</color>。
+		/// 选择要套用于Boss的<color=red>扭曲</color>。
 		/// Chinese-TW:
-		/// 選擇要施加給 Boss 的 <color=red>扭曲</color>。
+		/// 選擇要套用於Boss的<color=red>扭曲</color>。
 		/// </summary>
         public static string EmotionSystem_Distortion_Selection => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Distortion_Selection");
 		/// <summary>
@@ -1925,9 +2219,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// ゲスト感情
 		/// Chinese:
-		/// 访客情绪
+		/// 访客的情感开关
 		/// Chinese-TW:
-		/// 客人情緒
+		/// 訪客的情感開關
 		/// </summary>
         public static string EmotionSystem_EmotionsGuest => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_EmotionsGuest");
 		/// <summary>
@@ -1938,11 +2232,32 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 調査員感情
 		/// Chinese:
-		/// 调查员情绪
+		/// 调查员的情感开关
 		/// Chinese-TW:
-		/// 調查員情緒
+		/// 調查員的情感開關
 		/// </summary>
         public static string EmotionSystem_EmotionsInvestigator => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_EmotionsInvestigator");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current &a <color=#90EE90>Erosion</color>.
+		/// When taking damage, increase that damage by &a <color=#FF7C34>(Current Erosion)</color>.
+		/// Remove 1 <color=#90EE90>Erosion</color> at the start of the next turn.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionSystem_Erosion_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Erosion_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// When taking damage, increase that damage by &a <color=#FF7C34>(Current Erosion)</color>.
+		/// Remove 1 <color=#90EE90>Erosion</color> at the start of the next turn.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionSystem_Erosion_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Erosion_1");
 		/// <summary>
 		/// Korean:
 		/// 예술의 층
@@ -1984,15 +2299,24 @@ namespace EmotionSystem
         public static string EmotionSystem_Floor_Literature => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Literature");
 		/// <summary>
 		/// Korean:
+		/// English:
+		/// Floor of Natural Sciences
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionSystem_Floor_Natural => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Natural");
+		/// <summary>
+		/// Korean:
 		/// 기술 과학의 층
 		/// English:
 		/// Floor of Technological Sciences
 		/// Japanese:
 		/// 技術科学の階
 		/// Chinese:
-		/// 技术科学层
+		/// 科技层
 		/// Chinese-TW:
-		/// 技術科學層
+		/// 科技層
 		/// </summary>
         public static string EmotionSystem_Floor_Technological => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Technological");
 		/// <summary>
@@ -2003,9 +2327,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=red>否定</color>
 		/// Chinese:
-		/// <color=red>负面</color>
+		/// <color=red>负面的</color>
 		/// Chinese-TW:
-		/// <color=red>負面</color>
+		/// <color=red>負面的</color>
 		/// </summary>
         public static string EmotionSystem_Points_Negative => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Points_Negative");
 		/// <summary>
@@ -2016,9 +2340,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=green>肯定</color>
 		/// Chinese:
-		/// <color=green>正面</color>
+		/// <color=green>正面的</color>
 		/// Chinese-TW:
-		/// <color=green>正面</color>
+		/// <color=green>正面的</color>
 		/// </summary>
         public static string EmotionSystem_Points_Positive => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Points_Positive");
 		/// <summary>
@@ -2029,9 +2353,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// アクティブ
 		/// Chinese:
-		/// 激活
+		/// 生效中
 		/// Chinese-TW:
-		/// 啟用
+		/// 生效中
 		/// </summary>
         public static string EmotionSystem_Status_Active => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Status_Active");
 		/// <summary>
@@ -2042,9 +2366,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 非アクティブ
 		/// Chinese:
-		/// 未激活
+		/// 未生效
 		/// Chinese-TW:
-		/// 未啟用
+		/// 未生效
 		/// </summary>
         public static string EmotionSystem_Status_Inactive => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Status_Inactive");
 		/// <summary>
@@ -2055,9 +2379,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 異常を受け取る調査員を選択してください。
 		/// Chinese:
-		/// 选择要获得异常的调查员。
+		/// 选择要获得异想体页面的调查员。
 		/// Chinese-TW:
-		/// 選擇將獲得異常的調查員。
+		/// 選擇要獲得異想體頁面的調查員。
 		/// </summary>
         public static string SelectOwner_Abnormality => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("SelectOwner_Abnormality");
 		/// <summary>
@@ -2068,9 +2392,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=#FFDF00>E.G.O.</color> スキルを受け取る調査員を選択してください。
 		/// Chinese:
-		/// 选择要获得 <color=#FFDF00>E.G.O.</color> 技能的调查员。
+		/// 选择调查员成为<color=#FFDF00>E.G.O.</color>的持有者。
 		/// Chinese-TW:
-		/// 選擇將獲得 <color=#FFDF00>E.G.O.</color> 技能的調查員。
+		/// 選擇調查員成為<color=#FFDF00>E.G.O.</color>的持有者。
 		/// </summary>
         public static string SelectOwner_EGO => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("SelectOwner_EGO");
 		/// <summary>
@@ -2081,9 +2405,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 異常を選択してください。
 		/// Chinese:
-		/// 选择异常。
+		/// 选择异想体页面。
 		/// Chinese-TW:
-		/// 選擇異常。
+		/// 選擇異想體頁面。
 		/// </summary>
         public static string Select_Abnormality => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("Select_Abnormality");
 		/// <summary>
@@ -2094,9 +2418,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// <color=#FFDF00>E.G.O.</color> スキルを選択してください。
 		/// Chinese:
-		/// 选择 <color=#FFDF00>E.G.O.</color> 技能。
+		/// 选择<color=#FFDF00>E.G.O.</color>页面。
 		/// Chinese-TW:
-		/// 選擇 <color=#FFDF00>E.G.O.</color> 技能。
+		/// 選擇<color=#FFDF00>E.G.O.</color>頁面。
 		/// </summary>
         public static string Select_EGO => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("Select_EGO");
 

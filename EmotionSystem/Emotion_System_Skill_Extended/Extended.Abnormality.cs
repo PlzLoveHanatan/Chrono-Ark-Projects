@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameDataEditor;
 
 namespace EmotionSystem
 {
@@ -63,6 +64,41 @@ namespace EmotionSystem
 				{
 					BChar.StartCoroutine(Utils.HealingParticle(null, BChar, 10, true, true, true, true, true));
 					Utils.RemoveSkill(MySkill, true);
+				}
+			}
+
+			public class Justice : BuffSkillExHand
+			{
+
+			}
+
+
+			public class KingGreed : BuffSkillExHand
+			{
+				public override void Init()
+				{
+					var key = MySkill.MySkill.Target.Key;
+
+					if (key == GDEItemKeys.s_targettype_enemy || key == GDEItemKeys.s_targettype_all_other)
+					{
+						MySkill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_onetarget);
+					}
+				}
+			}
+
+			public class MagicalGirls : Skill_Extended, IP_PlayerTurn
+			{
+				public int ManaReduction = 0;
+
+				public override void FixedUpdate()
+				{
+					APChange = -ManaReduction;
+				}
+
+				public void Turn()
+				{
+					ManaReduction = 0;
+					SelfDestroy();
 				}
 			}
 		}

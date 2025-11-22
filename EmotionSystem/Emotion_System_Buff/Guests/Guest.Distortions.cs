@@ -31,13 +31,21 @@ namespace EmotionSystem
 					}
 				}
 
-				public void AddRewards(int equipTier = 0, int soulStone = 0)
+				public void AddRewards(int equipTier = 0, int soulStone = 0, int gold = 600)
 				{
+					bool legendaryDrop = RandomManager.RandomPer(RandomClassKey.BattleReward, 100, 20);
+
+					if (legendaryDrop)
+					{
+						equipTier = 4;
+					}
+
 					string randomEquipKey = PlayData.GetEquipRandom(equipTier, false, new List<string>());
 
 					RewardItems.Add(ItemBase.GetItem(randomEquipKey));
-					//RewardItems.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_ArtifactPouch));we
+					//RewardItems.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_ArtifactPouch));
 					RewardItems.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Soul, soulStone));
+					RewardItems.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, gold));
 					//RewardItems.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_RedHammer));
 				}
 
@@ -72,7 +80,7 @@ namespace EmotionSystem
 					PlusStat.RES_CC += 20f;
 					PlusStat.RES_DEBUFF += 20f;
 					PlusStat.RES_DOT += 20f;
-					AddRewards(3, 1);
+					AddRewards(3, 3);
 					RegisterRewardsToView();
 				}
 			}
@@ -86,11 +94,11 @@ namespace EmotionSystem
 
 				public override void Init()
 				{
-					PlusPerStat.MaxHP += 140;
+					PlusPerStat.MaxHP += 130;
 					PlusStat.RES_CC += 20f;
 					PlusStat.RES_DEBUFF += 20f;
 					PlusStat.RES_DOT += 20f;
-					AddRewards(3, 1);
+					AddRewards(3, 3);
 					RegisterRewardsToView();
 				}
 			}
@@ -104,7 +112,7 @@ namespace EmotionSystem
 					PlusStat.RES_DEBUFF += 20f;
 					PlusStat.RES_DOT += 20f;
 					PlusStat.DMGTaken -= 10;
-					AddRewards(3, 1);
+					AddRewards(3, 3);
 					RegisterRewardsToView();
 				}
 			}
@@ -118,7 +126,7 @@ namespace EmotionSystem
 					PlusStat.RES_DEBUFF += 20f;
 					PlusStat.RES_DOT += 20f;
 					PlusStat.dod += 10;
-					AddRewards(3, 2);
+					AddRewards(3, 3);
 					RegisterRewardsToView();
 				}
 
@@ -143,7 +151,7 @@ namespace EmotionSystem
 					PlusStat.RES_DEBUFF += 20f;
 					PlusStat.RES_DOT += 20f;
 					PlusPerStat.Damage += 10;
-					AddRewards(3, 1);
+					AddRewards(3, 3);
 					RegisterRewardsToView();
 				}
 
@@ -167,7 +175,7 @@ namespace EmotionSystem
 					PlusStat.RES_CC += 40f;
 					PlusStat.RES_DEBUFF += 40f;
 					PlusStat.RES_DOT += 40f;
-					AddRewards(3, 1);
+					AddRewards(3, 3);
 					RegisterRewardsToView();
 				}
 

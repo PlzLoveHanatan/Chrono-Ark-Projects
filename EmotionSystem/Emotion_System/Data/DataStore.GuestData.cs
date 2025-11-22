@@ -76,7 +76,7 @@ namespace EmotionSystem
 				{ GDEItemKeys.Enemy_S2_BombClownBoss, new List<string> { } },
 				{ GDEItemKeys.Enemy_MBoss2_1, new List<string> { } },
 				{ GDEItemKeys.Enemy_SR_GunManBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
-				{ GDEItemKeys.Enemy_S3_Boss_Pope, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
+				{ GDEItemKeys.Enemy_S3_Boss_Pope, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair } },
 				{ GDEItemKeys.Enemy_S3_Boss_TheLight, new List<string> { } },
 				{ GDEItemKeys.Enemy_S3_Boss_Reaper, new List<string> { } },
 				{ GDEItemKeys.Enemy_S3_FanaticBoss, new List<string> { } },
@@ -93,6 +93,7 @@ namespace EmotionSystem
 				{ GDEItemKeys.Enemy_S4_King_minion_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_S4_King_minion_1, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
 				{ GDEItemKeys.Enemy_TrialofBrave_Enemy_summon, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_TrialofStrength_Enemy, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_YouMustbeHappy, ModItemKeys.Buff_B_Abnormality_GuestLv1_Stress } },
 			};
 
 			public readonly List<string> AbnormalityKeyList = new List<string>

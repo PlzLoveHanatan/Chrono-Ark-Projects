@@ -45,6 +45,15 @@ namespace EmotionSystem
 				ModItemKeys.Skill_S_EGO_Art_Galaxy,
 				ModItemKeys.Skill_S_EGO_Art_Pleasure,
 			};
+
+			public readonly List<string> NaturalKeyList = new List<string>
+			{
+				ModItemKeys.Skill_S_EGO_Natural_Gold,
+				ModItemKeys.Skill_S_EGO_Natural_Hate,
+				ModItemKeys.Skill_S_EGO_Natural_Nihil,
+				ModItemKeys.Skill_S_EGO_Natural_Rage,
+				ModItemKeys.Skill_S_EGO_Natural_Sword,
+			};
 		}
 	}
 }

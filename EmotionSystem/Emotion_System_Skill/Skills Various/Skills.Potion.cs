@@ -30,7 +30,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					EmotionalManager.AbnormalitySelection(2, false, true);
+					EmotionManager.AbnormalitySelection(2, false, true);
 				}
 			}
 
@@ -38,7 +38,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					EmotionalManager.AbnormalitySelection(2, true);
+					EmotionManager.AbnormalitySelection(2, true);
 				}
 			}
 
@@ -46,7 +46,7 @@ namespace EmotionSystem
 			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					EmotionalManager.EGOSelection();
+					EmotionManager.EGOSelection();
 				}
 			}
 
@@ -58,7 +58,7 @@ namespace EmotionSystem
 					{
 						if (ally != null)
 						{
-							EmotionalManager.SetEmotionCapInvestigator(ally);
+							EmotionManager.SetEmotionCapInvestigator(ally);
 						}
 					}
 				}
@@ -72,7 +72,7 @@ namespace EmotionSystem
 					{
 						if (enemy != null)
 						{
-							EmotionalManager.SetEmotionCapGuest(enemy, true);
+							EmotionManager.SetEmotionCapGuest(enemy, true);
 						}
 					}
 				}

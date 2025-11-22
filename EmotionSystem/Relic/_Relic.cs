@@ -56,11 +56,11 @@ namespace EmotionSystem
 				{
 					if (isPositivePoints)
 					{
-						EmotionalManager.GetPosEmotion(ally, null, 3);
+						EmotionManager.GetPosEmotion(ally, null, 3);
 					}
 					else
 					{
-						EmotionalManager.GetNegEmotion(ally, null, 3);
+						EmotionManager.GetNegEmotion(ally, null, 3);
 					}
 				}
 			}

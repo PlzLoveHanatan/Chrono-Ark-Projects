@@ -119,7 +119,7 @@ namespace EmotionSystem
 					}
 					catch (Exception e)
 					{
-						Debug.Log(e.ToString());
+						Debug.Log(e);
 					}
 				}
 

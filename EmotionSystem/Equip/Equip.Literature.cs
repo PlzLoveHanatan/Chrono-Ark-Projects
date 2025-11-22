@@ -33,7 +33,7 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					PlusStat.DMGTaken = -15;
+					PlusStat.DMGTaken = -10;
 					PlusStat.Strength = true;
 				}
 

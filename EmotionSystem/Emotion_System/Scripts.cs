@@ -13,6 +13,9 @@ using System.Collections;
 using Spine;
 using System.Web;
 using System.Drawing;
+using I2.Loc;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using NLog.Targets;
 
 
 namespace EmotionSystem
@@ -41,41 +44,110 @@ namespace EmotionSystem
 			//}
 		}
 
-		public static void AttackRedirect(BattleChar bchar, Skill skillD, List<BattleChar> targets, int damage = 0)
+		public static void AttackRedirect(BattleChar user, Skill skill, List<BattleChar> targets)
 		{
-			var newTargets = Utils.AllyTeam.AliveChars.Where(a => a != null && a != bchar)
-				.Concat(Utils.EnemyTeam.AliveChars.Where(e => e != null)).ToList();
+			if (user == null || skill == null) return;
+
+			var newTargets = Utils.AllyTeam.AliveChars.Where(a => a != null && a != user)
+				.Concat(Utils.EnemyTeam.AliveChars.Where(e => e != null))
+				.ToList();
 
 			if (newTargets.Count == 0) return;
 
-			int index = RandomManager.RandomInt(bchar.GetRandomClass().Target, 0, newTargets.Count);
+			int index = RandomManager.RandomInt(RandomClassKey.Active, 0, newTargets.Count);
 			var randomTarget = newTargets[index];
+			var targetKey = skill.MySkill.Target.Key;
+			var oldTargetType = targetKey;
+			bool edgeCase = skill.MySkill.Target.Key == GDEItemKeys.s_targettype_all_enemy;
 
-			if (skillD.IsDamage && skillD.Master == bchar && !skillD.FreeUse && !skillD.PlusHit)
+			if (edgeCase)
 			{
+				skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_onetarget);
+				newTargets = user.MyTeam.AliveChars_Vanish.ToList();
 				targets.Clear();
-
-				if (skillD.MySkill.Target.Key == GDEItemKeys.s_targettype_all_enemy)
-				{
-					foreach (var enemy in Utils.EnemyTeam.AliveChars)
-					{
-						if (enemy != randomTarget)
-						{
-							Utils.AddBuff(bchar, enemy, ModItemKeys.Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_1);
-						}
-					}
-
-					targets.Add(randomTarget);
-					randomTarget?.Damage(bchar, damage, false, false);
-
-					Utils.EnemyTeam.AliveChars.ForEach(e => Utils.RemoveBuff(e, ModItemKeys.Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_1, true));
-				}
-
-				else if (randomTarget != null)
-				{
-					targets.Add(randomTarget);
-				}
+				targets.Add(randomTarget);
+				user.StartCoroutine(ReturnTargetType(skill, oldTargetType));
 			}
+			else if (randomTarget != null)
+			{
+				targets.AddRange(user.BattleInfo.SkillTargetReturn(skill, randomTarget, null));
+			}
+			ShowConfuseText(user);
+		}
+
+		public static void AttackRedirect(BattleChar user, Skill skill, List<BattleChar> targets, bool isSelfTarget = false, int chance = 0)
+		{
+			bool neverLucky = RandomManager.RandomPer(RandomClassKey.Active, 100, chance);
+
+			if (skill == null || user == null || !neverLucky) return;
+
+			var targetKey = skill.MySkill.Target.Key;
+			var oldTargetType = targetKey;
+			bool edgeCase = skill.MySkill.Target.Key == GDEItemKeys.s_targettype_all_enemy;
+
+			if (edgeCase)
+			{
+				// временно меняем таргет на одиночный
+				skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_onetarget);
+
+				List<BattleChar> newTargets;
+
+				if (!isSelfTarget)
+				{
+					newTargets = user.MyTeam.AliveChars_Vanish.Where(a => a != user).ToList();
+				}
+				else
+				{
+					newTargets = user.MyTeam.AliveChars_Vanish.ToList();
+				}
+
+				if (newTargets == null || newTargets.Count == 0)
+				{
+					user.StartCoroutine(ReturnTargetType(skill, oldTargetType)); // обязательно вернуть обратно
+					Debug.Log("AttackRedirect: No valid targets for AOE redirect.");
+					return;
+				}
+
+				targets.Clear();
+				targets.AddRange(newTargets);
+
+				user.StartCoroutine(ReturnTargetType(skill, oldTargetType));
+			}
+			else
+			{
+				BattleChar target;
+
+				var candidates = isSelfTarget
+					? user.MyTeam.AliveChars_Vanish.ToList()
+					: user.MyTeam.AliveChars_Vanish.Where(a => a != user).ToList();
+
+				if (candidates == null || candidates.Count == 0)
+				{
+					Debug.Log("AttackRedirect: No candidates for redirect.");
+					return;
+				}
+
+				// выбираем случайного
+				target = candidates.Random(RandomClassKey.Active);
+
+				targets.Clear();
+				targets.AddRange(user.BattleInfo.SkillTargetReturn(skill, target, null));
+			}
+
+			ShowConfuseText(user);
+		}
+
+		private static IEnumerator ReturnTargetType(Skill skill, string oldTargetKey)
+		{
+			yield return null;
+			skill.MySkill.Target = new GDEs_targettypeData(oldTargetKey);
+		}
+
+		public static void ShowConfuseText(BattleChar user)
+		{
+			var fx = Misc.UIInst(user.BattleInfo.EffectViewOb);
+			fx.transform.position = user.Info.Ally ? user.GetPos() : user.GetTopPos();
+			fx.GetComponent<EffectView>().TextOut(user.Info.Ally, " " + ScriptLocalization.System_Curse.Confu_Text);
 		}
 
 		public static void DestroyActions(BattleChar target, int actions = 1)
@@ -117,26 +189,42 @@ namespace EmotionSystem
 			}
 		}
 
+		private static Skill TempSkill(BattleChar user, string skillKey, bool isPlusHit = true, bool isFreeUse = true)
+		{
+			Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
+
+			if (skill == null)
+			{
+				return null;
+			}
+
+			skill.PlusHit = isPlusHit;
+			skill.FreeUse = isFreeUse;
+			return skill;
+		}
+
+
+		private static void ParticleOut(BattleChar target, BattleChar user, Skill skill)
+		{
+			var realTarget = target.IsDead
+				? user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target)
+				: target;
+
+			user.ParticleOut(skill, realTarget);
+		}
+
 		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, int recastNum = 1)
 		{
 			for (int i = 0; i < recastNum; i++)
 			{
 				yield return new WaitForSecondsRealtime(0.3f);
 
-				Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
-				skill.PlusHit = true;
-				skill.FreeUse = true;
-
-				if (target.IsDead)
+				var skill = TempSkill(user, skillKey);
+				if (skill != null)
 				{
-					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
-				}
-				else
-				{
-					user.ParticleOut(skill, target);
+					ParticleOut(target, user, skill);
 				}
 			}
-			yield break;
 		}
 
 		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, int recastNum = 1, int healingNum = 0, bool isHealLowestAlly = false, bool isPrimaryHeal = false)
@@ -151,17 +239,10 @@ namespace EmotionSystem
 				yield return new WaitForSecondsRealtime(0.2f);
 				yield return Utils.HealingParticle(user, Utils.DummyChar, healingNum, true, false, isHealLowestAlly, true, true);
 
-				Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
-				skill.PlusHit = true;
-				skill.FreeUse = true;
-
-				if (target.IsDead)
+				var skill = TempSkill(user, skillKey);
+				if (skill != null)
 				{
-					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
-				}
-				else
-				{
-					user.ParticleOut(skill, target);
+					ParticleOut(target, user, skill);
 				}
 			}
 			yield break;
@@ -173,61 +254,50 @@ namespace EmotionSystem
 			{
 				yield return new WaitForSecondsRealtime(0.3f);
 
-				Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
-				skill.PlusHit = true;
-				skill.FreeUse = true;
-
-				if (target.IsDead)
+				var skill = TempSkill(user, skillKey);
+				if (skill != null)
 				{
-					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
-					Utils.AddDebuff(target, user, debuffKey, percentage);
-				}
-				else
-				{
-					user.ParticleOut(skill, target);
+					ParticleOut(target, user, skill);
 					Utils.AddDebuff(target, user, debuffKey, percentage);
 				}
 			}
 			yield break;
 		}
 
-		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, int recastNum = 1, bool isInflictBleed = false, int bleedNum = 1, int percentage = 0)
+		public static IEnumerator RecastSkillBleed(BattleChar target, BattleChar user, string skillKey, int recastNum = 1, int bleedNum = 1, int percentage = 0)
 		{
+			Utils.ApplyBleed(target, user, bleedNum, percentage);
+
 			for (int i = 0; i < recastNum; i++)
 			{
 				yield return new WaitForSecondsRealtime(0.3f);
 
-				Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
-				skill.PlusHit = true;
-				skill.FreeUse = true;
-
-				if (target.IsDead)
+				var skill = TempSkill(user, skillKey);
+				if (skill != null)
 				{
-					user.ParticleOut(skill, user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target));
-
-					if (isInflictBleed)
-					{
-						Utils.ApplyBleed(target, user, bleedNum, percentage);
-					}
-				}
-				else
-				{
-					user.ParticleOut(skill, target);
-
-					if (isInflictBleed)
-					{
-						Utils.ApplyBleed(target, user, bleedNum, percentage);
-					}
+					ParticleOut(target, user, skill);
+					Utils.ApplyBleed(target, user, bleedNum, percentage);
 				}
 			}
 			yield break;
 		}
 
-		public static IEnumerator WingBeatHeal(BattleChar user)
+		public static IEnumerator RecastSkillErosion(BattleChar target, BattleChar user, string skillKey, int recastNum = 1, int erosionNum = 1, int percentage = 0)
 		{
-			yield return new WaitForSecondsRealtime(0.3f);
-			Utils.PlaySound("Floor_History_Wingbeat");
-			yield return Utils.HealingParticle(user, BattleSystem.instance.DummyChar, 8, true, true, true, true, true);
+			Utils.ApplyErosion(target, user, erosionNum, percentage);
+
+			for (int i = 0; i < recastNum; i++)
+			{
+				yield return new WaitForSecondsRealtime(0.3f);
+
+				var skill = TempSkill(user, skillKey);
+				if (skill != null)
+				{
+					ParticleOut(target, user, skill);
+					Utils.ApplyErosion(target, user, erosionNum, percentage);
+				}
+			}
+			yield break;
 		}
 
 		public static void SynchronizeWithEGO(BattleChar bchar, string desynchronizeSkill, List<string> skillsToSync)
@@ -395,6 +465,96 @@ namespace EmotionSystem
 			{
 				Utils.GetOrAddBuff(target, buffKey, percentage);
 			}
+		}
+
+		public static void AbnormalitySkillSelection(BattleChar user, DataStore.AbnormalitySkillsData.AbnormalityNatural abnoKey)
+		{
+			if (user.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove)
+			{
+				return;
+			}
+			BattleSystem.DelayInputAfter(SkillSelectionCoroutine(user, abnoKey));
+		}
+
+		private static IEnumerator SkillSelectionCoroutine(BattleChar user, DataStore.AbnormalitySkillsData.AbnormalityNatural abnoKey)
+		{
+			List<Skill> list = new List<Skill>();
+
+			if (DataStore.Instance.AbnormalitySkill.NaturalSkills.TryGetValue(abnoKey, out var dataList))
+			{
+				foreach (var data in dataList)
+				{
+					int gold = data.Gold;
+					string skillKey = data.Skill;
+
+					if (PlayData.TSavedata._Gold >= gold)
+					{
+						var skill = Skill.TempSkill(skillKey, user, user.MyTeam);
+						if (skill != null)
+						{
+							list.Add(skill);
+						}
+					}
+				}
+
+				if (list.Count > 0)
+				{
+					BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(list, new SkillButton.SkillClickDel(btn => OnSkillSelected(btn, user)),
+							ScriptLocalization.System_SkillSelect.EffectSelect, true, false));
+				}
+
+				yield break;
+			}
+		}
+
+		private static void OnSkillSelected(SkillButton myButton, BattleChar user)
+		{
+			if (myButton == null || myButton.Myskill == null || myButton.Myskill.MySkill == null)
+			{
+				return;
+			}
+
+			if (DataStore.Instance.AbnormalitySkill.NaturalSkillCost.TryGetValue(myButton.Myskill.MySkill.KeyID, out var gold))
+			{
+				PlayData.TSavedata._Gold = gold;
+			}
+
+			EmotionSystem_EGO_Button.instance.AddEGOSkill(user, myButton.Myskill.MySkill.KeyID);
+		}
+
+		public static bool LoseDrawBacks(BattleChar user)
+		{
+			// Проверяем наличие Nix
+
+			var nix = Utils.ReturnBuff(user, ModItemKeys.Buff_B_Abnormality_NaturalLv3_Nix) as NaturalBuff.Abnormality.Lv3.Nix;
+			
+			if (nix == null)
+			{
+				return false;
+			}
+
+			// Получаем все баффы
+			var despair = Utils.ReturnBuff(user, ModItemKeys.Buff_B_Abnormality_NaturalLv1_Despair) as NaturalBuff.Abnormality.Lv1.Despair;
+			var hate = Utils.ReturnBuff(user, ModItemKeys.Buff_B_Abnormality_NaturalLv1_Hate) as NaturalBuff.Abnormality.Lv1.Hate;
+			var greed = Utils.ReturnBuff(user, ModItemKeys.Buff_B_Abnormality_NaturalLv2_Greed) as NaturalBuff.Abnormality.Lv2.Greed;
+			var wrath = Utils.ReturnBuff(user, ModItemKeys.Buff_B_Abnormality_NaturalLv2_Wrath) as NaturalBuff.Abnormality.Lv2.Wrath;
+
+			// Если любого баффа нет, возвращаем false
+			if (despair == null || hate == null || greed == null || wrath == null)
+			{
+				return false;
+			}
+
+			// Меняем флаги
+			if (despair.DespairDrawBack) despair.DespairDrawBack = false;
+			if (hate.HateDrawBack) hate.HateDrawBack = false;
+			if (greed.GreedDrawBack) greed.GreedDrawBack = false;
+			if (wrath.WrathDrawBack) wrath.WrathDrawBack = false;
+
+			nix.noDrawBacks = true;
+
+			// Все баффы были — возвращаем true
+			return true;
 		}
 	}
 }

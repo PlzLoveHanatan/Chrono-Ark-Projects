@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EmotionSystem;
 using GameDataEditor;
+using UnityEngine;
 using static CharacterDocument;
 using static EmotionSystem.Extended.EGO;
 using static EmotionSystem.Scripts;
@@ -82,7 +84,15 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					BattleSystem.DelayInputAfter(Sync());
+				}
+
+				private IEnumerator Sync()
+				{
+					yield return new WaitForEndOfFrame();
 					Utils.AllyTeam.Draw(2);
+					SynchronizeWithEGO(BChar, ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_Desynchronize, DataStore.Instance.Synchronization.DerSkills);
+					yield break;
 				}
 			}
 
@@ -128,6 +138,7 @@ namespace EmotionSystem
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					DeSynchronize(BChar);
+					Utils.RemoveBuff(BChar, ModItemKeys.Buff_B_EGO_Technological_MagicBullet);
 				}
 			}
 

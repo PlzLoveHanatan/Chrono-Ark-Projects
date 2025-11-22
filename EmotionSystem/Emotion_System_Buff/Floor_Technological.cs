@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EmotionSystem;
 using GameDataEditor;
+using Spine;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 using static EmotionSystem.DataStore.Synchronize;
@@ -45,8 +47,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chance = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-						return base.DescExtended().Replace("&a", chance.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar).ToString());
 					}
 
 					public override void Init()
@@ -59,7 +60,7 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
 							Utils.PlaySound("Floor_Technological_Metallic");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 1);
 						}
 					}
 				}
@@ -84,7 +85,7 @@ namespace EmotionSystem
 
 					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 					{
-						if (SkillD.Master == BChar && SkillD.IsDamage)
+						if (SkillD.Master == BChar && SkillD.IsDamage && !ManaNextTurn)
 						{
 							Utils.PlaySound("Floor_Technological_Repetitive");
 							ManaNextTurn = true;
@@ -216,15 +217,12 @@ namespace EmotionSystem
 
 					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
 					{
-						if (IsCri)
+						if (IsCri && critsPerTurn >= 2)
 						{
 							Utils.PlaySound("Floor_Technological_Clean");
+							Utils.AllyTeam.AP += 1;
+							critsPerTurn++;
 
-							if (critsPerTurn >= 2)
-							{
-								Utils.AllyTeam.AP += 1;
-								critsPerTurn++;
-							}
 						}
 					}
 
@@ -238,8 +236,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chance = (int)(BChar.GetStat.HIT_CC + 100);
-						return base.DescExtended().Replace("&a", chance.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceCC(BChar, 25).ToString());
 					}
 
 					public override void Init()
@@ -257,9 +254,8 @@ namespace EmotionSystem
 
 							if (Damage >= threshold)
 							{
-								int chance = (int)(BChar.GetStat.HIT_CC + 100);
 								Utils.PlaySound("Floor_Technological_EternalRest");
-								Utils.AddDebuff(enemy, BChar, GDEItemKeys.Buff_B_Common_Rest, 1, chance);
+								Utils.AddDebuff(enemy, BChar, GDEItemKeys.Buff_B_Common_Rest, 1, 25);
 							}
 						}
 					}
@@ -316,7 +312,7 @@ namespace EmotionSystem
 
 					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 					{
-						if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.BasicSkill)
+						if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.BasicSkill && !SkillD.PlusHit)
 						{
 							AttackUses++;
 
@@ -328,15 +324,14 @@ namespace EmotionSystem
 							if (AttackUses >= 7)
 							{
 								Utils.PlaySound("Floor_Technological_TheSeventhBullet");
-								Scripts.AttackRedirect(BChar, SkillD, Targets, SkillD.TargetDamage);
-								Utils.RemoveBuff(BChar, ModItemKeys.Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_0, true);
+								Scripts.AttackRedirect(BChar, SkillD, Targets);
 								AttackUses = 0;
 							}
 						}
 					}
 				}
 
-				public class SeventhBullet_0 : Buff
+				public class SeventhBullet_0 : Buff, IP_SkillUse_User
 				{
 					public override void Init()
 					{
@@ -347,6 +342,14 @@ namespace EmotionSystem
 					public override bool CanSkillBuffAdd(Skill AddedSkill, int Index)
 					{
 						return AddedSkill.ExtendedFind<Extended.Abnormality.SeventhBullet>() == null && AddedSkill.Master == BChar && AddedSkill.IsDamage;
+					}
+
+					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
+					{
+						if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.BasicSkill && !SkillD.PlusHit)
+						{
+							SelfDestroy();
+						}
 					}
 				}
 
@@ -456,17 +459,12 @@ namespace EmotionSystem
 				}
 			}
 
-			public class MagicBullet : Buff, IP_Awake, IP_SkillUse_User
+			public class MagicBullet : Buff, IP_SkillUse_User
 			{
 				public override void SelfdestroyPlus()
 				{
 					Scripts.DeSynchronize(BChar);
 					SelfDestroy();
-				}
-
-				public void Awake()
-				{
-					Scripts.SynchronizeWithEGO(BChar, ModItemKeys.Skill_S_EGO_Synchronize_MagicBullet_Desynchronize, DataStore.Instance.Synchronization.DerSkills);
 				}
 
 				public void SkillUse(Skill SkillD, List<BattleChar> Targets)

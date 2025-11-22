@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace EmotionSystem
 {
-	public static class EmotionalManager
+	public static class EmotionManager
 	{
 		public static GameObject EmotionTrajectoryPos;
 		public static GameObject EmotionTrajectoryNeg;
@@ -241,6 +241,14 @@ namespace EmotionSystem
 			if (Utils.ReturnBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level) is Investigators.EmotionLucy lucyEmotion)
 			{
 				BattleSystem.DelayInputAfter(lucyEmotion.SelectEGO());
+			}
+		}
+
+		public static void InvertEmotionPoints(BattleChar user, bool isInvert = true)
+		{
+			if (Utils.ReturnBuff(user, ModItemKeys.Buff_B_Investigator_Emotional_Level) is Investigators.Emotion.Level userEmotion)
+			{
+				userEmotion.InvertPoints = isInvert;
 			}
 		}
 	}

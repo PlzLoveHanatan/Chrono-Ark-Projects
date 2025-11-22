@@ -54,7 +54,6 @@ namespace EmotionSystem
 					Utils.AllyTeam.Draw();
 				}
 			}
-
 		}
 
 		private void CleanDebuff(string debuffKey)

@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionSystem11172025180126</AssemblyName>
+    <AssemblyName>EmotionSystem11222025230335</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -409,18 +409,18 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                          <!-- Compile ItemGroup Start-->
+                                                                                                                                                                                                                                                                                                                                                                                                              <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionSystem_ModDefinition.cs" />
     <Compile Include="EmotionSystem_ModItemKeys.cs" />
     <Compile Include="EmotionSystem_Value.cs" />
     <Compile Include="IP_BuffObject_Updata.cs" />
     <Compile Include="TutorialLocalizer.cs" />
-    <Compile Include="Buff\B_Abnormality_LiteratureLv1_SurpriseGift.cs" />
-    <Compile Include="Emotion_System\Emotional_Manager.cs" />
+    <Compile Include="Emotion_System\Emotion_Manager.cs" />
     <Compile Include="Emotion_System\Scripts.cs" />
     <Compile Include="Emotion_System\Data\DataStore.Abnormality.cs" />
     <Compile Include="Emotion_System\Data\DataStore.AbnormalityData.cs" />
+    <Compile Include="Emotion_System\Data\DataStore.AbnormalitySkillData.cs" />
     <Compile Include="Emotion_System\Data\DataStore.EGOData.cs" />
     <Compile Include="Emotion_System\Data\DataStore.GuestData.cs" />
     <Compile Include="Emotion_System\Data\DataStore.LibraryFloor.cs" />
@@ -440,6 +440,7 @@
     <Compile Include="Emotion_System_Buff\Floor_Art.cs" />
     <Compile Include="Emotion_System_Buff\Floor_History.cs" />
     <Compile Include="Emotion_System_Buff\Floor_Literature.cs" />
+    <Compile Include="Emotion_System_Buff\Floor_Natural.cs" />
     <Compile Include="Emotion_System_Buff\Floor_Technological.cs" />
     <Compile Include="Emotion_System_Buff\Guests\Guest.Distortions.cs" />
     <Compile Include="Emotion_System_Buff\Guests\Guests.Abnormalities.cs" />
@@ -459,6 +460,7 @@
     <Compile Include="Emotion_System_Plugin\Plugin.Distortions.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.Invitastion.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.ResultUi.cs" />
+    <Compile Include="Emotion_System_Plugin\Plugin.ShopItems.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.StageStart.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.TimeTrial.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.TurnEnd.cs" />
@@ -466,6 +468,7 @@
     <Compile Include="Emotion_System_Skill\Floor_Art.cs" />
     <Compile Include="Emotion_System_Skill\Floor_History.cs" />
     <Compile Include="Emotion_System_Skill\Floor_Literature.cs" />
+    <Compile Include="Emotion_System_Skill\Floor_Natural.cs" />
     <Compile Include="Emotion_System_Skill\Floor_Technological.cs" />
     <Compile Include="Emotion_System_Skill\Skills Various\Skills.Guest.cs" />
     <Compile Include="Emotion_System_Skill\Skills Various\Skills.Lucy.cs" />

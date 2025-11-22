@@ -26,8 +26,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
 					}
 
 					public override void Init()
@@ -41,7 +40,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Literature_Axe");
-							Utils.ApplyBleed(hit, BChar);
+							Utils.ApplyBleed(hit, BChar, 1);
 						}
 					}
 				}
@@ -52,9 +51,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-						int chanceCC = (int)(BChar.GetStat.HIT_CC + 100);
-						return base.DescExtended().Replace("&a", chanceWeak.ToString()).Replace("&b", chanceCC.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar).ToString()).Replace("&b", Utils.ChanceCC(BChar).ToString());
 					}
 
 					public override void Init()
@@ -72,9 +69,9 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !oncePerTurn)
 						{
 							Utils.PlaySound("Floor_Literature_Cocoon");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 1);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 1);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind, 1);
 							oncePerTurn = true;
 						}
 					}
@@ -84,8 +81,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
 					}
 
 					public override void Init()
@@ -99,7 +95,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Literature_Glitter");
-							Utils.ApplyBleed(hit, BChar);
+							Utils.ApplyBleed(hit, BChar, 1);
 						}
 					}
 				}
@@ -224,9 +220,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-						int chanceCC = (int)(BChar.GetStat.HIT_CC + 100);
-						return base.DescExtended().Replace("&a", chanceWeak.ToString()).Replace("&b", chanceCC.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 25).ToString()).Replace("&b", Utils.ChanceCC(BChar, 25).ToString());
 					}
 
 					public override void Init()
@@ -245,9 +239,9 @@ namespace EmotionSystem
 						{
 							attackPlayed++;
 							Utils.PlaySound("Floor_Literature_Alertness");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 1 , 25);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 1, 25);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind, 1, 25);
 						}
 					}
 				}
@@ -327,8 +321,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 25).ToString());
 					}
 					
 					public override void Init()
@@ -342,7 +335,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Literature_Obsession");
-							Utils.ApplyBleed(hit, BChar, 2);
+							Utils.ApplyBleed(hit, BChar, 2, 25);
 						}
 					}
 				}
@@ -396,10 +389,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-						int chanceCC = (int)(BChar.GetStat.HIT_CC + 100);
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceWeak.ToString()).Replace("&b", chanceCC.ToString()).Replace("&c", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 50).ToString()).Replace("&b", Utils.ChanceCC(BChar, 50).ToString()).Replace("&c", Utils.ChanceDOT(BChar, 50).ToString());
 					}
 
 					public override void Init()
@@ -414,10 +404,10 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
 							Utils.PlaySound("Floor_Literature_GooeyWaste");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind);
-							Utils.ApplyBleed(hit, BChar);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 1, 50);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 1, 50);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind, 1, 50);
+							Utils.ApplyBleed(hit, BChar, 1, 50);
 						}
 					}
 				}
@@ -474,8 +464,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 25).ToString());
 					}
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
@@ -483,7 +472,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Literature_Glitter");
-							Utils.ApplyBleed(hit, BChar);
+							Utils.ApplyBleed(hit, BChar, 1, 25);
 						}
 					}
 				}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using EmotionSystem;
 using GameDataEditor;
 
@@ -15,29 +16,56 @@ namespace EmotionSystem
 		{
 			public class MusicBox : Buff, IP_SkillUse_User, IP_Dodge, IP_DamageTake, IP_Healed, IP_DealDamage, IP_Kill, IP_SomeOneDead
 			{
+				private bool Invert
+				{
+					get
+					{
+						if (Utils.ReturnBuff(BChar, ModItemKeys.Buff_B_Investigator_Emotional_Level) is Investigators.Emotion.Level level)
+						{
+							return level.InvertPoints;
+						}
+						return false;
+					}
+				}
+
+				private void GainPosOrNegPoints(Vector3? pos = null, int amount = 1)
+				{
+					if (Invert)
+					{
+						BChar.GetNegEmotion(pos, amount);
+					}
+					else
+					{
+						BChar.GetPosEmotion(pos, amount);
+					}
+				}
+
 				public override void SelfdestroyPlus()
 				{
-					EmotionalManager.SetEmotionCapInvestigator(BChar, true);
+					EmotionManager.SetEmotionCapInvestigator(BChar, true);
 				}
 
 				public void SomeOneDead(BattleChar DeadChar)
 				{
-					if (BChar.Info.Ally == DeadChar.Info.Ally && DeadChar != BChar)
+					if (DeadChar != BChar && DeadChar.Info.Ally)
 					{
-						BChar.GetNegEmotion(null, 3);
+						var pos = DeadChar.GetPosUI();
+						BChar.GetNegEmotion(pos, 3);
 					}
 				}
 
 				public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 				{
-					if (SkillD.IsHeal || SkillD.IsDamage && SkillD.Master == BChar)
+					if (SkillD.Master == BChar)
 					{
-						BChar.GetPosEmotion();
-					}
-
-					else if (SkillD.Master == BChar)
-					{
-						BChar.GetNegEmotion();
+						if (SkillD.IsHeal || SkillD.IsDamage)
+						{
+							GainPosOrNegPoints(SkillD.GetPosUI());
+						}
+						else
+						{
+							BChar.GetNegEmotion(SkillD.GetPosUI());
+						}
 					}
 				}
 
@@ -45,7 +73,7 @@ namespace EmotionSystem
 				{
 					if (SP.UseStatus == BChar)
 					{
-						BChar.GetPosEmotion(null, 3);
+						GainPosOrNegPoints(SP.UseStatus.GetPosUI(), 3);
 					}
 				}
 
@@ -53,12 +81,12 @@ namespace EmotionSystem
 				{
 					if (Damage >= 1)
 					{
-						BChar.GetPosEmotion();
+						GainPosOrNegPoints();
 					}
 
 					if (IsCri)
 					{
-						BChar.GetPosEmotion();
+						GainPosOrNegPoints();
 					}
 				}
 
@@ -66,12 +94,12 @@ namespace EmotionSystem
 				{
 					if (Dmg >= 1)
 					{
-						BChar.GetNegEmotion();
-						DeathDoorCheck();
+						GainPosOrNegPoints(User.GetPosUI());
+						BattleSystem.DelayInput(DeathDoorCheck());
 
 						if (Cri)
 						{
-							BChar.GetNegEmotion();
+							GainPosOrNegPoints(User.GetPosUI());
 						}
 					}
 				}
@@ -92,7 +120,7 @@ namespace EmotionSystem
 				{
 					if (HealedChar == BChar)
 					{
-						BChar.GetPosEmotion();
+						GainPosOrNegPoints(Healer.GetPosUI());
 					}
 				}
 
@@ -100,7 +128,7 @@ namespace EmotionSystem
 				{
 					if (Char == BChar)
 					{
-						BChar.GetPosEmotion();
+						GainPosOrNegPoints(Char.GetPosUI());
 					}
 				}
 			}
@@ -110,14 +138,14 @@ namespace EmotionSystem
 		{
 			public class PureTune : Lucy.MusicBox
 			{
-				
+
 			}
 
 			public class DarkTune : Buff, IP_PlayerTurn
 			{
 				public override void SelfdestroyPlus()
 				{
-					EmotionalManager.SetEmotionCapGuest(BChar, false);
+					EmotionManager.SetEmotionCapGuest(BChar, false);
 				}
 
 				public void Turn()
@@ -126,5 +154,5 @@ namespace EmotionSystem
 				}
 			}
 		}
-	}	
+	}
 }

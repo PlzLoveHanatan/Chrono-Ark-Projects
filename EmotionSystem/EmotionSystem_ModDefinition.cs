@@ -67,19 +67,27 @@ namespace EmotionSystem
 
 			public void Turn()
 			{
-				if (Utils.DistortedBosses)
-				{
-					foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars)
-					{
-						if (e != null && e is BattleEnemy enemy && enemy.Boss)
-						{
-							if (DataStore.Instance.Guest.GuestCurses.Any(curse => enemy.BuffReturn(curse) != null)) return;
+				if (!Utils.DistortedBosses) return;
 
-							BattleSystem.DelayInputAfter(CurseSelection(enemy));
+				if (BattleSystem.instance.BossBattle
+					)
+				{
+					BattleSystem.instance.AllyTeam.WaitCount += 3;
+				}
+
+				foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars)
+				{
+					if (e is BattleEnemy enemy && enemy.Boss)
+					{
+						if (DataStore.Instance.Guest.GuestCurses.Any(curse => enemy.BuffReturn(curse) != null))
+						{
+							return;
 						}
+						BattleSystem.DelayInputAfter(CurseSelection(enemy));
 					}
 				}
 			}
+
 
 			public IEnumerator CurseSelection(BattleEnemy boss)
 			{

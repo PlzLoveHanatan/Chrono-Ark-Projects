@@ -114,10 +114,10 @@ namespace EmotionSystem
 				{
 					if (EmotionBlock) return;
 
-					if (Damage >= 1)
-					{
-						BChar.GetPosEmotion();
-					}
+					//if (Damage >= 1)
+					//{
+					//	BChar.GetPosEmotion();
+					//}
 
 					if (IsCri)
 					{

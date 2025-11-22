@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using static EmotionSystem.Extended.EGO;
 
 namespace EmotionSystem
@@ -102,8 +103,16 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					BattleSystem.DelayInputAfter(ApplyExtended());
+				}
+
+				private IEnumerator ApplyExtended()
+				{
+					yield return new WaitForEndOfFrame();
+					yield return new WaitForEndOfFrame();
 					Utils.PlaySound("Floor_Literature_Laetitia");
 					Utils.ApplyExtended(BChar.MyTeam.Skills.Where(s => s.Master == BChar).ToList(), ModItemKeys.SkillExtended_Ex_Abnormality_Friend_1, true, true, true, 3);
+					yield break;
 				}
 			}
 

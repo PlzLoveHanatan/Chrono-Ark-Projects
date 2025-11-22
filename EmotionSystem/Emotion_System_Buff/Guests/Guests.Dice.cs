@@ -25,11 +25,12 @@ namespace EmotionSystem
 						var actions = DataStore.Instance.Guest.BossActions[BChar.Info.KeyData];
 						var action = actions.Random(BChar.GetRandomClass().SkillSelect);
 
-						// witch curse selection
-						if (BChar.Info.KeyData == GDEItemKeys.Enemy_S1_WitchBoss)
+						// reroll bosses nasty actions
+						if (RerollActions.TryGetValue(BChar.Info.KeyData, out var rerollList))
 						{
-							bool randomCurse = RandomManager.RandomPer(RandomClassKey.Boss, 100, 25); //25% chance for weak curse
-							action = randomCurse ? ModItemKeys.Skill_S_Guest_CurseWeak : ModItemKeys.Skill_S_Guest_CursePain;
+							// rerollList[0] = nasty action (25%)
+							// rerollList[1] = normal action (75%)
+							action = RollActionOverride(25, rerollList[0], rerollList[1]);
 						}
 						skill = Skill.TempSkill(action, BChar, BChar.MyTeam);
 					}
@@ -95,6 +96,20 @@ namespace EmotionSystem
 
 				return 2;
 			}
+
+			private string RollActionOverride(int chancePercent, string actionOnSuccess, string actionOnFail)
+			{
+				bool roll = RandomManager.RandomPer(RandomClassKey.Boss, 100, chancePercent);
+				return roll ? actionOnSuccess : actionOnFail;
+			}
+
+			private readonly Dictionary<string, List<string>> RerollActions = new Dictionary<string, List<string>>
+			{
+				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Skill_S_Guest_CurseWeak, ModItemKeys.Skill_S_Guest_CursePain } },
+				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { GDEItemKeys.Skill_S_Golem_1, GDEItemKeys.Skill_S_Golem_2 } },
+				{ GDEItemKeys.Enemy_S2_Shiranui, new List<string> { GDEItemKeys.Skill_S_Shiranui_3, GDEItemKeys.Skill_S_Shiranui_0 } },
+				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { GDEItemKeys.Skill_S_ProgramMaster_0, GDEItemKeys.Skill_S_ProgramMaster_1 } },
+			};
 		}
 	}
 }

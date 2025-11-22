@@ -20,6 +20,11 @@ namespace EmotionSystem
 					yield return __result.Current;
 				}
 
+				if (Utils.DistortedBosses)
+				{
+					BattleSystem.instance.MainQueueData.CustomeFogTurn = (int)(BattleSystem.instance.FogTurn * 1.3f);
+				}
+
 				if (Utils.BossInvitations)
 				{
 					InvitationManager.Instance.SendReception(__instance);
@@ -60,7 +65,7 @@ namespace EmotionSystem
 						InvitationManager.Instance.SpecialReward = false;
 						__instance.RuleChange.Shuffle = false;
 
-						foreach (var ally  in PlayData.TSavedata.Party)
+						foreach (var ally in PlayData.TSavedata.Party)
 						{
 							if (ally.Incapacitated)
 							{

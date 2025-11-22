@@ -234,6 +234,63 @@ namespace EmotionSystem
 				ModItemKeys.Skill_S_Abnormality_ArtLv3_Genesis,
 				ModItemKeys.Skill_S_Abnormality_ArtLv3_Finale,
 			};
+
+			public readonly List<Abnormality> Natural = new List<Abnormality>
+			{
+				// Lv1 — Positive
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv1_Blades, AbnoType.Pos, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv1_Justice, AbnoType.Pos, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv1_Love, AbnoType.Pos, 1),
+
+				// Lv1 — Negative
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv1_Blessing, AbnoType.Neg, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv1_Despair, AbnoType.Neg, 1),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv1_Hate, AbnoType.Neg, 1),
+
+				// Lv2 — Positive
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv2_Companion, AbnoType.Pos, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv2_Intemperance, AbnoType.Pos, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv2_Road, AbnoType.Pos, 2),
+
+				// Lv2 — Negative
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv2_Greed, AbnoType.Neg, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv2_Magical, AbnoType.Neg, 2),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv2_Wrath, AbnoType.Neg, 2),
+
+				// Lv3
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv3_Acidic, AbnoType.Neg, 3),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv3_Nix, AbnoType.Pos, 3),
+				new Abnormality(ModItemKeys.Skill_S_Abnormality_NaturalLv3_Void, AbnoType.Pos, 3),
+			};
+
+
+			public readonly List<string> NaturalKeys = new List<string>
+			{
+				// Lv1 — Positive
+				ModItemKeys.Skill_S_Abnormality_NaturalLv1_Blades,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv1_Justice,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv1_Love,
+
+				// Lv1 — Negative
+				ModItemKeys.Skill_S_Abnormality_NaturalLv1_Blessing,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv1_Despair,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv1_Hate,
+
+				// Lv2 — Positive
+				ModItemKeys.Skill_S_Abnormality_NaturalLv2_Companion,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv2_Intemperance,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv2_Road,
+
+				// Lv2 — Negative
+				ModItemKeys.Skill_S_Abnormality_NaturalLv2_Greed,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv2_Magical,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv2_Wrath,
+
+				// Lv3
+				ModItemKeys.Skill_S_Abnormality_NaturalLv3_Acidic,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv3_Nix,
+				ModItemKeys.Skill_S_Abnormality_NaturalLv3_Void,
+			};
 		}
 	}
 }

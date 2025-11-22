@@ -29,6 +29,7 @@ namespace EmotionSystem
 		public EGOData EGO { get; } = new EGOData();
 		public GuestData Guest { get; } = new GuestData();
 		public VisualUi Visual { get; } = new VisualUi();
+		public AbnormalitySkillsData AbnormalitySkill { get; } = new AbnormalitySkillsData();
 
 		public readonly List<string> ExceptSkills = new List<string>
 		{

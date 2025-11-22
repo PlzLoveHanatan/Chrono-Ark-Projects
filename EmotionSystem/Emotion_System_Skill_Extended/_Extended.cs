@@ -15,7 +15,7 @@ namespace EmotionSystem
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				EmotionalManager.AbnormalitySelection(2, true);
+				EmotionManager.AbnormalitySelection(2, true);
 				SelfDestroy();
 			}
 		}
@@ -24,7 +24,7 @@ namespace EmotionSystem
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				EmotionalManager.AbnormalitySelection(2, false, true);
+				EmotionManager.AbnormalitySelection(2, false, true);
 				SelfDestroy();
 			}
 		}
@@ -33,7 +33,7 @@ namespace EmotionSystem
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				EmotionalManager.EGOSelection();
+				EmotionManager.EGOSelection();
 				SelfDestroy();
 			}
 		}

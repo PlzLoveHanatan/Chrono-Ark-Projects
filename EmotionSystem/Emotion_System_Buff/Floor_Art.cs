@@ -39,8 +39,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
 					}
 
 					public override void Init()
@@ -86,8 +85,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
 					}
 
 					public override void Init()
@@ -102,7 +100,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Art_Powder");
-							Utils.ApplyBleed(hit, BChar);
+							Utils.ApplyBleed(hit, BChar, 1);
 						}
 					}
 				}
@@ -113,8 +111,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-						return base.DescExtended().Replace("&a", chanceWeak.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar).ToString());
 					}
 
 					public override void Init()
@@ -144,8 +141,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceDOT = (int)(BChar.GetStat.HIT_DOT + 100);
-						return base.DescExtended().Replace("&a", chanceDOT.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
 					}
 
 					public override void Init()
@@ -158,7 +154,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Art_Thorns");
-							Utils.ApplyBleed(hit, BChar);
+							Utils.ApplyBleed(hit, BChar, 1);
 						}
 					}
 				}
@@ -185,8 +181,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-						return base.DescExtended().Replace("&a", chanceWeak.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 25).ToString());
 					}
 
 					private int debuffsPerTurn;
@@ -203,8 +198,8 @@ namespace EmotionSystem
 						{
 							debuffsPerTurn++;
 							Utils.PlaySound("Floor_Art_Incomprehensible");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 1);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 1);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 1, 25);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 1, 25);
 						}
 					}
 
@@ -219,8 +214,7 @@ namespace EmotionSystem
 					public void Awake()
 					{
 						Utils.PlaySound("Floor_Art_Perfomance");
-						Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Abnormality_Art_Perfomance, BChar, BChar.MyTeam);
-						EmotionSystem_EGO_Button.instance?.AddEGOSkill(skill);
+						EmotionSystem_EGO_Button.instance?.AddEGOSkill(BChar, ModItemKeys.Skill_S_Abnormality_Art_Perfomance);
 					}
 				}
 
@@ -335,9 +329,7 @@ namespace EmotionSystem
 							Targets.AddRange(BChar.BattleInfo.SkillTargetReturn(SkillD, target, null));
 						}
 
-						var fx = Misc.UIInst(BChar.BattleInfo.EffectViewOb);
-						fx.transform.position = BChar.Info.Ally ? BChar.GetPos() : BChar.GetTopPos();
-						fx.GetComponent<EffectView>().TextOut(BChar.Info.Ally, " " + ScriptLocalization.System_Curse.Confu_Text);
+						Scripts.ShowConfuseText(BChar);
 					}
 				}
 
@@ -382,8 +374,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int chance = (int)(BChar.GetStat.HIT_DOT + 150);
-						return base.DescExtended().Replace("&a", chance.ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 50).ToString());
 					}
 
 					public void Awake()
@@ -415,7 +406,7 @@ namespace EmotionSystem
 
 					private void ApplyDebuffs(BattleChar enemy)
 					{
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EGO_Art_Aroma);
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EGO_Art_Aroma, 1, 50);
 					}
 				}
 			}

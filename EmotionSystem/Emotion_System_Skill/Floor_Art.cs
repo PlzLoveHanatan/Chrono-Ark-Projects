@@ -155,8 +155,7 @@ namespace EmotionSystem
 					Utils.PlaySound("Floor_Art_Pleasure");
 					int damage = BChar.EmotionLevel() * 5;
 					PlusSkillPerFinal.Damage = damage;
-					Utils.ApplyBleed(Targets[0], BChar, 5);
-					BattleSystem.DelayInput(Scripts.RecastSkill(Targets[0], BChar, ModItemKeys.Skill_S_EGO_Art_Pleasure, 2, true, 5, 200));
+					BattleSystem.DelayInput(Scripts.RecastSkillBleed(Targets[0], BChar, ModItemKeys.Skill_S_EGO_Art_Pleasure, 2, 5, 200));
 				}
 			}
 		}

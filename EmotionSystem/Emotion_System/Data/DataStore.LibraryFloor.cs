@@ -21,35 +21,38 @@ namespace EmotionSystem
 
 			public static readonly Dictionary<LibraryFloorType, LibraryFloorData> Floors = new Dictionary<LibraryFloorType, LibraryFloorData>
 			{
-				{
-					LibraryFloorType.History, new LibraryFloorData
+				{ LibraryFloorType.History, new LibraryFloorData
 					{
 						Abnormalities = DataStore.Instance.Abnormalities.History,
 						Egos = DataStore.Instance.EGO.HistoryKeyList,
 					}
 				},
 
-				{
-					LibraryFloorType.Technological, new LibraryFloorData
+				{ LibraryFloorType.Technological, new LibraryFloorData
 					{
 						Abnormalities = DataStore.Instance.Abnormalities.Technological,
 						Egos = DataStore.Instance.EGO.TechnologicalKeyList,
 					}
 				},
 
-				{
-					LibraryFloorType.Literature, new LibraryFloorData
+				{ LibraryFloorType.Literature, new LibraryFloorData
 					{
 						Abnormalities = DataStore.Instance.Abnormalities.Literature,
 						Egos = DataStore.Instance.EGO.LiteratureKeyList,
 					}
 				},
 
-				{
-					LibraryFloorType.Art, new LibraryFloorData
+				{ LibraryFloorType.Art, new LibraryFloorData
 					{
 						Abnormalities = DataStore.Instance.Abnormalities.Art,
 						Egos = DataStore.Instance.EGO.ArtKeyList,
+					}
+				},
+
+				{ LibraryFloorType.Natural, new LibraryFloorData
+					{
+						Abnormalities = DataStore.Instance.Abnormalities.Natural,
+						Egos = DataStore.Instance.EGO.NaturalKeyList,
 					}
 				},
 			};
@@ -60,7 +63,8 @@ namespace EmotionSystem
 			History = 0,
 			Technological = 1,
 			Literature = 2,
-			Art = 3
+			Art = 3,
+			Natural = 4
 		}
 
 		public class LibraryFloorData

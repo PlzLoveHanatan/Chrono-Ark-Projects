@@ -4,6 +4,7 @@ using System.Windows.Markup;
 using Dialogical;
 using EmotionSystem;
 using GameDataEditor;
+using Mono.Cecil.Cil;
 using Spine;
 using UnityEngine;
 using static EmotionSystem.Extended.EGO;
@@ -46,6 +47,18 @@ namespace EmotionSystem
 
 		public void AddEGOSkill(Skill skill)
 		{
+			if (skill != null)
+			{
+				EGOHand.Add(skill);
+				GetComponent<EmotionSystem_EGO_Button_Script>()?.StartRotation();
+			}
+		}
+
+		public void AddEGOSkill(BattleChar user, string skillKey)
+		{
+			if (string.IsNullOrEmpty(skillKey) || user == null) return;
+
+			Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
 			EGOHand.Add(skill);
 			GetComponent<EmotionSystem_EGO_Button_Script>()?.StartRotation();
 		}

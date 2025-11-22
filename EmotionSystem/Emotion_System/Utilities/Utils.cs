@@ -16,6 +16,8 @@ using DarkTonic.MasterAudio;
 using UnityEngine.Playables;
 using static EmotionSystem.DataStore.LibraryFloor;
 using Spine;
+using static CharacterDocument;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 
 namespace EmotionSystem
@@ -106,6 +108,36 @@ namespace EmotionSystem
 			yield break;
 		}
 
+		public static int ChanceDOT(BattleChar user, int additionalPercentage = 0)
+		{
+			return (int)(user.GetStat.HIT_DOT + 100 + additionalPercentage);
+		}
+
+		public static int ChanceDOT(BattleChar user)
+		{
+			return (int)(user.GetStat.HIT_DOT + 100);
+		}
+
+		public static int ChanceDebuff(BattleChar user, int additionalPercentage = 0)
+		{
+			return (int)(user.GetStat.HIT_DEBUFF + 100 + additionalPercentage);
+		}
+
+		public static int ChanceDebuff(BattleChar user)
+		{
+			return (int)(user.GetStat.HIT_DEBUFF + 100);
+		}
+
+		public static int ChanceCC(BattleChar user, int additionalPercentage = 0)
+		{
+			return (int)(user.GetStat.HIT_CC + 100 + additionalPercentage);
+		}
+
+		public static int ChanceCC(BattleChar user)
+		{
+			return (int)(user.GetStat.HIT_CC + 100);
+		}
+
 		public static void AddBarrier(BattleChar target, BattleChar user, string buffKey, int barrierNum = 0)
 		{
 			if (target == null || user == null || string.IsNullOrEmpty(buffKey)) return;
@@ -140,6 +172,19 @@ namespace EmotionSystem
 			for (int i = 0; i < debuffNum; i++)
 			{
 				target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
+			}
+		}
+
+		public static void AddDebuff(List<BattleChar> Targets, BattleChar user, string buffKey, int debuffNum = 1, int percentage = 0)
+		{
+			foreach (BattleChar target in Targets)
+			{
+				if (target == null || string.IsNullOrEmpty(buffKey) || target.Info.Ally) continue;
+
+				for (int i = 0; i < debuffNum; i++)
+				{
+					target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
+				}
 			}
 		}
 
@@ -213,16 +258,36 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void ApplyExtended(Skill skill, string extendedKey, bool isMultipleExtended = false)
+		public static Skill_Extended ApplyExtended(Skill skill, string extendedKey, bool isMultipleExtended = false, bool isBattleExtended = false)
 		{
-			if (skill == null || string.IsNullOrEmpty(extendedKey)) return;
+			Skill_Extended result = null;
 
-			var existing = skill.ExtendedFind_DataName(extendedKey);
+			if (skill == null || string.IsNullOrEmpty(extendedKey))
+			{
+				return result;
+			}
+
+			Skill_Extended existing = skill.ExtendedFind_DataName(extendedKey);
 
 			if (isMultipleExtended || existing == null)
 			{
-				skill.ExtendedAdd(extendedKey);
+				if (isBattleExtended == true)
+				{
+					skill.ExtendedAdd_Battle(extendedKey);
+				}
+				else
+				{
+					skill.ExtendedAdd(extendedKey);
+				}
+
+				result = skill.ExtendedFind_DataName(extendedKey);
 			}
+			else
+			{
+				result = existing;
+			}
+
+			return result;
 		}
 
 		public static void ApplyExtended(List<Skill> skillList, string extendedKey, bool? isHealingSkill = null, bool? isDamageSkill = null, bool isMultipleExtended = false, int extendedNum = 2, bool isRandomSkills = false, bool isBattleExtended = false)
@@ -253,9 +318,21 @@ namespace EmotionSystem
 
 			if (!isRandomSkills)
 			{
-				foreach (var skill in list.Take(Math.Min(extendedNum, list.Count)))
+				if (list.Count == 1)
 				{
-					ApplyExtendedToSkill(skill, extendedKey, isMultipleExtended, isBattleExtended);
+					Skill single = list[0];
+
+					for (int i = 0; i < extendedNum; i++)
+					{
+						ApplyExtendedToSkill(single, extendedKey, isMultipleExtended, isBattleExtended);
+					}
+				}
+				else
+				{
+					foreach (var skill in list.Take(Math.Min(extendedNum, list.Count)))
+					{
+						ApplyExtendedToSkill(skill, extendedKey, isMultipleExtended, isBattleExtended);
+					}
 				}
 			}
 			else
@@ -292,23 +369,24 @@ namespace EmotionSystem
 		{
 			if (target.Info.Ally || target == null) return;
 
-			var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, percentage) as Debuffs.Burn;
+			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, 1, percentage);
 
-			if (burn != null)
+			if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Burn) is Debuffs.Burn burn)
 			{
 				burn.CurrentBurn += stack;
 			}
+			//var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, percentage) as Debuffs.Burn;			
 		}
 
 		public static void ApplyBurn(List<BattleChar> Targets, BattleChar user, int stack = 1, int percentage = 0)
 		{
 			foreach (var target in Targets)
 			{
-				if (target.Info.Ally || target == null) return;
+				if (target.Info.Ally || target == null) continue;
 
-				var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, percentage) as Debuffs.Burn;
+				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, 1, percentage);
 
-				if (burn != null)
+				if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Burn) is Debuffs.Burn burn)
 				{
 					burn.CurrentBurn += stack;
 				}
@@ -319,9 +397,9 @@ namespace EmotionSystem
 		{
 			if (target.Info.Ally || target == null) return;
 
-			var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, percentage) as Debuffs.Bleed;
+			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, 1, percentage);
 
-			if (bleed != null)
+			if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Bleed) is Debuffs.Bleed bleed)
 			{
 				bleed.CurrentBleed += stack;
 			}
@@ -331,13 +409,40 @@ namespace EmotionSystem
 		{
 			foreach (var target in Targets)
 			{
-				if (target.Info.Ally || target == null) return;
+				if (target.Info.Ally || target == null) continue;
 
-				var bleed = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, percentage) as Debuffs.Bleed;
+				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, 1, percentage);
 
-				if (bleed != null)
+				if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Bleed) is Debuffs.Bleed bleed)
 				{
 					bleed.CurrentBleed += stack;
+				}
+			}
+		}
+
+		public static void ApplyErosion(BattleChar target, BattleChar user, int stack = 1, int percentage = 0)
+		{
+			if (target.Info.Ally || target == null) return;
+
+			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Erosion, 1, percentage);
+
+			if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Erosion) is Debuffs.Erosion erosion)
+			{
+				erosion.CurrentErosion += stack;
+			}
+		}
+
+		public static void ApplyErosion(List<BattleChar> Targets, BattleChar user, int stack = 1, int percentage = 0)
+		{
+			foreach (var target in Targets)
+			{
+				if (target.Info.Ally || target == null) continue;
+
+				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Erosion, 1, percentage);
+
+				if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Erosion) is Debuffs.Erosion erosion)
+				{
+					erosion.CurrentErosion += stack;
 				}
 			}
 		}
@@ -518,6 +623,8 @@ namespace EmotionSystem
 					return instance.Abnormalities.LiteratureKeys;
 				case DataStore.LibraryFloorType.Art:
 					return instance.Abnormalities.ArtKeys;
+				case DataStore.LibraryFloorType.Natural:
+					return instance.Abnormalities.NaturalKeys;
 				default:
 					return new List<string>();
 			}
@@ -547,6 +654,8 @@ namespace EmotionSystem
 					return instance.EGO.LiteratureKeyList;
 				case DataStore.LibraryFloorType.Art:
 					return instance.EGO.ArtKeyList;
+				case DataStore.LibraryFloorType.Natural:
+					return instance.EGO.NaturalKeyList;
 				default:
 					return new List<string>();
 			}
@@ -606,12 +715,18 @@ namespace EmotionSystem
 
 		public static void RemoveSkill(Skill skill)
 		{
-			if (skill == null) return;
+			if (skill == null || AllyTeam == null) return;
 
-			AllyTeam.Skills.Remove(skill);
-			AllyTeam.Skills_Deck.Remove(skill);
-			AllyTeam.Skills_UsedDeck.Remove(skill);
+			AllyTeam.Skills?.Remove(skill);
+			AllyTeam.Skills_Deck?.Remove(skill);
+			AllyTeam.Skills_UsedDeck?.Remove(skill);
+
+			if (BattleSystem.instance?.ActWindow != null)
+			{
+				BattleSystem.instance.ActWindow.Draw(AllyTeam, false);
+			}
 		}
+
 
 		public static IEnumerator RemoveSkillCoroutine(Skill skill, bool isExclude = true)
 		{

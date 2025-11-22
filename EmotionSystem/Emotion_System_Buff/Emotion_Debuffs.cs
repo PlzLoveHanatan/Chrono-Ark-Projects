@@ -96,6 +96,49 @@ namespace EmotionSystem
 			}
 		}
 
+		public class Erosion : Buff, IP_DamageTakeChange, IP_PlayerTurn, IP_TurnEnd, IP_BuffObject_Updata
+		{
+			public int CurrentErosion;
+
+			public void BuffObject_Updata(BuffObject obj)
+			{
+				string num = CurrentErosion.ToString();
+				obj.StackText.text = num;
+			}
+
+			public override string DescExtended()
+			{
+				string text = ModLocalization.EmotionSystem_Erosion_1;
+				if (BChar is BattleEnemy)
+				{
+					text = ModLocalization.EmotionSystem_Erosion_0;
+				}
+				return base.DescExtended().Replace("Description", text).Replace("&a", CurrentErosion.ToString());
+			}
+
+			public void Turn()
+			{
+				CurrentErosion--;
+			}
+
+			public void TurnEnd()
+			{
+				if (CurrentErosion == 0)
+				{
+					SelfDestroy();
+				}
+			}
+
+			public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
+			{
+				if (Dmg >= 1)
+				{
+					Dmg += CurrentErosion;
+				}
+				return Dmg;
+			}
+		}
+
 		public class Paralysis : Buff, IP_SkillUse_User_After
 		{
 			public override void BuffStat()
@@ -158,7 +201,7 @@ namespace EmotionSystem
 			}
 		}
 
-		public class B_EmotionSystem_ColorlessDepth : Buff, IP_EmotionLvUpBefore, IP_Awake
+		public class Colorless	: Buff, IP_EmotionLvUpBefore, IP_Awake
 		{
 			public void EmotionLvUp(CharEmotion charEmotion, int nextLevel)
 			{

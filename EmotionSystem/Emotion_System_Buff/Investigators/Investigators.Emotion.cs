@@ -19,11 +19,24 @@ namespace EmotionSystem
 
 				public int EmotionsGainThisTurn;
 				public bool EmotionsCap;
+				public bool InvertPoints;
 
 				public static GameObject EmotionPrefab;
-				public int EmotionalLevel => Emotion.Level;
+				public int EmotionLevel => Emotion.Level;
 
 				public static List<int> CoinsToLevelUp = new List<int> { 3, 3, 5, 7, 9 };
+
+				private void GainPosOrNegPoints(Vector3? pos = null, int amount = 1)
+				{
+					if (InvertPoints)
+					{
+						BChar.GetNegEmotion(pos, amount);
+					}
+					else
+					{
+						BChar.GetPosEmotion(pos, amount);
+					}
+				}
 
 				public void Awake()
 				{
@@ -55,12 +68,12 @@ namespace EmotionSystem
 					EmotionsGainThisTurn = 0;
 					Emotion.CanGetCoin = true;
 
-					if (EmotionalLevel >= 4)
+					if (EmotionLevel >= 4)
 					{
 						BChar.BuffAdd(ModItemKeys.Buff_B_Investigator_ManaReduction, BChar, false, 0, false, -1, false);
 					}
 
-					if (EmotionalLevel >= 5)
+					if (EmotionLevel >= 5)
 					{
 						BChar.BuffAdd(ModItemKeys.Buff_B_Investigator_Draw, BChar, false, 0, false, -1, false);
 					}
@@ -68,32 +81,30 @@ namespace EmotionSystem
 
 				public override void Init()
 				{
-					base.Init();
 					OnePassive = true;
 				}
 
 				public void SomeOneDead(BattleChar DeadChar)
 				{
-					if (BChar.Info.Ally == DeadChar.Info.Ally && DeadChar != BChar)
+					if (DeadChar != BChar && DeadChar.Info.Ally)
 					{
 						var pos = DeadChar.GetPosUI();
-						for (int i = 0; i < 3; i++)
-						{
-							BChar.GetNegEmotion(pos);
-						}
+						BChar.GetNegEmotion(pos, 3);
 					}
 				}
 
 				public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 				{
-					if (SkillD.IsHeal || SkillD.IsDamage && SkillD.Master == BChar)
+					if (SkillD.Master == BChar)
 					{
-						BChar.GetPosEmotion(SkillD.GetPosUI());
-					}
-
-					else if (SkillD.Master == BChar)
-					{
-						BChar.GetNegEmotion(SkillD.GetPosUI());
+						if (SkillD.IsHeal || SkillD.IsDamage)
+						{
+							GainPosOrNegPoints(SkillD.GetPosUI());
+						}
+						else
+						{
+							BChar.GetNegEmotion(SkillD.GetPosUI());
+						}
 					}
 				}
 
@@ -103,10 +114,7 @@ namespace EmotionSystem
 					{
 						var target = SP.TargetChar.First(bc => bc.IsDead);
 						var pos = target?.GetPosUI();
-						for (int i = 0; i < 3; i++)
-						{
-							BChar.GetPosEmotion(pos);
-						}
+						GainPosOrNegPoints(pos, 3);
 					}
 				}
 
@@ -114,12 +122,12 @@ namespace EmotionSystem
 				{
 					if (Damage >= 1)
 					{
-						BChar.GetPosEmotion(BChar.GetPosUI());
+						GainPosOrNegPoints(BChar.GetPosUI());
 					}
 
 					if (IsCri)
 					{
-						BChar.GetPosEmotion(BChar.GetPosUI());
+						GainPosOrNegPoints(BChar.GetPosUI());
 					}
 				}
 
@@ -128,7 +136,7 @@ namespace EmotionSystem
 					if (Dmg >= 1)
 					{
 						BChar.GetNegEmotion(User.GetPosUI());
-						DeathDoorCheck();
+						BattleSystem.DelayInput(DeathDoorCheck());
 
 						if (Cri)
 						{
@@ -153,7 +161,7 @@ namespace EmotionSystem
 				{
 					if (HealedChar == BChar)
 					{
-						BChar.GetPosEmotion(Healer.GetPosUI());
+						GainPosOrNegPoints(Healer.GetPosUI());		
 					}
 				}
 
@@ -161,7 +169,7 @@ namespace EmotionSystem
 				{
 					if (Char == BChar)
 					{
-						BChar.GetPosEmotion(SP.UseStatus.GetPosUI());
+						GainPosOrNegPoints(Char.GetPosUI());
 					}
 				}
 

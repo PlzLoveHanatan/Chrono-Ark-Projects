@@ -330,6 +330,11 @@ namespace EmotionSystem
 				{
 					private int turnsBeforeRemove;
 
+					public override void Init()
+					{
+						PlusStat.HEALTaken = -100;
+					}
+
 					public void Awake()
 					{
 						turnsBeforeRemove = 2;
@@ -459,7 +464,21 @@ namespace EmotionSystem
 							{
 								index = Utils.AllyTeam.Skills.IndexOf(DimensionSkill);
 								BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(DimensionSkill, true));
-								Utils.CreateSkill(SavedSkill.Master, SavedSkill.MySkill.KeyID, false, true, index);
+								var newSkill = Utils.CreateSkill(SavedSkill.Master, SavedSkill.MySkill.KeyID, false, true, index);
+
+								foreach (var extended in SavedSkill.AllExtendeds)
+								{
+									var clone = extended.Clone() as Skill_Extended;
+
+									if (clone.BattleExtended)
+									{
+										newSkill.ExtendedAdd_Battle(clone);
+									}
+									else
+									{
+										newSkill.ExtendedAdd(clone);
+									}	
+								}
 							}
 
 							var skillList = Utils.AllyTeam.Skills.ToList();
@@ -476,6 +495,19 @@ namespace EmotionSystem
 								BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(skill, true));
 
 								DimensionSkill = Utils.CreateSkill(skill.Master, ModItemKeys.Skill_S_Abnormality_Guest_DimensionalRefraction, false, true, indexList[randomIndex]);
+
+								foreach (var extended in SavedSkill.AllExtendeds)
+								{
+									var clone = extended.Clone() as Skill_Extended;
+									if (clone.BattleExtended)
+									{
+										DimensionSkill.ExtendedAdd_Battle(clone);
+									}
+									else
+									{
+										DimensionSkill.ExtendedAdd(clone);
+									}	
+								}
 
 								string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";
 								string baseDescription = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Description : "Unknown Skill";
