@@ -119,6 +119,11 @@ namespace EmotionSystem
 			public void Turn()
 			{
 				CurrentErosion--;
+
+				if (CurrentErosion == 0)
+				{
+					SelfDestroy();
+				}
 			}
 
 			public void TurnEnd()

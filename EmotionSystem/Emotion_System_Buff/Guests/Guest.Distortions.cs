@@ -103,7 +103,7 @@ namespace EmotionSystem
 				}
 			}
 
-			public class Robust : Distorted
+			public class Robust : Distorted, IP_PlayerTurn
 			{
 				public override void Init()
 				{
@@ -114,6 +114,11 @@ namespace EmotionSystem
 					PlusStat.DMGTaken -= 10;
 					AddRewards(3, 3);
 					RegisterRewardsToView();
+				}
+
+				public void Turn()
+				{
+					BChar.BuffAdd(GDEItemKeys.Buff_B_Armor_P_1, BChar, false, 0, false, -1, false);
 				}
 			}
 

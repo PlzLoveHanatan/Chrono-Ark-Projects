@@ -18,22 +18,43 @@ namespace EmotionSystem
 		{
 			public class Hate : Ex_EGO
 			{
+				public override string DescExtended(string desc)
+				{
+					int damage = (int)(BChar.GetStat.reg * 1.5f);
+					return base.DescExtended(desc).Replace("&a", damage.ToString());
+				}
+
 				public override bool Terms()
 				{
-					return BChar.Info.GetData.Role.Key == GDEItemKeys.CharRole_Role_Support;
+					return BChar.Info.GetData.Role.Key == GDEItemKeys.CharRole_Role_Support && NowCooldown <= 0;
 				}
 
 				public override void Init()
 				{
-					OncePerFight = true;
+					Cooldown = 2;
+				}
+
+				public override void FixedUpdate()
+				{
+					SkillBasePlus.Target_BaseDMG = (int)(BChar.GetStat.reg * 1.5f);
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_Art_Hate");
 				}
 			}
 
-			public class Intemperance : Ex_EGO
+			public class KinGreed : Ex_EGO
 			{
+				protected virtual int Gold => 1000;
+				protected virtual bool IsDestroyActions => false;
+
+				protected virtual bool Intemperance => true;
+
 				public override bool Terms()
 				{
-					return PlayData.TSavedata._Gold >= 1000;
+					return PlayData.TSavedata._Gold >= Gold;
 				}
 
 				public override void Init()
@@ -43,25 +64,34 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					PlayData.TSavedata._Gold -= 1000;
+					PlayData.TSavedata._Gold -= Gold;
+
+					if (IsDestroyActions)
+					{
+						Scripts.DestroyAllActions(Targets);
+					}
+
+					string sound = Intemperance ? "Floor_Art_Intemperance" : "Floor_Art_Road";
+					Utils.PlaySound(sound);
 				}
 			}
 
-			public class Road : Ex_EGO
+			public class Intemperance : KinGreed
 			{
-				public override bool Terms()
-				{
-					return PlayData.TSavedata._Gold >= 800;
-				}
+				protected override int Gold => 1000;
+				protected override bool IsDestroyActions => true;
+			}
 
-				public override void Init()
-				{
-					OncePerFight = true;
-				}
+			public class Road : KinGreed
+			{
+				protected override int Gold => 800;
+			}
 
+			public class VoidAbno : Skill_Extended
+			{
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					PlayData.TSavedata._Gold -= 800;
+					EmotionSystem_EGO_Button.instance.AddEGOSkill(BChar, ModItemKeys.Skill_S_Abnormality_Natural_Void);
 				}
 			}
 
@@ -69,11 +99,12 @@ namespace EmotionSystem
 			{
 				public override void Init()
 				{
-					OncePerFight = true;
+					Cooldown = 1;
 				}
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					Utils.PlaySound("Floor_Art_Void");
 					BattleSystem.DelayInputAfter(RemoveSkills());
 				}
 
@@ -88,7 +119,7 @@ namespace EmotionSystem
 					{
 						if (skill != null)
 						{
-							Utils.RemoveSkill(skill);
+							Utils.RemoveSkill(skill, true);
 							statsUp++;
 						}
 					}
@@ -117,20 +148,33 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					Utils.PlaySound("Floor_Art_Rage");
 					Scripts.AttackRedirect(BChar, SkillD, Targets, false, 30);
-					BattleSystem.DelayInput(Scripts.RecastSkillErosion(Targets[0], BChar, ModItemKeys.Skill_S_EGO_Natural_Rage, 2, 5, 200));
+					BattleSystem.DelayInput(Scripts.RecastSkillErosion(Targets[0], BChar, ModItemKeys.Skill_S_EGO_Natural_Rage, 2, 5, 300));
 				}
 			}
 
 			public class Gold : Ex_EGO
 			{
+				public override string DescExtended(string desc)
+				{
+					int daamage = (int)(PlayData.TSavedata._Gold * 0.025f);
+					return base.DescExtended(desc).Replace("&a", daamage.ToString());
+				}
+
 				public override void Init()
 				{
 					Cooldown = 3;
 				}
 
+				public override void FixedUpdate()
+				{
+					SkillBasePlus.Target_BaseDMG = (int)(PlayData.TSavedata._Gold * 0.025f);
+				}
+
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					Utils.PlaySound("Floor_Art_Gold");
 					BattleSystem.DelayInput(DeathCheck(Targets));
 				}
 
@@ -167,9 +211,16 @@ namespace EmotionSystem
 						}
 						else
 						{
+							PlusSkillPerFinal.Damage = 0;
 							SkillParticleOff();
 						}
 					}
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.PlaySound("Floor_Art_Love");
+					Utils.PlaySound("Floor_Art_LoveHate");
 				}
 			}
 
@@ -182,7 +233,8 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
-					BattleSystem.DelayInput(HandCheck());
+					Utils.PlaySound("Floor_Art_Void");
+					BattleSystem.DelayInputAfter(HandCheck());
 				}
 
 				private IEnumerator HandCheck()
@@ -206,6 +258,7 @@ namespace EmotionSystem
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					Utils.PlaySound("Floor_Art_Sword");
 					Scripts.DestroyActions(Targets);
 				}
 
@@ -213,6 +266,7 @@ namespace EmotionSystem
 				{
 					if (Cri)
 					{
+						Utils.PlaySound("Floor_Art_Sword_Cry");
 						Scripts.DestroyActions(hit);
 					}
 				}

@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionSystem11222025230335</AssemblyName>
+    <AssemblyName>EmotionSystem11252025230401</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -409,7 +409,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                                                                                                                                                                                                                                                                                                                              <!-- Compile ItemGroup Start-->
+                                                                                    <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionSystem_ModDefinition.cs" />
     <Compile Include="EmotionSystem_ModItemKeys.cs" />
@@ -482,12 +482,14 @@
     <Compile Include="Equip\Equip.Art.cs" />
     <Compile Include="Equip\Equip.History.cs" />
     <Compile Include="Equip\Equip.Literature.cs" />
+    <Compile Include="Equip\Equip.Natural.cs" />
     <Compile Include="Equip\Equip.Technological.cs" />
     <Compile Include="Equip\_Equip.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Relic\Relic.Art.cs" />
     <Compile Include="Relic\Relic.History.cs" />
     <Compile Include="Relic\Relic.Literature.cs" />
+    <Compile Include="Relic\Relic.Natural.cs" />
     <Compile Include="Relic\Relic.Technological.cs" />
     <Compile Include="Relic\_Relic.cs" />
   </ItemGroup>

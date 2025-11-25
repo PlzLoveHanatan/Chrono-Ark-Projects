@@ -58,11 +58,11 @@ namespace EmotionSystem
 
 					if (Targets.Count == 1)
 					{
-						Utils.ApplyBurn(Targets[0], BChar, 25);
+						Utils.ApplyBurn(Targets[0], BChar, 25, 300);
 					}
 					else
 					{
-						Utils.ApplyBurn(Targets, BChar, 15);
+						Utils.ApplyBurn(Targets, BChar, 15, 300);
 					}
 				}
 			}

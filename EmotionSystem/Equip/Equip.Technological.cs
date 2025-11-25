@@ -13,7 +13,13 @@ namespace EmotionSystem
 		{
 			public class Deathseeker : EquipBase, IP_SkillUse_User, IP_PlayerTurn
 			{
-				private bool OncePerTurn;
+				private bool oncePerTurn;
+
+				public override string DescExtended(string desc)
+				{
+					string text = oncePerTurn ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
+					return base.DescExtended(desc).Replace("&a", text.ToString());
+				}
 
 				public override void Init()
 				{
@@ -22,22 +28,16 @@ namespace EmotionSystem
 					PlusStat.HIT_DOT = 25;
 				}
 
-				public override string DescExtended(string desc)
-				{
-					string text = OncePerTurn ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
-					return base.DescExtended(desc).Replace("&a", text.ToString());
-				}
-
 				public void Turn()
 				{
-					OncePerTurn = false;
+					oncePerTurn = false;
 				}
 
 				public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 				{
-					if (SkillD.IsDamage && SkillD.Master == BChar && !OncePerTurn)
+					if (SkillD.IsDamage && SkillD.Master == BChar && !oncePerTurn)
 					{
-						OncePerTurn = true;
+						oncePerTurn = true;
 						Scripts.DestroyActions(Targets);
 					}
 				}

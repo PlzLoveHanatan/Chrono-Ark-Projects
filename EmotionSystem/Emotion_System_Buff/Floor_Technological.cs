@@ -47,7 +47,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 100).ToString());
 					}
 
 					public override void Init()
@@ -60,7 +60,7 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
 							Utils.PlaySound("Floor_Technological_Metallic");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 1);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, Utils.ChanceDebuff(BChar, 100));
 						}
 					}
 				}
@@ -236,7 +236,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceCC(BChar, 25).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceCC(BChar, 125).ToString());
 					}
 
 					public override void Init()
@@ -255,7 +255,7 @@ namespace EmotionSystem
 							if (Damage >= threshold)
 							{
 								Utils.PlaySound("Floor_Technological_EternalRest");
-								Utils.AddDebuff(enemy, BChar, GDEItemKeys.Buff_B_Common_Rest, 1, 25);
+								Utils.AddDebuff(enemy, BChar, GDEItemKeys.Buff_B_Common_Rest, 1, Utils.ChanceCC(BChar, 125));
 							}
 						}
 					}

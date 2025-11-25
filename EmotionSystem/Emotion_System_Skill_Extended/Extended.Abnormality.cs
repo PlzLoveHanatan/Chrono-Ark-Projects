@@ -67,12 +67,6 @@ namespace EmotionSystem
 				}
 			}
 
-			public class Justice : BuffSkillExHand
-			{
-
-			}
-
-
 			public class KingGreed : BuffSkillExHand
 			{
 				public override void Init()

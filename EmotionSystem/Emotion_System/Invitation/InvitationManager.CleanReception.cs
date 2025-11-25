@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,6 +17,11 @@ namespace EmotionSystem
 		{
 			if (string.IsNullOrEmpty(skillKey)) return;
 
+			BattleSystem.DelayInputAfter(CleanSkillCoroutine(skillKey, isExclude));
+		}
+
+		private IEnumerator CleanSkillCoroutine(string skillKey, bool isExclude = true)
+		{
 			// --- Deck ---
 			Skill skillDeck = Utils.AllyTeam.Skills_Deck.Find(s => s.MySkill.KeyID == skillKey);
 			while (skillDeck != null)
@@ -39,6 +45,8 @@ namespace EmotionSystem
 				Utils.RemoveSkill(skillHand, isExclude);
 				skillHand = Utils.AllyTeam.Skills.Find(s => s.MySkill.KeyID == skillKey);
 			}
+
+			yield break;
 		}
 
 		private void RemoveExtended(string extendedKey, bool isExclude = true, bool isDraw = false)
@@ -47,7 +55,7 @@ namespace EmotionSystem
 
 			foreach (var skill in skillHand)
 			{
-				Utils.RemoveSkill(skill, isExclude);
+				Utils.RemoveSkill(skill, false);
 
 				if (isDraw)
 				{
@@ -116,6 +124,13 @@ namespace EmotionSystem
 			CleanDebuff(GDEItemKeys.Buff_B_Shiranui_3_T);
 			CleanMusic();
 
+			BattleSystem.DelayInputAfter(KillBurningStake());
+		}
+
+		private IEnumerator KillBurningStake()
+		{
+			yield return new WaitForEndOfFrame();
+
 			var ally = Utils.AllyTeam.AliveChars.FirstOrDefault(a => a.Info.KeyData == GDEItemKeys.Character_AllyDoll);
 
 			if (ally != null)
@@ -134,12 +149,11 @@ namespace EmotionSystem
 
 				CanKillBurningStake = false;
 
-				if (safetyCounter >= 10)
+				if (safetyCounter >= 20)
 				{
 					Debug.LogWarning($"[BURNING_STAKE] {ally.Info?.KeyData} не умер после 10 попыток!");
 				}
 			}
-
 		}
 
 		private void CleanAfterDealer()
@@ -263,11 +277,18 @@ namespace EmotionSystem
 			}
 		}
 
-		private void CleanMusic(bool isPheonixTheme = false)
+		private IEnumerator CleanMusic()
+		{
+			BattleSystem.DelayInputAfter(CleanMusicCoroutine());
+			yield break;
+		}
+
+
+		private IEnumerator CleanMusicCoroutine(bool isPheonixTheme = false)
 		{
 			if (!FirstGuestInvitation && !SecondGuestInvitation)
 			{
-				return;
+				yield break;
 			}
 
 			string song = null;
@@ -293,7 +314,7 @@ namespace EmotionSystem
 
 			if (string.IsNullOrEmpty(song))
 			{
-				return;
+				yield break;
 			}
 
 			float volume = MasterAudio.MasterVolumeLevel;

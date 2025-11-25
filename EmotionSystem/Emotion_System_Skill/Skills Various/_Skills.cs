@@ -8,6 +8,12 @@ namespace EmotionSystem
 {
 	public partial class Skills
 	{
-
+		public class Test : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				PlayData.TSavedata._Gold = 1500;
+			}
+		}
 	}
 }

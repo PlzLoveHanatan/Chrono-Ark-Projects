@@ -107,7 +107,7 @@ namespace EmotionSystem
 			{
 				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Skill_S_Guest_CurseWeak, ModItemKeys.Skill_S_Guest_CursePain } },
 				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { GDEItemKeys.Skill_S_Golem_1, GDEItemKeys.Skill_S_Golem_2 } },
-				{ GDEItemKeys.Enemy_S2_Shiranui, new List<string> { GDEItemKeys.Skill_S_Shiranui_3, GDEItemKeys.Skill_S_Shiranui_0 } },
+				{ GDEItemKeys.Enemy_S2_Shiranui, new List<string> { GDEItemKeys.Skill_S_Shiranui_3, GDEItemKeys.Skill_S_Shiranui_1 } },
 				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { GDEItemKeys.Skill_S_ProgramMaster_0, GDEItemKeys.Skill_S_ProgramMaster_1 } },
 			};
 		}

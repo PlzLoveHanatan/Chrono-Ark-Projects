@@ -21,7 +21,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 100).ToString());
 					}
 
 					public override void BuffStat()
@@ -36,7 +36,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_History_Ashes");
-							Utils.ApplyBurn(hit, BChar, 1);
+							Utils.ApplyBurn(hit, BChar, 1, 100);
 						}
 					}
 				}
@@ -153,7 +153,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceCC(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceCC(BChar, 100).ToString());
 					}
 
 					public override void Init()
@@ -171,7 +171,7 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && !OncePerTurn && !hit.Info.Ally)
 						{
 							Utils.PlaySound("Floor_History_Embrace");
-							Utils.AddDebuff(hit, BChar, GDEItemKeys.Buff_B_Common_Rest, 1, Utils.ChanceCC(BChar));
+							Utils.AddDebuff(hit, BChar, GDEItemKeys.Buff_B_Common_Rest, 1, Utils.ChanceCC(BChar, 100));
 							OncePerTurn = true;
 						}
 					}
@@ -194,7 +194,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 25).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 125).ToString());
 					}
 
 					public override void Init()
@@ -212,7 +212,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_History_Ashes");
-							Utils.ApplyBurn(hit, BChar, 2, 25);
+							Utils.ApplyBurn(hit, BChar, 2, 125);
 
 							if (!hit.Info.Ally && lowHp)
 							{
@@ -234,7 +234,7 @@ namespace EmotionSystem
 					{
 						int damage = Mathf.Min(80, (int)(hit.GetStat.maxhp * 0.8f));
 						hit.Damage(BChar, damage, false, true, false, 0, false, false, false);
-						Utils.ApplyBurn(hit, BChar, 20, 25);
+						Utils.ApplyBurn(hit, BChar, 20, 125);
 						Utils.PlaySound("Floor_History_Explode");
 						BChar.Dead();
 						ChargeLucyNeck();
@@ -280,7 +280,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 25).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 125).ToString());
 					}
 
 					public override void Init()
@@ -308,8 +308,8 @@ namespace EmotionSystem
 					private void ApplyDebuffs(BattleChar enemy)
 					{
 						Utils.PlaySound("Floor_History_Spores");
-						Utils.ApplyBleed(enemy, BChar, 4, 25);
-						Utils.ApplyBurn(enemy, BChar, 4, 25);
+						Utils.ApplyBleed(enemy, BChar, 4, 125);
+						Utils.ApplyBurn(enemy, BChar, 4, 125);
 					}
 				}
 
@@ -328,7 +328,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 25).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 125).ToString());
 					}
 
 					public override void BuffStat()
@@ -356,7 +356,7 @@ namespace EmotionSystem
 					private void ApplyDebuffs(BattleChar enemy)
 					{
 						Utils.PlaySound("Floor_History_WorkerBee");
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv2_WorkerBee_0, 1, 25);
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv2_WorkerBee_0, 1, 125);
 					}
 				}
 

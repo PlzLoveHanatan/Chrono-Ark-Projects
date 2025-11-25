@@ -16,7 +16,6 @@ namespace EmotionSystem
 
 		}
 
-
 		public class EGO
 		{
 			public class TodayExpression : Ex_EGO
@@ -42,7 +41,7 @@ namespace EmotionSystem
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					Utils.PlaySound("Floor_Literature_SanguineDesire");
-					Utils.ApplyBleed(Targets[0], BChar, 10);
+					Utils.ApplyBleed(Targets[0], BChar, 10, 300);
 				}
 
 
@@ -120,8 +119,7 @@ namespace EmotionSystem
 			{
 				public override string DescExtended(string desc)
 				{
-					int chanceWeak = (int)(BChar.GetStat.HIT_DEBUFF + 100);
-					return base.DescExtended(desc).Replace("&a", chanceWeak.ToString());
+					return base.DescExtended(desc).Replace("&a", Utils.ChanceDebuff(BChar, 150).ToString());
 				}
 
 				public override void Init()
@@ -135,9 +133,9 @@ namespace EmotionSystem
 
 					foreach (var enemy in Targets)
 					{
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 5);
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 5);
-						Utils.ApplyBleed(enemy, BChar, 5);
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, Utils.ChanceDebuff(BChar, 150));
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, Utils.ChanceDebuff(BChar, 150));
+						Utils.ApplyBleed(enemy, BChar, 5, 150);
 					}
 
 					foreach (var ally in Utils.AllyTeam.AliveChars)

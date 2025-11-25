@@ -11,7 +11,16 @@ namespace EmotionSystem
 {
 	public partial class Extended
 	{
-		public class Ex_PosAbnoSelection : Skill_Extended
+		public class Ex_PosAbnoSelectionLv1 : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				EmotionManager.AbnormalitySelection(1, true);
+				SelfDestroy();
+			}
+		}
+
+		public class Ex_PosAbnoSelectionLv2 : Skill_Extended
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
@@ -20,7 +29,16 @@ namespace EmotionSystem
 			}
 		}
 		
-		public class Ex_NegAbnoSelection : Skill_Extended
+		public class Ex_NegAbnoSelectionLv1 : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				EmotionManager.AbnormalitySelection(1, false, true);
+				SelfDestroy();
+			}
+		}
+
+		public class Ex_NegAbnoSelectionLv2 : Skill_Extended
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
@@ -35,6 +53,14 @@ namespace EmotionSystem
 			{
 				EmotionManager.EGOSelection();
 				SelfDestroy();
+			}
+		}
+
+		public class SwordTears : Skill_Extended
+		{
+			public override void Init()
+			{
+				MySkill.Fatal = true;
 			}
 		}
 	}

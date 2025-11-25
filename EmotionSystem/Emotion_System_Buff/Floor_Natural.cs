@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Management.Instrumentation;
 using System.Text;
@@ -19,11 +20,16 @@ namespace EmotionSystem
 		{
 			public class Lv1
 			{
-				public class Blades : Buff, IP_SkillUse_Target
+				public class Blades : Buff, IP_SkillUse_Target, IP_Awake
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 100).ToString());
+					}
+
+					public void Awake()
+					{
+						EmotionManager.InvertEmotionPoints(BChar);
 					}
 
 					public override void Init()
@@ -35,7 +41,8 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 1);
+							Utils.PlaySound("Floor_Art_Blades");
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 1, Utils.ChanceDebuff(BChar, 100));
 						}
 					}
 				}
@@ -58,7 +65,8 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusStat.cri = 20;
-						PlusStat.def = -20;
+						PlusStat.hit = 20;
+						PlusStat.crihit = 20;
 					}
 
 					public void Turn()
@@ -70,6 +78,7 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && Cri && !oncePerTurn)
 						{
+							Utils.PlaySound("Floor_Art_Blessing");
 							int healNum = (int)(BChar.GetStat.atk * 0.5f);
 							BChar.StartCoroutine(Utils.HealingParticle(BChar, Utils.DummyChar, healNum, true, false, false, true, true));
 							oncePerTurn = true;
@@ -83,7 +92,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 100).ToString());
 					}
 
 					public void Awake()
@@ -95,14 +104,16 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusStat.cri = 20;
-						PlusStat.def = DespairDrawBack ? - 20 : 0;
+						PlusStat.hit = 20;
+						PlusStat.crihit = DespairDrawBack ? 20 : 0;
 					}
 
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 					{
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 2);
+							Utils.PlaySound("Floor_Art_Despair");
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 2, Utils.ChanceDebuff(BChar, 100));
 						}
 					}
 				}
@@ -132,8 +143,16 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Justice : Buff, IP_PlayerTurn_1
+				public class Justice : Buff, IP_PlayerTurn_1, IP_SkillUse_Target
 				{
+					private bool oncePerTurn;
+
+					public override string DescExtended()
+					{
+						int healNum = (int)(BChar.GetStat.reg * 0.25);
+						return base.DescExtended().Replace("&a", healNum.ToString());
+					}
+
 					public override void Init()
 					{
 						PlusPerStat.Heal = 10;
@@ -141,39 +160,43 @@ namespace EmotionSystem
 
 					public void Turn1()
 					{
-						Utils.AddBuff(BChar, ModItemKeys.Buff_B_Abnormality_NaturalLv1_Justice_1);
+						oncePerTurn = false;
+						ApplyVillain();
+					}
+
+					public void ApplyVillain()
+					{
+						var enemies = Utils.EnemyTeam.AliveChars;
+						int index = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, enemies.Count);
+						var randomEnemy = enemies[index];
+
+						Utils.PlaySound("Floor_Art_Justice");
+						Utils.AddDebuff(randomEnemy, BChar, ModItemKeys.Buff_B_Abnormality_NaturalLv1_Justice_0);
+					}
+
+					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+					{
+						if (Utils.ReturnBuff(hit, ModItemKeys.Buff_B_Abnormality_NaturalLv1_Justice_0) != null && !oncePerTurn)
+						{
+							Utils.PlaySound("Floor_Art_Love");
+							int healNum = (int)(BChar.GetStat.reg * 0.25f);
+							BChar.StartCoroutine(Utils.HealingParticle(null, BChar, healNum, true, false, true, true, true));
+							oncePerTurn = true;
+						}
 					}
 				}
 
-				public class Justice_0 : Buff
+				public class Justice_0 : Buff, IP_PlayerTurn
 				{
 					public override void Init()
 					{
 						PlusStat.IgnoreTaunt_EnemySelf = true;
 						PlusStat.DMGTaken = 10;
 					}
-				}
 
-				public class Justice_1 : Buff, IP_SkillUse_Target
-				{
-					public override void Init()
+					public void Turn()
 					{
-						base.Init();
-						LucySkillExBuff = (BuffSkillExHand)Skill_Extended.DataToExtended(ModItemKeys.SkillExtended_Ex_Abnormality_Justice);
-					}
-
-					public override bool CanSkillBuffAdd(Skill AddedSkill, int Index)
-					{
-						return AddedSkill.ExtendedFind<Extended.Abnormality.Justice>() == null && AddedSkill.Master == BChar && AddedSkill.IsDamage;
-					}
-
-					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
-					{
-						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !hit.Info.Ally && !SP.SkillData.BasicSkill)
-						{
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_Abnormality_NaturalLv1_Justice_0);
-							SelfDestroy();
-						}
+						SelfDestroy();
 					}
 				}
 
@@ -181,7 +204,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int healNum = (int)(BChar.GetStat.reg * 0.3);
+						int healNum = (int)(BChar.GetStat.reg * 0.5);
 						return base.DescExtended().Replace("&a", healNum.ToString());
 					}
 
@@ -201,8 +224,9 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !oncePerTurn)
 						{
-							int healNum = (int)(BChar.GetStat.reg * 0.3f);
-							BChar.StartCoroutine(Utils.HealingParticle(BChar, Utils.DummyChar, healNum, true, true, false, true, true));
+							Utils.PlaySound("Floor_Art_Love");
+							int healNum = (int)(BChar.GetStat.reg * 0.5f);
+							BChar.StartCoroutine(Utils.HealingParticle(null, BChar, healNum, true, false, true, true, true));
 							oncePerTurn = true;
 						}
 					}
@@ -213,9 +237,10 @@ namespace EmotionSystem
 			{
 				public class KingGreed : Buff, IP_SkillUse_Target
 				{
-					protected virtual int GoldGain => 20;
 					protected virtual int CritDamage => 20;
 					protected virtual int DamageTake => 0;
+					protected virtual bool isGreed => false;
+
 
 					public override void Init()
 					{
@@ -235,16 +260,29 @@ namespace EmotionSystem
 					public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 					{
 						bool canEarnMoney = BattleSystem.instance.TurnNum < BattleSystem.instance.FogTurn;
+						int moneyEarn = 0;
 
 						if (SP.SkillData.IsDamage && canEarnMoney)
 						{
-							PlayData.TSavedata._Gold += GoldGain;
+							Utils.PlaySound("Floor_Art_KingGreed");
+							moneyEarn = hit.Info.Ally ? DMG : DMG / 4;
+
+							if (isGreed)
+							{
+								moneyEarn *= 2;
+							}
+							PlayData.TSavedata._Gold += moneyEarn;
 						}
 					}
 				}
 
 				public class Companion : Buff, IP_PlayerTurn_1
 				{
+					public override string DescExtended()
+					{
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 125).ToString());
+					}
+
 					public override void Init()
 					{
 						PlusStat.HIT_CC = 20;
@@ -258,20 +296,26 @@ namespace EmotionSystem
 						{
 							Utils.AllyTeam.Draw();
 							Utils.AllyTeam.AP += 1;
+
+							foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+							{
+								Utils.ApplyErosion(enemy, BChar, 1, 125);
+							}
 						}
 					}
 				}
 
 				public class Greed : KingGreed, IP_Awake
 				{
-					protected override int GoldGain => 40;
 					protected override int CritDamage => 40;
 					protected override int DamageTake => GreedDrawBack ? 40 : 0;
+					protected override bool isGreed => true;
 
 					public bool GreedDrawBack = true;
 
 					public void Awake()
 					{
+						Utils.PlaySound("Floor_Art_Greed");
 						Scripts.LoseDrawBacks(BChar);
 						EmotionSystem_EGO_Button.instance.AddEGOSkill(BChar, ModItemKeys.Skill_S_Abnormality_Natural_Intemperance);
 						EmotionSystem_EGO_Button.instance.AddEGOSkill(BChar, ModItemKeys.Skill_S_Abnormality_Natural_Road);
@@ -290,7 +334,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 25).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 125).ToString());
 					}
 
 					public override void Init()
@@ -303,6 +347,7 @@ namespace EmotionSystem
 					{
 						if (Dmg >= 1)
 						{
+							Utils.PlaySound("Floor_Art_MagicalGirls");
 							foreach (var skill in Utils.AllyTeam.Skills.Where(s => s.Master == BChar))
 							{
 								if (Utils.ApplyExtended(skill, ModItemKeys.SkillExtended_Ex_Abnormality_MagicalGirls, false) is Extended.Abnormality.MagicalGirls ex)
@@ -331,12 +376,14 @@ namespace EmotionSystem
 
 					private void ApplyDebuffs(BattleChar target)
 					{
-						Utils.ApplyErosion(target, BChar, 1, 25);
+						Utils.ApplyErosion(target, BChar, 1, 125);
 					}
 				}
 
 				public class Road : KingGreed, IP_Awake
 				{
+					protected override int DamageTake => -20;
+					protected override int CritDamage => 0;
 					public void Awake()
 					{
 						EmotionSystem_EGO_Button.instance.AddEGOSkill(BChar, ModItemKeys.Skill_S_Abnormality_Natural_Road);
@@ -355,6 +402,11 @@ namespace EmotionSystem
 				{
 					public bool WrathDrawBack = true;
 
+					public override string DescExtended()
+					{
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 125).ToString());
+					}
+
 					public void Awake()
 					{
 						Scripts.LoseDrawBacks(BChar);
@@ -370,11 +422,15 @@ namespace EmotionSystem
 
 					public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 					{
-						if (!WrathDrawBack) return;
-
-						if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.BasicSkill && !SkillD.PlusHit)
+						if (SkillD.IsDamage && SkillD.Master == BChar)
 						{
-							Scripts.AttackRedirect(BChar, SkillD, Targets, false, 30);
+							Utils.ApplyErosion(Targets, BChar, 1, 125);
+
+							if (!SkillD.FreeUse && !SkillD.BasicSkill && !SkillD.PlusHit && !WrathDrawBack)
+							{
+								Utils.PlaySound("Floor_Art_Wrath");
+								Scripts.AttackRedirect(BChar, SkillD, Targets, false, 30);
+							}							
 						}
 					}
 				}
@@ -387,7 +443,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 50).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 150).ToString());
 					}
 
 					public override void Init()
@@ -402,10 +458,12 @@ namespace EmotionSystem
 					{
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
-							Utils.ApplyErosion(hit, BChar, 2, 50);
+							Utils.PlaySound("Floor_Art_Acidic");
+							Utils.ApplyErosion(hit, BChar, 2, 150);
 						}
 					}
 				}
+
 
 				public class Nix : Buff, IP_Awake, IP_PlayerTurn
 				{
@@ -413,7 +471,8 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 50).ToString()).Replace("&b", Utils.ChanceCC(BChar, 50).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 150).ToString())
+							.Replace("&b", Utils.ChanceCC(BChar, 150).ToString());
 					}
 
 					public void Awake()
@@ -425,24 +484,21 @@ namespace EmotionSystem
 					{
 						if (noDrawBacks)
 						{
+							Utils.PlaySound("Floor_Art_MagicalGirls");
+
 							foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
 							{
-								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 5, 50);
-								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 5, 50);
-								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind, 5, 50);
+								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 5, Utils.ChanceDebuff(BChar, 150));
+								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 5, Utils.ChanceDebuff(BChar, 150));
+								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind, 5, Utils.ChanceCC(BChar, 150));
 							}
 						}
 					}
 				}
 
-				public class Void : Buff, IP_Awake
+				public class Void : Buff
 				{
 					public int SkillsRemoved;
-
-					public void Awake()
-					{
-						EmotionSystem_EGO_Button.instance.AddEGOSkill(BChar, ModItemKeys.Skill_S_Abnormality_Natural_Void);
-					}
 
 					public override void BuffStat()
 					{

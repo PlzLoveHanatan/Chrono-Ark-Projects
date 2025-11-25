@@ -189,6 +189,39 @@ namespace EmotionSystem
 			}
 		}
 
+		public static void DestroyAllActions(BattleChar target)
+		{
+			if (target == null || target.Info.Ally) return;
+
+			if (BattleSystem.instance.EnemyCastSkills.Count == 0) return;
+
+			var targetSkill = BattleSystem.instance.EnemyCastSkills.FindAll(skill => skill.Usestate == target); // cant return null
+
+			foreach (var skill in targetSkill)
+			{
+				BattleSystem.instance.EnemyCastSkills.Remove(skill);
+				BattleSystem.instance.ActWindow.CastingWasteFixed(skill);
+			}
+		}
+
+		public static void DestroyAllActions(List <BattleChar> targets)
+		{
+			if (BattleSystem.instance.EnemyCastSkills.Count == 0) return;
+
+			foreach (var target in targets)
+			{
+				if (target == null || target.Info.Ally) continue;
+
+				var targetSkill = BattleSystem.instance.EnemyCastSkills.FindAll(skill => skill.Usestate == target); // cant return null
+
+				foreach (var skill in targetSkill)
+				{
+					BattleSystem.instance.EnemyCastSkills.Remove(skill);
+					BattleSystem.instance.ActWindow.CastingWasteFixed(skill);
+				}
+			}
+		}
+
 		private static Skill TempSkill(BattleChar user, string skillKey, bool isPlusHit = true, bool isFreeUse = true)
 		{
 			Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
@@ -546,10 +579,10 @@ namespace EmotionSystem
 			}
 
 			// Меняем флаги
-			if (despair.DespairDrawBack) despair.DespairDrawBack = false;
-			if (hate.HateDrawBack) hate.HateDrawBack = false;
-			if (greed.GreedDrawBack) greed.GreedDrawBack = false;
-			if (wrath.WrathDrawBack) wrath.WrathDrawBack = false;
+			if (despair.DespairDrawBack) despair.DespairDrawBack = false; despair.Init();
+			if (hate.HateDrawBack) hate.HateDrawBack = false; hate.Init();
+			if (greed.GreedDrawBack) greed.GreedDrawBack = false; greed.Init();
+			if (wrath.WrathDrawBack) wrath.WrathDrawBack = false; wrath.Init();
 
 			nix.noDrawBacks = true;
 

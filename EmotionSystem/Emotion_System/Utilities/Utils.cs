@@ -108,34 +108,19 @@ namespace EmotionSystem
 			yield break;
 		}
 
-		public static int ChanceDOT(BattleChar user, int additionalPercentage = 0)
+		public static int ChanceDOT(BattleChar user, int percentage = 0)
 		{
-			return (int)(user.GetStat.HIT_DOT + 100 + additionalPercentage);
+			return (int)(user.GetStat.HIT_DOT + percentage);
 		}
 
-		public static int ChanceDOT(BattleChar user)
+		public static int ChanceDebuff(BattleChar user, int percentage = 0)
 		{
-			return (int)(user.GetStat.HIT_DOT + 100);
+			return (int)(user.GetStat.HIT_DEBUFF + percentage);
 		}
 
-		public static int ChanceDebuff(BattleChar user, int additionalPercentage = 0)
+		public static int ChanceCC(BattleChar user, int percentage = 0)
 		{
-			return (int)(user.GetStat.HIT_DEBUFF + 100 + additionalPercentage);
-		}
-
-		public static int ChanceDebuff(BattleChar user)
-		{
-			return (int)(user.GetStat.HIT_DEBUFF + 100);
-		}
-
-		public static int ChanceCC(BattleChar user, int additionalPercentage = 0)
-		{
-			return (int)(user.GetStat.HIT_CC + 100 + additionalPercentage);
-		}
-
-		public static int ChanceCC(BattleChar user)
-		{
-			return (int)(user.GetStat.HIT_CC + 100);
+			return (int)(user.GetStat.HIT_CC + percentage);
 		}
 
 		public static void AddBarrier(BattleChar target, BattleChar user, string buffKey, int barrierNum = 0)
@@ -175,9 +160,9 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void AddDebuff(List<BattleChar> Targets, BattleChar user, string buffKey, int debuffNum = 1, int percentage = 0)
+		public static void AddDebuff(List<BattleChar> targets, BattleChar user, string buffKey, int debuffNum = 1, int percentage = 0)
 		{
-			foreach (BattleChar target in Targets)
+			foreach (BattleChar target in targets)
 			{
 				if (target == null || string.IsNullOrEmpty(buffKey) || target.Info.Ally) continue;
 
@@ -186,6 +171,30 @@ namespace EmotionSystem
 					target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
 				}
 			}
+		}
+
+		public static Buff AddDebuff(BattleChar target, BattleChar user, string buffKey, int debuffNum, int percentage, out Buff last)
+		{
+			last = null;
+
+			if (target == null || string.IsNullOrEmpty(buffKey) || target.Info.Ally)
+			{
+				return null;
+			}
+			else
+			{
+				for (int i = 0; i < debuffNum; i++)
+				{
+					Buff added = target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
+
+					if (added != null)
+					{
+						last = added;
+					}
+				}
+			}
+
+			return last;
 		}
 
 		public static void RemoveBuff(BattleChar bchar, string buffKey, bool isForceRemove = false)
@@ -367,41 +376,55 @@ namespace EmotionSystem
 
 		public static void ApplyBurn(BattleChar target, BattleChar user, int stack = 1, int percentage = 0)
 		{
-			if (target.Info.Ally || target == null) return;
+			if (target == null || target.Info.Ally) return;
 
-			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, 1, percentage);
+			int finalPercentage = ChanceDOT(user, percentage);
 
-			if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Burn) is Debuffs.Burn burn)
+			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, 1, finalPercentage, out Buff addedDebuff);
+
+			if (addedDebuff != null)
 			{
-				burn.CurrentBurn += stack;
-			}
-			//var burn = GetOrAddBuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, percentage) as Debuffs.Burn;			
-		}
-
-		public static void ApplyBurn(List<BattleChar> Targets, BattleChar user, int stack = 1, int percentage = 0)
-		{
-			foreach (var target in Targets)
-			{
-				if (target.Info.Ally || target == null) continue;
-
-				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, 1, percentage);
-
-				if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Burn) is Debuffs.Burn burn)
+				if (addedDebuff is Debuffs.Burn burn)
 				{
 					burn.CurrentBurn += stack;
 				}
 			}
 		}
 
+		public static void ApplyBurn(List<BattleChar> Targets, BattleChar user, int stack = 1, int percentage = 0)
+		{
+			foreach (var target in Targets)
+			{
+				if (target == null || target.Info.Ally) continue;
+
+				int finalPercentage = ChanceDOT(user, percentage);
+
+				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Burn, 1, finalPercentage, out Buff addedDebuff);
+
+				if (addedDebuff != null)
+				{
+					if (addedDebuff is Debuffs.Burn burn)
+					{
+						burn.CurrentBurn += stack;
+					}
+				}
+			}
+		}
+
 		public static void ApplyBleed(BattleChar target, BattleChar user, int stack = 1, int percentage = 0)
 		{
-			if (target.Info.Ally || target == null) return;
+			if (target == null || target.Info.Ally) return;
 
-			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, 1, percentage);
+			int finalPercentage = ChanceDOT(user, percentage);
 
-			if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Bleed) is Debuffs.Bleed bleed)
+			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, 1, finalPercentage, out Buff addedDebuff);
+
+			if (addedDebuff != null)
 			{
-				bleed.CurrentBleed += stack;
+				if (addedDebuff is Debuffs.Bleed bleed)
+				{
+					bleed.CurrentBleed += stack;
+				}
 			}
 		}
 
@@ -409,26 +432,36 @@ namespace EmotionSystem
 		{
 			foreach (var target in Targets)
 			{
-				if (target.Info.Ally || target == null) continue;
+				if (target == null || target.Info.Ally) continue;
 
-				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, 1, percentage);
+				int finalPercentage = ChanceDOT(user, percentage);
 
-				if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Bleed) is Debuffs.Bleed bleed)
+				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Bleed, 1, finalPercentage, out Buff addedDebuff);
+
+				if (addedDebuff != null)
 				{
-					bleed.CurrentBleed += stack;
+					if (addedDebuff is Debuffs.Bleed bleed)
+					{
+						bleed.CurrentBleed += stack;
+					}
 				}
 			}
 		}
 
 		public static void ApplyErosion(BattleChar target, BattleChar user, int stack = 1, int percentage = 0)
 		{
-			if (target.Info.Ally || target == null) return;
+			if (target == null || target.Info.Ally) return;
 
-			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Erosion, 1, percentage);
+			int finalPercentage = ChanceDebuff(user, percentage);
 
-			if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Erosion) is Debuffs.Erosion erosion)
+			AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Erosion, 1, finalPercentage, out Buff addedDebuff);
+
+			if (addedDebuff != null)
 			{
-				erosion.CurrentErosion += stack;
+				if (addedDebuff is Debuffs.Erosion erosion)
+				{
+					erosion.CurrentErosion += stack;
+				}
 			}
 		}
 
@@ -436,13 +469,18 @@ namespace EmotionSystem
 		{
 			foreach (var target in Targets)
 			{
-				if (target.Info.Ally || target == null) continue;
+				if (target == null || target.Info.Ally) continue;
 
-				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Erosion, 1, percentage);
+				int finalPercentage = ChanceDebuff(user, percentage);
 
-				if (ReturnBuff(target, ModItemKeys.Buff_B_EmotionSystem_Erosion) is Debuffs.Erosion erosion)
+				AddDebuff(target, user, ModItemKeys.Buff_B_EmotionSystem_Erosion, 1, finalPercentage, out Buff addedDebuff);
+
+				if (addedDebuff != null)
 				{
-					erosion.CurrentErosion += stack;
+					if (addedDebuff is Debuffs.Erosion erosion)
+					{
+						erosion.CurrentErosion += stack;
+					}
 				}
 			}
 		}
@@ -709,13 +747,24 @@ namespace EmotionSystem
 		{
 			if (skill == null) return;
 
-			skill.isExcept = isExclude;
-			skill?.Remove();
+			if (isExclude)
+			{
+				skill.Except();
+			}
+			else
+			{
+				skill.Remove();
+
+				if (BattleSystem.instance?.ActWindow != null)
+				{
+					BattleSystem.instance.ActWindow.Draw(AllyTeam, false);
+				}
+			}
 		}
 
 		public static void RemoveSkill(Skill skill)
 		{
-			if (skill == null || AllyTeam == null) return;
+			if (skill == null) return;
 
 			AllyTeam.Skills?.Remove(skill);
 			AllyTeam.Skills_Deck?.Remove(skill);
@@ -728,11 +777,12 @@ namespace EmotionSystem
 		}
 
 
-		public static IEnumerator RemoveSkillCoroutine(Skill skill, bool isExclude = true)
+		public static IEnumerator RemoveSkillCoroutine(Skill skill)
 		{
+			if (skill == null) yield break;
+
 			yield return null;
-			skill.isExcept = isExclude;
-			skill?.Remove();
+			skill.Except();
 		}
 	}
 }

@@ -55,7 +55,7 @@ namespace EmotionSystem
 
 					foreach (var target in Targets)
 					{
-						Utils.ApplyBleed(target, BChar, 10);
+						Utils.ApplyBleed(target, BChar, 10, 300);
 					}
 				}
 			}

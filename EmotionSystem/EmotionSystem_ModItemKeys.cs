@@ -341,6 +341,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv3_WornParasol = "B_Abnormality_LiteratureLv3_WornParasol";
 		/// <summary>
 		/// Blades Whetted by Teardrops
+		/// Can only gain <color=red>Negative</color> Points (except additional sources).
 		/// Attacks inflict 1 <color=red>Fragile</color> (<sprite=0> &a%) to the target's.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Blades = "B_Abnormality_NaturalLv1_Blades";
@@ -361,40 +362,40 @@ namespace EmotionSystem
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Hate = "B_Abnormality_NaturalLv1_Hate";
 		/// <summary>
-		/// In the name of Hate ♡
+		/// Hysterics ♡
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Hate_0 = "B_Abnormality_NaturalLv1_Hate_0";
 		/// <summary>
 		/// Justice
-		/// The first attack played from hand apply <color=#BD2DC2>Villain</color> status to the target's.
+		/// At the start of the turn, apply <color=#BD2DC2>Villain</color> to a random enemy.
+		/// When attacking a <color=#BD2DC2>Villain</color>, overheal an ally with the lowest health by &a <color=#FF7C34>(25% Healing Power)</color>. Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Justice = "B_Abnormality_NaturalLv1_Justice";
 		/// <summary>
-		/// <color=#BD2DC2>Villain</color> 
+		/// <color=#BD2DC2>Villain</color>
 		/// Removed at the start of the next turn.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Justice_0 = "B_Abnormality_NaturalLv1_Justice_0";
-        public static string Buff_B_Abnormality_NaturalLv1_Justice_1 = "B_Abnormality_NaturalLv1_Justice_1";
 		/// <summary>
 		/// Love
-		/// If user plays an Attack this turn, overheal an ally with the lowest health by &a <color=#FF7C34>(30% Healing Power)</color>. Only activates once per turn.
+		/// If user plays an Attack this turn, overheal an ally with the lowest health by &a <color=#FF7C34>(50% Healing Power)</color>. Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Love = "B_Abnormality_NaturalLv1_Love";
 		/// <summary>
 		/// Companion
-		/// At the start of the turn restore 1 Mana and draw 1 skill if all allies are alive.
+		/// At the start of the turn restore 1 Mana, draw 1 skill and inflict 1 <color=#90EE90>Erosion</color> (<sprite=0> &a%) to all enemies, if all allies are alive.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv2_Companion = "B_Abnormality_NaturalLv2_Companion";
 		/// <summary>
 		/// Greed
 		/// Allows <b>single-target</b> damage skills to be cast on an ally.
-		/// Gain 40 Gold on every attack (before reaching Black Fog).
+		/// Gain Gold on every attack equal to 50% of damage dealt (100% when attacking allies), before reaching Black Fog.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv2_Greed = "B_Abnormality_NaturalLv2_Greed";
 		/// <summary>
 		/// Intemperance
 		/// Allows <b>single-target</b> damage skills to be cast on an ally.
-		/// Gain 20 Gold on every attack (before reaching Black Fog).
+		/// Gain Gold on every attack equal to 25% of damage dealt (50% when attacking allies), before reaching Black Fog.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv2_Intemperance = "B_Abnormality_NaturalLv2_Intemperance";
 		/// <summary>
@@ -406,7 +407,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// Road to Happiness
 		/// Allows <b>single-target</b> damage skills to be cast on an ally.
-		/// Gain 20 Gold on every attack (before reaching Black Fog).
+		/// Gain Gold on every attack equal to 25% of damage dealt (50% when attacking allies), before reaching Black Fog.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv2_Road = "B_Abnormality_NaturalLv2_Road";
 		/// <summary>
@@ -415,6 +416,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_NaturalLv2_Road_0 = "B_Abnormality_NaturalLv2_Road_0";
 		/// <summary>
 		/// Wrath
+		/// Attacks inflict 1 <color=#90EE90>Erosion</color> (<sprite=0> &a%) to the target's.
 		/// Has a 30% chance to target a random ally (except the user) when playing an attack skill from hand.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv2_Wrath = "B_Abnormality_NaturalLv2_Wrath";
@@ -426,7 +428,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// Nix
 		/// At the start of the turn, inflict 5 'Feeble' (<sprite=0> &a%), 5 'Disarm' (<sprite=0> &a%) and 5 <color=orange>Bind</color> (<sprite=2> &a%) to all enemies.
-		/// 'Greed', 'Hate', 'Despair', and 'Wrath' lose their drawbacks.
+		/// <color=red>Hate</color>, <color=red>Despair</color>, <color=red>Greed</color> and <color=red>Wrath</color> lose their drawbacks.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv3_Nix = "B_Abnormality_NaturalLv3_Nix";
 		/// <summary>
@@ -723,11 +725,6 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_HappyMemories = "Ex_Abnormality_HappyMemories";
 		/// <summary>
-		/// Justice
-		/// Apply <color=#BD2DC2>Villain</color> to the target's.
-		/// </summary>
-        public static string SkillExtended_Ex_Abnormality_Justice = "Ex_Abnormality_Justice";
-		/// <summary>
 		/// <color=#ffc440>Greed</color>
 		/// Allows <b>single-target</b> damage skills to be cast on an ally.
 		/// Gain 20 Gold on every attack.
@@ -740,16 +737,6 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_Pebble = "Ex_Abnormality_Pebble";
 		/// <summary>
-		/// When cast, view 3 <color=red>Negative</color> Level II Abnormalities and select 1 to apply to an ally.
-		/// Can only activate once per battle.
-		/// </summary>
-        public static string SkillExtended_Ex_Abnormality_Selection_Neg = "Ex_Abnormality_Selection_Neg";
-		/// <summary>
-		/// When cast, view 3 <color=#32CD32>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
-		/// Can only activate once per battle.
-		/// </summary>
-        public static string SkillExtended_Ex_Abnormality_Selection_Pos = "Ex_Abnormality_Selection_Pos";
-		/// <summary>
 		/// The Seventh Bullet
 		/// This Attack target a random character, except user.
 		/// </summary>
@@ -760,10 +747,9 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillExtended_Ex_EGO_Cooldown = "Ex_EGO_Cooldown";
 		/// <summary>
-		/// When cast, view 2 <color=#FFDF00>E.G.O.</color> skills and select 1 to add into <color=#FFDF00>E.G.O.</color> Hand.
-		/// Can only activate once per battle.
+		/// Critical
 		/// </summary>
-        public static string SkillExtended_Ex_Ego_Selection = "Ex_Ego_Selection";
+        public static string SkillExtended_Ex_Equip_SwordTears = "Ex_Equip_SwordTears";
 		/// <summary>
 		/// Emotional Level 5
 		/// At 2 stacks, draw 1 skill.
@@ -788,6 +774,11 @@ namespace EmotionSystem
 		/// </summary>
         public static string Item_Equip_E_EmotionSystem_Devil = "E_EmotionSystem_Devil";
 		/// <summary>
+		/// Golden Urn
+		/// Gain 40 Gold on every attack (before reaching Black Fog).
+		/// </summary>
+        public static string Item_Equip_E_EmotionSystem_GoldenUrn = "E_EmotionSystem_GoldenUrn";
+		/// <summary>
 		/// Tranquil Lotus Bolus
 		/// </summary>
         public static string Item_Equip_E_EmotionSystem_Lotus = "E_EmotionSystem_Lotus";
@@ -800,6 +791,12 @@ namespace EmotionSystem
 		/// At the start of the turn, gain 'Nettle Clothing'.
 		/// </summary>
         public static string Item_Equip_E_EmotionSystem_Rags = "E_EmotionSystem_Rags";
+		/// <summary>
+		/// Sword Sharpened with Tears
+		/// All user skills gain Critical.
+		/// Upon landing a critical hit, destroys target's Action Point. Only activates once per turn. Current Status: &a.
+		/// </summary>
+        public static string Item_Equip_E_EmotionSystem_SwordTears = "E_EmotionSystem_SwordTears";
 		/// <summary>
 		/// Thrill
 		/// </summary>
@@ -954,7 +951,7 @@ namespace EmotionSystem
         public static string SkillKeyword_KeyWord_Paralysis = "KeyWord_Paralysis";
 		/// <summary>
 		/// Dark Tune
-		/// Apply <color=#8A2BE2>Dark Melody</color> to all enemies (cannot gain Emotion Points) for 1 turn.
+		/// Apply <color=#8A2BE2>Dark Melody</color> to all enemies (cannot gain Emotion Points) for 1 player turn.
 		/// <color=#919191>Why is it that macabre can be felt in this melody?</color>
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_DarkTune = "P_EmotionSystem_DarkTune";
@@ -995,6 +992,11 @@ namespace EmotionSystem
 		/// At the start of the turn, all allies gain 3 &a Emotion Points.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Artistic = "R_EmotionSystem_Artistic";
+		/// <summary>
+		/// Ashen Constellation's Blessing
+		/// At the start of the turn inflict 5 <color=red>Fragile</color> (<sprite=0> 100%) to all enemies.
+		/// </summary>
+        public static string Item_Passive_R_EmotionSystem_Ashen = "R_EmotionSystem_Ashen";
 		/// <summary>
 		/// Bloody Mist
 		/// At the start of the turn, shuffle 1 Blood Mist into deck.
@@ -1172,6 +1174,8 @@ namespace EmotionSystem
         public static string SkillEffect_SE_T_S_EGO_Technological_Regret = "SE_T_S_EGO_Technological_Regret";
         public static string SkillEffect_SE_T_S_EGO_Technological_SolemnLament = "SE_T_S_EGO_Technological_SolemnLament";
         public static string SkillEffect_SE_T_S_EmotionSystem_Lucy_MusicBox = "SE_T_S_EmotionSystem_Lucy_MusicBox";
+        public static string SkillEffect_SE_T_S_Guest_Tank_DrumDeath = "SE_T_S_Guest_Tank_DrumDeath";
+        public static string SkillEffect_SE_T_S_Guest_Tank_DrumWeak = "SE_T_S_Guest_Tank_DrumWeak";
         public static string SkillEffect_SE_T_S_Potion_DarkTune = "SE_T_S_Potion_DarkTune";
         public static string SkillEffect_SE_T_S_Potion_DistilledSuffering = "SE_T_S_Potion_DistilledSuffering";
         public static string SkillEffect_SE_T_S_Potion_DistortionFragment = "SE_T_S_Potion_DistortionFragment";
@@ -1580,7 +1584,9 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_NaturalLv3_Acidic = "S_Abnormality_NaturalLv3_Acidic";
 		/// <summary>
 		/// <color=red>Nix</color>
-		/// This abnormality is only effective if the investigator possesses all four of the following Abnormalities: 'Greed', 'Hate' , 'Despair', and 'Wrath' (regardless of the order in which they are obtained).
+		/// This abnormality is only effective if the investigator possesses all four of the following Abnormalities (regardless of the order in which they are obtained):
+		/// - Level 1: <color=red>Hate</color>, <color=red>Despair</color>.
+		/// - Level 2: <color=red>Greed</color>, <color=red>Wrath</color>.
 		/// <color=#919191>Having decided to trust its own intuition, the jester spake the names of everyone it had met on that path with each step it took.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_NaturalLv3_Nix = "S_Abnormality_NaturalLv3_Nix";
@@ -1593,6 +1599,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#BD2DC2>In the Name of Hate ♡</color>
 		/// Can only be used by support characters.
+		/// Damage is increased by &a <color=#FF7C34>(150% Healing Power)</color>.
 		/// </summary>
         public static string Skill_S_Abnormality_Natural_Hate = "S_Abnormality_Natural_Hate";
 		/// <summary>
@@ -1609,7 +1616,6 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=red>All Returns to the Void</color>
 		/// Remove all skills in hand for the current fight. Gain 2 Attack Power, 2 Healing Power and 5% Defense for each removed skill.
-		/// Add a <color=red>All Returns to the Void</color> to the <color=#ffc440>E.G.O.</color> Hand.
 		/// </summary>
         public static string Skill_S_Abnormality_Natural_Void = "S_Abnormality_Natural_Void";
 		/// <summary>
@@ -1798,6 +1804,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#ffc550>Gold Rush</color>
 		/// Additionaly attack 1 random enemy.
+		/// Damage is increased by &a <color=#FF7C34>(2.5% of current Gold)</color>.
 		/// Gain 500 Gold if this skill defeats an enemy.
 		/// </summary>
         public static string Skill_S_EGO_Natural_Gold = "S_EGO_Natural_Gold";
@@ -1903,8 +1910,22 @@ namespace EmotionSystem
 		/// <color=#919191>Instead of visiting the ocean, the child was given candy which let him see the ocean. Many colorful nights and days passed.</color>
 		/// </summary>
         public static string Skill_S_EmotionSystem_Lucy_RainbowSea = "S_EmotionSystem_Lucy_RainbowSea";
+		/// <summary>
+		/// Crucifying Curse
+		/// </summary>
         public static string Skill_S_Guest_CursePain = "S_Guest_CursePain";
+		/// <summary>
+		/// Weakening Curse
+		/// </summary>
         public static string Skill_S_Guest_CurseWeak = "S_Guest_CurseWeak";
+		/// <summary>
+		/// Drum of Death
+		/// </summary>
+        public static string Skill_S_Guest_Tank_DrumDeath = "S_Guest_Tank_DrumDeath";
+		/// <summary>
+		/// Drum of Weakening
+		/// </summary>
+        public static string Skill_S_Guest_Tank_DrumWeak = "S_Guest_Tank_DrumWeak";
 		/// <summary>
 		/// Dark Tune
 		/// </summary>
@@ -1947,6 +1968,31 @@ namespace EmotionSystem
 		/// Test
 		/// </summary>
         public static string Skill_S_Test = "S_Test";
+		/// <summary>
+		/// When cast, view 3 <color=red>Negative</color> Level I Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv1_Neg = "Ex_Abnormality_SelectionLv1_Neg";
+		/// <summary>
+		/// When cast, view 3 <color=green>Positive</color> Level I Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv1_Pos = "Ex_Abnormality_SelectionLv1_Pos";
+		/// <summary>
+		/// When cast, view 3 <color=green>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv2_Pos = "Ex_Abnormality_SelectionLv2_Pos";
+		/// <summary>
+		/// When cast, view 3 <color=red>Negative</color> Level II Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv2_Neg = "Ex_Abnormality_SelectionLv2_Neg";
+		/// <summary>
+		/// When cast, view 2 <color=#FFDF00>E.G.O.</color> skills and select 1 to add into <color=#FFDF00>E.G.O.</color> Hand.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_EGO_Selection = "Ex_EGO_Selection";
 
     }
 

@@ -436,7 +436,7 @@ namespace EmotionSystem
 						if (dimensionSkill != null)
 						{
 							index = Utils.AllyTeam.Skills.IndexOf(DimensionSkill);
-							BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(DimensionSkill, true));
+							BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(DimensionSkill));
 							Utils.CreateSkill(SavedSkill.Master, SavedSkill.MySkill.KeyID, false, true, index);
 						}
 					}
@@ -463,7 +463,7 @@ namespace EmotionSystem
 							if (dimensionSkill != null)
 							{
 								index = Utils.AllyTeam.Skills.IndexOf(DimensionSkill);
-								BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(DimensionSkill, true));
+								BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(DimensionSkill));
 								var newSkill = Utils.CreateSkill(SavedSkill.Master, SavedSkill.MySkill.KeyID, false, true, index);
 
 								foreach (var extended in SavedSkill.AllExtendeds)
@@ -492,7 +492,7 @@ namespace EmotionSystem
 								var skill = skillList[indexList[randomIndex]];
 								SavedSkill = skill;
 
-								BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(skill, true));
+								BattleSystem.DelayInput(Utils.RemoveSkillCoroutine(skill));
 
 								DimensionSkill = Utils.CreateSkill(skill.Master, ModItemKeys.Skill_S_Abnormality_Guest_DimensionalRefraction, false, true, indexList[randomIndex]);
 

@@ -39,7 +39,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 100).ToString());
 					}
 
 					public override void Init()
@@ -53,13 +53,13 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Art_Elation");
-							Utils.ApplyBleed(hit, BChar, 2);
+							Utils.ApplyBleed(hit, BChar, 2, 100);
 							bool neverLucky = RandomManager.RandomInt(RandomClassKey.InBattle, 0, 101) == 1;
 
 							if (neverLucky)
 							{
 								Utils.PlaySound("Floor_Art_Elation_Dead");								
-								Utils.ApplyBleed(hit, BChar, 10);
+								Utils.ApplyBleed(hit, BChar, 10, 100);
 								BChar.Dead(false, true);
 								Scripts.ChargeLucyNeck();
 							}
@@ -111,7 +111,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 100).ToString());
 					}
 
 					public override void Init()
@@ -131,8 +131,8 @@ namespace EmotionSystem
 						{
 							OncePerTurn = true;
 							Utils.PlaySound("Floor_Art_Tentacles");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 1);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 1);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 1, 100);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 1, 100);
 						}
 					}
 				}
@@ -141,7 +141,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDOT(BChar, 100).ToString());
 					}
 
 					public override void Init()
@@ -154,7 +154,7 @@ namespace EmotionSystem
 						if (SP.SkillData.IsDamage && SP.SkillData.Master == BChar)
 						{
 							Utils.PlaySound("Floor_Art_Thorns");
-							Utils.ApplyBleed(hit, BChar, 1);
+							Utils.ApplyBleed(hit, BChar, 1, 100);
 						}
 					}
 				}
@@ -181,7 +181,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 25).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 125).ToString());
 					}
 
 					private int debuffsPerTurn;
@@ -198,8 +198,8 @@ namespace EmotionSystem
 						{
 							debuffsPerTurn++;
 							Utils.PlaySound("Floor_Art_Incomprehensible");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 1, 25);
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 1, 25);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 1, 125);
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 1, 125);
 						}
 					}
 
@@ -374,7 +374,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 50).ToString());
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 150).ToString());
 					}
 
 					public void Awake()
@@ -406,7 +406,7 @@ namespace EmotionSystem
 
 					private void ApplyDebuffs(BattleChar enemy)
 					{
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EGO_Art_Aroma, 1, 50);
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EGO_Art_Aroma, 1, 150);
 					}
 				}
 			}
