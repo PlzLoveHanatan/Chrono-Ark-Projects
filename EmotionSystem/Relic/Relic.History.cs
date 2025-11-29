@@ -38,26 +38,30 @@ namespace EmotionSystem
 
 				public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
 				{
-					if (!BuffTaker.Info.Ally && addedbuff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT && addedbuff is Buff buff)
+					if (BuffTaker.Info.Ally) return;
+
+					if (addedbuff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT && !addedbuff.TimeUseless)
 					{
-						buff.TimeUseless = true;
+						addedbuff.TimeUseless = true;
 					}
 				}
 
 				public void Turn()
 				{
-					foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+					foreach (var enemy in Utils.EnemyTeam.AliveChars)
 					{
 						foreach (var buff in enemy.Buffs)
 						{
-							if (Exception.Contains(buff.BuffData.Key)) continue;
-
+							if (buff.BuffData.BuffTag.Key != GDEItemKeys.BuffTag_DOT || Exception.Contains(buff.BuffData.Key))
+							{
+								continue;
+							}
 							buff.SelfStackDestroy();
 						}
 					}
 				}
 
-				private readonly List<string> Exception = new List<string>()
+				private readonly HashSet<string> Exception = new HashSet<string>()
 				{
 					ModItemKeys.Buff_B_EmotionSystem_Bleed,
 					ModItemKeys.Buff_B_EmotionSystem_Burn,

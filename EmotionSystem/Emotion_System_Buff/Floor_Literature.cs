@@ -409,7 +409,7 @@ namespace EmotionSystem
 						{
 							Utils.PlaySound("Floor_Literature_GooeyWaste");
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 1, Utils.ChanceDebuff(BChar, 150));
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, Utils.ChanceDebuff(BChar, 150));
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 1, Utils.ChanceDebuff(BChar, 150));
 							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Bind, 1, Utils.ChanceCC(BChar, 150));
 							Utils.ApplyBleed(hit, BChar, 1, 150);
 						}

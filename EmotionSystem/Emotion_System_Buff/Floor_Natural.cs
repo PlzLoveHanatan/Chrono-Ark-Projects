@@ -297,7 +297,7 @@ namespace EmotionSystem
 							Utils.AllyTeam.Draw();
 							Utils.AllyTeam.AP += 1;
 
-							foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+							foreach (var enemy in Utils.EnemyTeam.AliveChars)
 							{
 								Utils.ApplyErosion(enemy, BChar, 1, 125);
 							}
@@ -487,7 +487,7 @@ namespace EmotionSystem
 						{
 							Utils.PlaySound("Floor_Art_MagicalGirls");
 
-							foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+							foreach (var enemy in Utils.EnemyTeam.AliveChars)
 							{
 								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Feeble, 5, Utils.ChanceDebuff(BChar, 150));
 								Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Disarm, 5, Utils.ChanceDebuff(BChar, 150));

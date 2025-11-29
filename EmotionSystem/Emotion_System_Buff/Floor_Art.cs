@@ -310,15 +310,15 @@ namespace EmotionSystem
 						if (edgeCase)
 						{
 							Targets.Clear();
-							Targets.AddRange(BChar.MyTeam.AliveChars_Vanish);
+							Targets.AddRange(BChar.MyTeam.AliveChars);
 						}
 						else
 						{
 							BattleChar target;
 
-							if (BChar.MyTeam.AliveChars_Vanish.Count > 1 && RandomManager.RandomPer(RandomClassKey.Active, 100, 50))
+							if (BChar.MyTeam.AliveChars.Count > 1 && RandomManager.RandomPer(RandomClassKey.Active, 100, 50))
 							{
-								target = BChar.MyTeam.AliveChars_Vanish.Random(RandomClassKey.Active);
+								target = BChar.MyTeam.AliveChars.Random(RandomClassKey.Active);
 							}
 							else
 							{
@@ -359,7 +359,7 @@ namespace EmotionSystem
 							BChar.StartCoroutine(Utils.HealingParticle(ally, Utils.DummyChar, heal, true, false));
 						}
 
-						foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+						foreach (var enemy in Utils.EnemyTeam.AliveChars)
 						{
 							int damage = enemy.GetStat.maxhp / 2;
 							enemy.Damage(Utils.DummyChar, damage, false, true);

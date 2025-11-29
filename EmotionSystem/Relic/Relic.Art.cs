@@ -42,7 +42,7 @@ namespace EmotionSystem
 
 				private IEnumerator SetPoints()
 				{
-					foreach (var ally in Utils.AllyTeam.AliveChars_Vanish)
+					foreach (var ally in Utils.AllyTeam.AliveChars)
 					{
 						EmotionManager.GainOnlyPositivePoints(ally);
 					}

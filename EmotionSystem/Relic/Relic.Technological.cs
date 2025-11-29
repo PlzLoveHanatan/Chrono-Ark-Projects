@@ -24,7 +24,7 @@ namespace EmotionSystem
 					{
 						ShinyEffect();
 
-						foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+						foreach (var enemy in Utils.EnemyTeam.AliveChars)
 						{
 							Utils.AddDebuff(enemy, Utils.DummyChar, GDEItemKeys.Buff_B_Common_Rest, 1, 100);
 						}

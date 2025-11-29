@@ -754,7 +754,6 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#ffc440>Greed</color>
 		/// Allows <b>single-target</b> damage skills to be cast on an ally.
-		/// Gain 20 Gold on every attack.
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_KingGreed = "Ex_Abnormality_KingGreed";
         public static string SkillExtended_Ex_Abnormality_MagicalGirls = "Ex_Abnormality_MagicalGirls";
@@ -2217,7 +2216,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 手札から攻撃スキルを使用する際、ランダムな味方（使用者除く）をターゲットにする確率30%。
 		/// Chinese:
+		/// 使用手中的攻击技能时，30%机率改为指向自身以外的随机友军。
 		/// Chinese-TW:
+		/// 使用手中的攻擊技能時，30%機率改為指向自身以外的隨機友軍。
 		/// </summary>
         public static string EmotionSystem_Abnormality_Wrath => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Abnormality_Wrath");
 		/// <summary>
@@ -2373,6 +2374,9 @@ namespace EmotionSystem
 		/// 次のターン開始時に <color=#90EE90>侵蝕</color> 1 を解除。
 		/// Chinese:
 		/// Chinese-TW:
+		/// <color=#90EE90>腐蝕</color>層數：&a
+		/// 受到的傷害量增加 <color=#FF7C34> &a </color>點<color=#FF7C34>(此減益層數)</color>。
+		/// 回合開始時減少 1 層。
 		/// </summary>
         public static string EmotionSystem_Erosion_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Erosion_0");
 		/// <summary>
@@ -2387,6 +2391,8 @@ namespace EmotionSystem
 		/// 次のターン開始時に <color=#90EE90>侵蝕</color> 1 を解除。
 		/// Chinese:
 		/// Chinese-TW:
+		/// 受到的傷害量增加 <color=#FF7C34> &a </color>點<color=#FF7C34>(此減益層數)</color>。
+		/// 回合開始時減少 1 層。
 		/// </summary>
         public static string EmotionSystem_Erosion_1 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Erosion_1");
 		/// <summary>
@@ -2436,7 +2442,9 @@ namespace EmotionSystem
 		/// Japanese:
 		/// 自然科学館
 		/// Chinese:
+		/// 自然层
 		/// Chinese-TW:
+		/// 自然層
 		/// </summary>
         public static string EmotionSystem_Floor_Natural => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Natural");
 		/// <summary>

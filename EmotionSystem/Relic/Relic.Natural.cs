@@ -22,7 +22,7 @@ namespace EmotionSystem
 				{
 					ShinyEffect();
 
-					foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+					foreach (var enemy in Utils.EnemyTeam.AliveChars)
 					{
 						Utils.AddDebuff(enemy, Utils.DummyChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 5, 100);
 					}

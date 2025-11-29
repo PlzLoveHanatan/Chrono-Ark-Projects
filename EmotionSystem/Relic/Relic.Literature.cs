@@ -22,7 +22,7 @@ namespace EmotionSystem
 				{
 					ShinyEffect();
 
-					foreach (var enemy in Utils.EnemyTeam.AliveChars_Vanish)
+					foreach (var enemy in Utils.EnemyTeam.AliveChars)
 					{
 						Utils.ApplyBleed(enemy, Utils.DummyChar, 2);
 					}
