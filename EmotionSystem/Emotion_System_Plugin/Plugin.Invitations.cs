@@ -20,7 +20,7 @@ namespace EmotionSystem
 					yield return __result.Current;
 				}
 
-				if (Utils.DistortedBosses)
+				if (Utils.DistortedBosses && !Utils.BossInvitations)
 				{
 					BattleSystem.instance.MainQueueData.CustomeFogTurn = (int)(BattleSystem.instance.FogTurn * 1.3f);
 				}
@@ -70,6 +70,7 @@ namespace EmotionSystem
 							if (ally.Incapacitated)
 							{
 								ally.Incapacitated = false;
+								ally.Hp = 1;
 								ally.Hp = (int)(ally.get_stat.maxhp * 0.5);
 							}
 						}

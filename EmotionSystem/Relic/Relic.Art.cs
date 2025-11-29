@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,28 @@ namespace EmotionSystem
 						ShinyEffect();
 						Utils.AllyTeam.AP += 1;
 					}
+				}
+			}
+
+			public class Flower : PassiveItemBase, IP_BattleStart_Ones
+			{
+				public override void Init()
+				{
+					OnePassive = true;
+				}
+
+				public void BattleStart(BattleSystem Ins)
+				{
+					BattleSystem.DelayInput(SetPoints());
+				}
+
+				private IEnumerator SetPoints()
+				{
+					foreach (var ally in Utils.AllyTeam.AliveChars_Vanish)
+					{
+						EmotionManager.GainOnlyPositivePoints(ally);
+					}
+					yield break;
 				}
 			}
 		}

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DarkTonic.MasterAudio;
+using GameDataEditor;
 using I2.Loc;
+using Scrolls;
 
 namespace EmotionSystem
 {

@@ -18,12 +18,12 @@ namespace EmotionSystem
 			{
 				if (PlayData.TSavedata.StageNum >= 0 && Utils.BossInvitations && Utils.DistortedBosses)
 				{
-					var data = GetOrCreateEmotionData();
+					var data =  Utils.GetOrCreateEmotionData();
 
-					if (!data.startingBonus)
+					if (!data.StartingBonus)
 					{
 						GainEmotionReward();
-						data.startingBonus = true;
+						data.StartingBonus = true;
 					}
 				}
 
@@ -52,16 +52,7 @@ namespace EmotionSystem
 				   key == GDEItemKeys.Stage_Stage4_Camp;
 		}
 
-		private static Value GetOrCreateEmotionData()
-		{
-			var data = PlayData.TSavedata.GetCustomValue<Value>();
-			if (data == null)
-			{
-				data = new Value();
-				PlayData.TSavedata.AddCustomValue(data);
-			}
-			return data;
-		}
+		
 
 		private static void GainEmotionReward()
 		{

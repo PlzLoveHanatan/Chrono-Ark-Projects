@@ -204,7 +204,7 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void DestroyAllActions(List <BattleChar> targets)
+		public static void DestroyAllActions(List<BattleChar> targets)
 		{
 			if (BattleSystem.instance.EnemyCastSkills.Count == 0) return;
 
@@ -560,7 +560,7 @@ namespace EmotionSystem
 			// Проверяем наличие Nix
 
 			var nix = Utils.ReturnBuff(user, ModItemKeys.Buff_B_Abnormality_NaturalLv3_Nix) as NaturalBuff.Abnormality.Lv3.Nix;
-			
+
 			if (nix == null)
 			{
 				return false;
@@ -579,10 +579,16 @@ namespace EmotionSystem
 			}
 
 			// Меняем флаги
-			if (despair.DespairDrawBack) despair.DespairDrawBack = false; despair.Init();
-			if (hate.HateDrawBack) hate.HateDrawBack = false; hate.Init();
-			if (greed.GreedDrawBack) greed.GreedDrawBack = false; greed.Init();
-			if (wrath.WrathDrawBack) wrath.WrathDrawBack = false; wrath.Init();
+			despair.DespairDrawBack = false;
+			despair.Init();
+
+			hate.HateDrawBack = false;
+			hate.Init();
+
+			greed.GreedDrawBack = false;
+			greed.Init();
+
+			wrath.WrathDrawBack = false;
 
 			nix.noDrawBacks = true;
 

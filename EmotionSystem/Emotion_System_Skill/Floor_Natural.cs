@@ -9,6 +9,7 @@ using ChronoArkMod;
 using GameDataEditor;
 using UnityEngine;
 using static EmotionSystem.Extended.EGO;
+using static EmotionSystem.NaturalBuff.Abnormality.Lv3;
 
 namespace EmotionSystem
 {
@@ -20,7 +21,7 @@ namespace EmotionSystem
 			{
 				public override string DescExtended(string desc)
 				{
-					int damage = (int)(BChar.GetStat.reg * 1.5f);
+					int damage = (int)(BChar.GetStat.reg);
 					return base.DescExtended(desc).Replace("&a", damage.ToString());
 				}
 
@@ -36,7 +37,7 @@ namespace EmotionSystem
 
 				public override void FixedUpdate()
 				{
-					SkillBasePlus.Target_BaseDMG = (int)(BChar.GetStat.reg * 1.5f);
+					SkillBasePlus.Target_BaseDMG = (int)(BChar.GetStat.reg);
 				}
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -141,6 +142,14 @@ namespace EmotionSystem
 		{
 			public class Rage : Ex_EGO
 			{
+				private bool NoDrawBack => Utils.ReturnBuff(BChar, ModItemKeys.Buff_B_Abnormality_NaturalLv3_Nix) is Nix nix && nix.noDrawBacks;
+
+				public override string DescExtended(string desc)
+				{
+					string text = NoDrawBack ? "" : ModLocalization.EmotionSystem_EGO_Rage;
+					return base.DescExtended(desc).Replace("Description", text.ToString());
+				}
+
 				public override void Init()
 				{
 					Cooldown = 3;
@@ -149,7 +158,11 @@ namespace EmotionSystem
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
 					Utils.PlaySound("Floor_Art_Rage");
-					Scripts.AttackRedirect(BChar, SkillD, Targets, false, 30);
+
+					if (!NoDrawBack)
+					{
+						Scripts.AttackRedirect(BChar, SkillD, Targets, false, 30);
+					}					
 					BattleSystem.DelayInput(Scripts.RecastSkillErosion(Targets[0], BChar, ModItemKeys.Skill_S_EGO_Natural_Rage, 2, 5, 300));
 				}
 			}
@@ -185,7 +198,7 @@ namespace EmotionSystem
 					{
 						if (target.IsDead)
 						{
-							PlayData.TSavedata._Gold += 500;
+							PlayData.TSavedata._Gold += 300;
 						}
 					}
 					yield break;

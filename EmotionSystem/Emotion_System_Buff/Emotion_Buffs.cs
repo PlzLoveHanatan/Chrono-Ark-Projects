@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using EmotionSystem;
 using GameDataEditor;
+using static EmotionSystem.Investigators.Emotion.Level;
 
 namespace EmotionSystem
 {
@@ -16,27 +17,39 @@ namespace EmotionSystem
 		{
 			public class MusicBox : Buff, IP_SkillUse_User, IP_Dodge, IP_DamageTake, IP_Healed, IP_DealDamage, IP_Kill, IP_SomeOneDead
 			{
-				private bool Invert
+				private EmotionMode Mode
 				{
 					get
 					{
 						if (Utils.ReturnBuff(BChar, ModItemKeys.Buff_B_Investigator_Emotional_Level) is Investigators.Emotion.Level level)
 						{
-							return level.InvertPoints;
+							return level.Mode;
 						}
-						return false;
+
+						return EmotionMode.Normal;
 					}
 				}
 
-				private void GainPosOrNegPoints(Vector3? pos = null, int amount = 1)
+				private void GainPosOrNegPoints(Vector3? pos = null, int amount = 1, bool isPositive = true)
 				{
-					if (Invert)
+					if (Mode == EmotionMode.ForceNegative)
 					{
 						BChar.GetNegEmotion(pos, amount);
 					}
-					else
+					else if (Mode == EmotionMode.ForcePositive)
 					{
 						BChar.GetPosEmotion(pos, amount);
+					}
+					else
+					{
+						if (isPositive)
+						{
+							BChar.GetPosEmotion(pos, amount);
+						}
+						else
+						{
+							BChar.GetNegEmotion(pos, amount);
+						}
 					}
 				}
 
@@ -50,7 +63,7 @@ namespace EmotionSystem
 					if (DeadChar != BChar && DeadChar.Info.Ally)
 					{
 						var pos = DeadChar.GetPosUI();
-						BChar.GetNegEmotion(pos, 3);
+						GainPosOrNegPoints(pos, 3, false);
 					}
 				}
 
@@ -60,11 +73,11 @@ namespace EmotionSystem
 					{
 						if (SkillD.IsHeal || SkillD.IsDamage)
 						{
-							GainPosOrNegPoints(SkillD.GetPosUI());
+							GainPosOrNegPoints(SkillD.GetPosUI(), 1, true);
 						}
 						else
 						{
-							BChar.GetNegEmotion(SkillD.GetPosUI());
+							GainPosOrNegPoints(SkillD.GetPosUI(), 1, false);
 						}
 					}
 				}
@@ -73,7 +86,8 @@ namespace EmotionSystem
 				{
 					if (SP.UseStatus == BChar)
 					{
-						GainPosOrNegPoints(SP.UseStatus.GetPosUI(), 3);
+						var pos = SP.UseStatus.GetPosUI();
+						GainPosOrNegPoints(pos, 3, true);
 					}
 				}
 
@@ -81,12 +95,12 @@ namespace EmotionSystem
 				{
 					if (Damage >= 1)
 					{
-						GainPosOrNegPoints();
+						GainPosOrNegPoints(null, 1, true);
 					}
 
 					if (IsCri)
 					{
-						GainPosOrNegPoints();
+						GainPosOrNegPoints(null, 1, true);
 					}
 				}
 
@@ -94,12 +108,12 @@ namespace EmotionSystem
 				{
 					if (Dmg >= 1)
 					{
-						GainPosOrNegPoints(User.GetPosUI());
+						GainPosOrNegPoints(User.GetPosUI(), 1, false);
 						BattleSystem.DelayInput(DeathDoorCheck());
 
 						if (Cri)
 						{
-							GainPosOrNegPoints(User.GetPosUI());
+							GainPosOrNegPoints(User.GetPosUI(), 1, false);
 						}
 					}
 				}
@@ -110,9 +124,10 @@ namespace EmotionSystem
 					{
 						foreach (var ally in BChar.MyTeam.AliveChars_Vanish)
 						{
-							ally.GetNegEmotion();
+							GainPosOrNegPoints(null, 1, false);
 						}
 					}
+
 					yield break;
 				}
 
@@ -120,7 +135,7 @@ namespace EmotionSystem
 				{
 					if (HealedChar == BChar)
 					{
-						GainPosOrNegPoints(Healer.GetPosUI());
+						GainPosOrNegPoints(Healer.GetPosUI(), 1, true);
 					}
 				}
 
@@ -128,7 +143,7 @@ namespace EmotionSystem
 				{
 					if (Char == BChar)
 					{
-						GainPosOrNegPoints(Char.GetPosUI());
+						GainPosOrNegPoints(Char.GetPosUI(), 1, true);
 					}
 				}
 			}
@@ -151,6 +166,15 @@ namespace EmotionSystem
 				public void Turn()
 				{
 					SelfDestroy();
+				}
+			}
+
+			public class EtherealNote : Buff
+			{
+				public override void Init()
+				{
+					PlusStat.MPR = StackNum;
+					PlusStat.PlusDiscard = 1;
 				}
 			}
 		}

@@ -8,10 +8,11 @@ using TMPro;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine;
 using UnityEngine.UI;
+using GameDataEditor;
 
 namespace EmotionSystem
 {
-	public class Utils_Ui
+	public static class Utils_Ui
 	{
 		public static void GetSprite(string path, Image img)
 		{
@@ -135,6 +136,45 @@ namespace EmotionSystem
 			{
 				UnityEngine.Object.Destroy(obj);
 			}
+		}
+		public static string GetDescription(this ItemEnchant enchant)
+		{
+			bool flag = string.IsNullOrEmpty(enchant.Name);
+			string result;
+			if (flag)
+			{
+				result = "";
+			}
+			else
+			{
+				string hexcode = enchant.CurseEnchant ? "FFDD09" : "97D8FFFF";
+				string text = enchant.Name + Misc.StatString(enchant.EnchantData.PlusStat, enchant.EnchantData.PlusPerStat);
+				bool flag2 = !string.IsNullOrEmpty(enchant.Key);
+				if (flag2)
+				{
+					string text2 = new GDESpecialKeyData("SPK_EnchantDesc_" + enchant.Key).Name;
+					bool flag3 = !string.IsNullOrEmpty(text2);
+					if (flag3)
+					{
+						text2 = enchant.EnchantData.DescExtended(text2);
+						text = text + "\n" + text2;
+					}
+				}
+				text = Misc.InputColor(text, hexcode);
+				result = text;
+			}
+			return result;
+		}
+
+		public static Type GetEnchantType(string prefix, string className)
+		{
+			return ModManager.GetType(prefix, className) ?? ModManager.GetType(className);
+		}
+
+		public static void CopyEquipEnchantCurse(Item_Equip equipNew, Item_Equip equipOld)
+		{
+			equipNew.Enchant = equipOld.Enchant;
+			equipNew.Curse = equipOld.Curse;
 		}
 	}
 }

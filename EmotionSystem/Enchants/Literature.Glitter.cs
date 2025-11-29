@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Value : CustomValue
+	public class Glitter : EquipBase
 	{
-		public bool StartingBonus = false;
-		public int WhetstoneCharge = 2;
+		public override void Init()
+		{
+			PlusPerStat.Damage = 10;
+			PlusStat.AggroPer = 50;
+		}
 	}
 }

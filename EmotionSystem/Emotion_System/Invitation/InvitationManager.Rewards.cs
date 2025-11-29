@@ -20,7 +20,7 @@ namespace EmotionSystem
 
 			AddReward(GDEItemKeys.Item_Misc_TimeMoney, timeMoney, totalRewards);
 			//AddReward(GDEItemKeys.Item_Misc_Soul, soulStones, totalRewards);
-			AddReward(ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent, 1);
+			//AddReward(ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent, 1);
 
 			if (PlayData.TSavedata.StageNum <= 4)
 			{

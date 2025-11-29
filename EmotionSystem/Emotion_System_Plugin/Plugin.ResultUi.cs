@@ -45,18 +45,18 @@ namespace EmotionSystem
 
 				StringBuilder sb = new StringBuilder();
 
-				if (Utils.InvestigatorEmotions)
+				if (Utils.AllyEmotions)
 				{
-					sb.AppendLine("+" + ModLocalization.EmotionSystem_EmotionsInvestigator);
+					sb.AppendLine("+" + ModLocalization.EmotionSystem_Emotions_Ally);
 				}
 
-				if (Utils.GuestEmotions)
+				if (Utils.EnemyEmotions)
 				{
-					sb.AppendLine("+" + ModLocalization.EmotionSystem_EmotionsGuest);
+					sb.AppendLine("+" + ModLocalization.EmotionSystem_Emotions_Enemy);
 				}
 
 				string floorName = GetLibraryFloor();
-				if (CurrentFloor != null && !string.IsNullOrEmpty(floorName) && Utils.InvestigatorEmotions)
+				if (CurrentFloor != null && !string.IsNullOrEmpty(floorName) && Utils.AllyEmotions)
 				{
 					sb.AppendLine("+" + floorName);
 				}

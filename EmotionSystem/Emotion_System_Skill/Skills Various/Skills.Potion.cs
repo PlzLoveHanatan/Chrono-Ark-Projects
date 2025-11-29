@@ -77,6 +77,15 @@ namespace EmotionSystem
 					}
 				}
 			}
+
+			public class EtherealNote : Skill_Extended
+			{
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Utils.AllyTeam.DiscardCount += 1;
+					Utils.AddBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Potion_EtherealNote);
+				}
+			}
 		}
 	}
 }

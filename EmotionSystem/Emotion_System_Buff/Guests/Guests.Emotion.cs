@@ -114,10 +114,10 @@ namespace EmotionSystem
 				{
 					if (EmotionBlock) return;
 
-					//if (Damage >= 1)
-					//{
-					//	BChar.GetPosEmotion();
-					//}
+					if (Damage >= 1)
+					{
+						BChar.GetPosEmotion();
+					}
 
 					if (IsCri)
 					{
@@ -189,8 +189,7 @@ namespace EmotionSystem
 						{
 							charEmotion.CanGetCoin = false;
 						}
-
-						else if (EmotionsGainThisTurn >= 2)
+						else if (EmotionsGainThisTurn >= Utils.LevelsPerTurn)
 						{
 							charEmotion.CanGetCoin = false;
 						}

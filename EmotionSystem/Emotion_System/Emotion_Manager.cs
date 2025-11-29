@@ -33,7 +33,7 @@ namespace EmotionSystem
 		{
 			var emotion = bc.MyEmotion();
 			if (emotion == null) return;
-			if (Utils.EmotionPointsParticles && source != null)
+			if (Utils.EmotionParticles && source != null)
 			{
 				GameObject prefab;
 				if (isPos)
@@ -126,7 +126,7 @@ namespace EmotionSystem
 
 		public static void AddEmotionLevel(this BattleChar bc, bool isForceLevelUp = false, bool isNegativePoints = false)
 		{
-			if (bc.EmotionLevel() >= 5 || !Utils.InvestigatorEmotions) return;
+			if (bc.EmotionLevel() >= 5 || !Utils.AllyEmotions) return;
 
 			var emotion = bc.MyEmotion();
 			var emotionalLevel = Utils.ReturnBuff(bc, ModItemKeys.Buff_B_Investigator_Emotional_Level) as Investigators.Emotion.Level;
@@ -244,11 +244,19 @@ namespace EmotionSystem
 			}
 		}
 
-		public static void InvertEmotionPoints(BattleChar user, bool isInvert = true)
+		public static void GainOnlyPositivePoints(BattleChar user)
 		{
 			if (Utils.ReturnBuff(user, ModItemKeys.Buff_B_Investigator_Emotional_Level) is Investigators.Emotion.Level userEmotion)
 			{
-				userEmotion.InvertPoints = isInvert;
+				userEmotion.Mode = Investigators.Emotion.Level.EmotionMode.ForcePositive;
+			}
+		}
+
+		public static void GainOnlyNegativePoints(BattleChar user)
+		{
+			if (Utils.ReturnBuff(user, ModItemKeys.Buff_B_Investigator_Emotional_Level) is Investigators.Emotion.Level userEmotion)
+			{
+				userEmotion.Mode = Investigators.Emotion.Level.EmotionMode.ForceNegative;
 			}
 		}
 	}

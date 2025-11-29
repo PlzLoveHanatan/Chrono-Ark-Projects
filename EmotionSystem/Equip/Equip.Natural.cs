@@ -67,7 +67,7 @@ namespace EmotionSystem
 
 					if (SP.SkillData.IsDamage && canEarnMoney)
 					{
-						PlayData.TSavedata._Gold += 40;
+						PlayData.TSavedata._Gold += DMG / 2;
 					}
 				}
 			}

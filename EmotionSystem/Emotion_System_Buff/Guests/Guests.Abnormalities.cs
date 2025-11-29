@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
 using I2.Loc;
+using NLog.Targets;
 using UnityEngine;
 
 namespace EmotionSystem
@@ -124,26 +125,22 @@ namespace EmotionSystem
 
 					public void Awake()
 					{
-						Utils.AddBuff(BChar, ModItemKeys.Buff_B_Abnormality_GuestLv2_BehaviourAdjustment_0);
-					}
-
-					public override string DescExtended()
-					{
-						string text = DodgedOrDebuffBlocked ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
-						return base.DescExtended().Replace("&a", text.ToString());
+						GetBuff();
 					}
 
 					public void Turn()
 					{
-						if (DodgedOrDebuffBlocked)
-						{
-							Utils.AddBuff(BChar, ModItemKeys.Buff_B_Abnormality_GuestLv2_BehaviourAdjustment_0);
-							DodgedOrDebuffBlocked = false;
-						}
+						GetBuff();
+					}
+
+					private void GetBuff()
+					{
+						Utils.GetOrAddBuff(BChar, ModItemKeys.Buff_B_Abnormality_GuestLv2_BehaviourAdjustment_0);
+						Utils.GetOrAddBuff(BChar, ModItemKeys.Buff_B_Abnormality_GuestLv2_BehaviourAdjustment_1);
 					}
 				}
 
-				public class BehaviourAdjustment_0 : Buff, IP_BuffAdd, IP_Dodge
+				public class BehaviourAdjustment_0 : Buff, IP_Dodge
 				{
 					public override void Init()
 					{
@@ -156,12 +153,14 @@ namespace EmotionSystem
 						{
 							if (SP.SkillData.IsDamage && !SP.UseStatus.IsLucy && !SP.UseStatus.Dummy)
 							{
-								ChangeBoolState();
 								SelfDestroy();
 							}
 						}
 					}
+				}
 
+				public class BehaviourAdjustment_1 : Buff, IP_BuffAdd
+				{
 					public void Buffadded(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff)
 					{
 						GDEBuffData gdebuffData = new GDEBuffData(addedbuff.BuffData.Key);
@@ -169,16 +168,7 @@ namespace EmotionSystem
 						{
 							addedbuff.SelfDestroy();
 							BuffTaker.SimpleTextOut(ScriptLocalization.UI_Battle.DebuffGuard);
-							ChangeBoolState();
 							SelfDestroy();
-						}
-					}
-
-					public void ChangeBoolState()
-					{
-						if (Utils.ReturnBuff(BChar, ModItemKeys.Buff_B_Abnormality_GuestLv2_BehaviourAdjustment) is BehaviourAdjustment buff)
-						{
-							buff.DodgedOrDebuffBlocked = true;
 						}
 					}
 				}
@@ -306,11 +296,34 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Shelter : Buff, IP_HPChange
+				public class Shelter : Buff, IP_PlayerTurn_1, IP_Awake
 				{
-					public override void Init()
+					public void Turn1()
 					{
-						OnePassive = true;
+						ApplyShelter();
+					}
+
+					public void Awake()
+					{
+						ApplyShelter();
+					}
+
+					private void ApplyShelter()
+					{
+						bool additionalShelter = PlayData.TSavedata.Party.Count >= 4 || Utils.AllyTeam.AliveChars.Count >= 4;
+						int repeats = additionalShelter ? 2 : 1;
+						var enemies = Utils.AllyTeam.AliveChars;
+
+						for (int i = 0; i < repeats; i++)
+						{
+							if (enemies.Count == 0) break;
+
+							int index = RandomManager.RandomInt(BChar.GetRandomClass().Main, 0, enemies.Count);
+							var randomEnemy = enemies[index];
+							enemies.RemoveAt(index);
+
+							randomEnemy.BuffAdd(ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter_0, BChar, false, 125, false, -1, false);
+						}
 					}
 
 					public void HPChange(BattleChar Char, bool Healed)
@@ -326,7 +339,16 @@ namespace EmotionSystem
 					}
 				}
 
-				public class Shelter_0 : Buff, IP_DamageTake, IP_Awake, IP_PlayerTurn
+				public class Shelter_0 : Buff
+				{
+					public override void Init()
+					{
+						PlusPerStat.Damage = -20;
+						PlusPerStat.Heal = -20;
+					}
+				}
+
+				public class Shelter_Old : Buff, IP_DamageTake, IP_Awake, IP_PlayerTurn
 				{
 					private int turnsBeforeRemove;
 
@@ -401,6 +423,7 @@ namespace EmotionSystem
 					public override void Init()
 					{
 						PlusStat.Stun = true;
+						PlusStat.DMGTaken = 30;
 					}
 
 					public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
@@ -477,7 +500,7 @@ namespace EmotionSystem
 									else
 									{
 										newSkill.ExtendedAdd(clone);
-									}	
+									}
 								}
 							}
 
@@ -506,7 +529,7 @@ namespace EmotionSystem
 									else
 									{
 										DimensionSkill.ExtendedAdd(clone);
-									}	
+									}
 								}
 
 								string baseName = skill.MySkill != null ? new GDESkillData(skill.MySkill.KeyID).Name : "Unknown Skill";

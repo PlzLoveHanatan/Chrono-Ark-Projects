@@ -4,6 +4,12 @@ namespace EmotionSystem
     public static class ModItemKeys
     {
 		/// <summary>
+		/// Overused Whetstone
+		/// Use 1 charge to apply a unique Enchantment to equipment. Can be used unlimited times. Gain 1 charge when entering a fight.
+		/// Current charges: &a (Max 2).
+		/// </summary>
+        public static string Item_Consume_C_EmotionSystem_Whetstone = "C_EmotionSystem_Whetstone";
+		/// <summary>
 		/// Echoes from the Beyond
 		/// At the start of the turn, create a <color=#6291EC>Penetrate</color> in hand.
 		/// </summary>
@@ -119,14 +125,19 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv1_YouMustbeHappy = "B_Abnormality_GuestLv1_YouMustbeHappy";
 		/// <summary>
 		/// Behaviour Adjustment
-		/// Every turn dodge the first attack (except Lucy skills) or block 1 debuff. Current Abnormality status: &a.
+		/// Every turn dodge the first non additional attack (includes Lucy skills and attacks) and block 1 debuff.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_BehaviourAdjustment = "B_Abnormality_GuestLv2_BehaviourAdjustment";
 		/// <summary>
-		/// Behaviour Adjustment
-		/// Dodge the first skill (except Lucy skills) and block 1 debuff.
+		/// Dodge Attack
+		/// Dodge the first attack.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_BehaviourAdjustment_0 = "B_Abnormality_GuestLv2_BehaviourAdjustment_0";
+		/// <summary>
+		/// Block Debuff
+		/// Resist the next received debuff and remove this buff.
+		/// </summary>
+        public static string Buff_B_Abnormality_GuestLv2_BehaviourAdjustment_1 = "B_Abnormality_GuestLv2_BehaviourAdjustment_1";
 		/// <summary>
 		/// Energy Conversion
 		/// When this character loses 50% of its Max HP (20% for bosses), lose 1 Mana for the current turn.
@@ -150,12 +161,12 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_Present = "B_Abnormality_GuestLv2_Present";
 		/// <summary>
 		/// Shelter
-		/// Upon reaching 0 health, this character receives a buff that grants invincibility for 2 player turns.
+		/// At the start of the turn, apply (<sprite=0>125%) <color=red>Shelter's Toll</color> to 1 random ally. Apply an additional <color=red>Shelter's Toll</color> to another ally if you have 4 party members.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Shelter = "B_Abnormality_GuestLv2_Shelter";
 		/// <summary>
-		/// Shelter
-		/// This character dies while taking &a damage <color=#FF7C34>(Emotion Level * 15)</color> or more damage from a single hit this Scene. Removed after &b turn(s).
+		/// <color=red>Shelter's Toll</color>
+		/// <color=#919191>Personal safety is the number one priority</color>
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Shelter_0 = "B_Abnormality_GuestLv2_Shelter_0";
 		/// <summary>
@@ -336,7 +347,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_LiteratureLv3_LovingFamily_0 = "B_Abnormality_LiteratureLv3_LovingFamily_0";
 		/// <summary>
 		/// Well-worn Parasol
-		/// Gain 50% chance to reduce the next received damage to 0 and reflect double damage to the attacker.
+		/// Gain 50% chance to reduce the next received damage to 0.
 		/// </summary>
         public static string Buff_B_Abnormality_LiteratureLv3_WornParasol = "B_Abnormality_LiteratureLv3_WornParasol";
 		/// <summary>
@@ -368,17 +379,17 @@ namespace EmotionSystem
 		/// <summary>
 		/// Justice
 		/// At the start of the turn, apply <color=#BD2DC2>Villain</color> to a random enemy.
-		/// When attacking a <color=#BD2DC2>Villain</color>, overheal an ally with the lowest health by &a <color=#FF7C34>(25% Healing Power)</color>. Only activates once per turn.
+		/// When attacking a <color=#BD2DC2>Villain</color>, overheal an ally with the lowest health by &a <color=#FF7C34>(20% Healing Power)</color>. Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Justice = "B_Abnormality_NaturalLv1_Justice";
 		/// <summary>
 		/// <color=#BD2DC2>Villain</color>
-		/// Removed at the start of the next turn.
+		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Justice_0 = "B_Abnormality_NaturalLv1_Justice_0";
 		/// <summary>
 		/// Love
-		/// If user plays an Attack this turn, overheal an ally with the lowest health by &a <color=#FF7C34>(50% Healing Power)</color>. Only activates once per turn.
+		/// If user plays an Attack this turn, overheal an ally with the lowest health by &a <color=#FF7C34>(100% Healing Power)</color>. Only activates once per turn.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv1_Love = "B_Abnormality_NaturalLv1_Love";
 		/// <summary>
@@ -417,7 +428,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// Wrath
 		/// Attacks inflict 1 <color=#90EE90>Erosion</color> (<sprite=0> &a%) to the target's.
-		/// Has a 30% chance to target a random ally (except the user) when playing an attack skill from hand.
+		/// Description
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv2_Wrath = "B_Abnormality_NaturalLv2_Wrath";
 		/// <summary>
@@ -427,8 +438,9 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_NaturalLv3_Acidic = "B_Abnormality_NaturalLv3_Acidic";
 		/// <summary>
 		/// Nix
-		/// At the start of the turn, inflict 5 'Feeble' (<sprite=0> &a%), 5 'Disarm' (<sprite=0> &a%) and 5 <color=orange>Bind</color> (<sprite=2> &a%) to all enemies.
-		/// <color=red>Hate</color>, <color=red>Despair</color>, <color=red>Greed</color> and <color=red>Wrath</color> lose their drawbacks.
+		/// This abnormality is only effective if the user possesses all four of the following Abnormalities:
+		/// <color=red>Hate</color>, <color=red>Despair</color>, <color=red>Greed</color> and <color=red>Wrath</color> (regardless of the order in which they are obtained).
+		/// At the start of the turn, inflict 5 'Feeble' (<sprite=0> &a%), 5 'Disarm' (<sprite=0> &a%) and 5 <color=orange>Bind</color> (<sprite=2> &a%) to all enemies. The required abnormalities will lose their drawbacks.
 		/// </summary>
         public static string Buff_B_Abnormality_NaturalLv3_Nix = "B_Abnormality_NaturalLv3_Nix";
 		/// <summary>
@@ -671,15 +683,30 @@ namespace EmotionSystem
 		/// </summary>
         public static string Buff_B_Potion_DarkTune = "B_Potion_DarkTune";
 		/// <summary>
+		/// Ethereal Note
+		/// Increase Exchanges by 1.
+		/// </summary>
+        public static string Buff_B_Potion_EtherealNote = "B_Potion_EtherealNote";
+		/// <summary>
 		/// <color=#FFDF00>Golden Melody</color>
 		/// Gain additional Emotion Points (except additional sources). Remove turn cap.
 		/// </summary>
         public static string Buff_B_Potion_PureTune = "B_Potion_PureTune";
 		/// <summary>
 		/// Dreaming Current
-		/// Learn 1 <color=#00FFFF>unique</color> Lucy draw skill.
+		/// Learn 1 random <color=#00FFFF>unique</color> Lucy draw skill.
 		/// </summary>
         public static string Item_Consume_C_EmotionSystem_DreamingCurrent = "C_EmotionSystem_DreamingCurrent";
+        public static string EnchantList_Perfection = "Perfection";
+        public static string EnchantList_Petal = "Petal";
+        public static string EnchantList_Vigilance = "Vigilance";
+        public static string EnchantList_Vines = "Vines";
+        public static string EnchantList_Gift = "Gift";
+        public static string EnchantList_Glitter = "Glitter";
+        public static string EnchantList_Love = "Love";
+        public static string EnchantList_Sorrow = "Sorrow";
+        public static string EnchantList_Magic = "Magic";
+        public static string EnchantList_Tranquility = "Tranquility";
 		/// <summary>
 		/// Passive:
 		/// </summary>
@@ -737,6 +764,26 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillExtended_Ex_Abnormality_Pebble = "Ex_Abnormality_Pebble";
 		/// <summary>
+		/// When cast, view 3 <color=red>Negative</color> Level I Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv1_Neg = "Ex_Abnormality_SelectionLv1_Neg";
+		/// <summary>
+		/// When cast, view 3 <color=green>Positive</color> Level I Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv1_Pos = "Ex_Abnormality_SelectionLv1_Pos";
+		/// <summary>
+		/// When cast, view 3 <color=red>Negative</color> Level II Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv2_Neg = "Ex_Abnormality_SelectionLv2_Neg";
+		/// <summary>
+		/// When cast, view 3 <color=green>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
+		/// Can only activate once per battle.
+		/// </summary>
+        public static string SkillExtended_Ex_Abnormality_SelectionLv2_Pos = "Ex_Abnormality_SelectionLv2_Pos";
+		/// <summary>
 		/// The Seventh Bullet
 		/// This Attack target a random character, except user.
 		/// </summary>
@@ -747,8 +794,10 @@ namespace EmotionSystem
 		/// </summary>
         public static string SkillExtended_Ex_EGO_Cooldown = "Ex_EGO_Cooldown";
 		/// <summary>
-		/// Critical
+		/// When cast, view 2 <color=#FFDF00>E.G.O.</color> skills and select 1 to add into <color=#FFDF00>E.G.O.</color> Hand.
+		/// Can only activate once per battle.
 		/// </summary>
+        public static string SkillExtended_Ex_EGO_Selection = "Ex_EGO_Selection";
         public static string SkillExtended_Ex_Equip_SwordTears = "Ex_Equip_SwordTears";
 		/// <summary>
 		/// Emotional Level 5
@@ -775,7 +824,7 @@ namespace EmotionSystem
         public static string Item_Equip_E_EmotionSystem_Devil = "E_EmotionSystem_Devil";
 		/// <summary>
 		/// Golden Urn
-		/// Gain 40 Gold on every attack (before reaching Black Fog).
+		/// Gain Gold on every attack equal to 50% of damage dealt, before reaching Black Fog.
 		/// </summary>
         public static string Item_Equip_E_EmotionSystem_GoldenUrn = "E_EmotionSystem_GoldenUrn";
 		/// <summary>
@@ -850,6 +899,12 @@ namespace EmotionSystem
 		/// Removed at the start of the next turn. Can be targeted regardless Taunt status.
 		/// </summary>
         public static string SkillKeyword_KeyWord_Abnormality_Request = "KeyWord_Abnormality_Request";
+		/// <summary>
+		/// <color=red>Shelter's Toll</color>
+		/// Attack Power -20%
+		/// Healing Power -20%
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Abnormality_Shelter = "KeyWord_Abnormality_Shelter";
 		/// <summary>
 		/// <color=#C3CBD8>Entangled</color>
 		/// Evade -20%
@@ -976,6 +1031,11 @@ namespace EmotionSystem
 		/// </summary>
         public static string Item_Potions_P_EmotionSystem_EssenceWrath = "P_EmotionSystem_EssenceWrath";
 		/// <summary>
+		/// Ethereal Note
+		/// Increase Maximum Mana and Exchanges by 1 for this battle.
+		/// </summary>
+        public static string Item_Potions_P_EmotionSystem_EtherealNote = "P_EmotionSystem_EtherealNote";
+		/// <summary>
 		/// Ignited Remorse
 		/// Inflict 15 <color=#FC6178>Burn</color> to the target.
 		/// </summary>
@@ -1009,6 +1069,16 @@ namespace EmotionSystem
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Ember = "R_EmotionSystem_Ember";
 		/// <summary>
+		/// Today's Expression
+		/// Allies can only gain <color=red>Negative</color> Points (except additional sources). 
+		/// </summary>
+        public static string Item_Passive_R_EmotionSystem_Expression = "R_EmotionSystem_Expression";
+		/// <summary>
+		/// Flower Mound
+		/// Allies can only gain <color=green>Positive</color> Points (except additional sources). 
+		/// </summary>
+        public static string Item_Passive_R_EmotionSystem_Flower = "R_EmotionSystem_Flower";
+		/// <summary>
 		/// Rest
 		/// If you end the turn with unspent Mana, apply Stun (<sprite=2>100%) to all enemies.
 		/// </summary>
@@ -1023,6 +1093,16 @@ namespace EmotionSystem
 		/// At the start of the turn, inflict 2 <color=red>Bleed</color> (<sprite=1> 100%) to all enemies.
 		/// </summary>
         public static string Item_Passive_R_EmotionSystem_Shoes = "R_EmotionSystem_Shoes";
+		/// <summary>
+		/// Torch Stack
+		/// Pain debuffs applied to enemies become infinite duration and lose 1 stack every turn.
+		/// </summary>
+        public static string Item_Passive_R_EmotionSystem_Torch = "R_EmotionSystem_Torch";
+		/// <summary>
+		/// Wealth
+		/// Receive 1% less damage per 500 Gold you have.
+		/// </summary>
+        public static string Item_Passive_R_EmotionSystem_Wealth = "R_EmotionSystem_Wealth";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_Despair = "SE_S_S_Abnormality_GuestLv1_Despair";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_GiantMushroom = "SE_S_S_Abnormality_GuestLv1_GiantMushroom";
         public static string SkillEffect_SE_S_S_Abnormality_GuestLv1_RainbowSea = "SE_S_S_Abnormality_GuestLv1_RainbowSea";
@@ -1584,9 +1664,6 @@ namespace EmotionSystem
         public static string Skill_S_Abnormality_NaturalLv3_Acidic = "S_Abnormality_NaturalLv3_Acidic";
 		/// <summary>
 		/// <color=red>Nix</color>
-		/// This abnormality is only effective if the investigator possesses all four of the following Abnormalities (regardless of the order in which they are obtained):
-		/// - Level 1: <color=red>Hate</color>, <color=red>Despair</color>.
-		/// - Level 2: <color=red>Greed</color>, <color=red>Wrath</color>.
 		/// <color=#919191>Having decided to trust its own intuition, the jester spake the names of everyone it had met on that path with each step it took.</color>
 		/// </summary>
         public static string Skill_S_Abnormality_NaturalLv3_Nix = "S_Abnormality_NaturalLv3_Nix";
@@ -1599,7 +1676,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#BD2DC2>In the Name of Hate ♡</color>
 		/// Can only be used by support characters.
-		/// Damage is increased by &a <color=#FF7C34>(150% Healing Power)</color>.
+		/// Damage is increased by &a <color=#FF7C34>(100% Healing Power)</color>.
 		/// </summary>
         public static string Skill_S_Abnormality_Natural_Hate = "S_Abnormality_Natural_Hate";
 		/// <summary>
@@ -1805,7 +1882,7 @@ namespace EmotionSystem
 		/// <color=#ffc550>Gold Rush</color>
 		/// Additionaly attack 1 random enemy.
 		/// Damage is increased by &a <color=#FF7C34>(2.5% of current Gold)</color>.
-		/// Gain 500 Gold if this skill defeats an enemy.
+		/// Gain 300 Gold if this skill defeats an enemy.
 		/// </summary>
         public static string Skill_S_EGO_Natural_Gold = "S_EGO_Natural_Gold";
 		/// <summary>
@@ -1821,8 +1898,8 @@ namespace EmotionSystem
 		/// <summary>
 		/// <color=#ffc550>Blind Rage</color>
 		/// Inflict 5 <color=#90EE90>Erosion</color> to the target's.
-		/// Recast this skill 3 times.
-		/// Has a 30% chance to target a random ally (except the user).
+		/// Recast this skill 2 times.
+		/// Description
 		/// </summary>
         public static string Skill_S_EGO_Natural_Rage = "S_EGO_Natural_Rage";
 		/// <summary>
@@ -1946,6 +2023,7 @@ namespace EmotionSystem
 		/// Essence of Wrath
 		/// </summary>
         public static string Skill_S_Potion_EssenceWrath = "S_Potion_EssenceWrath";
+        public static string Skill_S_Potion_EtherealNote = "S_Potion_EtherealNote";
 		/// <summary>
 		/// Ignited Remorse
 		/// </summary>
@@ -1968,31 +2046,6 @@ namespace EmotionSystem
 		/// Test
 		/// </summary>
         public static string Skill_S_Test = "S_Test";
-		/// <summary>
-		/// When cast, view 3 <color=red>Negative</color> Level I Abnormalities and select 1 to apply to an ally.
-		/// Can only activate once per battle.
-		/// </summary>
-        public static string SkillExtended_Ex_Abnormality_SelectionLv1_Neg = "Ex_Abnormality_SelectionLv1_Neg";
-		/// <summary>
-		/// When cast, view 3 <color=green>Positive</color> Level I Abnormalities and select 1 to apply to an ally.
-		/// Can only activate once per battle.
-		/// </summary>
-        public static string SkillExtended_Ex_Abnormality_SelectionLv1_Pos = "Ex_Abnormality_SelectionLv1_Pos";
-		/// <summary>
-		/// When cast, view 3 <color=green>Positive</color> Level II Abnormalities and select 1 to apply to an ally.
-		/// Can only activate once per battle.
-		/// </summary>
-        public static string SkillExtended_Ex_Abnormality_SelectionLv2_Pos = "Ex_Abnormality_SelectionLv2_Pos";
-		/// <summary>
-		/// When cast, view 3 <color=red>Negative</color> Level II Abnormalities and select 1 to apply to an ally.
-		/// Can only activate once per battle.
-		/// </summary>
-        public static string SkillExtended_Ex_Abnormality_SelectionLv2_Neg = "Ex_Abnormality_SelectionLv2_Neg";
-		/// <summary>
-		/// When cast, view 2 <color=#FFDF00>E.G.O.</color> skills and select 1 to add into <color=#FFDF00>E.G.O.</color> Hand.
-		/// Can only activate once per battle.
-		/// </summary>
-        public static string SkillExtended_Ex_EGO_Selection = "Ex_EGO_Selection";
 
     }
 
@@ -2158,6 +2211,17 @@ namespace EmotionSystem
         public static string EmotionSystemEmotionSystemTutorial_4 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem/EmotionSystemTutorial_4");
 		/// <summary>
 		/// Korean:
+		/// 손패에서 공격 스킬을 사용할 때, 무작위 아군(사용자 제외)을 대상으로 할 확률 30%.
+		/// English:
+		/// Has a 30% chance to target a random ally (except the user) when playing an attack skill from hand.
+		/// Japanese:
+		/// 手札から攻撃スキルを使用する際、ランダムな味方（使用者除く）をターゲットにする確率30%。
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string EmotionSystem_Abnormality_Wrath => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Abnormality_Wrath");
+		/// <summary>
+		/// Korean:
 		/// 현재 &a <color=red>출혈</color>.
 		/// 행동 시마다 <color=purple>&b 고통 피해</color> <color=#FF7C34>(출혈 * 3)</color>를 받고, <color=red>출혈</color> 중첩의 1/3을 감소시킵니다. (올림)
 		/// English:
@@ -2259,47 +2323,68 @@ namespace EmotionSystem
         public static string EmotionSystem_Distortion_Selection => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Distortion_Selection");
 		/// <summary>
 		/// Korean:
-		/// 손님 감정
+		/// 무작위 아군(사용자 제외)을 대상으로 할 확률 30%.
 		/// English:
-		/// Guest Emotions
+		/// Has a 30% chance to target a random ally (except the user).
 		/// Japanese:
-		/// ゲスト感情
+		/// ランダムな味方（使用者除く）をターゲットにする確率30%。
 		/// Chinese:
-		/// 访客的情感开关
 		/// Chinese-TW:
-		/// 訪客的情感開關
 		/// </summary>
-        public static string EmotionSystem_EmotionsGuest => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_EmotionsGuest");
+        public static string EmotionSystem_EGO_Rage => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_EGO_Rage");
 		/// <summary>
 		/// Korean:
-		/// 조사관 감정
+		/// 아군 감정
 		/// English:
-		/// Investigator Emotions
+		/// Ally Emotions
 		/// Japanese:
-		/// 調査員感情
+		/// 味方の感情
 		/// Chinese:
 		/// 调查员的情感开关
 		/// Chinese-TW:
 		/// 調查員的情感開關
 		/// </summary>
-        public static string EmotionSystem_EmotionsInvestigator => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_EmotionsInvestigator");
+        public static string EmotionSystem_Emotions_Ally => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Emotions_Ally");
 		/// <summary>
 		/// Korean:
+		/// 적군 감정
+		/// English:
+		/// Enemy Emotions
+		/// Japanese:
+		/// 敵の感情
+		/// Chinese:
+		/// 访客的情感开关
+		/// Chinese-TW:
+		/// 訪客的情感開關
+		/// </summary>
+        public static string EmotionSystem_Emotions_Enemy => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Emotions_Enemy");
+		/// <summary>
+		/// Korean:
+		/// 현재 &a <color=#90EE90>침식</color>.
+		/// 피해를 받을 때, 그 피해가 &a <color=#FF7C34>(현재 침식)</color>만큼 증가합니다.
+		/// 다음 턴 시작 시 <color=#90EE90>침식</color> 1 제거.
 		/// English:
 		/// Current &a <color=#90EE90>Erosion</color>.
 		/// When taking damage, increase that damage by &a <color=#FF7C34>(Current Erosion)</color>.
 		/// Remove 1 <color=#90EE90>Erosion</color> at the start of the next turn.
 		/// Japanese:
+		/// 現在 &a <color=#90EE90>侵蝕</color>。
+		/// ダメージを受けると、そのダメージが &a <color=#FF7C34>(現在の侵蝕)</color> だけ増加します。
+		/// 次のターン開始時に <color=#90EE90>侵蝕</color> 1 を解除。
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
         public static string EmotionSystem_Erosion_0 => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Erosion_0");
 		/// <summary>
 		/// Korean:
+		/// 피해를 받을 때, 그 피해가 &a <color=#FF7C34>(현재 침식)</color>만큼 증가합니다.
+		/// 다음 턴 시작 시 <color=#90EE90>침식</color> 1 제거.
 		/// English:
 		/// When taking damage, increase that damage by &a <color=#FF7C34>(Current Erosion)</color>.
 		/// Remove 1 <color=#90EE90>Erosion</color> at the start of the next turn.
 		/// Japanese:
+		/// ダメージを受けると、そのダメージが &a <color=#FF7C34>(現在の侵蝕)</color> だけ増加します。
+		/// 次のターン開始時に <color=#90EE90>侵蝕</color> 1 を解除。
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
@@ -2345,9 +2430,11 @@ namespace EmotionSystem
         public static string EmotionSystem_Floor_Literature => ModManager.getModInfo("EmotionSystem").localizationInfo.SystemLocalizationUpdate("EmotionSystem_Floor_Literature");
 		/// <summary>
 		/// Korean:
+		/// 자연과학관
 		/// English:
 		/// Floor of Natural Sciences
 		/// Japanese:
+		/// 自然科学館
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>

@@ -12,7 +12,7 @@ namespace EmotionSystem
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				PlayData.TSavedata._Gold = 1500;
+				PlayData.TSavedata._Gold += 10000;
 			}
 		}
 	}

@@ -25,7 +25,7 @@ namespace EmotionSystem
 
 			list.Add(new ModIReturn());
 
-			if (Utils.GuestEmotions)
+			if (Utils.EnemyEmotions)
 			{
 				list.Add(Guests.TeamLevel.Instance);
 			}
@@ -41,17 +41,24 @@ namespace EmotionSystem
 					StartTutorial();
 				}
 
-				if (Utils.InvestigatorEmotions)
+				if (Utils.AllyEmotions)
 				{
 					Utils.AddBuff(Utils.AllyTeam.LucyAlly, ModItemKeys.Buff_B_Lucy_Emotional_Level);
 					Utils.AllyTeam.AliveChars.ForEach(a => Utils.AddBuff(a, ModItemKeys.Buff_B_Investigator_Emotional_Level));
 					Utils.UnlockSkillPreview(false, false, false, true);
 				}
+
+				var whetstone = PlayData.TSavedata.Inventory.Find(i => i != null && i.itemkey == ModItemKeys.Item_Consume_C_EmotionSystem_Whetstone);
+
+				if (whetstone != null && Utils.Data.WhetstoneCharge < 2)
+				{
+					Utils.Data.WhetstoneCharge++;
+				}
 			}
 
 			public void BattleStartUIOnBefore(BattleSystem Ins)
 			{
-				if (Utils.InvestigatorEmotions)
+				if (Utils.AllyEmotions)
 				{
 					CreateEGOButton();
 				}
@@ -59,7 +66,7 @@ namespace EmotionSystem
 
 			public void EnemyAwake(BattleChar Enemy)
 			{
-				if (Utils.GuestEmotions)
+				if (Utils.EnemyEmotions)
 				{
 					Utils.AddBuff(Enemy, ModItemKeys.Buff_B_Guest_Emotional_Level);
 				}
@@ -69,10 +76,9 @@ namespace EmotionSystem
 			{
 				if (!Utils.DistortedBosses) return;
 
-				if (BattleSystem.instance.BossBattle
-					)
+				if (BattleSystem.instance.BossBattle)
 				{
-					BattleSystem.instance.AllyTeam.WaitCount += 3;
+					BattleSystem.instance.AllyTeam.WaitCount += 2;
 				}
 
 				foreach (var e in BattleSystem.instance.EnemyTeam.AliveChars)

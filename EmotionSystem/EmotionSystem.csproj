@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionSystem11252025230401</AssemblyName>
+    <AssemblyName>EmotionSystem11292025172147</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -409,7 +409,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                    <!-- Compile ItemGroup Start-->
+    <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionSystem_ModDefinition.cs" />
     <Compile Include="EmotionSystem_ModItemKeys.cs" />
@@ -457,8 +457,10 @@
     <Compile Include="Emotion_System_EGO_Button\EmotionSystem_EGO_Button_Script.cs" />
     <Compile Include="Emotion_System_EGO_Button\EmotionSystem_EGO_Button_Tooltip.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.BuffObject.cs" />
+    <Compile Include="Emotion_System_Plugin\Plugin.Buffs.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.Distortions.cs" />
-    <Compile Include="Emotion_System_Plugin\Plugin.Invitastion.cs" />
+    <Compile Include="Emotion_System_Plugin\Plugin.Enchant.cs" />
+    <Compile Include="Emotion_System_Plugin\Plugin.Invitations.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.ResultUi.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.ShopItems.cs" />
     <Compile Include="Emotion_System_Plugin\Plugin.StageStart.cs" />
@@ -479,12 +481,23 @@
     <Compile Include="Emotion_System_Skill_Extended\Extended.EGO.cs" />
     <Compile Include="Emotion_System_Skill_Extended\Extended.Emotion.cs" />
     <Compile Include="Emotion_System_Skill_Extended\_Extended.cs" />
+    <Compile Include="Enchants\Art.Perfection.cs" />
+    <Compile Include="Enchants\Art.Petal.cs" />
+    <Compile Include="Enchants\History.Vigilance.cs" />
+    <Compile Include="Enchants\History.Vines.cs" />
+    <Compile Include="Enchants\Literature.Gift.cs" />
+    <Compile Include="Enchants\Literature.Glitter.cs" />
+    <Compile Include="Enchants\Natural.Love.cs" />
+    <Compile Include="Enchants\Natural.Sorrow.cs" />
+    <Compile Include="Enchants\Technological.Magic.cs" />
+    <Compile Include="Enchants\Technological.Tranquility.cs" />
     <Compile Include="Equip\Equip.Art.cs" />
     <Compile Include="Equip\Equip.History.cs" />
     <Compile Include="Equip\Equip.Literature.cs" />
     <Compile Include="Equip\Equip.Natural.cs" />
     <Compile Include="Equip\Equip.Technological.cs" />
     <Compile Include="Equip\_Equip.cs" />
+    <Compile Include="Field Items\Whetstone.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Relic\Relic.Art.cs" />
     <Compile Include="Relic\Relic.History.cs" />

@@ -35,7 +35,7 @@ namespace EmotionSystem
 					Skill.TempSkill(ModItemKeys.Skill_S_Relic_Artistic_0, Utils.AllyTeam.LucyAlly, Utils.AllyTeam)
 				};
 
-				BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(list, Selection, ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+				BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(list, Selection, ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
 			}
 
 			private void Selection(SkillButton button)

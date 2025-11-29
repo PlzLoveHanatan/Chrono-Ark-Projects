@@ -25,7 +25,7 @@ namespace EmotionSystem
 				float TimeRate = 1f;
 
 				// если флаг включён — добавляем
-				if (Utils.GuestEmotions)
+				if (Utils.EnemyEmotions)
 				{
 					TimeRate += add_GuestEmotions;
 				}

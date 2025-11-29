@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Value : CustomValue
+	public class Perfection : EquipBase
 	{
-		public bool StartingBonus = false;
-		public int WhetstoneCharge = 2;
+		public override void Init()
+		{
+			PlusStat.cri = 15;
+			PlusStat.Penetration = 50;
+		}
 	}
 }

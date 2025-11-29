@@ -52,5 +52,34 @@ namespace EmotionSystem
 			ModItemKeys.Skill_S_EmotionSystem_Lucy_RainbowSea,
 			ModItemKeys.Skill_S_EmotionSystem_Lucy_MusicBox,
 		};
+
+		public readonly List<string> EnchantsAbno = new List<string>
+		{
+			"Perfection",
+			"Petal",
+			"Vigilance",
+			"Vines",
+			"Gift",
+			"Glitter",
+			"Love",
+			"Sorrow",
+			"Magic",
+			"Tranquility"
+		};
+
+		public readonly List<string> EnchantsNormal = new List<string>
+		{
+			"En_dangerous",
+			"En_Resistant",
+			"En_precise",
+			"En_sacred",
+			"En_sharp",
+			"En_magical",
+			"En_Warding",
+			"En_Deadly",
+			"En_Impeccable",
+			"En_Penetrating",
+			"En_volant",
+		};
 	}
 }

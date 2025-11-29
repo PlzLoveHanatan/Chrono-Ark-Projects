@@ -17,11 +17,17 @@ namespace EmotionSystem
 			[HarmonyPostfix]
 			public static void NewItems(FieldStore __instance)
 			{
-				if (!Utils.DistortedBosses) return;
+				//if (!Utils.DistortedBosses) return;
 
-				for (int i = 0; i < 2; i++)
+				int stage = PlayData.TSavedata.StageNum;
+
+				__instance.StoreItems.Add(ItemBase.GetPotionRandom());
+				__instance.StoreItems.Add(ItemBase.GetPotionRandom());
+				__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent));
+
+				if (stage == 1)
 				{
-					__instance.StoreItems.Add(ItemBase.GetPotionRandom());
+					__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_Whetstone));
 				}
 			}
 		}

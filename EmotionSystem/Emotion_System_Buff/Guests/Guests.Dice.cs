@@ -106,6 +106,7 @@ namespace EmotionSystem
 			private readonly Dictionary<string, List<string>> RerollActions = new Dictionary<string, List<string>>
 			{
 				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Skill_S_Guest_CurseWeak, ModItemKeys.Skill_S_Guest_CursePain } },
+				{ GDEItemKeys.Enemy_MBoss2_0, new List<string> { ModItemKeys.Skill_S_Guest_Tank_DrumDeath, ModItemKeys.Skill_S_Guest_Tank_DrumWeak } },
 				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { GDEItemKeys.Skill_S_Golem_1, GDEItemKeys.Skill_S_Golem_2 } },
 				{ GDEItemKeys.Enemy_S2_Shiranui, new List<string> { GDEItemKeys.Skill_S_Shiranui_3, GDEItemKeys.Skill_S_Shiranui_1 } },
 				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { GDEItemKeys.Skill_S_ProgramMaster_0, GDEItemKeys.Skill_S_ProgramMaster_1 } },

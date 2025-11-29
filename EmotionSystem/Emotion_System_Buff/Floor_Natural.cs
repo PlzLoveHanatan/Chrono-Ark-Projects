@@ -29,7 +29,7 @@ namespace EmotionSystem
 
 					public void Awake()
 					{
-						EmotionManager.InvertEmotionPoints(BChar);
+						EmotionManager.GainOnlyNegativePoints(BChar);
 					}
 
 					public override void Init()
@@ -59,7 +59,7 @@ namespace EmotionSystem
 
 					public void Awake()
 					{
-						EmotionManager.InvertEmotionPoints(BChar);
+						EmotionManager.GainOnlyNegativePoints(BChar);
 					}
 
 					public override void Init()
@@ -98,7 +98,7 @@ namespace EmotionSystem
 					public void Awake()
 					{
 						Scripts.LoseDrawBacks(BChar);
-						EmotionManager.InvertEmotionPoints(BChar);
+						EmotionManager.GainOnlyNegativePoints(BChar);
 					}
 
 					public override void Init()
@@ -149,7 +149,7 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						int healNum = (int)(BChar.GetStat.reg * 0.25);
+						int healNum = (int)(BChar.GetStat.reg * 0.2);
 						return base.DescExtended().Replace("&a", healNum.ToString());
 					}
 
@@ -179,7 +179,7 @@ namespace EmotionSystem
 						if (Utils.ReturnBuff(hit, ModItemKeys.Buff_B_Abnormality_NaturalLv1_Justice_0) != null && !oncePerTurn)
 						{
 							Utils.PlaySound("Floor_Art_Love");
-							int healNum = (int)(BChar.GetStat.reg * 0.25f);
+							int healNum = (int)(BChar.GetStat.reg * 0.2f);
 							BChar.StartCoroutine(Utils.HealingParticle(null, BChar, healNum, true, false, true, true, true));
 							oncePerTurn = true;
 						}
@@ -204,7 +204,7 @@ namespace EmotionSystem
 				{
 					public override string DescExtended()
 					{
-						int healNum = (int)(BChar.GetStat.reg * 0.5);
+						int healNum = (int)(BChar.GetStat.reg);
 						return base.DescExtended().Replace("&a", healNum.ToString());
 					}
 
@@ -225,7 +225,7 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage && !oncePerTurn)
 						{
 							Utils.PlaySound("Floor_Art_Love");
-							int healNum = (int)(BChar.GetStat.reg * 0.5f);
+							int healNum = (int)(BChar.GetStat.reg);
 							BChar.StartCoroutine(Utils.HealingParticle(null, BChar, healNum, true, false, true, true, true));
 							oncePerTurn = true;
 						}
@@ -239,7 +239,7 @@ namespace EmotionSystem
 				{
 					protected virtual int CritDamage => 20;
 					protected virtual int DamageTake => 0;
-					protected virtual bool isGreed => false;
+					protected virtual bool IsGreed => false;
 
 
 					public override void Init()
@@ -267,7 +267,7 @@ namespace EmotionSystem
 							Utils.PlaySound("Floor_Art_KingGreed");
 							moneyEarn = hit.Info.Ally ? DMG : DMG / 4;
 
-							if (isGreed)
+							if (IsGreed)
 							{
 								moneyEarn *= 2;
 							}
@@ -309,7 +309,7 @@ namespace EmotionSystem
 				{
 					protected override int CritDamage => 40;
 					protected override int DamageTake => GreedDrawBack ? 40 : 0;
-					protected override bool isGreed => true;
+					protected override bool IsGreed => true;
 
 					public bool GreedDrawBack = true;
 
@@ -404,7 +404,8 @@ namespace EmotionSystem
 
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 125).ToString());
+						string description = WrathDrawBack ? ModLocalization.EmotionSystem_Abnormality_Wrath : "";
+						return base.DescExtended().Replace("&a", Utils.ChanceDebuff(BChar, 125).ToString()).Replace("Description", description.ToString());
 					}
 
 					public void Awake()
@@ -426,7 +427,7 @@ namespace EmotionSystem
 						{
 							Utils.ApplyErosion(Targets, BChar, 1, 125);
 
-							if (!SkillD.FreeUse && !SkillD.BasicSkill && !SkillD.PlusHit && !WrathDrawBack)
+							if (!SkillD.FreeUse && !SkillD.BasicSkill && !SkillD.PlusHit && WrathDrawBack)
 							{
 								Utils.PlaySound("Floor_Art_Wrath");
 								Scripts.AttackRedirect(BChar, SkillD, Targets, false, 30);
@@ -465,7 +466,7 @@ namespace EmotionSystem
 				}
 
 
-				public class Nix : Buff, IP_Awake, IP_PlayerTurn
+				public class Nix : Buff, IP_Awake, IP_PlayerTurn_1
 				{
 					public bool noDrawBacks = false;
 
@@ -480,7 +481,7 @@ namespace EmotionSystem
 						noDrawBacks = Scripts.LoseDrawBacks(BChar);
 					}
 
-					public void Turn()
+					public void Turn1()
 					{
 						if (noDrawBacks)
 						{

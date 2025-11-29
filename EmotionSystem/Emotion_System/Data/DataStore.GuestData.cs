@@ -62,11 +62,11 @@ namespace EmotionSystem
 
 			public readonly Dictionary<string, List<string>> BannedBossAbnormality = new Dictionary<string, List<string>>()
 			{
-				{ GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
-				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_MBoss_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
+				{ GDEItemKeys.Enemy_S1_ArmorBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
 				{ GDEItemKeys.Enemy_S1_WitchBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Strengthen, ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair } },
-				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter, ModItemKeys.Buff_B_Abnormality_GuestLv3_DimensionalRefraction } },
-				{ GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_Boss_Golem, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair, ModItemKeys.Buff_B_Abnormality_GuestLv3_DimensionalRefraction } },
+				{ GDEItemKeys.Enemy_S1_BossDorchiX, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Strengthen, ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair } },
 				{ GDEItemKeys.Enemy_MBoss2_0, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_Joker, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_Shiranui, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
@@ -75,24 +75,25 @@ namespace EmotionSystem
 				{ GDEItemKeys.Enemy_S2_MainBoss_1_1, new List<string> { } },
 				{ GDEItemKeys.Enemy_S2_BombClownBoss, new List<string> { } },
 				{ GDEItemKeys.Enemy_MBoss2_1, new List<string> { } },
-				{ GDEItemKeys.Enemy_SR_GunManBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_SR_GunManBoss, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
 				{ GDEItemKeys.Enemy_S3_Boss_Pope, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Despair, ModItemKeys.Buff_B_Abnormality_GuestLv1_Strengthen } },
 				{ GDEItemKeys.Enemy_S3_Boss_TheLight, new List<string> { } },
 				{ GDEItemKeys.Enemy_S3_Boss_Reaper, new List<string> { } },
 				{ GDEItemKeys.Enemy_S3_FanaticBoss, new List<string> { } },
-				{ GDEItemKeys.Enemy_LBossFirst, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_LBossFirst, new List<string> { } },
 				{ GDEItemKeys.Enemy_S4_King_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
-				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity, ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_ProgramMaster, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
 			};
 
 			public readonly Dictionary<string, List<string>> BannedAbnormality = new Dictionary<string, List<string>>()
 			{
-				{ GDEItemKeys.Enemy_S2_Ballon, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
-				{ GDEItemKeys.Enemy_S2_BoomBalloon, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
-				{ GDEItemKeys.Enemy_S2_HealBallon, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
-				{ GDEItemKeys.Enemy_S4_King_minion_0, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
-				{ GDEItemKeys.Enemy_S4_King_minion_1, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
-				{ GDEItemKeys.Enemy_TrialofBrave_Enemy_summon, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv2_Shelter } },
+				{ GDEItemKeys.Enemy_S2_Ballon, new List<string> { } },
+				{ GDEItemKeys.Enemy_S2_BoomBalloon, new List<string> { } },
+				{ GDEItemKeys.Enemy_S2_HealBallon, new List<string> { } },
+				{ GDEItemKeys.Enemy_S4_King_minion_0, new List<string> { } },
+				{ GDEItemKeys.Enemy_S4_King_minion_1, new List<string> { } },
+				{ GDEItemKeys.Enemy_SR_Outlaw, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_Unity } },
+				{ GDEItemKeys.Enemy_TrialofBrave_Enemy_summon, new List<string> { } },
 				{ GDEItemKeys.Enemy_TrialofStrength_Enemy, new List<string> { ModItemKeys.Buff_B_Abnormality_GuestLv1_YouMustbeHappy, ModItemKeys.Buff_B_Abnormality_GuestLv1_Stress } },
 			};
 

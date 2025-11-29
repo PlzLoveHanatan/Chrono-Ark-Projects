@@ -31,13 +31,18 @@ namespace EmotionSystem
 					}
 				}
 
-				public void AddRewards(int equipTier = 0, int soulStone = 0, int gold = 600)
+				public void AddRewards(int equipTier = 0, int soulStone = 0, int gold = 500)
 				{
 					bool legendaryDrop = RandomManager.RandomPer(RandomClassKey.BattleReward, 100, 20);
 
 					if (legendaryDrop)
 					{
 						equipTier = 4;
+					}
+
+					if (Utils.DistortedBosses && Utils.BossInvitations)
+					{
+						soulStone = 1;
 					}
 
 					string randomEquipKey = PlayData.GetEquipRandom(equipTier, false, new List<string>());

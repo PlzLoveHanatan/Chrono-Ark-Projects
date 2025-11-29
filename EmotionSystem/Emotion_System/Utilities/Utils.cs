@@ -24,16 +24,19 @@ namespace EmotionSystem
 {
 	public static class Utils
 	{
-		public static bool EmotionPointsParticles => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Emotion Points Particles").Value;
-		public static bool EGOButtonHotkey => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("EGO Button Hotkey").Value;
+		public static bool EmotionParticles => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Emotion Particles").Value;
+		public static bool EGOButtonHotkey => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("EGO Button Hotkey").Value; // Temporary removed
 
-		public static bool InvestigatorEmotions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Investigator Emotions").Value;
-		public static bool GuestEmotions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Guest Emotions").Value;
+		public static bool AllyEmotions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Ally Emotions").Value;
+		public static bool EnemyEmotions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Enemy Emotions").Value;
 		public static bool BossInvitations => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Boss Invitations").Value;
-		public static bool EmotionalSounds => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Emotional Sounds").Value;
+		public static bool EmotionSounds => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Emotion Sounds").Value;
 		public static bool DistortedBosses => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Distorted Bosses").Value;
-		public static bool Distortions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Distortions").Value;
+		public static bool Distortions => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Distortions").Value; // WIP
 		public static bool ChibiAngela => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Chibi Angela").Value;
+		public static float LevelsPerTurn => ModManager.getModInfo("EmotionSystem").GetSetting<SliderSetting>("Levels Per Turn").Value;
+
+		public static Value Data => GetOrCreateEmotionData();
 
 		public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
 		public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
@@ -41,7 +44,7 @@ namespace EmotionSystem
 
 		public static void EmotionsCheck()
 		{
-			if (!InvestigatorEmotions && !GuestEmotions)
+			if (!AllyEmotions && !EnemyEmotions)
 			{
 				var mod = ModManager.getModInfo("EmotionSystem");
 				mod.GetSetting<ToggleSetting>("Ally Emotions").Value = true;
@@ -242,7 +245,7 @@ namespace EmotionSystem
 
 		public static void PlaySound(string sound)
 		{
-			if (string.IsNullOrEmpty(sound) || !EmotionalSounds) return;
+			if (string.IsNullOrEmpty(sound) || !EmotionSounds) return;
 
 			float volume = MasterAudio.MasterVolumeLevel;
 			MasterAudio.PlaySound(sound, volume, null, 0f, null, null, false, false);
@@ -783,6 +786,17 @@ namespace EmotionSystem
 
 			yield return null;
 			skill.Except();
+		}
+
+		public static Value GetOrCreateEmotionData()
+		{
+			var data = PlayData.TSavedata.GetCustomValue<Value>();
+			if (data == null)
+			{
+				data = new Value();
+				PlayData.TSavedata.AddCustomValue(data);
+			}
+			return data;
 		}
 	}
 }

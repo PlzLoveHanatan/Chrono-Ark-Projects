@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,28 @@ namespace EmotionSystem
 					{
 						Utils.ApplyBleed(enemy, Utils.DummyChar, 2);
 					}
+				}
+			}
+
+			public class Expression : PassiveItemBase, IP_BattleStart_Ones
+			{
+				public override void Init()
+				{
+					OnePassive = true;
+				}
+
+				public void BattleStart(BattleSystem Ins)
+				{
+					BattleSystem.DelayInput(SetPoints());
+				}
+
+				private IEnumerator SetPoints()
+				{
+					foreach (var ally in Utils.AllyTeam.AliveChars_Vanish)
+					{
+						EmotionManager.GainOnlyNegativePoints(ally);
+					}
+					yield break;
 				}
 			}
 		}
