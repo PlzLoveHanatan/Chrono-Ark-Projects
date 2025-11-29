@@ -133,8 +133,8 @@ namespace EmotionSystem
 
 					foreach (var enemy in Targets)
 					{
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, Utils.ChanceDebuff(BChar, 150));
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, Utils.ChanceDebuff(BChar, 150));
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 5, Utils.ChanceDebuff(BChar, 150));
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_EmotionSystem_Fragile, 5, Utils.ChanceDebuff(BChar, 150));
 						Utils.ApplyBleed(enemy, BChar, 5, 150);
 					}
 
