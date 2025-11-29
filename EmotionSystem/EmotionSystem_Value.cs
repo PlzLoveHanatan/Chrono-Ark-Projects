@@ -10,5 +10,6 @@ namespace EmotionSystem
 	{
 		public bool StartingBonus = false;
 		public int WhetstoneCharge = 2;
+		public bool TorchActive = false;
 	}
 }

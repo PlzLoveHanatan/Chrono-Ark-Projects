@@ -29,11 +29,22 @@ namespace EmotionSystem
 				}
 			}
 
-			public class Torch : PassiveItemBase, IP_BuffAddAfter, IP_PlayerTurn
+			public class Torch : PassiveItemBase, IP_BuffAddAfter, IP_PlayerTurn, IP_BattleStart_Ones, IP_BattleEnd
 			{
+				private readonly HashSet<string> Exception = new HashSet<string>()
+				{
+					ModItemKeys.Buff_B_EmotionSystem_Bleed,
+					ModItemKeys.Buff_B_EmotionSystem_Burn,
+				};
+
 				public override void Init()
 				{
 					OnePassive = true;
+				}
+
+				public void BattleStart(BattleSystem Ins)
+				{
+					Utils.Data.TorchActive = true;
 				}
 
 				public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
@@ -61,11 +72,10 @@ namespace EmotionSystem
 					}
 				}
 
-				private readonly HashSet<string> Exception = new HashSet<string>()
+				public void BattleEnd()
 				{
-					ModItemKeys.Buff_B_EmotionSystem_Bleed,
-					ModItemKeys.Buff_B_EmotionSystem_Burn,
-				};
+					Utils.Data.TorchActive = true;
+				}
 			}
 		}
 	}

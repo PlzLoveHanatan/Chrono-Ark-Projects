@@ -23,9 +23,11 @@ namespace EmotionSystem
 
 			public static void Prefix(Buff __instance)
 			{
+				if (!Utils.Data.TorchActive) return;
+
 				var buffKey = __instance.BuffData.BuffTag.Key;
 
-				if (__instance.TimeUseless && buffKey == GDEItemKeys.BuffTag_DOT && !Exception.Contains(buffKey))
+				if (__instance.TimeUseless && buffKey == GDEItemKeys.BuffTag_DOT && !Exception.Contains(__instance.BuffData.Key))
 				{
 					foreach (var stack in __instance.StackInfo)
 					{
