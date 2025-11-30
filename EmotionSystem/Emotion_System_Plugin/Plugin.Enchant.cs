@@ -33,20 +33,27 @@ namespace EmotionSystem
 						return false;
 					}
 
-					string randomKey;
-					do
+					List<string> allAvailableEnchants = new List<string>();
+					allAvailableEnchants.AddRange(DataStore.Instance.EnchantsAbno);
+
+					if (allAvailableEnchants.Count > 0)
 					{
-						int index = RandomManager.RandomInt(RandomClassKey.CursedEnchant, 0, DataStore.Instance.EnchantsAbno.Count);
-						randomKey = DataStore.Instance.EnchantsAbno[index];
-					} while (equip.Enchant != null && equip.Enchant.Key == randomKey);
+						string randomKey;
+						do
+						{
+							int index = RandomManager.RandomInt(RandomClassKey.CursedEnchant, 0, allAvailableEnchants.Count);
+							randomKey = allAvailableEnchants[index];
+						} while (equip.Enchant != null && equip.Enchant.Key == randomKey);
 
-					ItemEnchant.RandomEnchantTarget(equip, randomKey);
-
+						ItemEnchant.RandomEnchantTarget(equip, randomKey);
+					}
 
 					equip._Isidentify = true;
 
 					if (equip.ItemScript is EquipItem_Enchent ench)
+					{
 						ench.Enchent();
+					}
 
 					MasterAudio.PlaySound("Enchent", 1f);
 					__instance.SelfDestroy();
@@ -114,31 +121,28 @@ namespace EmotionSystem
 							};
 
 
-						List<string> list2 = new List<string>();
+						List<string> allAvailableEnchants = new List<string>();
+						List<string> selectedRandomEnchants = new List<string>();
 
-						int count = Mathf.Min(6, DataStore.Instance.EnchantsAbno.Count); // если нужно больше элементов, чем есть в списке
-						for (int i = 0; i < count; i++)
+						allAvailableEnchants.AddRange(DataStore.Instance.LegendaryEnchantsAbno);
+						int maxEnchantCount = Math.Min(6, allAvailableEnchants.Count);
+
+						for (int i = 0; i < maxEnchantCount; i++)
 						{
-							int index = RandomManager.RandomInt(RandomClassKey.CursedEnchant, 0, DataStore.Instance.EnchantsAbno.Count);
-							list2.Add(DataStore.Instance.EnchantsAbno[index]);
-							DataStore.Instance.EnchantsAbno.RemoveAt(index); // удаляем, чтобы не повторялось
+							int randomIndex = RandomManager.RandomInt(RandomClassKey.CursedEnchant, 0, allAvailableEnchants.Count);
+							selectedRandomEnchants.Add(allAvailableEnchants[randomIndex]);
+							allAvailableEnchants.RemoveAt(randomIndex);
 						}
 
-						// Если нужно добить до 6 чаров случайными повторами:
-						while (list2.Count < 6)
+						int maxEquipCount = Math.Min(6, items.Count);
+
+						for (int i = 0; i < maxEquipCount; i++)
 						{
-							int index = RandomManager.RandomInt(RandomClassKey.CursedEnchant, 0, list2.Count);
-							list2.Add(list2[index]); // повторяем случайные из уже выбранных
-						}
-
-
-						// Применяем
-						for (int i = 0; i < 6; i++)
-						{
-							Item_Equip equip = items[i] as Item_Equip;
-
-							equip.Enchant = ItemEnchant.NewEnchant(equip, list2[i]);
-							equip._Isidentify = true;
+							if (items[i] is Item_Equip currentEquip && i < selectedRandomEnchants.Count)
+							{
+								currentEquip.Enchant = ItemEnchant.NewEnchant(currentEquip, selectedRandomEnchants[i]);
+								currentEquip._Isidentify = true;
+							}
 						}
 
 						MasterAudio.PlaySound("Anvil", 1f, null, 0f, null, null, false, false);

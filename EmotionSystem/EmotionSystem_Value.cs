@@ -9,7 +9,7 @@ namespace EmotionSystem
 	public class Value : CustomValue
 	{
 		public bool StartingBonus = false;
-		public int WhetstoneCharge = 2;
+		public int WhetstoneCharge = 3;
 		public bool TorchActive = false;
 	}
 }

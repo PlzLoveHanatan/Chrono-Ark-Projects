@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Magic : EquipBase
+	public class En_Magic : EquipBase
 	{
 		public override void Init()
 		{
-			PlusPerStat.Damage = 10;
-			PlusStat.hit = 10;
+			PlusPerStat.Damage = 5;
+			PlusStat.hit = 5;
+		}
+	}
+
+	public class En_Magic_L : EquipBase
+	{
+		public override void Init()
+		{
+			PlusPerStat.Damage = 15;
+			PlusStat.hit = 15;
 		}
 	}
 }

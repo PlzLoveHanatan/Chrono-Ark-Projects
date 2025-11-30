@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using EmotionSystem;
+using GameDataEditor;
 using NLog.Targets;
 
 namespace EmotionSystem
@@ -13,13 +15,13 @@ namespace EmotionSystem
 	{
 		public class Natural
 		{
-			public class Sword : EquipBase, IP_SkillUse_Target, IP_PlayerTurn, IP_Draw
+			public class SwordTears : EquipBase, IP_SkillUse_Target, IP_PlayerTurn, IP_Draw
 			{
-				private bool oncePerTurn;
+				public bool OncePerTurn;
 
 				public override string DescExtended(string desc)
 				{
-					string text = oncePerTurn ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
+					string text = OncePerTurn ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
 					return base.DescExtended(desc).Replace("&a", text.ToString());
 				}
 
@@ -31,15 +33,15 @@ namespace EmotionSystem
 
 				public void Turn()
 				{
-					OnePassive = true;
-					oncePerTurn = false;
+					Utils.GetOrAddBuff(BChar, ModItemKeys.Buff_B_EmotionSystem_SwordTears);
+					OncePerTurn = false;
 				}
 
 				public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 				{
-					if (SP.SkillData.IsDamage && !hit.Info.Ally && Cri && !oncePerTurn)
+					if (SP.SkillData.IsDamage && !hit.Info.Ally && Cri && !OncePerTurn)
 					{
-						oncePerTurn = true;
+						OncePerTurn = true;
 						Scripts.DestroyActions(hit);
 					}
 				}

@@ -30,12 +30,13 @@ namespace EmotionSystem
 
 				public void Turn()
 				{
+					Utils.GetOrAddBuff(BChar, ModItemKeys.Buff_B_EmotionSystem_Deathseeker);
 					oncePerTurn = false;
 				}
 
 				public void SkillUse(Skill SkillD, List<BattleChar> Targets)
 				{
-					if (SkillD.IsDamage && SkillD.Master == BChar && !oncePerTurn)
+					if (SkillD.IsDamage && SkillD.Master == BChar && !oncePerTurn && !Targets[0].Info.Ally)
 					{
 						oncePerTurn = true;
 						Scripts.DestroyActions(Targets);

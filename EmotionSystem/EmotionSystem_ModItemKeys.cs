@@ -6,7 +6,7 @@ namespace EmotionSystem
 		/// <summary>
 		/// Overused Whetstone
 		/// Use 1 charge to apply a unique Enchantment to equipment. Can be used unlimited times. Gain 1 charge when entering a fight.
-		/// Current charges: &a (Max 2).
+		/// Current charges: &a (Max 3).
 		/// </summary>
         public static string Item_Consume_C_EmotionSystem_Whetstone = "C_EmotionSystem_Whetstone";
 		/// <summary>
@@ -125,7 +125,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv1_YouMustbeHappy = "B_Abnormality_GuestLv1_YouMustbeHappy";
 		/// <summary>
 		/// Behaviour Adjustment
-		/// Every turn dodge the first non additional attack (includes Lucy skills and attacks) and block 1 debuff.
+		/// Every turn dodge all attacks until non additional attack is dodged and block 1 debuff.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_BehaviourAdjustment = "B_Abnormality_GuestLv2_BehaviourAdjustment";
 		/// <summary>
@@ -161,7 +161,7 @@ namespace EmotionSystem
         public static string Buff_B_Abnormality_GuestLv2_Present = "B_Abnormality_GuestLv2_Present";
 		/// <summary>
 		/// Shelter
-		/// At the start of the turn, apply (<sprite=0>125%) <color=red>Shelter's Toll</color> to 1 random ally. Apply an additional <color=red>Shelter's Toll</color> to another ally if you have 4 party members.
+		/// At the start of the turn, apply (<sprite=0>125%) <color=red>Shelter's Toll</color> to 1 random ally. Apply an additional <color=red>Shelter's Toll</color> to another ally if you have 4 alive party members.
 		/// </summary>
         public static string Buff_B_Abnormality_GuestLv2_Shelter = "B_Abnormality_GuestLv2_Shelter";
 		/// <summary>
@@ -592,6 +592,11 @@ namespace EmotionSystem
 		/// </summary>
         public static string Buff_B_EmotionSystem_Burn = "B_EmotionSystem_Burn";
 		/// <summary>
+		/// Deathseeker
+		/// Attack skills destroys target's Action Point. Only activates once per turn. Current Status: &a.
+		/// </summary>
+        public static string Buff_B_EmotionSystem_Deathseeker = "B_EmotionSystem_Deathseeker";
+		/// <summary>
 		/// Disarm
 		/// </summary>
         public static string Buff_B_EmotionSystem_Disarm = "B_EmotionSystem_Disarm";
@@ -614,6 +619,11 @@ namespace EmotionSystem
 		/// The effect remains until next attack.
 		/// </summary>
         public static string Buff_B_EmotionSystem_Paralysis = "B_EmotionSystem_Paralysis";
+		/// <summary>
+		/// Sword Sharpened with Tears
+		/// Upon landing a critical hit, destroys target's Action Point. Only activates once per turn. Current Status: &a.
+		/// </summary>
+        public static string Buff_B_EmotionSystem_SwordTears = "B_EmotionSystem_SwordTears";
 		/// <summary>
 		/// Dice
 		/// Gain 1 action count.
@@ -697,16 +707,26 @@ namespace EmotionSystem
 		/// Learn 1 random <color=#00FFFF>unique</color> Lucy draw skill.
 		/// </summary>
         public static string Item_Consume_C_EmotionSystem_DreamingCurrent = "C_EmotionSystem_DreamingCurrent";
-        public static string EnchantList_Perfection = "Perfection";
-        public static string EnchantList_Petal = "Petal";
-        public static string EnchantList_Vigilance = "Vigilance";
-        public static string EnchantList_Vines = "Vines";
-        public static string EnchantList_Gift = "Gift";
-        public static string EnchantList_Glitter = "Glitter";
-        public static string EnchantList_Love = "Love";
-        public static string EnchantList_Sorrow = "Sorrow";
-        public static string EnchantList_Magic = "Magic";
-        public static string EnchantList_Tranquility = "Tranquility";
+        public static string EnchantList_En_Perfection = "En_Perfection";
+        public static string EnchantList_En_Perfection_L = "En_Perfection_L";
+        public static string EnchantList_En_Petal = "En_Petal";
+        public static string EnchantList_En_Petal_L = "En_Petal_L";
+        public static string EnchantList_En_Vigilance = "En_Vigilance";
+        public static string EnchantList_En_Vigilance_L = "En_Vigilance_L";
+        public static string EnchantList_En_Vines = "En_Vines";
+        public static string EnchantList_En_Vines_L = "En_Vines_L";
+        public static string EnchantList_En_Gift = "En_Gift";
+        public static string EnchantList_En_Gift_L = "En_Gift_L";
+        public static string EnchantList_En_Glitter = "En_Glitter";
+        public static string EnchantList_En_Glitter_L = "En_Glitter_L";
+        public static string EnchantList_En_Love = "En_Love";
+        public static string EnchantList_En_Love_L = "En_Love_L";
+        public static string EnchantList_En_Sorrow = "En_Sorrow";
+        public static string EnchantList_En_Sorrow_L = "En_Sorrow_L";
+        public static string EnchantList_En_Magic = "En_Magic";
+        public static string EnchantList_En_Magic_L = "En_Magic_L";
+        public static string EnchantList_En_Tranquility = "En_Tranquility";
+        public static string EnchantList_En_Tranquility_L = "En_Tranquility_L";
 		/// <summary>
 		/// Passive:
 		/// </summary>

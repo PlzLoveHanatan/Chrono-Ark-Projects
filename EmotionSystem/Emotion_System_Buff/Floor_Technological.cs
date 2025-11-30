@@ -15,6 +15,30 @@ namespace EmotionSystem
 {
 	public class TechnologicalBuff
 	{
+		public class DeathseekerBuff : Buff, IP_SkillUse_User, IP_PlayerTurn
+		{
+			private bool oncePerTurn;
+
+			public override string DescExtended()
+			{
+				string text = oncePerTurn ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
+				return base.DescExtended().Replace("&a", text.ToString());
+			}
+
+			public void Turn()
+			{
+				oncePerTurn = false;
+			}
+
+			public void SkillUse(Skill SkillD, List<BattleChar> Targets)
+			{
+				if (SkillD.IsDamage && SkillD.Master == BChar && !oncePerTurn && !Targets[0].Info.Ally)
+				{
+					oncePerTurn = true;
+				}
+			}
+		}
+
 		public class Abnormality
 		{
 			public class Lv1

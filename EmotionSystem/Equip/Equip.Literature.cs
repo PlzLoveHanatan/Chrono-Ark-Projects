@@ -21,9 +21,8 @@ namespace EmotionSystem
 				{
 					bool alwaysLucky = RandomManager.RandomPer(BChar.GetRandomClass().Target, 100, 50);
 
-					if (alwaysLucky)
+					if (alwaysLucky && !resist)
 					{
-						Utils.PlaySound("Floor_Literature_WornParasol");
 						resist = true;
 					}
 				}

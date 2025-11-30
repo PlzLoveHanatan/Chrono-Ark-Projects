@@ -7,12 +7,21 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Love : EquipBase
+	public class En_Love : EquipBase
 	{
 		public override void Init()
 		{
-			PlusPerStat.Heal = 10;
-			PlusStat.PlusCriHeal = 10;
+			PlusPerStat.Heal = 5;
+			PlusStat.cri = 5;
+		}
+	}
+
+	public class En_Love_L : EquipBase
+	{
+		public override void Init()
+		{
+			PlusPerStat.Heal = 15;
+			PlusStat.cri = 15;
 		}
 	}
 }

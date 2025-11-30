@@ -55,17 +55,32 @@ namespace EmotionSystem
 
 		public readonly List<string> EnchantsAbno = new List<string>
 		{
-			"Perfection",
-			"Petal",
-			"Vigilance",
-			"Vines",
-			"Gift",
-			"Glitter",
-			"Love",
-			"Sorrow",
-			"Magic",
-			"Tranquility"
+			"En_Perfection",
+			"En_Petal",
+			"En_Vigilance",
+			"En_Vines",
+			"En_Gift",
+			"En_Glitter",
+			"En_Love",
+			"En_Sorrow",
+			"En_Magic",
+			"En_Tranquility"
 		};
+
+		public readonly List<string> LegendaryEnchantsAbno = new List<string>
+		{
+			"En_Perfection_L",
+			"En_Petal_L",
+			"En_Vigilance_L",
+			"En_Vines_L",
+			"En_Gift_L",
+			"En_Glitter_L",
+			"En_Love_L",
+			"En_Sorrow_L",
+			"En_Magic_L",
+			"En_Tranquility_L"
+		};
+
 
 		public readonly List<string> EnchantsNormal = new List<string>
 		{

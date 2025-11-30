@@ -53,6 +53,7 @@ namespace EmotionSystem
 
 					if (addedbuff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT && !addedbuff.TimeUseless)
 					{
+						ShinyEffect();
 						addedbuff.TimeUseless = true;
 					}
 				}

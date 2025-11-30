@@ -8,14 +8,40 @@ using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
 using I2.Loc;
+using NLog.LayoutRenderers;
 using UnityEngine;
 using UnityEngine.UI;
 using static EmotionSystem.Extended.EGO;
+using static EmotionSystem.NaturalSkill.EGO;
 
 namespace EmotionSystem
 {
 	public class NaturalBuff
 	{
+		public class SwordTearsBuff : Buff, IP_SkillUse_Target, IP_PlayerTurn
+		{
+			private bool oncePerTurn;
+
+			public override string DescExtended()
+			{
+				string text = oncePerTurn ? ModLocalization.EmotionSystem_Status_Inactive : ModLocalization.EmotionSystem_Status_Active;
+				return base.DescExtended().Replace("&a", text.ToString());
+			}
+
+			public void Turn()
+			{
+				oncePerTurn = false;
+			}
+
+			public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
+			{
+				if (SP.SkillData.IsDamage && !hit.Info.Ally && Cri && !oncePerTurn)
+				{
+					oncePerTurn = true;
+				}
+			}
+		}
+
 		public class Abnormality
 		{
 			public class Lv1
@@ -431,7 +457,7 @@ namespace EmotionSystem
 							{
 								Utils.PlaySound("Floor_Art_Wrath");
 								Scripts.AttackRedirect(BChar, SkillD, Targets, false, 30);
-							}							
+							}
 						}
 					}
 				}

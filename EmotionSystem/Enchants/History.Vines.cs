@@ -6,14 +6,25 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Vines : EquipBase
+	public class En_Vines : EquipBase
 	{
 		public override void Init()
 		{
-			PlusStat.DMGTaken = -10;
-			PlusStat.RES_CC = 10;
-			PlusStat.RES_DEBUFF = 10;
-			PlusStat.RES_DOT = 10;
+			PlusStat.DMGTaken = -5;
+			PlusStat.RES_CC = 5;
+			PlusStat.RES_DEBUFF = 5;
+			PlusStat.RES_DOT = 5;
+		}
+	}
+
+	public class En_Vines_L : EquipBase
+	{
+		public override void Init()
+		{
+			PlusStat.DMGTaken = -15;
+			PlusStat.RES_CC = 15;
+			PlusStat.RES_DEBUFF = 15;
+			PlusStat.RES_DOT = 15;
 		}
 	}
 }

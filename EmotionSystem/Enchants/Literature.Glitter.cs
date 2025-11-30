@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Glitter : EquipBase
+	public class En_Glitter : EquipBase
 	{
 		public override void Init()
 		{
-			PlusPerStat.Damage = 10;
+			PlusPerStat.Damage = 5;
 			PlusStat.AggroPer = 50;
+		}
+	}
+
+	public class En_Glitter_L : EquipBase
+	{
+		public override void Init()
+		{
+			PlusPerStat.Damage = 15;
+			PlusStat.AggroPer = 100;
 		}
 	}
 }

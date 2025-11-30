@@ -427,7 +427,7 @@ namespace EmotionSystem
 					{
 						bool alwaysLucky = RandomManager.RandomPer(BChar.GetRandomClass().Target, 100, 50);
 
-						if (alwaysLucky && Dmg >= 1)
+						if (alwaysLucky && Dmg >= 1 && !resist)
 						{
 							Utils.PlaySound("Floor_Literature_WornParasol");
 							resist = true;
@@ -448,7 +448,7 @@ namespace EmotionSystem
 				{
 					public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 					{
-						if (Dmg >= 1)
+						if (Dmg >= 1 && !resist)
 						{
 							Utils.PlaySound("Floor_Literature_LovingFamily");
 							resist = true;

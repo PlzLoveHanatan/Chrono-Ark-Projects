@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Vigilance : EquipBase
+	public class En_Vigilance : EquipBase
 	{
 		public override void Init()
 		{
-			PlusStat.HEALTaken = 15;
+			PlusStat.HEALTaken = 10;
+			PlusStat.AggroPer = 50;
+		}
+	}
+
+	public class En_Vigilance_L : EquipBase
+	{
+		public override void Init()
+		{
+			PlusStat.HEALTaken = 20;
 			PlusStat.AggroPer = 100;
 			PlusStat.Strength = true;
 		}
