@@ -11,5 +11,7 @@ namespace QoH
 	{
 		public bool CanSwitchSanity = true;
 		public bool UnlimitedSanity = false;
+		public bool JusticeEquip = false;
+		public bool SunMoonQuest = false;
 	}
 }

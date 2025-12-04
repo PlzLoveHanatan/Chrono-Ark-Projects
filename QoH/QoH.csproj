@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>QoH12042025132025</AssemblyName>
+    <AssemblyName>QoH12042025234512</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -411,9 +411,10 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                                                                                                                                                                                          <!-- Compile ItemGroup Start-->
+                                      <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Buffs.cs" />
+    <Compile Include="Equips.cs" />
     <Compile Include="Extendeds.cs" />
     <Compile Include="Passive.cs" />
     <Compile Include="QoH_Chibi_QueenOfHatred.cs" />
@@ -425,6 +426,7 @@
     <Compile Include="QoH_Sanity_Tooltip.cs" />
     <Compile Include="QoH_Utils.cs" />
     <Compile Include="QoH_Value.cs" />
+    <Compile Include="Relics.cs" />
     <Compile Include="Skills.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
   </ItemGroup>

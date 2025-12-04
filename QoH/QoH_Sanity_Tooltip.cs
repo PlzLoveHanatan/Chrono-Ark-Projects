@@ -25,7 +25,7 @@ namespace QoH
 
 				if (Utils.ReturnBuff(queen, ModItemKeys.Buff_B_QoH_Sanity) is Buffs.QoHSanity sanity)
 				{
-					if (!sanity.CanSwitchForm && !sanity.UnlimitedSwitches && !sanity.UnlimitedSwitchesTurn)
+					if (sanity.CanSwitchForm <= 0 && !sanity.UnlimitedSwitches && !sanity.UnlimitedSwitchesTurn)
 					{
 						return text;
 					}
@@ -41,7 +41,7 @@ namespace QoH
 
 					if (!sanity.UnlimitedSwitches && !sanity.UnlimitedSwitchesTurn)
 					{
-						text += " " + ModLocalization.QoH_Sanity_TurnCap;
+						//text += " " + ModLocalization.QoH_Sanity_TurnCap;
 					}
 				}
 				return text;

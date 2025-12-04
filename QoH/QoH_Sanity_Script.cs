@@ -49,7 +49,7 @@ namespace QoH
 			var queen = Utils.AllyTeam.AliveChars.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_QoH);
 			var sanity = Utils.ReturnBuff(queen, ModItemKeys.Buff_B_QoH_Sanity) as Buffs.QoHSanity;
 
-			interactable = sanity.CanSwitchForm || sanity.UnlimitedSwitches || sanity.UnlimitedSwitchesTurn;
+			interactable = sanity.CanSwitchForm > 0 || sanity.UnlimitedSwitches || sanity.UnlimitedSwitchesTurn;
 
 			// Смена спрайта в зависимости от текущего баффа
 			if (sanity.MagicalGirlMode)

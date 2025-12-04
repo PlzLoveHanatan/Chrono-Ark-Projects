@@ -69,10 +69,15 @@ namespace QoH
         public static string Buff_B_QoH_Transformation = "B_QoH_Transformation";
 		/// <summary>
 		/// What use... am I...
-		/// Pain debuffs applied onto enemies by allies are extended by 2 turns, enemies take 1 additional Pain damage for each stack of Pain debuff.
+		/// Pain debuffs applied onto enemies by allies are extended by 2 turns. Each stack of pain debuff deal additonal <color=purple>1 Pain Damage</color>.
 		/// </summary>
         public static string Buff_B_QoH_WhatUse = "B_QoH_WhatUse";
         public static string Buff_B_QoH_WhatUse_0 = "B_QoH_WhatUse_0";
+		/// <summary>
+		/// XVIII - Sun and Moon
+		/// Ignores Emotion Level cap.
+		/// </summary>
+        public static string Buff_B_R_QoH_SunMoon = "B_R_QoH_SunMoon";
 		/// <summary>
 		/// When played, heal the ally with the lowest health (50% of Queen of Hatred Healing Power).
 		/// Queen of Hatred can change Sanity unlimited times this turn.
@@ -83,6 +88,16 @@ namespace QoH
 		/// Hysteria
 		/// </summary>
         public static string SkillExtended_Ex_QoH_Hysteria = "Ex_QoH_Hysteria";
+		/// <summary>
+		/// Spent Use, Forming Hate
+		/// Whenever the wearer applies a Pain debuff onto an enemy, deal <color=purple>5 Pain damage</color> per stack applied.
+		/// </summary>
+        public static string Item_Equip_E_QoH_FormingHate = "E_QoH_FormingHate";
+		/// <summary>
+		/// Magical Girl's Lovely Gift
+		/// All wearer healing skills apply Love/Hate ☆ to the target's.
+		/// </summary>
+        public static string Item_Equip_E_QoH_LovelyGift = "E_QoH_LovelyGift";
 		/// <summary>
 		/// <color=#BD2DC2>Hysteria!</color>
 		/// Attack Power +15%
@@ -101,10 +116,21 @@ namespace QoH
 		/// Queen of Hatred
 		/// Passive:
 		/// At the start of the turn, apply <color=#BD2DC2>Mark of Villainy</color> to a random enemy and gain <color=#FF77FF>Pure Heart ☆</color>
-		/// Can use attack skills only when having <color=#BD2DC2>Hysteria!</color>
+		/// Can change Sanity once per turn (twice at Level 4).
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_QoH = "QoH";
+		/// <summary>
+		/// XVII — Star
+		/// At the start of the 6th turn. View remaining Level III Abnormalities and select 1 to apply to an ally. This effect activates only once per battle.
+		/// </summary>
+        public static string Item_Passive_R_QoH_Star = "R_QoH_Star";
+		/// <summary>
+		/// XVIII - Sun and Moon
+		/// Increase all enemies health by 25%. Enemies ignores Emotion Level cap.
+		/// Gain 2 'Dummy Data' and 'Dreaming Current'. Expand your Relic inventory by 2.
+		/// </summary>
+        public static string Item_Passive_R_QoH_SunMoon = "R_QoH_SunMoon";
         public static string SkillEffect_SE_S_S_QoH_Blessing = "SE_S_S_QoH_Blessing";
         public static string SkillEffect_SE_S_S_QoH_Heartwave = "SE_S_S_QoH_Heartwave";
         public static string SkillEffect_SE_S_S_QoH_Justice = "SE_S_S_QoH_Justice";
@@ -149,7 +175,7 @@ namespace QoH
         public static string Skill_S_QoH_Harmony = "S_QoH_Harmony";
 		/// <summary>
 		/// Glittering Heartwave ♡
-		/// Increase healing amount by &a <color=#FF7C34>(&b% Healing Power)</color> for each type of debuff on a target.
+		/// Increase healing amount by &a <color=#FF7C34>(25% Healing Power)</color> for each type of debuff on a target.
 		/// Remove all target's <sprite=1> debuffs.
 		/// </summary>
         public static string Skill_S_QoH_Heartwave = "S_QoH_Heartwave";
@@ -160,10 +186,9 @@ namespace QoH
         public static string Skill_S_QoH_Justice = "S_QoH_Justice";
 		/// <summary>
 		/// Love Attack ♡
-		/// Choose One -
 		/// Heal all allies by &a <color=#FF7C34>(50% &b Healing Power)</color> and draw 2 skills.
-		/// Or extend all enemies Pain debuffs by 1 turn and draw 3 skills.
-		/// If Queen of Hatred is fainted, do not choose and draw 2 skills.
+		/// Queen of Hatred can change Sanity unlimited times this turn.
+		/// If Queen of Hatred is fainted, do not heal and draw 2 skills.
 		/// </summary>
         public static string Skill_S_QoH_Lucy = "S_QoH_Lucy";
 		/// <summary>
@@ -178,7 +203,7 @@ namespace QoH
         public static string Skill_S_QoH_Lucy_1 = "S_QoH_Lucy_1";
 		/// <summary>
 		/// Lovely Miracle Flash ♡
-		/// If the target has a Pain debuff or is defeated by this skill, heal an ally with lowest health by &a <color=#FF7C34>(50% Attack Power)</color> and apply 1 stack of this skill's debuffs to all enemies.
+		/// If the target has a Pain debuff, heal an ally with lowest health by &a <color=#FF7C34>(50% Attack Power)</color> and apply 1 stack of this skill's debuffs to all enemies.
 		/// </summary>
         public static string Skill_S_QoH_Miracle = "S_QoH_Miracle";
 		/// <summary>

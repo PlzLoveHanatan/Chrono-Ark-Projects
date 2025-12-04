@@ -14,6 +14,7 @@ using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using HarmonyLib;
 using EmotionSystem;
+using TileTypes;
 namespace QoH
 {
 	public class QoH_Plugin : ChronoArkPlugin
@@ -53,6 +54,44 @@ namespace QoH
 			return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_QoH);
 		}
 
+
+		[HarmonyPatch(typeof(FieldSystem), "StageStart")]
+		public static class StagePatch
+		{
+			[HarmonyPostfix]
+			public static void StageStartPostfix()
+			{
+				if (!QoHInParty() || !QoH_Utils.JusticeEquip) return;
+
+				if (PlayData.TSavedata.StageNum >= 0)
+				{
+					if (!QoH_Utils.Data.JusticeEquip)
+					{
+						QoH_Utils.Data.JusticeEquip = true;
+						GainjusticeReward();
+					}
+
+					if (!QoH_Utils.Data.SunMoonQuest)
+					{
+						QoH_Utils.Data.SunMoonQuest = true;
+						GainSunMoonQuest();
+					}
+				}
+			}
+
+			private static void GainjusticeReward()
+			{
+				PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_QoH_FormingHate));
+				PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Equip_E_QoH_LovelyGift));
+				//PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Passive_R_QoH_Star));
+			}
+
+			private static void GainSunMoonQuest()
+			{
+				PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Passive_R_QoH_SunMoon));
+			}
+		}
+
 		private static readonly Dictionary<string, string> QoHVoiceEN = new Dictionary<string, string>
 		{
 			{"QoH_BattleStart", "Prithee, leave it in my care!" },
@@ -66,8 +105,10 @@ namespace QoH
 			{"QoH_BattleIdle", "Gasp! Doth aught requireth mine assistance?" },
 			{"QoH_BattleIdle_0", "Tis evident this foe shall pose a challenge... allow me!" },
 
-			{"QoH_FieldIdle", "The Second Warning... hm! 'Tis evident! Now is the time for thee to deliver unto them the smiting of justice! Ho! With this hairpin and E.G.O Gear, thy most gracious gift...and do away with this chaos!" },
-			{"QoH_FieldIdle_0", "Even if my life be made forfeit... I shall protect the employees of this establishment and the people of the City! Ho! Arcana... Beats!" },
+			//{"QoH_FieldIdle", "So... this is what it hath all come to. I'm just like them. I failed the suppression, I'm a useless— Get out of my head..." },
+			{"QoH_FieldIdle_0", "Even if my life be made forfeit... I shall protect the employees of this establishment and the people of the City!" },
+			{"QoH_FieldIdle_1", "No warnings today, I must wonder... Perish the thought... I have definitely not harbored thoughts of boredom induced by the lack of eventful action!" },
+			
 
 			{"QoH_Kill", "Heh heh, 'tis light work!" },
 			{"QoH_Kill_0", "Heh heh, justice, served! Now... I must forthwith make haste and return to her to regale her with the haaaaai-lights of this suppression!" },
@@ -92,7 +133,7 @@ namespace QoH
 			[HarmonyPrefix]
 			public static bool Prefix(PrintText __instance, string inText)
 			{
-				if (!QoH_Utils.QoHVoice)
+				if (!QoH_Utils.JusticeVoice)
 				{
 					return true;
 				}

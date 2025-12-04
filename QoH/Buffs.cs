@@ -20,7 +20,7 @@ namespace QoH
 		{
 			private GameObject Sanity;
 			public bool MagicalGirlMode = true;
-			public bool CanSwitchForm = true;
+			public int CanSwitchForm = 1;
 			public bool UnlimitedSwitches = false;
 			public bool SanityDrawBack = true;
 			public bool UnlimitedSwitchesTurn = false;
@@ -107,11 +107,11 @@ namespace QoH
 			{
 				if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 
-				if (CanSwitchForm || UnlimitedSwitches || UnlimitedSwitchesTurn)
+				if (CanSwitchForm > 0 || UnlimitedSwitches || UnlimitedSwitchesTurn)
 				{
 					MagicalGirlMode = !MagicalGirlMode;
 					ChangeIcon(MagicalGirlMode);
-					CanSwitchForm = false;
+					CanSwitchForm--;
 				}
 			}
 
@@ -141,6 +141,7 @@ namespace QoH
 
 			private void CreateSanity()
 			{
+				CanSwitchForm = MyChar.LV >= 4 ? 2 : 1;
 				Sprite sprite = Utils_Ui.GetSprite("Visual/QoH/Sanity/Sanity_M.png");
 				Sanity = Utils_Ui.CreateUIImage("Sanity_M", BChar.transform, sprite, new Vector2(150, 150), new Vector3(170, 170, 0), true);
 				Sanity.AddComponent<QoH_Sanity_Script>();
@@ -150,7 +151,7 @@ namespace QoH
 			private void SetSanityFlags()
 			{
 				MagicalGirlMode = true;
-				CanSwitchForm = true;
+				CanSwitchForm = MyChar.LV >= 4 ? 2 : 1;
 				UnlimitedSwitchesTurn = false;
 				ChangeIcon(MagicalGirlMode);
 
@@ -266,9 +267,9 @@ namespace QoH
 			}
 		}
 
-		public class Affection : QoHDOT, IP_Dead, IP_DebuffResist, IP_DamageTake, IP_PlayerTurn
+		public class Affection : QoHDOT, IP_Dead, IP_DebuffResist, IP_PlayerTurn, IP_DamageChange_Hit_sumoperation
 		{
-			protected override float AttackPower => 1f;
+			protected override float AttackPower => 0.75f;
 			protected override bool OncePerTun => oncePerTun;
 
 			private bool oncePerTun;
@@ -281,30 +282,30 @@ namespace QoH
 
 			public void Dead()
 			{
-				BattleSystem.instance.AllyTeam.Add(Skill.TempSkill(ModItemKeys.Skill_S_QoH_Shot, base.Usestate_F, base.Usestate_F.MyTeam), true);
+				BattleSystem.instance.AllyTeam.Add(Skill.TempSkill(ModItemKeys.Skill_S_QoH_Shot, Usestate_F, Usestate_F.MyTeam), true);
 			}
 
 			public void Resist()
 			{
-				if (!this.BChar.IsDead)
+				if (!BChar.IsDead)
 				{
-					BattleSystem.instance.AllyTeam.Skills_UsedDeck.Add(Skill.TempSkill(ModItemKeys.Skill_S_QoH_Shot, base.Usestate_F, base.Usestate_F.MyTeam));
-				}
-			}
-
-			public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
-			{
-				if (User == Usestate_F && !oncePerTun)
-				{
-					oncePerTun = true;
-					int heal = (int)(Usestate_F.GetStat.atk * AttackPower);
-					BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Usestate_F, heal, true, false, true, false, false, false));
+					BattleSystem.instance.AllyTeam.Skills_UsedDeck.Add(Skill.TempSkill(ModItemKeys.Skill_S_QoH_Shot, Usestate_F, Usestate_F.MyTeam));
 				}
 			}
 
 			public void Turn()
 			{
 				oncePerTun = false;
+			}
+
+			public void DamageChange_Hit_sumoperation(Skill SkillD, int Damage, ref bool Cri, bool View, ref int PlusDamage)
+			{
+				if (SkillD.Master == Usestate_F && !OncePerTun)
+				{
+					oncePerTun = true;
+					int heal = (int)(Usestate_F.GetStat.atk * AttackPower);
+					BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Usestate_F, heal, true, false, true, false, false, false));
+				}
 			}
 		}
 
@@ -441,6 +442,19 @@ namespace QoH
 					sanity.SanityDrawBack = false;
 					sanity.Init();
 				}
+			}
+		}
+
+		public class SunMoon : Buff, IP_Awake
+		{
+			public void Awake()
+			{
+				EmotionManager.RemoveEmotionCapGuest(BChar);
+			}
+
+			public override void Init()
+			{
+				PlusPerStat.MaxHP = 25;
 			}
 		}
 	}

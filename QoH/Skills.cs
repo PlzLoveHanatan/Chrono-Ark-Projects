@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using DG.Tweening;
 using EmotionSystem;
 using GameDataEditor;
 using I2.Loc;
@@ -13,6 +14,8 @@ using NLog.LayoutRenderers;
 using NLog.Targets;
 using Spine;
 using UnityEngine;
+using static EmotionSystem.LiteratureBuff.Abnormality.Lv2;
+using static Mono.Security.X509.X520;
 
 namespace QoH
 {
@@ -91,11 +94,6 @@ namespace QoH
 				}
 			}
 
-			public override void SkillKill(SkillParticle SP)
-			{
-				BattleSystem.DelayInput(ApplyDebuffs());
-			}
-
 			private IEnumerator ApplyDebuffs()
 			{
 				BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, BChar, Heal, true, false, true, true, true, false));
@@ -128,7 +126,7 @@ namespace QoH
 
 			public override string DescExtended(string desc)
 			{
-				return base.DescExtended(desc).Replace("&a", Heal.ToString()).Replace("&b", (Heal * 100).ToString());
+				return base.DescExtended(desc).Replace("&a", Heal.ToString());
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -307,33 +305,59 @@ namespace QoH
 
 		public class LucyLoveAttack : Skill_Extended
 		{
-			private readonly BattleChar Queen = Utils.AllyTeam.AliveChars.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_QoH);
-			private int Heal => (int)(Queen?.GetStat.reg * 0.5f);
-
 			public override string DescExtended(string desc)
 			{
-				return base.DescExtended(desc).Replace("&a", Heal.ToString()).Replace("&b", Queen.Info.Name.ToString());
+				string name = "";
+				int heal = 0;
+
+				if (BattleSystem.instance != null)
+				{
+					var queen = Utils.AllyTeam.AliveChars.FirstOrDefault(c => c != null && c.Info.KeyData == ModItemKeys.Character_QoH);
+
+					if (queen != null)
+					{
+						heal = (int)(queen.GetStat.reg * 0.5f);
+						name = queen.Info.Name ?? "";
+					}
+				}
+
+				string baseDesc = base.DescExtended(desc) ?? "";
+				baseDesc = baseDesc.Replace("&a", heal.ToString());
+				baseDesc = baseDesc.Replace("&b", name);
+				return baseDesc;
 			}
+
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				List<Skill> strings = new List<Skill>
-				{
-					Skill.TempSkill(ModItemKeys.Skill_S_QoH_Lucy_0, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
-					Skill.TempSkill(ModItemKeys.Skill_S_QoH_Lucy_1, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
-				};
+				int heal = 0;
+				var queen = Utils.AllyTeam.AliveChars.FirstOrDefault(c => c != null && c.Info.KeyData == ModItemKeys.Character_QoH);
 
-				if (Queen != null)
+				//List<Skill> strings = new List<Skill>
+				//{
+				//	Skill.TempSkill(ModItemKeys.Skill_S_QoH_Lucy_0, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+				//	Skill.TempSkill(ModItemKeys.Skill_S_QoH_Lucy_1, Utils.AllyTeam.LucyAlly, Utils.AllyTeam),
+				//};
+
+				if (queen != null)
 				{
-					BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(strings, new SkillButton.SkillClickDel(Selection), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
+					heal = (int)(queen.GetStat.reg * 0.5f);
+
+					if (Utils.ReturnBuff(queen, ModItemKeys.Buff_B_QoH_Sanity) is Buffs.QoHSanity sanity)
+					{
+						sanity.UnlimitedSwitchesTurn = true;
+					}
+
+					foreach (var ally in Utils.AllyTeam.AliveChars)
+					{
+						BattleSystem.instance.StartCoroutine(Utils.HealingParticle(ally, queen, heal, true, false, false, true, true, false));
+					}
+					//BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(strings, s => Selection(s, queen, heal), ScriptLocalization.System_SkillSelect.EffectSelect, false, false, true, false, false));
 				}
-				else
-				{
-					Utils.AllyTeam.Draw(2);
-				}
+				Utils.AllyTeam.Draw(2);
 			}
 
-			private void Selection(SkillButton Mybutton)
+			private void Selection(SkillButton Mybutton, BattleChar bchar, int heal = 0)
 			{
 				string key = Mybutton.Myskill.MySkill.KeyID;
 				int drawNum = 2;
@@ -342,7 +366,7 @@ namespace QoH
 				{
 					foreach (var ally in Utils.AllyTeam.AliveChars)
 					{
-						BattleSystem.instance.StartCoroutine(Utils.HealingParticle(ally, Queen, Heal, true, false, false, true, true, false));
+						BattleSystem.instance.StartCoroutine(Utils.HealingParticle(ally, bchar, heal, true, false, false, true, true, false));
 					}
 				}
 				else

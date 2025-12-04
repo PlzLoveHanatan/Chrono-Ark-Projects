@@ -19,7 +19,7 @@ namespace QoH
 				{
 					if (Utils.ReturnBuff(BChar, ModItemKeys.Buff_B_QoH_Sanity) is Buffs.QoHSanity sanity)
 					{
-						result = (sanity.MagicalGirlMode && MySkill.IsHeal) || (!sanity.MagicalGirlMode && MySkill.IsDamage);
+						result = (sanity.MagicalGirlMode && MySkill.IsHeal) || (!sanity.MagicalGirlMode && MySkill.IsDamage) || (!MySkill.IsHeal && !MySkill.IsDamage);
 					}
 				}
 
