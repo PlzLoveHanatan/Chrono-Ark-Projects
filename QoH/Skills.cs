@@ -42,10 +42,11 @@ namespace QoH
 
 		public class Embrace : Skill_Extended
 		{
+			private int Heal => (int)(BChar.GetStat.reg * 0.4f);
+
 			public override string DescExtended(string desc)
 			{
-				int heal = (int)(BChar.GetStat.reg * 0.2);
-				return base.DescExtended(desc).Replace("&a", heal.ToString());
+				return base.DescExtended(desc).Replace("&a", Heal.ToString());
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -68,18 +69,18 @@ namespace QoH
 
 				for (int i = 0; i < recastHeal; i++)
 				{
-					int heal = (int)(BChar.GetStat.reg * 0.2);
-					BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, BChar, heal, true, false, true, true, true, false));
+					BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, BChar, Heal, true, false, true, true, true, false));
 				}
 			}
 		}
 
 		public class Miracle : Skill_Extended
 		{
+			private int Heal => (int)(BChar.GetStat.atk * 0.5f);
+
 			public override string DescExtended(string desc)
 			{
-				int heal = (int)(BChar.GetStat.reg * 0.5);
-				return base.DescExtended(desc).Replace("&a", heal.ToString());
+				return base.DescExtended(desc).Replace("&a", Heal.ToString());
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -97,8 +98,7 @@ namespace QoH
 
 			private IEnumerator ApplyDebuffs()
 			{
-				int heal = (int)(BChar.GetStat.reg * 0.5);
-				BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, BChar, heal, true, false, true, true, true, false));
+				BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, BChar, Heal, true, false, true, true, true, false));
 
 				var enemies = Utils.EnemyTeam.AliveChars;
 
@@ -124,16 +124,17 @@ namespace QoH
 
 		public class HeartWave : Skill_Extended
 		{
+			private int Heal => (int)(BChar.GetStat.reg * 0.25f);
+
 			public override string DescExtended(string desc)
 			{
-				int heal = (int)(BChar.GetStat.reg * 0.25f);
-				return base.DescExtended(desc).Replace("&a", heal.ToString());
+				return base.DescExtended(desc).Replace("&a", Heal.ToString()).Replace("&b", (Heal * 100).ToString());
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
 				int debuffTypes = GetDebuffTypes(Targets[0]);
-				int additionalHeal = (int)(BChar.GetStat.reg * 0.25f * debuffTypes);
+				int additionalHeal = Heal * debuffTypes;
 
 				if (debuffTypes > 0)
 				{
@@ -335,6 +336,7 @@ namespace QoH
 			private void Selection(SkillButton Mybutton)
 			{
 				string key = Mybutton.Myskill.MySkill.KeyID;
+				int drawNum = 2;
 
 				if (key == ModItemKeys.Skill_S_QoH_Lucy_0)
 				{
@@ -349,16 +351,19 @@ namespace QoH
 					{
 						foreach (var buff in enemy.Buffs)
 						{
-							if (buff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT)
+							if (buff.BuffData.Debuff && buff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT)
 							{
-								buff.BuffData.LifeTime++;
-								buff.BuffData.LifeTime++;
+								foreach (StackBuff stackbuff in buff.StackInfo)
+								{
+									stackbuff.RemainTime++;
+								}
 							}
 						}
 					}
+					drawNum = 3;
 				}
 
-				Utils.AllyTeam.Draw(2);
+				Utils.AllyTeam.Draw(drawNum);
 			}
 		}
 	}

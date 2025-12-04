@@ -10,18 +10,20 @@ using GameDataEditor;
 using Spine.Unity.Examples;
 using DarkTonic.MasterAudio;
 using System.Collections;
+using PItem;
 
 namespace QoH
 {
 	public class Buffs
 	{
-		public class QoHSanity : Buff, IP_Awake, IP_PlayerTurn, IP_SomeOneDead, IP_DamageTake
+		public class QoHSanity : Buff, IP_Awake, IP_PlayerTurn, IP_SomeOneDead, IP_DamageTake, IP_Healed
 		{
 			private GameObject Sanity;
 			public bool MagicalGirlMode = true;
 			public bool CanSwitchForm = true;
 			public bool UnlimitedSwitches = false;
 			public bool SanityDrawBack = true;
+			public bool UnlimitedSwitchesTurn = false;
 
 			public override string NameExtended(string Name)
 			{
@@ -65,21 +67,22 @@ namespace QoH
 
 			public void Turn()
 			{
-				MagicalGirlMode = true;
-				CanSwitchForm = true;
-				Sprite.GetSpriteByAddress(BuffData.Icon_Path);
-				BE?.gameObject?.SetActive(true);
-
-				var sanity = Sanity.GetComponent<QoH_Sanity_Script>();
-				if (sanity != null)
-				{
-					sanity.AllowPulse = true;
-				}
+				SetSanityFlags();
 			}
 
 			public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 			{
 				MagicalGirlMode = false;
+				ChangeIcon(MagicalGirlMode);
+			}
+
+			public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
+			{
+				if (HealedChar == BChar)
+				{
+					MagicalGirlMode = true;
+					ChangeIcon(MagicalGirlMode);
+				}
 			}
 
 			public void SomeOneDead(BattleChar DeadChar)
@@ -104,26 +107,28 @@ namespace QoH
 			{
 				if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove) return;
 
-				if (CanSwitchForm || UnlimitedSwitches)
+				if (CanSwitchForm || UnlimitedSwitches || UnlimitedSwitchesTurn)
 				{
-					//MasterAudio.PlaySound("WaitButton");
 					MagicalGirlMode = !MagicalGirlMode;
-
-					if (MagicalGirlMode)
-					{
-						Sprite.GetSpriteByAddress(BuffData.Icon_Path);
-						BE?.gameObject?.SetActive(true);
-					}
-					else
-					{
-						var path = "Visual/QoH/Sanity/Sanity_H.png";
-						Sprite.GetSpriteByPath(path);
-						BE?.gameObject?.SetActive(false);
-					}
-
-					Init();
+					ChangeIcon(MagicalGirlMode);
 					CanSwitchForm = false;
 				}
+			}
+
+			private void ChangeIcon(bool MagicalGirlMode)
+			{
+				if (MagicalGirlMode)
+				{
+					Sprite.GetSpriteByAddress(BuffData.Icon_Path);
+					BE?.gameObject?.SetActive(true);
+				}
+				else
+				{
+					var path = "Visual/QoH/Sanity/Sanity_H.png";
+					Sprite.GetSpriteByPath(path);
+					BE?.gameObject?.SetActive(false);
+				}
+				Init();
 			}
 
 			private IEnumerator SetBEDel()
@@ -141,11 +146,26 @@ namespace QoH
 				Sanity.AddComponent<QoH_Sanity_Script>();
 				Sanity.AddComponent<QoH_Sanity_Tooltip>();
 			}
+
+			private void SetSanityFlags()
+			{
+				MagicalGirlMode = true;
+				CanSwitchForm = true;
+				UnlimitedSwitchesTurn = false;
+				ChangeIcon(MagicalGirlMode);
+
+				var sanity = Sanity.GetComponent<QoH_Sanity_Script>();
+				if (sanity != null)
+				{
+					sanity.AllowPulse = true;
+				}
+			}
 		}
 
 		public class QoHDOT : Buff
 		{
-			protected virtual float HealingPower => 0.5f;
+			protected virtual float HealingPower => 0f;
+			protected virtual float AttackPower => 0f;
 			protected virtual BattleChar Bchar => Usestate_F ?? BChar;
 			protected virtual bool OncePerTun => false;
 
@@ -153,11 +173,21 @@ namespace QoH
 			{
 				int heal = 0;
 				string user = "";
+				int percentage = 0;
 				string status = OncePerTun ? EmotionSystem.ModLocalization.EmotionSystem_Status_Inactive : EmotionSystem.ModLocalization.EmotionSystem_Status_Active;
 
 				if (Bchar != null)
 				{
-					heal = (int)(Bchar.GetStat.reg * HealingPower);
+					if (HealingPower != 0)
+					{
+						heal = (int)(Bchar.GetStat.reg * HealingPower);
+						percentage = (int)(HealingPower * 100);
+					}
+					else
+					{
+						heal = (int)(Bchar.GetStat.atk * AttackPower);
+						percentage = (int)(AttackPower * 100);
+					}
 
 					if (Bchar.Info != null && !string.IsNullOrEmpty(Bchar.Info.Name))
 					{
@@ -167,8 +197,9 @@ namespace QoH
 
 				string desc = base.DescExtended() ?? "";
 				desc = desc.Replace("&a", heal.ToString());
-				desc = desc.Replace("&b", string.IsNullOrEmpty(user) ? "" : user + " ");
-				desc = desc.Replace("&c", status);
+				desc = desc.Replace("&b", percentage.ToString());
+				desc = desc.Replace("&c", string.IsNullOrEmpty(user) ? "" : user + " ");
+				desc = desc.Replace("&d", status);
 				return desc;
 			}
 		}
@@ -211,7 +242,7 @@ namespace QoH
 
 		public class Chant : QoHDOT, IP_Dead
 		{
-			protected override float HealingPower => 0.25f;
+			protected override float AttackPower => 0.5f;
 
 			public override void BuffStat()
 			{
@@ -230,14 +261,14 @@ namespace QoH
 
 			private void HealAlly()
 			{
-				int heal = (int)(Usestate_F.GetStat.reg * HealingPower);
+				int heal = (int)(Usestate_F.GetStat.atk * AttackPower);
 				BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Usestate_F, heal, true, false, true, false, false, false));
 			}
 		}
 
-		public class Affection : QoHDOT, IP_Dead, IP_DebuffResist, IP_DamageTake
+		public class Affection : QoHDOT, IP_Dead, IP_DebuffResist, IP_DamageTake, IP_PlayerTurn
 		{
-			protected override float HealingPower => 0.5f;
+			protected override float AttackPower => 1f;
 			protected override bool OncePerTun => oncePerTun;
 
 			private bool oncePerTun;
@@ -266,37 +297,60 @@ namespace QoH
 				if (User == Usestate_F && !oncePerTun)
 				{
 					oncePerTun = true;
-					int heal = (int)(Usestate_F.GetStat.reg * HealingPower);
+					int heal = (int)(Usestate_F.GetStat.atk * AttackPower);
 					BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Usestate_F, heal, true, false, true, false, false, false));
 				}
 			}
+
+			public void Turn()
+			{
+				oncePerTun = false;
+			}
 		}
 
-		public class LoveJustice : QoHDOT, IP_SkillUse_Target
+		public class ArcanaSlave : QoHDOT, IP_SkillUse_Target
 		{
-			protected override float HealingPower => 1f;
+			protected override float HealingPower => 0.25f;
+
+			public override void Init()
+			{
+				PlusStat.HIT_DOT = 10;
+				PlusStat.hit = 5;
+			}
+
+			public override string DescExtended()
+			{
+				return base.DescExtended().Replace("&f", Utils.ChanceDOT(BChar, 105).ToString());
+			}
 
 			public void AttackEffect(BattleChar hit, SkillParticle SP, int DMG, bool Cri)
 			{
-				if (SP.SkillData.IsDamage)
+				if (SP.SkillData.IsDamage && hit != null && !hit.Info.Ally)
 				{
 					int heal = (int)(Usestate_F.GetStat.reg * HealingPower);
-					BChar.StartCoroutine(Utils.HealingParticle(Bchar, Usestate_F, heal, true, false, false, false, false, false));
-					SelfDestroy();
+					BChar.StartCoroutine(Utils.HealingParticle(Bchar, Usestate_F, heal, true, false, true, false, false, false));
+					Utils.AddDebuff(hit, Usestate_F, ModItemKeys.Buff_B_QoH_Shattered, 1, Utils.ChanceDOT(BChar, 105));
+					SelfStackDestroy();
 				}
 			}
 		}
 
-		public class ArcanaSlave : QoHDOT, IP_DamageTake
+		public class LoveJustice : QoHDOT, IP_DamageTake
 		{
 			protected override float HealingPower => 0.5f;
+
+			public override void Init()
+			{
+				PlusStat.RES_DOT = 10;
+				PlusStat.dod = 5;
+			}
 
 			public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 			{
 				if (Dmg >= 1)
 				{
 					int heal = (int)(Usestate_F.GetStat.reg * HealingPower);
-					BChar.StartCoroutine(Utils.HealingParticle(Bchar, Usestate_F, heal, true, false, false, false, false, false));
+					BChar.StartCoroutine(Utils.HealingParticle(Bchar, Usestate_F, heal, true, false, true, false, false, false));
 					SelfDestroy();
 				}
 			}
@@ -304,7 +358,7 @@ namespace QoH
 
 		public class LoveHate : QoHDOT
 		{
-			protected override float HealingPower => 0.5f;
+			protected override float AttackPower => 0.5f;
 
 			public override void Init()
 			{
@@ -313,7 +367,7 @@ namespace QoH
 
 			public override void TurnUpdate()
 			{
-				int damage = (int)(Usestate_F.GetStat.reg * HealingPower);
+				int damage = (int)(Usestate_F.GetStat.atk * AttackPower);
 				BChar.Damage(Usestate_F, damage, false, true);
 				base.TurnUpdate();
 			}
@@ -342,7 +396,7 @@ namespace QoH
 			}
 		}
 
-		public class WhatUse : Buff, IP_BuffAddAfter
+		public class WhatUse : Buff, IP_BuffAddAfter, IP_BuffUpdate
 		{
 			public void BuffaddedAfter(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff, StackBuff stackBuff)
 			{
@@ -353,6 +407,25 @@ namespace QoH
 					stackBuff.RemainTime++;
 					stackBuff.RemainTime++;
 				}
+			}
+
+			public void BuffUpdate(Buff MyBuff)
+			{
+				if (!MyBuff.BChar.Info.Ally && MyBuff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT)
+				{
+					if (!MyBuff.BuffExtended.Any((Buff_Ex p) => p is WhatUse_Ex))
+					{
+						MyBuff.AddBuffEx(new WhatUse_Ex());
+					}
+				}
+			}
+		}
+
+		public class WhatUse_Ex : Buff_Ex
+		{
+			public override void BuffStat()
+			{
+				PlusDamageTick = 1;
 			}
 		}
 

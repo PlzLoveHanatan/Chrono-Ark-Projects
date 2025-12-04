@@ -11,7 +11,7 @@ namespace QoH
 		public Image Img;
 
 		[Header("Interaction Colors")]
-		public Color normalColor = Color.white;
+		public Color normalColor = new Color(1f, 1f, 1f, 1f);
 		public Color hoverColor = new Color(0.8f, 0.8f, 0.8f);
 		public Color pressedColor = new Color(0.9f, 0.9f, 0.9f);
 		public Color disabledColor = new Color(1f, 1f, 1f, 0.5f);
@@ -26,8 +26,8 @@ namespace QoH
 		private bool interactable;
 		public bool AllowPulse = true;
 
-		private float pulseSpeed = 4f;
-		private float pulseAmount = 0.08f;
+		private readonly float pulseSpeed = 4f;
+		private readonly float pulseAmount = 0.08f;
 
 		private Vector3 baseScale;
 
@@ -49,7 +49,7 @@ namespace QoH
 			var queen = Utils.AllyTeam.AliveChars.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_QoH);
 			var sanity = Utils.ReturnBuff(queen, ModItemKeys.Buff_B_QoH_Sanity) as Buffs.QoHSanity;
 
-			interactable = sanity.CanSwitchForm || sanity.UnlimitedSwitches;
+			interactable = sanity.CanSwitchForm || sanity.UnlimitedSwitches || sanity.UnlimitedSwitchesTurn;
 
 			// Смена спрайта в зависимости от текущего баффа
 			if (sanity.MagicalGirlMode)

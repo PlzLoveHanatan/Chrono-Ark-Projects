@@ -108,7 +108,7 @@ namespace QoH
 
 			public IEnumerator Draw(Skill Drawskill, bool NotDraw)
 			{
-				if (Drawskill.IsDamage && Drawskill.Master == BChar)
+				if (Drawskill.Master == BChar)
 				{
 					Utils.ApplyExtended(Drawskill, ModItemKeys.SkillExtended_Ex_QoH_Hysteria, false, true);
 				}
@@ -119,7 +119,7 @@ namespace QoH
 			{
 				var fixedSkill = (BChar as BattleAlly).MyBasicSkill.buttonData;
 
-				if (fixedSkill != null && fixedSkill.IsDamage)
+				if (fixedSkill != null)
 				{
 					Utils.ApplyExtended(fixedSkill, ModItemKeys.SkillExtended_Ex_QoH_Hysteria, false, true);
 				}

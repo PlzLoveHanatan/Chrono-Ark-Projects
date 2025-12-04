@@ -4,23 +4,23 @@ namespace QoH
     public static class ModItemKeys
     {
 		/// <summary>
-		/// Affection and Hatred ☆
-		/// When this unit dies, add 'Sparkling Justice Shot ♡' to your hand. When attacked by <color=#FF7C34>&b</color>heal the ally with the lowest health for &a <color=#FF7C34>(50% &bHealing Power)</color>. Only activates once per turn. Current status: &c.
+		/// Affection and Hatred ♡
+		/// When this unit dies, add 'Sparkling Justice Shot ♡' to your hand. When attacked by <color=#FF7C34>&c</color>heal the ally with the lowest health for &a <color=#FF7C34>(&b% &cAttack Power)</color>. Only activates once per turn. Current status: &d.
 		/// </summary>
         public static string Buff_B_QoH_Affection = "B_QoH_Affection";
 		/// <summary>
 		/// Arcana Slave ☆
-		/// Restore &a <color=#FF7C34>(50% &bHealing Power)</color> health and remove this buff, when taking damage.
+		/// When attacking, apply 'Shattered Heartbeat ☆ (<sprite=1> &f%) to the target's, restore &a health <color=#FF7C34>(&b% &cHealing Power)</color> and remove 1 stack.
 		/// </summary>
         public static string Buff_B_QoH_ArcanaSlave = "B_QoH_ArcanaSlave";
 		/// <summary>
 		/// Magical Girl's Chant ☆
-		/// When this unit dies or this buff ends, heal an ally with lowest health by &a <color=#FF7C34>(25% &bHealing Power)</color>.
+		/// When this unit dies or this buff ends, heal an ally with lowest health by &a <color=#FF7C34>(&b% &cAttack Power)</color>.
 		/// </summary>
         public static string Buff_B_QoH_Chant = "B_QoH_Chant";
 		/// <summary>
 		/// Love/Hate ☆
-		/// Take <color=purple>&a Pain Damage</color> <color=#FF7C34>(50% &b Healing Power)</color>, every time this unit perform an action.
+		/// Take <color=purple>&a Pain Damage</color> <color=#FF7C34>(&b% &cAttack Power)</color>, every time this unit perform an action.
 		/// </summary>
         public static string Buff_B_QoH_LoveHate = "B_QoH_LoveHate";
 		/// <summary>
@@ -29,7 +29,7 @@ namespace QoH
         public static string Buff_B_QoH_LoveHate_0 = "B_QoH_LoveHate_0";
 		/// <summary>
 		/// Love Justice ☆
-		/// Restore &a <color=#FF7C34>(100% &bHealing Power)</color> health and remove this buff, when playing attack skill.
+		/// Restore &a health <color=#FF7C34>(&b% &cHealing Power)</color> and remove this buff, when taking damage.
 		/// </summary>
         public static string Buff_B_QoH_LoveJustice = "B_QoH_LoveJustice";
 		/// <summary>
@@ -38,13 +38,13 @@ namespace QoH
         public static string Buff_B_QoH_MagicalCandy = "B_QoH_MagicalCandy";
 		/// <summary>
 		/// Here Comes Magical Girl ☆
-		/// At the star of the turn apply <color=#BD2DC2>Mark of Villainy</color> to a random enemy.
+		/// At the start of the turn, apply <color=#BD2DC2>Mark of Villainy</color> to a random enemy.
 		/// </summary>
         public static string Buff_B_QoH_MagicalGirl = "B_QoH_MagicalGirl";
 		/// <summary>
 		/// <color=#BD2DC2>Mark of Villainy</color>
 		/// Removed at the start of the next turn.
-		/// Can be targeted regardelss Taunt status.
+		/// Can be targeted regardless Taunt status.
 		/// </summary>
         public static string Buff_B_QoH_Mark = "B_QoH_Mark";
 		/// <summary>
@@ -69,9 +69,16 @@ namespace QoH
         public static string Buff_B_QoH_Transformation = "B_QoH_Transformation";
 		/// <summary>
 		/// What use... am I...
-		/// Pain debuffs applied onto enemies are extended by 2 turns.
+		/// Pain debuffs applied onto enemies by allies are extended by 2 turns, enemies take 1 additional Pain damage for each stack of Pain debuff.
 		/// </summary>
         public static string Buff_B_QoH_WhatUse = "B_QoH_WhatUse";
+        public static string Buff_B_QoH_WhatUse_0 = "B_QoH_WhatUse_0";
+		/// <summary>
+		/// When played, heal the ally with the lowest health (50% of Queen of Hatred Healing Power).
+		/// Queen of Hatred can change Sanity unlimited times this turn.
+		/// <sprite name="비용1"><sprite name="이상">
+		/// </summary>
+        public static string SkillExtended_Ex_QoH_0 = "Ex_QoH_0";
 		/// <summary>
 		/// Hysteria
 		/// </summary>
@@ -93,7 +100,7 @@ namespace QoH
 		/// <summary>
 		/// Queen of Hatred
 		/// Passive:
-		/// At the star of the turn apply <color=#BD2DC2>Mark of Villainy</color> to a random enemy and gain <color=#FF77FF>Pure Heart ☆</color>
+		/// At the start of the turn, apply <color=#BD2DC2>Mark of Villainy</color> to a random enemy and gain <color=#FF77FF>Pure Heart ☆</color>
 		/// Can use attack skills only when having <color=#BD2DC2>Hysteria!</color>
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
@@ -132,7 +139,7 @@ namespace QoH
         public static string Skill_S_QoH_Blessing = "S_QoH_Blessing";
 		/// <summary>
 		/// Starlight Embrace ♡
-		/// Repeatedly heal an ally with lowest health by &a <color=#FF7C34>(20% Healing Power)</color> for each stack of <sprite=1> debuff on a target's.
+		/// Repeatedly heal an ally with lowest health by &a <color=#FF7C34>(40% Healing Power)</color> for each stack of <sprite=1> debuff on a target's.
 		/// </summary>
         public static string Skill_S_QoH_Embrace = "S_QoH_Embrace";
 		/// <summary>
@@ -142,34 +149,36 @@ namespace QoH
         public static string Skill_S_QoH_Harmony = "S_QoH_Harmony";
 		/// <summary>
 		/// Glittering Heartwave ♡
-		/// Increase healing amount by &a <color=#FF7C34>(25% Healing Power)</color> for each type of debuff on a target.
+		/// Increase healing amount by &a <color=#FF7C34>(&b% Healing Power)</color> for each type of debuff on a target.
 		/// Remove all target's <sprite=1> debuffs.
 		/// </summary>
         public static string Skill_S_QoH_Heartwave = "S_QoH_Heartwave";
 		/// <summary>
 		/// In the Name of Justice ♡
-		/// When facing 1 enemy apply additonal stack of 'Shattered Heartbeat ☆' to the target.
+		/// When facing 1 enemy apply additional stack of 'Shattered Heartbeat ☆' to the target.
 		/// </summary>
         public static string Skill_S_QoH_Justice = "S_QoH_Justice";
 		/// <summary>
 		/// Love Attack ♡
 		/// Choose One -
 		/// Heal all allies by &a <color=#FF7C34>(50% &b Healing Power)</color> and draw 2 skills.
-		/// Or extend all enemies Pain debuffs by 2 turns and draw 2 skills.
+		/// Or extend all enemies Pain debuffs by 1 turn and draw 3 skills.
 		/// If Queen of Hatred is fainted, do not choose and draw 2 skills.
 		/// </summary>
         public static string Skill_S_QoH_Lucy = "S_QoH_Lucy";
 		/// <summary>
+		/// Pure Heart Resonance ♡
 		/// Heal all allies and draw 2 skills.
 		/// </summary>
         public static string Skill_S_QoH_Lucy_0 = "S_QoH_Lucy_0";
 		/// <summary>
-		/// Extend all enemies Pain debuffs by 2 turns and draw 2 skills.
+		/// Justice Rhythm ☆
+		/// Extend all enemies Pain debuffs by 1 turn and draw 3 skills.
 		/// </summary>
         public static string Skill_S_QoH_Lucy_1 = "S_QoH_Lucy_1";
 		/// <summary>
 		/// Lovely Miracle Flash ♡
-		/// If the target has a Pain debuff or is defeated by this skill, heal an ally with lowest health by &a <color=#FF7C34>(50% Healing Power)</color> and apply 1 stack of this skill's debuffs to all enemies.
+		/// If the target has a Pain debuff or is defeated by this skill, heal an ally with lowest health by &a <color=#FF7C34>(50% Attack Power)</color> and apply 1 stack of this skill's debuffs to all enemies.
 		/// </summary>
         public static string Skill_S_QoH_Miracle = "S_QoH_Miracle";
 		/// <summary>
@@ -182,7 +191,6 @@ namespace QoH
         public static string Skill_S_QoH_Radiant = "S_QoH_Radiant";
 		/// <summary>
 		/// Arcana Beats ♡
-		/// If the target has a Pain debuff, this skill gains 100% Critical Chance.
 		/// </summary>
         public static string Skill_S_QoH_Rare_Beats = "S_QoH_Rare_Beats";
 		/// <summary>
@@ -200,7 +208,7 @@ namespace QoH
 		/// </summary>
         public static string Skill_S_QoH_Shot = "S_QoH_Shot";
 		/// <summary>
-		/// Love Spiral Ray ♡
+		/// Promise of Justice ♡
 		/// </summary>
         public static string Skill_S_QoH_Spiral = "S_QoH_Spiral";
         public static string Skill_S_QoH_Test = "S_QoH_Test";
@@ -213,7 +221,6 @@ namespace QoH
 		/// Korean:
 		/// English:
 		/// Gain <color=#FF77FF>Pure Heart ☆</color>
-		/// <color=#919191>Can switch Sanity only once per turn</color>
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -223,7 +230,6 @@ namespace QoH
 		/// Korean:
 		/// English:
 		/// Gain <color=#BD2DC2>Hysteria!</color> now!
-		/// <color=#919191>Can switch Sanity only once per turn</color>
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -241,8 +247,8 @@ namespace QoH
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// Can use attacks.
-		/// Can only gain <color=red>Negative</color> Points.
+		/// Can only use Attack skills.
+		/// Can only gain <color=red>Negative</color> Points. Gain <color=#FF77FF>Pure Heart ☆</color> when healed.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -260,12 +266,22 @@ namespace QoH
 		/// <summary>
 		/// Korean:
 		/// English:
+		/// Can only use Healing skills.
 		/// Can only gain <color=green>Positive</color> Points. Gain <color=#BD2DC2>Hysteria!</color> when taking damage.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
 		/// </summary>
         public static string QoH_Sanity_Mod_M_Desc => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_M_Desc");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// <color=#919191>Can switch Sanity only once per turn</color>
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string QoH_Sanity_TurnCap => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_TurnCap");
 
     }
 }

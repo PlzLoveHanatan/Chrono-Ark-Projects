@@ -11,6 +11,8 @@ namespace QoH
 {
 	public static class QoH_Utils
 	{
+		public static bool QoHVoice => ModManager.getModInfo("QoH").GetSetting<ToggleSetting>("QoH Voice").Value;
+
 		public static QoH_Value Data => GetOrCreateData();
 
 		public static QoH_Value GetOrCreateData()

@@ -25,10 +25,9 @@ namespace QoH
 
 				if (Utils.ReturnBuff(queen, ModItemKeys.Buff_B_QoH_Sanity) is Buffs.QoHSanity sanity)
 				{
-
-					if (!sanity.CanSwitchForm || !sanity.UnlimitedSwitches)
+					if (!sanity.CanSwitchForm && !sanity.UnlimitedSwitches && !sanity.UnlimitedSwitchesTurn)
 					{
-						text = "";
+						return text;
 					}
 
 					if (sanity.MagicalGirlMode)
@@ -38,6 +37,11 @@ namespace QoH
 					else
 					{
 						text = ModLocalization.QoH_Sanity_H;
+					}
+
+					if (!sanity.UnlimitedSwitches && !sanity.UnlimitedSwitchesTurn)
+					{
+						text += " " + ModLocalization.QoH_Sanity_TurnCap;
 					}
 				}
 				return text;
