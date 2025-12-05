@@ -61,17 +61,17 @@ namespace QoH
 			[HarmonyPostfix]
 			public static void StageStartPostfix()
 			{
-				if (!QoHInParty() || !QoH_Utils.JusticeEquip) return;
+				if (!QoHInParty()) return;
 
 				if (PlayData.TSavedata.StageNum >= 0)
 				{
-					if (!QoH_Utils.Data.JusticeEquip)
+					if (!QoH_Utils.Data.JusticeEquip && QoH_Utils.MagicalEquip)
 					{
 						QoH_Utils.Data.JusticeEquip = true;
 						GainjusticeReward();
 					}
 
-					if (!QoH_Utils.Data.SunMoonQuest)
+					if (!QoH_Utils.Data.SunMoonQuest && QoH_Utils.SunMoonQuest)
 					{
 						QoH_Utils.Data.SunMoonQuest = true;
 						GainSunMoonQuest();
@@ -88,7 +88,15 @@ namespace QoH
 
 			private static void GainSunMoonQuest()
 			{
+				if (PlayData.TSavedata.IdentifyItems.Find((string x) => x == GDEItemKeys.Item_Scroll_Scroll_Transfer) == null)
+				{
+					PlayData.TSavedata.IdentifyItems.Add(GDEItemKeys.Item_Scroll_Scroll_Transfer);
+				}
+
+				//PlayData.TSavedata.Passive_Itembase.Add(ItemBase.GetItem(ModItemKeys.Item_Passive_R_QoH_SunMoon));
+
 				PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Passive_R_QoH_SunMoon));
+				PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Scroll_Scroll_Transfer));
 			}
 		}
 
@@ -133,7 +141,7 @@ namespace QoH
 			[HarmonyPrefix]
 			public static bool Prefix(PrintText __instance, string inText)
 			{
-				if (!QoH_Utils.JusticeVoice)
+				if (!QoH_Utils.MagicalVoice)
 				{
 					return true;
 				}

@@ -11,8 +11,9 @@ namespace QoH
 {
 	public static class QoH_Utils
 	{
-		public static bool JusticeVoice => ModManager.getModInfo("QoH").GetSetting<ToggleSetting>("Justice Voice").Value;
-		public static bool JusticeEquip => ModManager.getModInfo("QoH").GetSetting<ToggleSetting>("Justice Equip").Value;
+		public static bool MagicalVoice => ModManager.getModInfo("QoH").GetSetting<ToggleSetting>("Magical Voice").Value;
+		public static bool MagicalEquip => ModManager.getModInfo("QoH").GetSetting<ToggleSetting>("Magical Equip").Value;
+		public static bool SunMoonQuest => ModManager.getModInfo("QoH").GetSetting<ToggleSetting>("Sun Moon Quest").Value;
 
 		public static QoH_Value Data => GetOrCreateData();
 

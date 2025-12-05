@@ -41,19 +41,24 @@ namespace QoH
 
 			private readonly Dictionary<string, Type[]> ChibiOptions = new Dictionary<string, Type[]>
 			{
-				{ "Attack", new Type[] { Type.Chibi_Attack, Type.Chibi_Move, Type.Chibi_Normal } },
-				{ "Heal",   new Type[] { Type.Chibi_Idle,   Type.Chibi_Move, Type.Chibi_Normal } },
-				{ "Damage", new Type[] { Type.Chibi_Idle,   Type.Chibi_Damaged } },
-				{ "Default", new Type[] { Type.Chibi_Idle, Type.Chibi_Move, Type.Chibi_Normal } }
+				{ "Attack", new Type[] { Type.Chibi_Attack_Hand, Type.Chibi_Attack_Magic, Type.Chibi_Move, Type.Chibi_Wink_Seat, Type.Chibi_Wink_Stand } },
+				{ "Heal", new Type[] { Type.Chibi_Idle, Type.Chibi_Move, Type.Chibi_Wink_Seat, Type.Chibi_Wink_Stand } },
+				{ "Damaged", new Type[] { Type.Chibi_Damaged, Type.Chibi_Idle, Type.Chibi_Shrug, Type.Chibi_Shrug_Extra } },
+				{ "Evade", new Type[] { Type.Chibi_Attack_Hand, Type.Chibi_Move, Type.Chibi_Shrug, Type.Chibi_Wink_Seat, Type.Chibi_Wink_Stand } },
+				{ "Default", new Type[] { Type.Chibi_Idle, Type.Chibi_Move, Type.Chibi_Shrug, Type.Chibi_Wink_Seat, Type.Chibi_Wink_Stand } } 
 			};
 
 			private readonly Dictionary<Type, (Vector2 size, Vector3 position)> ChibiInfo = new Dictionary<Type, (Vector2 size, Vector3 position)>
 			{
-				{ Type.Chibi_Attack, ( new Vector2 (370, 370), new Vector3 (20, 260) ) },
+				{ Type.Chibi_Attack_Magic, ( new Vector2 (370, 370), new Vector3 (20, 260) ) },
+				{ Type.Chibi_Attack_Hand, ( new Vector2 (300, 300), new Vector3 (20, 260) ) },
 				{ Type.Chibi_Damaged, ( new Vector2 (300, 300), new Vector3 (-60, 240) ) },
 				{ Type.Chibi_Idle, ( new Vector2 (270, 270), new Vector3 (40, 240) ) },
 				{ Type.Chibi_Move, (new Vector2(250, 250), new Vector3(-20, 240) ) },
-				{ Type.Chibi_Normal, (new Vector2(260, 260), new Vector3(-30, 220) ) },
+				{ Type.Chibi_Wink_Seat, (new Vector2(260, 260), new Vector3(-30, 220) ) },
+				{ Type.Chibi_Wink_Stand, (new Vector2(280, 280), new Vector3(20, 240) ) },
+				{ Type.Chibi_Shrug, (new Vector2(260, 260), new Vector3(20, 240) ) },
+				{ Type.Chibi_Shrug_Extra, (new Vector2(260, 260), new Vector3(0, 240) ) },
 			};
 
 			public override void Init()
@@ -94,7 +99,7 @@ namespace QoH
 			{
 				if ( Char == BChar)
 				{
-					CreateChibi(Type.Chibi_Move);
+					ChooseChibi(null, false, true);
 				}
 			}
 
@@ -139,7 +144,7 @@ namespace QoH
 				}
 			}
 
-			private void ChooseChibi(Skill skill, bool isTakingDamage = false, bool randomChibi = false)
+			private void ChooseChibi(Skill skill, bool isTakingDamage = false, bool isEvade = false, bool randomChibi = false)
 			{
 				Type[] options;
 
@@ -153,7 +158,11 @@ namespace QoH
 				}
 				else if (isTakingDamage)
 				{
-					options = ChibiOptions["Damage"];
+					options = ChibiOptions["Damaged"];
+				}
+				else if (isEvade)
+				{
+					options = ChibiOptions["Evade"];
 				}
 				else
 				{

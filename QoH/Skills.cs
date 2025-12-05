@@ -277,6 +277,7 @@ namespace QoH
 			{
 				int damage = (int)(BChar.GetStat.atk * 0.5f);
 				SkillBasePlus.Target_BaseDMG = AdditionalDamage(Targets[0]) * damage;
+				Utils.PlaySound("S_QoH_ArcanaSlave", true);
 			}
 
 			private int AdditionalDamage(BattleChar bchar)
@@ -296,10 +297,7 @@ namespace QoH
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				if (Targets[0].GetBuffs(BattleChar.GETBUFFTYPE.DOT, false, false).Count > 0)
-				{
-					PlusSkillStat.cri = 100;
-				}
+				Utils.PlaySound("S_QoH_ArcanaBeats", true);
 			}
 		}
 

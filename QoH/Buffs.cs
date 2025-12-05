@@ -24,6 +24,7 @@ namespace QoH
 			public bool UnlimitedSwitches = false;
 			public bool SanityDrawBack = true;
 			public bool UnlimitedSwitchesTurn = false;
+			private int sfxPerTurn = 2;
 
 			public override string NameExtended(string Name)
 			{
@@ -74,6 +75,12 @@ namespace QoH
 			{
 				MagicalGirlMode = false;
 				ChangeIcon(MagicalGirlMode);
+				if (sfxPerTurn > 0)
+				{
+					sfxPerTurn--;
+					Utils.PlaySound("S_QoH_Sanity_H", true);
+					BChar.StartCoroutine(ShowText(BChar.GetTopPos(), ModLocalization.QoH_Sanity_Text_H));	
+				}
 			}
 
 			public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
@@ -82,6 +89,12 @@ namespace QoH
 				{
 					MagicalGirlMode = true;
 					ChangeIcon(MagicalGirlMode);
+					if (sfxPerTurn > 0)
+					{
+						sfxPerTurn--;
+						Utils.PlaySound("S_QoH_Sanity_M", true);
+						BChar.StartCoroutine(ShowText(BChar.GetTopPos(), ModLocalization.QoH_Sanity_Text_M));
+					}
 				}
 			}
 
@@ -153,6 +166,7 @@ namespace QoH
 				MagicalGirlMode = true;
 				CanSwitchForm = MyChar.LV >= 4 ? 2 : 1;
 				UnlimitedSwitchesTurn = false;
+				sfxPerTurn = 2;
 				ChangeIcon(MagicalGirlMode);
 
 				var sanity = Sanity.GetComponent<QoH_Sanity_Script>();
@@ -160,6 +174,13 @@ namespace QoH
 				{
 					sanity.AllowPulse = true;
 				}
+			}
+
+			private IEnumerator ShowText(Vector3 position, string text)
+			{
+				var topText = BattleText.CustomText(position, text);
+				yield return new WaitForSecondsRealtime(2f);
+				topText?.End();
 			}
 		}
 
@@ -229,19 +250,30 @@ namespace QoH
 
 			public void Dead()
 			{
-				var list = BChar.MyTeam.AliveChars.Where(a => a != BChar).ToList();
-				var index = RandomManager.RandomInt(RandomClassKey.Curse, 0, list.Count);
-				var enemy = list[index];
-
-				if (enemy != null)
+				try
 				{
-					int damage = (int)(Usestate_F.GetStat.atk * 0.3) * StackNum * LifeTime;
-					enemy.Damage(Usestate_F, damage, false, true);
+					var list = BChar.MyTeam.AliveChars.Where(a => a != BChar).ToList();
+
+					if (list.Count > 0)
+					{
+						var index = RandomManager.RandomInt(RandomClassKey.Curse, 0, list.Count);
+						var enemy = list[index];
+
+						if (enemy != null)
+						{
+							int damage = (int)(Usestate_F.GetStat.atk * 0.3) * StackNum * LifeTime;
+							enemy.Damage(Usestate_F, damage / 2, false, true);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					Debug.LogException(ex);
 				}
 			}
 		}
 
-		public class Chant : QoHDOT, IP_Dead
+		public class Chant : QoHDOT
 		{
 			protected override float AttackPower => 0.5f;
 
@@ -255,15 +287,17 @@ namespace QoH
 				HealAlly();
 			}
 
-			public void Dead()
-			{
-				HealAlly();
-			}
-
 			private void HealAlly()
 			{
-				int heal = (int)(Usestate_F.GetStat.atk * AttackPower);
-				BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Usestate_F, heal, true, false, true, false, false, false));
+				try
+				{
+					int heal = (int)(Usestate_F.GetStat.atk * AttackPower);
+					BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Usestate_F, heal, true, false, true, false, false, false));
+				}
+				catch (Exception ex)
+				{
+					Debug.LogException(ex);
+				}
 			}
 		}
 
@@ -366,12 +400,12 @@ namespace QoH
 				PlusPerStat.Damage = -5;
 			}
 
-			public override void TurnUpdate()
-			{
-				int damage = (int)(Usestate_F.GetStat.atk * AttackPower);
-				BChar.Damage(Usestate_F, damage, false, true);
-				base.TurnUpdate();
-			}
+			//public override void TurnUpdate()
+			//{
+			//	int damage = (int)(Usestate_F.GetStat.atk * AttackPower);
+			//	BChar.Damage(Usestate_F, damage, false, true);
+			//	base.TurnUpdate();
+			//}
 		}
 
 		public class Power : Buff
@@ -406,7 +440,6 @@ namespace QoH
 				if (addedbuff.BuffData.Debuff && addedbuff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT && stackBuff.RemainTime != 0)
 				{
 					stackBuff.RemainTime++;
-					stackBuff.RemainTime++;
 				}
 			}
 
@@ -426,7 +459,7 @@ namespace QoH
 		{
 			public override void BuffStat()
 			{
-				PlusDamageTick = 1;
+				PlusDamageTick = 2;
 			}
 		}
 
@@ -455,6 +488,14 @@ namespace QoH
 			public override void Init()
 			{
 				PlusPerStat.MaxHP = 25;
+			}
+		}
+		
+		public class MagicalCandy : Buff
+		{
+			public override void Init()
+			{
+				PlusStat.RES_DOT = 10;
 			}
 		}
 	}

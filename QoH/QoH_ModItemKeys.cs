@@ -15,12 +15,11 @@ namespace QoH
         public static string Buff_B_QoH_ArcanaSlave = "B_QoH_ArcanaSlave";
 		/// <summary>
 		/// Magical Girl's Chant ☆
-		/// When this unit dies or this buff ends, heal an ally with lowest health by &a <color=#FF7C34>(&b% &cAttack Power)</color>.
+		/// When this this buff ends, heal an ally with lowest health by &a <color=#FF7C34>(&b% &cAttack Power)</color>.
 		/// </summary>
         public static string Buff_B_QoH_Chant = "B_QoH_Chant";
 		/// <summary>
 		/// Love/Hate ☆
-		/// Take <color=purple>&a Pain Damage</color> <color=#FF7C34>(&b% &cAttack Power)</color>, every time this unit perform an action.
 		/// </summary>
         public static string Buff_B_QoH_LoveHate = "B_QoH_LoveHate";
 		/// <summary>
@@ -58,7 +57,7 @@ namespace QoH
         public static string Buff_B_QoH_Sanity = "B_QoH_Sanity";
 		/// <summary>
 		/// Shattered Heartbeat ☆
-		/// When this unit dies, random unit on this character's side takes <color=purple>Pain damage</color> equal to the total damage of the debuff over X turns.
+		/// When this unit dies, random unit on this character's side takes <color=purple>Pain damage</color> equal to the half total damage of the debuff over X turns.
 		/// </summary>
         public static string Buff_B_QoH_Shattered = "B_QoH_Shattered";
 		/// <summary>
@@ -69,7 +68,7 @@ namespace QoH
         public static string Buff_B_QoH_Transformation = "B_QoH_Transformation";
 		/// <summary>
 		/// What use... am I...
-		/// Pain debuffs applied onto enemies by allies are extended by 2 turns. Each stack of pain debuff deal additonal <color=purple>1 Pain Damage</color>.
+		/// Pain debuffs applied onto enemies by allies are extended by 1 turn. Each stack of pain debuff deal additonal <color=purple>2 Pain Damage</color>.
 		/// </summary>
         public static string Buff_B_QoH_WhatUse = "B_QoH_WhatUse";
         public static string Buff_B_QoH_WhatUse_0 = "B_QoH_WhatUse_0";
@@ -79,39 +78,30 @@ namespace QoH
 		/// </summary>
         public static string Buff_B_R_QoH_SunMoon = "B_R_QoH_SunMoon";
 		/// <summary>
-		/// When played, heal the ally with the lowest health (50% of Queen of Hatred Healing Power).
+		/// When played, heal the ally with the lowest health (75% of Queen of Hatred Healing Power).
 		/// Queen of Hatred can change Sanity unlimited times this turn.
 		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_QoH_0 = "Ex_QoH_0";
+		/// <summary>
+		/// All enemies take <color=purple>X Pain Damage</color> equal to the total damage of the Pain debuffs on them over X turns * 2, then destroy all Pain debuffs.
+		/// <sprite name="비용1"><sprite name="이상">
+		/// </summary>
+        public static string SkillExtended_Ex_QoH_1 = "Ex_QoH_1";
 		/// <summary>
 		/// Hysteria
 		/// </summary>
         public static string SkillExtended_Ex_QoH_Hysteria = "Ex_QoH_Hysteria";
 		/// <summary>
 		/// Spent Use, Forming Hate
-		/// Whenever the wearer applies a Pain debuff onto an enemy, deal <color=purple>5 Pain damage</color> per stack applied.
+		/// For every stack of <sprite=1> Pain debuff applied onto an enemy, gain 40% chance to deal <color=purple>X Pain damage</color> equal to the total damage of the debuff over X turns * 2, then destroy the debuff.
 		/// </summary>
         public static string Item_Equip_E_QoH_FormingHate = "E_QoH_FormingHate";
 		/// <summary>
 		/// Magical Girl's Lovely Gift
-		/// All wearer healing skills apply Love/Hate ☆ to the target's.
+		/// At the start of the turn apply Love/Hate ☆ to all allies.
 		/// </summary>
         public static string Item_Equip_E_QoH_LovelyGift = "E_QoH_LovelyGift";
-		/// <summary>
-		/// <color=#BD2DC2>Hysteria!</color>
-		/// Attack Power +15%
-		/// Healing Power -15%
-		/// Aggro Increased
-		/// Can play attacks this turn.
-		/// Can only gain <color=red>Negative</color> Points.
-		/// </summary>
-        public static string SkillKeyword_KeyWord_Hysteria = "KeyWord_Hysteria";
-		/// <summary>
-		/// Here Comes Magical Girl ☆
-		/// Remove <color=#BD2DC2>Hysteria!</color> when gain this buff.
-		/// </summary>
-        public static string SkillKeyword_KeyWord_MagicalGirl = "KeyWord_MagicalGirl";
 		/// <summary>
 		/// Queen of Hatred
 		/// Passive:
@@ -122,13 +112,13 @@ namespace QoH
         public static string Character_QoH = "QoH";
 		/// <summary>
 		/// XVII — Star
-		/// At the start of the 6th turn. View remaining Level III Abnormalities and select 1 to apply to an ally. This effect activates only once per battle.
+		/// At the start of the 6th turn, view remaining Level III Abnormalities and select 1 to apply to an ally. This effect activates only once per battle.
 		/// </summary>
         public static string Item_Passive_R_QoH_Star = "R_QoH_Star";
 		/// <summary>
 		/// XVIII - Sun and Moon
 		/// Increase all enemies health by 25%. Enemies ignores Emotion Level cap.
-		/// Gain 2 'Dummy Data' and 'Dreaming Current'. Expand your Relic inventory by 2.
+		/// Gain 2 'Dummy Data' and 1 'Dreaming Current'. Expand your Relic inventory by 2.
 		/// </summary>
         public static string Item_Passive_R_QoH_SunMoon = "R_QoH_SunMoon";
         public static string SkillEffect_SE_S_S_QoH_Blessing = "SE_S_S_QoH_Blessing";
@@ -141,6 +131,7 @@ namespace QoH
         public static string SkillEffect_SE_S_S_QoH_Spiral = "SE_S_S_QoH_Spiral";
         public static string SkillEffect_SE_Tick_B_QoH_Affection = "SE_Tick_B_QoH_Affection";
         public static string SkillEffect_SE_Tick_B_QoH_Chant = "SE_Tick_B_QoH_Chant";
+        public static string SkillEffect_SE_Tick_B_QoH_LoveHate = "SE_Tick_B_QoH_LoveHate";
         public static string SkillEffect_SE_Tick_B_QoH_LoveHate_0 = "SE_Tick_B_QoH_LoveHate_0";
         public static string SkillEffect_SE_Tick_B_QoH_LoveHate_1 = "SE_Tick_B_QoH_LoveHate_1";
         public static string SkillEffect_SE_Tick_B_QoH_MagicalCandy = "SE_Tick_B_QoH_MagicalCandy";
@@ -158,6 +149,7 @@ namespace QoH
         public static string SkillEffect_SE_T_S_QoH_Rare_Slave = "SE_T_S_QoH_Rare_Slave";
         public static string SkillEffect_SE_T_S_QoH_Shot = "SE_T_S_QoH_Shot";
         public static string SkillEffect_SE_T_S_QoH_Spiral = "SE_T_S_QoH_Spiral";
+        public static string SkillEffect_SE_T_S_QoH_Test = "SE_T_S_QoH_Test";
 		/// <summary>
 		/// Blessing of Pure Heart ♡
 		/// Cast this skill on the target and the ally on their right-side.
@@ -298,6 +290,24 @@ namespace QoH
 		/// Chinese-TW:
 		/// </summary>
         public static string QoH_Sanity_Mod_M_Desc => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_M_Desc");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Disappear..! Agh, nngh...
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string QoH_Sanity_Text_H => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Text_H");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// ..Hoh? Hath aught transpired?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string QoH_Sanity_Text_M => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Text_M");
 		/// <summary>
 		/// Korean:
 		/// English:
