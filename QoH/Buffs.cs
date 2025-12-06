@@ -18,13 +18,14 @@ namespace QoH
 	{
 		public class QoHSanity : Buff, IP_Awake, IP_PlayerTurn, IP_SomeOneDead, IP_DamageTake, IP_Healed
 		{
-			private GameObject Sanity;
+			private GameObject sanityIcon;
 			public bool MagicalGirlMode = true;
 			public int CanSwitchForm = 1;
 			public bool UnlimitedSwitches = false;
 			public bool SanityDrawBack = true;
 			public bool UnlimitedSwitchesTurn = false;
 			private int sfxPerTurn = 2;
+			private bool lastMode;
 
 			public override string NameExtended(string Name)
 			{
@@ -75,12 +76,6 @@ namespace QoH
 			{
 				MagicalGirlMode = false;
 				ChangeIcon(MagicalGirlMode);
-				if (sfxPerTurn > 0)
-				{
-					sfxPerTurn--;
-					Utils.PlaySound("S_QoH_Sanity_H", true);
-					BChar.StartCoroutine(ShowText(BChar.GetTopPos(), ModLocalization.QoH_Sanity_Text_H));	
-				}
 			}
 
 			public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
@@ -89,12 +84,6 @@ namespace QoH
 				{
 					MagicalGirlMode = true;
 					ChangeIcon(MagicalGirlMode);
-					if (sfxPerTurn > 0)
-					{
-						sfxPerTurn--;
-						Utils.PlaySound("S_QoH_Sanity_M", true);
-						BChar.StartCoroutine(ShowText(BChar.GetTopPos(), ModLocalization.QoH_Sanity_Text_M));
-					}
 				}
 			}
 
@@ -102,7 +91,7 @@ namespace QoH
 			{
 				if (DeadChar == BChar)
 				{
-					Utils_Ui.DestroyObject(Sanity);
+					Utils_Ui.DestroyObject(sanityIcon);
 				}
 			}
 
@@ -124,22 +113,43 @@ namespace QoH
 				{
 					MagicalGirlMode = !MagicalGirlMode;
 					ChangeIcon(MagicalGirlMode);
-					CanSwitchForm--;
+
+					if (!UnlimitedSwitches && !UnlimitedSwitchesTurn)
+					{
+						CanSwitchForm--;
+					}
 				}
 			}
 
 			private void ChangeIcon(bool MagicalGirlMode)
 			{
+				if (lastMode == MagicalGirlMode) return;
+
+				lastMode = MagicalGirlMode;
+				string sound;
+				string text;
+
 				if (MagicalGirlMode)
 				{
 					Sprite.GetSpriteByAddress(BuffData.Icon_Path);
 					BE?.gameObject?.SetActive(true);
+					sound = "S_QoH_Sanity_M";
+					text = ModLocalization.QoH_Sanity_Text_M;
 				}
 				else
 				{
 					var path = "Visual/QoH/Sanity/Sanity_H.png";
 					Sprite.GetSpriteByPath(path);
 					BE?.gameObject?.SetActive(false);
+					sound = "S_QoH_Sanity_H";
+					text = ModLocalization.QoH_Sanity_Text_H;
+				}
+
+				if (sfxPerTurn > 0)
+				{
+					sfxPerTurn--;
+					Utils.PlaySound(sound, true);
+					BChar.StartCoroutine(ShowText(BChar.GetTopPos(), text));
 				}
 				Init();
 			}
@@ -154,11 +164,12 @@ namespace QoH
 
 			private void CreateSanity()
 			{
+				lastMode = MagicalGirlMode;
 				CanSwitchForm = MyChar.LV >= 4 ? 2 : 1;
 				Sprite sprite = Utils_Ui.GetSprite("Visual/QoH/Sanity/Sanity_M.png");
-				Sanity = Utils_Ui.CreateUIImage("Sanity_M", BChar.transform, sprite, new Vector2(150, 150), new Vector3(170, 170, 0), true);
-				Sanity.AddComponent<QoH_Sanity_Script>();
-				Sanity.AddComponent<QoH_Sanity_Tooltip>();
+				sanityIcon = Utils_Ui.CreateUIImage("Sanity_M", BChar.transform, sprite, new Vector2(150, 150), new Vector3(170, 170, 0), true);
+				sanityIcon.AddComponent<QoH_Sanity_Script>();
+				sanityIcon.AddComponent<QoH_Sanity_Tooltip>();
 			}
 
 			private void SetSanityFlags()
@@ -169,10 +180,13 @@ namespace QoH
 				sfxPerTurn = 2;
 				ChangeIcon(MagicalGirlMode);
 
-				var sanity = Sanity.GetComponent<QoH_Sanity_Script>();
-				if (sanity != null)
+				if (sanityIcon != null)
 				{
-					sanity.AllowPulse = true;
+					var sanity = sanityIcon.GetComponent<QoH_Sanity_Script>();
+					if (sanity != null)
+					{
+						sanity.AllowPulse = true;
+					}
 				}
 			}
 
@@ -478,7 +492,7 @@ namespace QoH
 			}
 		}
 
-		public class SunMoon : Buff, IP_Awake
+		public class SunMoon : Buff, IP_Awake, IP_PlayerTurn_1
 		{
 			public void Awake()
 			{
@@ -488,6 +502,11 @@ namespace QoH
 			public override void Init()
 			{
 				PlusPerStat.MaxHP = 25;
+			}
+
+			public void Turn1()
+			{
+				BChar.GetNegEmotion(null, 3);
 			}
 		}
 		

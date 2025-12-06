@@ -15,7 +15,7 @@ namespace QoH
         public static string Buff_B_QoH_ArcanaSlave = "B_QoH_ArcanaSlave";
 		/// <summary>
 		/// Magical Girl's Chant ☆
-		/// When this this buff ends, heal an ally with lowest health by &a <color=#FF7C34>(&b% &cAttack Power)</color>.
+		/// When this buff ends, heal an ally with lowest health by &a <color=#FF7C34>(&b% &cAttack Power)</color>.
 		/// </summary>
         public static string Buff_B_QoH_Chant = "B_QoH_Chant";
 		/// <summary>
@@ -75,6 +75,7 @@ namespace QoH
 		/// <summary>
 		/// XVIII - Sun and Moon
 		/// Ignores Emotion Level cap.
+		/// At the start of the turn gain 3 <color=red>Negative</color> Points.
 		/// </summary>
         public static string Buff_B_R_QoH_SunMoon = "B_R_QoH_SunMoon";
 		/// <summary>
@@ -84,7 +85,7 @@ namespace QoH
 		/// </summary>
         public static string SkillExtended_Ex_QoH_0 = "Ex_QoH_0";
 		/// <summary>
-		/// All enemies take <color=purple>X Pain Damage</color> equal to the total damage of the Pain debuffs on them over X turns * 2, then destroy all Pain debuffs.
+		/// All enemies take <color=purple>X Pain Damage</color> equal to the total damage of the Pain debuffs on them over X turns * 2, then destroy all enemies Pain debuffs.
 		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_QoH_1 = "Ex_QoH_1";
@@ -112,13 +113,13 @@ namespace QoH
         public static string Character_QoH = "QoH";
 		/// <summary>
 		/// XVII — Star
-		/// At the start of the 6th turn, view remaining Level III Abnormalities and select 1 to apply to an ally. This effect activates only once per battle.
+		/// <color=#C067EF>Emotion Burst</color>: At the start of the 6th turn, view remaining Level III Abnormalities and select 1 to apply to an ally. This effect activates only once per battle.
 		/// </summary>
         public static string Item_Passive_R_QoH_Star = "R_QoH_Star";
 		/// <summary>
 		/// XVIII - Sun and Moon
 		/// Increase all enemies health by 25%. Enemies ignores Emotion Level cap.
-		/// Gain 2 'Dummy Data' and 1 'Dreaming Current'. Expand your Relic inventory by 2.
+		/// Gain 1 'Dummy Data', 1 'Transcendent Tome' and 1 'Golden Bread'. Expand your Relic inventory by 2.
 		/// </summary>
         public static string Item_Passive_R_QoH_SunMoon = "R_QoH_SunMoon";
         public static string SkillEffect_SE_S_S_QoH_Blessing = "SE_S_S_QoH_Blessing";
@@ -156,12 +157,12 @@ namespace QoH
 		/// </summary>
         public static string Skill_S_QoH_Blessing = "S_QoH_Blessing";
 		/// <summary>
-		/// Starlight Embrace ♡
+		/// Pink Star Blessing ♡
 		/// Repeatedly heal an ally with lowest health by &a <color=#FF7C34>(40% Healing Power)</color> for each stack of <sprite=1> debuff on a target's.
 		/// </summary>
         public static string Skill_S_QoH_Embrace = "S_QoH_Embrace";
 		/// <summary>
-		/// Harmony Burst ♡
+		/// Sweet Peach Shot ♡
 		/// Recast this skill if the target have 3 different type of <sprite=1> debuffs.
 		/// </summary>
         public static string Skill_S_QoH_Harmony = "S_QoH_Harmony";
@@ -173,7 +174,6 @@ namespace QoH
         public static string Skill_S_QoH_Heartwave = "S_QoH_Heartwave";
 		/// <summary>
 		/// In the Name of Justice ♡
-		/// When facing 1 enemy apply additional stack of 'Shattered Heartbeat ☆' to the target.
 		/// </summary>
         public static string Skill_S_QoH_Justice = "S_QoH_Justice";
 		/// <summary>
@@ -194,7 +194,7 @@ namespace QoH
 		/// </summary>
         public static string Skill_S_QoH_Lucy_1 = "S_QoH_Lucy_1";
 		/// <summary>
-		/// Lovely Miracle Flash ♡
+		/// Harmony Burst ♡
 		/// If the target has a Pain debuff, heal an ally with lowest health by &a <color=#FF7C34>(50% Attack Power)</color> and apply 1 stack of this skill's debuffs to all enemies.
 		/// </summary>
         public static string Skill_S_QoH_Miracle = "S_QoH_Miracle";
@@ -236,85 +236,137 @@ namespace QoH
     {
 		/// <summary>
 		/// Korean:
+		/// <color=#FF77FF>순수한 마음 ☆</color>을 획득합니다
 		/// English:
 		/// Gain <color=#FF77FF>Pure Heart ☆</color>
 		/// Japanese:
+		/// <color=#FF77FF>ピュアハート ☆</color>を獲得する
 		/// Chinese:
+		/// 获得 <color=#FF77FF>纯净之心 ☆</color>
 		/// Chinese-TW:
+		/// 獲得 <color=#FF77FF>純淨之心 ☆</color>
 		/// </summary>
         public static string QoH_Sanity_H => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_H");
 		/// <summary>
 		/// Korean:
+		/// 지금 <color=#BD2DC2>히스테리아!</color>를 획득합니다!
 		/// English:
 		/// Gain <color=#BD2DC2>Hysteria!</color> now!
 		/// Japanese:
+		/// 今すぐ <color=#BD2DC2>ヒステリア！</color>を獲得する！
 		/// Chinese:
+		/// 立即获得 <color=#BD2DC2>歇斯底里！</color>
 		/// Chinese-TW:
+		/// 立刻獲得 <color=#BD2DC2>歇斯底里！</color>
 		/// </summary>
         public static string QoH_Sanity_M => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_M");
 		/// <summary>
 		/// Korean:
+		/// <color=#BD2DC2>히스테리아!</color>
 		/// English:
 		/// <color=#BD2DC2>Hysteria!</color>
 		/// Japanese:
+		/// <color=#BD2DC2>ヒステリア！</color>
 		/// Chinese:
+		/// <color=#BD2DC2>歇斯底里！</color>
 		/// Chinese-TW:
+		/// <color=#BD2DC2>歇斯底里！</color>
 		/// </summary>
         public static string QoH_Sanity_Mod_H => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_H");
 		/// <summary>
 		/// Korean:
+		/// 오직 공격 스킬만 사용할 수 있습니다.
+		/// 오직 부정 포인트만 획득할 수 있습니다.
+		/// 회복되면 <color=#FF77FF>순수한 마음 ☆</color>을 획득합니다.
 		/// English:
 		/// Can only use Attack skills.
 		/// Can only gain <color=red>Negative</color> Points. Gain <color=#FF77FF>Pure Heart ☆</color> when healed.
 		/// Japanese:
+		/// 攻撃スキルしか使用できない。
+		/// ネガティブポイントしか獲得できない。
+		/// 回復されると <color=#FF77FF>ピュアハート ☆</color> を獲得する。
 		/// Chinese:
+		/// 只能使用攻击技能。
+		/// 只能获得负面点数。
+		/// 被治疗时获得 <color=#FF77FF>纯净之心 ☆</color>。
 		/// Chinese-TW:
+		/// 只能使用攻擊技能。
+		/// 只能獲得負面點數。
+		/// 被治療時獲得 <color=#FF77FF>純淨之心 ☆</color>。
 		/// </summary>
         public static string QoH_Sanity_Mod_H_Desc => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_H_Desc");
 		/// <summary>
 		/// Korean:
+		/// <color=#FF77FF>순수한 마음 ☆</color>
 		/// English:
 		/// <color=#FF77FF>Pure Heart ☆</color>
 		/// Japanese:
+		/// <color=#FF77FF>ピュアハート ☆</color>
 		/// Chinese:
+		/// <color=#FF77FF>纯净之心 ☆</color>
 		/// Chinese-TW:
+		/// <color=#FF77FF>純淨之心 ☆</color>
 		/// </summary>
         public static string QoH_Sanity_Mod_M => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_M");
 		/// <summary>
 		/// Korean:
+		/// 오직 회복 스킬만 사용할 수 있습니다.
+		/// 오직 긍정 포인트만 획득할 수 있습니다.
+		/// 피해를 받으면 <color=#BD2DC2>히스테리아!</color>를 획득합니다.
 		/// English:
 		/// Can only use Healing skills.
 		/// Can only gain <color=green>Positive</color> Points. Gain <color=#BD2DC2>Hysteria!</color> when taking damage.
 		/// Japanese:
+		/// 回復スキルしか使用できない。
+		/// ポジティブポイントしか獲得できない。
+		/// ダメージを受けると <color=#BD2DC2>ヒステリア！</color> を獲得する。
 		/// Chinese:
+		/// 只能使用治疗技能。
+		/// 只能获得正面点数。
+		/// 受到伤害时获得 <color=#BD2DC2>歇斯底里！</color>。
 		/// Chinese-TW:
+		/// 只能使用治療技能。
+		/// 只能獲得正面點數。
+		/// 受到傷害時獲得 <color=#BD2DC2>歇斯底里！</color>。
 		/// </summary>
         public static string QoH_Sanity_Mod_M_Desc => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_M_Desc");
 		/// <summary>
 		/// Korean:
+		/// 사라져…! 아, 으응…
 		/// English:
 		/// Disappear..! Agh, nngh...
 		/// Japanese:
+		/// 消えて…！あっ、んんっ…
 		/// Chinese:
+		/// 消失吧……！啊，唔嗯……
 		/// Chinese-TW:
+		/// 消失吧……！啊，唔嗯……
 		/// </summary>
         public static string QoH_Sanity_Text_H => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Text_H");
 		/// <summary>
 		/// Korean:
+		/// …흠? 무슨 일이 있었나?
 		/// English:
 		/// ..Hoh? Hath aught transpired?
 		/// Japanese:
+		/// …ほう？何かあったのか？
 		/// Chinese:
+		/// ……哦？发生了什么吗？
 		/// Chinese-TW:
+		/// ……哦？發生什麼事了嗎？
 		/// </summary>
         public static string QoH_Sanity_Text_M => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Text_M");
 		/// <summary>
 		/// Korean:
+		/// <color=#919191>매 턴마다 이성 상태를 한 번만 전환할 수 있습니다</color>
 		/// English:
 		/// <color=#919191>Can switch Sanity only once per turn</color>
 		/// Japanese:
+		/// <color=#919191>1ターンにつき1回のみ正気度を切り替えることができる</color>
 		/// Chinese:
+		/// <color=#919191>每回合只能切换一次理智状态</color>
 		/// Chinese-TW:
+		/// <color=#919191>每回合只能切換一次理智狀態</color>
 		/// </summary>
         public static string QoH_Sanity_TurnCap => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_TurnCap");
 

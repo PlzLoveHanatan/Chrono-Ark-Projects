@@ -9,6 +9,10 @@ using ChronoArkMod;
 using EmotionSystem;
 using GameDataEditor;
 using System.Collections;
+using static CharacterDocument;
+using UnityEngine.PostProcessing;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace QoH
 {
@@ -25,15 +29,14 @@ namespace QoH
 
 			public void Turn()
 			{
-				if (BattleSystem.instance.TurnNum == 6)
+				if (BattleSystem.instance.TurnNum >= 6 && !oncePerFight)
 				{
-					ShinyEffect();
-					EmotionManager.AbnormalitySelection(5);
-
-					//if (Utils.AllyTeam.AliveChars.All(a => a != null && a.EmotionLevel() >= 5))
-					//{
-
-					//}
+					if (Utils.AllyTeam.AliveChars.All(a => a != null && a.EmotionLevel() >= 5))
+					{
+						oncePerFight = true;
+						ShinyEffect();
+						EmotionManager.AbnormalitySelection(5);
+					}
 				}
 			}
 		}
@@ -69,8 +72,8 @@ namespace QoH
 				InventoryManager.Reward(new List<ItemBase>
 				{
 					ItemBase.GetItem(GDEItemKeys.Item_Consume_EquipPouch),
-					ItemBase.GetItem(GDEItemKeys.Item_Consume_EquipPouch),
-					ItemBase.GetItem(EmotionSystem.ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent),
+					ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy_Rare),
+					ItemBase.GetItem(GDEItemKeys.Item_Consume_GoldenBread),
 				});
 			}
 

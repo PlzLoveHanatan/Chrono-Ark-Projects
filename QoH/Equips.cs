@@ -26,7 +26,7 @@ namespace QoH
 
 			public void Buffadded(BattleChar BuffUser, BattleChar BuffTaker, Buff addedbuff)
 			{
-				if (!BuffUser == BChar && !BuffTaker.Info.Ally) return;
+				if (BuffUser != BChar && !BuffTaker.Info.Ally) return;
 
 				if (addedbuff.BuffData.Debuff && addedbuff.BuffData.BuffTag.Key == GDEItemKeys.BuffTag_DOT && !addedbuff.TimeUseless)
 				{
@@ -43,7 +43,7 @@ namespace QoH
 
 			public IEnumerator DealDamage(BattleChar BuffUser, BattleChar BuffTaker, Buff addedBuff, int damage = 0)
 			{
-				if (BuffTaker != null && !BuffTaker.IsDead)
+				if (BuffTaker != null && !BuffTaker.IsDead && !BuffTaker.Info.Ally)
 				{
 					BuffTaker.Damage(BuffUser, damage, false, true, false, 0, false, false, false);
 				}

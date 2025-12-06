@@ -175,7 +175,8 @@ namespace QoH
 
 			private void CreateChibi(Type? chibiType = null, bool randomChibi = false)
 			{
-				// Если нужно выбрать случайный чиби
+				if (!QoH_Utils.MagicalChibi) return;
+
 				if (randomChibi || !chibiType.HasValue)
 				{
 					chibiType = AllChibiTypes[RandomManager.RandomInt(RandomClassKey.Active, 0, AllChibiTypes.Length)];
