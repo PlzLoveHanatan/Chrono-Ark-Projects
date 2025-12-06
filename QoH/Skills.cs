@@ -388,5 +388,13 @@ namespace QoH
 				Utils.AllyTeam.Draw(drawNum);
 			}
 		}
+
+		public class JusticeShot : Skill_Extended
+		{
+			public override void SkillKill(SkillParticle SP)
+			{
+				BattleSystem.instance.AllyTeam.Add(Skill.TempSkill(ModItemKeys.Skill_S_QoH_Shot, BChar, BChar.MyTeam), true);
+			}
+		}
 	}
 }

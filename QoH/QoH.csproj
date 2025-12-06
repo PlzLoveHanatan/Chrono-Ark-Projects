@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>QoH12062025132833</AssemblyName>
+    <AssemblyName>QoH12062025162544</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -411,7 +411,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-              <!-- Compile ItemGroup Start-->
+                                <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Buffs.cs" />
     <Compile Include="Equips.cs" />

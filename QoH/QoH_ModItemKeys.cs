@@ -242,9 +242,9 @@ namespace QoH
 		/// Japanese:
 		/// <color=#FF77FF>ピュアハート ☆</color>を獲得する
 		/// Chinese:
-		/// 获得 <color=#FF77FF>纯净之心 ☆</color>
+		/// 取回了<color=#FF77FF>纯净之心☆</color>
 		/// Chinese-TW:
-		/// 獲得 <color=#FF77FF>純淨之心 ☆</color>
+		/// 取回了<color=#FF77FF>純淨之心☆</color>
 		/// </summary>
         public static string QoH_Sanity_H => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_H");
 		/// <summary>
@@ -255,9 +255,9 @@ namespace QoH
 		/// Japanese:
 		/// 今すぐ <color=#BD2DC2>ヒステリア！</color>を獲得する！
 		/// Chinese:
-		/// 立即获得 <color=#BD2DC2>歇斯底里！</color>
+		/// 变得<color=#BD2DC2>歇斯底里</color>了！
 		/// Chinese-TW:
-		/// 立刻獲得 <color=#BD2DC2>歇斯底里！</color>
+		/// 變得<color=#BD2DC2>歇斯底里</color>了！
 		/// </summary>
         public static string QoH_Sanity_M => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_M");
 		/// <summary>
@@ -268,9 +268,9 @@ namespace QoH
 		/// Japanese:
 		/// <color=#BD2DC2>ヒステリア！</color>
 		/// Chinese:
-		/// <color=#BD2DC2>歇斯底里！</color>
+		/// <color=#BD2DC2>歇斯底里</color>
 		/// Chinese-TW:
-		/// <color=#BD2DC2>歇斯底里！</color>
+		/// <color=#BD2DC2>歇斯底里</color>
 		/// </summary>
         public static string QoH_Sanity_Mod_H => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_H");
 		/// <summary>
@@ -287,12 +287,12 @@ namespace QoH
 		/// 回復されると <color=#FF77FF>ピュアハート ☆</color> を獲得する。
 		/// Chinese:
 		/// 只能使用攻击技能。
-		/// 只能获得负面点数。
-		/// 被治疗时获得 <color=#FF77FF>纯净之心 ☆</color>。
+		/// 只能获得<color=red>负面的</color>情感点数。
+		/// 受到治疗时，获得<color=#FF77FF>纯净之心☆</color>。
 		/// Chinese-TW:
 		/// 只能使用攻擊技能。
-		/// 只能獲得負面點數。
-		/// 被治療時獲得 <color=#FF77FF>純淨之心 ☆</color>。
+		/// 只能獲得<color=red>負面的</color>情感點數。
+		/// 受到治療時，獲得<color=#FF77FF>純淨之心☆</color>。
 		/// </summary>
         public static string QoH_Sanity_Mod_H_Desc => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_H_Desc");
 		/// <summary>
@@ -303,9 +303,9 @@ namespace QoH
 		/// Japanese:
 		/// <color=#FF77FF>ピュアハート ☆</color>
 		/// Chinese:
-		/// <color=#FF77FF>纯净之心 ☆</color>
+		/// <color=#FF77FF>纯净之心☆</color>
 		/// Chinese-TW:
-		/// <color=#FF77FF>純淨之心 ☆</color>
+		/// <color=#FF77FF>純淨之心☆</color>
 		/// </summary>
         public static string QoH_Sanity_Mod_M => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_M");
 		/// <summary>
@@ -322,12 +322,12 @@ namespace QoH
 		/// ダメージを受けると <color=#BD2DC2>ヒステリア！</color> を獲得する。
 		/// Chinese:
 		/// 只能使用治疗技能。
-		/// 只能获得正面点数。
-		/// 受到伤害时获得 <color=#BD2DC2>歇斯底里！</color>。
+		/// 只能获得<color=green>正面的</color>情感点数。
+		/// 受到伤害时，会变得<color=#BD2DC2>歇斯底里</color>。
 		/// Chinese-TW:
 		/// 只能使用治療技能。
-		/// 只能獲得正面點數。
-		/// 受到傷害時獲得 <color=#BD2DC2>歇斯底里！</color>。
+		/// 只能獲得<color=green>正面的</color>情感點數。
+		/// 受到傷害時，會變得<color=#BD2DC2>歇斯底里</color>。
 		/// </summary>
         public static string QoH_Sanity_Mod_M_Desc => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Mod_M_Desc");
 		/// <summary>
@@ -338,9 +338,9 @@ namespace QoH
 		/// Japanese:
 		/// 消えて…！あっ、んんっ…
 		/// Chinese:
-		/// 消失吧……！啊，唔嗯……
+		/// 消失吧……！哈、哈嗯……
 		/// Chinese-TW:
-		/// 消失吧……！啊，唔嗯……
+		/// 消失吧……！哈、哈嗯……
 		/// </summary>
         public static string QoH_Sanity_Text_H => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Text_H");
 		/// <summary>
@@ -351,9 +351,9 @@ namespace QoH
 		/// Japanese:
 		/// …ほう？何かあったのか？
 		/// Chinese:
-		/// ……哦？发生了什么吗？
+		/// ……咦？刚刚发生什么了？
 		/// Chinese-TW:
-		/// ……哦？發生什麼事了嗎？
+		/// ……咦？剛剛發生什麼了？
 		/// </summary>
         public static string QoH_Sanity_Text_M => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_Text_M");
 		/// <summary>
@@ -364,9 +364,9 @@ namespace QoH
 		/// Japanese:
 		/// <color=#919191>1ターンにつき1回のみ正気度を切り替えることができる</color>
 		/// Chinese:
-		/// <color=#919191>每回合只能切换一次理智状态</color>
+		/// <color=#919191>每回合仅能切换 1 次理智</color>
 		/// Chinese-TW:
-		/// <color=#919191>每回合只能切換一次理智狀態</color>
+		/// <color=#919191>每回合僅能切換 1 次理智</color>
 		/// </summary>
         public static string QoH_Sanity_TurnCap => ModManager.getModInfo("QoH").localizationInfo.SystemLocalizationUpdate("QoH_Sanity_TurnCap");
 

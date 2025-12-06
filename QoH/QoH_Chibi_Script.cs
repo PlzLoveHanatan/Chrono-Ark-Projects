@@ -101,10 +101,17 @@ namespace QoH
 			Array values = Enum.GetValues(typeof(ChibiEffect));
 			ChibiEffect newEffect;
 
-			do
+			if (values.Length == 1)
 			{
-				newEffect = (ChibiEffect)values.GetValue(UnityEngine.Random.Range(0, values.Length));
-			} while (lastEffectPlayed.HasValue && newEffect == lastEffectPlayed.Value && values.Length > 1);
+				newEffect = (ChibiEffect)values.GetValue(0);
+			}
+			else
+			{
+				do
+				{
+					newEffect = (ChibiEffect)values.GetValue(UnityEngine.Random.Range(0, values.Length));
+				} while (lastEffectPlayed.HasValue && newEffect == lastEffectPlayed.Value);
+			}
 
 			currentEffect = newEffect;
 			timer = 0f;
@@ -117,7 +124,7 @@ namespace QoH
 		{
 			lastEffectPlayed = currentEffect;
 			active = false;
-			Utils_Ui.DestroyObject(gameObject);
+			Destroy(gameObject);
 		}
 
 		/* ================= EFFECTS ================= */

@@ -198,68 +198,65 @@ namespace QoH
 
 		private static readonly Dictionary<string, string> QoHVoiceZH = new Dictionary<string, string>
 		{
-			{"QoH_BattleStart", "请把它交给我吧！" },
-			{"QoH_BattleStart_0", "以爱与正义之名～ 魔法少女到来！" },
+			{"QoH_BattleStart", "不要离我太远喔！" },
+			{"QoH_BattleStart_0", "以爱与正义之名～魔法少女参上！" },
 
-			{"QoH_Chest", "你可知道胜利的荣光与其中世界的美丽？不知道吗？没关系！因为我们此时此刻所见的... 正是那一切。" },
-			{"QoH_Cri", "看吧，邪恶就这样被净化了！" },
-			{"QoH_Curse", "我... 发过誓... 我要... 保护你们所有人... 直到最后..." },
-			{"QoH_Healed", "原谅我... 这是我的... 过失... 全部都是..." },
+			{"QoH_Chest", "我有预感……这是能带来胜利的宝物！" },
+			{"QoH_Cri", "看哪，邪恶已被扫除！" },
+			{"QoH_Curse", "我发誓……会保护……大家……直到……" },
+			{"QoH_Healed", "原谅……我……都是……我的错……" },
 
-			{"QoH_BattleIdle", "啊！需要我的帮助吗？" },
-			{"QoH_BattleIdle_0", "看来这个敌人会成为挑战... 交给我吧！" },
+			{"QoH_BattleIdle", "啊！有什么能帮到你的？" },
+			{"QoH_BattleIdle_0", "这可真不妙……让我来吧！" },
 
-			{"QoH_FieldIdle_0", "即便我献出生命... 我也会保护这家机构的员工和这座城市的人们！" },
-			{"QoH_FieldIdle_1", "今天没有警告吗，我有些疑惑... 别乱想... 我绝对没有因为缺乏重大事件而感到无聊！" },
+			{"QoH_FieldIdle_0", "即使献上生命……我也会保护这机构与都市的人们！" },
+			{"QoH_FieldIdle_1", "今天没有警报吗……绝对不是因为缺乏表现机会而感到无聊喔！" },
 
-			{"QoH_Kill", "嘿嘿，小事一桩！" },
-			{"QoH_Kill_0", "嘿嘿，正义已得伸张！现在... 我得立刻赶回她身边，向她讲述这次镇压的精彩瞬间！" },
+			{"QoH_Kill", "嘿嘿，轻松！" },
+			{"QoH_Kill_0", "正义得到伸张！真想……现在就赶回去，跟她讲讲这次「镇压」的精彩！" },
 
-			{"QoH_Master", "该付出代价的时候到了吗...？" },
+			{"QoH_Master", "到了……付出代价……的时候吗？" },
 
-			{"QoH_Pharos", "从我脑海里滚出去..." },
-			{"QoH_Pharos_0", "奥秘的渣滓..." },
-			{"QoH_Pharos_1", "哈哈... 现在和平将会统治了，然后...？" },
+			{"QoH_Pharos", "滚出……我的脑袋……" },
+			{"QoH_Pharos_0", "阿卡纳……可悲……" },
+			{"QoH_Pharos_1", "哈哈……和平到来……然后呢？" },
 
-			{"QoH_Potion", "嗯！轻松搞定！下次也请指望我的帮助吧！" },
+			{"QoH_Potion", "嗯，非常顺利！下次也别忘了找我哟！" },
 
-			{"QoH_DeathDoor", "呃，不可能..." },
-			{"QoH_DeathDoorAlly", "...我失败了。你已不再需要我了吗？" },
+			{"QoH_DeathDoor", "呐，这不可能……" },
+			{"QoH_DeathDoorAlly", "...我失败了……你会就这样离开吗？" },
 		};
 
 		private static readonly Dictionary<string, string> QoHVoiceZH_TW = new Dictionary<string, string>
 		{
-			{"QoH_BattleStart", "請把它交給我吧！" },
-			{"QoH_BattleStart_0", "以愛與正義之名～ 魔法少女到來！" },
+			{"QoH_BattleStart", "不要離我太遠喔！" },
+			{"QoH_BattleStart_0", "以愛與正義之名～魔法少女參上！" },
 
-			{"QoH_Chest", "你可知道勝利的榮光與其中世界的美麗？不知道嗎？沒關係！因為我們此時此刻所見的... 正是那一切。" },
-			{"QoH_Cri", "看吧，邪惡就這樣被淨化了！" },
-			{"QoH_Curse", "我... 發過誓... 我要... 保護你們所有人... 直到最後..." },
-			{"QoH_Healed", "原諒我... 這是我的... 過失... 全部都是..." },
+			{"QoH_Chest", "我有預感……這是能帶來勝利的寶物！" },
+			{"QoH_Cri", "看哪，邪惡已被掃除！" },
+			{"QoH_Curse", "我發誓……會保護……大家……直到……" },
+			{"QoH_Healed", "原諒……我……都是……我的錯……" },
 
-			{"QoH_BattleIdle", "啊！需要我的幫助嗎？" },
-			{"QoH_BattleIdle_0", "看來這個敵人會成為挑戰... 交給我吧！" },
+			{"QoH_BattleIdle", "啊！有什麼能幫到你的？" },
+			{"QoH_BattleIdle_0", "這可真不妙……讓我來吧！" },
 
-			{"QoH_FieldIdle_0", "即便我獻出生命... 我也會保護這家機構的員工與這座城市的人們！" },
-			{"QoH_FieldIdle_1", "今天沒有警告嗎，我有些疑惑... 別亂想... 我絕對沒有因為缺乏重大事件而感到無聊！" },
+			{"QoH_FieldIdle_0", "即使獻上生命……我也會保護這機構與都市的人們！" },
+			{"QoH_FieldIdle_1", "今天沒有警報嗎……絕對不是因為缺乏表現機會而感到無聊喔！" },
 
-			{"QoH_Kill", "嘿嘿，小事一樁！" },
-			{"QoH_Kill_0", "嘿嘿，正義已得伸張！現在... 我得立刻趕回她身邊，向她講述這次鎮壓的精彩瞬間！" },
+			{"QoH_Kill", "嘿嘿，輕鬆！" },
+			{"QoH_Kill_0", "正義得到伸張！真想……現在就趕回去，跟她講講這次「鎮壓」的精彩！" },
 
-			{"QoH_Master", "該付出代價的時候到了嗎...？" },
+			{"QoH_Master", "到了……付出代價……的時候嗎？" },
 
-			{"QoH_Pharos", "從我腦海裡滾出去..." },
-			{"QoH_Pharos_0", "奧秘的渣滓..." },
-			{"QoH_Pharos_1", "哈哈... 現在和平將會統治了，然後...？" },
+			{"QoH_Pharos", "滾出……我的腦袋……" },
+			{"QoH_Pharos_0", "阿卡納……可悲……" },
+			{"QoH_Pharos_1", "哈哈……和平到來……然後呢？" },
 
-			{"QoH_Potion", "嗯！輕鬆搞定！下次也請指望我的幫助吧！" },
+			{"QoH_Potion", "嗯，非常順利！下次也別忘了找我喲！" },
 
-			{"QoH_DeathDoor", "呃，不可能..." },
-			{"QoH_DeathDoorAlly", "...我失敗了。你已不再需要我了嗎？" },
+			{"QoH_DeathDoor", "吶，這不可能……" },
+			{"QoH_DeathDoorAlly", "...我失敗了……你會就這樣離開嗎？" },
 		};
-
-
-
 
 
 		[HarmonyPatch(typeof(PrintText))]
