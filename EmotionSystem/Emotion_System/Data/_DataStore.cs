@@ -33,7 +33,7 @@ namespace EmotionSystem
 
 		public readonly List<string> ExceptSkills = new List<string>
 		{
-			GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard,
+			//GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard,
 			//GDEItemKeys.Skill_S_Momori_P
 		};
 

@@ -18,6 +18,7 @@ using static EmotionSystem.DataStore.LibraryFloor;
 using Spine;
 using static CharacterDocument;
 using System.Runtime.InteropServices.WindowsRuntime;
+using EItem;
 
 
 namespace EmotionSystem
@@ -488,9 +489,14 @@ namespace EmotionSystem
 			}
 		}
 
-		public static IEnumerator HealingParticle(BattleChar target, BattleChar user, int healingNum = 0, bool isHealing = false, bool isParticleOut = false, bool isHealLowestAlly = false, bool isPlusHit = false, bool isFreeUse = false)
+		public static IEnumerator HealingParticle(BattleChar target, BattleChar user, int healingNum = 0, bool isHealing = false, bool isParticleOut = false, bool isHealLowestAlly = false, bool isPlusHit = false, bool isFreeUse = false, bool isOverHeal = true)
 		{
 			yield return null;
+			
+			if (user == null)
+			{
+				user = DummyChar;
+			}
 
 			if (isHealing)
 			{
@@ -503,7 +509,8 @@ namespace EmotionSystem
 						target = AllyTeam.FindChar_LowHP();
 					}
 				}
-				target.Heal(user, healingNum, false, true, null);
+
+				target?.Heal(user, healingNum, false, isOverHeal, null);
 			}
 
 			if (isParticleOut)

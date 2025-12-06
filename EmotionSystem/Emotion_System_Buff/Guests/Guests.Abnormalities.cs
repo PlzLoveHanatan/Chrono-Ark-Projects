@@ -310,7 +310,7 @@ namespace EmotionSystem
 
 					private void ApplyShelter()
 					{
-						bool additionalShelter = PlayData.TSavedata.Party.Count >= 4 || Utils.AllyTeam.AliveChars.Count >= 4;
+						bool additionalShelter = Utils.AllyTeam.AliveChars.Count >= 4;
 						int repeats = additionalShelter ? 2 : 1;
 						var enemies = Utils.AllyTeam.AliveChars;
 

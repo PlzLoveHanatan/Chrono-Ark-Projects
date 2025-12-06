@@ -14,6 +14,7 @@ namespace EmotionSystem
 		{
 			public LookDayUi LookDay { get; } = new LookDayUi();
 			public EGOUi EGOButton { get; } = new EGOUi();
+			public QoHUi QoHChibi { get; } = new QoHUi();
 
 			public class EGOUi
 			{
@@ -139,6 +140,35 @@ namespace EmotionSystem
 					"Face_Normal",
 					"Face_Angry",
 					"Face_VeryAngry",
+				};
+			}
+
+			public class QoHUi
+			{
+				public enum SpriteTypeChibi
+				{
+					Chibi_Attack_Hand,
+					Chibi_Attack_Magic,
+					Chibi_Damaged,
+					Chibi_Idle,	
+					Chibi_Move,
+					Chibi_Wink_Seat,
+					Chibi_Wink_Stand,
+					Chibi_Shrug,
+					Chibi_Shrug_Extra,
+				}
+
+				public readonly Dictionary<SpriteTypeChibi, string> SpritePathsChibi = new Dictionary<SpriteTypeChibi, string>()
+				{
+					{ SpriteTypeChibi.Chibi_Attack_Magic, "Visual/QoH/Chibi/Attack_Magic.png" },
+					{ SpriteTypeChibi.Chibi_Attack_Hand, "Visual/QoH/Chibi/Attack_Hand.png" },
+					{ SpriteTypeChibi.Chibi_Damaged, "Visual/QoH/Chibi/Damaged.png" },
+					{ SpriteTypeChibi.Chibi_Idle, "Visual/QoH/Chibi/Idle.png" },
+					{ SpriteTypeChibi.Chibi_Move, "Visual/QoH/Chibi/Move.png" },
+					{ SpriteTypeChibi.Chibi_Wink_Seat, "Visual/QoH/Chibi/Wink_Seat.png" },
+					{ SpriteTypeChibi.Chibi_Wink_Stand, "Visual/QoH/Chibi/Wink_Stand.png" },
+					{ SpriteTypeChibi.Chibi_Shrug, "Visual/QoH/Chibi/Shrug.png" },
+					{ SpriteTypeChibi.Chibi_Shrug_Extra, "Visual/QoH/Chibi/Shrug_Extra.png" },
 				};
 			}
 		}

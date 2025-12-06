@@ -16,6 +16,7 @@ using System.Drawing;
 using I2.Loc;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using NLog.Targets;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 
 namespace EmotionSystem
@@ -239,6 +240,9 @@ namespace EmotionSystem
 
 		private static void ParticleOut(BattleChar target, BattleChar user, Skill skill)
 		{
+
+			if (target == null) return;
+
 			var realTarget = target.IsDead
 				? user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target)
 				: target;
@@ -248,6 +252,8 @@ namespace EmotionSystem
 
 		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, string skillKey, int recastNum = 1)
 		{
+			if (string.IsNullOrEmpty(skillKey) || target == null) yield break;
+
 			for (int i = 0; i < recastNum; i++)
 			{
 				yield return new WaitForSecondsRealtime(0.3f);

@@ -31,7 +31,7 @@ namespace EmotionSystem
 					}
 				}
 
-				public void AddRewards(int equipTier = 0, int soulStone = 0, int gold = 500)
+				public void AddRewards(int equipTier = 0, int soulStone = 0, int gold = 300)
 				{
 					bool legendaryDrop = RandomManager.RandomPer(RandomClassKey.BattleReward, 100, 20);
 

@@ -25,6 +25,17 @@ namespace EmotionSystem
 			string path2 = ModManager.getModInfo("EmotionSystem").assetInfo.ImageFromFile(path);
 			return AddressableLoadManager.LoadAsyncCompletion<Sprite>(path2, AddressableLoadManager.ManageType.None);
 		}
+		public static void GetSpriteByAddress(this Image img, string address,
+			AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage)
+		{
+			AddressableLoadManager.LoadAsyncAction(address, type, img);
+		}
+
+		public static void GetSpriteByPath(this Image img, string path)
+		{
+			var address = EmotionlSystem_Plugin.ThisMod.assetInfo.ImageFromFile(path);
+			img.GetSpriteByAddress(address);
+		}
 
 		public static void GetSpriteAsync(string path, Action<AsyncOperationHandle> collback)
 		{

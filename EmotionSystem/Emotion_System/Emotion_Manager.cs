@@ -124,9 +124,17 @@ namespace EmotionSystem
 			}
 		}
 
+		public static void RemoveEmotionCapGuest(this BattleChar bc, bool isEmotionCap = true)
+		{
+			if (Utils.ReturnBuff(bc, ModItemKeys.Buff_B_Guest_Emotional_Level) is Guests.Emotion.Level buff)
+			{
+				buff.UnlimitedEmotions = isEmotionCap;
+			}
+		}
+
 		public static void AddEmotionLevel(this BattleChar bc, bool isForceLevelUp = false, bool isNegativePoints = false)
 		{
-			if (bc.EmotionLevel() >= 5 || !Utils.AllyEmotions) return;
+			if (bc.EmotionLevel() >= 5 || bc.MyEmotion() == null) return;
 
 			var emotion = bc.MyEmotion();
 			var emotionalLevel = Utils.ReturnBuff(bc, ModItemKeys.Buff_B_Investigator_Emotional_Level) as Investigators.Emotion.Level;

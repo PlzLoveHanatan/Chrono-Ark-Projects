@@ -33,7 +33,7 @@ namespace EmotionSystem
 
 				public static List<int> CoinsToLevelUp = new List<int> { 3, 3, 5, 7, 9 };
 
-				private void GainPosOrNegPoints(BattleChar user, Vector3? pos = null, int amount = 1, bool isPostive = true)
+				public void GainPosOrNegPoints(BattleChar user, Vector3? pos = null, int amount = 1, bool isPostive = true)
 				{
 					if (Mode == EmotionMode.ForceNegative)
 					{
@@ -180,7 +180,12 @@ namespace EmotionSystem
 				{
 					if (HealedChar == BChar)
 					{
-						GainPosOrNegPoints(BChar, Healer.GetPosUI());
+						var pos = HealedChar.GetPosUI();
+						if (Healer.GetPosUI() != null)
+						{
+							pos = Healer.GetPosUI();
+						}
+						GainPosOrNegPoints(BChar, pos);
 					}
 				}
 

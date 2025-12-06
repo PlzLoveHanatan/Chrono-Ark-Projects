@@ -37,11 +37,23 @@ namespace EmotionSystem
 					__instance.BloodyMistText.text = "";
 				}
 
-				RectTransform textRect = __instance.BloodyMistText.GetComponent<RectTransform>();
-				if (textRect != null)
+
+				//__instance.BloodyMistObj.transform.position += new Vector3(0f, 80f, 0f);
+
+
+				var pos = __instance.BloodyMistObj.GetComponent<RectTransform>();
+				if (pos != null)
 				{
-					textRect.anchoredPosition += new Vector2(0, 80);
+					pos.anchoredPosition += new Vector2(0, 80);
 				}
+
+
+
+				//RectTransform textRect = __instance.BloodyMistText.GetComponent<RectTransform>();
+				//if (textRect != null)
+				//{
+				//	textRect.anchoredPosition += new Vector2(0, 80);
+				//}
 
 				StringBuilder sb = new StringBuilder();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace EmotionSystem
 
 				private int EmotionsGainThisTurn;
 				public bool EmotionBlock;
+				public bool UnlimitedEmotions;
 
 				private bool IsSummon;
 
@@ -38,6 +40,7 @@ namespace EmotionSystem
 				{
 					IsSummon = true;
 					EmotionBlock = false;
+					UnlimitedEmotions = false;
 					EmotionsGainThisTurn = 0;
 
 					if (BChar is BattleEnemy e && e.Boss && Utils.BossInvitations)
@@ -185,9 +188,14 @@ namespace EmotionSystem
 								break;
 						}
 
+
 						if (EmotionBlock)
 						{
 							charEmotion.CanGetCoin = false;
+						}
+						else if (UnlimitedEmotions)
+						{
+							charEmotion.CanGetCoin = true;
 						}
 						else if (EmotionsGainThisTurn >= Utils.LevelsPerTurn)
 						{

@@ -17,38 +17,21 @@ namespace EmotionSystem
 		{
 			public class MusicBox : Buff, IP_SkillUse_User, IP_Dodge, IP_DamageTake, IP_Healed, IP_DealDamage, IP_Kill, IP_SomeOneDead
 			{
-				private EmotionMode Mode
+				private void GainPosOrNegPoints(BattleChar user, Vector3? pos = null, int amount = 1, bool isPositive = true)
 				{
-					get
+					if (Utils.ReturnBuff(user, ModItemKeys.Buff_B_Investigator_Emotional_Level) is Investigators.Emotion.Level level)
 					{
-						if (Utils.ReturnBuff(BChar, ModItemKeys.Buff_B_Investigator_Emotional_Level) is Investigators.Emotion.Level level)
-						{
-							return level.Mode;
-						}
-
-						return EmotionMode.Normal;
-					}
-				}
-
-				private void GainPosOrNegPoints(Vector3? pos = null, int amount = 1, bool isPositive = true)
-				{
-					if (Mode == EmotionMode.ForceNegative)
-					{
-						BChar.GetNegEmotion(pos, amount);
-					}
-					else if (Mode == EmotionMode.ForcePositive)
-					{
-						BChar.GetPosEmotion(pos, amount);
+						level.GainPosOrNegPoints(user, pos, amount, isPositive);
 					}
 					else
 					{
 						if (isPositive)
 						{
-							BChar.GetPosEmotion(pos, amount);
+							user.GetPosEmotion(pos, amount);
 						}
 						else
 						{
-							BChar.GetNegEmotion(pos, amount);
+							user.GetNegEmotion(pos, amount);
 						}
 					}
 				}
@@ -63,7 +46,7 @@ namespace EmotionSystem
 					if (DeadChar != BChar && DeadChar.Info.Ally)
 					{
 						var pos = DeadChar.GetPosUI();
-						GainPosOrNegPoints(pos, 3, false);
+						GainPosOrNegPoints(BChar, pos, 3, false);
 					}
 				}
 
@@ -73,11 +56,11 @@ namespace EmotionSystem
 					{
 						if (SkillD.IsHeal || SkillD.IsDamage)
 						{
-							GainPosOrNegPoints(SkillD.GetPosUI(), 1, true);
+							GainPosOrNegPoints(BChar, SkillD.GetPosUI(), 1, true);
 						}
 						else
 						{
-							GainPosOrNegPoints(SkillD.GetPosUI(), 1, false);
+							GainPosOrNegPoints(BChar, SkillD.GetPosUI(), 1, false);
 						}
 					}
 				}
@@ -87,7 +70,7 @@ namespace EmotionSystem
 					if (SP.UseStatus == BChar)
 					{
 						var pos = SP.UseStatus.GetPosUI();
-						GainPosOrNegPoints(pos, 3, true);
+						GainPosOrNegPoints(BChar, pos, 3, true);
 					}
 				}
 
@@ -95,12 +78,12 @@ namespace EmotionSystem
 				{
 					if (Damage >= 1)
 					{
-						GainPosOrNegPoints(null, 1, true);
+						GainPosOrNegPoints(BChar, null, 1, true);
 					}
 
 					if (IsCri)
 					{
-						GainPosOrNegPoints(null, 1, true);
+						GainPosOrNegPoints(BChar, null, 1, true);
 					}
 				}
 
@@ -108,12 +91,12 @@ namespace EmotionSystem
 				{
 					if (Dmg >= 1)
 					{
-						GainPosOrNegPoints(User.GetPosUI(), 1, false);
+						GainPosOrNegPoints(BChar, User.GetPosUI(), 1, false);
 						BattleSystem.DelayInput(DeathDoorCheck());
 
 						if (Cri)
 						{
-							GainPosOrNegPoints(User.GetPosUI(), 1, false);
+							GainPosOrNegPoints(BChar, User.GetPosUI(), 1, false);
 						}
 					}
 				}
@@ -124,7 +107,7 @@ namespace EmotionSystem
 					{
 						foreach (var ally in BChar.MyTeam.AliveChars_Vanish)
 						{
-							GainPosOrNegPoints(null, 1, false);
+							GainPosOrNegPoints(ally, null, 1, false);
 						}
 					}
 
@@ -135,7 +118,7 @@ namespace EmotionSystem
 				{
 					if (HealedChar == BChar)
 					{
-						GainPosOrNegPoints(Healer.GetPosUI(), 1, true);
+						GainPosOrNegPoints(BChar, Healer.GetPosUI(), 1, true);
 					}
 				}
 
@@ -143,7 +126,7 @@ namespace EmotionSystem
 				{
 					if (Char == BChar)
 					{
-						GainPosOrNegPoints(Char.GetPosUI(), 1, true);
+						GainPosOrNegPoints(BChar, Char.GetPosUI(), 1, true);
 					}
 				}
 			}

@@ -64,7 +64,9 @@ namespace EmotionSystem
 					{
 						foreach (var buff in enemy.Buffs)
 						{
-							if (buff.BuffData.BuffTag.Key != GDEItemKeys.BuffTag_DOT || Exception.Contains(buff.BuffData.Key))
+							if (buff.BuffData.BuffTag.Key != GDEItemKeys.BuffTag_DOT
+								|| Exception.Contains(buff.BuffData.Key)
+								|| buff.BuffData.LifeTime <= 0)
 							{
 								continue;
 							}
