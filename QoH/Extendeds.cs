@@ -41,7 +41,11 @@ namespace QoH
 			{
 				var queen = Utils.AllyTeam.AliveChars.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_QoH);
 				int heal = (int)(queen.GetStat.reg * 0.75);
-				BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Utils.DummyChar, heal, true, false, true, false, false, false));
+
+				if (queen != null)
+				{
+					BattleSystem.instance.StartCoroutine(Utils.HealingParticle(null, Utils.DummyChar, heal, true, false, true, false, false, false));
+				}
 
 				if (Utils.ReturnBuff(queen, ModItemKeys.Buff_B_QoH_Sanity) is Buffs.QoHSanity sanity)
 				{

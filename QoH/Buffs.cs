@@ -264,6 +264,12 @@ namespace QoH
 
 			public void Dead()
 			{
+
+				BattleSystem.DelayInput(SpreadDamage());
+			}
+
+			private IEnumerator SpreadDamage()
+			{
 				try
 				{
 					var list = BChar.MyTeam.AliveChars.Where(a => a != BChar).ToList();
@@ -273,7 +279,7 @@ namespace QoH
 						var index = RandomManager.RandomInt(RandomClassKey.Curse, 0, list.Count);
 						var enemy = list[index];
 
-						if (enemy != null)
+						if (enemy != null && Usestate_F != null)
 						{
 							int damage = (int)(Usestate_F.GetStat.atk * 0.3) * StackNum * LifeTime;
 							enemy.Damage(Usestate_F, damage / 2, false, true);
@@ -284,6 +290,8 @@ namespace QoH
 				{
 					Debug.LogException(ex);
 				}
+
+				yield break;
 			}
 		}
 
@@ -298,10 +306,10 @@ namespace QoH
 
 			public override void DestroyByTurn()
 			{
-				HealAlly();
+				BattleSystem.DelayInput(HealAlly());
 			}
 
-			private void HealAlly()
+			private IEnumerator HealAlly()
 			{
 				try
 				{
@@ -312,6 +320,8 @@ namespace QoH
 				{
 					Debug.LogException(ex);
 				}
+
+				yield break;
 			}
 		}
 
@@ -509,7 +519,7 @@ namespace QoH
 				BChar.GetNegEmotion(null, 3);
 			}
 		}
-		
+
 		public class MagicalCandy : Buff
 		{
 			public override void Init()

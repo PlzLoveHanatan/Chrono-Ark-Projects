@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using ChronoArkMod;
 using DG.Tweening;
 using EmotionSystem;
 using GameDataEditor;
@@ -14,6 +15,7 @@ using NLog.LayoutRenderers;
 using NLog.Targets;
 using Spine;
 using UnityEngine;
+using static EmotionSystem.Extended.EGO;
 using static EmotionSystem.LiteratureBuff.Abnormality.Lv2;
 using static Mono.Security.X509.X520;
 
@@ -391,9 +393,37 @@ namespace QoH
 
 		public class JusticeShot : Skill_Extended
 		{
+			private GameObject TestParticle;
+
+			//public override void FixedUpdate()
+			//{
+			//	if (TestParticle == null)
+			//	{
+			//		GameObject prefab = GetAssets<GameObject>("Assets/TestParticle.prefab", "testasset");
+			//		if (prefab == null)
+			//		{
+			//			Debug.Log("Assets cannot be loaded");
+			//			return;
+			//		}
+
+			//		TestParticle = UnityEngine.Object.Instantiate(prefab, MySkill.MyButton.transform);
+			//		TestParticle.transform.localPosition = Vector3.zero;
+			//		TestParticle.transform.SetAsLastSibling();
+			//		TestParticle.SetActive(true);
+			//	}
+			//}
+
 			public override void SkillKill(SkillParticle SP)
 			{
 				BattleSystem.instance.AllyTeam.Add(Skill.TempSkill(ModItemKeys.Skill_S_QoH_Shot, BChar, BChar.MyTeam), true);
+			}
+
+			private T GetAssets<T>(string path, string assetBundlePatch = null) where T : UnityEngine.Object
+			{
+				var mod = ModManager.getModInfo("QoH");
+				if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = mod.DefaultAssetBundlePath;
+				var address = mod.assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
+				return AddressableLoadManager.LoadAddressableAsset<T>(address);
 			}
 		}
 	}

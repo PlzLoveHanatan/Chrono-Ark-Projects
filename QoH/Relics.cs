@@ -29,11 +29,10 @@ namespace QoH
 
 			public void Turn()
 			{
-				if (BattleSystem.instance.TurnNum >= 6 && !oncePerFight)
+				if (BattleSystem.instance.TurnNum == 6)
 				{
 					if (Utils.AllyTeam.AliveChars.All(a => a != null && a.EmotionLevel() >= 5))
 					{
-						oncePerFight = true;
 						ShinyEffect();
 						EmotionManager.AbnormalitySelection(5);
 					}
