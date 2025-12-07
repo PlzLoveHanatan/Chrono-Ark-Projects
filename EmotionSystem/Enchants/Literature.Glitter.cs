@@ -12,7 +12,7 @@ namespace EmotionSystem
 		{
 			PlusPerStat.Damage = 5;
 			PlusStat.PlusCriDmg = 5;
-			PlusStat.AggroPer = 50;
+			PlusStat.AggroPer = 25;
 		}
 	}
 
@@ -22,7 +22,7 @@ namespace EmotionSystem
 		{
 			PlusPerStat.Damage = 15;
 			PlusStat.PlusCriDmg = 15;
-			PlusStat.AggroPer = 100;
+			PlusStat.AggroPer = 50;
 		}
 	}
 }

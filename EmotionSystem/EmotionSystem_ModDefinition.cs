@@ -153,7 +153,6 @@ namespace EmotionSystem
 				button.Myskill.isExcept = true;
 			}
 
-
 			private void CreateEGOButton()
 			{
 				Transform parent = BattleSystem.instance.ActWindow.transform;

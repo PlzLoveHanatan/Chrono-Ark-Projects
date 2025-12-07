@@ -11,7 +11,7 @@ namespace EmotionSystem
 		public override void Init()
 		{
 			PlusStat.HEALTaken = 10;
-			PlusStat.AggroPer = 50;
+			PlusStat.AggroPer = 25;
 		}
 	}
 
@@ -20,7 +20,7 @@ namespace EmotionSystem
 		public override void Init()
 		{
 			PlusStat.HEALTaken = 20;
-			PlusStat.AggroPer = 100;
+			PlusStat.AggroPer = 50;
 			PlusStat.Strength = true;
 		}
 	}

@@ -36,24 +36,24 @@ namespace EmotionSystem
 					List<string> allAvailableEnchants = new List<string>();
 					allAvailableEnchants.AddRange(DataStore.Instance.EnchantsAbno);
 
+					if (equip.Enchant.Key != null && equip.itemkey != GDEItemKeys.Item_Equip_EndlessScroll)
+					{
+						allAvailableEnchants.Remove(equip.Enchant.Key);
+					}
+					
 					if (allAvailableEnchants.Count > 0)
 					{
-						string randomKey;
-						do
-						{
-							int index = RandomManager.RandomInt(RandomClassKey.CursedEnchant, 0, allAvailableEnchants.Count);
-							randomKey = allAvailableEnchants[index];
-						} while (equip.Enchant != null && equip.Enchant.Key == randomKey);
-
+						int index = RandomManager.RandomInt(RandomClassKey.CursedEnchant, 0, allAvailableEnchants.Count);
+						string randomKey = allAvailableEnchants[index];
 						ItemEnchant.RandomEnchantTarget(equip, randomKey);
 					}
 
 					equip._Isidentify = true;
 
-					if (equip.ItemScript is EquipItem_Enchent ench)
-					{
-						ench.Enchent();
-					}
+					//if (equip.ItemScript is EquipItem_Enchent ench)
+					//{
+					//	ench.Enchent();
+					//}
 
 					MasterAudio.PlaySound("Enchent", 1f);
 					__instance.SelfDestroy();
@@ -64,7 +64,9 @@ namespace EmotionSystem
 					if (FieldSystem.instance != null)
 					{
 						foreach (AllyWindow ally in FieldSystem.instance.PartyWindow)
+						{
 							ally.EquipUpdate();
+						}
 					}
 
 					Utils.Data.WhetstoneCharge--;

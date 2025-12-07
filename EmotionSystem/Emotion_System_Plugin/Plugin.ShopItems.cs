@@ -10,6 +10,7 @@ namespace EmotionSystem
 {
 	public partial class Plugin
 	{
+		// Regular shops
 		[HarmonyPatch(typeof(FieldStore))]
 		public static class NewShopItems
 		{
@@ -24,11 +25,27 @@ namespace EmotionSystem
 				__instance.StoreItems.Add(ItemBase.GetPotionRandom());
 				__instance.StoreItems.Add(ItemBase.GetPotionRandom());
 				__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent));
+				__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_Fractured));
 
 				if (stage == 1)
 				{
 					__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_Whetstone));
 				}
+			}
+		}
+
+		// Shop in White Space before Azar fight
+		[HarmonyPatch(typeof(SpecialStore))]
+		public static class NewSpecialShopItems
+		{
+			[HarmonyPatch("Start")]
+			[HarmonyPostfix]
+			public static void NewItems(SpecialStore __instance)
+			{
+				__instance.StoreItems.Add(ItemBase.GetPotionRandom());
+				__instance.StoreItems.Add(ItemBase.GetPotionRandom());
+				__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent));
+				__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_Fractured));
 			}
 		}
 	}

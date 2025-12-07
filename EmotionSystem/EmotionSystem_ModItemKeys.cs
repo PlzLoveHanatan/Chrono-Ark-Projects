@@ -707,6 +707,11 @@ namespace EmotionSystem
 		/// Learn 1 random <color=#00FFFF>unique</color> Lucy draw skill.
 		/// </summary>
         public static string Item_Consume_C_EmotionSystem_DreamingCurrent = "C_EmotionSystem_DreamingCurrent";
+		/// <summary>
+		/// Fractured Blade
+		/// Fully recharge Whetstone.
+		/// </summary>
+        public static string Item_Consume_C_EmotionSystem_Fractured = "C_EmotionSystem_Fractured";
         public static string EnchantList_En_Perfection = "En_Perfection";
         public static string EnchantList_En_Perfection_L = "En_Perfection_L";
         public static string EnchantList_En_Petal = "En_Petal";

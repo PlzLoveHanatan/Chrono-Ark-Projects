@@ -11,7 +11,7 @@ namespace EmotionSystem
 		public override void Init()
 		{
 			PlusStat.cri = 15;
-			PlusStat.Penetration = 50;
+			PlusStat.Penetration = 25;
 		}
 	}
 
@@ -20,7 +20,7 @@ namespace EmotionSystem
 		public override void Init()
 		{
 			PlusStat.cri = 30;
-			PlusStat.Penetration = 100;
+			PlusStat.Penetration = 50;
 		}
 	}
 }
