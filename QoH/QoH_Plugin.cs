@@ -15,6 +15,12 @@ using ChronoArkMod.ModData;
 using HarmonyLib;
 using EmotionSystem;
 using TileTypes;
+using System.Runtime.CompilerServices;
+using static CharacterDocument;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Text.RegularExpressions;
+using TMPro;
 namespace QoH
 {
 	public class QoH_Plugin : ChronoArkPlugin
@@ -116,7 +122,7 @@ namespace QoH
 			//{"QoH_FieldIdle", "So... this is what it hath all come to. I'm just like them. I failed the suppression, I'm a useless— Get out of my head..." },
 			{"QoH_FieldIdle_0", "Even if my life be made forfeit... I shall protect the employees of this establishment and the people of the City!" },
 			{"QoH_FieldIdle_1", "No warnings today, I must wonder... Perish the thought... I have definitely not harbored thoughts of boredom induced by the lack of eventful action!" },
-			
+
 
 			{"QoH_Kill", "Heh heh, 'tis light work!" },
 			{"QoH_Kill_0", "Heh heh, justice, served! Now... I must forthwith make haste and return to her to regale her with the haaaaai-lights of this suppression!" },
@@ -295,5 +301,34 @@ namespace QoH
 				return true;
 			}
 		}
+
+		//// Adding custom keywords to skills with base Description (damage/heal/accuracy/critical chance or if skill already have Keyword)
+		//[HarmonyPatch(typeof(SkillToolTip), "Input")]
+		//public static class SkillToolTip_Input_Plugin
+		//{
+		//	[HarmonyPostfix]
+		//	public static void Postfix(SkillToolTip __instance, Skill Skill)
+		//	{
+		//		if (__instance?.Desc == null || Skill?.MySkill == null) return;
+
+		//		var kw = Skill.MySkill.PlusKeyWords.FirstOrDefault(a => a.Key == ModItemKeys.SkillKeyword_KeyWord_Boobs);
+		//		if (kw == null) return;
+
+		//		string myWord = SkillToolTip.ColorChange("FF7C34", kw.Name);
+		//		var lines = (__instance.Desc.text ?? string.Empty).Split('\n').ToList();
+		//		int idx = lines.FindIndex(l => l.Contains("<b>") && l.Contains("</b>"));
+
+		//		if (idx >= 0)
+		//		{
+		//			lines[idx] += ". " + myWord;
+		//		}
+		//		else
+		//		{
+		//			lines.Insert(0, $"<b>{myWord}</b>");
+		//		}
+
+		//		__instance.Desc.text = string.Join("\n", lines);
+		//	}
+		//}
 	}
 }

@@ -40,8 +40,8 @@ namespace QoH
 				baseScale = Img.rectTransform.localScale;
 			}
 
-			sanity_M = Utils_Ui.GetSprite(Sanity_M_Path);
-			sanity_H = Utils_Ui.GetSprite(Sanity_H_Path);
+			sanity_M = Utils_UI.GetSprite(Sanity_M_Path);
+			sanity_H = Utils_UI.GetSprite(Sanity_H_Path);
 		}
 
 		public void Update()
@@ -51,7 +51,7 @@ namespace QoH
 
 			interactable = sanity.CanSwitchForm > 0 || sanity.UnlimitedSwitches || sanity.UnlimitedSwitchesTurn;
 
-			// Смена спрайта в зависимости от текущего баффа
+			// Change Sanity sprite depends on current Mod
 			if (sanity.MagicalGirlMode)
 			{
 				Img.sprite = sanity_M;
@@ -61,22 +61,21 @@ namespace QoH
 				Img.sprite = sanity_H;
 			}
 
-			// Стало НЕ активно
+			// Not Active
 			if (!interactable && wasInteractable)
 			{
 				Img.rectTransform.localScale = baseScale;
 				Img.color = disabledColor;
 			}
 
-			// Стало активно
+			// Active
 			if (interactable && !wasInteractable)
 			{
 				Img.rectTransform.localScale = baseScale;
 				Img.color = normalColor;
 			}
 
-			// ========== ПУЛЬСАЦИЯ ==========
-
+			// Pulssation
 			if (interactable && AllowPulse)
 			{
 				float pulse = 1f + Mathf.Sin(Time.time * pulseSpeed) * pulseAmount;

@@ -134,7 +134,7 @@ namespace QoH
 			{
 				foreach (var kvp in DataStore.Instance.Visual.QoHChibi.SpritePathsChibi)
 				{
-					Utils_Ui.LoadSpriteAsync(kvp.Value, sprite =>
+					Utils_UI.LoadSpriteAsync(kvp.Value, sprite =>
 					{
 						if (sprite != null)
 						{
@@ -182,7 +182,6 @@ namespace QoH
 					chibiType = AllChibiTypes[RandomManager.RandomInt(RandomClassKey.Active, 0, AllChibiTypes.Length)];
 				}
 
-				// Проверка, есть ли спрайт
 				if (!ChibiSprites.TryGetValue(chibiType.Value, out Sprite chibiSprite) || chibiSprite == null)
 				{
 					return;
@@ -190,12 +189,12 @@ namespace QoH
 
 				if (CurrentChibi != null)
 				{
-					Utils_Ui.DestroyObject(CurrentChibi);
+					Utils_UI.DestroyObject(CurrentChibi);
 				}
 
 				var (size, position) = ChibiInfo[chibiType.Value];
 
-				CurrentChibi = Utils_Ui.CreateUIImage("Chibi", BChar.transform, chibiSprite, size, position, false);
+				CurrentChibi = Utils_UI.CreateUIImage("Chibi", BChar.transform, chibiSprite, size, position, false);
 				CurrentChibi.AddComponent<QoH_Chibi_Script>();
 			}
 		}

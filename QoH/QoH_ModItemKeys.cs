@@ -104,6 +104,10 @@ namespace QoH
 		/// </summary>
         public static string Item_Equip_E_QoH_LovelyGift = "E_QoH_LovelyGift";
 		/// <summary>
+		/// Boobs
+		/// </summary>
+        public static string SkillKeyword_KeyWord_Boobs = "KeyWord_Boobs";
+		/// <summary>
 		/// Queen of Hatred
 		/// Passive:
 		/// At the start of the turn, apply <color=#BD2DC2>Mark of Villainy</color> to a random enemy and gain <color=#FF77FF>Pure Heart ☆</color>
@@ -228,6 +232,9 @@ namespace QoH
 		/// Promise of Justice ♡
 		/// </summary>
         public static string Skill_S_QoH_Spiral = "S_QoH_Spiral";
+		/// <summary>
+		/// Test
+		/// </summary>
         public static string Skill_S_QoH_Test = "S_QoH_Test";
 
     }

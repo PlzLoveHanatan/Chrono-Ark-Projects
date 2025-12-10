@@ -91,7 +91,7 @@ namespace QoH
 			{
 				if (DeadChar == BChar)
 				{
-					Utils_Ui.DestroyObject(sanityIcon);
+					Utils_UI.DestroyObject(sanityIcon);
 				}
 			}
 
@@ -166,8 +166,8 @@ namespace QoH
 			{
 				lastMode = MagicalGirlMode;
 				CanSwitchForm = MyChar.LV >= 4 ? 2 : 1;
-				Sprite sprite = Utils_Ui.GetSprite("Visual/QoH/Sanity/Sanity_M.png");
-				sanityIcon = Utils_Ui.CreateUIImage("Sanity_M", BChar.transform, sprite, new Vector2(150, 150), new Vector3(170, 170, 0), true);
+				Sprite sprite = Utils_UI.GetSprite("Visual/QoH/Sanity/Sanity_M.png");
+				sanityIcon = Utils_UI.CreateUIImage("Sanity_M", BChar.transform, sprite, new Vector2(150, 150), new Vector3(170, 170, 0), true);
 				sanityIcon.AddComponent<QoH_Sanity_Script>();
 				sanityIcon.AddComponent<QoH_Sanity_Tooltip>();
 			}
