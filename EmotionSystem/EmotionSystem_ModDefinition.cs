@@ -167,8 +167,8 @@ namespace EmotionSystem
 				var defaultType = DataStore.Instance.Visual.EGOButton.GetDefault(setType);
 				var visualData = DataStore.Instance.Visual.EGOButton.GetData(setType, defaultType.Value);
 
-				Sprite sprite = Utils_Ui.GetSprite(visualData.Path);
-				GameObject egoButton = Utils_Ui.CreateUIImage("EGO_Button", parent, sprite, visualData.Size, visualData.Position, true);
+				Sprite sprite = Utils_UI.GetSprite(visualData.Path);
+				GameObject egoButton = Utils_UI.CreateUIImage("EGO_Button", parent, sprite, visualData.Size, visualData.Position, true);
 
 				var egoSystem = egoButton.AddComponent<EmotionSystem_EGO_Button>();
 				egoButton.AddComponent<EmotionSystem_EGO_Button_Script>();
@@ -179,7 +179,7 @@ namespace EmotionSystem
 
 			public static void StartTutorial()
 			{
-				var tutorial = Utils_Ui.GetAssets<Tutorial>("Assets/ModAssets/EmotionSystemTutorial.asset", "tutorial");
+				var tutorial = Utils_UI.GetAssets<Tutorial>("Assets/ModAssets/EmotionSystemTutorial.asset", "tutorial");
 
 				if (tutorial != null)
 				{

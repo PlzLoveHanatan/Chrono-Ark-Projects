@@ -90,7 +90,7 @@ namespace EmotionSystem
 			if (flag)
 			{
 				Item_Equip equipNew = __instance.MyChar.Equip[b_Replica.Index] as Item_Equip;
-				Utils_Ui.CopyEquipEnchantCurse(equipNew, __instance.MyItem);
+				Utils_UI.CopyEquipEnchantCurse(equipNew, __instance.MyItem);
 			}
 		}
 
@@ -171,7 +171,7 @@ namespace EmotionSystem
 				if (instruction.Is(OpCodes.Call, AccessTools.Method(typeof(ModManager),
 					nameof(ModManager.GetType), new Type[] { typeof(string), typeof(string) })))
 				{
-					instruction.operand = AccessTools.Method(typeof(Utils_Ui), nameof(Utils_Ui.GetEnchantType));
+					instruction.operand = AccessTools.Method(typeof(Utils_UI), nameof(Utils_UI.GetEnchantType));
 				}
 				yield return instruction;
 			}
@@ -197,7 +197,7 @@ namespace EmotionSystem
 					yield return new CodeInstruction(OpCodes.Pop);
 					yield return new CodeInstruction(OpCodes.Ldarg_0);
 					yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(Item_Equip), nameof(Item_Equip.Enchant)));
-					yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Utils_Ui), nameof(Utils_Ui.GetDescription)));
+					yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Utils_UI), nameof(Utils_UI.GetDescription)));
 				}
 			}
 		}

@@ -356,7 +356,7 @@ namespace EmotionSystem
 					private void ApplyDebuffs(BattleChar enemy)
 					{
 						Utils.PlaySound("Floor_History_WorkerBee");
-						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv2_WorkerBee_0, 1, 125);
+						Utils.AddDebuff(enemy, BChar, ModItemKeys.Buff_B_Abnormality_HistoryLv2_WorkerBee_0, 1, Utils.ChanceDebuff(BChar, 125));
 					}
 				}
 

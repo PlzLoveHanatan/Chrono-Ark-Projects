@@ -55,7 +55,7 @@ namespace EmotionSystem
 
 					if (EmotionPrefab == null)
 					{
-						EmotionPrefab = Utils_Ui.GetAssets<GameObject>("Assets/ModAssets/EmotionUI.prefab", "emotionsystemunityassetbundle");
+						EmotionPrefab = Utils_UI.GetAssets<GameObject>("Assets/ModAssets/EmotionUI.prefab", "emotionsystemunityassetbundle");
 						if (EmotionPrefab == null)
 						{
 							Debug.Log("Assets cannot be loaded");

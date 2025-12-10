@@ -12,7 +12,7 @@ using GameDataEditor;
 
 namespace EmotionSystem
 {
-	public static class Utils_Ui
+	public static class Utils_UI
 	{
 		public static void GetSprite(string path, Image img)
 		{
@@ -148,6 +148,7 @@ namespace EmotionSystem
 				UnityEngine.Object.Destroy(obj);
 			}
 		}
+
 		public static string GetDescription(this ItemEnchant enchant)
 		{
 			bool flag = string.IsNullOrEmpty(enchant.Name);

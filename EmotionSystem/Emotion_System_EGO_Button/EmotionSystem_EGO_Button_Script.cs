@@ -55,7 +55,7 @@ namespace EmotionSystem
 				var key = kvp.Key;
 				var data = kvp.Value;
 
-				Utils_Ui.GetSpriteAsync(data.Path, (AsyncOperationHandle handle) =>
+				Utils_UI.GetSpriteAsync(data.Path, (AsyncOperationHandle handle) =>
 				{
 					if (handle.Result is Sprite sprite)
 					{

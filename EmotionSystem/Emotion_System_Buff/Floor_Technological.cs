@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,9 @@ using EmotionSystem;
 using GameDataEditor;
 using Spine;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Experimental.UIElements;
+using static CharacterDocument;
 using static EmotionSystem.DataStore.Synchronize;
 
 namespace EmotionSystem
@@ -84,7 +86,7 @@ namespace EmotionSystem
 						if (SP.SkillData.Master == BChar && SP.SkillData.IsDamage)
 						{
 							Utils.PlaySound("Floor_Technological_Metallic");
-							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, Utils.ChanceDebuff(BChar, 100));
+							Utils.AddDebuff(hit, BChar, ModItemKeys.Buff_B_EmotionSystem_Paralysis, 1, Utils.ChanceDebuff(BChar, 100));
 						}
 					}
 				}
@@ -318,13 +320,31 @@ namespace EmotionSystem
 					}
 				}
 
-				public class SeventhBullet : Buff, IP_SkillUse_User
+				public class SeventhBullet : Buff, IP_SkillUse_User, IP_Awake
 				{
-					private int AttackUses;
+					private GameObject bulletObj;
+					private SeventhBulletVisual visualComponent;
+
+					public void Awake()
+					{
+						var bulletPrefab = Utils_UI.GetAssets<GameObject>("Assets/ModAssets/SeventhBulletUI.prefab", "emotionsystemunityassetbundle");
+						if (bulletPrefab == null)
+						{
+							Debug.LogError("[SeventhBullet] UI PREFAB NOT LOADED!");
+							return;
+						}
+
+						bulletObj = UnityEngine.Object.Instantiate(bulletPrefab, BChar.UI.transform.GetChild(0));
+						bulletObj.transform.localPosition = new Vector3(35, 130, 0);
+						bulletObj.transform.SetAsFirstSibling();
+						bulletObj.SetActive(true);
+						visualComponent = bulletObj.GetComponent<SeventhBulletVisual>();
+					}
 
 					public override string DescExtended()
 					{
-						return base.DescExtended().Replace("&a", AttackUses.ToString());
+						int bulletNum = visualComponent?.BulletCounter ?? 0;
+						return base.DescExtended().Replace("&a", bulletNum.ToString());
 					}
 
 					public override void Init()
@@ -338,19 +358,30 @@ namespace EmotionSystem
 					{
 						if (SkillD.IsDamage && SkillD.Master == BChar && !SkillD.FreeUse && !SkillD.BasicSkill && !SkillD.PlusHit)
 						{
-							AttackUses++;
+							if (visualComponent == null) return;
 
-							if (AttackUses == 6)
+							visualComponent.NextBullet();
+							int currentCount = visualComponent.BulletCounter;
+
+							if (currentCount == 6)
 							{
 								Utils.AddBuff(BChar, ModItemKeys.Buff_B_Abnormality_TechnologicalLv2_SeventhBullet_0);
 							}
-
-							if (AttackUses >= 7)
+							else if (currentCount == 7)
 							{
 								Utils.PlaySound("Floor_Technological_TheSeventhBullet");
 								Scripts.AttackRedirect(BChar, SkillD, Targets);
-								AttackUses = 0;
+								visualComponent.ResetCounter();
 							}
+						}
+					}
+
+					public void SomeOneDead(BattleChar DeadChar)
+					{
+						if (DeadChar == BChar)
+						{
+							Utils_UI.DestroyObject(bulletObj);
+							visualComponent = null;
 						}
 					}
 				}

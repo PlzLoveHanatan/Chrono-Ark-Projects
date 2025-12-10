@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EmotionSystem12072025143650</AssemblyName>
+    <AssemblyName>EmotionSystem12102025172948</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -15,10 +15,11 @@
     <Reference Include="Accessibility">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <Private>False</Private>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ChronoArk_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp-firstpass">
       <Private>False</Private>
     </Reference>
     <Reference Include="Beardy.BeardsGridLayoutGroup.Runtime">
@@ -26,7 +27,7 @@
     </Reference>
     <Reference Include="ChronoArkMod.EmotionSystem.ModAssembly, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\EmotionalSystem\Assemblies\ChronoArkMod.EmotionSystem.ModAssembly.dll</HintPath>
+      <HintPath>..\..\EmotionSystem\Assemblies\ChronoArkMod.EmotionSystem.ModAssembly.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <Private>False</Private>
@@ -409,7 +410,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-          <!-- Compile ItemGroup Start-->
+                                                                                                                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="EmotionSystem_ModDefinition.cs" />
     <Compile Include="EmotionSystem_ModItemKeys.cs" />
@@ -434,7 +435,7 @@
     <Compile Include="Emotion_System\Invitation\_InvitationManager.cs" />
     <Compile Include="Emotion_System\Utilities\Utils.cs" />
     <Compile Include="Emotion_System\Utilities\Utils_Extensions.cs" />
-    <Compile Include="Emotion_System\Utilities\Utils_Ui.cs" />
+    <Compile Include="Emotion_System\Utilities\Utils_UI.cs" />
     <Compile Include="Emotion_System_Buff\Emotion_Buffs.cs" />
     <Compile Include="Emotion_System_Buff\Emotion_Debuffs.cs" />
     <Compile Include="Emotion_System_Buff\Floor_Art.cs" />

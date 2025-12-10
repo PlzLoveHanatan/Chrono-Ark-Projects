@@ -323,7 +323,7 @@ namespace EmotionSystem
 
 			private readonly List<string> EdgeCaseAbnormalities = new List<string>
 			{
-				ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_DarkFlame,
+				//ModItemKeys.Skill_S_Abnormality_TechnologicalLv3_DarkFlame,
 				ModItemKeys.Skill_S_Abnormality_ArtLv3_Finale,
 			};
 		}

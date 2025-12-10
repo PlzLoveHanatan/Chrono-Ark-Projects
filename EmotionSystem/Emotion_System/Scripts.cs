@@ -55,6 +55,7 @@ namespace EmotionSystem
 
 			if (newTargets.Count == 0) return;
 
+			targets.Clear();
 			int index = RandomManager.RandomInt(RandomClassKey.Active, 0, newTargets.Count);
 			var randomTarget = newTargets[index];
 			var targetKey = skill.MySkill.Target.Key;
@@ -65,7 +66,6 @@ namespace EmotionSystem
 			{
 				skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_onetarget);
 				newTargets = user.MyTeam.AliveChars_Vanish.ToList();
-				targets.Clear();
 				targets.Add(randomTarget);
 				user.StartCoroutine(ReturnTargetType(skill, oldTargetType));
 			}

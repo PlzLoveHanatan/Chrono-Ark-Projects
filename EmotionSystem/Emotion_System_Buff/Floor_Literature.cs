@@ -150,7 +150,7 @@ namespace EmotionSystem
 							}
 							else
 							{
-								currentFace = Utils_Ui.CreateUIImage(faceName, BChar.transform, faceSprite, new Vector2(100, 100), new Vector3(170, 170, 0), false);
+								currentFace = Utils_UI.CreateUIImage(faceName, BChar.transform, faceSprite, new Vector2(100, 100), new Vector3(170, 170, 0), false);
 							}
 						}
 					}
@@ -159,7 +159,7 @@ namespace EmotionSystem
 					{
 						foreach (var kvp in DataStore.Instance.Visual.LookDay.SpritePathsFace)
 						{
-							Utils_Ui.LoadSpriteAsync(kvp.Value, sprite =>
+							Utils_UI.LoadSpriteAsync(kvp.Value, sprite =>
 							{
 								if (sprite != null)
 								{
@@ -178,7 +178,7 @@ namespace EmotionSystem
 					{
 						if (DeadChar == BChar)
 						{
-							Utils_Ui.DestroyObject(currentFace);
+							Utils_UI.DestroyObject(currentFace);
 						}
 					}
 				}

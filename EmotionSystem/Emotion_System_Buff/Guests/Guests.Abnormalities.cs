@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DarkTonic.MasterAudio;
 using GameDataEditor;
 using I2.Loc;
 using NLog.Targets;
@@ -142,6 +143,8 @@ namespace EmotionSystem
 
 				public class BehaviourAdjustment_0 : Buff, IP_Dodge
 				{
+					//private GameObject statusIcon;
+
 					public override void Init()
 					{
 						PlusStat.PerfectDodge = true;
@@ -154,9 +157,16 @@ namespace EmotionSystem
 							if (SP.SkillData.IsDamage && !SP.UseStatus.IsLucy && !SP.UseStatus.Dummy)
 							{
 								SelfDestroy();
+								//Utils_Ui.DestroyObject(statusIcon);
 							}
 						}
 					}
+
+					//public void Awake()
+					//{
+					//	Sprite sprite = Utils_Ui.GetSprite("Visual/StatusEffects/Appetite.png");
+					//	statusIcon = Utils_Ui.CreateUIImage("status", BChar.transform, sprite, new Vector2(150, 150), BChar.GetTopPos(), true);
+					//}
 				}
 
 				public class BehaviourAdjustment_1 : Buff, IP_BuffAdd

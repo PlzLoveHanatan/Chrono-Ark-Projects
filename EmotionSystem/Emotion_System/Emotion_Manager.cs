@@ -40,7 +40,7 @@ namespace EmotionSystem
 				{
 					if (EmotionTrajectoryPos == null)
 					{
-						EmotionTrajectoryPos = Utils_Ui.GetAssets<GameObject>("Assets/ModAssets/EmotionTrajectoryPos.prefab", "emotionsystemunityassetbundle");
+						EmotionTrajectoryPos = Utils_UI.GetAssets<GameObject>("Assets/ModAssets/EmotionTrajectoryPos.prefab", "emotionsystemunityassetbundle");
 					}
 					prefab = EmotionTrajectoryPos;
 				}
@@ -48,7 +48,7 @@ namespace EmotionSystem
 				{
 					if (EmotionTrajectoryNeg == null)
 					{
-						EmotionTrajectoryNeg = Utils_Ui.GetAssets<GameObject>("Assets/ModAssets/EmotionTrajectoryNeg.prefab", "emotionsystemunityassetbundle");
+						EmotionTrajectoryNeg = Utils_UI.GetAssets<GameObject>("Assets/ModAssets/EmotionTrajectoryNeg.prefab", "emotionsystemunityassetbundle");
 					}
 					prefab = EmotionTrajectoryNeg;
 				}
