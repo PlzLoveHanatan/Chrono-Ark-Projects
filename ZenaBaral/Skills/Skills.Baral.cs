@@ -50,6 +50,7 @@ namespace ZenaBaral
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
 				Utils.ApplyBleed(Targets, BChar, 10, 150);
+				ZenaScripts.PlaySounds("Baral_Trail");
 			}
 		}
 
@@ -57,6 +58,8 @@ namespace ZenaBaral
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
+				ZenaScripts.PlaySounds("Baral_Extirpation");
+
 				foreach (var target in Targets)
 				{
 					if (target.Info.Ally) continue;

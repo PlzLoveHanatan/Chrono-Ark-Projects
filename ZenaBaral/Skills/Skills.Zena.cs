@@ -49,6 +49,7 @@ namespace ZenaBaral
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
+				ZenaScripts.PlaySounds("Zena_Bird_Cage");
 				Scripts.DestroyActions(Targets);
 			}
 		}
