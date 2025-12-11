@@ -37,7 +37,7 @@ namespace EmotionSystem
 		public static bool ChibiAngela => ModManager.getModInfo("EmotionSystem").GetSetting<ToggleSetting>("Chibi Angela").Value;
 		public static float LevelsPerTurn => ModManager.getModInfo("EmotionSystem").GetSetting<SliderSetting>("Levels Per Turn").Value;
 
-		public static Value Data => GetOrCreateEmotionData();
+		public static EmotionSystem_Value Data => GetOrCreateEmotionData();
 
 		public static BattleTeam AllyTeam => BattleSystem.instance.AllyTeam;
 		public static BattleTeam EnemyTeam => BattleSystem.instance.EnemyTeam;
@@ -795,12 +795,12 @@ namespace EmotionSystem
 			skill.Except();
 		}
 
-		public static Value GetOrCreateEmotionData()
+		public static EmotionSystem_Value GetOrCreateEmotionData()
 		{
-			var data = PlayData.TSavedata.GetCustomValue<Value>();
+			var data = PlayData.TSavedata.GetCustomValue<EmotionSystem_Value>();
 			if (data == null)
 			{
-				data = new Value();
+				data = new EmotionSystem_Value();
 				PlayData.TSavedata.AddCustomValue(data);
 			}
 			return data;

@@ -59,6 +59,7 @@ namespace EmotionSystem
 			PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Consume_SmallChest));
 			//PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Consume_SmallChest));
 			PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookLucy_Rare, 1));
+			PartyInventory.InvenM.AddNewItem(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_DreamingCurrent, 1));
 		}
 	}
 }

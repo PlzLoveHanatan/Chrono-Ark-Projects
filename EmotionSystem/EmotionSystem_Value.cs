@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmotionSystem
 {
-	public class Value : CustomValue
+	public class EmotionSystem_Value : CustomValue
 	{
 		public bool StartingBonus = false;
 		public int WhetstoneCharge = 3;

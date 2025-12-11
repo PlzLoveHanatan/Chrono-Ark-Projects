@@ -30,6 +30,8 @@ namespace EmotionSystem
 				if (stage == 1)
 				{
 					__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_Whetstone));
+					__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_EntryTicket));
+					__instance.StoreItems.Add(ItemBase.GetItem(ModItemKeys.Item_Consume_C_EmotionSystem_GoldenEntryTicket));
 				}
 			}
 		}

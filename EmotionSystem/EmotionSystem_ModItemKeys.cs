@@ -708,10 +708,20 @@ namespace EmotionSystem
 		/// </summary>
         public static string Item_Consume_C_EmotionSystem_DreamingCurrent = "C_EmotionSystem_DreamingCurrent";
 		/// <summary>
+		/// Entry Ticket
+		/// Gain Dark Tune and Pure Tune potions.
+		/// </summary>
+        public static string Item_Consume_C_EmotionSystem_EntryTicket = "C_EmotionSystem_EntryTicket";
+		/// <summary>
 		/// Fractured Blade
 		/// Fully recharge Whetstone.
 		/// </summary>
         public static string Item_Consume_C_EmotionSystem_Fractured = "C_EmotionSystem_Fractured";
+		/// <summary>
+		/// Golden Entry Ticket
+		/// Learn Decisive Strike. Gain Dark Tune and Pure Tune potions.
+		/// </summary>
+        public static string Item_Consume_C_EmotionSystem_GoldenEntryTicket = "C_EmotionSystem_GoldenEntryTicket";
         public static string EnchantList_En_Perfection = "En_Perfection";
         public static string EnchantList_En_Perfection_L = "En_Perfection_L";
         public static string EnchantList_En_Petal = "En_Petal";

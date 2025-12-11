@@ -320,26 +320,9 @@ namespace EmotionSystem
 					}
 				}
 
-				public class SeventhBullet : Buff, IP_SkillUse_User, IP_Awake
+				public class SeventhBullet : Buff, IP_SkillUse_User
 				{
-					private GameObject bulletObj;
-					private SeventhBulletVisual visualComponent;
-
-					public void Awake()
-					{
-						var bulletPrefab = Utils_UI.GetAssets<GameObject>("Assets/ModAssets/SeventhBulletUI.prefab", "emotionsystemunityassetbundle");
-						if (bulletPrefab == null)
-						{
-							Debug.LogError("[SeventhBullet] UI PREFAB NOT LOADED!");
-							return;
-						}
-
-						bulletObj = UnityEngine.Object.Instantiate(bulletPrefab, BChar.UI.transform.GetChild(0));
-						bulletObj.transform.localPosition = new Vector3(35, 130, 0);
-						bulletObj.transform.SetAsFirstSibling();
-						bulletObj.SetActive(true);
-						visualComponent = bulletObj.GetComponent<SeventhBulletVisual>();
-					}
+					private SeventhBulletVisual visualComponent => BE.GetComponent<SeventhBulletVisual>();
 
 					public override string DescExtended()
 					{
@@ -373,15 +356,6 @@ namespace EmotionSystem
 								Scripts.AttackRedirect(BChar, SkillD, Targets);
 								visualComponent.ResetCounter();
 							}
-						}
-					}
-
-					public void SomeOneDead(BattleChar DeadChar)
-					{
-						if (DeadChar == BChar)
-						{
-							Utils_UI.DestroyObject(bulletObj);
-							visualComponent = null;
 						}
 					}
 				}
