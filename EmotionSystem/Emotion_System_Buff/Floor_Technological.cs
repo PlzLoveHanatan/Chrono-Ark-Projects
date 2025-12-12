@@ -322,7 +322,7 @@ namespace EmotionSystem
 
 				public class SeventhBullet : Buff, IP_SkillUse_User
 				{
-					private SeventhBulletVisual visualComponent => BE.GetComponent<SeventhBulletVisual>();
+					private SeventhBulletVisual visualComponent => BE?.GetComponent<SeventhBulletVisual>() ?? null;
 
 					public override string DescExtended()
 					{
