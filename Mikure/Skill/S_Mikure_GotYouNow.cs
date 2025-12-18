@@ -42,9 +42,9 @@ namespace Mikure
             if (!Targets[0].Info.Ally)
             {
                 IsDamage = true;
-                SkillBasePlus.Target_BaseDMG = (int)(SkillD.TargetHeal * 2.1f);
+                SkillBasePlus.Target_BaseDMG = (int)(SkillD.TargetHeal);
                 PlusSkillPerStat.Heal = -99999;
             }
         }
-    }
+	}
 }
