@@ -389,5 +389,34 @@ namespace Kazuma
                 }
             }
         }
-    }
+
+		// Adding custom keywords to skills with base Description (damage/heal/accuracy/critical chance or if skill already have Keyword)
+		[HarmonyPatch(typeof(SkillToolTip), "Input")]
+		public static class SkillToolTip_Input_Plugin
+		{
+            [HarmonyPostfix]
+            public static void Postfix(SkillToolTip __instance, Skill Skill)
+            {
+                //if (__instance?.Desc == null || Skill?.MySkill == null) return;
+
+                var kw = Skill.MySkill.PlusKeyWords.FirstOrDefault(a => a.Key == ModItemKeys.SkillKeyword_KeyWord_Panties || a.Key == ModItemKeys.SkillKeyword_KeyWord_Contract);
+				if (kw == null) return;
+
+				string myWord = SkillToolTip.ColorChange("FF7C34", kw.Name);
+				var lines = (__instance.Desc.text ?? string.Empty).Split('\n').ToList();
+				int idx = lines.FindIndex(l => l.Contains("<b>") && l.Contains("</b>"));
+
+				if (idx >= 0)
+				{
+					lines[idx] += ". " + myWord;
+				}
+				else
+				{
+					lines.Insert(0, $"<b>{myWord}</b>");
+				}
+
+				__instance.Desc.text = string.Join("\n", lines);
+			}
+		}
+	}
 }

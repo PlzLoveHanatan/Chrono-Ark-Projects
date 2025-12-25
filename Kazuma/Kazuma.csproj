@@ -3,12 +3,13 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Kazuma06142025145721</AssemblyName>
+    <AssemblyName>Kazuma12132025141719</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <ReferencePath>D:/SteamLibrary/steamapps/common/Chrono Ark/ChronoArk_Data/Managed</ReferencePath>
+    <ProjectGuid>{954900C1-E7BD-4407-97F8-1E944B16D330}</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
@@ -22,6 +23,9 @@
     </Reference>
     <Reference Include="Beardy.BeardsGridLayoutGroup.Runtime">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="ChronoArkMod.Kazuma.ModAssembly">
+      <HintPath>..\..\Kazuma\Assemblies\ChronoArkMod.Kazuma.ModAssembly.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
       <Private>False</Private>
@@ -404,19 +408,21 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-  
-                                                                                                                                                                                                                                            <!-- Compile ItemGroup Start-->
+                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
+    <Compile Include="Buffs.cs" />
+    <Compile Include="Contracts.cs" />
+    <Compile Include="Extends.cs" />
     <Compile Include="Kazuma_ModDefinition.cs" />
     <Compile Include="Kazuma_ModItemKeys.cs" />
     <Compile Include="Kazuma_Plugin.cs" />
+    <Compile Include="Kazuma_Value.cs" />
+    <Compile Include="Panties.cs" />
+    <Compile Include="Passive.cs" />
+    <Compile Include="Scripts.cs" />
+    <Compile Include="Skills.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="Buff\B_Kazuma_Luck.cs" />
-    <Compile Include="Character\P_Kazuma.cs" />
-    <Compile Include="Item_Consume\Item_Kazuma_Panties_01_Standart.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
-    <Compile Include="Skill\S_Kazuma_Steal.cs" />
-    <Compile Include="Skill\S_Kazuma_Test.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
