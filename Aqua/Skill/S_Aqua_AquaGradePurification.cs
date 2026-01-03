@@ -30,7 +30,7 @@ namespace Aqua
 
             if (target != null && target.Info.Ally)
             {
-                var buffs = target.GetBuffs(BattleChar.GETBUFFTYPE.DEBUFF, false, false);
+                var buffs = target.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, false, false);
 
                 foreach (var buff in buffs)
                 {
