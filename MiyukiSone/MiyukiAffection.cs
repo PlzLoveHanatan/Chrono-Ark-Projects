@@ -56,7 +56,9 @@ namespace MiyukiSone
 
 		public static void MiyukiTurn()
 		{
-			if (RandomManager.RandomPer(MiyukiRandom, 0, 50) == true)
+			//MiyukiDialogueBox(); return;
+
+			if (RandomManager.RandomPer(MiyukiRandom, 0, 50) == true && CurrentAffection != MiyukiAffectionState.neutral)
 			{
 				switch (CurrentAffection)
 				{
@@ -80,11 +82,13 @@ namespace MiyukiSone
 		{
 			var allStates = Enum.GetValues(typeof(BoxState));
 			BoxState currentState = state ?? (BoxState)allStates.GetValue(UnityEngine.Random.Range(0, allStates.Length));
-			Sprite sprite = MiyukiUI.GetSprite(DialogueSprite[currentState]);
-			Vector2 position = DialoguePositions[currentState];
-			Vector3 size = DialogueSize[currentState];
+			string[] spriteVariants = DialogueSprites[currentState];
+			string randomSprite = spriteVariants[RandomManager.RandomInt("MiyukiRandomBox", 0, spriteVariants.Length)];
+			Sprite sprite = MiyukiUI.GetSprite("MiyukiVisual/DialogueBox/" + randomSprite);
+			Vector2 size = DialogueSize[currentState];
+			Vector3 position = Dialogueposition[currentState];
 
-			testWindow = MiyukiUI.CreateUIImage($"dialogue_{currentState}",BattleSystem.instance.ActWindow.transform, sprite, position, size, true);
+			testWindow = MiyukiUI.CreateUIImage($"dialogue_{currentState}", BattleSystem.instance.ActWindow.transform, sprite, size, position, true);
 			testWindow.AddComponent<MiyukiWindow>();
 			testWindow.AddComponent<MiyukiWindowDragHandler>();
 			testWindow.GetComponent<MiyukiWindow>().currentBoxState = currentState;
@@ -103,7 +107,7 @@ namespace MiyukiSone
 				case 3: Pd._Gold += 250; selectedEvent = MiyukiEvent.gold; break;
 				case 4: Pd._Soul += 1; selectedEvent = MiyukiEvent.soulstones; break;
 			}
-			MiyukiTextEvent(MiyukiBchar, selectedEvent, true);
+			MiyukiTextEvent(selectedEvent, true);
 		}
 
 		private static void FetchSkill()
@@ -126,7 +130,7 @@ namespace MiyukiSone
 				case 2: Pd._Soul -= 1; selectedEvent = MiyukiEvent.soulstones; break;
 			}
 			// remove skill from hand or deck for the current battle
-			MiyukiTextEvent(MiyukiBchar, selectedEvent, true);
+			MiyukiTextEvent(selectedEvent, true);
 		}
 	}
 }

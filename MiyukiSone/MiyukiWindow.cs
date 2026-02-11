@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using static MiyukiSone.Affection;
 using static MiyukiSone.DialogueBox;
 using static MiyukiSone.Utils;
+using static MiyukiSone.Text;
+using System.Collections.Generic;
 
 namespace MiyukiSone
 {
@@ -41,12 +43,10 @@ namespace MiyukiSone
 		private void CreateButtons()
 		{
 			// Используем назначенные спрайты или загружаем по умолчанию
-			Sprite spriteYes = yesButtonSprite ?? MiyukiUI.GetSprite("MiyukiVisual/btn_yes_click.png");
-			Sprite spriteNo = noButtonSprite ?? MiyukiUI.GetSprite("MiyukiVisual/btn_no_click.png");
+			Sprite spriteYes = yesButtonSprite ?? MiyukiUI.GetSprite("MiyukiVisual/DialogueBox/box_btn_yes.png");
+			Sprite spriteNo = noButtonSprite ?? MiyukiUI.GetSprite("MiyukiVisual/DialogueBox/box_btn_no.png");
 
-			// Создаем кнопку Yes
-			btn_yes = MiyukiUI.CreateUIImage("btn_yes", transform, spriteYes,
-				buttonSize, yesButtonPosition, true);
+			btn_yes = MiyukiUI.CreateUIImage("btn_yes", transform, spriteYes, buttonSize, yesButtonPosition, true);
 
 			if (btn_yes != null)
 			{
@@ -61,9 +61,7 @@ namespace MiyukiSone
 				yesButton.colors = colors;
 			}
 
-			// Создаем кнопку No
-			btn_no = MiyukiUI.CreateUIImage("btn_no", transform, spriteNo,
-				buttonSize, noButtonPosition, true);
+			btn_no = MiyukiUI.CreateUIImage("btn_no", transform, spriteNo, buttonSize, noButtonPosition, true);
 
 			if (btn_no != null)
 			{
@@ -85,8 +83,8 @@ namespace MiyukiSone
 			{
 				case BoxState.love: ClickLove(); break;
 				case BoxState.kiss: ClickKiss(); break;
-				case BoxState.sex: ClickSex(); break;
-				case BoxState.help: ClickHelp(); break;
+				//case BoxState.sex: ClickSex(); break;
+				//case BoxState.help: ClickHelp(); break;
 				default: break;
 			}
 			Debug.Log("Btn Yes clicked");
@@ -94,14 +92,30 @@ namespace MiyukiSone
 			Destroy(gameObject);
 		}
 
-		private void ClickLove()
+		private void OnNoClicked()
 		{
-
+			switch (currentBoxState)
+			{
+				case BoxState.love: ClickLove(false); break;
+				case BoxState.kiss: ClickKiss(false); break;
+				//case BoxState.sex: ClickSex(); break;
+				//case BoxState.help: ClickHelp(); break;
+				default: break;
+			}
+			Debug.Log("Btn No clicked");
+			ChangePoints();
+			Destroy(gameObject);
 		}
 
-		private void ClickKiss()
+		private void ClickLove(bool isYes = true)
 		{
-			PlaySound("Kiss");
+			MiyukiTextBox(currentBoxState, isYes);
+		}
+
+		private void ClickKiss(bool isYes = true)
+		{
+			MiyukiTextBox(currentBoxState, isYes);
+			//PlaySound("Kiss");
 		}
 
 		private void ClickSex()
@@ -112,13 +126,6 @@ namespace MiyukiSone
 		private void ClickHelp()
 		{
 
-		}
-
-		private void OnNoClicked()
-		{
-			Debug.Log("Btn No clicked");
-			ChangePoints();
-			Destroy(gameObject);
 		}
 	}
 }

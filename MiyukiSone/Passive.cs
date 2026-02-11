@@ -26,7 +26,7 @@ namespace MiyukiSone
 		public void BattleStart(BattleSystem Ins)
 		{
 			//CreateWindow();
-			CreateChatWindow();
+			//CreateChatWindow();
 		}
 
 		private void CreateWindow()
@@ -68,10 +68,7 @@ namespace MiyukiSone
 
 		public void Turn()
 		{
-			if (EvenTurn)
-			{
-				BattleSystem.DelayInputAfter(FetchSkill());
-			}
+			Affection.MiyukiTurn();
 		}
 
 		private IEnumerator FetchSkill()

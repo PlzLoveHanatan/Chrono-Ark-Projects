@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
+using static MiyukiSone.DialogueBox;
 
 namespace MiyukiSone
 {
@@ -34,6 +35,58 @@ namespace MiyukiSone
 
 		};
 
+		public static readonly Dictionary<BoxState, string[]> MiyukiDialogueBoxYes = new Dictionary<BoxState, string[]>()
+		{
+			{
+				BoxState.love, new string[]
+				{
+					"I love you too!",
+					"You make me so happy!",
+					"Forever and ever!",
+					"Promise me...",
+					"My heart is yours!",
+					"I'll never let you go!",
+					"Thank you for loving me...",
+					"You're my hero!"
+				}
+			},
+
+			{
+				BoxState.kiss, new string[]
+				{
+					"Can we do that again?",
+					"One more? Please?",
+					"My heart is racing...",
+				}
+			}
+		};
+
+		public static readonly Dictionary<BoxState, string[]> MiyukiDialogueBoxNo = new Dictionary<BoxState, string[]>()
+		{
+			{
+				BoxState.love, new string[]
+				{
+					"Oh... I understand...",
+					"Maybe someday...",
+					"I'll wait for you...",
+					"It's okay, I still love you.",
+					"Did I do something wrong?",
+					"I hope you change your mind...",
+					"Even if you don't love me back, I'll stay by your side.",
+					"..."
+				}
+			},
+
+			{
+				BoxState.kiss, new string[]
+				{
+					"It's okay, I'll wait.",
+					"Maybe next time?",
+					"Did I make you uncomfortable?",
+				}
+			}
+		};
+
 		private static readonly Dictionary<MiyukiEvent, string> MiyukiEventLove = new Dictionary<MiyukiEvent, string>()
 		{
 			{ MiyukiEvent.draw, "Draw"},
@@ -45,28 +98,25 @@ namespace MiyukiSone
 
 		private static readonly Dictionary<MiyukiEvent, string> MiyukiEventHate = new Dictionary<MiyukiEvent, string>()
 		{
-			{ MiyukiEvent.draw, "Draw"},
 			{ MiyukiEvent.mana, "Mana"},
 			{ MiyukiEvent.gold, "Gold"},
-			{ MiyukiEvent.fetch, "Fetch"},
-			{ MiyukiEvent.random, "I love you!"},
 		};
 
-		private readonly static Dictionary<MiyukiTextState, string> MiyukiBattleDialogue = new Dictionary<MiyukiTextState, string>()
+		private readonly static Dictionary<MiyukiTextState, string> MiyukiDialogueBattle = new Dictionary<MiyukiTextState, string>()
 		{
 			{ MiyukiTextState.heal, "How dare you heal other people !?" },
 		};
 
-		public static void MiyukiText(BattleChar bchar, MiyukiTextState state, bool isEvent = true)
+		public static void MiyukiTextBox(BoxState stateBox, bool isYes, bool isEvent = true)
 		{
-			string text = MiyukiText(state);
-			MiyukiText(bchar, text, SoftText(), isEvent);
+			string text = MiyukiTextBox(stateBox, isYes);
+			MiyukiText(text, SoftText(), isEvent);
 		}
 
-		public static void MiyukiTextEvent(BattleChar bchar, MiyukiEvent eventText, bool isEvent = true)
+		public static void MiyukiTextEvent(MiyukiEvent eventText, bool isEvent = true)
 		{
 			string text = MiyukiTextEvent(eventText);
-			MiyukiText(bchar, text, SoftText(), isEvent);
+			MiyukiText(text, SoftText(), isEvent);
 		}
 
 		private static bool SoftText()
@@ -81,14 +131,14 @@ namespace MiyukiSone
 			return isSoftText;
 		}
 
-		public static void MiyukiText(BattleChar bchar, string text, bool isSoftText, bool isEvent)
+		public static void MiyukiText(string text, bool isSoftText, bool isEvent)
 		{
-			var position = bchar.GetTopPos();
-			if (string.IsNullOrEmpty(text) || bchar.IsDead || bchar.Info.KeyData != ModItemKeys.Character_Miyuki) return;
+			var position = MiyukiBchar.GetTopPos();
+			if (string.IsNullOrEmpty(text) || MiyukiBchar.IsDead) return;
 
 			if (isSoftText)
 			{
-				bchar.StartCoroutine(TextSoft(position, text));
+				MiyukiBchar.StartCoroutine(TextSoft(position, text));
 			}
 			else
 			{
@@ -96,9 +146,14 @@ namespace MiyukiSone
 			}
 		}
 
-		private static string MiyukiText(MiyukiTextState state)
+		private static string MiyukiTextBox(BoxState state, bool isYes)
 		{
-			return MiyukiBattleDialogue.TryGetValue(state, out string line) && !string.IsNullOrEmpty(line) ? line : "I'm Error";
+			var dic = isYes ? MiyukiDialogueBoxYes : MiyukiDialogueBoxNo;
+			if (dic.TryGetValue(state, out string[] lines) && lines != null && lines.Length > 0)
+			{
+				return lines[RandomManager.RandomInt("MiyukiRandomBox", 0, lines.Length)];
+			}
+			return "I'm Error";
 		}
 
 		private static string MiyukiTextEvent(MiyukiEvent state)
@@ -110,7 +165,7 @@ namespace MiyukiSone
 		private static IEnumerator TextSoft(Vector3 position, string text)
 		{
 			var topText = BattleText.CustomText(position, text);
-			yield return new WaitForSecondsRealtime(2f);
+			yield return new WaitForSecondsRealtime(3f);
 			topText?.End();
 		}
 
