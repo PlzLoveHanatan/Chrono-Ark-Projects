@@ -12,7 +12,7 @@ using GameDataEditor;
 
 namespace MiyukiSone
 {
-	public static class MiyukiUI
+	public static class UtilsUI
 	{
 		public static void GetSprite(string pathAddress, Image img)
 		{

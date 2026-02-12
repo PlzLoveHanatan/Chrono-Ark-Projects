@@ -9,5 +9,6 @@ namespace MiyukiSone
     public class MiyukiCV : CustomValue
     {
         public int MiyukiAffectionPoints = 0;
+        public bool Equip = false;
     }
 }

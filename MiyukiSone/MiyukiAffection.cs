@@ -8,27 +8,34 @@ using GameDataEditor;
 using I2.Loc;
 using UnityEngine;
 using static MiyukiSone.Utils;
-using static MiyukiSone.Text;
+using static MiyukiSone.DialogueBoxData;
+using static MiyukiSone.EventData;
+using static MiyukiSone.EventStringLoader;
 using static MiyukiSone.DialogueBox;
+using static MiyukiSone.EventAction;
+using UnityEngine.U2D.SpriteShapeClipperLib;
 
 namespace MiyukiSone
 {
 	public static class Affection
 	{
-		private static GameObject testWindow;
 		public enum MiyukiAffectionState
 		{
-			love, // 5 -> 10
-			neutral, // between -5 and 5
-			hate, // -5 -> -10
+			adoration,  // 20+
+			love,       // 10 -> 19
+			indifference, // -9 -> 9
+			hate,       // -10 -> -19
+			eradication // -20-
 		}
 
 		private const string MiyukiRandom = "MiyukiRandom";
 
-		private const int Love_Threshold = 5;
-		private const int Hate_Threshold = -5;
-		private const int Max_Affection = 10;
-		private const int Min_Affection = -10;
+		private const int Adoration_Threshold = 20;
+		private const int Love_Threshold = 10;
+		private const int Hate_Threshold = -10;
+		private const int Eradication_Threshold = -20;
+		private const int Max_Affection = 20;
+		private const int Min_Affection = -20;
 		private const int Random_Chance = 5;
 
 		public static int MiyukiPoints => MiyukiData.MiyukiAffectionPoints;
@@ -37,13 +44,18 @@ namespace MiyukiSone
 		{
 			get
 			{
-				if (MiyukiPoints >= Love_Threshold) return MiyukiAffectionState.love;
-				else if (MiyukiPoints <= Hate_Threshold) return MiyukiAffectionState.hate;
-				else return MiyukiAffectionState.neutral;
+				int points = MiyukiPoints;
+
+				if (points >= 20) return MiyukiAffectionState.adoration;
+				if (points >= 10) return MiyukiAffectionState.love;				
+				if (points <= -10) return MiyukiAffectionState.hate;
+				if (points <= -20) return MiyukiAffectionState.eradication;
+
+				return MiyukiAffectionState.indifference;
 			}
 		}
 
-		public static void ChangePoints()
+		public static void ChangePointsRandom()
 		{
 			int amount = RandomManager.RandomInt(MiyukiRandom, 0, 2);
 			ChangePoints(-amount);
@@ -52,85 +64,32 @@ namespace MiyukiSone
 		public static void ChangePoints(int amount)
 		{
 			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, Min_Affection, Max_Affection);
+			Debug.Log($"Current Miyuki affection is {MiyukiPoints}");
 		}
 
 		public static void MiyukiTurn()
 		{
-			//MiyukiDialogueBox(); return;
+			//CreateDialogueBox(); return;
 
-			if (RandomManager.RandomPer(MiyukiRandom, 0, 50) == true && CurrentAffection != MiyukiAffectionState.neutral)
+			bool alwaysLucky = RandomManager.RandomPer(MiyukiRandom, 100, 50);
+
+			if (alwaysLucky && CurrentAffection != MiyukiAffectionState.indifference)
 			{
-				switch (CurrentAffection)
-				{
-					case MiyukiAffectionState.love: LoveAction(5); break;
-					case MiyukiAffectionState.hate: HateAction(3); break;
-					default: break;
-				}
+				MiyukiAction();
+
+				//switch (CurrentAffection)
+				//{
+				//	case MiyukiAffectionState.adoration: AdorationAction(5); break;
+				//	case MiyukiAffectionState.eradication: EradicationAction(3); break;
+				//	default: CreateDialogueBox();  break;
+				//}
 			}
 			else
 			{
-				MiyukiDialogueBox();
+				DialogueBoxState? state = null;
+				if (CurrentAffection == MiyukiAffectionState.adoration && alwaysLucky) state = DialogueBoxState.kiss;
+				CreateDialogueBox(state);
 			}
-		}
-
-		private static void CreateDialogueBox(BoxState state)
-		{
-			MiyukiDialogueBox(state);
-		}
-
-		private static void MiyukiDialogueBox(BoxState? state = null)
-		{
-			var allStates = Enum.GetValues(typeof(BoxState));
-			BoxState currentState = state ?? (BoxState)allStates.GetValue(UnityEngine.Random.Range(0, allStates.Length));
-			string[] spriteVariants = DialogueSprites[currentState];
-			string randomSprite = spriteVariants[RandomManager.RandomInt("MiyukiRandomBox", 0, spriteVariants.Length)];
-			Sprite sprite = MiyukiUI.GetSprite("MiyukiVisual/DialogueBox/" + randomSprite);
-			Vector2 size = DialogueSize[currentState];
-			Vector3 position = Dialogueposition[currentState];
-
-			testWindow = MiyukiUI.CreateUIImage($"dialogue_{currentState}", BattleSystem.instance.ActWindow.transform, sprite, size, position, true);
-			testWindow.AddComponent<MiyukiWindow>();
-			testWindow.AddComponent<MiyukiWindowDragHandler>();
-			testWindow.GetComponent<MiyukiWindow>().currentBoxState = currentState;
-		}
-
-		private static void LoveAction(int actions)
-		{
-			if (RandomManager.RandomPer(MiyukiRandom, 100, MiyukiPoints * Random_Chance) == false) return;
-			int actionIndex = RandomManager.RandomInt(MiyukiRandom, 0, actions);
-			MiyukiEvent selectedEvent = MiyukiEvent.random;
-			switch (actionIndex)
-			{
-				case 0: AllyTeam.Draw(); selectedEvent = MiyukiEvent.draw; break;
-				case 1: AllyTeam.AP += 1; selectedEvent = MiyukiEvent.mana; break;
-				case 2: FetchSkill(); selectedEvent = MiyukiEvent.fetch; break;
-				case 3: Pd._Gold += 250; selectedEvent = MiyukiEvent.gold; break;
-				case 4: Pd._Soul += 1; selectedEvent = MiyukiEvent.soulstones; break;
-			}
-			MiyukiTextEvent(selectedEvent, true);
-		}
-
-		private static void FetchSkill()
-		{
-			BattleSystem.instance.EffectDelays.Enqueue(BattleSystem.I_OtherSkillSelect(AllyTeam.Skills_Deck,
-				new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.ForceDraw(b.Myskill)), ScriptLocalization.System_SkillSelect.DrawSkill, false, true, true, false, true));
-		}
-
-		private static void HateAction(int actions)
-		{
-			if (RandomManager.RandomPer(MiyukiRandom, 100, MiyukiPoints * Random_Chance) == false) return;
-			if (Pd._Gold < 250) actions--;
-			if (Pd._Soul < 1) actions--;
-			int actionIndex = RandomManager.RandomInt(MiyukiRandom, 0, actions);
-			MiyukiEvent selectedEvent = MiyukiEvent.random;
-			switch (actionIndex)
-			{
-				case 0: AllyTeam.AP -= 1; selectedEvent = MiyukiEvent.mana; break;
-				case 1: Pd._Gold -= 250; selectedEvent = MiyukiEvent.gold; break;
-				case 2: Pd._Soul -= 1; selectedEvent = MiyukiEvent.soulstones; break;
-			}
-			// remove skill from hand or deck for the current battle
-			MiyukiTextEvent(selectedEvent, true);
-		}
+		}		
 	}
 }

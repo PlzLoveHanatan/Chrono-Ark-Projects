@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace MiyukiSone
 {
-	public class MiyukiWindowDragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+	public class DialogueBoxDragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 	{
 		[Header("Drag Settings")]
 		public bool allowDrag = true;

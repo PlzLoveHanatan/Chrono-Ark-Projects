@@ -10,7 +10,7 @@ using System.Linq;
 namespace MiyukiSone
 {
 	[RequireComponent(typeof(RectTransform))]
-	public class MiyukiInputField : MonoBehaviour
+	public class MiyukiInputEvent : MonoBehaviour
 	{
 		[Header("Input Field Settings")]
 		public string placeholderText = "Type text here";
@@ -643,21 +643,21 @@ namespace MiyukiSone
 			}
 		}
 
-		public static MiyukiInputField CreateChatInput(string spritePath, Transform parentWindow, Vector2 windowSize, Vector3 windowPosition,
+		public static MiyukiInputEvent CreateChatInput(string spritePath, Transform parentWindow, Vector2 windowSize, Vector3 windowPosition,
 	string placeholder, Vector2? inputPosition = null, Vector2? inputSize = null)
 		{
 			try
 			{
 				string path = string.IsNullOrEmpty(spritePath) ? "MiyukiVisual/dlog_test.png" : spritePath;
 				if (parentWindow == null) parentWindow = BattleSystem.instance.ActWindow.transform;
-				Sprite sprite = MiyukiUI.GetSprite(path);
-				GameObject window = MiyukiUI.CreateUIImage("ChatWindow", parentWindow, sprite, windowSize, windowPosition, true);
-				window.AddComponent<MiyukiWindowDragHandler>();
+				Sprite sprite = UtilsUI.GetSprite(path);
+				GameObject window = UtilsUI.CreateUIImage("ChatWindow", parentWindow, sprite, windowSize, windowPosition, true);
+				window.AddComponent<DialogueBoxDragHandler>();
 
 				Vector2 finalInputPosition = inputPosition ?? new Vector2(0, -20);
 				Vector2 finalInputSize = inputSize ?? new Vector2(400, 35);
 
-				MiyukiInputField inputField = Create(window.transform, finalInputPosition, finalInputSize);
+				MiyukiInputEvent inputField = Create(window.transform, finalInputPosition, finalInputSize);
 
 				string text = string.IsNullOrEmpty(placeholder) ? "Input text here" : placeholder;
 				inputField.placeholderText = text;
@@ -687,18 +687,18 @@ namespace MiyukiSone
 			}
 		}
 
-		private static IEnumerator DelayedFocusCoroutine(MiyukiInputField inputField)
+		private static IEnumerator DelayedFocusCoroutine(MiyukiInputEvent inputField)
 		{
 			yield return new WaitForSeconds(0.1f);
 			inputField?.Focus();
 		}
 
-		public static MiyukiInputField Create(Transform parent, Vector2 position, Vector2 size)
+		public static MiyukiInputEvent Create(Transform parent, Vector2 position, Vector2 size)
 		{
 			GameObject inputObj = new GameObject("MiyukiInputField");
 			inputObj.transform.SetParent(parent, false);
 
-			MiyukiInputField inputField = inputObj.AddComponent<MiyukiInputField>();
+			MiyukiInputEvent inputField = inputObj.AddComponent<MiyukiInputEvent>();
 			if (inputField != null)
 			{
 				inputField.SetPosition(position);
