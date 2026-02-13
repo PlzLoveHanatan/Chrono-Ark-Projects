@@ -561,6 +561,7 @@ namespace MiyukiSone
 			CheckTextInput(value);
 			Clear();
 			Focus();
+			Destroy(gameObject);
 		}
 
 		private void CheckTextInput(string text)

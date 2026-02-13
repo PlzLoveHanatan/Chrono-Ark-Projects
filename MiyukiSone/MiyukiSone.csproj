@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone02122026230622</AssemblyName>
+    <AssemblyName>MiyukiSone02132026174003</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -382,13 +382,12 @@
       <Private>False</Private>
     </Reference>
     <!-- Extra Reference Start-->
-    <!-- Extra Reference End-->
+<!-- Extra Reference End-->
   </ItemGroup>
-  <!-- Compile ItemGroup Start-->
+                                                                                                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="MiyukiAffection.cs" />
     <Compile Include="MiyukiCV.cs" />
-    <Compile Include="MiyukiEvent\EventActions.cs" />
     <Compile Include="MiyukiSone_ModDefinition.cs" />
     <Compile Include="MiyukiSone_ModItemKeys.cs" />
     <Compile Include="MiyukiSone_Plugin.cs" />
@@ -401,9 +400,11 @@
     <Compile Include="MiyukiDialogueBox\DialogueBoxDragHandler.cs" />
     <Compile Include="MiyukiDialogueBox\DialogueBoxStringLoader.cs" />
     <Compile Include="MiyukiDialogueBox\DialogueBoxWindow.cs" />
+    <Compile Include="MiyukiEvent\EventBattle.cs" />
     <Compile Include="MiyukiEvent\EventData.cs" />
+    <Compile Include="MiyukiEvent\EventField.cs" />
     <Compile Include="MiyukiEvent\EventStringLoader.cs" />
-    <Compile Include="MiyukiEvent\MiyukiInputField.cs" />
+    <Compile Include="MiyukiEvent\MiyukiInputEvent.cs" />
     <Compile Include="MiyukiUtils\Utils.cs" />
     <Compile Include="MiyukiUtils\UtilsUI.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />

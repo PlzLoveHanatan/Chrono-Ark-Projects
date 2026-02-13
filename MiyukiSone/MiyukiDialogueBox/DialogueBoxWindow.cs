@@ -113,7 +113,7 @@ namespace MiyukiSone
 
 		private void ClickHandler(bool isYesClick, int points)
 		{
-			ChangePoints(points);
+			ChangeAffectionPoints(points);
 			switch (currentDialogueBoxState)
 			{
 				case DialogueBoxState.love: ClickLove(isYesClick); break;

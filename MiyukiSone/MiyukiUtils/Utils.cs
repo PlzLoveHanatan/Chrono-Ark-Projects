@@ -15,6 +15,7 @@ namespace MiyukiSone
 {
 	public static class Utils
 	{
+		public const string Author = "MiyukiSone";
 		public static TempSaveData Pd => PlayData.TSavedata;
 		public static BattleSystem Bs => BattleSystem.instance;
 		public static BattleTeam AllyTeam => Bs?.AllyTeam;
@@ -143,7 +144,11 @@ namespace MiyukiSone
 
 		public static string GetLocalizedText<T>(T line) where T : class
 		{
-			if (line == null) return "I'm Error";
+			if (line == null)
+			{
+				Debug.Log($"The line is missing {line}"); 
+				return "I'm Error";
+			}
 
 			string lang = I2.Loc.LocalizationManager.CurrentLanguage;
 
@@ -163,6 +168,12 @@ namespace MiyukiSone
 				case "Chinese-TW": return string.IsNullOrEmpty(chineseTW) ? english : chineseTW;
 				default: return english;
 			}
+		}
+
+		public static Buff SecureBuff(BattleChar target, BattleChar user, string buffKey, int percentage = 0)
+		{
+			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
+			return buff;
 		}
 	}
 }

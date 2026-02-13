@@ -12,7 +12,7 @@ using static MiyukiSone.DialogueBoxData;
 using static MiyukiSone.EventData;
 using static MiyukiSone.EventStringLoader;
 using static MiyukiSone.DialogueBox;
-using static MiyukiSone.EventAction;
+using static MiyukiSone.EventBattle;
 using UnityEngine.U2D.SpriteShapeClipperLib;
 
 namespace MiyukiSone
@@ -21,24 +21,25 @@ namespace MiyukiSone
 	{
 		public enum MiyukiAffectionState
 		{
-			adoration,  // 20+
-			love,       // 10 -> 19
+			adoration,  // 25+
+			love,       // 10 -> 24
 			indifference, // -9 -> 9
-			hate,       // -10 -> -19
-			eradication // -20-
+			hate,       // -10 -> -24
+			eradication // -25-
 		}
 
 		private const string MiyukiRandom = "MiyukiRandom";
-
-		private const int Adoration_Threshold = 20;
-		private const int Love_Threshold = 10;
-		private const int Hate_Threshold = -10;
-		private const int Eradication_Threshold = -20;
-		private const int Max_Affection = 20;
-		private const int Min_Affection = -20;
+		private const int Max_Affection = 25;
+		private const int Min_Affection = -25;
 		private const int Random_Chance = 5;
 
+		public static bool MiyukiActing => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints)) && !IsIndifferent;
+
 		public static int MiyukiPoints => MiyukiData.MiyukiAffectionPoints;
+		public static bool IsLoving => CurrentAffection == MiyukiAffectionState.love || CurrentAffection == MiyukiAffectionState.adoration;
+		public static bool IsHating => CurrentAffection == MiyukiAffectionState.hate || CurrentAffection == MiyukiAffectionState.eradication;
+		public static bool IsIndifferent => CurrentAffection == MiyukiAffectionState.indifference;
+		public static bool IsExtremeAffection => CurrentAffection == MiyukiAffectionState.adoration || CurrentAffection == MiyukiAffectionState.eradication;
 
 		public static MiyukiAffectionState CurrentAffection
 		{
@@ -46,22 +47,22 @@ namespace MiyukiSone
 			{
 				int points = MiyukiPoints;
 
-				if (points >= 20) return MiyukiAffectionState.adoration;
-				if (points >= 10) return MiyukiAffectionState.love;				
+				if (points >= 25) return MiyukiAffectionState.adoration;
+				if (points >= 10) return MiyukiAffectionState.love;
+				if (points <= -25) return MiyukiAffectionState.eradication;
 				if (points <= -10) return MiyukiAffectionState.hate;
-				if (points <= -20) return MiyukiAffectionState.eradication;
 
 				return MiyukiAffectionState.indifference;
 			}
 		}
 
-		public static void ChangePointsRandom()
+		public static void ChangeAffectionPointsRandom()
 		{
 			int amount = RandomManager.RandomInt(MiyukiRandom, 0, 2);
-			ChangePoints(-amount);
+			ChangeAffectionPoints(-amount);
 		}
 
-		public static void ChangePoints(int amount)
+		public static void ChangeAffectionPoints(int amount)
 		{
 			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, Min_Affection, Max_Affection);
 			Debug.Log($"Current Miyuki affection is {MiyukiPoints}");
@@ -69,26 +70,22 @@ namespace MiyukiSone
 
 		public static void MiyukiTurn()
 		{
-			//CreateDialogueBox(); return;
+			//CreateDialogueBox(DialogueBoxState.kiss); return;
 
-			bool alwaysLucky = RandomManager.RandomPer(MiyukiRandom, 100, 50);
+			bool alwaysLucky = RandomManager.RandomPer(MiyukiRandom, 100, Math.Abs(MiyukiPoints * Random_Chance + 25));
 
-			if (alwaysLucky && CurrentAffection != MiyukiAffectionState.indifference)
+			if (alwaysLucky)
 			{
-				MiyukiAction();
-
-				//switch (CurrentAffection)
-				//{
-				//	case MiyukiAffectionState.adoration: AdorationAction(5); break;
-				//	case MiyukiAffectionState.eradication: EradicationAction(3); break;
-				//	default: CreateDialogueBox();  break;
-				//}
-			}
-			else
-			{
-				DialogueBoxState? state = null;
-				if (CurrentAffection == MiyukiAffectionState.adoration && alwaysLucky) state = DialogueBoxState.kiss;
-				CreateDialogueBox(state);
+				if (!IsIndifferent)
+				{
+					MiyukiAction();
+				}
+				else
+				{
+					DialogueBoxState? state = null;
+					if (CurrentAffection == MiyukiAffectionState.adoration && alwaysLucky) state = DialogueBoxState.kiss;
+					CreateDialogueBox(state);
+				}
 			}
 		}		
 	}

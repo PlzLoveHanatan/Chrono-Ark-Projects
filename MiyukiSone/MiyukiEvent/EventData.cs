@@ -15,11 +15,18 @@ namespace MiyukiSone
 	{
 		public enum EventState
 		{
+			draw,
 			mana,
 			inventory,
 			gold,
 			soulstones,
 			consumable,
+			redirectHeal,
+			redirectAttack,
+			changeDamageDeal,
+			changeDamageTake,
+			witchCurse,
+			other
 		}
 	}
 }

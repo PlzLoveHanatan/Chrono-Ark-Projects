@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using UnityEngine;
 using static MiyukiSone.Utils;
 using static MiyukiSone.EventData;
+using static MiyukiSone.Affection;
+using EItem;
 
 namespace MiyukiSone
 {
@@ -81,12 +83,21 @@ namespace MiyukiSone
 		public static string GetLocalizedLine(EventState state, bool isLove)
 		{
 			var line = GetRandomLine(state, isLove);
+
+			if (line == null)
+			{
+				Debug.Log($"Line is null for {state}, isLove={isLove}");
+				return $"[Missing: {state}]";
+			}
+
+			// ТЕПЕРЬ line ТОЧНО EventLine, и метод GetLocalizedText сработает
 			return GetLocalizedText(line);
 		}
 
-		public static string MiyukiTextEvent(EventState e, bool isLove, bool isEvent = true)
+		public static string MiyukiTextEvent(EventState e, bool isEvent = true)
 		{
-			string text = GetLocalizedLine(e, isLove);
+			//if (IsIndifferent) return null;
+			string text = GetLocalizedLine(e, IsLoving);
 			ShowText(text, isEvent);
 			return text;
 		}

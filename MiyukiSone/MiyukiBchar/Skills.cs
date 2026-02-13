@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiyukiBchar
+namespace MiyukiSone
 {
-	internal class Skills
+	public class Skills
 	{
+
 	}
 }

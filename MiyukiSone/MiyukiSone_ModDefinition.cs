@@ -35,6 +35,8 @@ namespace MiyukiSone
 					// add % chance to show Miyuki dialogue
 					// Create Miyuki Image + add text + any nasty behaviour -> remove soulstones/gold or curse equips
 				}
+
+				// uncurse Miyuki equip
 			}
 		}
 	}
