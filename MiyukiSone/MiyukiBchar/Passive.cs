@@ -11,6 +11,7 @@ using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
 using static MiyukiSone.EventStringLoader;
 using static MiyukiSone.EventData;
+using static MiyukiSone.DialogueBoxData;
 using System.Runtime.CompilerServices;
 using GameDataEditor;
 using NLog.Targets;
@@ -18,7 +19,7 @@ using System.EnterpriseServices;
 
 namespace MiyukiSone
 {
-	public class Passive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted
+	public class Passive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted, IP_TurnEnd
 	{
 		private MiyukiInputEvent chatInputField;
 
@@ -47,25 +48,42 @@ namespace MiyukiSone
 		{
 			//CreateWindow();
 			//CreateChatWindow();
-			ChangeAffectionPoints(25);
+			//ChangeAffectionPoints(25);
+			if (MiyukiDecides) DeckManipulation();
+		}
+
+		private void DeckManipulation()
+		{
+			if (IsInLove)
+			{
+				// remove curses + shake dust + bloodmist
+			}
+			if (IsHostile)
+			{
+				for (int i = 0; i < 2; i++)
+				{
+					Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiBm", Skill.TempSkill(GDEItemKeys.Skill_S_Transcendence_Main));
+				}
+			}
 		}
 
 		public void DrawNumChange(int DrawNum, out int OutNum)
 		{
-			if (!MiyukiActing)
+			if (MiyukiDecides)
 			{
-				OutNum = DrawNum;
+				OutNum = IsLoving ? DrawNum + 1 : IsHating ? DrawNum - 1 : DrawNum;
+				MiyukiTextEvent();
 			}
 			else
 			{
-				OutNum = IsLoving ? DrawNum + 1 : IsHating ? DrawNum - 1 : DrawNum;
-				MiyukiTextEvent(EventState.draw);
+				OutNum = DrawNum;
 			}
 		}
 
 		public void Turn()
 		{
 			AllyTeam.AliveChars.Where(a => a != BChar).ToList().ForEach(a => SecureBuff(a, BChar, ""));
+			if (Bs.TurnNum > 1) Bs.StartCoroutine(DialogueBoxEvent.RestartStagePreserveProgress());
 			MiyukiTurn();
 		}
 
@@ -133,7 +151,12 @@ namespace MiyukiSone
 		private IEnumerator ShowMiyukiEventText(EventState state)
 		{
 			yield return null;
-			MiyukiTextEvent(state);
+			MiyukiTextEvent();
+		}
+
+		public void TurnEnd()
+		{
+			//UnlockNextTurnEndTry();
 		}
 
 		//public void SkillUse(Skill SkillD, List<BattleChar> Targets)

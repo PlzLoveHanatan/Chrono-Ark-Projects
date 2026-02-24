@@ -1,47 +1,498 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using I2.Loc;
+using Newtonsoft.Json;
 using UnityEngine;
-using ChronoArkMod;
+using I2.Loc;
+using static MiyukiSone.DialogueBox;
 using static MiyukiSone.Utils;
+using System.Collections;
+using GameDataEditor;
+using DarkTonic.MasterAudio;
+using ChronoArkMod;
 
 namespace MiyukiSone
 {
+	public enum TryType
+	{
+		FirstTry,
+		SecondTry,
+		ThirdTry,
+		FourthTry,
+		FifthTry,
+		SixthTry,
+		SeventhTry,
+		EighthTry,
+		NinthTry,
+		TenthTry,
+		EleventhTry,
+	}
+
 	public static class DialogueBoxData
 	{
-		public enum DialogueBoxState
+		// Для временного аудио объекта
+		private static GameObject _currentTempGO;
+
+		private class DialogueLine
 		{
-			love,
-			kiss,
-			//sex,
-			//help
+			public string Key { get; set; }
+			public string English { get; set; }
+			public string Korean { get; set; }
+			public string Japanese { get; set; }
+			public string Chinese { get; set; }
+			public string Chinese_TW { get; set; }
+			public string AudioFile { get; set; }
+
+			[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+			public bool? IsSpecial { get; set; }
 		}
 
-		public static readonly Dictionary<DialogueBoxState, List<string>> DialogueSprites = new Dictionary<DialogueBoxState, List<string>>()
+		private class LoveDialogueData
 		{
-			{ DialogueBoxState.love, new List<string> {"box_love_0.png", "box_love_1.png", "box_love_2.png", "box_love_3.png", "box_love_4.png",
-				"box_love_5.png", "box_love_6.png", "box_love_7.png", "box_love_8.png", "box_love_9.png", "box_love_10.png" } },
-			{ DialogueBoxState.kiss, new List<string> { "box_kiss_0.png", "box_kiss_1.png", "box_kiss_2.png", "box_kiss_3.png" } },
-		};
+			[JsonProperty("yes")]
+			public List<DialogueLine> Yes { get; set; }
 
+			[JsonProperty("no")]
+			public List<DialogueLine> No { get; set; }
+		}
 
-		public static readonly Dictionary<DialogueBoxState, Vector2> DialogueSize = new Dictionary<DialogueBoxState, Vector2>()
+		private static LoveDialogueData loveDialogues;
+		private static readonly HashSet<string> usedLoveYesKeys = new HashSet<string>();
+		private static readonly HashSet<string> usedLoveNoKeys = new HashSet<string>();
+
+		// ============= KISS =============
+		private class KissDialogueData
 		{
-			{ DialogueBoxState.love, new Vector3(700, 130, 0) },
-			{ DialogueBoxState.kiss, new Vector3(700, 130, 0) },
-			//{ DialogueBoxState.sex, new Vector3(0, 120, 0) },
-			//{ DialogueBoxState.help, new Vector3(0, 90, 0) }
-		};
+			[JsonProperty("yes")]
+			public List<DialogueLine> Yes { get; set; }
 
-		public static readonly Dictionary<DialogueBoxState, Vector3> Dialogueposition = new Dictionary<DialogueBoxState, Vector3>()
+			[JsonProperty("no")]
+			public Dictionary<string, List<DialogueLine>> No { get; set; }
+		}
+
+		private static KissDialogueData kissDialogues;
+
+		// ============= TURN END =============
+		private static Dictionary<string, List<DialogueLine>> turnDialogues;
+
+		// ============= МЕТОДЫ ЗАГРУЗКИ =============
+		public static void LoadDialogues()
 		{
-			{ DialogueBoxState.love, new Vector3(170, 170, 0) },
-			{ DialogueBoxState.kiss, new Vector3(170, 170, 0) },
-			//{ DialogueBoxState.sex, new Vector3(0, 120, 0) },
-			//{ DialogueBoxState.help, new Vector3(0, 90, 0) }
-		};
+			if (loveDialogues != null && kissDialogues != null && turnDialogues != null)
+			{
+				Debug.Log("Диалоги уже загружены, повторная загрузка не нужна.");
+				return;
+			}
+
+			LoadLoveDialogues();
+			LoadKissDialogues();
+			LoadTurnDialogues();
+		}
+
+		private static void LoadLoveDialogues()
+		{
+			string jsonContent = MiyukiJsonReader.LoadJson("MiyukiDialogueBoxLove.json");
+
+			if (jsonContent == null)
+			{
+				Debug.LogError("Не удалось загрузить MiyukiDialogueBoxLove.json");
+				return;
+			}
+
+			try
+			{
+				loveDialogues = JsonConvert.DeserializeObject<LoveDialogueData>(jsonContent);
+				int yesCount = loveDialogues?.Yes?.Count ?? 0;
+				int noCount = loveDialogues?.No?.Count ?? 0;
+				Debug.Log($"Диалоги LOVE загружены. Yes: {yesCount}, No: {noCount}");
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"Ошибка десериализации MiyukiDialogueBoxLove.json: {ex.Message}");
+			}
+		}
+
+		private static void LoadKissDialogues()
+		{
+			string jsonContent = MiyukiJsonReader.LoadJson("MiyukiDialogueBoxKiss.json");
+
+			if (jsonContent == null)
+			{
+				Debug.LogError("Не удалось загрузить MiyukiDialogueBoxKiss.json");
+				return;
+			}
+
+			try
+			{
+				kissDialogues = JsonConvert.DeserializeObject<KissDialogueData>(jsonContent);
+				int yesCount = kissDialogues?.Yes?.Count ?? 0;
+				int noCategories = kissDialogues?.No?.Count ?? 0;
+				Debug.Log($"Kiss диалоги загружены. Yes: {yesCount}, No категорий: {noCategories}");
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"Ошибка десериализации MiyukiDialogueBoxKiss.json: {ex.Message}");
+			}
+		}
+
+		private static void LoadTurnDialogues()
+		{
+			string jsonContent = MiyukiJsonReader.LoadJson("MiyukiDialogueBoxTurn.json");
+
+			if (jsonContent == null)
+			{
+				Debug.LogError("Не удалось загрузить MiyukiDialogueBoxTurn.json");
+				return;
+			}
+
+			try
+			{
+				turnDialogues = JsonConvert.DeserializeObject<Dictionary<string, List<DialogueLine>>>(jsonContent);
+				Debug.Log($"Turn диалоги загружены. Найдено типов: {turnDialogues?.Count ?? 0}");
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"Ошибка десериализации MiyukiDialogueBoxTurn.json: {ex.Message}");
+			}
+		}
+
+		private static string GetLocalizedLine(DialogueLine line)
+		{
+			string currentLanguage = LocalizationManager.CurrentLanguage;
+
+			switch (currentLanguage)
+			{
+				case "Korean": return !string.IsNullOrEmpty(line.Korean) ? line.Korean : line.English;
+				case "Japanese": return !string.IsNullOrEmpty(line.Japanese) ? line.Japanese : line.English;
+				case "Chinese": return !string.IsNullOrEmpty(line.Chinese) ? line.Chinese : line.English;
+				case "Chinese (Traditional)": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
+				default: return line.English;
+			}
+		}
+
+		// ============= МЕТОДЫ ДЛЯ АУДИО =============
+		private static T GetAssets<T>(string path, string assetBundlePath = null) where T : UnityEngine.Object
+		{
+			if (string.IsNullOrEmpty(assetBundlePath)) assetBundlePath = "MiyukiSone";
+			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<T>(assetBundlePath, path);
+			return AddressableLoadManager.LoadAddressableAsset<T>(address);
+		}
+
+		private static void PlaySoundFromAsset(string audioPath, bool isStopOldBus = true, int? volumePercent = null)
+		{
+			if (string.IsNullOrEmpty(audioPath)) return;
+
+			AudioClip clip = GetAssets<AudioClip>(audioPath);
+			if (clip == null)
+			{
+				Debug.LogWarning($"AudioClip not found: {audioPath}");
+				return;
+			}
+
+			if (isStopOldBus && _currentTempGO != null)
+			{
+				MasterAudio.StopBus("SE");
+				GameObject.Destroy(_currentTempGO);
+				_currentTempGO = null;
+			}
+
+			GameObject tempGO = new GameObject("TempAudio");
+			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
+
+			float finalVolume = volumePercent.HasValue ? Mathf.Clamp(volumePercent.Value / 100f, 0f, 2f) : MasterAudio.MasterVolumeLevel;
+
+			audioSource.volume = finalVolume;
+			audioSource.PlayOneShot(clip);
+
+			_currentTempGO = tempGO;
+			UnityEngine.Object.Destroy(tempGO, clip.length);
+
+			Debug.Log($"🎯 Playing audio: {audioPath}");
+		}
+
+		// ============= LOVE =============
+		private static DialogueLine GetRandomLoveLine(bool isYes)
+		{
+			List<DialogueLine> allLines = isYes ? loveDialogues?.Yes : loveDialogues?.No;
+			if (allLines == null || allLines.Count == 0) return null;
+
+			HashSet<string> usedKeys = isYes ? usedLoveYesKeys : usedLoveNoKeys;
+
+			if (usedKeys.Count >= allLines.Count)
+			{
+				Debug.Log($"Все love фразы (yes:{isYes}) были показаны. Сбрасываем историю.");
+				usedKeys.Clear();
+			}
+
+			var availableLines = allLines.Where(line => !usedKeys.Contains(line.Key)).ToList();
+
+			if (availableLines.Count == 0)
+			{
+				usedKeys.Clear();
+				availableLines = allLines;
+			}
+
+			int index = UnityEngine.Random.Range(0, availableLines.Count);
+			var selectedLine = availableLines[index];
+
+			usedKeys.Add(selectedLine.Key);
+			return selectedLine;
+		}
+
+		public static void MiyukiTextBoxLove(bool isYes, bool isEvent = true)
+		{
+			var line = GetRandomLoveLine(isYes);
+			if (line == null)
+			{
+				Debug.LogError($"Не найдена строка для love диалога, isYes: {isYes}");
+				return;
+			}
+
+			string text = GetLocalizedLine(line);
+			ShowText(text, isEvent);
+			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
+
+			// Путь к папке Love
+			PlaySoundFromAsset($"Assets/DialogueBox/Love/{line.AudioFile}.ogg", true);
+		}
+
+		// ============= KISS =============
+		private static string GetKissNoKeyFromType(TryType tryType)
+		{
+			switch (tryType)
+			{
+				case TryType.FirstTry: return "Try_01";
+				case TryType.SecondTry: return "Try_02";
+				case TryType.ThirdTry: return "Try_03";
+				case TryType.FourthTry: return "Try_04";
+				case TryType.FifthTry: return "Try_05";
+				case TryType.SixthTry: return "Try_06";
+				case TryType.SeventhTry: return "Try_07";
+				case TryType.EighthTry: return "Try_08";
+				case TryType.NinthTry: return "Try_09";
+				case TryType.TenthTry: return "Try_10";
+				case TryType.EleventhTry: return "Try_11";
+				default: return "";
+			}
+		}
+
+		private static DialogueLine GetRandomKissYesLine()
+		{
+			if (kissDialogues?.Yes == null || kissDialogues.Yes.Count == 0)
+			{
+				Debug.LogError("Нет Yes фраз для Kiss диалогов");
+				return null;
+			}
+
+			int index = UnityEngine.Random.Range(0, kissDialogues.Yes.Count);
+			var selectedLine = kissDialogues.Yes[index];
+
+			if (selectedLine.IsSpecial == true)
+			{
+				Debug.Log($"Выбрана особенная Yes фраза: {selectedLine.Key}");
+			}
+
+			return selectedLine;
+		}
+
+		private static DialogueLine GetCurrentKissNoLine()
+		{
+			if (kissDialogues?.No == null)
+			{
+				Debug.LogError("Kiss диалоги не загружены или нет No секции");
+				return null;
+			}
+
+			string tryKey = GetKissNoKeyFromType(MiyukiData.CurrentKissNoType);
+
+			if (!kissDialogues.No.TryGetValue(tryKey, out List<DialogueLine> phrases) || phrases == null || phrases.Count == 0)
+			{
+				Debug.LogError($"Нет No фраз для типа {MiyukiData.CurrentKissNoType} (ключ: {tryKey})");
+				return null;
+			}
+
+			MiyukiData.KissNoCallCount++;
+
+			int phraseIndex = MiyukiData.KissNoCallCount == 1 ? 0 : (phrases.Count > 1 ? 1 : 0);
+
+			if (phraseIndex >= phrases.Count)
+			{
+				Debug.LogError($"Для типа {MiyukiData.CurrentKissNoType} нет фразы с индексом {phraseIndex}");
+				return null;
+			}
+
+			return phrases[phraseIndex];
+		}
+
+		public static void MiyukiTextBoxKiss(bool isYes, bool isEvent = true)
+		{
+			DialogueLine line;
+			if (isYes)
+			{
+				line = GetRandomKissYesLine();
+				if (line == null)
+				{
+					Debug.LogError("Не найдена Yes фраза для Kiss диалога");
+					return;
+				}
+				Debug.Log($"Kiss Yes dialog - Audio: {line.AudioFile}, Key: {line.Key}, isSpecial: {line.IsSpecial}");
+
+				// Yes фразы в папке Kiss/Yes
+				PlaySoundFromAsset($"Assets/DialogueBox/Kiss/{line.AudioFile}.ogg", true);
+			}
+			else
+			{
+				line = GetCurrentKissNoLine();
+				if (line == null)
+				{
+					Debug.LogError("Не найдена No фраза для Kiss диалога");
+					return;
+				}
+				Debug.Log($"Kiss No dialog - Type: {MiyukiData.CurrentKissNoType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {MiyukiData.KissNoCallCount}");
+
+				// No фразы в папке Kiss/No
+				PlaySoundFromAsset($"Assets/DialogueBox/Kiss/{line.AudioFile}.ogg", true);
+
+				if (MiyukiData.KissNoCallCount == 2)
+				{
+					UnlockNextKissNo();
+				}
+			}
+
+			string text = GetLocalizedLine(line);
+			ShowText(text, isEvent);
+		}
+
+		public static void UnlockNextKissNo()
+		{
+			if (MiyukiData.CurrentKissNoType == TryType.EleventhTry && MiyukiData.KissNoCallCount == 2)
+			{
+				Bs.StartCoroutine(MessWithGame());
+				Debug.Log("Достигнут последний No тип для Kiss (EleventhTry). Нельзя разблокировать дальше");
+				return;
+			}
+
+			MiyukiData.CurrentKissNoType++;
+			MiyukiData.KissNoCallCount = 0;
+			Debug.Log($"Разблокирован новый No тип для Kiss: {MiyukiData.CurrentKissNoType}");
+		}
+
+		private static IEnumerator MessWithGame()
+		{
+			yield return new WaitForSeconds(1.5f);
+			UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
+			if (UnityEngine.Random.Range(0, 2) == 1 && Pd.StageNum > 0)
+			{
+				UIManager.inst.StartCoroutine(PauseWindow.RestartCo());
+			}
+			else
+			{
+				PauseWindow.QuitGameDel();
+			}
+		}
+
+		public static TryType GetCurrentKissNoType()
+		{
+			return MiyukiData.CurrentKissNoType;
+		}
+
+		public static void ResetAllKissNo()
+		{
+			MiyukiData.CurrentKissNoType = TryType.FirstTry;
+			MiyukiData.KissNoCallCount = 0;
+			Debug.Log("Все Kiss No диалоги сброшены. Начинаем с FirstTry");
+		}
+
+		// ============= TURN END =============
+		private static string GetTurnKeyFromType(TryType tryType)
+		{
+			switch (tryType)
+			{
+				case TryType.FirstTry: return "Try_01";
+				case TryType.SecondTry: return "Try_02";
+				case TryType.ThirdTry: return "Try_03";
+				case TryType.FourthTry: return "Try_04";
+				case TryType.FifthTry: return "Try_05";
+				case TryType.SixthTry: return "Try_06";
+				case TryType.SeventhTry: return "Try_07";
+				case TryType.EighthTry: return "Try_08";
+				case TryType.NinthTry: return "Try_09";
+				case TryType.TenthTry: return "Try_10";
+				case TryType.EleventhTry: return "Try_11";
+				default: return "";
+			}
+		}
+
+		private static DialogueLine GetCurrentTurnLine()
+		{
+			if (turnDialogues == null)
+			{
+				Debug.LogError("Turn диалоги не загружены");
+				return null;
+			}
+
+			string tryKey = GetTurnKeyFromType(MiyukiData.CurrentTryType);
+
+			if (!turnDialogues.TryGetValue(tryKey, out List<DialogueLine> phrases) || phrases == null || phrases.Count == 0)
+			{
+				Debug.LogError($"Нет фраз для типа {MiyukiData.CurrentTryType} (ключ: {tryKey})");
+				return null;
+			}
+
+			MiyukiData.CurrentTryCallCount++;
+
+			int phraseIndex = MiyukiData.CurrentTryType == TryType.EleventhTry ? 0 : (MiyukiData.CurrentTryCallCount == 1 ? 0 : 1);
+
+			if (phraseIndex >= phrases.Count)
+			{
+				Debug.LogError($"Для типа {MiyukiData.CurrentTryType} нет фразы с индексом {phraseIndex}");
+				return null;
+			}
+
+			return phrases[phraseIndex];
+		}
+
+		public static void MiyukiTextBoxTurn(bool isEvent = true)
+		{
+			var line = GetCurrentTurnLine();
+			if (line == null)
+			{
+				Debug.LogError($"Не найдена строка для текущего Turn диалога: {MiyukiData.CurrentTryType}");
+				return;
+			}
+
+			string text = GetLocalizedLine(line);
+			ShowText(text, isEvent);
+			Debug.Log($"Turn dialog - Type: {MiyukiData.CurrentTryType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {MiyukiData.CurrentTryCallCount}");
+
+			// Путь к папке Turn
+			PlaySoundFromAsset($"Assets/DialogueBox/Turn/{line.AudioFile}.ogg", true);
+		}
+
+		public static void UnlockNextTurnEndTry()
+		{
+			if (MiyukiData.CurrentTryType == TryType.EleventhTry || MiyukiData.CurrentTryCallCount == 1)
+			{
+				Debug.Log("Достигнут последний тип (EleventhTry). Нельзя разблокировать дальше");
+				return;
+			}
+
+			MiyukiData.CurrentTryType++;
+			MiyukiData.CurrentTryCallCount = 0;
+			Debug.Log($"Разблокирован новый тип Turn: {MiyukiData.CurrentTryType}");
+		}
+
+		public static TryType GetCurrentTryType()
+		{
+			return MiyukiData.CurrentTryType;
+		}
+
+		public static void ResetAllTries()
+		{
+			MiyukiData.CurrentTryType = TryType.FirstTry;
+			MiyukiData.CurrentTryCallCount = 0;
+			Debug.Log("Все Try диалоги сброшены. Начинаем с FirstTry");
+		}
 	}
 }

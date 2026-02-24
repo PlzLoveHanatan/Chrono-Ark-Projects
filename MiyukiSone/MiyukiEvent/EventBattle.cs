@@ -30,18 +30,16 @@ namespace MiyukiSone
 			int randomIndex = availableIndexes[RandomManager.RandomInt("MiyukiLoveAction", 0, availableIndexes.Count)];
 			MiyukiData.LastLoveAction = randomIndex;
 
-			EventState selectedEvent = EventState.consumable;
-
 			switch (randomIndex)
 			{
-				case 0: ChangeMana(1); selectedEvent = EventState.mana; break;
-				case 1: ChangeInventoryNum(1); selectedEvent = EventState.inventory; break;
-				case 2: ChangeGold(250); selectedEvent = EventState.gold; break;
-				case 3: ChangeSoulstones(1); selectedEvent = EventState.soulstones; break;
-				case 4: FetchSkill(); selectedEvent = EventState.draw; break;
+				case 0: ChangeMana(1); break;
+				case 1: ChangeInventoryNum(1); break;
+				case 2: ChangeGold(250); break;
+				case 3: ChangeSoulstones(1); break;
+				case 4: FetchSkill(); break;
 				default: break;
 			}
-			MiyukiTextEvent(selectedEvent);
+			MiyukiTextEvent();
 		}
 
 		private static void HateActions()
@@ -53,42 +51,40 @@ namespace MiyukiSone
 			int randomIndex = availableIndexes[RandomManager.RandomInt("MiyukiHateAction", 0, availableIndexes.Count)];
 			MiyukiData.LasthateAction = randomIndex;
 
-			if (Pd._Soul >= 1 || Pd._Soul >= 2 && IsExtremeAffection) availableIndexes.Add(2);
+			if (Pd._Soul >= 1 || Pd._Soul >= 2 && IsHating) availableIndexes.Add(2);
 			if (Pd._Soul >= 2) availableIndexes.Add(3);
-
-			EventState selectedEvent = EventState.consumable;
 
 			switch (randomIndex)
 			{
-				case 0: ChangeMana(1); selectedEvent = EventState.mana; break;
-				case 1: ChangeInventoryNum(1); selectedEvent = EventState.inventory; break;
-				case 2: ChangeGold(250); selectedEvent = EventState.gold; break;
-				case 3: ChangeSoulstones(1); selectedEvent = EventState.soulstones; break;
+				case 0: ChangeMana(1); break;
+				case 1: ChangeInventoryNum(1); break;
+				case 2: ChangeGold(250); break;
+				case 3: ChangeSoulstones(1); break;
 			}
-			MiyukiTextEvent(selectedEvent);
+			MiyukiTextEvent();
 		}
 
 		private static void ChangeMana(int amount)
 		{
-			int finalValue = IsExtremeAffection ? amount * 2 : amount;
+			int finalValue = IsAdoring || IsHating ? amount * 2 : amount;
 			AllyTeam.AP += IsLoving ? finalValue : -finalValue;
 		}
 
 		private static void ChangeGold(int amount)
 		{
-			int finalValue = IsExtremeAffection ? amount * 2 : amount;
+			int finalValue = IsAdoring || IsHating ? amount * 2 : amount;
 			Pd._Gold += IsLoving ? finalValue : -finalValue;
 		}
 
 		private static void ChangeSoulstones(int amount)
 		{
-			int finalValue = IsExtremeAffection ? amount * 2 : amount;
+			int finalValue = IsAdoring || IsHating ? amount * 2 : amount;
 			Pd._Soul += IsLoving ? finalValue : -finalValue;
 		}
 
 		private static void ChangeInventoryNum(int amount)
 		{
-			int finalValue = IsExtremeAffection ? amount * 2 : amount;
+			int finalValue = IsAdoring || IsHating ? amount * 2 : amount;
 			finalValue = IsLoving ? finalValue : -finalValue;
 			PartyInventory.InvenM.ChangeMaxInventoryNum(finalValue);
 		}

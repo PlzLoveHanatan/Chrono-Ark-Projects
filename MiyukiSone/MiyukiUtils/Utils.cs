@@ -15,18 +15,15 @@ namespace MiyukiSone
 {
 	public static class Utils
 	{
-		public const string Author = "MiyukiSone";
+		public static ModInfo ThisMod => ModManager.getModInfo("MiyukiSone");
 		public static TempSaveData Pd => PlayData.TSavedata;
 		public static BattleSystem Bs => BattleSystem.instance;
 		public static BattleTeam AllyTeam => Bs?.AllyTeam;
 		public static BattleChar DummyChar => AllyTeam?.DummyChar;
 		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki);
 		public static MiyukiCV MiyukiData => GetOrCreateMiyukiData();
-		public static ModInfo ThisMod => ModManager.getModInfo("MiyukiSone");
-		public static bool MiyukiInParty()
-		{
-			return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
-		}
+		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
+		private static GameObject _currentTempGO;
 
 		public static MiyukiCV GetOrCreateMiyukiData()
 		{
@@ -39,20 +36,63 @@ namespace MiyukiSone
 			return data;
 		}
 
-		public static void PlaySound(string sound)
-		{
-			if (string.IsNullOrEmpty(sound)) return;
-
-			float volume = MasterAudio.MasterVolumeLevel;
-			MasterAudio.PlaySound(sound, volume, null, 0f, null, null, false, false);
-		}
-
-		public static void PlaySound(string sound, bool isStopOldBus = true)
+		public static void PlaySound(string sound, bool isStopOldBus = false, float? volume = null)
 		{
 			if (string.IsNullOrEmpty(sound)) return;
 
 			if (isStopOldBus) MasterAudio.StopBus("SE");
-			PlaySound(sound);
+
+			float finalVolume = volume ?? MasterAudio.MasterVolumeLevel;
+			MasterAudio.PlaySound(sound, finalVolume, null, 0f, null, null, false, false);
+		}
+
+		public static void PlaySound(string sound)
+		{
+			PlaySound(sound, false, null);
+		}
+
+		public static void PlaySound(string sound, bool isStopOldBus)
+		{
+			PlaySound(sound, isStopOldBus, null);
+		}
+
+		public static void PlaySound(string sound, float volume)
+		{
+			PlaySound(sound, false, volume);
+		}
+
+		public static void PlaySoundFromAsset(string assetPath, bool isStopOldBus = true, int? volumePercent = null)
+		{
+			if (string.IsNullOrEmpty(assetPath)) return;
+
+			AudioClip clip = UtilsUI.GetAssets<AudioClip>(assetPath);
+			if (clip == null)
+			{
+				Debug.LogWarning($"AudioClip not found at path: {assetPath}");
+				return;
+			}
+
+			// Останавливаем предыдущее временное аудио, если оно есть
+			if (isStopOldBus && _currentTempGO != null)
+			{
+				MasterAudio.StopBus("SE");
+				GameObject.Destroy(_currentTempGO);
+				_currentTempGO = null;
+			}
+
+			GameObject tempGO = new GameObject("TempAudio");
+			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
+
+			float finalVolume = volumePercent.HasValue ? Mathf.Clamp(volumePercent.Value / 100f, 0f, 2f) : MasterAudio.MasterVolumeLevel;
+
+			audioSource.volume = finalVolume;
+			audioSource.PlayOneShot(clip);
+
+			// Сохраняем ссылку на текущий объект
+			_currentTempGO = tempGO;
+
+			// Уничтожаем после окончания
+			UnityEngine.Object.Destroy(tempGO, clip.length);
 		}
 
 		public static void RemoveSkill(Skill skill, bool isExclude = false)
@@ -107,10 +147,10 @@ namespace MiyukiSone
 		private static bool SoftText()
 		{
 			bool isSoftText;
-			switch (CurrentAffection)
+			switch (CurrentAffectionState)
 			{
-				case MiyukiAffectionState.adoration: isSoftText = true; break;
-				case MiyukiAffectionState.eradication: isSoftText = false; break;
+				case MiyukiAffectionState.Adoration: isSoftText = true; break;
+				case MiyukiAffectionState.Hatred: isSoftText = false; break;
 				default: isSoftText = true; break;
 			}
 			return isSoftText;
@@ -119,7 +159,7 @@ namespace MiyukiSone
 		private static IEnumerator TextSoft(Vector3 position, string text)
 		{
 			var topText = BattleText.CustomText(position, text);
-			yield return new WaitForSecondsRealtime(3f);
+			yield return new WaitForSecondsRealtime(3.5f);
 			topText?.End();
 		}
 
@@ -172,6 +212,7 @@ namespace MiyukiSone
 
 		public static Buff SecureBuff(BattleChar target, BattleChar user, string buffKey, int percentage = 0)
 		{
+			if (string.IsNullOrEmpty(buffKey)) return null;
 			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
 			return buff;
 		}

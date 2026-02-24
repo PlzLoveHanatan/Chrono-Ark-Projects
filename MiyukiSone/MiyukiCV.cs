@@ -1,16 +1,18 @@
-﻿using System;
+﻿using MiyukiSone;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MiyukiSone
+public class MiyukiCV : CustomValue
 {
-    public class MiyukiCV : CustomValue
-    {
-        public int MiyukiAffectionPoints = 0;
-        public bool Equip = false;
-		public int LastLoveAction = -1;
-		public int LasthateAction = -1;
-	}
+	public int MiyukiAffectionPoints = 0;
+	public bool Equip = false;
+	public int LastLoveAction = -1;
+	public int LasthateAction = -1;
+
+	// TurnEnd
+	public TryType CurrentTryType = TryType.FirstTry;
+	public int CurrentTryCallCount = 0;
+
+	// Kiss no answer
+	public TryType CurrentKissNoType = TryType.FirstTry;
+	public int KissNoCallCount = 0;
 }

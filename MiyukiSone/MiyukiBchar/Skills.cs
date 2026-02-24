@@ -8,6 +8,9 @@ namespace MiyukiSone
 {
 	public class Skills
 	{
+		public class Test : Skill_Extended
+		{
 
+		}
 	}
 }

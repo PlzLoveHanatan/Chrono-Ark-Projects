@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
+using I2.Loc;
 using static MiyukiSone.Utils;
-using static MiyukiSone.EventData;
 using static MiyukiSone.Affection;
-using EItem;
 
 namespace MiyukiSone
 {
@@ -14,91 +14,102 @@ namespace MiyukiSone
 	{
 		public class EventLine
 		{
+			public string Key { get; set; }
 			public string English { get; set; }
 			public string Korean { get; set; }
 			public string Japanese { get; set; }
 			public string Chinese { get; set; }
 			public string Chinese_TW { get; set; }
+			public string AudioFile { get; set; }
 		}
 
-		private static readonly Dictionary<EventState, EventLine[]> cachedLove = new Dictionary<EventState, EventLine[]>();
-		private static readonly Dictionary<EventState, EventLine[]> cachedHate = new Dictionary<EventState, EventLine[]>();
+		private class RootEvents
+		{
+			[JsonProperty("love")]
+			public List<EventLine> Love { get; set; }
+
+			[JsonProperty("hate")]
+			public List<EventLine> Hate { get; set; }
+		}
+
+		private static EventLine[] cachedLove;
+		private static EventLine[] cachedHate;
+
+		// Храним показанные ключи
+		private static readonly HashSet<string> usedLoveKeys = new HashSet<string>();
+		private static readonly HashSet<string> usedHateKeys = new HashSet<string>();
 
 		public static void LoadEvents()
 		{
-			if (cachedLove.Count > 0 && cachedHate.Count > 0)
+			if (cachedLove != null && cachedHate != null)
 			{
-				Debug.Log("События уже загружены, повторная загрузка не нужна.");
+				Debug.Log("События уже загружены");
 				return;
 			}
 
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ThisMod.DirectoryName, "Assets", "MiyukiEvent.json");
 			if (!File.Exists(path))
 			{
-				Debug.Log("Файл событий не найден: " + path);
+				Debug.LogError("Файл событий не найден: " + path);
 				return;
 			}
 
-			var jsonDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, List<EventLine>>>>(File.ReadAllText(path));
+			var root = JsonConvert.DeserializeObject<RootEvents>(File.ReadAllText(path));
 
-			foreach (var kvp in jsonDict)
-			{
-				if (!Enum.TryParse(kvp.Key, true, out EventState e))
-				{
-					Debug.Log($"Не удалось распознать EventState: {kvp.Key}");
-					continue;
-				}
+			cachedLove = root?.Love?.ToArray() ?? new EventLine[0];
+			cachedHate = root?.Hate?.ToArray() ?? new EventLine[0];
 
-				kvp.Value.TryGetValue("love", out List<EventLine> loveLines);
-				kvp.Value.TryGetValue("hate", out List<EventLine> hateLines);
-
-				if (!cachedLove.ContainsKey(e))
-				{
-					cachedLove[e] = loveLines != null ? loveLines.ToArray() : new EventLine[0];
-				}
-
-				if (!cachedHate.ContainsKey(e))
-				{
-					cachedHate[e] = hateLines != null ? hateLines.ToArray() : new EventLine[0];
-				}
-			}
-			Debug.Log("События успешно загружены.");
+			Debug.Log($"События LOVE загружены: {cachedLove.Length}");
+			Debug.Log($"События HATE загружены: {cachedHate.Length}");
 		}
 
-		public static EventLine GetRandomLine(EventState e, bool isLove)
+		private static EventLine GetRandomLine(bool isLove)
 		{
 			LoadEvents();
-			var dic = isLove ? cachedLove : cachedHate;
 
-			EventLine[] lines;
-			if (dic.TryGetValue(e, out lines) && lines.Length > 0)
+			var allLines = isLove ? cachedLove : cachedHate;
+			if (allLines.Length == 0) return null;
+
+			var usedKeys = isLove ? usedLoveKeys : usedHateKeys;
+
+			if (usedKeys.Count >= allLines.Length)
 			{
-				int index = RandomManager.RandomInt("EventStateRandom", 0, lines.Length);
-				return lines[index];
+				Debug.Log($"Все фразы для {(isLove ? "LOVE" : "HATE")} были показаны. Сбрасываем.");
+				usedKeys.Clear();
 			}
 
-			return null;
+			var availableLines = allLines.Where(line => !usedKeys.Contains(line.Key)).ToList();
+
+			if (availableLines.Count == 0)
+			{
+				usedKeys.Clear();
+				availableLines = allLines.ToList();
+			}
+
+			int index = RandomManager.RandomInt("MiyukiEventRandom", 0, availableLines.Count);
+			var selectedLine = availableLines[index];
+
+			usedKeys.Add(selectedLine.Key);
+			return selectedLine;
 		}
 
-		public static string GetLocalizedLine(EventState state, bool isLove)
+		public static string MiyukiTextEvent(bool isEvent = true)
 		{
-			var line = GetRandomLine(state, isLove);
+			var line = GetRandomLine(IsInLove);
 
 			if (line == null)
 			{
-				Debug.Log($"Line is null for {state}, isLove={isLove}");
-				return $"[Missing: {state}]";
+				Debug.LogError($"Не найдена строка для состояния: {(IsLoving ? "LOVE" : "HATE")}");
+				return null;
 			}
 
-			// ТЕПЕРЬ line ТОЧНО EventLine, и метод GetLocalizedText сработает
-			return GetLocalizedText(line);
-		}
-
-		public static string MiyukiTextEvent(EventState e, bool isEvent = true)
-		{
-			//if (IsIndifferent) return null;
-			string text = GetLocalizedLine(e, IsLoving);
+			string text = GetLocalizedText(line);
 			ShowText(text, isEvent);
+
+			Debug.Log($"Displayed text key: {line.Key}");
+
+			Debug.Log($"Playing audio: {line.AudioFile}");
+			PlaySound(line.AudioFile, true);
 			return text;
 		}
 	}

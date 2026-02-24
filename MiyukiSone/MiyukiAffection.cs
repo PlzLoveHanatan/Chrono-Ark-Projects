@@ -21,72 +21,78 @@ namespace MiyukiSone
 	{
 		public enum MiyukiAffectionState
 		{
-			adoration,  // 25+
-			love,       // 10 -> 24
-			indifference, // -9 -> 9
-			hate,       // -10 -> -24
-			eradication // -25-
+			Adoration,     // 25+
+			Love,          // 10-24
+			Neutral,       // -9 - 9
+			Annoyance,     // -10 - -24
+			Hatred         // -25-
 		}
 
-		private const string MiyukiRandom = "MiyukiRandom";
-		private const int Max_Affection = 25;
-		private const int Min_Affection = -25;
-		private const int Random_Chance = 5;
+		private const string MiyukiRandomKey = "MiyukiRandom";
+		private const int MaxAffectionPoints = 25;
+		private const int MinAffectionPoints = -25;
+		private const int RandomChanceMultiplier = 5;
 
-		public static bool MiyukiActing => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints)) && !IsIndifferent;
+		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints * RandomChanceMultiplier + 25)) && !IsNeutral;
 
 		public static int MiyukiPoints => MiyukiData.MiyukiAffectionPoints;
-		public static bool IsLoving => CurrentAffection == MiyukiAffectionState.love || CurrentAffection == MiyukiAffectionState.adoration;
-		public static bool IsHating => CurrentAffection == MiyukiAffectionState.hate || CurrentAffection == MiyukiAffectionState.eradication;
-		public static bool IsIndifferent => CurrentAffection == MiyukiAffectionState.indifference;
-		public static bool IsExtremeAffection => CurrentAffection == MiyukiAffectionState.adoration || CurrentAffection == MiyukiAffectionState.eradication;
 
-		public static MiyukiAffectionState CurrentAffection
+		public static bool IsAdoring => CurrentAffectionState == MiyukiAffectionState.Adoration;
+
+		public static bool IsLoving => CurrentAffectionState == MiyukiAffectionState.Love;
+
+		public static bool IsInLove => CurrentAffectionState == MiyukiAffectionState.Adoration || CurrentAffectionState == MiyukiAffectionState.Love;
+
+		public static bool IsNeutral => CurrentAffectionState == MiyukiAffectionState.Neutral;
+
+		public static bool IsAnnoyed => CurrentAffectionState == MiyukiAffectionState.Annoyance;
+
+		public static bool IsHating => CurrentAffectionState == MiyukiAffectionState.Hatred;
+
+		public static bool IsHostile => CurrentAffectionState == MiyukiAffectionState.Annoyance || CurrentAffectionState == MiyukiAffectionState.Hatred;
+
+		public static MiyukiAffectionState CurrentAffectionState
 		{
 			get
 			{
 				int points = MiyukiPoints;
 
-				if (points >= 25) return MiyukiAffectionState.adoration;
-				if (points >= 10) return MiyukiAffectionState.love;
-				if (points <= -25) return MiyukiAffectionState.eradication;
-				if (points <= -10) return MiyukiAffectionState.hate;
+				if (points >= 25) return MiyukiAffectionState.Adoration;
+				if (points >= 10) return MiyukiAffectionState.Love;
+				if (points <= -25) return MiyukiAffectionState.Hatred;
+				if (points <= -10) return MiyukiAffectionState.Annoyance;
 
-				return MiyukiAffectionState.indifference;
+				return MiyukiAffectionState.Neutral;
 			}
 		}
 
 		public static void ChangeAffectionPointsRandom()
 		{
-			int amount = RandomManager.RandomInt(MiyukiRandom, 0, 2);
+			int amount = RandomManager.RandomInt(MiyukiRandomKey, 0, 2);
 			ChangeAffectionPoints(-amount);
 		}
 
 		public static void ChangeAffectionPoints(int amount)
 		{
-			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, Min_Affection, Max_Affection);
+			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, MinAffectionPoints, MaxAffectionPoints);
 			Debug.Log($"Current Miyuki affection is {MiyukiPoints}");
 		}
 
 		public static void MiyukiTurn()
 		{
-			//CreateDialogueBox(DialogueBoxState.kiss); return;
+			CreateDialogueBox(); return;
 
-			bool alwaysLucky = RandomManager.RandomPer(MiyukiRandom, 100, Math.Abs(MiyukiPoints * Random_Chance + 25));
-
-			if (alwaysLucky)
+			if (MiyukiDecides)
 			{
-				if (!IsIndifferent)
-				{
-					MiyukiAction();
-				}
-				else
-				{
-					DialogueBoxState? state = null;
-					if (CurrentAffection == MiyukiAffectionState.adoration && alwaysLucky) state = DialogueBoxState.kiss;
-					CreateDialogueBox(state);
-				}
+				MiyukiAction();
 			}
-		}		
+			else
+			{
+				bool isKissTriggered = RandomManager.RandomPer(MiyukiRandomKey, 100, 30);
+				DialogueBoxState? dialogueState = null;
+				if (isKissTriggered) dialogueState = DialogueBoxState.kiss;
+				CreateDialogueBox(dialogueState);
+			}
+		}
 	}
 }

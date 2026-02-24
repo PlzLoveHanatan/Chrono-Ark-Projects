@@ -2,9 +2,12 @@
 using UnityEngine.UI;
 using static MiyukiSone.Affection;
 using static MiyukiSone.DialogueBoxData;
+using static MiyukiSone.DialogueBox;
 using static MiyukiSone.Utils;
-using static MiyukiSone.DialogueBoxStringLoader;
+using static MiyukiSone.DialogueBoxEvent;
 using System.Collections.Generic;
+using System.EnterpriseServices;
+using UnityEngine.EventSystems;
 
 namespace MiyukiSone
 {
@@ -39,6 +42,12 @@ namespace MiyukiSone
 		private void Start()
 		{
 			CreateButtons();
+			//FindAndHookSkipButton();
+		}
+
+		private void Update()
+		{
+			// add the voice if trying to end turn and skip the window
 		}
 
 		private void InitializeWindow()
@@ -122,18 +131,20 @@ namespace MiyukiSone
 				//case BoxState.help: ClickHelp(); break;
 				default: break;
 			}
-			Destroy(gameObject);
+
+			if (currentDialogueBoxState == DialogueBoxState.kiss && !isYesClick) return;
+			RemoveWindow(gameObject);
 		}
 
 		private void ClickLove(bool isYes = true)
 		{
-			MiyukiTextBox(currentDialogueBoxState, isYes);
+			MiyukiTextBoxLove(isYes);
 		}
 
 		private void ClickKiss(bool isYes = true)
 		{
-			MiyukiTextBox(currentDialogueBoxState, isYes);
-			//PlaySound("Kiss");
+			if (isYes) ResetAllKissNo();
+			MiyukiTextBoxKiss(isYes);
 		}
 
 		private void ClickSex()

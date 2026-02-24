@@ -42,10 +42,10 @@ namespace MiyukiSone
 			AddressableLoadManager.LoadAsyncAction(path, AddressableLoadManager.ManageType.None, collback);
 		}
 
-		public static T GetAssets<T>(string path, string assetBundlePatch = null) where T : UnityEngine.Object
+		public static T GetAssets<T>(string path, string assetBundlePath = null) where T : UnityEngine.Object
 		{
-			if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = ModManager.getModInfo("MiyukiSone").DefaultAssetBundlePath;
-			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
+			if (string.IsNullOrEmpty(assetBundlePath)) assetBundlePath = "MiyukiSone"; //assetBundlePath = ModManager.getModInfo("MiyukiSone").DefaultAssetBundlePath;
+			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<T>(assetBundlePath, path);
 			return AddressableLoadManager.LoadAddressableAsset<T>(address);
 		}
 
