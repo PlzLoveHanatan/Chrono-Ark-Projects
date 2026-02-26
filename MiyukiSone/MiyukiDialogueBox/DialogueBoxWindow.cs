@@ -4,7 +4,6 @@ using static MiyukiSone.Affection;
 using static MiyukiSone.DialogueBoxData;
 using static MiyukiSone.DialogueBox;
 using static MiyukiSone.Utils;
-using static MiyukiSone.DialogueBoxEvent;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using UnityEngine.EventSystems;
@@ -127,7 +126,7 @@ namespace MiyukiSone
 			{
 				case DialogueBoxState.love: ClickLove(isYesClick); break;
 				case DialogueBoxState.kiss: ClickKiss(isYesClick); break;
-				//case BoxState.sex: ClickSex(); break;
+				case DialogueBoxState.help: ClickHelp(isYesClick); break;
 				//case BoxState.help: ClickHelp(); break;
 				default: break;
 			}
@@ -136,12 +135,12 @@ namespace MiyukiSone
 			RemoveWindow(gameObject);
 		}
 
-		private void ClickLove(bool isYes = true)
+		private void ClickLove(bool isYes)
 		{
 			MiyukiTextBoxLove(isYes);
 		}
 
-		private void ClickKiss(bool isYes = true)
+		private void ClickKiss(bool isYes)
 		{
 			if (isYes) ResetAllKissNo();
 			MiyukiTextBoxKiss(isYes);
@@ -152,7 +151,7 @@ namespace MiyukiSone
 
 		}
 
-		private void ClickHelp()
+		private void ClickHelp(bool isYes)
 		{
 
 		}

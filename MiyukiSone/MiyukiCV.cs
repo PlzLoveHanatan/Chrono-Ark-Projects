@@ -5,8 +5,9 @@ public class MiyukiCV : CustomValue
 {
 	public int MiyukiAffectionPoints = 0;
 	public bool Equip = false;
-	public int LastLoveAction = -1;
-	public int LasthateAction = -1;
+	public int LastDereAction = -1;
+	public int LastYandereAction = -1;
+	public int LastTurnAction = -1;
 
 	// TurnEnd
 	public TryType CurrentTryType = TryType.FirstTry;

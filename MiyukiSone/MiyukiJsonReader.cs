@@ -9,20 +9,13 @@ using static MiyukiSone.Utils;
 
 namespace MiyukiSone
 {
-	// ============= ХЕЛПЕР ТОЛЬКО ДЛЯ ЧТЕНИЯ ФАЙЛОВ =============
 	public static class MiyukiJsonReader
 	{
-		/// <summary>
-		/// Возвращает полный путь к JSON-файлу в папке Assets мода
-		/// </summary>
 		public static string GetFullPath(string fileName)
 		{
 			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ThisMod.DirectoryName, "Assets", fileName);
 		}
 
-		/// <summary>
-		/// Загружает содержимое JSON-файла. Возвращает null если файл не найден или ошибка чтения
-		/// </summary>
 		public static string LoadJson(string fileName)
 		{
 			string path = GetFullPath(fileName);
@@ -44,9 +37,6 @@ namespace MiyukiSone
 			}
 		}
 
-		/// <summary>
-		/// Пытается загрузить JSON-файл. Возвращает true при успехе
-		/// </summary>
 		public static bool TryLoadJson(string fileName, out string content)
 		{
 			content = LoadJson(fileName);

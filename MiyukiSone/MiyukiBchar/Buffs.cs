@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using static MiyukiSone.EventData;
 using static MiyukiSone.Affection;
-using static MiyukiSone.EventStringLoader;
 
 namespace MiyukiSone
 {
@@ -20,7 +19,7 @@ namespace MiyukiSone
 			{
 				if (!MiyukiDecides && !Hit.Info.Ally) return Dmg;
 
-				Dmg = IsLoving ? (int)(Dmg * 0.85f) : (int)(Dmg * 1.15f);
+				Dmg = IsDere ? (int)(Dmg * 0.85f) : (int)(Dmg * 1.15f);
 				//MiyukiTextEvent(EventState.changeDamageTake);
 				return Dmg;
 			}
@@ -30,7 +29,7 @@ namespace MiyukiSone
 			{
 				if (!MiyukiDecides && Target.Info.Ally) return Damage;
 
-				Damage = IsLoving ? (int)(Damage * 0.85f) : (int)(Damage * 1.15f);
+				Damage = IsDere ? (int)(Damage * 0.85f) : (int)(Damage * 1.15f);
 				//MiyukiTextEvent(EventState.changeDamageDeal);
 				return Damage;
 			}

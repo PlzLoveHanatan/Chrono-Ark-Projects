@@ -13,13 +13,16 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using HarmonyLib;
+using UseItem;
+using System.Reflection.Emit;
+using static MiyukiSone.Affection;
 namespace MiyukiSone
 {
 	public class MiyukiSone_Plugin : ChronoArkPlugin
 	{
 		public const string modname = "MiyukiSone";
 
-		public const string version = "1.0";
+		public const string version = "0.9";
 
 		public const string author = "MiyukiSone";
 
@@ -41,11 +44,11 @@ namespace MiyukiSone
 			}
 			catch (Exception e)
 			{
-				Debug.Log("QoH: Patch Catch: " + e.ToString());
+				Debug.Log("MiyukiSone: Patch Catch: " + e.ToString());
 			}
 		}
 
-		public static bool QoHInParty()
+		public static bool MiyukiInParty()
 		{
 			return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
 		}

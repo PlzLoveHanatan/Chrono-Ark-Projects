@@ -30,10 +30,7 @@ namespace MiyukiSone
 	}
 
 	public static class DialogueBoxData
-	{
-		// Для временного аудио объекта
-		private static GameObject _currentTempGO;
-
+	{	
 		private class DialogueLine
 		{
 			public string Key { get; set; }
@@ -92,11 +89,11 @@ namespace MiyukiSone
 
 		private static void LoadLoveDialogues()
 		{
-			string jsonContent = MiyukiJsonReader.LoadJson("MiyukiDialogueBoxLove.json");
+			string jsonContent = MiyukiJsonReader.LoadJson("DialogueBoxLove.json");
 
 			if (jsonContent == null)
 			{
-				Debug.LogError("Не удалось загрузить MiyukiDialogueBoxLove.json");
+				Debug.LogError("Не удалось загрузить DialogueBoxLove.json");
 				return;
 			}
 
@@ -109,17 +106,17 @@ namespace MiyukiSone
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Ошибка десериализации MiyukiDialogueBoxLove.json: {ex.Message}");
+				Debug.LogError($"Ошибка десериализации DialogueBoxLove.json: {ex.Message}");
 			}
 		}
 
 		private static void LoadKissDialogues()
 		{
-			string jsonContent = MiyukiJsonReader.LoadJson("MiyukiDialogueBoxKiss.json");
+			string jsonContent = MiyukiJsonReader.LoadJson("DialogueBoxKiss.json");
 
 			if (jsonContent == null)
 			{
-				Debug.LogError("Не удалось загрузить MiyukiDialogueBoxKiss.json");
+				Debug.LogError("Не удалось загрузить DialogueBoxKiss.json");
 				return;
 			}
 
@@ -132,17 +129,17 @@ namespace MiyukiSone
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Ошибка десериализации MiyukiDialogueBoxKiss.json: {ex.Message}");
+				Debug.LogError($"Ошибка десериализации DialogueBoxKiss.json: {ex.Message}");
 			}
 		}
 
 		private static void LoadTurnDialogues()
 		{
-			string jsonContent = MiyukiJsonReader.LoadJson("MiyukiDialogueBoxTurn.json");
+			string jsonContent = MiyukiJsonReader.LoadJson("DialogueBoxTurn.json");
 
 			if (jsonContent == null)
 			{
-				Debug.LogError("Не удалось загрузить MiyukiDialogueBoxTurn.json");
+				Debug.LogError("Не удалось загрузить DialogueBoxTurn.json");
 				return;
 			}
 
@@ -153,7 +150,7 @@ namespace MiyukiSone
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Ошибка десериализации MiyukiDialogueBoxTurn.json: {ex.Message}");
+				Debug.LogError($"Ошибка десериализации DialogueBoxTurn.json: {ex.Message}");
 			}
 		}
 
@@ -166,49 +163,9 @@ namespace MiyukiSone
 				case "Korean": return !string.IsNullOrEmpty(line.Korean) ? line.Korean : line.English;
 				case "Japanese": return !string.IsNullOrEmpty(line.Japanese) ? line.Japanese : line.English;
 				case "Chinese": return !string.IsNullOrEmpty(line.Chinese) ? line.Chinese : line.English;
-				case "Chinese (Traditional)": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
+				case "Chinese_TW": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
 				default: return line.English;
 			}
-		}
-
-		// ============= МЕТОДЫ ДЛЯ АУДИО =============
-		private static T GetAssets<T>(string path, string assetBundlePath = null) where T : UnityEngine.Object
-		{
-			if (string.IsNullOrEmpty(assetBundlePath)) assetBundlePath = "MiyukiSone";
-			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<T>(assetBundlePath, path);
-			return AddressableLoadManager.LoadAddressableAsset<T>(address);
-		}
-
-		private static void PlaySoundFromAsset(string audioPath, bool isStopOldBus = true, int? volumePercent = null)
-		{
-			if (string.IsNullOrEmpty(audioPath)) return;
-
-			AudioClip clip = GetAssets<AudioClip>(audioPath);
-			if (clip == null)
-			{
-				Debug.LogWarning($"AudioClip not found: {audioPath}");
-				return;
-			}
-
-			if (isStopOldBus && _currentTempGO != null)
-			{
-				MasterAudio.StopBus("SE");
-				GameObject.Destroy(_currentTempGO);
-				_currentTempGO = null;
-			}
-
-			GameObject tempGO = new GameObject("TempAudio");
-			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
-
-			float finalVolume = volumePercent.HasValue ? Mathf.Clamp(volumePercent.Value / 100f, 0f, 2f) : MasterAudio.MasterVolumeLevel;
-
-			audioSource.volume = finalVolume;
-			audioSource.PlayOneShot(clip);
-
-			_currentTempGO = tempGO;
-			UnityEngine.Object.Destroy(tempGO, clip.length);
-
-			Debug.Log($"🎯 Playing audio: {audioPath}");
 		}
 
 		// ============= LOVE =============
@@ -366,9 +323,9 @@ namespace MiyukiSone
 
 		public static void UnlockNextKissNo()
 		{
-			if (MiyukiData.CurrentKissNoType == TryType.EleventhTry && MiyukiData.KissNoCallCount == 2)
+			if (MiyukiData.CurrentKissNoType == TryType.EleventhTry && MiyukiData.KissNoCallCount > 2)
 			{
-				Bs.StartCoroutine(MessWithGame());
+				EventRandom.PawWithGame();
 				Debug.Log("Достигнут последний No тип для Kiss (EleventhTry). Нельзя разблокировать дальше");
 				return;
 			}
@@ -376,20 +333,6 @@ namespace MiyukiSone
 			MiyukiData.CurrentKissNoType++;
 			MiyukiData.KissNoCallCount = 0;
 			Debug.Log($"Разблокирован новый No тип для Kiss: {MiyukiData.CurrentKissNoType}");
-		}
-
-		private static IEnumerator MessWithGame()
-		{
-			yield return new WaitForSeconds(1.5f);
-			UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
-			if (UnityEngine.Random.Range(0, 2) == 1 && Pd.StageNum > 0)
-			{
-				UIManager.inst.StartCoroutine(PauseWindow.RestartCo());
-			}
-			else
-			{
-				PauseWindow.QuitGameDel();
-			}
 		}
 
 		public static TryType GetCurrentKissNoType()

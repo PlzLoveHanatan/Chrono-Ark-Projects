@@ -10,9 +10,8 @@ using UnityEngine;
 using static MiyukiSone.Utils;
 using static MiyukiSone.DialogueBoxData;
 using static MiyukiSone.EventData;
-using static MiyukiSone.EventStringLoader;
 using static MiyukiSone.DialogueBox;
-using static MiyukiSone.EventBattle;
+using static MiyukiSone.Event;
 using UnityEngine.U2D.SpriteShapeClipperLib;
 
 namespace MiyukiSone
@@ -21,11 +20,9 @@ namespace MiyukiSone
 	{
 		public enum MiyukiAffectionState
 		{
-			Adoration,     // 25+
-			Love,          // 10-24
-			Neutral,       // -9 - 9
-			Annoyance,     // -10 - -24
-			Hatred         // -25-
+			DereDere,     // 15+
+			Kuudere,       // -9 - 9
+			Yandere         // -15-
 		}
 
 		private const string MiyukiRandomKey = "MiyukiRandom";
@@ -33,23 +30,16 @@ namespace MiyukiSone
 		private const int MinAffectionPoints = -25;
 		private const int RandomChanceMultiplier = 5;
 
-		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints * RandomChanceMultiplier + 25)) && !IsNeutral;
+		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints * RandomChanceMultiplier + 25)) && !IsKuudere;
 
 		public static int MiyukiPoints => MiyukiData.MiyukiAffectionPoints;
 
-		public static bool IsAdoring => CurrentAffectionState == MiyukiAffectionState.Adoration;
+		public static bool IsDere => CurrentAffectionState == MiyukiAffectionState.DereDere;
 
-		public static bool IsLoving => CurrentAffectionState == MiyukiAffectionState.Love;
+		public static bool IsKuudere => CurrentAffectionState == MiyukiAffectionState.Kuudere;
 
-		public static bool IsInLove => CurrentAffectionState == MiyukiAffectionState.Adoration || CurrentAffectionState == MiyukiAffectionState.Love;
+		public static bool IsYandere => CurrentAffectionState == MiyukiAffectionState.Yandere;
 
-		public static bool IsNeutral => CurrentAffectionState == MiyukiAffectionState.Neutral;
-
-		public static bool IsAnnoyed => CurrentAffectionState == MiyukiAffectionState.Annoyance;
-
-		public static bool IsHating => CurrentAffectionState == MiyukiAffectionState.Hatred;
-
-		public static bool IsHostile => CurrentAffectionState == MiyukiAffectionState.Annoyance || CurrentAffectionState == MiyukiAffectionState.Hatred;
 
 		public static MiyukiAffectionState CurrentAffectionState
 		{
@@ -57,12 +47,10 @@ namespace MiyukiSone
 			{
 				int points = MiyukiPoints;
 
-				if (points >= 25) return MiyukiAffectionState.Adoration;
-				if (points >= 10) return MiyukiAffectionState.Love;
-				if (points <= -25) return MiyukiAffectionState.Hatred;
-				if (points <= -10) return MiyukiAffectionState.Annoyance;
+				if (points >= 15) return MiyukiAffectionState.DereDere;
+				if (points <= -15) return MiyukiAffectionState.Yandere;
 
-				return MiyukiAffectionState.Neutral;
+				return MiyukiAffectionState.Kuudere;
 			}
 		}
 
@@ -80,7 +68,7 @@ namespace MiyukiSone
 
 		public static void MiyukiTurn()
 		{
-			CreateDialogueBox(); return;
+			//CreateDialogueBox(); return;
 
 			if (MiyukiDecides)
 			{
@@ -88,7 +76,7 @@ namespace MiyukiSone
 			}
 			else
 			{
-				bool isKissTriggered = RandomManager.RandomPer(MiyukiRandomKey, 100, 30);
+				bool isKissTriggered = RandomManager.RandomPer(MiyukiRandomKey, 100, 30) && IsDere;
 				DialogueBoxState? dialogueState = null;
 				if (isKissTriggered) dialogueState = DialogueBoxState.kiss;
 				CreateDialogueBox(dialogueState);

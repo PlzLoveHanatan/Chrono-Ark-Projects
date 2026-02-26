@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using System.Web.ModelBinding;
 using ChronoArkMod.ModEditor;
 using UnityEngine;
+using GameDataEditor;
+using I2.Loc;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
-using static MiyukiSone.EventStringLoader;
 using static MiyukiSone.EventData;
 using static MiyukiSone.DialogueBoxData;
-using System.Runtime.CompilerServices;
-using GameDataEditor;
-using NLog.Targets;
-using System.EnterpriseServices;
+using static MiyukiSone.UtilsScripts;
+using static MiyukiSone.DialogueBox;
+using DarkTonic.MasterAudio;
 
 namespace MiyukiSone
 {
@@ -27,8 +27,8 @@ namespace MiyukiSone
 		{
 			GDEItemKeys.Skill_S_Witch_P_0,
 			GDEItemKeys.Skill_S_Witch_2,
-			//GDEItemKeys.Skill_S_ShadowPriest_12,
-			//GDEItemKeys.Skill_S_ShadowPriest_3,
+			GDEItemKeys.Skill_S_ShadowPriest_12,
+			GDEItemKeys.Skill_S_ShadowPriest_3,
 			GDEItemKeys.Skill_S_Queen_7,
 			GDEItemKeys.Skill_S_Queen_13,
 		};
@@ -41,7 +41,7 @@ namespace MiyukiSone
 
 		public void LevelUp()
 		{
-			ChangeAffectionPoints(1);
+			ChangeAffectionPoints(2);
 		}
 
 		public void BattleStart(BattleSystem Ins)
@@ -49,29 +49,14 @@ namespace MiyukiSone
 			//CreateWindow();
 			//CreateChatWindow();
 			//ChangeAffectionPoints(25);
-			if (MiyukiDecides) DeckManipulation();
-		}
-
-		private void DeckManipulation()
-		{
-			if (IsInLove)
-			{
-				// remove curses + shake dust + bloodmist
-			}
-			if (IsHostile)
-			{
-				for (int i = 0; i < 2; i++)
-				{
-					Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiBm", Skill.TempSkill(GDEItemKeys.Skill_S_Transcendence_Main));
-				}
-			}
+			if (MiyukiDecides) PawsWithDeck();
 		}
 
 		public void DrawNumChange(int DrawNum, out int OutNum)
 		{
 			if (MiyukiDecides)
 			{
-				OutNum = IsLoving ? DrawNum + 1 : IsHating ? DrawNum - 1 : DrawNum;
+				OutNum = IsDere ? DrawNum + 1 : IsYandere ? DrawNum - 1 : DrawNum;
 				MiyukiTextEvent();
 			}
 			else
@@ -82,27 +67,20 @@ namespace MiyukiSone
 
 		public void Turn()
 		{
-			AllyTeam.AliveChars.Where(a => a != BChar).ToList().ForEach(a => SecureBuff(a, BChar, ""));
-			if (Bs.TurnNum > 1) Bs.StartCoroutine(DialogueBoxEvent.RestartStagePreserveProgress());
 			MiyukiTurn();
+			MiyukiTurnAction();
 		}
 
 		// decrease affection
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 		{
-			if (User == BChar && Dmg >= 1 && !resist)
-			{
-				ChangeAffectionPoints(-1);
-			}
+			if (User == BChar && Dmg >= 1 && !resist) ChangeAffectionPoints(-1);
 		}
 
 		// increase affection
 		public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
 		{
-			if (HealedChar == BChar && Healer != BChar)
-			{
-				ChangeAffectionPoints(1);
-			}
+			if (HealedChar == BChar && Healer != BChar) ChangeAffectionPoints(1);
 		}
 
 		private void CreateChatWindow()
@@ -126,32 +104,29 @@ namespace MiyukiSone
 			if (aliveAllies.Count <= 0) return;
 			int randomIndex = RandomManager.RandomInt("MiyukiTargetRedirect", 0, aliveAllies.Count);
 
-			EventState state = EventState.other;
 			BattleChar newTarget = null;
 
 			if (edgeCaseSkills.Contains(SkillD.MySkill.KeyID))
 			{
 				newTarget = aliveAllies[randomIndex];
-				state = EventState.other;
 			}
-			else if (SkillD.IsDamage)
+			else if (SkillD.IsDamage && BChar.HP <= 0)
 			{
 				newTarget = aliveAllies[randomIndex];
-				state = EventState.redirectAttack;
 			}
 			else return;
 
 			Targets.Clear();
 			Targets.Add(newTarget);
-
 			ChangeAffectionPoints(-1);
-			BattleSystem.DelayInputAfter(ShowMiyukiEventText(state));
+			EventYandere.YandereAction(false);
+			BChar.StartCoroutine(ShowMiyukiEventText());
 		}
 
-		private IEnumerator ShowMiyukiEventText(EventState state)
+		private IEnumerator ShowMiyukiEventText()
 		{
 			yield return null;
-			MiyukiTextEvent();
+			MiyukiTextEvent(false);
 		}
 
 		public void TurnEnd()
@@ -159,14 +134,92 @@ namespace MiyukiSone
 			//UnlockNextTurnEndTry();
 		}
 
-		//public void SkillUse(Skill SkillD, List<BattleChar> Targets)
-		//{
-		//	if (SkillD.IsHeal && !Targets.Contains(BChar) && BChar.HP < BChar.GetStat.maxhp)
-		//	{
-		//		Targets.Clear();
-		//		Targets.Add(BChar);
-		//		MiyukiTextEvent(EventState.redirectHeal);
-		//	}
-		//}
+		private void MiyukiTurnAction()
+		{
+			AllyTeam.AliveChars.Where(a => a != BChar).ToList().ForEach(a => SecureBuff(a, BChar, ""));
+			if (!MiyukiDecides) return;
+
+			if (Bs.TurnNum == Bs.FogTurn && !IsYandere) goto MiyukiHelp;
+
+			bool isPositive = IsDere;
+			var actions = new List<Action<bool>>
+			{
+				PawsWithHand,
+				PawsWithAllies,
+				PawsWithEnemies,
+				PawsWithMana
+			};
+
+			if (MiyukiData.LastTurnAction != -1 && actions.Count > 1) actions.RemoveAt(MiyukiData.LastTurnAction);
+			int randomIndex = RandomManager.RandomInt("MiyukiDereAction", 0, actions.Count);
+			actions[randomIndex].Invoke(isPositive);
+			MiyukiData.LastTurnAction = randomIndex;
+
+		MiyukiHelp:;
+			CreateDialogueBox(DialogueBoxState.help);
+		}
+
+		private void PawsWithHand(bool isPositive)
+		{
+			var skillList = isPositive ? AllyTeam.Skills_Deck : AllyTeam.Skills;
+			var action = isPositive ? new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.ForceDraw(b.Myskill)) : new SkillButton.SkillClickDel(b => b.Remove());
+			var title = isPositive ? ScriptLocalization.System_SkillSelect.DrawSkill : ScriptLocalization.System_SkillSelect.WasteSkill;
+			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(skillList, action, title, false, true, true, false, true));
+		}
+
+
+		private void PawsWithAllies(bool isPositive)
+		{
+			if (isPositive) HealLowestAlly(BChar, (int)BChar.GetStat.reg);
+			else AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("MiyukiRandom").Damage(MiyukiBchar, PlayData.TSavedata.StageNum * 10, false, true);
+
+		}
+
+		private void PawsWithEnemies(bool isPositive)
+		{
+			if (isPositive) RemoveActions(Bs.EnemyTeam.AliveChars_Vanish);
+			else Bs.EnemyTeam.AliveChars_Vanish.ForEach(e => AddBuff(e, ""));
+		}
+
+		private void PawsWithMana(bool isPositive)
+		{
+			int amount = isPositive ? 1 : -1;
+			AllyTeam.AP += amount;
+		}
+
+		private void PawsWithDeck()
+		{
+			if (IsDere)
+			{
+				for (int i = 0; i < PlayData.TSavedata.LucySkills.Count; i++)
+				{
+					var skillData = new GDESkillData(PlayData.TSavedata.LucySkills[i]);
+					if (skillData.User == "LucyCurse" || skillData.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy)
+					{
+						PlayData.TSavedata.LucySkills.RemoveAt(i);
+						i--;
+					}
+				}
+
+				for (int i = 0; i < AllyTeam.Skills_Deck.Count; i++)
+				{
+					var skill = AllyTeam.Skills_Deck[i];
+
+					if (skill?.MySkill != null && skill.MySkill.User == "LucyCurse" || skill?.MySkill?.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy || skill?.MySkill.KeyID == GDEItemKeys.Skill_S_Transcendence_Main)
+					{
+						AllyTeam.Skills_Deck.Remove(skill);
+						MasterAudio.StopBus("SE");
+						MasterAudio.PlaySound("WaterSpell", 100f, null, 0f, null, null, false, false);
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0; i < 2; i++)
+				{
+					Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiBm", Skill.TempSkill(GDEItemKeys.Skill_S_Transcendence_Main));
+				}
+			}
+		}
 	}
 }

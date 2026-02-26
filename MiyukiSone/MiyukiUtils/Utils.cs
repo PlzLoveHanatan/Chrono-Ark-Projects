@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ChronoArkMod;
 using ChronoArkMod.ModData;
 using DarkTonic.MasterAudio;
+using I2.Loc;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using static MiyukiSone.Affection;
@@ -19,6 +20,7 @@ namespace MiyukiSone
 		public static TempSaveData Pd => PlayData.TSavedata;
 		public static BattleSystem Bs => BattleSystem.instance;
 		public static BattleTeam AllyTeam => Bs?.AllyTeam;
+		public static BattleTeam EnemyTeam => Bs?.EnemyTeam;
 		public static BattleChar DummyChar => AllyTeam?.DummyChar;
 		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki);
 		public static MiyukiCV MiyukiData => GetOrCreateMiyukiData();
@@ -61,18 +63,17 @@ namespace MiyukiSone
 			PlaySound(sound, false, volume);
 		}
 
-		public static void PlaySoundFromAsset(string assetPath, bool isStopOldBus = true, int? volumePercent = null)
+		public static void PlaySoundFromAsset(string audioPath, bool isStopOldBus = true, int? volumePercent = null)
 		{
-			if (string.IsNullOrEmpty(assetPath)) return;
+			if (string.IsNullOrEmpty(audioPath)) return;
 
-			AudioClip clip = UtilsUI.GetAssets<AudioClip>(assetPath);
+			AudioClip clip = UtilsUI.GetAssets<AudioClip>(audioPath);
 			if (clip == null)
 			{
-				Debug.LogWarning($"AudioClip not found at path: {assetPath}");
+				Debug.LogWarning($"AudioClip not found: {audioPath}");
 				return;
 			}
 
-			// Останавливаем предыдущее временное аудио, если оно есть
 			if (isStopOldBus && _currentTempGO != null)
 			{
 				MasterAudio.StopBus("SE");
@@ -88,51 +89,17 @@ namespace MiyukiSone
 			audioSource.volume = finalVolume;
 			audioSource.PlayOneShot(clip);
 
-			// Сохраняем ссылку на текущий объект
 			_currentTempGO = tempGO;
-
-			// Уничтожаем после окончания
 			UnityEngine.Object.Destroy(tempGO, clip.length);
-		}
 
-		public static void RemoveSkill(Skill skill, bool isExclude = false)
-		{
-			if (skill == null) return;
-
-			if (isExclude)
-			{
-				skill.Except();
-			}
-			else
-			{
-				BattleSystem.instance?.StartCoroutine(RemoveSkillCo(skill));
-			}
-		}
-
-		private static IEnumerator RemoveSkillCo(Skill skill)
-		{
-			DeckList(AllyTeam.Skills, skill);
-			DeckList(AllyTeam.Skills_Deck, skill);
-			DeckList(AllyTeam.Skills_UsedDeck, skill);
-			BattleSystem.instance?.ActWindow.Draw(AllyTeam, false);
-			yield break;
-		}
-
-		private static void DeckList(List<Skill> list, Skill skill)
-		{
-			int index = list.FindIndex(s => s.CharinfoSkilldata == skill.CharinfoSkilldata);
-
-			if (index != -1)
-			{
-				list.RemoveAt(index);
-			}
+			Debug.Log($"🎯 Playing audio: {audioPath}");
 		}
 
 		public static void ShowText(string text, bool isEvent)
 		{
+			bool isSoftText = IsDere || IsKuudere;
+			if (string.IsNullOrEmpty(text) || MiyukiBchar.IsDead || MiyukiBchar == null) return;
 			var position = MiyukiBchar.GetTopPos();
-			bool isSoftText = SoftText();
-			if (string.IsNullOrEmpty(text) || MiyukiBchar.IsDead) return;
 
 			if (isSoftText)
 			{
@@ -142,18 +109,6 @@ namespace MiyukiSone
 			{
 				BattleSystem.DelayInput(TextHard(position, text, isEvent));
 			}
-		}
-
-		private static bool SoftText()
-		{
-			bool isSoftText;
-			switch (CurrentAffectionState)
-			{
-				case MiyukiAffectionState.Adoration: isSoftText = true; break;
-				case MiyukiAffectionState.Hatred: isSoftText = false; break;
-				default: isSoftText = true; break;
-			}
-			return isSoftText;
 		}
 
 		private static IEnumerator TextSoft(Vector3 position, string text)
@@ -182,39 +137,6 @@ namespace MiyukiSone
 			}
 		}
 
-		public static string GetLocalizedText<T>(T line) where T : class
-		{
-			if (line == null)
-			{
-				Debug.Log($"The line is missing {line}"); 
-				return "I'm Error";
-			}
-
-			string lang = I2.Loc.LocalizationManager.CurrentLanguage;
-
-			var type = typeof(T);
-
-			string english = (string)type.GetProperty("English")?.GetValue(line);
-			string korean = (string)type.GetProperty("Korean")?.GetValue(line);
-			string japanese = (string)type.GetProperty("Japanese")?.GetValue(line);
-			string chinese = (string)type.GetProperty("Chinese")?.GetValue(line);
-			string chineseTW = (string)type.GetProperty("Chinese_TW")?.GetValue(line);
-
-			switch (lang)
-			{
-				case "Korean": return string.IsNullOrEmpty(korean) ? english : korean;
-				case "Japanese": return string.IsNullOrEmpty(japanese) ? english : japanese;
-				case "Chinese": return string.IsNullOrEmpty(chinese) ? english : chinese;
-				case "Chinese-TW": return string.IsNullOrEmpty(chineseTW) ? english : chineseTW;
-				default: return english;
-			}
-		}
-
-		public static Buff SecureBuff(BattleChar target, BattleChar user, string buffKey, int percentage = 0)
-		{
-			if (string.IsNullOrEmpty(buffKey)) return null;
-			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
-			return buff;
-		}
+		
 	}
 }
