@@ -68,7 +68,7 @@ namespace MiyukiSone
 
 		public static void MiyukiTurn()
 		{
-			//CreateDialogueBox(); return;
+			CreateDialogueBox(); return;
 
 			if (MiyukiDecides)
 			{

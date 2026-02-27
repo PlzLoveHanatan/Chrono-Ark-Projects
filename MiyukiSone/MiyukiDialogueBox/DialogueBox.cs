@@ -14,7 +14,7 @@ namespace MiyukiSone
 		{
 			int windowCount = RandomManager.RandomPer("MiyukiRandomWindow", 100, 15) ? 2 : 1;
 
-			for (int i = 0; i < windowCount; i++)
+			for (int i = 0; i < 1; i++)
 			{
 				DialogueBoxState currentState = state ?? DialogueBoxState.love;
 				var sprites = DialogueSprites[currentState];

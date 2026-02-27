@@ -100,15 +100,8 @@ namespace MiyukiSone
 			bool isSoftText = IsDere || IsKuudere;
 			if (string.IsNullOrEmpty(text) || MiyukiBchar.IsDead || MiyukiBchar == null) return;
 			var position = MiyukiBchar.GetTopPos();
-
-			if (isSoftText)
-			{
-				MiyukiBchar.StartCoroutine(TextSoft(position, text));
-			}
-			else
-			{
-				BattleSystem.DelayInput(TextHard(position, text, isEvent));
-			}
+			if (isSoftText) MiyukiBchar.StartCoroutine(TextSoft(position, text));
+			else BattleSystem.DelayInput(TextHard(position, text, isEvent));
 		}
 
 		private static IEnumerator TextSoft(Vector3 position, string text)
@@ -136,7 +129,5 @@ namespace MiyukiSone
 				AddressableLoadManager.LoadAsyncAction(facePath, AddressableLoadManager.ManageType.Character, imageComponent);
 			}
 		}
-
-		
 	}
 }

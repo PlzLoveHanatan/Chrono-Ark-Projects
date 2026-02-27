@@ -210,7 +210,6 @@ namespace MiyukiSone
 			ShowText(text, isEvent);
 			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
 
-			// Путь к папке Love
 			PlaySoundFromAsset($"Assets/DialogueBox/Love/{line.AudioFile}.ogg", true);
 		}
 
@@ -323,7 +322,7 @@ namespace MiyukiSone
 
 		public static void UnlockNextKissNo()
 		{
-			if (MiyukiData.CurrentKissNoType == TryType.EleventhTry && MiyukiData.KissNoCallCount > 2)
+			if (MiyukiData.CurrentKissNoType == TryType.EleventhTry && MiyukiData.KissNoCallCount > 1)
 			{
 				EventRandom.PawWithGame();
 				Debug.Log("Достигнут последний No тип для Kiss (EleventhTry). Нельзя разблокировать дальше");
@@ -415,7 +414,7 @@ namespace MiyukiSone
 
 		public static void UnlockNextTurnEndTry()
 		{
-			if (MiyukiData.CurrentTryType == TryType.EleventhTry || MiyukiData.CurrentTryCallCount == 1)
+			if (MiyukiData.CurrentTryType == TryType.EleventhTry || MiyukiData.CurrentTryCallCount == 1 || MiyukiData.CurrentTryCallCount == 0)
 			{
 				Debug.Log("Достигнут последний тип (EleventhTry). Нельзя разблокировать дальше");
 				return;

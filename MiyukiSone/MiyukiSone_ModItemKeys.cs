@@ -3,6 +3,8 @@ namespace MiyukiSone
 {
     public static class ModItemKeys
     {
+        public static string Buff_B_Miyuki_Buff = "B_Miyuki_Buff";
+        public static string Buff_B_Miyuki_Debuff = "B_Miyuki_Debuff";
 		/// <summary>
 		/// Miyuki
 		/// Passive:
@@ -28,8 +30,6 @@ namespace MiyukiSone
 		/// test 4
 		/// </summary>
         public static string Skill_S_Test_4 = "S_Test_4";
-        public static string Buff_B_Miyuki_Debuff = "B_Miyuki_Debuff";
-        public static string Buff_B_Miyuki_Buff = "B_Miyuki_Buff";
 
     }
 

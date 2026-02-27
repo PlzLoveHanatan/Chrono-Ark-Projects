@@ -8,6 +8,7 @@ public class MiyukiCV : CustomValue
 	public int LastDereAction = -1;
 	public int LastYandereAction = -1;
 	public int LastTurnAction = -1;
+	public int LastHelpAction = -1;
 
 	// TurnEnd
 	public TryType CurrentTryType = TryType.FirstTry;
@@ -16,4 +17,7 @@ public class MiyukiCV : CustomValue
 	// Kiss no answer
 	public TryType CurrentKissNoType = TryType.FirstTry;
 	public int KissNoCallCount = 0;
+
+	public int LastYesBoxAnimation = -1;
+	public int LastNoBoxAnimation = -1;
 }

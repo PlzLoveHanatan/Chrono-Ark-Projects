@@ -63,7 +63,7 @@ namespace MiyukiSone
 
 		public static void ChangeGold(int amount)
 		{
-			int gold = RandomManager.RandomInt("MiyukiRandomGold", 50, amount);
+			int gold = IsDere ? RandomManager.RandomInt("MiyukiRandomGold", 50, amount) : amount;
 			int finalValue = IsDere ? amount : -amount;
 			Pd._Gold += finalValue;
 		}

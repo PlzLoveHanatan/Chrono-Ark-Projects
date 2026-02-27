@@ -37,6 +37,7 @@ namespace MiyukiSone
 			}
 			MiyukiTextEvent(isDere);
 		}
+
 		private static List<int> GetAvailableActions()
 		{
 			List<int> actions = new List<int>();

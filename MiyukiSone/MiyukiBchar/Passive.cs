@@ -131,7 +131,7 @@ namespace MiyukiSone
 
 		public void TurnEnd()
 		{
-			//UnlockNextTurnEndTry();
+			UnlockNextTurnEndTry();
 		}
 
 		private void MiyukiTurnAction()

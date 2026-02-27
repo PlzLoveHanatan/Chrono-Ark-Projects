@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone02262026194124</AssemblyName>
+    <AssemblyName>MiyukiSone02272026141314</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -385,9 +385,6 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\MiyukiSone\Assemblies\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="ChronoArkMod.Akari.ModAssembly">
-      <HintPath>..\..\MiyukiSone\Assemblies\ChronoArkMod.Akari.ModAssembly.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>..\..\MiyukiSone\Assemblies\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -406,17 +403,19 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>..\..\MiyukiSone\Assemblies\MonoMod.Utils.dll</HintPath>
     </Reference>
-<!-- Extra Reference End-->
+    <!-- Extra Reference End-->
   </ItemGroup>
-                                                                      <!-- Compile ItemGroup Start-->
+  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="MiyukiAffection.cs" />
     <Compile Include="MiyukiCV.cs" />
+    <Compile Include="MiyukiEvent\EventHelp.cs" />
     <Compile Include="MiyukiJsonReader.cs" />
     <Compile Include="MiyukiSonePatches.cs" />
     <Compile Include="MiyukiSone_ModDefinition.cs" />
     <Compile Include="MiyukiSone_ModItemKeys.cs" />
     <Compile Include="MiyukiSone_Plugin.cs" />
+    <Compile Include="MiyukiVisual.cs" />
     <Compile Include="MiyukiBchar\Buffs.cs" />
     <Compile Include="MiyukiBchar\Passive.cs" />
     <Compile Include="MiyukiBchar\Skills.cs" />

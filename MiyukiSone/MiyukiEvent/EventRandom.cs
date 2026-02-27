@@ -73,12 +73,6 @@ namespace MiyukiSone
 			ChangeAffectionPoints(2);
 		}
 
-		// change class skill to forbiden skill or rare skill
-		private static void ChangeSkillFromBook()
-		{
-			
-		}
-
 		private static void AddUpgradeOnSkill()
 		{
 
