@@ -26,6 +26,7 @@ namespace MiyukiSone
 			if (UnityEngine.Random.Range(0, 2) == 1 && Pd.StageNum > 0)
 			{
 				UIManager.inst.StartCoroutine(PauseWindow.RestartCo());
+				PauseWindow.ReturnToMainDel();
 			}
 			else
 			{

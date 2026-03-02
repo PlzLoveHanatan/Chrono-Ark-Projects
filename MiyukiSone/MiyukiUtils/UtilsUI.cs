@@ -23,16 +23,18 @@ namespace MiyukiSone
 		public static Sprite GetSprite(string pathAddress)
 		{
 			string path = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(pathAddress);
-			return AddressableLoadManager.LoadAsyncCompletion<Sprite>(path, AddressableLoadManager.ManageType.None);
+			var sprite = AddressableLoadManager.LoadAsyncCompletion<Sprite>(path, AddressableLoadManager.ManageType.None);
+			return sprite;
 		}
-		public static void GetSpriteByAddress(this Image img, string address, AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage)
+
+		public static string GetSpriteAddress(string spritePath)
 		{
-			AddressableLoadManager.LoadAsyncAction(address, type, img);
+			return ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<Sprite>("MiyukiSone", spritePath);
 		}
 
 		public static void GetSpriteByPath(this Image img, string path)
 		{
-			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(path);
+			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromAsset("MiyukiSone", path);
 			img.GetSpriteByAddress(address);
 		}
 
@@ -47,6 +49,11 @@ namespace MiyukiSone
 			if (string.IsNullOrEmpty(assetBundlePath)) assetBundlePath = "MiyukiSone"; //assetBundlePath = ModManager.getModInfo("MiyukiSone").DefaultAssetBundlePath;
 			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<T>(assetBundlePath, path);
 			return AddressableLoadManager.LoadAddressableAsset<T>(address);
+		}
+
+		public static void GetSpriteByAddress(this Image img, string address, AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage)
+		{
+			AddressableLoadManager.LoadAsyncAction(address, type, img);
 		}
 
 		public static void LoadSpriteAsync(string path, Action<Sprite> onLoaded)

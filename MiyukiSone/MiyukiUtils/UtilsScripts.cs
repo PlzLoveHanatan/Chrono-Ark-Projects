@@ -161,5 +161,37 @@ namespace MiyukiSone
 			taker.Damage(DummyChar, damage, false, isPain, true);
 			taker.BuffRemove(GDEItemKeys.Buff_B_Momori_P_NoDead);
 		}
+
+		public static Skill_Extended ApplyExtended(Skill skill, string extendedKey, bool isMultipleExtended = false, bool isBattleExtended = false)
+		{
+			Skill_Extended result = null;
+
+			if (skill == null || string.IsNullOrEmpty(extendedKey))
+			{
+				return result;
+			}
+
+			Skill_Extended existing = skill.ExtendedFind_DataName(extendedKey);
+
+			if (isMultipleExtended || existing == null)
+			{
+				if (isBattleExtended == true)
+				{
+					skill.ExtendedAdd_Battle(extendedKey);
+				}
+				else
+				{
+					skill.ExtendedAdd(extendedKey);
+				}
+
+				result = skill.ExtendedFind_DataName(extendedKey);
+			}
+			else
+			{
+				result = existing;
+			}
+
+			return result;
+		}
 	}
 }

@@ -11,25 +11,30 @@ namespace MiyukiSone
 		/// </summary>
         public static string Character_Miyuki = "Miyuki";
 		/// <summary>
-		/// test
+		/// Test
+		/// +10 points
 		/// </summary>
         public static string Skill_S_Test = "S_Test";
 		/// <summary>
-		/// test 1
+		/// Test 2
+		/// -10 points
 		/// </summary>
         public static string Skill_S_Test_1 = "S_Test_1";
 		/// <summary>
-		/// test 2
+		/// Happy Birthday to YOU
 		/// </summary>
-        public static string Skill_S_Test_2 = "S_Test_2";
+        public static string Skill_S_HappyBirthday = "S_HappyBirthday";
+        public static string SkillEffect_SE_T_S_HappyBirthday = "SE_T_S_HappyBirthday";
 		/// <summary>
-		/// test 3
+		/// Warning Strike
 		/// </summary>
-        public static string Skill_S_Test_3 = "S_Test_3";
+        public static string Skill_S_WarningStrike = "S_WarningStrike";
+        public static string SkillEffect_SE_T_S_WarningStrike = "SE_T_S_WarningStrike";
 		/// <summary>
-		/// test 4
+		/// Measured Love
 		/// </summary>
-        public static string Skill_S_Test_4 = "S_Test_4";
+        public static string Skill_S_MeasuredLove = "S_MeasuredLove";
+        public static string SkillEffect_SE_T_S_MeasuredLove = "SE_T_S_MeasuredLove";
 
     }
 

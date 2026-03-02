@@ -9,6 +9,7 @@ public class MiyukiCV : CustomValue
 	public int LastYandereAction = -1;
 	public int LastTurnAction = -1;
 	public int LastHelpAction = -1;
+	public int LastPrank = -1;
 
 	// TurnEnd
 	public TryType CurrentTryType = TryType.FirstTry;

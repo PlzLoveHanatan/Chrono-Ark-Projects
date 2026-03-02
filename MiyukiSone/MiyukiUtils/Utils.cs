@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using ChronoArkMod;
 using ChronoArkMod.ModData;
 using DarkTonic.MasterAudio;
+using GameDataEditor;
 using I2.Loc;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using static MiyukiSone.Affection;
+using static MiyukiSone.Skills.Class;
+using static MiyukiSone.UtilsUI;
 
 namespace MiyukiSone
 {
@@ -127,6 +130,57 @@ namespace MiyukiSone
 			if (imageComponent != null)
 			{
 				AddressableLoadManager.LoadAsyncAction(facePath, AddressableLoadManager.ManageType.Character, imageComponent);
+			}
+		}
+
+		public static void ChangeSkillImages(this Skill skill, string skillSpritePath = null, string buttonSpritePath = null, string basicSpritePath = null, string defaultSkillKey = null, bool isRestoreImg = false)
+		{
+			if (isRestoreImg && !string.IsNullOrEmpty(defaultSkillKey))
+			{
+				var defaultSkill = Skill.TempSkill(defaultSkillKey, skill.Master, skill.Master.MyTeam);
+				skill.Image_Skill = defaultSkill.Image_Skill;
+				skill.Image_Button = defaultSkill.Image_Button;
+				skill.Image_Basic = defaultSkill.Image_Basic;
+			}
+			else
+			{
+				if (!string.IsNullOrEmpty(skillSpritePath))
+				{
+					string fullPath = skillSpritePath + ".png";
+					string address = GetSpriteAddress(fullPath);
+					skill.Image_Skill = address;
+				}
+
+				if (!string.IsNullOrEmpty(buttonSpritePath))
+				{
+					string address = GetSpriteAddress(buttonSpritePath + ".png");
+					skill.Image_Button = address;
+				}
+
+				if (!string.IsNullOrEmpty(basicSpritePath))
+				{
+					string address = GetSpriteAddress(basicSpritePath + ".png");
+					skill.Image_Basic = address;
+				}
+
+				if (Bs != null)
+				{
+					BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
+					GlitchEffect(skill);
+					foreach (var ex in skill.AllExtendeds)
+					{
+						if (ex is MiyukiSoneSkill miyukiSkill) miyukiSkill.Init();
+					}
+				}
+			}
+		}
+
+		public static void GlitchEffect(this Skill changeFrom)
+		{
+			if (changeFrom.MyButton != null)
+			{
+				UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
+				UnityEngine.Object.Destroy(obj, 0.5f);
 			}
 		}
 	}

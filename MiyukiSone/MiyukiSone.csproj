@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone02272026141314</AssemblyName>
+    <AssemblyName>MiyukiSone03022026223225</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -403,15 +403,17 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>..\..\MiyukiSone\Assemblies\MonoMod.Utils.dll</HintPath>
     </Reference>
-    <!-- Extra Reference End-->
+<!-- Extra Reference End-->
   </ItemGroup>
-  <!-- Compile ItemGroup Start-->
+                    <!-- Compile ItemGroup Start-->
   <ItemGroup>
+    <Compile Include="IP_MiyukiSkillImgChange.cs" />
     <Compile Include="MiyukiAffection.cs" />
     <Compile Include="MiyukiCV.cs" />
-    <Compile Include="MiyukiEvent\EventHelp.cs" />
     <Compile Include="MiyukiJsonReader.cs" />
     <Compile Include="MiyukiSonePatches.cs" />
+    <Compile Include="MiyukiSonePatchesHelpers.cs" />
+    <Compile Include="MiyukiSoneSkillImgChange.cs" />
     <Compile Include="MiyukiSone_ModDefinition.cs" />
     <Compile Include="MiyukiSone_ModItemKeys.cs" />
     <Compile Include="MiyukiSone_Plugin.cs" />
@@ -427,6 +429,8 @@
     <Compile Include="MiyukiEvent\Event.cs" />
     <Compile Include="MiyukiEvent\EventData.cs" />
     <Compile Include="MiyukiEvent\EventDere.cs" />
+    <Compile Include="MiyukiEvent\EventDialogueBox.cs" />
+    <Compile Include="MiyukiEvent\EventHelp.cs" />
     <Compile Include="MiyukiEvent\EventRandom.cs" />
     <Compile Include="MiyukiEvent\EventYandere.cs" />
     <Compile Include="MiyukiEvent\MiyukiInputEvent.cs" />

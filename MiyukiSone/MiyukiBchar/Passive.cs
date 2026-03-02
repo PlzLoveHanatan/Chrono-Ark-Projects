@@ -49,26 +49,20 @@ namespace MiyukiSone
 			//CreateWindow();
 			//CreateChatWindow();
 			//ChangeAffectionPoints(25);
-			if (MiyukiDecides) PawsWithDeck();
+			if (MiyukiDecides) PawsWithDeck(MiyukiMood);
 		}
 
 		public void DrawNumChange(int DrawNum, out int OutNum)
 		{
-			if (MiyukiDecides)
-			{
-				OutNum = IsDere ? DrawNum + 1 : IsYandere ? DrawNum - 1 : DrawNum;
-				MiyukiTextEvent();
-			}
-			else
-			{
-				OutNum = DrawNum;
-			}
+			int newDrawNum = MiyukiOutcome(1);
+			OutNum = newDrawNum != 0 ? DrawNum += newDrawNum : DrawNum;
+			if (newDrawNum != 0) MiyukiTextEvent();
 		}
 
 		public void Turn()
 		{
 			MiyukiTurn();
-			MiyukiTurnAction();
+			//MiyukiTurnAction();
 		}
 
 		// decrease affection
@@ -102,24 +96,18 @@ namespace MiyukiSone
 
 			var aliveAllies = AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList();
 			if (aliveAllies.Count <= 0) return;
-			int randomIndex = RandomManager.RandomInt("MiyukiTargetRedirect", 0, aliveAllies.Count);
 
+			int randomIndex = RandomManager.RandomInt("MiyukiTargetRedirect", 0, aliveAllies.Count);
 			BattleChar newTarget = null;
 
-			if (edgeCaseSkills.Contains(SkillD.MySkill.KeyID))
-			{
-				newTarget = aliveAllies[randomIndex];
-			}
-			else if (SkillD.IsDamage && BChar.HP <= 0)
-			{
-				newTarget = aliveAllies[randomIndex];
-			}
+			if (edgeCaseSkills.Contains(SkillD.MySkill.KeyID)) newTarget = aliveAllies[randomIndex];
+			else if (SkillD.IsDamage && BChar.HP <= 0) newTarget = aliveAllies[randomIndex];
 			else return;
 
 			Targets.Clear();
 			Targets.Add(newTarget);
 			ChangeAffectionPoints(-1);
-			EventYandere.YandereAction(false);
+			//EventYandere.YandereAction(false);
 			BChar.StartCoroutine(ShowMiyukiEventText());
 		}
 
@@ -141,7 +129,6 @@ namespace MiyukiSone
 
 			if (Bs.TurnNum == Bs.FogTurn && !IsYandere) goto MiyukiHelp;
 
-			bool isPositive = IsDere;
 			var actions = new List<Action<bool>>
 			{
 				PawsWithHand,
@@ -151,8 +138,8 @@ namespace MiyukiSone
 			};
 
 			if (MiyukiData.LastTurnAction != -1 && actions.Count > 1) actions.RemoveAt(MiyukiData.LastTurnAction);
-			int randomIndex = RandomManager.RandomInt("MiyukiDereAction", 0, actions.Count);
-			actions[randomIndex].Invoke(isPositive);
+			int randomIndex = RandomManager.RandomInt("MiyukiTurnAction", 0, actions.Count);
+			actions[randomIndex].Invoke(MiyukiMood);
 			MiyukiData.LastTurnAction = randomIndex;
 
 		MiyukiHelp:;
@@ -162,7 +149,7 @@ namespace MiyukiSone
 		private void PawsWithHand(bool isPositive)
 		{
 			var skillList = isPositive ? AllyTeam.Skills_Deck : AllyTeam.Skills;
-			var action = isPositive ? new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.ForceDraw(b.Myskill)) : new SkillButton.SkillClickDel(b => b.Remove());
+			var action = isPositive ? new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.ForceDraw(b.Myskill)) : new SkillButton.SkillClickDel(b => b.Waste());
 			var title = isPositive ? ScriptLocalization.System_SkillSelect.DrawSkill : ScriptLocalization.System_SkillSelect.WasteSkill;
 			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(skillList, action, title, false, true, true, false, true));
 		}
@@ -183,13 +170,12 @@ namespace MiyukiSone
 
 		private void PawsWithMana(bool isPositive)
 		{
-			int amount = isPositive ? 1 : -1;
-			AllyTeam.AP += amount;
+			AllyTeam.AP += MiyukiOutcome(1);
 		}
 
-		private void PawsWithDeck()
+		private void PawsWithDeck(bool isPositive)
 		{
-			if (IsDere)
+			if (isPositive)
 			{
 				for (int i = 0; i < PlayData.TSavedata.LucySkills.Count; i++)
 				{

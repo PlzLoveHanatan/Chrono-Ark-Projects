@@ -7,6 +7,8 @@ using UnityEngine;
 using I2.Loc;
 using static MiyukiSone.DialogueBox;
 using static MiyukiSone.Utils;
+using static MiyukiSone.Affection;
+using static MiyukiSone.EventDialogueBox;
 using System.Collections;
 using GameDataEditor;
 using DarkTonic.MasterAudio;
@@ -209,8 +211,8 @@ namespace MiyukiSone
 			string text = GetLocalizedLine(line);
 			ShowText(text, isEvent);
 			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
-
 			PlaySoundFromAsset($"Assets/DialogueBox/Love/{line.AudioFile}.ogg", true);
+			if (!isYes && MiyukiDecides) PawsPrank();
 		}
 
 		// ============= KISS =============
