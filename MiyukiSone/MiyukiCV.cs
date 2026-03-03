@@ -1,7 +1,4 @@
-﻿using MiyukiSone;
-using System.Collections.Generic;
-
-public class MiyukiCV : CustomValue
+﻿public class MiyukiCV : CustomValue
 {
 	public int MiyukiAffectionPoints = 0;
 	public bool Equip = false;
@@ -11,14 +8,15 @@ public class MiyukiCV : CustomValue
 	public int LastHelpAction = -1;
 	public int LastPrank = -1;
 
-	// TurnEnd
-	public TryType CurrentTryType = TryType.FirstTry;
+	// TurnEnd - храним как int
+	public int CurrentTryType = 0; // 0 = FirstTry, 1 = SecondTry и т.д.
 	public int CurrentTryCallCount = 0;
 
-	// Kiss no answer
-	public TryType CurrentKissNoType = TryType.FirstTry;
+	// Kiss no answer - храним как int
+	public int CurrentKissNoType = 0;
 	public int KissNoCallCount = 0;
 
+	// Dialogue Box animation
 	public int LastYesBoxAnimation = -1;
 	public int LastNoBoxAnimation = -1;
 }

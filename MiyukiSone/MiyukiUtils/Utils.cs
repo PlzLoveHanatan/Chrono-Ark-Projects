@@ -21,6 +21,7 @@ namespace MiyukiSone
 	{
 		public static ModInfo ThisMod => ModManager.getModInfo("MiyukiSone");
 		public static TempSaveData Pd => PlayData.TSavedata;
+		public static FieldSystem Fs => FieldSystem.instance;
 		public static BattleSystem Bs => BattleSystem.instance;
 		public static BattleTeam AllyTeam => Bs?.AllyTeam;
 		public static BattleTeam EnemyTeam => Bs?.EnemyTeam;

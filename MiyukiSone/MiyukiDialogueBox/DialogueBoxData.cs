@@ -32,7 +32,7 @@ namespace MiyukiSone
 	}
 
 	public static class DialogueBoxData
-	{	
+	{
 		private class DialogueLine
 		{
 			public string Key { get; set; }
@@ -235,6 +235,30 @@ namespace MiyukiSone
 			}
 		}
 
+		// Конвертеры для работы с int из MiyukiCV
+		private static TryType IntToTryType(int value)
+		{
+			return (TryType)value;
+		}
+
+		private static int TryTypeToInt(TryType type)
+		{
+			return (int)type;
+		}
+
+		// Свойства для работы с MiyukiCV
+		private static TryType CurrentKissNoType
+		{
+			get => IntToTryType(MiyukiData.CurrentKissNoType);
+			set => MiyukiData.CurrentKissNoType = TryTypeToInt(value);
+		}
+
+		private static int KissNoCallCount
+		{
+			get => MiyukiData.KissNoCallCount;
+			set => MiyukiData.KissNoCallCount = value;
+		}
+
 		private static DialogueLine GetRandomKissYesLine()
 		{
 			if (kissDialogues?.Yes == null || kissDialogues.Yes.Count == 0)
@@ -262,21 +286,22 @@ namespace MiyukiSone
 				return null;
 			}
 
-			string tryKey = GetKissNoKeyFromType(MiyukiData.CurrentKissNoType);
+			TryType currentType = CurrentKissNoType;
+			string tryKey = GetKissNoKeyFromType(currentType);
 
 			if (!kissDialogues.No.TryGetValue(tryKey, out List<DialogueLine> phrases) || phrases == null || phrases.Count == 0)
 			{
-				Debug.LogError($"Нет No фраз для типа {MiyukiData.CurrentKissNoType} (ключ: {tryKey})");
+				Debug.LogError($"Нет No фраз для типа {currentType} (ключ: {tryKey})");
 				return null;
 			}
 
-			MiyukiData.KissNoCallCount++;
+			KissNoCallCount++;
 
-			int phraseIndex = MiyukiData.KissNoCallCount == 1 ? 0 : (phrases.Count > 1 ? 1 : 0);
+			int phraseIndex = KissNoCallCount == 1 ? 0 : (phrases.Count > 1 ? 1 : 0);
 
 			if (phraseIndex >= phrases.Count)
 			{
-				Debug.LogError($"Для типа {MiyukiData.CurrentKissNoType} нет фразы с индексом {phraseIndex}");
+				Debug.LogError($"Для типа {currentType} нет фразы с индексом {phraseIndex}");
 				return null;
 			}
 
@@ -296,7 +321,6 @@ namespace MiyukiSone
 				}
 				Debug.Log($"Kiss Yes dialog - Audio: {line.AudioFile}, Key: {line.Key}, isSpecial: {line.IsSpecial}");
 
-				// Yes фразы в папке Kiss/Yes
 				PlaySoundFromAsset($"Assets/DialogueBox/Kiss/{line.AudioFile}.ogg", true);
 			}
 			else
@@ -307,12 +331,11 @@ namespace MiyukiSone
 					Debug.LogError("Не найдена No фраза для Kiss диалога");
 					return;
 				}
-				Debug.Log($"Kiss No dialog - Type: {MiyukiData.CurrentKissNoType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {MiyukiData.KissNoCallCount}");
+				Debug.Log($"Kiss No dialog - Type: {CurrentKissNoType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {KissNoCallCount}");
 
-				// No фразы в папке Kiss/No
 				PlaySoundFromAsset($"Assets/DialogueBox/Kiss/{line.AudioFile}.ogg", true);
 
-				if (MiyukiData.KissNoCallCount == 2)
+				if (KissNoCallCount == 2)
 				{
 					UnlockNextKissNo();
 				}
@@ -324,27 +347,27 @@ namespace MiyukiSone
 
 		public static void UnlockNextKissNo()
 		{
-			if (MiyukiData.CurrentKissNoType == TryType.EleventhTry && MiyukiData.KissNoCallCount > 1)
+			if (CurrentKissNoType == TryType.EleventhTry && KissNoCallCount > 1)
 			{
 				EventRandom.PawWithGame();
 				Debug.Log("Достигнут последний No тип для Kiss (EleventhTry). Нельзя разблокировать дальше");
 				return;
 			}
 
-			MiyukiData.CurrentKissNoType++;
-			MiyukiData.KissNoCallCount = 0;
-			Debug.Log($"Разблокирован новый No тип для Kiss: {MiyukiData.CurrentKissNoType}");
+			CurrentKissNoType = CurrentKissNoType + 1;
+			KissNoCallCount = 0;
+			Debug.Log($"Разблокирован новый No тип для Kiss: {CurrentKissNoType}");
 		}
 
 		public static TryType GetCurrentKissNoType()
 		{
-			return MiyukiData.CurrentKissNoType;
+			return CurrentKissNoType;
 		}
 
 		public static void ResetAllKissNo()
 		{
-			MiyukiData.CurrentKissNoType = TryType.FirstTry;
-			MiyukiData.KissNoCallCount = 0;
+			CurrentKissNoType = TryType.FirstTry;
+			KissNoCallCount = 0;
 			Debug.Log("Все Kiss No диалоги сброшены. Начинаем с FirstTry");
 		}
 
@@ -368,6 +391,19 @@ namespace MiyukiSone
 			}
 		}
 
+		// Свойства для Turn
+		private static TryType CurrentTryType
+		{
+			get => IntToTryType(MiyukiData.CurrentTryType);
+			set => MiyukiData.CurrentTryType = TryTypeToInt(value);
+		}
+
+		private static int CurrentTryCallCount
+		{
+			get => MiyukiData.CurrentTryCallCount;
+			set => MiyukiData.CurrentTryCallCount = value;
+		}
+
 		private static DialogueLine GetCurrentTurnLine()
 		{
 			if (turnDialogues == null)
@@ -376,21 +412,22 @@ namespace MiyukiSone
 				return null;
 			}
 
-			string tryKey = GetTurnKeyFromType(MiyukiData.CurrentTryType);
+			TryType currentType = CurrentTryType;
+			string tryKey = GetTurnKeyFromType(currentType);
 
 			if (!turnDialogues.TryGetValue(tryKey, out List<DialogueLine> phrases) || phrases == null || phrases.Count == 0)
 			{
-				Debug.LogError($"Нет фраз для типа {MiyukiData.CurrentTryType} (ключ: {tryKey})");
+				Debug.LogError($"Нет фраз для типа {currentType} (ключ: {tryKey})");
 				return null;
 			}
 
-			MiyukiData.CurrentTryCallCount++;
+			CurrentTryCallCount++;
 
-			int phraseIndex = MiyukiData.CurrentTryType == TryType.EleventhTry ? 0 : (MiyukiData.CurrentTryCallCount == 1 ? 0 : 1);
+			int phraseIndex = currentType == TryType.EleventhTry ? 0 : (CurrentTryCallCount == 1 ? 0 : 1);
 
 			if (phraseIndex >= phrases.Count)
 			{
-				Debug.LogError($"Для типа {MiyukiData.CurrentTryType} нет фразы с индексом {phraseIndex}");
+				Debug.LogError($"Для типа {currentType} нет фразы с индексом {phraseIndex}");
 				return null;
 			}
 
@@ -402,40 +439,39 @@ namespace MiyukiSone
 			var line = GetCurrentTurnLine();
 			if (line == null)
 			{
-				Debug.LogError($"Не найдена строка для текущего Turn диалога: {MiyukiData.CurrentTryType}");
+				Debug.LogError($"Не найдена строка для текущего Turn диалога: {CurrentTryType}");
 				return;
 			}
 
 			string text = GetLocalizedLine(line);
 			ShowText(text, isEvent);
-			Debug.Log($"Turn dialog - Type: {MiyukiData.CurrentTryType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {MiyukiData.CurrentTryCallCount}");
+			Debug.Log($"Turn dialog - Type: {CurrentTryType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {CurrentTryCallCount}");
 
-			// Путь к папке Turn
 			PlaySoundFromAsset($"Assets/DialogueBox/Turn/{line.AudioFile}.ogg", true);
 		}
 
 		public static void UnlockNextTurnEndTry()
 		{
-			if (MiyukiData.CurrentTryType == TryType.EleventhTry || MiyukiData.CurrentTryCallCount == 1 || MiyukiData.CurrentTryCallCount == 0)
+			if (CurrentTryType == TryType.EleventhTry || CurrentTryCallCount == 1 || CurrentTryCallCount == 0)
 			{
 				Debug.Log("Достигнут последний тип (EleventhTry). Нельзя разблокировать дальше");
 				return;
 			}
 
-			MiyukiData.CurrentTryType++;
-			MiyukiData.CurrentTryCallCount = 0;
-			Debug.Log($"Разблокирован новый тип Turn: {MiyukiData.CurrentTryType}");
+			CurrentTryType = CurrentTryType + 1;
+			CurrentTryCallCount = 0;
+			Debug.Log($"Разблокирован новый тип Turn: {CurrentTryType}");
 		}
 
 		public static TryType GetCurrentTryType()
 		{
-			return MiyukiData.CurrentTryType;
+			return CurrentTryType;
 		}
 
 		public static void ResetAllTries()
 		{
-			MiyukiData.CurrentTryType = TryType.FirstTry;
-			MiyukiData.CurrentTryCallCount = 0;
+			CurrentTryType = TryType.FirstTry;
+			CurrentTryCallCount = 0;
 			Debug.Log("Все Try диалоги сброшены. Начинаем с FirstTry");
 		}
 	}

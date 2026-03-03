@@ -51,7 +51,7 @@ namespace MiyukiSone
 
 		private void Update()
 		{
-			// add the voice if trying to end turn and skip the window
+			if (BattleSystem.instance == null) RemoveWindow(gameObject);
 		}
 
 		private void InitializeWindow()
@@ -80,9 +80,15 @@ namespace MiyukiSone
 
 			btn_yes = CreateButton("btn_yes", spriteYes, yesPos, OnYesClicked);
 
-			if (twoYesButtons)
+			if (twoYesButtons || !MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise)
 			{
 				CreateButton("btn_yes2", spriteYes, noPos, OnYesClicked);
+
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise)
+				{
+					MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise = true;
+					MiyukiSoneSaveManager.Instance.Save();
+				}
 				btn_no = null;
 			}
 			else
@@ -192,9 +198,9 @@ namespace MiyukiSone
 			MiyukiData.LastYesBoxAnimation = animations.IndexOf(available[index]);
 			if (RandomManager.RandomPer("MiyukiHeartsSpawn", 100, 50)) return;
 			Transform mainTarget = RandomManager.RandomPer("MiyukiHeartPos", 100, 50) ? btn_yes.transform : MiyukiBchar.transform;
-			MiyukiVisual.Instance.SpawnHearts(mainTarget);
+			MiyukiSoneVisual.Instance.SpawnHearts(mainTarget);
 			if (RandomManager.RandomPer("MiyukiHeartExtra", 100, 25)) extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
-			MiyukiVisual.Instance.SpawnHearts(extraTarget);		
+			MiyukiSoneVisual.Instance.SpawnHearts(extraTarget);		
 		}
 
 		private void PlayRandomNoAnimation()

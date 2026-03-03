@@ -68,7 +68,9 @@ namespace MiyukiSone
 		// decrease affection
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 		{
-			if (User == BChar && Dmg >= 1 && !resist) ChangeAffectionPoints(-1);
+			if (User != BChar) return;
+			if (Dmg >= 1) ChangeAffectionPoints(-1);
+			if (BChar.HP < 0) resist = true;
 		}
 
 		// increase affection

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
 using GameDataEditor;
+using UnityEngine;
 
 namespace MiyukiSone
 {
@@ -116,9 +117,26 @@ namespace MiyukiSone
 
 			}
 
-			public class GameUpdate : Skill_Extended
+			public class GameUpdate : Skill_Extended, IP_MiyukiSkillImgChange
 			{
+				public override bool Terms()
+				{
+					return !MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated && base.Terms();
+				}
 
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					MiyukiSoneSaveManager.Instance.CurrentData.LockedState = (int)CurrentAffectionState;
+					MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated = true;
+					MiyukiSoneSaveManager.Instance.Save();
+					EventRandom.RestartCurrentRun();
+					base.SkillUseSingle(SkillD, Targets);
+				}
+
+				public void SkillImgChange(Skill mySkill)
+				{
+					MySkill.ChangeImg();
+				}
 			}
 		}
 

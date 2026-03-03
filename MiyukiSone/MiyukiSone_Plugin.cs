@@ -16,6 +16,7 @@ using HarmonyLib;
 using UseItem;
 using System.Reflection.Emit;
 using static MiyukiSone.Affection;
+using static MiyukiSone.Utils;
 namespace MiyukiSone
 {
 	public class MiyukiSone_Plugin : ChronoArkPlugin
@@ -53,6 +54,18 @@ namespace MiyukiSone
 			return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
 		}
 
+		[HarmonyPatch(typeof(PlayData))]
+		[HarmonyPatch(nameof(PlayData.GameEndInit))]
+		public class Patch_Reset_Save
+		{
+			[HarmonyPostfix]
+			public static void Postfix()
+			{
+				MiyukiSoneSaveManager.Instance.ResetSave();
+				Debug.Log("Miyuki save file reset coimplete");
+			}
+		}
+
 		[HarmonyPatch(typeof(BattleSystem))]
 		[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
 		class Patch_BattleSystem_TurnEnd
@@ -64,14 +77,35 @@ namespace MiyukiSone
 				{
 					foreach (var windowObj in DialogueBox.dialogueWindows)
 					{
-						if (windowObj != null)
-						{
-							DialogueBoxData.MiyukiTextBoxTurn();
-						}
+						if (windowObj != null) DialogueBoxData.MiyukiTextBoxTurn();
 					}
 					return false;
 				}
 				return true;
+			}
+		}
+
+		[HarmonyPatch(typeof(FieldSystem))]
+		[HarmonyPatch(nameof(FieldSystem.StageStart))]
+		public static class StagePatch
+		{
+			[HarmonyPostfix]
+			public static void StageStartPostfix()
+			{
+				var data = MiyukiSoneSaveManager.Instance.CurrentData;
+				if (!data.GameRestarted && data.GameUpdated)
+				{
+					data.GameRestarted = true;
+					MiyukiSoneSaveManager.Instance.Save();
+					Fs?.StartCoroutine(WaitForSeconds());
+				}
+
+			}
+
+			private static IEnumerator WaitForSeconds()
+			{
+				yield return new WaitForSeconds(3f);
+				yield return EventRandom.ExitGame();
 			}
 		}
 	}

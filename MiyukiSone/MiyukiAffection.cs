@@ -70,6 +70,12 @@ namespace MiyukiSone
 		{
 			get
 			{
+				// Проверяем есть ли залоченное состояние в сохранении
+				if (MiyukiSoneSaveManager.Instance.CurrentData.LockedState.HasValue)
+				{
+					return (MiyukiAffectionState)MiyukiSoneSaveManager.Instance.CurrentData.LockedState.Value;
+				}
+
 				int points = MiyukiPoints;
 
 				if (points >= 15) return MiyukiAffectionState.DereDere;
@@ -88,6 +94,11 @@ namespace MiyukiSone
 		public static void ChangeAffectionPoints(int amount)
 		{
 			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, MinAffectionPoints, MaxAffectionPoints);
+
+			// Сохраняем очки в JSON
+			MiyukiSoneSaveManager.Instance.CurrentData.AffectionPoints = MiyukiPoints;
+			MiyukiSoneSaveManager.Instance.Save();
+
 			Debug.Log($"[Miyuki] Affection points changed by {amount}. Current: {MiyukiPoints}");
 
 			foreach (var skill in BattleSystem.instance.AllyTeam.Skills)

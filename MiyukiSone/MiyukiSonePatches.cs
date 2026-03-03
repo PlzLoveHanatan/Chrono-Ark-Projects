@@ -14,6 +14,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using static MiyukiSone.MiyukiSonePatchesHelpers;
 using static Spine.Unity.Examples.SpineboyFootplanter;
+using static MiyukiSone.Utils;
 
 namespace MiyukiSone
 {
@@ -173,42 +174,16 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(MainSceneScript __instance)
 			{
-				// Находим корневые объекты
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+
 				GameObject canvas = GameObject.Find("Canvas");
 				GameObject canvas2 = GameObject.Find("Canvas (2)");
 
 				if (canvas == null) return;
 
-				// 1. Меняем логотип
-				Transform logo = canvas.transform.Find("Can/Logo");
-				if (logo != null)
-				{
-					Image logoImg = logo.GetComponent<Image>();
-					if (logoImg != null)
-					{
-						Sprite miyukiLogo = UtilsUI.GetSprite("MiyukiVisual/Menu/logo.png");
-						if (miyukiLogo != null)
-						{
-							logoImg.sprite = miyukiLogo;
-							Debug.Log("[Miyuki] Logo replaced");
-						}
-					}
-				}
+				SetSprite(canvas.transform, "Can/Logo", "MiyukiVisual/Menu/logo.png");
+				SetText(canvas.transform, "Can/PressAnyKey/Text", null, 0, true);
 
-				// 2. Меняем текст "Press Any Key"
-				Transform pressKey = canvas.transform.Find("Can/PressAnyKey/Text");
-				if (pressKey != null)
-				{
-					TextMeshProUGUI tmp = pressKey.GetComponent<TextMeshProUGUI>();
-					if (tmp != null)
-					{
-						//tmp.text = "Press Any Key...";
-						tmp.color = new Color(1f, 0.5f, 0.8f);
-						tmp.fontStyle = FontStyles.Bold;
-					}
-				}
-
-				// 3. Меняем все кнопки главного меню
 				Transform mainMenu = canvas.transform.Find("MainMenu");
 				if (mainMenu != null)
 				{
@@ -220,34 +195,11 @@ namespace MiyukiSone
 					SetMenuButton(mainMenu, "TextMeshPro Text (3)", "Exit");
 				}
 
-				// 4. Меняем версию
 				if (canvas2 != null)
 				{
-					Transform version = canvas2.transform.Find("TextMeshPro Text");
-					if (version != null)
-					{
-						TextMeshProUGUI tmp = version.GetComponent<TextMeshProUGUI>();
-						if (tmp != null)
-						{
-							//tmp.text += " | with Miyuki";
-							tmp.color = new Color(1f, 0.5f, 0.8f);
-						}
-					}
-
-					// 5. Меняем цвет SNS иконок
-					Transform twitter = canvas2.transform.Find("SNSAlign/Twitter");
-					if (twitter != null)
-					{
-						Image img = twitter.GetComponent<Image>();
-						if (img != null) img.color = new Color(1f, 0.5f, 0.8f);
-					}
-
-					Transform discord = canvas2.transform.Find("SNSAlign/Discord");
-					if (discord != null)
-					{
-						Image img = discord.GetComponent<Image>();
-						if (img != null) img.color = new Color(1f, 0.5f, 0.8f);
-					}
+					SetText(canvas2.transform, "TextMeshPro Text", null, 0, true);
+					SetImageColor(canvas2.transform, "SNSAlign/Twitter", new Color(1f, 0.5f, 0.8f));
+					SetImageColor(canvas2.transform, "SNSAlign/Discord", new Color(1f, 0.5f, 0.8f));
 				}
 
 				Debug.Log("[Miyuki] Main menu fully styled!");
@@ -261,8 +213,8 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
 			{
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
-
 				SetSprite(root, "Back", "MiyukiVisual/Menu/pause.png");
 				SetSprite(root, "Main/Image", "MiyukiVisual/Menu/pause_window.png");
 				MakeTransparent(root, "Main/Image/Image (1)");
@@ -280,8 +232,8 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(MainOptionMenu __instance)
 			{
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
-
 				ReplaceAllBackSprites("MiyukiVisual/Menu/option.png");
 				SetSprite(root, "Image", "MiyukiVisual/Menu/option_window.png");
 				MakeTransparent(root, "Image/Image (1)");
@@ -297,11 +249,11 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				ReplaceAllBackSprites("MiyukiVisual/Menu/pause.png");
 			}
 		}
 
-		// ==================== GAME PLAY OPTION ====================
 		[HarmonyPatch(typeof(GamePlayOption))]
 		[HarmonyPatch("Open")]
 		class Patch_GamePlayOption
@@ -309,6 +261,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(GamePlayOption __instance)
 			{
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Game Play", 38);
 				SetSprite(root, "Content", "MiyukiVisual/Menu/gameplay_window.png");
@@ -320,7 +273,6 @@ namespace MiyukiSone
 			}
 		}
 
-		// ==================== SOUND OPTION ====================
 		[HarmonyPatch(typeof(SoundOption))]
 		[HarmonyPatch("Open")]
 		class Patch_SoundOption
@@ -328,8 +280,8 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(SoundOption __instance)
 			{
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
-
 				SetText(root, "TextMeshPro Text", "Sound", 38);
 				SetSprite(root, "Content", "MiyukiVisual/Menu/sound_window.png");
 				MakeTransparent(root, "Content/Back");
@@ -340,7 +292,6 @@ namespace MiyukiSone
 			}
 		}
 
-		// ==================== GRAPHIC OPTION ====================
 		[HarmonyPatch(typeof(GraphicOption))]
 		[HarmonyPatch("Open")]
 		class Patch_GraphicOption
@@ -348,8 +299,8 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(GraphicOption __instance)
 			{
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
-
 				SetText(root, "TextMeshPro Text", "Graphic", 38);
 				SetSprite(root, "Content", "MiyukiVisual/Menu/graphic_window.png");
 				MakeTransparent(root, "Content/Back");
@@ -360,7 +311,6 @@ namespace MiyukiSone
 			}
 		}
 
-		// ==================== CONTROL OPTION ====================
 		[HarmonyPatch(typeof(ControlOption))]
 		[HarmonyPatch("Open")]
 		class Patch_ControlOption
@@ -368,8 +318,8 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(ControlOption __instance)
 			{
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
-
 				SetText(root, "KeyObj/TextMeshPro Text", "Control", 38);
 				SetSprite(root, "KeyObj/Content", "MiyukiVisual/Menu/control_window.png");
 				MakeTransparent(root, "KeyObj/Content/Back");

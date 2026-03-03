@@ -34,17 +34,31 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void RestartCurrentStage()
+		public static IEnumerator ExitGame()
 		{
-			BattleSystem.instance.StartCoroutine(RestartCurrentStageCo());
+			SaveManager.savemanager.Save();
+			yield return new WaitForSeconds(1.5f);
+			UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
+			PauseWindow.QuitGameDel();
 		}
 
-		private static IEnumerator RestartCurrentStageCo()
+		public static void RestartCurrentRun()
+		{
+			BattleSystem.instance.StartCoroutine(RestartCurrentStageCo(0));
+		}
+
+		public static void RestartCurrentStage(int stageNum = 0)
+		{
+			BattleSystem.instance.StartCoroutine(RestartCurrentStageCo(stageNum));
+		}
+
+		private static IEnumerator RestartCurrentStageCo(int stageNum = 0)
 		{
 			BattleSystem.instance.BattleEnd(true, false);
 			FieldSystem.instance.ClearMap();
 			string stageKey;
-			switch (PlayData.TSavedata.StageNum)
+			stageNum = stageNum == 0 ? Pd.StageNum : stageNum;
+			switch (stageNum)
 			{
 				case 0: stageKey = GDEItemKeys.Stage_Stage1_1; break;
 				case 1: stageKey = GDEItemKeys.Stage_Stage1_2; break;

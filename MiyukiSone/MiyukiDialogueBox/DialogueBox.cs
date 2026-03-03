@@ -27,6 +27,7 @@ namespace MiyukiSone
 
 				int randomSpriteIndex = RandomManager.RandomInt("MiyukiRandomBox", 0, availableSprites.Count);
 				string randomSprite = availableSprites[randomSpriteIndex];
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise) randomSprite = "";
 				lastSpriteKey = randomSprite;
 
 				var transform = BattleSystem.instance.ActWindow.transform;
