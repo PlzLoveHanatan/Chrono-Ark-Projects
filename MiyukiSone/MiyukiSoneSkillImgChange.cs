@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
+using static MiyukiSone.Affection;
 
 namespace MiyukiSone
 {
@@ -15,12 +16,24 @@ namespace MiyukiSone
 			public string buttonPath;
 			public string basicPath;
 			public bool useDefault;
+			public List<PointsThreshold> pointsThresholds;
 
 			public SkillImageSet() { }
 		}
 
+		[Serializable]
+		public class PointsThreshold
+		{
+			public int minPoints;
+			public string skillPath;
+			public string buttonPath;
+			public string basicPath;
+			public bool useDefault;
+		}
+
 		private static Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>> _skillImages;
 		private static Dictionary<string, MiyukiAffectionState> _currentState = new Dictionary<string, MiyukiAffectionState>();
+		private static Dictionary<string, int> _currentPoints = new Dictionary<string, int>();
 
 		public static Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>> SkillImages
 		{
@@ -66,10 +79,31 @@ namespace MiyukiSone
 			if (skill == null) return;
 
 			string skillID = skill.MySkill.KeyID;
-			MiyukiAffectionState newState = Affection.CurrentAffectionState;
+			MiyukiAffectionState newState = CurrentAffectionState;
 
 			if (!SkillImages.TryGetValue(skillID, out var stateMap) || stateMap == null || stateMap.Count == 0) return;
 
+			// Для скилов с thresholds в DereDere
+			if (newState == MiyukiAffectionState.DereDere && stateMap.TryGetValue(MiyukiAffectionState.DereDere, out var deredereSet)
+				&& deredereSet.pointsThresholds != null && deredereSet.pointsThresholds.Count > 0) 
+			{
+				int currentPoints = MiyukiPoints;
+				var threshold = deredereSet.pointsThresholds .Where(t => currentPoints >= t.minPoints).OrderByDescending(t => t.minPoints).FirstOrDefault();
+
+				if (threshold != null)
+				{
+					// Проверяем изменился ли threshold
+					if (_currentPoints.TryGetValue(skillID, out var lastPoints) && lastPoints == threshold.minPoints) return;
+
+					_currentPoints[skillID] = threshold.minPoints;
+
+					if (threshold.useDefault) skill.ChangeSkillImage(isRestoreImg: true, defaultSkillKey: skillID);
+					else skill.ChangeSkillImage(threshold.skillPath, threshold.buttonPath, threshold.basicPath);
+					return;
+				}
+			}
+
+			// Для всех остальных случаев (включая DereDere без thresholds)
 			if (_currentState.TryGetValue(skillID, out var currentState) && currentState == newState) return;
 
 			var imageSet = FindBestImageSet(stateMap, newState);
@@ -77,20 +111,15 @@ namespace MiyukiSone
 
 			_currentState[skillID] = newState;
 
-			if (imageSet.useDefault)
-			{
-				skill.ChangeSkillImages(isRestoreImg: true, defaultSkillKey: skillID);
-			}
-			else if (!string.IsNullOrEmpty(imageSet.skillPath))
-			{
-				skill.ChangeSkillImages(imageSet.skillPath, imageSet.buttonPath, imageSet.basicPath);
-			}
+			if (imageSet.useDefault) skill.ChangeSkillImage(isRestoreImg: true, defaultSkillKey: skillID);
+			else if (!string.IsNullOrEmpty(imageSet.skillPath)) skill.ChangeSkillImage(imageSet.skillPath, imageSet.buttonPath, imageSet.basicPath);
 		}
 
 		public static void ReloadConfig()
 		{
 			_skillImages = null;
 			_currentState.Clear();
+			_currentPoints.Clear();
 		}
 	}
 }

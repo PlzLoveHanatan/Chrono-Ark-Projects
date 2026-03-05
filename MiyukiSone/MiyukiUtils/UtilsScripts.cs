@@ -8,13 +8,12 @@ using GameDataEditor;
 using MiyukiSone;
 using NLog.Targets;
 using static MiyukiSone.Utils;
-using static MiyukiSone.UtilsScripts;
 
 namespace MiyukiSone
 {
 	public static class UtilsScripts
 	{
-		public static void RemoveSkill(Skill skill, bool isExclude = false)
+		public static void RemoveSkill(this Skill skill, bool isExclude = false)
 		{
 			if (skill == null) return;
 
@@ -124,7 +123,7 @@ namespace MiyukiSone
 			window.SetCountSkillVL((window.CastingGroup.GetComponentsInChildren<SkillButton>().Length >= 13) ? 30 : 45);
 		}
 
-		public static void AddBuff(BattleChar user, BattleChar target, string buffKey, int buffNum = 1)
+		public static void AddBuff(this BattleChar user, BattleChar target, string buffKey, int buffNum = 1)
 		{
 			if (user == null || string.IsNullOrEmpty(buffKey)) return;
 
@@ -134,7 +133,7 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void AddBuff(BattleChar user, List<BattleChar> targets, string buffKey, int buffNum = 1)
+		public static void AddBuff(this BattleChar user, List<BattleChar> targets, string buffKey, int buffNum = 1)
 		{
 			foreach (var target in targets)
 			{
@@ -142,7 +141,7 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void AddBuff(BattleChar target, string buffKey, int buffNum = 1)
+		public static void AddBuff(this BattleChar target, string buffKey, int buffNum = 1)
 		{
 			AddBuff(DummyChar, target, buffKey, buffNum);
 		}

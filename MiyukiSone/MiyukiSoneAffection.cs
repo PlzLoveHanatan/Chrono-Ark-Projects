@@ -8,9 +8,9 @@ using GameDataEditor;
 using I2.Loc;
 using UnityEngine;
 using static MiyukiSone.Utils;
-using static MiyukiSone.DialogueBoxData;
+using static MiyukiSone.DialogueData;
 using static MiyukiSone.EventData;
-using static MiyukiSone.DialogueBox;
+using static MiyukiSone.Dialogue;
 using static MiyukiSone.Event;
 using UnityEngine.U2D.SpriteShapeClipperLib;
 
@@ -26,12 +26,11 @@ namespace MiyukiSone
 	public static class Affection
 	{
 		private const string MiyukiRandomKey = "MiyukiRandom";
-		private const int MaxAffectionPoints = 25;
-		private const int MinAffectionPoints = -25;
-		private const int RandomChanceMultiplier = 5;
+		private const int MaxAffectionPoints = 100;
+		private const int MinAffectionPoints = -100;
 		public static int MiyukiPoints => MiyukiData.MiyukiAffectionPoints;
 
-		public static int MiyukiOutcome(int baseValue)
+		public static int MiyukiResult(int baseValue)
 		{
 			if (MiyukiDecides) return 0;
 
@@ -45,7 +44,7 @@ namespace MiyukiSone
 
 				if (MiyukiPoints == MaxAffectionPoints || MiyukiPoints == MinAffectionPoints)
 				{
-					int bonusChance = Mathf.Clamp(Math.Abs(MiyukiPoints) * RandomChanceMultiplier + 25, 0, 100);
+					int bonusChance = Mathf.Clamp(Math.Abs(MiyukiPoints) + 25, 0, 100);
 					bool isDouble = RandomManager.RandomPer(IsDere ? "DereBonus" : "YandereBonus", 100, bonusChance);
 					if (isDouble) return result * 2;
 				}
@@ -55,7 +54,7 @@ namespace MiyukiSone
 			return 0;
 		}
 
-		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints * RandomChanceMultiplier + 25));
+		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints + 25));
 
 		public static bool MiyukiMood => IsDere || (IsKuudere && MiyukiPoints >= 0);
 
@@ -70,7 +69,6 @@ namespace MiyukiSone
 		{
 			get
 			{
-				// Проверяем есть ли залоченное состояние в сохранении
 				if (MiyukiSoneSaveManager.Instance.CurrentData.LockedState.HasValue)
 				{
 					return (MiyukiAffectionState)MiyukiSoneSaveManager.Instance.CurrentData.LockedState.Value;
@@ -83,6 +81,11 @@ namespace MiyukiSone
 
 				return MiyukiAffectionState.Kuudere;
 			}
+		}
+
+		public static void ChangeAffectionPoints()
+		{
+			ChangeAffectionPoints(1);
 		}
 
 		public static void ChangeAffectionPointsRandom()
@@ -101,7 +104,7 @@ namespace MiyukiSone
 
 			Debug.Log($"[Miyuki] Affection points changed by {amount}. Current: {MiyukiPoints}");
 
-			foreach (var skill in BattleSystem.instance.AllyTeam.Skills)
+			foreach (var skill in AllyTeam.Skills.Concat(AllyTeam.Skills_Deck).Concat(AllyTeam.Skills_UsedDeck))
 			{
 				foreach (var ex in skill.AllExtendeds)
 				{
@@ -115,7 +118,7 @@ namespace MiyukiSone
 
 		public static void MiyukiTurn()
 		{
-			CreateDialogueBox(); return;
+			CreateDialogue(); return;
 
 			if (MiyukiDecides)
 			{
@@ -124,9 +127,9 @@ namespace MiyukiSone
 			else
 			{
 				bool isKissTriggered = RandomManager.RandomPer(MiyukiRandomKey, 100, 30) && IsDere;
-				DialogueBoxState? dialogueState = null;
-				if (isKissTriggered) dialogueState = DialogueBoxState.kiss;
-				CreateDialogueBox(dialogueState);
+				DialogueState? dialogueState = null;
+				if (isKissTriggered) dialogueState = DialogueState.kiss;
+				CreateDialogue(dialogueState);
 			}
 		}
 	}

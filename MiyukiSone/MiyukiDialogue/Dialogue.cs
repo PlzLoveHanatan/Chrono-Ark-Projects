@@ -1,22 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static MiyukiSone.DialogueBoxData;
+using static MiyukiSone.DialogueData;
 
 namespace MiyukiSone
 {
-	public static class DialogueBox
+	public enum DialogueState
+	{
+		love,
+		kiss,
+		help,
+		//help
+	}
+
+	public static class Dialogue
 	{
 		public static List<GameObject> dialogueWindows = new List<GameObject>();
 		private static string lastSpriteKey = null;
 
-		public static void CreateDialogueBox(DialogueBoxState? state = null)
+		public static void CreateDialogue(DialogueState? state = null)
 		{
 			int windowCount = RandomManager.RandomPer("MiyukiRandomWindow", 100, 15) ? 2 : 1;
 
 			for (int i = 0; i < 1; i++)
 			{
-				DialogueBoxState currentState = state ?? DialogueBoxState.love;
+				DialogueState currentState = state ?? DialogueState.love;
 				var sprites = DialogueSprites[currentState];
 				List<string> availableSprites = new List<string>(sprites);
 
@@ -27,18 +35,18 @@ namespace MiyukiSone
 
 				int randomSpriteIndex = RandomManager.RandomInt("MiyukiRandomBox", 0, availableSprites.Count);
 				string randomSprite = availableSprites[randomSpriteIndex];
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise) randomSprite = "";
+				if (!MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise) randomSprite = "dlg_eternal_01";
 				lastSpriteKey = randomSprite;
 
 				var transform = BattleSystem.instance.ActWindow.transform;
-				Sprite sprite = UtilsUI.GetSprite("MiyukiVisual/DialogueBox/" + randomSprite);
+				Sprite sprite = UtilsUI.GetSprite("MiyukiVisual/Dialogue/" + randomSprite + ".png");
 				Vector2 size = DialogueSize[currentState];
 				Vector3 position = GetRandomPosition(size, "MiyukiRandomPos");
 
-				GameObject newWindow = UtilsUI.CreateUIImage($"DialogueBox_{randomSprite}", transform, sprite, size, position, true);
-				newWindow.AddComponent<DialogueBoxWindow>();
-				newWindow.AddComponent<DialogueBoxDragHandler>();
-				newWindow.GetComponent<DialogueBoxWindow>().currentDialogueBoxState = currentState;
+				GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", transform, sprite, size, position, true);
+				newWindow.AddComponent<DialogueWindow>();
+				newWindow.AddComponent<DialogueDragHandler>();
+				newWindow.GetComponent<DialogueWindow>().currentDialogueState = currentState;
 				newWindow.transform.SetAsLastSibling();
 				dialogueWindows.Add(newWindow);
 			}
@@ -86,37 +94,28 @@ namespace MiyukiSone
 			return new Vector3(randomX, randomY, 0);
 		}
 
-		public enum DialogueBoxState
+		public static readonly Dictionary<DialogueState, List<string>> DialogueSprites = new Dictionary<DialogueState, List<string>>()
 		{
-			love,
-			kiss,
-			help,
-			//help
-		}
-
-		public static readonly Dictionary<DialogueBoxState, List<string>> DialogueSprites = new Dictionary<DialogueBoxState, List<string>>()
-		{
-			{ DialogueBoxState.love, new List<string> {"box_love_0.png", "box_love_1.png", "box_love_2.png", "box_love_3.png", "box_love_4.png",
-				"box_love_5.png", "box_love_6.png", "box_love_7.png", "box_love_8.png", "box_love_9.png", "box_love_10.png", "box_love_11.png", "box_love_12.png" } },
-			{ DialogueBoxState.kiss, new List<string> { "box_kiss_0.png", "box_kiss_1.png" } },
-			{ DialogueBoxState.help, new List<string> { "box_kiss_0.png", "box_kiss_1.png" } },
+			{ DialogueState.love, new List<string> {"dlg_love_01", "dlg_love_02", "dlg_love_03", "dlg_love_04", "dlg_love_05", "dlg_love_06", "dlg_love_07", "dlg_love_08", "dlg_love_09", "dlg_love_010", "dlg_love_011" } },
+			{ DialogueState.kiss, new List<string> { "dlg_kiss_01", "dlg_kiss_02" } },
+			{ DialogueState.help, new List<string> { "dlg_kiss_01", "dlg_kiss_01" } },
 		};
 
 
-		public static readonly Dictionary<DialogueBoxState, Vector2> DialogueSize = new Dictionary<DialogueBoxState, Vector2>()
+		public static readonly Dictionary<DialogueState, Vector2> DialogueSize = new Dictionary<DialogueState, Vector2>()
 		{
-			{ DialogueBoxState.love, new Vector3(700, 130, 0) },
-			{ DialogueBoxState.kiss, new Vector3(700, 130, 0) },
-			{ DialogueBoxState.help, new Vector3(700, 130, 0) },
-			//{ DialogueBoxState.help, new Vector3(0, 90, 0) }
+			{ DialogueState.love, new Vector3(700, 168, 0) },
+			{ DialogueState.kiss, new Vector3(700, 168, 0) },
+			{ DialogueState.help, new Vector3(700, 168, 0) },
+			//{ DialogueState.help, new Vector3(0, 90, 0) }
 		};
 
-		public static readonly Dictionary<DialogueBoxState, Vector3> Dialogueposition = new Dictionary<DialogueBoxState, Vector3>()
+		public static readonly Dictionary<DialogueState, Vector3> Dialogueposition = new Dictionary<DialogueState, Vector3>()
 		{
-			{ DialogueBoxState.love, new Vector3(170, 170, 0) },
-			{ DialogueBoxState.kiss, new Vector3(170, 170, 0) },
-			//{ DialogueBoxState.sex, new Vector3(0, 120, 0) },
-			//{ DialogueBoxState.help, new Vector3(0, 90, 0) }
+			{ DialogueState.love, new Vector3(170, 170, 0) },
+			{ DialogueState.kiss, new Vector3(170, 170, 0) },
+			//{ DialogueState.sex, new Vector3(0, 120, 0) },
+			//{ DialogueState.help, new Vector3(0, 90, 0) }
 		};
 	}
 }

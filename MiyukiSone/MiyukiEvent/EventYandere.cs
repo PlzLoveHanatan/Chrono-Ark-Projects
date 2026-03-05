@@ -81,12 +81,12 @@ namespace MiyukiSone
 
 		private static void DebuffAllies()
 		{
-			AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().ForEach(a => AddBuff(a, ModItemKeys.Buff_B_Miyuki_Debuff));
+			AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().ForEach(a => a.AddBuff(ModItemKeys.Buff_B_Miyuki_Debuff));
 		}
 
 		private static void BuffEnemies()
 		{
-			Bs.EnemyTeam.AliveChars_Vanish.ForEach(a => AddBuff(a, ModItemKeys.Buff_B_Miyuki_Buff));
+			Bs.EnemyTeam.AliveChars_Vanish.ForEach(a => a.AddBuff(ModItemKeys.Buff_B_Miyuki_Buff));
 		}
 	}
 }

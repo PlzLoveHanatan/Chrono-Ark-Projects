@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone03032026145008</AssemblyName>
+    <AssemblyName>MiyukiSone03042026225951</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,32 +405,33 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                      <!-- Compile ItemGroup Start-->
+                                                  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="IP_MiyukiSkillImgChange.cs" />
-    <Compile Include="MiyukiAffection.cs" />
-    <Compile Include="MiyukiCV.cs" />
     <Compile Include="MiyukiJsonReader.cs" />
+    <Compile Include="MiyukiSoneAffection.cs" />
     <Compile Include="MiyukiSonePatches.cs" />
     <Compile Include="MiyukiSonePatchesHelpers.cs" />
     <Compile Include="MiyukiSoneSaveData.cs" />
+    <Compile Include="MiyukiSoneSkillExtension.cs" />
     <Compile Include="MiyukiSoneSkillImgChange.cs" />
     <Compile Include="MiyukiSoneVisual.cs" />
     <Compile Include="MiyukiSone_ModDefinition.cs" />
     <Compile Include="MiyukiSone_ModItemKeys.cs" />
     <Compile Include="MiyukiSone_Plugin.cs" />
+    <Compile Include="MiyukSoneiCV.cs" />
     <Compile Include="MiyukiBchar\Buffs.cs" />
     <Compile Include="MiyukiBchar\Passive.cs" />
     <Compile Include="MiyukiBchar\Skills.cs" />
     <Compile Include="MiyukiBchar\SkillsExtended.cs" />
-    <Compile Include="MiyukiDialogueBox\DialogueBox.cs" />
-    <Compile Include="MiyukiDialogueBox\DialogueBoxData.cs" />
-    <Compile Include="MiyukiDialogueBox\DialogueBoxDragHandler.cs" />
-    <Compile Include="MiyukiDialogueBox\DialogueBoxWindow.cs" />
+    <Compile Include="MiyukiDialogue\Dialogue.cs" />
+    <Compile Include="MiyukiDialogue\DialogueData.cs" />
+    <Compile Include="MiyukiDialogue\DialogueDragHandler.cs" />
+    <Compile Include="MiyukiDialogue\DialogueWindow.cs" />
     <Compile Include="MiyukiEvent\Event.cs" />
     <Compile Include="MiyukiEvent\EventData.cs" />
     <Compile Include="MiyukiEvent\EventDere.cs" />
-    <Compile Include="MiyukiEvent\EventDialogueBox.cs" />
+    <Compile Include="MiyukiEvent\EventDialogue.cs" />
     <Compile Include="MiyukiEvent\EventHelp.cs" />
     <Compile Include="MiyukiEvent\EventRandom.cs" />
     <Compile Include="MiyukiEvent\EventYandere.cs" />

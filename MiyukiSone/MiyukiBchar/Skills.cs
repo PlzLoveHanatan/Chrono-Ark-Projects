@@ -5,9 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static MiyukiSone.Utils;
+using static MiyukiSone.UtilsScripts;
 using static MiyukiSone.Affection;
 using GameDataEditor;
 using UnityEngine;
+using static MiyukiSone.Skills.Class;
+using NLog.Targets;
 
 namespace MiyukiSone
 {
@@ -17,7 +20,7 @@ namespace MiyukiSone
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				ChangeAffectionPoints(25);
+				ChangeAffectionPoints(10);
 				base.SkillUseSingle(SkillD, Targets);
 			}
 		}
@@ -26,8 +29,16 @@ namespace MiyukiSone
 		{
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				ChangeAffectionPoints(-25);
+				ChangeAffectionPoints(-10);
 				base.SkillUseSingle(SkillD, Targets);
+			}
+		}
+
+		public class SacrificedKnowledge : Skill_Extended
+		{
+			public override bool Terms()
+			{
+				return false;
 			}
 		}
 
@@ -37,40 +48,17 @@ namespace MiyukiSone
 			{
 				public override void Init()
 				{
-					if (IsYandere)
-					{
-						var targetKey = MySkill.MySkill.Target.Key;
-
-						if (targetKey == GDEItemKeys.s_targettype_enemy) MySkill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_otherally);
-						else if (targetKey == GDEItemKeys.s_targettype_all_enemy) MySkill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_ally);
-						else if (targetKey == GDEItemKeys.s_targettype_ally) MySkill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_enemy);
-						else if (targetKey == GDEItemKeys.s_targettype_all_ally) MySkill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_enemy);
-					}
+					MySkill.MiyukiInit();
 					base.Init();
 				}
 			}
 
-			public class BloomingQueen : Skill_Extended
+			public class QueenBee : MiyukiSoneSkill
 			{
 
 			}
 
-			public class EternalPromise : Skill_Extended
-			{
-
-			}
-
-			public class GlitchingPhone : Skill_Extended
-			{
-
-			}
-
-			public class GracefulSwing : Skill_Extended
-			{
-
-			}
-
-			public class HappyBirthday : MiyukiSoneSkill, IP_MiyukiSkillImgChange
+			public class EternalPromise : Skill_Extended, IP_MiyukiSkillImgChange
 			{
 				public void SkillImgChange(Skill mySkill)
 				{
@@ -78,9 +66,96 @@ namespace MiyukiSone
 				}
 			}
 
-			public class LingeringDesire : Skill_Extended
+			public class GlitchingPhone : Skill_Extended
 			{
+				private float timer = 0f;
+				private readonly float interval = 3f;
 
+				public override void FixedUpdate()
+				{
+					base.FixedUpdate();
+
+					timer += Time.fixedDeltaTime;
+
+					if (timer >= interval)
+					{
+						timer = 0f;
+						ChangeImg();
+					}
+				}
+
+				private void ChangeImg()
+				{
+					string[] suffixes = { "01", "02", "03" };
+					var available = Enumerable.Range(0, suffixes.Length).Where(i => i != MiyukiData.LastPhoneImage || suffixes.Length == 1).ToList();
+					int selected = available[RandomManager.RandomInt("MiyukiPhone", 0, available.Count)];
+					MiyukiData.LastPhoneImage = selected;
+					string path = $"Assets/Images/Skills/GlitchingPhone/{suffixes[selected]}/";
+					MySkill.ChangeSkillImage(path + "skill", path + "button", path + "basic", isGlicthEffect: true);
+				}
+			}
+
+			public class GracefulSwing : PriestPBase
+			{
+				private int Damage => (int)(BChar.GetStat.atk * 1.5f);
+				private bool _lastPassiveDraw;
+
+				public override string DescExtended(string desc)
+				{
+					return base.DescExtended(desc).Replace("&a", Damage.ToString());
+				}
+
+				public override void Init()
+				{
+					base.Init();
+					MySkill.MiyukiInit(CurrentAffectionState);
+
+				}
+
+				public override void FixedUpdate()
+				{
+					if (PassiveDraw != _lastPassiveDraw)
+					{
+						_lastPassiveDraw = PassiveDraw;
+
+						if (PassiveDraw)
+						{
+							string path = "Assets/Images/Skills/GracefulSwing/Prophecy/";
+							SkillBasePlus.Target_BaseDMG = Damage;
+							MySkill.ChangeSkillImage(path + "skill", path + "button", path + "basic", isGlicthEffect: true);
+						}
+						else MySkill.ChangeSkillImage(isRestoreImg: true);
+					}
+					base.FixedUpdate();
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					if (PassiveDraw) SkillBasePlus.Target_BaseDMG = Damage;
+					base.SkillUseSingle(SkillD, Targets);
+				}
+			}
+
+			public class HappyBirthday : SkillExtedned_IlyaP, IP_MiyukiSkillImgChange
+			{
+				public override void Init()
+				{
+					base.Init();
+					MySkill.MiyukiInit(CurrentAffectionState);
+				}
+
+				public override void IlyaWaste()
+				{
+					if (!MySkill.IsMiyukiOwner()) return;
+					AllyTeam.Draw();
+					BattleSystem.DelayInput(BattleSystem.instance.SkillRandomUseIenum(BChar, MySkill, false, true, false));
+					base.IlyaWaste();
+				}
+
+				public void SkillImgChange(Skill mySkill)
+				{
+					mySkill.ChangeImg();
+				}
 			}
 
 			public class MeasuredLove : MiyukiSoneSkill, IP_MiyukiSkillImgChange
@@ -91,18 +166,40 @@ namespace MiyukiSone
 				}
 			}
 
-			public class Pandemonium : Skill_Extended
+			public class SweetRestraint : MiyukiSoneSkill, IP_SkillCastingStart
 			{
-
+				public void SkillCasting(CastingSkill ThisSkill)
+				{
+					BChar.AddBuff(GDEItemKeys.Buff_B_Lian_P_0);
+				}
 			}
 
-			public class SweetRestraint : Skill_Extended
+			public class WarningStrike : Skill_Momori, IP_MiyukiSkillImgChange
 			{
+				private int Heal => (int)(BChar.GetStat.reg);
 
-			}
+				public override string DescExtended(string desc)
+				{
+					return base.DescExtended(desc).Replace("&a", Heal.ToString());
+				}
 
-			public class WarningStrike : MiyukiSoneSkill, IP_MiyukiSkillImgChange
-			{
+				public override void Init()
+				{
+					MySkill.MiyukiInit();
+					base.Init();
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					var momoriPskill = GetMomoriPskill();
+					if (momoriPskill.Any())
+					{
+						var p = momoriPskill.First();
+						p.SaveDMG = Math.Max(0, p.SaveDMG - Heal);
+					}
+					base.SkillUseSingle(SkillD, Targets);
+				}
+
 				public void SkillImgChange(Skill mySkill)
 				{
 					mySkill.ChangeImg();
@@ -112,12 +209,40 @@ namespace MiyukiSone
 
 		public class Rare
 		{
-			public class EternalKiss : Skill_Extended
+			public class JustforYOU : MiyukiSoneSkill, IP_MiyukiSkillImgChange
 			{
+				public override bool Terms()
+				{
+					return !IsYandere && base.Terms();
+				}
 
+				public override void FixedUpdate()
+				{
+					base.FixedUpdate();
+					if (Bs != null) UpdateAPCost();
+				}
+
+				private void UpdateAPCost()
+				{
+					bool inDeck = AllyTeam.Skills_Deck.Concat(AllyTeam.Skills_UsedDeck).Contains(MySkill);
+					MySkill.APChange = inDeck ? 3 : 0;
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					Targets.ForEach(t => t.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).ForEach(b => b.SelfDestroy()));
+					DialogueState state = IsDere && MiyukiPoints >= 30 ? DialogueState.kiss : DialogueState.love;
+					Dialogue.CreateDialogue(state);
+					base.SkillUseSingle(SkillD, Targets);
+				}
+
+				public void SkillImgChange(Skill mySkill)
+				{
+					mySkill.ChangeImg();
+				}
 			}
 
-			public class GameUpdate : Skill_Extended, IP_MiyukiSkillImgChange
+			public class GameUpdate : MiyukiSoneSkill, IP_MiyukiSkillImgChange
 			{
 				public override bool Terms()
 				{
@@ -142,15 +267,7 @@ namespace MiyukiSone
 
 		public class Lucy
 		{
-			public class JustforYOU : Skill_Extended
-			{
 
-			}
-
-			public class OnlyYOUandMe : Skill_Extended
-			{
-
-			}
 		}
 	}
 }

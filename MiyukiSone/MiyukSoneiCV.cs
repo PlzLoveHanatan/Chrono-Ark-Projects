@@ -1,4 +1,4 @@
-﻿public class MiyukiCV : CustomValue
+﻿public class MiyukSoneiCV : CustomValue
 {
 	public int MiyukiAffectionPoints = 0;
 	public bool Equip = false;
@@ -7,6 +7,7 @@
 	public int LastTurnAction = -1;
 	public int LastHelpAction = -1;
 	public int LastPrank = -1;
+	public int LastPhoneImage = -1;
 
 	// TurnEnd - храним как int
 	public int CurrentTryType = 0; // 0 = FirstTry, 1 = SecondTry и т.д.

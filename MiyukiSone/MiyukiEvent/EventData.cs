@@ -5,7 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 using I2.Loc;
-using static MiyukiSone.DialogueBox;
+using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
 using DarkTonic.MasterAudio;

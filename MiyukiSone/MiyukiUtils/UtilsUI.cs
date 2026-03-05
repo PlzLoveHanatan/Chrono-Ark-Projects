@@ -29,6 +29,7 @@ namespace MiyukiSone
 
 		public static string GetSpriteAddress(string spritePath)
 		{
+			Debug.Log($"[Miyuki] Loading sprite: {spritePath}");
 			return ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<Sprite>("MiyukiSone", spritePath);
 		}
 

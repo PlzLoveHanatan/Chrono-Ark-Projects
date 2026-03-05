@@ -73,11 +73,15 @@ namespace MiyukiSone
 			[HarmonyPrefix]
 			public static bool Prefix()
 			{
-				if (DialogueBox.dialogueWindows.Count > 0)
+				if (Dialogue.dialogueWindows.Count > 0)
 				{
-					foreach (var windowObj in DialogueBox.dialogueWindows)
+					foreach (var windowObj in Dialogue.dialogueWindows)
 					{
-						if (windowObj != null) DialogueBoxData.MiyukiTextBoxTurn();
+						if (windowObj != null)
+						{
+							DialogueData.MiyukiTextBoxTurn();
+							ChangeAffectionPointsRandom();
+						}
 					}
 					return false;
 				}

@@ -5,10 +5,10 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 using I2.Loc;
-using static MiyukiSone.DialogueBox;
+using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
-using static MiyukiSone.EventDialogueBox;
+using static MiyukiSone.EventDialogue;
 using System.Collections;
 using GameDataEditor;
 using DarkTonic.MasterAudio;
@@ -31,7 +31,7 @@ namespace MiyukiSone
 		EleventhTry,
 	}
 
-	public static class DialogueBoxData
+	public static class DialogueData
 	{
 		private class DialogueLine
 		{
@@ -91,11 +91,11 @@ namespace MiyukiSone
 
 		private static void LoadLoveDialogues()
 		{
-			string jsonContent = MiyukiJsonReader.LoadJson("DialogueBoxLove.json");
+			string jsonContent = MiyukiJsonReader.LoadJson("DialogueLove.json");
 
 			if (jsonContent == null)
 			{
-				Debug.LogError("Не удалось загрузить DialogueBoxLove.json");
+				Debug.LogError("Не удалось загрузить DialogueLove.json");
 				return;
 			}
 
@@ -108,17 +108,17 @@ namespace MiyukiSone
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Ошибка десериализации DialogueBoxLove.json: {ex.Message}");
+				Debug.LogError($"Ошибка десериализации DialogueLove.json: {ex.Message}");
 			}
 		}
 
 		private static void LoadKissDialogues()
 		{
-			string jsonContent = MiyukiJsonReader.LoadJson("DialogueBoxKiss.json");
+			string jsonContent = MiyukiJsonReader.LoadJson("DialogueKiss.json");
 
 			if (jsonContent == null)
 			{
-				Debug.LogError("Не удалось загрузить DialogueBoxKiss.json");
+				Debug.LogError("Не удалось загрузить DialogueKiss.json");
 				return;
 			}
 
@@ -131,17 +131,17 @@ namespace MiyukiSone
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Ошибка десериализации DialogueBoxKiss.json: {ex.Message}");
+				Debug.LogError($"Ошибка десериализации DialogueKiss.json: {ex.Message}");
 			}
 		}
 
 		private static void LoadTurnDialogues()
 		{
-			string jsonContent = MiyukiJsonReader.LoadJson("DialogueBoxTurn.json");
+			string jsonContent = MiyukiJsonReader.LoadJson("DialogueTurn.json");
 
 			if (jsonContent == null)
 			{
-				Debug.LogError("Не удалось загрузить DialogueBoxTurn.json");
+				Debug.LogError("Не удалось загрузить DialogueTurn.json");
 				return;
 			}
 
@@ -152,7 +152,7 @@ namespace MiyukiSone
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Ошибка десериализации DialogueBoxTurn.json: {ex.Message}");
+				Debug.LogError($"Ошибка десериализации DialogueTurn.json: {ex.Message}");
 			}
 		}
 
@@ -211,7 +211,7 @@ namespace MiyukiSone
 			string text = GetLocalizedLine(line);
 			ShowText(text, isEvent);
 			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
-			PlaySoundFromAsset($"Assets/DialogueBox/Love/{line.AudioFile}.ogg", true);
+			PlaySoundFromAsset($"Assets/Dialogue/Love/{line.AudioFile}.ogg", true);
 			if (!isYes && MiyukiDecides) PawsPrank();
 		}
 
@@ -321,7 +321,7 @@ namespace MiyukiSone
 				}
 				Debug.Log($"Kiss Yes dialog - Audio: {line.AudioFile}, Key: {line.Key}, isSpecial: {line.IsSpecial}");
 
-				PlaySoundFromAsset($"Assets/DialogueBox/Kiss/{line.AudioFile}.ogg", true);
+				PlaySoundFromAsset($"Assets/Dialogue/Kiss/{line.AudioFile}.ogg", true);
 			}
 			else
 			{
@@ -333,7 +333,7 @@ namespace MiyukiSone
 				}
 				Debug.Log($"Kiss No dialog - Type: {CurrentKissNoType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {KissNoCallCount}");
 
-				PlaySoundFromAsset($"Assets/DialogueBox/Kiss/{line.AudioFile}.ogg", true);
+				PlaySoundFromAsset($"Assets/Dialogue/Kiss/{line.AudioFile}.ogg", true);
 
 				if (KissNoCallCount == 2)
 				{
@@ -447,7 +447,7 @@ namespace MiyukiSone
 			ShowText(text, isEvent);
 			Debug.Log($"Turn dialog - Type: {CurrentTryType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {CurrentTryCallCount}");
 
-			PlaySoundFromAsset($"Assets/DialogueBox/Turn/{line.AudioFile}.ogg", true);
+			PlaySoundFromAsset($"Assets/Dialogue/Turn/{line.AudioFile}.ogg", true);
 		}
 
 		public static void UnlockNextTurnEndTry()

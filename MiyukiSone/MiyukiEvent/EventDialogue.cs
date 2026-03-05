@@ -10,7 +10,7 @@ using static MiyukiSone.UtilsScripts;
 
 namespace MiyukiSone
 {
-	public class EventDialogueBox
+	public class EventDialogue
 	{
 		public static void PawsPrank()
 		{

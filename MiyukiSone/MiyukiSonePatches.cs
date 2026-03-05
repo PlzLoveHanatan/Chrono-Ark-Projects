@@ -82,7 +82,7 @@ namespace MiyukiSone
 				GDEItemKeys.Skill_S_DefultSkill_0,
 				GDEItemKeys.Skill_S_DefultSkill_1,
 				GDEItemKeys.Skill_S_DefultSkill_2,
-				//GDEItemKeys.Skill_S_SacrificeSkill
+				ModItemKeys.Skill_S_SacrificedKnowledge
 			};
 
 			var skillPoolKeys = IsYandere || !MiyukiSone_Plugin.MiyukiInParty() ? customSkillKeys : PlayData.ALLRARESKILLLIST.Select(s => s.KeyID).ToList();

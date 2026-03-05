@@ -653,7 +653,7 @@ namespace MiyukiSone
 				if (parentWindow == null) parentWindow = BattleSystem.instance.ActWindow.transform;
 				Sprite sprite = UtilsUI.GetSprite(path);
 				GameObject window = UtilsUI.CreateUIImage("ChatWindow", parentWindow, sprite, windowSize, windowPosition, true);
-				window.AddComponent<DialogueBoxDragHandler>();
+				window.AddComponent<DialogueDragHandler>();
 
 				Vector2 finalInputPosition = inputPosition ?? new Vector2(0, -20);
 				Vector2 finalInputSize = inputSize ?? new Vector2(400, 35);

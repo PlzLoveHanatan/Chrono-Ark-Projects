@@ -12,9 +12,9 @@ using I2.Loc;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
 using static MiyukiSone.EventData;
-using static MiyukiSone.DialogueBoxData;
+using static MiyukiSone.DialogueData;
 using static MiyukiSone.UtilsScripts;
-using static MiyukiSone.DialogueBox;
+using static MiyukiSone.Dialogue;
 using DarkTonic.MasterAudio;
 
 namespace MiyukiSone
@@ -49,12 +49,13 @@ namespace MiyukiSone
 			//CreateWindow();
 			//CreateChatWindow();
 			//ChangeAffectionPoints(25);
-			if (MiyukiDecides) PawsWithDeck(MiyukiMood);
+			ChangeAffectionPoints(0);
+			//if (MiyukiDecides) PawsWithDeck(MiyukiMood);
 		}
 
 		public void DrawNumChange(int DrawNum, out int OutNum)
 		{
-			int newDrawNum = MiyukiOutcome(1);
+			int newDrawNum = MiyukiResult(1);
 			OutNum = newDrawNum != 0 ? DrawNum += newDrawNum : DrawNum;
 			if (newDrawNum != 0) MiyukiTextEvent();
 		}
@@ -65,15 +66,12 @@ namespace MiyukiSone
 			//MiyukiTurnAction();
 		}
 
-		// decrease affection
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 		{
-			if (User != BChar) return;
 			if (Dmg >= 1) ChangeAffectionPoints(-1);
-			if (BChar.HP < 0) resist = true;
+			if (BChar.HP < 0 && AllyTeam.AliveChars.Count > 0) resist = true;
 		}
 
-		// increase affection
 		public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
 		{
 			if (HealedChar == BChar && Healer != BChar) ChangeAffectionPoints(1);
@@ -136,7 +134,10 @@ namespace MiyukiSone
 				PawsWithHand,
 				PawsWithAllies,
 				PawsWithEnemies,
-				PawsWithMana
+				PawsWithMana,
+				PawsWithExchange,
+				PawsWithStandBy,
+				//PawsWithBlackFog
 			};
 
 			if (MiyukiData.LastTurnAction != -1 && actions.Count > 1) actions.RemoveAt(MiyukiData.LastTurnAction);
@@ -145,7 +146,7 @@ namespace MiyukiSone
 			MiyukiData.LastTurnAction = randomIndex;
 
 		MiyukiHelp:;
-			CreateDialogueBox(DialogueBoxState.help);
+			CreateDialogue(DialogueState.help);
 		}
 
 		private void PawsWithHand(bool isPositive)
@@ -167,15 +168,43 @@ namespace MiyukiSone
 		private void PawsWithEnemies(bool isPositive)
 		{
 			if (isPositive) RemoveActions(Bs.EnemyTeam.AliveChars_Vanish);
-			else Bs.EnemyTeam.AliveChars_Vanish.ForEach(e => AddBuff(e, ""));
+			else Bs.EnemyTeam.AliveChars_Vanish.ForEach(e => e.AddBuff(""));
 		}
 
 		private void PawsWithMana(bool isPositive)
 		{
-			AllyTeam.AP += MiyukiOutcome(1);
+			AllyTeam.AP += MiyukiResult(1);
+		}
+
+		private void PawsWithStandBy(bool isPositive)
+		{
+			AllyTeam.WaitCount += MiyukiResult(1);
+		}
+
+		private void PawsWithExchange(bool isPositive)
+		{
+			AllyTeam.DiscardCount += MiyukiResult(1);
 		}
 
 		private void PawsWithDeck(bool isPositive)
+		{
+			List<string> posSkillKey = new List<string>()
+			{
+				GDEItemKeys.Skill_S_Transcendence_Main,
+			};
+
+			List<string> negSkillKey = new List<string>()
+			{
+				GDEItemKeys.Skill_S_Transcendence_Main,
+			};
+
+			for (int i = 0; i < MiyukiResult(1); i++)
+			{
+				Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiBm", Skill.TempSkill(GDEItemKeys.Skill_S_Transcendence_Main));
+			}
+		}
+
+		private void PawsWithDeck2(bool isPositive)
 		{
 			if (isPositive)
 			{

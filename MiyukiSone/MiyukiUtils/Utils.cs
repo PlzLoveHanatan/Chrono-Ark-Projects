@@ -27,16 +27,16 @@ namespace MiyukiSone
 		public static BattleTeam EnemyTeam => Bs?.EnemyTeam;
 		public static BattleChar DummyChar => AllyTeam?.DummyChar;
 		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki);
-		public static MiyukiCV MiyukiData => GetOrCreateMiyukiData();
+		public static MiyukSoneiCV MiyukiData => GetOrCreateMiyukiData();
 		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
 		private static GameObject _currentTempGO;
 
-		public static MiyukiCV GetOrCreateMiyukiData()
+		public static MiyukSoneiCV GetOrCreateMiyukiData()
 		{
-			var data = PlayData.TSavedata.GetCustomValue<MiyukiCV>();
+			var data = PlayData.TSavedata.GetCustomValue<MiyukSoneiCV>();
 			if (data == null)
 			{
-				data = new MiyukiCV();
+				data = new MiyukSoneiCV();
 				PlayData.TSavedata.AddCustomValue(data);
 			}
 			return data;
@@ -134,7 +134,7 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void ChangeSkillImages(this Skill skill, string skillSpritePath = null, string buttonSpritePath = null, string basicSpritePath = null, string defaultSkillKey = null, bool isRestoreImg = false)
+		public static void ChangeSkillImage(this Skill skill, string skillSpritePath = null, string buttonSpritePath = null, string basicSpritePath = null, string defaultSkillKey = null, bool isRestoreImg = false, bool isGlicthEffect = false)
 		{
 			if (isRestoreImg && !string.IsNullOrEmpty(defaultSkillKey))
 			{
@@ -167,7 +167,7 @@ namespace MiyukiSone
 				if (Bs != null)
 				{
 					BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
-					GlitchEffect(skill);
+					if (isGlicthEffect) GlitchEffect(skill);
 					foreach (var ex in skill.AllExtendeds)
 					{
 						if (ex is MiyukiSoneSkill miyukiSkill) miyukiSkill.Init();
@@ -176,12 +176,70 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void GlitchEffect(this Skill changeFrom)
+		public static void SkillChange(this Skill changeFrom, Skill changeTo, bool keepID = true, bool keepExtended = true, bool isGlitchEffect = false)
+		{
+			if (changeFrom.MyButton != null && isGlitchEffect) GlitchEffect(changeFrom);
+
+			List<Skill_Extended> ExtendedToKeep = new List<Skill_Extended>();
+			ExtendedToKeep.AddRange(changeTo.AllExtendeds.Select(ex => ex.Clone() as Skill_Extended));
+			foreach (Skill_Extended skill_Extended in changeFrom.AllExtendeds)
+			{
+				foreach (string text in changeFrom.MySkill.SkillExtended)
+				{
+					if (keepExtended && !text.Contains(skill_Extended.Name))
+					{
+						ExtendedToKeep.Add(skill_Extended.Clone() as Skill_Extended);
+					}
+					skill_Extended.SelfDestroy();
+				}
+			}
+
+			bool createExcept = keepExtended && changeFrom.isExcept;
+			changeFrom.Init(changeTo.MySkill, changeFrom.Master, changeFrom.Master.MyTeam);
+			if (createExcept) changeFrom.isExcept = true;
+
+			foreach (var skill_Extended in ExtendedToKeep)
+			{
+				if (skill_Extended.BattleExtended)
+				{
+					changeFrom.ExtendedAdd_Battle(skill_Extended);
+				}
+				else
+				{
+					changeFrom.ExtendedAdd(skill_Extended);
+				}
+			}
+
+			changeFrom.Image_Skill = changeTo.Image_Skill;
+			changeFrom.Image_Button = changeTo.Image_Button;
+			changeFrom.Image_Basic = changeTo.Image_Basic;
+
+			if (changeFrom.CharinfoSkilldata == null) changeFrom.CharinfoSkilldata = new CharInfoSkillData(changeFrom.MySkill);
+
+			changeFrom.CharinfoSkilldata.SkillInfo = changeFrom.MySkill;
+			Skill_Extended oldUpgrade = changeFrom.CharinfoSkilldata.SKillExtended;
+			if (!keepID)
+			{
+				changeFrom.CharinfoSkilldata.CopyData(changeTo.CharinfoSkilldata);
+			}
+			if (keepExtended)
+			{
+				changeFrom.CharinfoSkilldata.SKillExtended = oldUpgrade;
+			}
+			else
+			{
+				changeFrom.CharinfoSkilldata.SKillExtended = changeTo.CharinfoSkilldata.SKillExtended;
+			}
+			BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
+		}
+
+		public static void GlitchEffect(this Skill changeFrom, float time = 0)
 		{
 			if (changeFrom.MyButton != null)
 			{
+				time = time > 0 ? time : 0.3f;
 				UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
-				UnityEngine.Object.Destroy(obj, 0.5f);
+				UnityEngine.Object.Destroy(obj, time);
 			}
 		}
 	}
