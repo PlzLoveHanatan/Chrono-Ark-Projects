@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>EnDub03082026001606</AssemblyName>
+    <AssemblyName>EnDub03112026101236</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -403,9 +403,9 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>..\..\EnDub\Assemblies\MonoMod.Utils.dll</HintPath>
     </Reference>
-    <!-- Extra Reference End-->
+<!-- Extra Reference End-->
   </ItemGroup>
-  <!-- Compile ItemGroup Start-->
+          <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="Data.cs" />
     <Compile Include="EnDub_ModDefinition.cs" />

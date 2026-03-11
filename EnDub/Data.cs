@@ -39,6 +39,7 @@ namespace EnDub
 			{ GDEItemKeys.Character_ShadowPriest, "Charon" },
 			{ GDEItemKeys.Character_Queen, "Huz" },
 			{ GDEItemKeys.Character_Lian, "Lian" },
+			{ GDEItemKeys.Character_SilverStein, "Silverstein" },
 		};
 
 		public static Dictionary<string, string> skinKeyToName = new Dictionary<string, string>()
