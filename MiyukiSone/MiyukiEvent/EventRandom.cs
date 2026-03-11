@@ -37,7 +37,7 @@ namespace MiyukiSone
 		public static IEnumerator ExitGame()
 		{
 			SaveManager.savemanager.Save();
-			yield return new WaitForSeconds(1.5f);
+			yield return new WaitForSeconds(2f);
 			UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
 			PauseWindow.QuitGameDel();
 		}

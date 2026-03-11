@@ -16,12 +16,13 @@ using static MiyukiSone.DialogueData;
 using static MiyukiSone.UtilsScripts;
 using static MiyukiSone.Dialogue;
 using DarkTonic.MasterAudio;
+using System.EnterpriseServices;
 
 namespace MiyukiSone
 {
 	public class Passive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted, IP_TurnEnd
 	{
-		private MiyukiInputEvent chatInputField;
+		private MiyukiInputEvent chatInputField;	
 
 		private readonly HashSet<string> edgeCaseSkills = new HashSet<string>()
 		{
@@ -63,6 +64,7 @@ namespace MiyukiSone
 		public void Turn()
 		{
 			MiyukiTurn();
+			CreateCharacterLucyDraw();
 			//MiyukiTurnAction();
 		}
 
@@ -149,6 +151,31 @@ namespace MiyukiSone
 			CreateDialogue(DialogueState.help);
 		}
 
+
+		private void CreateInnerDesire()
+		{
+			// for allies
+		}
+
+		private void CreateCharacterLucyDraw()
+		{
+			List<string> keys = new List<string>()
+			{
+				GDEItemKeys.Skill_S_Priest_7_LucyD, // Divine Revelation
+				GDEItemKeys.Skill_S_MissChain_12_LucyD, // Burning Draw
+				GDEItemKeys.Skill_S_Control_3_Draw, // Insight
+				GDEItemKeys.Skill_S_Lucy_24, // Change of Plans
+				//GDEItemKeys.Skill_S_Azar_8_LucyDraw, // Fractured Illusion
+			};
+
+			var lucy = AllyTeam.LucyAlly;
+			var skill = Skill.TempSkill(keys.Random("MiyukiRandomDraw"), lucy, lucy.MyTeam);
+			AllyTeam.Add(skill, true);
+			skill.isExcept = true;
+			skill.APChange++;
+			skill.AutoDelete = 1;
+		}
+
 		private void PawsWithHand(bool isPositive)
 		{
 			var skillList = isPositive ? AllyTeam.Skills_Deck : AllyTeam.Skills;
@@ -190,7 +217,7 @@ namespace MiyukiSone
 		{
 			List<string> posSkillKey = new List<string>()
 			{
-				GDEItemKeys.Skill_S_Transcendence_Main,
+				// lucy draw skills
 			};
 
 			List<string> negSkillKey = new List<string>()
