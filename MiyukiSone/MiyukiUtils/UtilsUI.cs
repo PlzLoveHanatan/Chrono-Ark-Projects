@@ -9,6 +9,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine;
 using UnityEngine.UI;
 using GameDataEditor;
+using static TMPro.SpriteAssetUtilities.TexturePacker;
 
 namespace MiyukiSone
 {
@@ -25,6 +26,12 @@ namespace MiyukiSone
 			string path = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(pathAddress);
 			var sprite = AddressableLoadManager.LoadAsyncCompletion<Sprite>(path, AddressableLoadManager.ManageType.None);
 			return sprite;
+		}
+
+		public static string GetPrefabAdress(string prefabPath)
+		{
+			Debug.Log($"[Miyuki] Loading prefab: {prefabPath}");
+			return ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<GameObject>("MiyukiSone", prefabPath);
 		}
 
 		public static string GetSpriteAddress(string spritePath)

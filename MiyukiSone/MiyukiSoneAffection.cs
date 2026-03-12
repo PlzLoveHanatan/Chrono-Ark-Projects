@@ -32,7 +32,7 @@ namespace MiyukiSone
 
 		public static int MiyukiResult(int baseValue)
 		{
-			if (MiyukiDecides) return 0;
+			if (!MiyukiDecides) return 0;
 
 			if (IsKuudere)
 			{
@@ -45,7 +45,7 @@ namespace MiyukiSone
 				if (MiyukiPoints == MaxAffectionPoints || MiyukiPoints == MinAffectionPoints)
 				{
 					int bonusChance = Mathf.Clamp(Math.Abs(MiyukiPoints) + 25, 0, 100);
-					bool isDouble = RandomManager.RandomPer(IsDere ? "DereBonus" : "YandereBonus", 100, bonusChance);
+					bool isDouble = RandomManager.RandomPer(IsDere ? "MiyukiDere" : "MiyukiYandere", 100, bonusChance);
 					if (isDouble) return result * 2;
 				}
 
@@ -54,7 +54,7 @@ namespace MiyukiSone
 			return 0;
 		}
 
-		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Math.Abs(MiyukiPoints + 25));
+		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Mathf.Clamp(Math.Abs(MiyukiPoints) + 25, 0, 100));
 
 		public static bool MiyukiMood => IsDere || (IsKuudere && MiyukiPoints >= 0);
 
@@ -90,15 +90,15 @@ namespace MiyukiSone
 
 		public static void ChangeAffectionPointsRandom()
 		{
-			int amount = RandomManager.RandomInt(MiyukiRandomKey, 0, 2);
-			ChangeAffectionPoints(-amount);
+			int amount = MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated ? 1 : RandomManager.RandomInt(MiyukiRandomKey, 0, 2);
+			ChangeAffectionPoints(-amount);				
 		}
 
 		public static void ChangeAffectionPoints(int amount)
 		{
+			if (amount < 0 && MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) amount *= 2;
 			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, MinAffectionPoints, MaxAffectionPoints);
 
-			// Сохраняем очки в JSON
 			MiyukiSoneSaveManager.Instance.CurrentData.AffectionPoints = MiyukiPoints;
 			MiyukiSoneSaveManager.Instance.Save();
 
@@ -112,6 +112,16 @@ namespace MiyukiSone
 					{
 						handler.SkillImgChange(skill);
 					}
+				}
+			}
+
+			foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
+			{
+				Passive_Char passive = battleChar.Info.Passive;
+
+				if (passive != null && passive is IP_MiyukiSoneMoodChange handler)
+				{
+					handler.MiyukiMoodChange();
 				}
 			}
 		}

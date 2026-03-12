@@ -15,15 +15,18 @@ using static MiyukiSone.EventData;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.UtilsScripts;
 using static MiyukiSone.Dialogue;
+using static MiyukiSone.MiyukiSoneMood;
 using DarkTonic.MasterAudio;
 using System.EnterpriseServices;
+using UnityEngine.UI;
 
 namespace MiyukiSone
 {
-	public class Passive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted, IP_TurnEnd
+	public class Passive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted, IP_TurnEnd, IP_MiyukiSoneMoodChange
 	{
 		private MiyukiInputEvent chatInputField;	
 
+		// Ally damage skills
 		private readonly HashSet<string> edgeCaseSkills = new HashSet<string>()
 		{
 			GDEItemKeys.Skill_S_Witch_P_0,
@@ -34,19 +37,47 @@ namespace MiyukiSone
 			GDEItemKeys.Skill_S_Queen_13,
 		};
 
+		private readonly Dictionary<string, string> characterDrawList = new Dictionary<string, string>()
+		{
+			{ ModItemKeys.Skill_S_GracefulSwing, GDEItemKeys.Skill_S_Priest_7_LucyD },// Divine Revelation
+			{ ModItemKeys.Skill_S_WarningStrike, GDEItemKeys.Skill_S_Control_3_Draw }, // Insight 
+			{ ModItemKeys.Skill_S_EternalVow, GDEItemKeys.Skill_S_MissChain_12_LucyD }, // Burning Draw
+			//{ ModItemKeys.Skill_S_HappyBirthday, GDEItemKeys.Skill_S_Lucy_24 }, // Change of Plans
+			{ ModItemKeys.Skill_S_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
+		};
+
+		private readonly List<string> avaliableCharacterDraw = new List<string>();
+
 		public override void Init()
 		{
 			base.Init();
 			OnePassive = true;
 		}
 
+		public void MiyukiMoodChange()
+		{
+			ChangeMood();
+		}
+
 		public void LevelUp()
 		{
-			ChangeAffectionPoints(2);
+			ChangeAffectionPoints();
 		}
 
 		public void BattleStart(BattleSystem Ins)
 		{
+			avaliableCharacterDraw.Clear();
+			AllyTeam.Skills_Deck.ForEach(s =>
+			{
+				if (characterDrawList.TryGetValue(s.MySkill.KeyID, out string drawKey))
+				{
+					avaliableCharacterDraw.Add(drawKey);
+				}
+			});
+
+			//BattleFaceChange();
+			PawsWithDeck();
+
 			//CreateWindow();
 			//CreateChatWindow();
 			//ChangeAffectionPoints(25);
@@ -59,12 +90,21 @@ namespace MiyukiSone
 			int newDrawNum = MiyukiResult(1);
 			OutNum = newDrawNum != 0 ? DrawNum += newDrawNum : DrawNum;
 			if (newDrawNum != 0) MiyukiTextEvent();
+			Debug.Log($"Draw num = {newDrawNum}");
 		}
 
 		public void Turn()
 		{
+			BattleSystem.DelayInputAfter(MiyukiCo());
+		}
+
+		private IEnumerator MiyukiCo()
+		{
+			yield return new WaitForFixedUpdate();
 			MiyukiTurn();
+			MiyukiTurnPaw();
 			CreateCharacterLucyDraw();
+			//MiyukiMoodChange();
 			//MiyukiTurnAction();
 		}
 
@@ -124,27 +164,24 @@ namespace MiyukiSone
 			UnlockNextTurnEndTry();
 		}
 
-		private void MiyukiTurnAction()
+		private void MiyukiTurnPaw()
 		{
-			AllyTeam.AliveChars.Where(a => a != BChar).ToList().ForEach(a => SecureBuff(a, BChar, ""));
+			AllyTeam.AliveChars.Where(a => a != BChar).ToList().ForEach(a => SecureBuff(a, BChar, ModItemKeys.Buff_B_Miyuki_Buff));
 			if (!MiyukiDecides) return;
 
-			if (Bs.TurnNum == Bs.FogTurn && !IsYandere) goto MiyukiHelp;
+			if (Bs.TurnNum >= Bs.FogTurn && !IsYandere) goto MiyukiHelp;
 
-			var actions = new List<Action<bool>>
+			var actions = new List<Action>
 			{
-				PawsWithHand,
-				PawsWithAllies,
-				PawsWithEnemies,
 				PawsWithMana,
 				PawsWithExchange,
 				PawsWithStandBy,
-				//PawsWithBlackFog
+				PawsWithBlackFog
 			};
 
 			if (MiyukiData.LastTurnAction != -1 && actions.Count > 1) actions.RemoveAt(MiyukiData.LastTurnAction);
-			int randomIndex = RandomManager.RandomInt("MiyukiTurnAction", 0, actions.Count);
-			actions[randomIndex].Invoke(MiyukiMood);
+			int randomIndex = RandomManager.RandomInt("MiyukiTurnPaw", 0, actions.Count);
+			actions[randomIndex].Invoke();
 			MiyukiData.LastTurnAction = randomIndex;
 
 		MiyukiHelp:;
@@ -159,110 +196,65 @@ namespace MiyukiSone
 
 		private void CreateCharacterLucyDraw()
 		{
-			List<string> keys = new List<string>()
-			{
-				GDEItemKeys.Skill_S_Priest_7_LucyD, // Divine Revelation
-				GDEItemKeys.Skill_S_MissChain_12_LucyD, // Burning Draw
-				GDEItemKeys.Skill_S_Control_3_Draw, // Insight
-				GDEItemKeys.Skill_S_Lucy_24, // Change of Plans
-				//GDEItemKeys.Skill_S_Azar_8_LucyDraw, // Fractured Illusion
-			};
+			if (avaliableCharacterDraw.Count == 0 || Bs.TurnNum == 1) return;
 
-			var lucy = AllyTeam.LucyAlly;
-			var skill = Skill.TempSkill(keys.Random("MiyukiRandomDraw"), lucy, lucy.MyTeam);
+			var skill = Skill.TempSkill(avaliableCharacterDraw.Random("MiyukiRandomDraw"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
 			AllyTeam.Add(skill, true);
 			skill.isExcept = true;
 			skill.APChange++;
 			skill.AutoDelete = 1;
 		}
 
-		private void PawsWithHand(bool isPositive)
-		{
-			var skillList = isPositive ? AllyTeam.Skills_Deck : AllyTeam.Skills;
-			var action = isPositive ? new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.ForceDraw(b.Myskill)) : new SkillButton.SkillClickDel(b => b.Waste());
-			var title = isPositive ? ScriptLocalization.System_SkillSelect.DrawSkill : ScriptLocalization.System_SkillSelect.WasteSkill;
-			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(skillList, action, title, false, true, true, false, true));
-		}
-
-
-		private void PawsWithAllies(bool isPositive)
-		{
-			if (isPositive) HealLowestAlly(BChar, (int)BChar.GetStat.reg);
-			else AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("MiyukiRandom").Damage(MiyukiBchar, PlayData.TSavedata.StageNum * 10, false, true);
-
-		}
-
-		private void PawsWithEnemies(bool isPositive)
-		{
-			if (isPositive) RemoveActions(Bs.EnemyTeam.AliveChars_Vanish);
-			else Bs.EnemyTeam.AliveChars_Vanish.ForEach(e => e.AddBuff(""));
-		}
-
-		private void PawsWithMana(bool isPositive)
+		private void PawsWithMana()
 		{
 			AllyTeam.AP += MiyukiResult(1);
 		}
 
-		private void PawsWithStandBy(bool isPositive)
+		private void PawsWithStandBy()
 		{
 			AllyTeam.WaitCount += MiyukiResult(1);
 		}
 
-		private void PawsWithExchange(bool isPositive)
+		private void PawsWithExchange()
 		{
 			AllyTeam.DiscardCount += MiyukiResult(1);
 		}
 
-		private void PawsWithDeck(bool isPositive)
+		private void PawsWithBlackFog()
 		{
+			Bs.FogTurn += MiyukiResult(1);
+		}
+
+
+		private void PawsWithDeck()
+		{
+			if (!MiyukiDecides) return;
+
 			List<string> posSkillKey = new List<string>()
 			{
-				// lucy draw skills
+				GDEItemKeys.Skill_S_LucyD_3, // Search
+				GDEItemKeys.Skill_S_LucyD_16, // Deep in Thought
+				GDEItemKeys.Skill_S_PopcornGirl_Lucy_1, // Tasty Popcorn!
+				GDEItemKeys.Skill_S_PopcornGirl_Lucy_2, // Caramel Popcorn!
+				GDEItemKeys.Skill_S_PopcornGirl_Lucy_3, // Spicy Popcorn!
 			};
 
 			List<string> negSkillKey = new List<string>()
 			{
-				GDEItemKeys.Skill_S_Transcendence_Main,
+				GDEItemKeys.Skill_S_Transcendence_Main, // Bloodmist
+				GDEItemKeys.Skill_S_LucyCurse_CursedClock,
+				GDEItemKeys.Skill_S_LucyCurse_Banana,
+				GDEItemKeys.Skill_S_LucyCurse_Late,
+				GDEItemKeys.Skill_S_LucyCurse_Heavy,
 			};
+
+			List<string> selectedSkills = MiyukiMood ? posSkillKey : negSkillKey;
 
 			for (int i = 0; i < MiyukiResult(1); i++)
 			{
-				Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiBm", Skill.TempSkill(GDEItemKeys.Skill_S_Transcendence_Main));
-			}
-		}
-
-		private void PawsWithDeck2(bool isPositive)
-		{
-			if (isPositive)
-			{
-				for (int i = 0; i < PlayData.TSavedata.LucySkills.Count; i++)
-				{
-					var skillData = new GDESkillData(PlayData.TSavedata.LucySkills[i]);
-					if (skillData.User == "LucyCurse" || skillData.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy)
-					{
-						PlayData.TSavedata.LucySkills.RemoveAt(i);
-						i--;
-					}
-				}
-
-				for (int i = 0; i < AllyTeam.Skills_Deck.Count; i++)
-				{
-					var skill = AllyTeam.Skills_Deck[i];
-
-					if (skill?.MySkill != null && skill.MySkill.User == "LucyCurse" || skill?.MySkill?.KeyID == GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy || skill?.MySkill.KeyID == GDEItemKeys.Skill_S_Transcendence_Main)
-					{
-						AllyTeam.Skills_Deck.Remove(skill);
-						MasterAudio.StopBus("SE");
-						MasterAudio.PlaySound("WaterSpell", 100f, null, 0f, null, null, false, false);
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0; i < 2; i++)
-				{
-					Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiBm", Skill.TempSkill(GDEItemKeys.Skill_S_Transcendence_Main));
-				}
+				var skill = Skill.TempSkill(selectedSkills.Random("MiyukiRandomSkill"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
+				if (skill != null) Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiRandomInsert", skill);
+				//skill.isExcept = true;
 			}
 		}
 	}

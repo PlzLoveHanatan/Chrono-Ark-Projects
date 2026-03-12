@@ -12,6 +12,7 @@ using UnityEngine;
 using static MiyukiSone.Skills.Class;
 using NLog.Targets;
 using static CharacterDocument;
+using System.Drawing;
 
 namespace MiyukiSone
 {
@@ -503,6 +504,19 @@ namespace MiyukiSone
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 				{
+					List<string> strings = new List<string>()
+					{
+						GDEItemKeys.SkillExtended_SkillWe_AutoWaste,
+						GDEItemKeys.SkillExtended_SkillWe_Count,
+						GDEItemKeys.SkillExtended_SkillWe_Effect15,
+						GDEItemKeys.SkillExtended_SkillWe_Mana1,
+						GDEItemKeys.SkillExtended_SkillWe_NoExchange,
+						GDEItemKeys.SkillExtended_SkillWe_Ones,
+						GDEItemKeys.SkillExtended_SkillWe_SelfpainDMG,
+					};
+
+					var skillData = MyChar.SkillDatas.FirstOrDefault(sd => sd == MySkill.CharinfoSkilldata);
+					if (skillData != null && skillData.SKillExtended == null) skillData.SKillExtended = DataToExtended(GDEItemKeys.SkillExtended_SkillWe_NoExchange);
 					MiyukiSoneSaveManager.Instance.CurrentData.LockedState = (int)CurrentAffectionState;
 					MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated = true;
 					MiyukiSoneSaveManager.Instance.Save();

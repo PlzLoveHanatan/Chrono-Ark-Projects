@@ -9,8 +9,10 @@ using ChronoArkMod.ModData;
 using DarkTonic.MasterAudio;
 using GameDataEditor;
 using I2.Loc;
+using Spine;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
+using UnityEngine.UI;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Skills.Class;
 using static MiyukiSone.UtilsUI;
@@ -67,6 +69,40 @@ namespace MiyukiSone
 			PlaySound(sound, false, volume);
 		}
 
+		public static void PlaySong()
+		{
+			List<string> songKeys = new List<string>()
+			{
+				"DreamLove",
+				"WayBack",
+				"WithHope",
+				"Forever",
+				"Heart",
+				"WithYOU",
+				"Monochrome",
+				"MerryGoRound",
+			};
+
+			if (SaveManager.NowSaveSlot.SoundBGMVolume == 0)
+			{
+				ChangeBGMVolume(50);
+				MiyukiData.BGMVolumeIncreased = true;
+			}
+
+			var availableSongs = songKeys.ToList();
+			if (MiyukiData.LastSong != -1 && availableSongs.Count > 1) availableSongs.RemoveAt(MiyukiData.LastSong);
+			int randomIndex = RandomManager.RandomInt("MiyukiRandomSong", 0, availableSongs.Count);
+			MiyukiData.LastSong = randomIndex;
+			PlaySound(availableSongs[randomIndex], true);
+		}
+
+		public static void ChangeBGMVolume(int volume)
+		{
+			SaveManager.NowSaveSlot.SoundBGMVolume = volume;
+			SaveManager.NowSaveSlot.SaveSoundData();
+			SaveManager.savemanager.OptionApply(false, false);
+		}
+
 		public static void PlaySoundFromAsset(string audioPath, bool isStopOldBus = true, int? volumePercent = null)
 		{
 			if (string.IsNullOrEmpty(audioPath)) return;
@@ -121,19 +157,6 @@ namespace MiyukiSone
 			yield break;
 		}
 
-		public static void BattleFaceChange(string path)
-		{
-			ModInfo modInfo = ModManager.getModInfo("MiyukiSone");
-			string facePath = modInfo.assetInfo.ImageFromFile("MiyukiVisual/" + path);
-
-			MiyukiBchar.Info.GetData.face_Path = facePath;
-			var imageComponent = MiyukiBchar.UI.CharImage.GetComponent<UnityEngine.UI.Image>();
-			if (imageComponent != null)
-			{
-				AddressableLoadManager.LoadAsyncAction(facePath, AddressableLoadManager.ManageType.Character, imageComponent);
-			}
-		}
-
 		public static void ChangeSkillImage(this Skill skill, string skillSpritePath = null, string buttonSpritePath = null, string basicSpritePath = null, string defaultSkillKey = null, bool isRestoreImg = false, bool isGlicthEffect = false)
 		{
 			if (isRestoreImg && !string.IsNullOrEmpty(defaultSkillKey))
@@ -147,8 +170,7 @@ namespace MiyukiSone
 			{
 				if (!string.IsNullOrEmpty(skillSpritePath))
 				{
-					string fullPath = skillSpritePath + ".png";
-					string address = GetSpriteAddress(fullPath);
+					string address = GetSpriteAddress(skillSpritePath + ".png");
 					skill.Image_Skill = address;
 				}
 

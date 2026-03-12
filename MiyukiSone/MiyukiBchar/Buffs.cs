@@ -11,27 +11,42 @@ namespace MiyukiSone
 {
 	public class Buffs
 	{
-		// 10% -> 30%
+		// Hidden buff
 		public class MiyukiBuff : Buff, IP_DamageChange, IP_DamageTakeChange
 		{
-			//change all taking damage depends on Miyuki affection state
+			// Сhange all taking damage for allies depends on Miyuki current affection
 			public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
 			{
-				if (!MiyukiDecides && !Hit.Info.Ally) return Dmg;
-
-				Dmg = IsDere ? (int)(Dmg * 0.85f) : (int)(Dmg * 1.15f);
-				//MiyukiTextEvent(EventState.changeDamageTake);
+				int multiplier = MiyukiResult(10);
+				if (multiplier == 0 || !Hit.Info.Ally) return Dmg;
+				float factor = 1f - (multiplier / 100f);
+				Dmg = (int)(Dmg * factor);
 				return Dmg;
 			}
 
-			// change all damage output depends on Miyuki affection state
+			// Сhange all deal damage for all enemies depends on Miyuki affection
 			public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
 			{
-				if (!MiyukiDecides && Target.Info.Ally) return Damage;
-
-				Damage = IsDere ? (int)(Damage * 0.85f) : (int)(Damage * 1.15f);
-				//MiyukiTextEvent(EventState.changeDamageDeal);
+				int multiplier = MiyukiResult(10);
+				if (multiplier == 0 || !Target.Info.Ally) return Damage;
+				float factor = 1f - (multiplier / 100f);
+				Damage = (int)(Damage * factor);
 				return Damage;
+			}
+		}
+
+		// Hidden Debuff
+		public class MiyukiDebuff : Buff, IP_PlayerTurn
+		{
+			public override void Init()
+			{
+				BChar.Info.PlusActCount.Add(1);
+				base.Init();
+			}
+
+			public void Turn()
+			{
+				SelfDestroy();
 			}
 		}
 	}

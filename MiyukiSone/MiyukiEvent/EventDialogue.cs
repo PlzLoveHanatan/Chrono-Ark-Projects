@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
+using I2.Loc;
 using Spine;
 using static MiyukiSone.Utils;
 using static MiyukiSone.UtilsScripts;
@@ -102,6 +103,28 @@ namespace MiyukiSone
 			{
 
 			};
+		}
+
+		private void PawsWithHand(bool isPositive)
+		{
+			var skillList = isPositive ? AllyTeam.Skills_Deck : AllyTeam.Skills;
+			var action = isPositive ? new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.ForceDraw(b.Myskill)) : new SkillButton.SkillClickDel(b => b.Waste());
+			var title = isPositive ? ScriptLocalization.System_SkillSelect.DrawSkill : ScriptLocalization.System_SkillSelect.WasteSkill;
+			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(skillList, action, title, false, true, true, false, true));
+		}
+
+
+		//private void PawsWithAllies(bool isPositive)
+		//{
+		//	if (isPositive) HealLowestAlly(BChar, (int)BChar.GetStat.reg);
+		//	else AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("MiyukiRandom").Damage(MiyukiBchar, PlayData.TSavedata.StageNum * 10, false, true);
+
+		//}
+
+		private void PawsWithEnemies(bool isPositive)
+		{
+			if (isPositive) RemoveActions(Bs.EnemyTeam.AliveChars_Vanish);
+			else Bs.EnemyTeam.AliveChars_Vanish.ForEach(e => e.AddBuff(""));
 		}
 	}
 }

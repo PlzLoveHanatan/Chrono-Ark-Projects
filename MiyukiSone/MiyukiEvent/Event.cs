@@ -19,9 +19,8 @@ namespace MiyukiSone
 	{
 		public static void MiyukiAction()
 		{
-			//if (MiyukiPoints)
-			if (IsDere) EventDere.DereAction();
-			if (IsYandere) EventYandere.YandereAction();
+			if (MiyukiMood) EventDere.DereAction();
+			else EventYandere.YandereAction();
 		}
 
 		private static void AddItem(string itemKey)

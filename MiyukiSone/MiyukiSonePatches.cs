@@ -15,6 +15,11 @@ using UnityEngine.SceneManagement;
 using static MiyukiSone.MiyukiSonePatchesHelpers;
 using static Spine.Unity.Examples.SpineboyFootplanter;
 using static MiyukiSone.Utils;
+using DarkTonic.MasterAudio;
+using System.Collections;
+using I2.Loc;
+using System.Collections.Specialized;
+using System;
 
 namespace MiyukiSone
 {
@@ -121,7 +126,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(MainSceneScript __instance)
 			{
-				return; 
+				return;
 				// Создаем канвас если нет
 				GameObject canvas = GameObject.Find("MiyukiOverlayCanvas");
 				if (canvas == null)
@@ -164,6 +169,113 @@ namespace MiyukiSone
 					// Если нет арта, делаем розовый фон
 					//img.color = new Color(1f, 0.5f, 0.8f, 0.5f);
 				}
+			}
+		}
+
+		[HarmonyPatch(typeof(MainSceneScript))]
+		[HarmonyPatch("Start")]
+		public static class MainSceneScript_Start_Patch
+		{
+			public static bool Prefix(MainSceneScript __instance)
+			{
+				__instance.StartCoroutine(MiyukiStart(__instance));
+				return false;
+
+				if (MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated)
+				{
+					
+				}
+				return true;
+			}
+
+			private static IEnumerator MiyukiStart(MainSceneScript instance)
+			{
+				instance.PadDetectObj.SetActive(false);
+				instance.PadOptionObj.SetActive(false);
+				yield return new WaitForFixedUpdate();
+
+				UIManager.inst?.ForceFadeIn();
+
+				instance.SceneFirst.SetActive(false);
+				instance.SceneError.SetActive(false);
+				instance.SceneFirst_Error.SetActive(false);
+
+				if (SaveManager.savemanager.TempSave != null && SaveManager.savemanager.TempSave.Party.Count != 0)
+				{
+					instance.IsKeepPlaying = true;
+					instance.StartGameText.text = ScriptLocalization.UI_Main.Continue;
+				}
+
+				GamepadManager.GetList().Clear();
+				GamepadManager.IsLayoutMode = false;
+				GamepadManager.CursorSpeed = 50f;
+
+				// skip the song
+
+				instance.Version.text = Application.version;
+				instance.StartCoroutine(instance.StartDelay());
+				instance.WorkshopObj.SetActive(!GameObject.Find("StovePCSDKManager"));
+
+				yield break;
+			}
+		}
+
+		[HarmonyPatch(typeof(MainSceneScript))]
+		[HarmonyPatch("StartDelay")]
+		public static class MainSceneScript_StartDelay_Patch
+		{
+			public static bool Prefix(MainSceneScript __instance, ref IEnumerator __result)
+			{
+				__result = StartMiyukiDelay(__instance);
+				return false;
+
+				//if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated)
+				//{
+				//	__result = StartMiyukiDelay(__instance);
+				//	return false;
+				//}
+
+				return true;
+			}
+
+			private static IEnumerator StartMiyukiDelay(MainSceneScript instance)
+			{
+				yield return new WaitForFixedUpdate();
+				yield return new WaitForFixedUpdate();
+				yield return new WaitForFixedUpdate();
+				yield return new WaitForSeconds(0.5f);
+
+				PlaySong();
+
+				if (SaveManager.NowData.storydata.MainStoryProgress == 0)
+				{
+					//MasterAudio.PlaySound("YourCustomMusicKey", 1f, null, 0f, null, null, false, false);
+					instance.SceneFirst.SetActive(true);
+					instance.MainCanvas.worldCamera = instance.Scene1Cam_first;
+				}
+
+				if (SaveManager.NowData.storydata.MainStoryProgress == 1)
+				{
+					SaveManager.NowData.storydata.MainStoryProgress = 2;
+				}
+
+				if (SaveManager.NowData.storydata.MainStoryProgress == 2)
+				{
+					instance.SceneError.SetActive(true);
+					instance.MainCanvas.worldCamera = instance.Scene2Cam_error;
+					instance.Logo.material = instance.LogoChangedMaterial;
+					//MasterAudio.PlaySound("Noise 2", 0.9f, new float?(0.2f), 0f, null, null, false, false);
+				}
+
+				if (SaveManager.NowData.storydata.MainStoryProgress >= 3)
+				{
+					instance.SceneFirst_Error.SetActive(true);
+					instance.MainCanvas.worldCamera = instance.Scene3Cam_firsterror;
+					//MasterAudio.PlaySound("MainMenu", 1f, null, 0f, null, null, false, false);
+				}
+
+				instance.Cam = instance.MainCanvas.worldCamera.transform.parent.GetComponent<Animator>();
+				yield break;
 			}
 		}
 
@@ -213,6 +325,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
 			{
+				PlaySong();
 				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetSprite(root, "Back", "MiyukiVisual/Menu/pause.png");
@@ -222,6 +335,42 @@ namespace MiyukiSone
 				ProcessButtons(root, "Main/Image/Layout");
 				ProcessRemainArea(root);
 				SetImageColor(root, "Help", new Color(1f, 0.5f, 0.8f, 0.2f));
+			}
+		}
+
+		[HarmonyPatch(typeof(PauseWindow))]
+		[HarmonyPatch("Delete")]
+		public static class PauseWindow_Delete_Patch
+		{
+			[HarmonyPostfix]
+			public static void Postfix(PauseWindow __instance)
+			{
+				MasterAudio.StopBus("BGM");
+				if (MiyukiData.BGMVolumeIncreased) ChangeBGMVolume(0);
+			}
+		}
+
+		[HarmonyPatch(typeof(Collections))]
+		[HarmonyPatch("Start")]
+		public static class Collections_Start_Patch
+		{
+			[HarmonyPostfix]
+			public static void Postfix()
+			{
+				PlaySong();
+			}
+		}
+
+		[HarmonyPatch(typeof(Collections))]
+		[HarmonyPatch(nameof(Collections.ESC))]
+		public static class Collections_Close_Patch
+		{
+			[HarmonyPostfix]
+			public static void Postfix()
+			{
+				MasterAudio.StopBus("BGM");
+				if (MiyukiData.BGMVolumeIncreased) ChangeBGMVolume(0);
+				
 			}
 		}
 
