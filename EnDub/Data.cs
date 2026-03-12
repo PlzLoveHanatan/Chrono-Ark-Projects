@@ -46,6 +46,7 @@ namespace EnDub
 		{
 			{ GDEItemKeys.Character_Skin_Charon_Swimsuit, "Swimsuit" },
 			{ GDEItemKeys.Character_Skin_Huz_Swimsuit, "Swimsuit" },
+			{ GDEItemKeys.Character_Skin_SilverStein_Casino, "Casino" },
 		};
 
 		public static void LoadAllCharacterAudio()
