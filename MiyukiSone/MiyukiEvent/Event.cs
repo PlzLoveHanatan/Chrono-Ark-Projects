@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Mono.Security.X509.Extensions;
 using static MiyukiSone.EventData;
 using static MiyukiSone.Utils;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using GameDataEditor;
 using UnityEngine;
 using I2.Loc;
@@ -19,7 +19,7 @@ namespace MiyukiSone
 	{
 		public static void MiyukiAction()
 		{
-			if (MiyukiMood) EventDere.DereAction();
+			if (MiyukiInMood) EventDere.DereAction();
 			else EventYandere.YandereAction();
 		}
 

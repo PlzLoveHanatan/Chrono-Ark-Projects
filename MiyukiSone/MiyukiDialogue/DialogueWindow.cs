@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
@@ -35,6 +35,7 @@ namespace MiyukiSone
 		private const string Btn_Kiss_Sprite = "MiyukiVisual/Dialogue/dlg_btn_kiss.png";
 
 		private bool isClicked = false;
+		private int click;
 		public DialogueState currentDialogueState;
 
 		private void Awake()
@@ -77,14 +78,14 @@ namespace MiyukiSone
 
 			btn_yes = CreateButton("btn_yes", spriteYes, yesPos, OnYesClicked);
 
-			if (twoYesButtons || !MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise)
+			if (twoYesButtons || !MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 			{
 				CreateButton("btn_yes2", spriteYes, noPos, OnYesClicked);
 
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise)
+				if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 				{
-					MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise = true;
-					MiyukiSoneSaveManager.Instance.Save();
+					MiyukiSaveManager.Instance.CurrentData.EternalPromise = true;
+					MiyukiSaveManager.Instance.Save();
 				}
 				btn_no = null;
 			}
@@ -117,7 +118,6 @@ namespace MiyukiSone
 
 		private void OnYesClicked()
 		{
-			
 			ClickHandler(true);
 			Debug.Log("Btn yes clicked");
 		}
@@ -130,7 +130,8 @@ namespace MiyukiSone
 
 		private void ClickHandler(bool isYesClick)
 		{
-			if (isClicked) return;
+			//if (isClicked) return;
+			click++;
 
 			//bool heartsOnButton = RandomManager.RandomPer("MiyukiHeartPos", 100, 50);
 			int points = currentDialogueState == DialogueState.kiss ? 5 : 1;
@@ -145,9 +146,9 @@ namespace MiyukiSone
 				default: break;
 			}
 
+			if (click >= 5) RemoveWindow(gameObject);
 			if ((currentDialogueState == DialogueState.kiss && !isYesClick) || currentDialogueState == DialogueState.help) return;
 
-			isClicked = true;
 			ClickBonusAction(isYesClick);
 		}
 
@@ -198,9 +199,9 @@ namespace MiyukiSone
 			if (RandomManager.RandomPer("MiyukiHeartsSpawn", 100, 50)) return;
 			ChangeAffectionPoints();
 			Transform mainTarget = RandomManager.RandomPer("MiyukiHeartPos", 100, 50) ? btn_yes.transform : MiyukiBchar.transform;
-			MiyukiSoneVisual.Instance.SpawnHearts(mainTarget);
+			MiyukiVisual.Instance.SpawnHearts(mainTarget);
 			if (RandomManager.RandomPer("MiyukiHeartExtra", 100, 25)) extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
-			MiyukiSoneVisual.Instance.SpawnHearts(extraTarget);		
+			MiyukiVisual.Instance.SpawnHearts(extraTarget);		
 		}
 
 		private void PlayRandomNoAnimation()

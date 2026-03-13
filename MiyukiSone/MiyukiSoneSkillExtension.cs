@@ -13,7 +13,7 @@ using static MiyukiSone.Utils;
 
 namespace MiyukiSone
 {
-	public static class MiyukiSoneSkillExtension
+	public static class MiyukiSkillExtension
 	{
 		public static bool IsMiyukiOwner(this Skill skill)
 		{

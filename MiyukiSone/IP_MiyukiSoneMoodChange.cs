@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiyukiSone
 {
-	public interface IP_MiyukiSoneMoodChange
+	public interface IP_MiyukiMoodChange
 	{
 		void MiyukiMoodChange();
 	}

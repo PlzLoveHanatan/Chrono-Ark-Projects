@@ -23,7 +23,7 @@ namespace MiyukiSone
 		Yandere         // -15-
 	}
 
-	public static class Affection
+	public static class MiyukiAffection
 	{
 		private const string MiyukiRandomKey = "MiyukiRandom";
 		private const int MaxAffectionPoints = 100;
@@ -56,7 +56,7 @@ namespace MiyukiSone
 
 		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Mathf.Clamp(Math.Abs(MiyukiPoints) + 25, 0, 100));
 
-		public static bool MiyukiMood => IsDere || (IsKuudere && MiyukiPoints >= 0);
+		public static bool MiyukiInMood => IsDere || (IsKuudere && MiyukiPoints >= 0);
 
 		public static bool IsDere => CurrentAffectionState == MiyukiAffectionState.DereDere;
 
@@ -69,9 +69,9 @@ namespace MiyukiSone
 		{
 			get
 			{
-				if (MiyukiSoneSaveManager.Instance.CurrentData.LockedState.HasValue)
+				if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue)
 				{
-					return (MiyukiAffectionState)MiyukiSoneSaveManager.Instance.CurrentData.LockedState.Value;
+					return (MiyukiAffectionState)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
 				}
 
 				int points = MiyukiPoints;
@@ -90,17 +90,17 @@ namespace MiyukiSone
 
 		public static void ChangeAffectionPointsRandom()
 		{
-			int amount = MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated ? 1 : RandomManager.RandomInt(MiyukiRandomKey, 0, 2);
+			int amount = MiyukiSaveManager.Instance.CurrentData.GameUpdated ? 1 : RandomManager.RandomInt(MiyukiRandomKey, 0, 2);
 			ChangeAffectionPoints(-amount);				
 		}
 
 		public static void ChangeAffectionPoints(int amount)
 		{
-			if (amount < 0 && MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) amount *= 2;
+			if (amount < 0 && MiyukiSaveManager.Instance.CurrentData.GameUpdated) amount *= 2;
 			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, MinAffectionPoints, MaxAffectionPoints);
 
-			MiyukiSoneSaveManager.Instance.CurrentData.AffectionPoints = MiyukiPoints;
-			MiyukiSoneSaveManager.Instance.Save();
+			MiyukiSaveManager.Instance.CurrentData.AffectionPoints = MiyukiPoints;
+			MiyukiSaveManager.Instance.Save();
 
 			Debug.Log($"[Miyuki] Affection points changed by {amount}. Current: {MiyukiPoints}");
 
@@ -119,7 +119,7 @@ namespace MiyukiSone
 			{
 				Passive_Char passive = battleChar.Info.Passive;
 
-				if (passive != null && passive is IP_MiyukiSoneMoodChange handler)
+				if (passive != null && passive is IP_MiyukiMoodChange handler)
 				{
 					handler.MiyukiMoodChange();
 				}

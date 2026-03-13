@@ -5,18 +5,18 @@ using System.Collections.Generic;
 
 namespace MiyukiSone
 {
-	public class MiyukiSoneVisual : MonoBehaviour
+	public class MiyukiVisual : MonoBehaviour
 	{
-		private static MiyukiSoneVisual _instance;
+		private static MiyukiVisual _instance;
 
-		public static MiyukiSoneVisual Instance
+		public static MiyukiVisual Instance
 		{
 			get
 			{
 				if (_instance == null)
 				{
 					GameObject go = new GameObject("MiyukiVisualManager");
-					_instance = go.AddComponent<MiyukiSoneVisual>();
+					_instance = go.AddComponent<MiyukiVisual>();
 
 					Canvas canvas = GameObject.FindObjectOfType<Canvas>();
 					if (canvas != null)

@@ -15,7 +15,7 @@ using ChronoArkMod.ModData;
 using HarmonyLib;
 using UseItem;
 using System.Reflection.Emit;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using static MiyukiSone.Utils;
 namespace MiyukiSone
 {
@@ -61,7 +61,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
-				MiyukiSoneSaveManager.Instance.ResetSave();
+				MiyukiSaveManager.Instance.ResetSave();
 				Debug.Log("Miyuki save file reset coimplete");
 			}
 		}
@@ -96,11 +96,11 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void StageStartPostfix()
 			{
-				var data = MiyukiSoneSaveManager.Instance.CurrentData;
+				var data = MiyukiSaveManager.Instance.CurrentData;
 				if (!data.GameRestarted && data.GameUpdated)
 				{
 					data.GameRestarted = true;
-					MiyukiSoneSaveManager.Instance.Save();
+					MiyukiSaveManager.Instance.Save();
 					Fs?.StartCoroutine(WaitForSeconds());
 				}
 

@@ -22,34 +22,32 @@ namespace MiyukiSone
 		{
 			int windowCount = RandomManager.RandomPer("MiyukiRandomWindow", 100, 15) ? 2 : 1;
 
-			for (int i = 0; i < 1; i++)
+			DialogueState currentState = state ?? DialogueState.love;
+			var sprites = DialogueSprites[currentState];
+			List<string> availableSprites = new List<string>(sprites);
+
+			if (!string.IsNullOrEmpty(lastSpriteKey) && availableSprites.Contains(lastSpriteKey) && availableSprites.Count > 1)
 			{
-				DialogueState currentState = state ?? DialogueState.love;
-				var sprites = DialogueSprites[currentState];
-				List<string> availableSprites = new List<string>(sprites);
-
-				if (!string.IsNullOrEmpty(lastSpriteKey) && availableSprites.Contains(lastSpriteKey) && availableSprites.Count > 1)
-				{
-					availableSprites.Remove(lastSpriteKey);
-				}
-
-				int randomSpriteIndex = RandomManager.RandomInt("MiyukiRandomBox", 0, availableSprites.Count);
-				string randomSprite = availableSprites[randomSpriteIndex];
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.EternalPromise) randomSprite = "dlg_eternal_01";
-				lastSpriteKey = randomSprite;
-
-				var transform = BattleSystem.instance.ActWindow.transform;
-				Sprite sprite = UtilsUI.GetSprite("MiyukiVisual/Dialogue/" + randomSprite + ".png");
-				Vector2 size = DialogueSize[currentState];
-				Vector3 position = GetRandomPosition(size, "MiyukiRandomPos");
-
-				GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", transform, sprite, size, position, true);
-				newWindow.AddComponent<DialogueWindow>();
-				newWindow.AddComponent<DialogueDragHandler>();
-				newWindow.GetComponent<DialogueWindow>().currentDialogueState = currentState;
-				newWindow.transform.SetAsLastSibling();
-				dialogueWindows.Add(newWindow);
+				availableSprites.Remove(lastSpriteKey);
 			}
+
+			int randomSpriteIndex = RandomManager.RandomInt("MiyukiRandomBox", 0, availableSprites.Count);
+			string randomSprite = availableSprites[randomSpriteIndex];
+			if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise) randomSprite = "dlg_eternal_01";
+			lastSpriteKey = randomSprite;
+
+			var transform = BattleSystem.instance.ActWindow.transform;
+			Sprite sprite = UtilsUI.GetSprite("MiyukiVisual/Dialogue/" + randomSprite + ".png");
+			Vector2 size = DialogueSize[currentState];
+			Vector3 position = GetRandomPosition(size, "MiyukiRandomPos");
+
+			GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", transform, sprite, size, position, true);
+			newWindow.AddComponent<DialogueWindow>();
+			newWindow.AddComponent<DialogueDragHandler>();
+			newWindow.GetComponent<DialogueWindow>().currentDialogueState = currentState;
+			newWindow.transform.SetAsLastSibling();
+			dialogueWindows.Add(newWindow);
+
 		}
 
 		public static void RemoveWindow(GameObject window)

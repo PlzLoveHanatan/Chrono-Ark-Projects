@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 
 namespace MiyukiSone
 {
-	public static class MiyukiSoneSkillImgChange
+	public static class MiyukiSkillImgChange
 	{
 		[Serializable]
 		public class SkillImageSet

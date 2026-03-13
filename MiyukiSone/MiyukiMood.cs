@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using static MiyukiSone.Utils;
 using static MiyukiSone.UtilsUI;
 
 namespace MiyukiSone
 {
-	public static class MiyukiSoneMood
+	public static class MiyukiMood
 	{
 		// I didnt create this names myself, I just take it from the files data
 		private static readonly List<string> FolderName = new List<string>()

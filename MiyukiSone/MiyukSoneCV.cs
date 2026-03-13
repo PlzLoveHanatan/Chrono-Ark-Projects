@@ -1,4 +1,4 @@
-﻿public class MiyukSoneiCV : CustomValue
+﻿public class MiyukCV : CustomValue
 {
 	public int MiyukiAffectionPoints = 0;
 	public bool Equip = false;
@@ -26,4 +26,6 @@
 	public int LastNoBoxAnimation = -1;
 
 	public bool BGMVolumeIncreased = false;
+
+	public string LastBuff;
 }

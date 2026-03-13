@@ -10,24 +10,39 @@ using UnityEngine;
 using GameDataEditor;
 using I2.Loc;
 using static MiyukiSone.Utils;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using static MiyukiSone.EventData;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.UtilsScripts;
 using static MiyukiSone.Dialogue;
-using static MiyukiSone.MiyukiSoneMood;
+using static MiyukiSone.MiyukiMood;
 using DarkTonic.MasterAudio;
 using System.EnterpriseServices;
 using UnityEngine.UI;
 
 namespace MiyukiSone
 {
-	public class Passive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted, IP_TurnEnd, IP_MiyukiSoneMoodChange
+	public class MiyukiPassive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted, IP_TurnEnd, IP_MiyukiMoodChange
 	{
-		private MiyukiInputEvent chatInputField;	
+		private MiyukiInputEvent chatInputField;
+
+
+		public List<string> MiyukiChoiceList = new List<string>();
+		private readonly List<Action> MiyukiPaws;
+
+		public MiyukiPassive()
+		{
+			MiyukiPaws = new List<Action>()
+			{
+				PawsWithMana,
+				PawsWithExchange,
+				PawsWithStandBy,
+				//PawsWithBlackFog
+			};
+		}
 
 		// Ally damage skills
-		private readonly HashSet<string> edgeCaseSkills = new HashSet<string>()
+		private readonly HashSet<string> allyDamageSkills = new HashSet<string>()
 		{
 			GDEItemKeys.Skill_S_Witch_P_0,
 			GDEItemKeys.Skill_S_Witch_2,
@@ -89,23 +104,15 @@ namespace MiyukiSone
 		{
 			int newDrawNum = MiyukiResult(1);
 			OutNum = newDrawNum != 0 ? DrawNum += newDrawNum : DrawNum;
-			if (newDrawNum != 0) MiyukiTextEvent();
+			if (newDrawNum != 0) MiyukiTextEvent(MiyukiInMood);
 			Debug.Log($"Draw num = {newDrawNum}");
 		}
 
 		public void Turn()
 		{
-			BattleSystem.DelayInputAfter(MiyukiCo());
-		}
-
-		private IEnumerator MiyukiCo()
-		{
-			yield return new WaitForFixedUpdate();
 			MiyukiTurn();
 			MiyukiTurnPaw();
 			CreateCharacterLucyDraw();
-			//MiyukiMoodChange();
-			//MiyukiTurnAction();
 		}
 
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
@@ -142,7 +149,7 @@ namespace MiyukiSone
 			int randomIndex = RandomManager.RandomInt("MiyukiTargetRedirect", 0, aliveAllies.Count);
 			BattleChar newTarget = null;
 
-			if (edgeCaseSkills.Contains(SkillD.MySkill.KeyID)) newTarget = aliveAllies[randomIndex];
+			if (allyDamageSkills.Contains(SkillD.MySkill.KeyID)) newTarget = aliveAllies[randomIndex];
 			else if (SkillD.IsDamage && BChar.HP <= 0) newTarget = aliveAllies[randomIndex];
 			else return;
 
@@ -170,22 +177,17 @@ namespace MiyukiSone
 			if (!MiyukiDecides) return;
 
 			if (Bs.TurnNum >= Bs.FogTurn && !IsYandere) goto MiyukiHelp;
-
-			var actions = new List<Action>
+			else
 			{
-				PawsWithMana,
-				PawsWithExchange,
-				PawsWithStandBy,
-				PawsWithBlackFog
-			};
-
-			if (MiyukiData.LastTurnAction != -1 && actions.Count > 1) actions.RemoveAt(MiyukiData.LastTurnAction);
-			int randomIndex = RandomManager.RandomInt("MiyukiTurnPaw", 0, actions.Count);
-			actions[randomIndex].Invoke();
-			MiyukiData.LastTurnAction = randomIndex;
+				var paw = MiyukiPaws.ToList();
+				if (MiyukiData.LastTurnAction != -1 && paw.Count > 1) paw.RemoveAt(MiyukiData.LastTurnAction);
+				int randomIndex = RandomManager.RandomInt("MiyukiPaw", 0, paw.Count);
+				paw[randomIndex].Invoke();
+				MiyukiData.LastTurnAction = randomIndex;
+			}
 
 		MiyukiHelp:;
-			CreateDialogue(DialogueState.help);
+			//CreateDialogue(DialogueState.help);
 		}
 
 
@@ -248,7 +250,7 @@ namespace MiyukiSone
 				GDEItemKeys.Skill_S_LucyCurse_Heavy,
 			};
 
-			List<string> selectedSkills = MiyukiMood ? posSkillKey : negSkillKey;
+			List<string> selectedSkills = MiyukiInMood ? posSkillKey : negSkillKey;
 
 			for (int i = 0; i < MiyukiResult(1); i++)
 			{

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace MiyukiSone
 {
-	public static class MiyukiSonePatchesHelpers
+	public static class MiyukiPatchesHelpers
 	{
 		private static readonly Color MiyukiPink = new Color(1f, 0.5f, 0.8f);
 		private static readonly Color MiyukiButtonBg = new Color(0.8f, 0.3f, 0.6f, 0.3f);

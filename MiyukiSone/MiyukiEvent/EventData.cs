@@ -7,7 +7,7 @@ using UnityEngine;
 using I2.Loc;
 using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using DarkTonic.MasterAudio;
 using ChronoArkMod;
 

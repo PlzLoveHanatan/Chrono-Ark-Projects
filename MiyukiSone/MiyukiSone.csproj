@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone03132026001636</AssemblyName>
+    <AssemblyName>MiyukiSone03132026145441</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,13 +405,13 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                        <!-- Compile ItemGroup Start-->
+                                                                                                                                                    <!-- Compile ItemGroup Start-->
   <ItemGroup>
-    <Compile Include="IP_MiyukiSkillImgChange.cs" />
     <Compile Include="IP_MiyukiSoneMoodChange.cs" />
-    <Compile Include="MiyukiJsonReader.cs" />
+    <Compile Include="IP_MiyukiSoneSkillImgChange.cs" />
+    <Compile Include="MiyukiMood.cs" />
     <Compile Include="MiyukiSoneAffection.cs" />
-    <Compile Include="MiyukiSoneMood.cs" />
+    <Compile Include="MiyukiSoneJsonReader.cs" />
     <Compile Include="MiyukiSonePatches.cs" />
     <Compile Include="MiyukiSonePatchesHelpers.cs" />
     <Compile Include="MiyukiSoneSaveManager.cs" />
@@ -421,7 +421,7 @@
     <Compile Include="MiyukiSone_ModDefinition.cs" />
     <Compile Include="MiyukiSone_ModItemKeys.cs" />
     <Compile Include="MiyukiSone_Plugin.cs" />
-    <Compile Include="MiyukSoneiCV.cs" />
+    <Compile Include="MiyukSoneCV.cs" />
     <Compile Include="MiyukiBchar\Buffs.cs" />
     <Compile Include="MiyukiBchar\Passive.cs" />
     <Compile Include="MiyukiBchar\Skills.cs" />

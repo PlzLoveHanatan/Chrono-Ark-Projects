@@ -7,7 +7,16 @@ namespace MiyukiSone
 		/// Miyuki Buff
 		/// </summary>
         public static string Buff_B_Miyuki_Buff = "B_Miyuki_Buff";
+        public static string Buff_B_Miyuki_CloseRangeShot = "B_Miyuki_CloseRangeShot";
         public static string Buff_B_Miyuki_Debuff = "B_Miyuki_Debuff";
+		/// <summary>
+		/// Miyuki's Might
+		/// </summary>
+        public static string Buff_B_Miyuki_Might = "B_Miyuki_Might";
+		/// <summary>
+		/// Recovery
+		/// </summary>
+        public static string Buff_B_Miyuki_Recover = "B_Miyuki_Recover";
 		/// <summary>
 		/// Miyuki
 		/// Passive:
@@ -64,6 +73,12 @@ namespace MiyukiSone
 		/// The selected ally is allowed to Parry once.
 		/// </summary>
         public static string Skill_S_MeasuredLove = "S_MeasuredLove";
+		/// <summary>
+		/// Miyuki's Might
+		/// Choose one of Phoenix's abilities to cast.
+		/// List of usable abilities a&
+		/// </summary>
+        public static string Skill_S_MiyukiMight = "S_MiyukiMight";
 		/// <summary>
 		/// Pandemonium
 		/// This skill always lands against targets with a Mark of Silverstein.

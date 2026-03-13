@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using GameDataEditor;
 using UseItem;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using PItem;
 using System.Reflection;
 using DG.Tweening.Plugins.Core;
@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using static MiyukiSone.MiyukiSonePatchesHelpers;
+using static MiyukiSone.MiyukiPatchesHelpers;
 using static Spine.Unity.Examples.SpineboyFootplanter;
 using static MiyukiSone.Utils;
 using DarkTonic.MasterAudio;
@@ -24,7 +24,7 @@ using System;
 namespace MiyukiSone
 {
 	[HarmonyPatch]
-	public static class Patches
+	public static class MiyukiPatches
 	{
 		[HarmonyTranspiler]
 		[HarmonyPatch(typeof(CharFace), "GetRandomSkill")]
@@ -34,7 +34,7 @@ namespace MiyukiSone
 			int num = list.FindLastIndex((CodeInstruction code) => code.opcode == OpCodes.Ldloc_0);
 			list.InsertRange(num + 1, new List<CodeInstruction>
 			{
-				new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patches), nameof(MiyukiModifySkills)))
+				new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatches), nameof(MiyukiModifySkills)))
 			});
 			return list.AsEnumerable<CodeInstruction>();
 		}
@@ -55,7 +55,7 @@ namespace MiyukiSone
 			{
 				// Вставляем вызов MiyukiModifySkills
 				codes.InsertRange(insertIndex + 1, new List<CodeInstruction>
-				{ new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patches), nameof(MiyukiModifySkills))) });
+				{ new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatches), nameof(MiyukiModifySkills))) });
 			}
 			return codes.AsEnumerable();
 		}
@@ -181,7 +181,7 @@ namespace MiyukiSone
 				__instance.StartCoroutine(MiyukiStart(__instance));
 				return false;
 
-				if (MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated)
+				if (MiyukiSaveManager.Instance.CurrentData.GameUpdated)
 				{
 					
 				}
@@ -229,7 +229,7 @@ namespace MiyukiSone
 				__result = StartMiyukiDelay(__instance);
 				return false;
 
-				//if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated)
+				//if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated)
 				//{
 				//	__result = StartMiyukiDelay(__instance);
 				//	return false;
@@ -286,7 +286,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(MainSceneScript __instance)
 			{
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 
 				GameObject canvas = GameObject.Find("Canvas");
 				GameObject canvas2 = GameObject.Find("Canvas (2)");
@@ -326,7 +326,7 @@ namespace MiyukiSone
 			public static void Postfix(PauseWindow __instance)
 			{
 				PlaySong();
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetSprite(root, "Back", "MiyukiVisual/Menu/pause.png");
 				SetSprite(root, "Main/Image", "MiyukiVisual/Menu/pause_window.png");
@@ -381,7 +381,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(MainOptionMenu __instance)
 			{
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				ReplaceAllBackSprites("MiyukiVisual/Menu/option.png");
 				SetSprite(root, "Image", "MiyukiVisual/Menu/option_window.png");
@@ -398,7 +398,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				ReplaceAllBackSprites("MiyukiVisual/Menu/pause.png");
 			}
 		}
@@ -410,7 +410,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(GamePlayOption __instance)
 			{
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Game Play", 38);
 				SetSprite(root, "Content", "MiyukiVisual/Menu/gameplay_window.png");
@@ -429,7 +429,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(SoundOption __instance)
 			{
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Sound", 38);
 				SetSprite(root, "Content", "MiyukiVisual/Menu/sound_window.png");
@@ -448,7 +448,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(GraphicOption __instance)
 			{
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Graphic", 38);
 				SetSprite(root, "Content", "MiyukiVisual/Menu/graphic_window.png");
@@ -467,7 +467,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(ControlOption __instance)
 			{
-				if (!MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "KeyObj/TextMeshPro Text", "Control", 38);
 				SetSprite(root, "KeyObj/Content", "MiyukiVisual/Menu/control_window.png");

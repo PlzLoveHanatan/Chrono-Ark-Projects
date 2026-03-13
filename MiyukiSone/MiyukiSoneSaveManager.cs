@@ -10,7 +10,7 @@ using static MiyukiSone.Utils;
 
 namespace MiyukiSone
 {
-	public class MiyukiSoneSaveManager
+	public class MiyukiSaveManager
 	{
 		[Serializable]
 		public class MiyukiSaveData
@@ -26,22 +26,22 @@ namespace MiyukiSone
 
 		public MiyukiSaveData CurrentData => _currentData;
 		private MiyukiSaveData _currentData;
-		private static MiyukiSoneSaveManager _instance;
+		private static MiyukiSaveManager _instance;
 
-		public static MiyukiSoneSaveManager Instance
+		public static MiyukiSaveManager Instance
 		{
 			get
 			{
 				if (_instance == null)
 				{
-					_instance = new MiyukiSoneSaveManager();
+					_instance = new MiyukiSaveManager();
 					_instance.Load();
 				}
 				return _instance;
 			}
 		}
 
-		private MiyukiSoneSaveManager()
+		private MiyukiSaveManager()
 		{
 			_currentData = new MiyukiSaveData();
 		}

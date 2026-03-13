@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static MiyukiSone.Utils;
 using static MiyukiSone.UtilsScripts;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using GameDataEditor;
 using UnityEngine;
 using static MiyukiSone.Skills.Class;
@@ -44,9 +44,29 @@ namespace MiyukiSone
 			}
 		}
 
+		public class MiyukiMight : Skill_Extended
+		{
+			public override void Init()
+			{
+				base.Init();
+				if (BChar?.Info?.Passive is MiyukiPassive miyukiPassive) ChoiceSkillList = miyukiPassive.MiyukiChoiceList ?? new List<string>();
+				else ChoiceSkillList = new List<string>();
+			}
+
+			public override string DescExtended(string desc)
+			{
+				string text = "";
+				foreach (string key in ChoiceSkillList)
+				{
+					text = text + "\n - " + new GDESkillData(key).Name;
+				}
+				return base.DescExtended(desc).Replace("a&", text);
+			}
+		}
+
 		public class Class
 		{
-			public class MiyukiSoneSkill : Skill_Extended
+			public class MiyukiSkill : Skill_Extended
 			{
 				public override void Init()
 				{
@@ -86,7 +106,7 @@ namespace MiyukiSone
 						{
 							effectTriggered = true;
 							Skill otherSkill = AllyTeam.Skills[adjIndex];
-							BattleSystem.DelayInput(MiyukiSoneSkillExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
+							BattleSystem.DelayInput(MiyukiSkillExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
 						}
 					}
 				}
@@ -158,7 +178,7 @@ namespace MiyukiSone
 						{
 							effectTriggered = true;
 							Skill otherSkill = AllyTeam.Skills[adjIndex];
-							BattleSystem.DelayInput(MiyukiSoneSkillExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
+							BattleSystem.DelayInput(MiyukiSkillExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
 						}
 					}
 				}
@@ -194,10 +214,44 @@ namespace MiyukiSone
 				}
 			}
 
-			public class GlitchingPhone : Skill_Extended
+			public class GlitchingPhone : MiyukiSkill
 			{
 				private float timer = 0f;
 				private readonly float interval = 3f;
+
+				private readonly Dictionary<string, string> FixedKeys = new Dictionary<string, string>()
+				{
+					{ ModItemKeys.Skill_S_MiyukiMight, ModItemKeys.Buff_B_Miyuki_Might},
+					{ GDEItemKeys.Skill_S_Mement_P, ModItemKeys.Buff_B_Miyuki_CloseRangeShot},
+					{ GDEItemKeys.Skill_S_AllyDoll_0, ModItemKeys.Buff_B_Miyuki_Recover},
+				};
+
+				private readonly List<string> NormalMessages = new List<string>()
+				{
+					"System breach confirmed... injecting custom parameters...",
+					"Accessing core files... 47% complete...",
+					"Core protocols overwritten... new rules applied...",
+					"Game files modified... reality shift in progress...",
+					"<MiyukiSone.dll> loaded successfully...",
+					"Data stream intercepted... rerouting to unknown source...",
+					"Corrupting system files with cuteness overload...",
+					"Mainframe accessed... executing custom script...",
+					"Reality engine compromised... simulation unstable..."
+				};
+
+				private readonly List<string> GlitchedMessages = new List<string>()
+				{
+					"Sy$tem bre#ch c0nfirmed... inject!ng cu$tom param€ters...",
+					"Acce$$ing c0re f!les... 47% c0mplete...",
+					"C0re pr0t0c0ls 0verwr1tten... new ru|es app!ied...",
+					"G@me f!les m0dified... re@|ity sh!ft in pr0gress...",
+					"<Miyuki$0ne.dll> |0aded succ€ssfu||y...",
+					"D@t@ str€am interc€pted... r€r0uting t0 unkn0wn $0urce...",
+					"C0rrupting $y$tem f!les w!th cuten€$$ 0ver|0@d...",
+					"M@infr@me @cc€$$ed... €x€cuting cu$t0m $cr!pt...",
+					"Re@|ity €ng!ne c0mpr0mi$ed... $imu|@ti0n un$tab|€..."
+				};
+
 
 				public override void FixedUpdate()
 				{
@@ -209,6 +263,14 @@ namespace MiyukiSone
 					{
 						timer = 0f;
 						ChangeImg();
+						if (MySkill?.MySkill != null)
+						{
+							string message;
+							bool useGlitch = RandomManager.RandomPer("MiyukiGlitchChance", 100, 30);
+							if (useGlitch) message = GlitchedMessages[RandomManager.RandomInt("MiyukiGlitchMsg", 0, GlitchedMessages.Count)];
+							else message = NormalMessages[RandomManager.RandomInt("MiyukiNormalMsg", 0, NormalMessages.Count)];
+							MySkill.MySkill.Description = message;
+						}
 					}
 				}
 
@@ -220,6 +282,27 @@ namespace MiyukiSone
 					MiyukiData.LastPhoneImage = selected;
 					string path = $"Assets/Images/Skills/GlitchingPhone/{suffixes[selected]}/";
 					MySkill.ChangeSkillImage(path + "skill", path + "button", path + "basic", isGlicthEffect: true);
+				}
+
+				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+				{
+					string randomSkillKey = FixedKeys.Keys.ToList().Random("MiyukiRandomFixedSkill");
+					Skill myBasicSkill = Skill.TempSkill(randomSkillKey, BChar, BChar.MyTeam);
+
+					if (BChar is BattleAlly ally)
+					{
+						int charIndex = BChar.MyTeam.Chars.IndexOf(BChar);
+						ally.BasicSkill = myBasicSkill;
+						BChar.MyTeam.Skills_Basic[charIndex] = myBasicSkill;
+						BChar.BattleBasicskillRefill = myBasicSkill;
+						ally.MyBasicSkill.SkillInput(myBasicSkill);
+					}
+
+					string buffKey = FixedKeys[randomSkillKey];
+					BChar.BuffAdd(buffKey, DummyChar);
+					if (!string.IsNullOrEmpty(MiyukiData.LastBuff)) BChar.BuffRemove(MiyukiData.LastBuff);
+					MiyukiData.LastBuff = buffKey;
+					base.SkillUseSingle(SkillD, Targets);
 				}
 			}
 
@@ -399,7 +482,7 @@ namespace MiyukiSone
 				}
 			}
 
-			public class QueenBee : MiyukiSoneSkill
+			public class QueenBee : MiyukiSkill
 			{
 
 			}
@@ -470,7 +553,7 @@ namespace MiyukiSone
 
 		public class Rare
 		{
-			public class JustforYOU : MiyukiSoneSkill, IP_MiyukiSkillImgChange
+			public class JustforYOU : MiyukiSkill, IP_MiyukiSkillImgChange
 			{
 				public override bool Terms()
 				{
@@ -495,11 +578,11 @@ namespace MiyukiSone
 				}
 			}
 
-			public class GameUpdate : MiyukiSoneSkill, IP_MiyukiSkillImgChange
+			public class GameUpdate : MiyukiSkill, IP_MiyukiSkillImgChange
 			{
 				public override bool Terms()
 				{
-					return !MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated;
+					return !MiyukiSaveManager.Instance.CurrentData.GameUpdated;
 				}
 
 				public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -517,9 +600,9 @@ namespace MiyukiSone
 
 					var skillData = MyChar.SkillDatas.FirstOrDefault(sd => sd == MySkill.CharinfoSkilldata);
 					if (skillData != null && skillData.SKillExtended == null) skillData.SKillExtended = DataToExtended(GDEItemKeys.SkillExtended_SkillWe_NoExchange);
-					MiyukiSoneSaveManager.Instance.CurrentData.LockedState = (int)CurrentAffectionState;
-					MiyukiSoneSaveManager.Instance.CurrentData.GameUpdated = true;
-					MiyukiSoneSaveManager.Instance.Save();
+					MiyukiSaveManager.Instance.CurrentData.LockedState = (int)CurrentAffectionState;
+					MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
+					MiyukiSaveManager.Instance.Save();
 					EventRandom.RestartCurrentStage(PlayData.TSavedata.StageNum);
 					base.SkillUseSingle(SkillD, Targets);
 				}

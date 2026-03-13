@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
 using UnityEngine;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using static MiyukiSone.Utils;
 
 namespace MiyukiSone

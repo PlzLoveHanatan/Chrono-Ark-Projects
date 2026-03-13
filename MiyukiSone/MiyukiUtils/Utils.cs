@@ -13,7 +13,7 @@ using Spine;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
-using static MiyukiSone.Affection;
+using static MiyukiSone.MiyukiAffection;
 using static MiyukiSone.Skills.Class;
 using static MiyukiSone.UtilsUI;
 
@@ -29,16 +29,16 @@ namespace MiyukiSone
 		public static BattleTeam EnemyTeam => Bs?.EnemyTeam;
 		public static BattleChar DummyChar => AllyTeam?.DummyChar;
 		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki);
-		public static MiyukSoneiCV MiyukiData => GetOrCreateMiyukiData();
+		public static MiyukCV MiyukiData => GetOrCreateMiyukiData();
 		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
 		private static GameObject _currentTempGO;
 
-		public static MiyukSoneiCV GetOrCreateMiyukiData()
+		public static MiyukCV GetOrCreateMiyukiData()
 		{
-			var data = PlayData.TSavedata.GetCustomValue<MiyukSoneiCV>();
+			var data = PlayData.TSavedata.GetCustomValue<MiyukCV>();
 			if (data == null)
 			{
-				data = new MiyukSoneiCV();
+				data = new MiyukCV();
 				PlayData.TSavedata.AddCustomValue(data);
 			}
 			return data;
@@ -192,7 +192,7 @@ namespace MiyukiSone
 					if (isGlicthEffect) GlitchEffect(skill);
 					foreach (var ex in skill.AllExtendeds)
 					{
-						if (ex is MiyukiSoneSkill miyukiSkill) miyukiSkill.Init();
+						if (ex is MiyukiSkill miyukiSkill) miyukiSkill.Init();
 					}
 				}
 			}
