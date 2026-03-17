@@ -40,6 +40,7 @@ namespace EnDub
 			{ GDEItemKeys.Character_Queen, "Huz" },
 			{ GDEItemKeys.Character_Lian, "Lian" },
 			{ GDEItemKeys.Character_SilverStein, "Silverstein" },
+			{ GDEItemKeys.Character_Sizz, "Sizz" },
 		};
 
 		public static Dictionary<string, string> skinKeyToName = new Dictionary<string, string>()
@@ -47,6 +48,7 @@ namespace EnDub
 			{ GDEItemKeys.Character_Skin_Charon_Swimsuit, "Swimsuit" },
 			{ GDEItemKeys.Character_Skin_Huz_Swimsuit, "Swimsuit" },
 			{ GDEItemKeys.Character_Skin_SilverStein_Casino, "Casino" },
+			{ GDEItemKeys.Character_Skin_Sizz_Swimsuit, "Swimsuit" },
 		};
 
 		public static void LoadAllCharacterAudio()

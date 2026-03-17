@@ -66,8 +66,9 @@ namespace EnDub
 			GameObject tempGO = new GameObject("TempAudio");
 			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
 
-			float finalVolume = volumePercent.HasValue ? volumePercent.Value / 100f : 1f;
-			audioSource.PlayOneShot(clip, finalVolume);
+			//float finalVolume = volumePercent.HasValue ? volumePercent.Value / 100f : 1f;
+
+			audioSource.PlayOneShot(clip, Settings.AudioVolume);
 
 			_currentTempGO = tempGO;
 			UnityEngine.Object.Destroy(tempGO, clip.length);
