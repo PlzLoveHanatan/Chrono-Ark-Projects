@@ -23,13 +23,11 @@ namespace MiyukiSone
 			int windowCount = RandomManager.RandomPer("MiyukiRandomWindow", 100, 15) ? 2 : 1;
 
 			DialogueState currentState = state ?? DialogueState.love;
+			if (RandomManager.RandomPer("MiyukiRandomKiss", 100, 30)) state = DialogueState.kiss;
 			var sprites = DialogueSprites[currentState];
 			List<string> availableSprites = new List<string>(sprites);
 
-			if (!string.IsNullOrEmpty(lastSpriteKey) && availableSprites.Contains(lastSpriteKey) && availableSprites.Count > 1)
-			{
-				availableSprites.Remove(lastSpriteKey);
-			}
+			if (!string.IsNullOrEmpty(lastSpriteKey) && availableSprites.Contains(lastSpriteKey) && availableSprites.Count > 1) availableSprites.Remove(lastSpriteKey);
 
 			int randomSpriteIndex = RandomManager.RandomInt("MiyukiRandomBox", 0, availableSprites.Count);
 			string randomSprite = availableSprites[randomSpriteIndex];

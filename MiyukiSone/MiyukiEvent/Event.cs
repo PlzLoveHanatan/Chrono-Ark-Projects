@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Mono.Security.X509.Extensions;
 using static MiyukiSone.EventData;
 using static MiyukiSone.Utils;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using GameDataEditor;
 using UnityEngine;
 using I2.Loc;
@@ -19,7 +19,7 @@ namespace MiyukiSone
 	{
 		public static void MiyukiAction()
 		{
-			if (MiyukiInMood) EventDere.DereAction();
+			if (MiyukiActing) EventDere.DereAction();
 			else EventYandere.YandereAction();
 		}
 
@@ -46,8 +46,7 @@ namespace MiyukiSone
 		}
 		public static void ChangeInventoryNum(int amount)
 		{
-			int finalValue = IsDere ? amount : -amount;
-			PartyInventory.InvenM.ChangeMaxInventoryNum(finalValue);
+			PartyInventory.InvenM.ChangeMaxInventoryNum(MiyukiResult(amount));
 		}
 
 		public static void ChangeRelicBarNum(int amount)
@@ -56,21 +55,19 @@ namespace MiyukiSone
 			//{
 			//	PlayData.TSavedata.Passive_Itembase.Add(null);
 			//}
-			PlayData.TSavedata.ArkPassivePlus += amount;
+			PlayData.TSavedata.ArkPassivePlus += MiyukiResult(amount);
 			if (UIManager.NowActiveUI is ArkPartsUI) UIManager.NowActiveUI.Delete();
 		}
 
 		public static void ChangeGold(int amount)
 		{
-			int gold = IsDere ? RandomManager.RandomInt("MiyukiRandomGold", 50, amount) : amount;
-			int finalValue = IsDere ? amount : -amount;
-			Pd._Gold += finalValue;
+			int gold = MiyukiActing ? RandomManager.RandomInt("MiyukiRandomGold", 50, amount) : amount;
+			Pd._Gold += MiyukiResult(gold);
 		}
 
 		public static void ChangeSoulstones(int amount)
 		{
-			int finalValue = IsDere ? amount : -amount;
-			Pd._Soul += finalValue;
+			Pd._Soul += MiyukiResult(amount);
 		}
 
 		public static void GainRandomPotion()
@@ -137,7 +134,7 @@ namespace MiyukiSone
 				GDEItemKeys.Item_Misc_RWEnterItem,
 				//GDEItemKeys.Item_Misc_TimeMoney,
 			};
-			AddItem(keys.Random("MiyukiRandomConsumable"));
+			AddItem(keys.Random("MiyukiRandomMisc"));
 		}
 	}
 }

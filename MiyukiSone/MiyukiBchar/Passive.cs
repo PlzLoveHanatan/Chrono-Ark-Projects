@@ -10,24 +10,28 @@ using UnityEngine;
 using GameDataEditor;
 using I2.Loc;
 using static MiyukiSone.Utils;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using static MiyukiSone.EventData;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.UtilsScripts;
 using static MiyukiSone.Dialogue;
-using static MiyukiSone.MiyukiMood;
 using DarkTonic.MasterAudio;
 using System.EnterpriseServices;
 using UnityEngine.UI;
+using System.ServiceModel.Channels;
 
 namespace MiyukiSone
 {
-	public class MiyukiPassive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_Healed, IP_DrawNumChange, IP_LevelUp, IP_Targeted, IP_TurnEnd, IP_MiyukiMoodChange
+	public class MiyukiPassive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_DrawNumChange, IP_Targeted, IP_TurnEnd, IP_MiyukiCharImgChange
 	{
+		#region Data & Constructors
 		private MiyukiInputEvent chatInputField;
 
+		private bool LessDraw;
 
+		// Fixed Ability Skill List
 		public List<string> MiyukiChoiceList = new List<string>();
+
 		private readonly List<Action> MiyukiPaws;
 
 		public MiyukiPassive()
@@ -37,6 +41,9 @@ namespace MiyukiSone
 				PawsWithMana,
 				PawsWithExchange,
 				PawsWithStandBy,
+				PawsWithCost,
+				PawsWithSwift,
+				PawsWithUpgrade,
 				//PawsWithBlackFog
 			};
 		}
@@ -52,6 +59,9 @@ namespace MiyukiSone
 			GDEItemKeys.Skill_S_Queen_13,
 		};
 
+		// Main List
+		public readonly List<string> AvaliableCharacterDraw = new List<string>();
+
 		private readonly Dictionary<string, string> characterDrawList = new Dictionary<string, string>()
 		{
 			{ ModItemKeys.Skill_S_GracefulSwing, GDEItemKeys.Skill_S_Priest_7_LucyD },// Divine Revelation
@@ -61,81 +71,84 @@ namespace MiyukiSone
 			{ ModItemKeys.Skill_S_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
 		};
 
-		private readonly List<string> avaliableCharacterDraw = new List<string>();
+		// Keys for additional shuffled skills in the deck
+		private readonly List<string> PosLucyDrawKeys = new List<string>()
+		{
+			GDEItemKeys.Skill_S_LucyD_3, // Search
+			GDEItemKeys.Skill_S_LucyD_16, // Deep in Thought
+			GDEItemKeys.Skill_S_PopcornGirl_Lucy_1, // Tasty Popcorn!
+			GDEItemKeys.Skill_S_PopcornGirl_Lucy_2, // Caramel Popcorn!
+			GDEItemKeys.Skill_S_PopcornGirl_Lucy_3, // Spicy Popcorn!
+			GDEItemKeys.Skill_S_Lucy_CasinoDLC_7, // All in
+		};
 
+		private readonly List<string> NegLucyDrawKeys = new List<string>()
+		{
+			GDEItemKeys.Skill_S_Transcendence_Main, // Bloodmist
+			GDEItemKeys.Skill_S_LucyCurse_CursedClock,
+			GDEItemKeys.Skill_S_LucyCurse_Banana,
+			GDEItemKeys.Skill_S_LucyCurse_Late,
+			GDEItemKeys.Skill_S_LucyCurse_Heavy,
+		};
+		#endregion
+
+		#region Character Passive IP
 		public override void Init()
 		{
 			base.Init();
 			OnePassive = true;
 		}
 
-		public void MiyukiMoodChange()
+		public void CharImgChange()
 		{
-			ChangeMood();
-		}
-
-		public void LevelUp()
-		{
-			ChangeAffectionPoints();
+			MiyukiCharImg.ChangeCharacterImage();
 		}
 
 		public void BattleStart(BattleSystem Ins)
 		{
-			avaliableCharacterDraw.Clear();
+			AvaliableCharacterDraw.Clear();
 			AllyTeam.Skills_Deck.ForEach(s =>
 			{
 				if (characterDrawList.TryGetValue(s.MySkill.KeyID, out string drawKey))
 				{
-					avaliableCharacterDraw.Add(drawKey);
+					AvaliableCharacterDraw.Add(drawKey);
 				}
 			});
 
-			//BattleFaceChange();
 			PawsWithDeck();
-
-			//CreateWindow();
-			//CreateChatWindow();
-			//ChangeAffectionPoints(25);
-			ChangeAffectionPoints(0);
-			//if (MiyukiDecides) PawsWithDeck(MiyukiMood);
 		}
 
 		public void DrawNumChange(int DrawNum, out int OutNum)
 		{
 			int newDrawNum = MiyukiResult(1);
 			OutNum = newDrawNum != 0 ? DrawNum += newDrawNum : DrawNum;
-			if (newDrawNum != 0) MiyukiTextEvent(MiyukiInMood);
+			if (newDrawNum != 0) MiyukiTextEvent(CurrentAffection);
 			Debug.Log($"Draw num = {newDrawNum}");
 		}
 
 		public void Turn()
 		{
-			MiyukiTurn();
-			MiyukiTurnPaw();
-			CreateCharacterLucyDraw();
+			try
+			{
+				MiyukiTurn();
+				CreateCharacterLucyDraw();
+				MiyukiTurnPaw();
+				//PartyInventory.InvenM.ChangeMaxInventoryNum(2);
+				//PartyInventory.InvenM.CreateInven(PartyInventory.InvenM.InventoryItems.Count + 2);
+				//PartyInventory.InvenM.ItemUpdateFromInven();
+			}
+			catch (Exception e)
+			{
+				Debug.Log(e.ToString());
+			}
 		}
 
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 		{
-			if (Dmg >= 1) ChangeAffectionPoints(-1);
-			if (BChar.HP < 0 && AllyTeam.AliveChars.Count > 0) resist = true;
-		}
-
-		public void Healed(BattleChar Healer, BattleChar HealedChar, int HealNum, bool Cri, int OverHeal)
-		{
-			if (HealedChar == BChar && Healer != BChar) ChangeAffectionPoints(1);
-		}
-
-		private void CreateChatWindow()
-		{
-			chatInputField = MiyukiInputEvent.CreateChatInput(
-				spritePath: "MiyukiVisual/dlog_test.png",
-				parentWindow: BattleSystem.instance.ActWindow.transform,
-				windowSize: new Vector2(700, 130),
-				windowPosition: new Vector3(170, 170, 0),
-				placeholder: "",
-				inputPosition: new Vector2(0, -20),
-				inputSize: new Vector2(400, 35));
+			if (BChar.HP < 0 && AllyTeam.AliveChars.Count > 0)
+			{
+				resist = true;
+			}
 		}
 
 		public void Targeted(Skill SkillD, List<BattleChar> Targets)
@@ -155,7 +168,6 @@ namespace MiyukiSone
 
 			Targets.Clear();
 			Targets.Add(newTarget);
-			ChangeAffectionPoints(-1);
 			//EventYandere.YandereAction(false);
 			BChar.StartCoroutine(ShowMiyukiEventText());
 		}
@@ -163,21 +175,25 @@ namespace MiyukiSone
 		private IEnumerator ShowMiyukiEventText()
 		{
 			yield return null;
-			MiyukiTextEvent(false);
+			MiyukiTextEvent(CurrentAffection);
 		}
 
 		public void TurnEnd()
 		{
 			UnlockNextTurnEndTry();
 		}
+		#endregion
 
-		private void MiyukiTurnPaw()
+		#region Miyuki's Turn Paws
+		public void MiyukiTurnPaw()
 		{
 			AllyTeam.AliveChars.Where(a => a != BChar).ToList().ForEach(a => SecureBuff(a, BChar, ModItemKeys.Buff_B_Miyuki_Buff));
-			if (!MiyukiDecides) return;
 
-			if (Bs.TurnNum >= Bs.FogTurn && !IsYandere) goto MiyukiHelp;
-			else
+			if (IsKuudere) return;
+
+			//if (Bs.TurnNum >= Bs.FogTurn && !IsYandere) goto MiyukiHelp;
+
+			for (int i = 0; i < 2; i++)
 			{
 				var paw = MiyukiPaws.ToList();
 				if (MiyukiData.LastTurnAction != -1 && paw.Count > 1) paw.RemoveAt(MiyukiData.LastTurnAction);
@@ -186,25 +202,9 @@ namespace MiyukiSone
 				MiyukiData.LastTurnAction = randomIndex;
 			}
 
-		MiyukiHelp:;
+
+			//MiyukiHelp:;
 			//CreateDialogue(DialogueState.help);
-		}
-
-
-		private void CreateInnerDesire()
-		{
-			// for allies
-		}
-
-		private void CreateCharacterLucyDraw()
-		{
-			if (avaliableCharacterDraw.Count == 0 || Bs.TurnNum == 1) return;
-
-			var skill = Skill.TempSkill(avaliableCharacterDraw.Random("MiyukiRandomDraw"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
-			AllyTeam.Add(skill, true);
-			skill.isExcept = true;
-			skill.APChange++;
-			skill.AutoDelete = 1;
 		}
 
 		private void PawsWithMana()
@@ -227,37 +227,70 @@ namespace MiyukiSone
 			Bs.FogTurn += MiyukiResult(1);
 		}
 
+		private void PawsWithCost()
+		{
+			if (AllyTeam.Skills.Count == 0) return;
+			var skill = AllyTeam.Skills.Random("MiyukiCost");
+			skill.APChange = MiyukiResult(1);
+		}
+
+		private void PawsWithSwift()
+		{
+			if (AllyTeam.Skills.Count == 0) return;
+			var skill = AllyTeam.Skills.FindAll(s => s.NotCount == !MiyukiResult()).ToList().Random("MiyukiSwift");
+			if (skill == null) return;
+			skill.NotCount = MiyukiResult();
+		}
+
+		private void PawsWithUpgrade()
+		{
+			if (AllyTeam.Skills.Count == 0) return;
+			Skill skill = AllyTeam.Skills.Where(s => s.MySkill.SkillExtended == null).ToList().Random("RandomSkill");
+			if (skill == null) return;
+			List<Skill_Extended> enforce = MiyukiResult() ? PlayData.GetEnforce(true, skill) : PlayData.GetEnforce(false, skill);
+			skill.ExtendedAdd_Battle(enforce.Random("RandomEx"));
+		}
+
 
 		private void PawsWithDeck()
 		{
-			if (!MiyukiDecides) return;
+			if (IsKuudere) return;
 
-			List<string> posSkillKey = new List<string>()
-			{
-				GDEItemKeys.Skill_S_LucyD_3, // Search
-				GDEItemKeys.Skill_S_LucyD_16, // Deep in Thought
-				GDEItemKeys.Skill_S_PopcornGirl_Lucy_1, // Tasty Popcorn!
-				GDEItemKeys.Skill_S_PopcornGirl_Lucy_2, // Caramel Popcorn!
-				GDEItemKeys.Skill_S_PopcornGirl_Lucy_3, // Spicy Popcorn!
-			};
+			List<string> selectedSkills = MiyukiResult() ? PosLucyDrawKeys : NegLucyDrawKeys;
 
-			List<string> negSkillKey = new List<string>()
-			{
-				GDEItemKeys.Skill_S_Transcendence_Main, // Bloodmist
-				GDEItemKeys.Skill_S_LucyCurse_CursedClock,
-				GDEItemKeys.Skill_S_LucyCurse_Banana,
-				GDEItemKeys.Skill_S_LucyCurse_Late,
-				GDEItemKeys.Skill_S_LucyCurse_Heavy,
-			};
-
-			List<string> selectedSkills = MiyukiInMood ? posSkillKey : negSkillKey;
-
-			for (int i = 0; i < MiyukiResult(1); i++)
+			for (int i = 0; i < 2; i++)
 			{
 				var skill = Skill.TempSkill(selectedSkills.Random("MiyukiRandomSkill"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
 				if (skill != null) Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiRandomInsert", skill);
-				//skill.isExcept = true;
+				skill.isExcept = true;
+				skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
 			}
+		}
+		#endregion
+
+		// Remove 1 draw and creating character draw instead every turn, or not remove
+		private void CreateCharacterLucyDraw()
+		{
+			if (AvaliableCharacterDraw.Count == 0 || /*Bs.TurnNum == 1*/ LessDraw) return;
+
+			var skill = Skill.TempSkill(AvaliableCharacterDraw.Random("MiyukiCharacterDraw"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
+			AllyTeam.Add(skill, true);
+			skill.isExcept = true;
+			skill.APChange++;
+			skill.AutoDelete = 1;
+			skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
+		}
+
+		private void CreateChatWindow()
+		{
+			chatInputField = MiyukiInputEvent.CreateChatInput(
+				spritePath: "MiyukiVisual/dlog_test.png",
+				parentWindow: BattleSystem.instance.ActWindow.transform,
+				windowSize: new Vector2(700, 130),
+				windowPosition: new Vector3(170, 170, 0),
+				placeholder: "",
+				inputPosition: new Vector2(0, -20),
+				inputSize: new Vector2(400, 35));
 		}
 	}
 }

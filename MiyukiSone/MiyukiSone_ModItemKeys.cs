@@ -7,8 +7,16 @@ namespace MiyukiSone
 		/// Miyuki Buff
 		/// </summary>
         public static string Buff_B_Miyuki_Buff = "B_Miyuki_Buff";
+		/// <summary>
+		/// Buff Enemy
+		/// Gain 1 action count. Removed at the start of the next turn.
+		/// </summary>
+        public static string Buff_B_Miyuki_Buff_Enemy = "B_Miyuki_Buff_Enemy";
         public static string Buff_B_Miyuki_CloseRangeShot = "B_Miyuki_CloseRangeShot";
-        public static string Buff_B_Miyuki_Debuff = "B_Miyuki_Debuff";
+		/// <summary>
+		/// Debuff Ally
+		/// </summary>
+        public static string Buff_B_Miyuki_Debuff_Ally = "B_Miyuki_Debuff_Ally";
 		/// <summary>
 		/// Miyuki's Might
 		/// </summary>
@@ -18,10 +26,15 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Recover = "B_Miyuki_Recover";
 		/// <summary>
+		/// Glitch
+		/// </summary>
+        public static string SkillExtended_Ex_Miyuki_Glitch = "Ex_Miyuki_Glitch";
+		/// <summary>
 		/// Miyuki
 		/// Passive:
 		/// </summary>
         public static string Character_Miyuki = "Miyuki";
+        public static string SkillEffect_SE_S_S_Special_EternalKiss = "SE_S_S_Special_EternalKiss";
         public static string SkillEffect_SE_T_S_EternalPromise = "SE_T_S_EternalPromise";
         public static string SkillEffect_SE_T_S_EternalVow = "SE_T_S_EternalVow";
         public static string SkillEffect_SE_T_S_GracefulSwing = "SE_T_S_GracefulSwing";
@@ -31,6 +44,7 @@ namespace MiyukiSone
         public static string SkillEffect_SE_T_S_Pandemonium = "SE_T_S_Pandemonium";
         public static string SkillEffect_SE_T_S_QueenBee = "SE_T_S_QueenBee";
         public static string SkillEffect_SE_T_S_Rare_JustforYOU = "SE_T_S_Rare_JustforYOU";
+        public static string SkillEffect_SE_T_S_Special_EternalKiss = "SE_T_S_Special_EternalKiss";
         public static string SkillEffect_SE_T_S_StepToward = "SE_T_S_StepToward";
         public static string SkillEffect_SE_T_S_SweetRestraint = "SE_T_S_SweetRestraint";
         public static string SkillEffect_SE_T_S_WarningStrike = "SE_T_S_WarningStrike";
@@ -80,7 +94,13 @@ namespace MiyukiSone
 		/// </summary>
         public static string Skill_S_MiyukiMight = "S_MiyukiMight";
 		/// <summary>
+		/// Helping Hand
+		/// View allies' unique draw skills and select one to create in hand. The created skill gains Exclude.
+		/// </summary>
+        public static string Skill_S_Miyuki_LucyDraw = "S_Miyuki_LucyDraw";
+		/// <summary>
 		/// Pandemonium
+		/// Can only target characters with a Weakening debuff.
 		/// This skill always lands against targets with a Mark of Silverstein.
 		/// This skill casts twice if it has an Illusion Sword buff.
 		/// </summary>
@@ -92,6 +112,7 @@ namespace MiyukiSone
         public static string Skill_S_QueenBee = "S_QueenBee";
 		/// <summary>
 		/// Game Update
+		/// Cost is increased by 1 per stage cleared.
 		/// Restart current stage.
 		/// </summary>
         public static string Skill_S_Rare_GameUpdate = "S_Rare_GameUpdate";
@@ -107,6 +128,9 @@ namespace MiyukiSone
         public static string Skill_S_SacrificedKnowledge = "S_SacrificedKnowledge";
 		/// <summary>
 		/// Eternal Kiss
+		/// Heal all characters except yourself and the target for &a <color=#FF7C34>(99% Healing Power)</color>.
+		/// Convert all ally barriers into party barrier.
+		/// Draw 1 skill.
 		/// </summary>
         public static string Skill_S_Special_EternalKiss = "S_Special_EternalKiss";
 		/// <summary>

@@ -66,28 +66,28 @@ namespace MiyukiSone
 			}
 		}
 
-		[HarmonyPatch(typeof(BattleSystem))]
-		[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
-		class Patch_BattleSystem_TurnEnd
-		{
-			[HarmonyPrefix]
-			public static bool Prefix()
-			{
-				if (Dialogue.dialogueWindows.Count > 0)
-				{
-					foreach (var windowObj in Dialogue.dialogueWindows)
-					{
-						if (windowObj != null)
-						{
-							DialogueData.MiyukiTextBoxTurn();
-							ChangeAffectionPointsRandom();
-						}
-					}
-					return false;
-				}
-				return true;
-			}
-		}
+		//[HarmonyPatch(typeof(BattleSystem))]
+		//[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
+		//class Patch_BattleSystem_TurnEnd
+		//{
+		//	[HarmonyPrefix]
+		//	public static bool Prefix()
+		//	{
+		//		if (Dialogue.dialogueWindows.Count > 0)
+		//		{
+		//			foreach (var windowObj in Dialogue.dialogueWindows)
+		//			{
+		//				if (windowObj != null)
+		//				{
+		//					DialogueData.MiyukiTextBoxTurn();
+		//					ChangeAffectionPointsRandom();
+		//				}
+		//			}
+		//			return false;
+		//		}
+		//		return true;
+		//	}
+		//}
 
 		[HarmonyPatch(typeof(FieldSystem))]
 		[HarmonyPatch(nameof(FieldSystem.StageStart))]

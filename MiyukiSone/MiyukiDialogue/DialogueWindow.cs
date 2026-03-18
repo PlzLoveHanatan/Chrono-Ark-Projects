@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
 using static MiyukiSone.EventData;
 using static MiyukiSone.EventHelp;
+using static MiyukiSone.EventDialogue;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Linq;
+using Dialogical;
+using System;
 
 namespace MiyukiSone
 {
@@ -130,26 +133,35 @@ namespace MiyukiSone
 
 		private void ClickHandler(bool isYesClick)
 		{
-			//if (isClicked) return;
-			click++;
-
-			//bool heartsOnButton = RandomManager.RandomPer("MiyukiHeartPos", 100, 50);
-			int points = currentDialogueState == DialogueState.kiss ? 5 : 1;
-			int finalPoints = isYesClick ? points : -points;
-			ChangeAffectionPoints(finalPoints);
-
-			switch (currentDialogueState)
+			try
 			{
-				case DialogueState.love: ClickLove(isYesClick); break;
-				case DialogueState.kiss: ClickKiss(isYesClick); break;
-				case DialogueState.help: ClickHelp(isYesClick); break;
-				default: break;
+				click++;
+				if (click >= 5) RemoveWindow(gameObject);
+
+				if (isClicked) return;
+
+				int points = currentDialogueState == DialogueState.kiss ? 5 : 1;
+				int finalPoints = isYesClick ? points : -points;
+
+				switch (currentDialogueState)
+				{
+					case DialogueState.love: ClickLove(isYesClick); break;
+					case DialogueState.kiss: ClickKiss(isYesClick); break;
+					case DialogueState.help: ClickHelp(isYesClick); break;
+					default: break;
+				}
+
+				if (MiyukiDecides /*&& !isYesClick*/) PawsPrank();
+
+				if (currentDialogueState == DialogueState.kiss && !isYesClick) return;
+
+				ClickBonusAction(isYesClick);
 			}
-
-			if (click >= 5) RemoveWindow(gameObject);
-			if ((currentDialogueState == DialogueState.kiss && !isYesClick) || currentDialogueState == DialogueState.help) return;
-
-			ClickBonusAction(isYesClick);
+			catch (Exception e)
+			{
+				Debug.Log(e.ToString());
+				RemoveWindow(gameObject);
+			}
 		}
 
 		private void ClickLove(bool isYes)
@@ -165,7 +177,7 @@ namespace MiyukiSone
 
 		private void ClickHelp(bool isYes)
 		{
-			MiyukiTextEvent(isYes); // change to help event
+			MiyukiTextEvent(CurrentAffection); // change to help event
 			if (isYes) MiyukiHelpAction();
 		}
 
@@ -196,12 +208,14 @@ namespace MiyukiSone
 			int index = RandomManager.RandomInt("MiyukiYesAnim", 0, available.Count);
 			PlayAnimationAndDestroy(available[index].Invoke());
 			MiyukiData.LastYesBoxAnimation = animations.IndexOf(available[index]);
-			if (RandomManager.RandomPer("MiyukiHeartsSpawn", 100, 50)) return;
-			ChangeAffectionPoints();
+			if (RandomManager.RandomInt("MiyukiHeartsSpawn", 0, 2) == 1) return;
 			Transform mainTarget = RandomManager.RandomPer("MiyukiHeartPos", 100, 50) ? btn_yes.transform : MiyukiBchar.transform;
 			MiyukiVisual.Instance.SpawnHearts(mainTarget);
-			if (RandomManager.RandomPer("MiyukiHeartExtra", 100, 25)) extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
-			MiyukiVisual.Instance.SpawnHearts(extraTarget);		
+			if (RandomManager.RandomPer("MiyukiHeartExtra", 100, 25))
+			{
+				extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
+				MiyukiVisual.Instance.SpawnHearts(extraTarget);
+			}
 		}
 
 		private void PlayRandomNoAnimation()
@@ -239,7 +253,7 @@ namespace MiyukiSone
 			Vector3 startScale = t.localScale;
 
 			// случайное смещение по X: влево или вправо
-			float xOffset = Random.Range(-50f, 50f);
+			float xOffset = UnityEngine.Random.Range(-50f, 50f);
 			Vector3 endPos = startPos + new Vector3(xOffset, 150f, 0);
 
 			float elapsed = 0f;
@@ -271,14 +285,11 @@ namespace MiyukiSone
 			Transform t = transform;
 
 			// CanvasGroup для фейда
-			CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
-			if (canvasGroup == null)
-				canvasGroup = gameObject.AddComponent<CanvasGroup>();
-
+			CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
 			Quaternion startRot = t.rotation;
 
 			// Случайное направление падения: либо -25°, либо +25°
-			float angleZ = Random.value < 0.5f ? -25f : 25f;
+			float angleZ = UnityEngine.Random.value < 0.5f ? -25f : 25f;
 			Quaternion endRot = Quaternion.Euler(0, 0, angleZ);
 
 			Vector3 startPos = t.localPosition;
@@ -321,7 +332,7 @@ namespace MiyukiSone
 			float maxTilt = 4f;
 
 			// случайный наклон вправо или влево
-			float tiltDirection = Random.value < 0.5f ? 1f : -1f;
+			float tiltDirection = UnityEngine.Random.value < 0.5f ? 1f : -1f;
 
 			float elapsed = 0f;
 
@@ -377,8 +388,8 @@ namespace MiyukiSone
 					float currentShake = maxShake * shakeProgress;
 
 					t.localPosition = originalPos + new Vector3(
-						Random.Range(-currentShake, currentShake),
-						Random.Range(-currentShake, currentShake),
+						UnityEngine.Random.Range(-currentShake, currentShake),
+						UnityEngine.Random.Range(-currentShake, currentShake),
 						0);
 				}
 				else

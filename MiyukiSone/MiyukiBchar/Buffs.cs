@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using GameDataEditor;
 using UnityEngine;
 using static MiyukiSone.EventData;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using static MiyukiSone.Utils;
 
 
@@ -22,7 +22,7 @@ namespace MiyukiSone
 			// Сhange all taking damage for allies depends on Miyuki current affection
 			public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
 			{
-				int multiplier = MiyukiResult(10);
+				int multiplier = MiyukiResult(15);
 				if (multiplier == 0 || !Hit.Info.Ally) return Dmg;
 				float factor = 1f - (multiplier / 100f);
 				Dmg = (int)(Dmg * factor);
@@ -32,7 +32,7 @@ namespace MiyukiSone
 			// Сhange all deal damage for all enemies depends on Miyuki affection
 			public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
 			{
-				int multiplier = MiyukiResult(10);
+				int multiplier = MiyukiResult(15);
 				if (multiplier == 0 || !Target.Info.Ally) return Damage;
 				float factor = 1f - (multiplier / 100f);
 				Damage = (int)(Damage * factor);
@@ -40,8 +40,7 @@ namespace MiyukiSone
 			}
 		}
 
-		// Hidden Debuff
-		public class MiyukiDebuff : Buff, IP_PlayerTurn
+		public class MiyukiBuffEnemy : Buff, IP_PlayerTurn
 		{
 			public override void Init()
 			{
@@ -55,9 +54,21 @@ namespace MiyukiSone
 			}
 		}
 
+		public class MiyukiDebuffAlly : Buff
+		{
+			public override void Init()
+			{
+				PlusPerStat.Damage = -100;
+				base.Init();
+			}
+		}
+
 
 		public class FixedAbility : Buff, IP_SkillUse_BasicSkill, IP_PlayerTurn
 		{
+			// Pattern Matching
+			//public MiyukiPassive MiyukiPassive => BChar.Info.Passive is MiyukiPassive mp ? mp : null;
+			public MiyukiPassive MiyukiPassive => BChar.Info.Passive as MiyukiPassive;
 			public virtual bool RecoverySkill => false;
 			private bool usedThisTurn = false;
 
@@ -94,12 +105,9 @@ namespace MiyukiSone
 
 		public class CloseRangeShot : FixedAbility, IP_SkillUseHand_Team, IP_Draw
 		{
-			public override bool RecoverySkill => false;
-
 			public override void BuffOneAwake()
 			{
 				base.BuffOneAwake();
-
 				foreach (var skill in AllyTeam.Skills)
 				{
 					if (skill.IsCreatedInBattle && skill.ExtendedFind("Mement_Ex_0", true) == null)
@@ -107,6 +115,14 @@ namespace MiyukiSone
 						skill.ExtendedAdd(Skill_Extended.DataToExtended(GDEItemKeys.SkillExtended_Mement_Ex_0));
 					}
 				}
+
+				MiyukiPassive?.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Mement_LucyDraw);
+			}
+
+			public override void SelfdestroyPlus()
+			{
+				MiyukiPassive?.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_Mement_LucyDraw);
+				base.SelfdestroyPlus();
 			}
 
 			public void SKillUseHand_Team(Skill skill)
@@ -125,7 +141,7 @@ namespace MiyukiSone
 
 			public IEnumerator Draw(Skill Drawskill, bool NotDraw)
 			{
-				if (Drawskill.IsCreatedInBattle && Drawskill.AP >= 1 && Drawskill.ExtendedFind("Mement_Ex_0", true) == null/* && Drawskill.Master.Info.KeyData != GDEItemKeys.Character_Mement*/)
+				if (Drawskill.IsCreatedInBattle && Drawskill.AP >= 1 && Drawskill.ExtendedFind("Mement_Ex_0", true) == null && Drawskill.Master.Info.KeyData != ModItemKeys.Character_Miyuki)
 				{
 					Drawskill.ExtendedAdd(Skill_Extended.DataToExtended(GDEItemKeys.SkillExtended_Mement_Ex_0));
 				}
@@ -136,25 +152,32 @@ namespace MiyukiSone
 
 		public class MiyukiMight : FixedAbility
 		{
-			public override bool RecoverySkill => false;
+			private readonly string[] PhoenixChoices = new[]
+			{
+				GDEItemKeys.Skill_S_Phoenix_P,      // Feast
+				GDEItemKeys.Skill_S_Phoenix_3_0,    // Fetch
+				GDEItemKeys.Skill_S_Phoenix_4,      // Undying Sanctuary
+				GDEItemKeys.Skill_S_Phoenix_5_0,    // Fly
+				GDEItemKeys.Skill_S_Phoenix_5_0,    // Fly
+				GDEItemKeys.Skill_S_Phoenix_6_1,    // Eternal Flame
+				GDEItemKeys.Skill_S_Phoenix_10_0,   // Find Bread
+				GDEItemKeys.Skill_S_Phoenix_10_1    // Throw Bread
+			};
 
 			public override void BuffOneAwake()
 			{
 				base.BuffOneAwake();
+				if (MiyukiPassive == null) return;
+				MiyukiPassive.MiyukiChoiceList = MiyukiPassive.MiyukiChoiceList ?? new List<string>();
+				MiyukiPassive.MiyukiChoiceList.Clear();
+				MiyukiPassive.MiyukiChoiceList.AddRange(PhoenixChoices);
+				MiyukiPassive.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Phoenix_Draw);
+			}
 
-				if (BChar.Info.Passive is MiyukiPassive miyukiPassive)
-				{
-					miyukiPassive.MiyukiChoiceList = miyukiPassive.MiyukiChoiceList ?? new List<string>();
-					miyukiPassive.MiyukiChoiceList.Clear();
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_3_0); // Fetch
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_4_0); // Undying Sanctuary
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_5_0); // Fly
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_5_0); // Fly
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_6_1); // Eternal Flame
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_P); // Feeast
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_10_0); // Find Bread
-					miyukiPassive.MiyukiChoiceList.Add(GDEItemKeys.Skill_S_Phoenix_10_1); // Throw Bread
-				}
+			public override void SelfdestroyPlus()
+			{
+				MiyukiPassive?.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_Phoenix_Draw);
+				base.SelfdestroyPlus();
 			}
 		}
 

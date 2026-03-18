@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using GameDataEditor;
 using UseItem;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using PItem;
 using System.Reflection;
 using DG.Tweening.Plugins.Core;
@@ -20,6 +20,8 @@ using System.Collections;
 using I2.Loc;
 using System.Collections.Specialized;
 using System;
+using Random = UnityEngine.Random;
+using Spine;
 
 namespace MiyukiSone
 {
@@ -62,27 +64,21 @@ namespace MiyukiSone
 
 		public static List<Skill> MiyukiModifySkills(List<Skill> skills)
 		{
-			if (!MiyukiDecides && MiyukiSone_Plugin.MiyukiInParty()) return skills;
+			if (skills == null || skills.Count == 0 || MiyukiSone_Plugin.MiyukiInParty() && IsKuudere) return skills;
 
-			UnityEngine.Debug.Log("[Miyuki] === ModifySkills START ===");
+			int skillIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, skills.Count);
+			int randomSkill = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? 100 : 10;
+			int randomEx = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? 100 : 25;
+			if (RandomManager.RandomPer("MiyukiReplaceSkill", 100, randomSkill)) ReplaceSkill(skills, skillIndex);
+			if (RandomManager.RandomPer("MiyukiAddExtended", 100, randomEx)) AddExtendedToSkill(skills, skillIndex);
+			return skills;
+		}
 
-			if (skills == null || skills.Count == 0)
-			{
-				UnityEngine.Debug.Log("[Miyuki] skills == null or empty");
-				return skills;
-			}
+		private static void ReplaceSkill(List<Skill> skills, int skillIndex)
+		{
+			//if (skills.Any(s => s?.Master?.Info?.HasRareSkill() == true) && MiyukiActing && MiyukiSone_Plugin.MiyukiInParty()) return;
 
-			// Проверяем, есть ли у персонажа уже редкий скилл
-			bool hasRare = skills.Any(s => s?.Master?.Info?.HasRareSkill() == true);
-			if (hasRare && IsDere)
-			{
-				UnityEngine.Debug.Log("[Miyuki] Character already has rare skill, returning original skills");
-				return skills;
-			}
-
-			UnityEngine.Debug.Log("[Miyuki] Skill count: " + skills.Count);
-
-			var customSkillKeys = new List<string>
+			var negSkillKeys = new List<string>
 			{
 				GDEItemKeys.Skill_S_DefultSkill_0,
 				GDEItemKeys.Skill_S_DefultSkill_1,
@@ -90,27 +86,30 @@ namespace MiyukiSone
 				ModItemKeys.Skill_S_SacrificedKnowledge
 			};
 
-			var skillPoolKeys = IsYandere || !MiyukiSone_Plugin.MiyukiInParty() ? customSkillKeys : PlayData.ALLRARESKILLLIST.Select(s => s.KeyID).ToList();
+			var targetSkill = skills[skillIndex];
+			// keep random rare skills ?
+			var skillPoolKeys = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? negSkillKeys : PlayData.ALLRARESKILLLIST.Select(s => s.KeyID).ToList();
+			if (negSkillKeys.Count == 0) return;
+			var newSkillKey = skillPoolKeys.Random("MiyukiRandomRareSkill");
+			UnityEngine.Debug.Log($"[Miyuki] Replacing slot {skillIndex} | {targetSkill?.MySkill?.KeyID} -> {newSkillKey}");
+			skills[skillIndex] = Skill.TempSkill(newSkillKey, targetSkill?.Master, targetSkill?.MyTeam);
+		}
 
-			UnityEngine.Debug.Log("[Miyuki] Skill pool size: " + skillPoolKeys.Count);
+		private static void AddExtendedToSkill(List<Skill> skills, int skillIndex)
+		{
+			var targetSkill = skills[skillIndex];
+			var skillData = targetSkill?.CharinfoSkilldata;
 
-			if (skillPoolKeys.Count == 0)
+			if (skillData != null && skillData.SKillExtended == null)
 			{
-				UnityEngine.Debug.Log("[Miyuki] skillPoolKeys is empty");
-				return skills;
+				List<Skill_Extended> enforce = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? PlayData.GetEnforce(true, targetSkill) : PlayData.GetEnforce(false, targetSkill);
+				targetSkill.ExtendedAdd_Battle(enforce.Random("Random"));
 			}
-
-			int slotIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, skills.Count);
-			var oldSkill = skills[slotIndex];
-			var newSkillKey = skillPoolKeys.Random("MiyukiRandomSkill");
-
-			UnityEngine.Debug.Log($"[Miyuki] Replacing slot {slotIndex} | {oldSkill?.MySkill?.KeyID} -> {newSkillKey}");
-
-			skills[slotIndex] = Skill.TempSkill(newSkillKey, oldSkill?.Master, oldSkill?.MyTeam);
-
-			UnityEngine.Debug.Log("[Miyuki] === ModifySkills END ===");
-
-			return skills;
+			else
+			{
+				UnityEngine.Debug.Log("[Miyuki] Cannot add extended: skillData null or already has extended");
+				ReplaceSkill(skills, skillIndex);
+			}
 		}
 
 		private static bool HasRareSkill(this Character character)
@@ -183,7 +182,7 @@ namespace MiyukiSone
 
 				if (MiyukiSaveManager.Instance.CurrentData.GameUpdated)
 				{
-					
+
 				}
 				return true;
 			}
@@ -326,6 +325,7 @@ namespace MiyukiSone
 			public static void Postfix(PauseWindow __instance)
 			{
 				PlaySong();
+				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetSprite(root, "Back", "MiyukiVisual/Menu/pause.png");
@@ -346,6 +346,10 @@ namespace MiyukiSone
 			public static void Postfix(PauseWindow __instance)
 			{
 				MasterAudio.StopBus("BGM");
+				MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
+				MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
+				MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
+				MiyukiVisual.Instance.StopParticles();
 				if (MiyukiData.BGMVolumeIncreased) ChangeBGMVolume(0);
 			}
 		}
@@ -369,8 +373,11 @@ namespace MiyukiSone
 			public static void Postfix()
 			{
 				MasterAudio.StopBus("BGM");
+				MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
+				MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
+				MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
 				if (MiyukiData.BGMVolumeIncreased) ChangeBGMVolume(0);
-				
+
 			}
 		}
 

@@ -7,7 +7,7 @@ using UnityEngine;
 using I2.Loc;
 using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using DarkTonic.MasterAudio;
 using ChronoArkMod;
 
@@ -119,10 +119,11 @@ namespace MiyukiSone
 		}
 
 		// ============= ОСНОВНОЙ МЕТОД ДЛЯ ВЫЗОВА =============
-		public static string MiyukiTextEvent(bool? isDere = null, bool isEvent = true)
+		public static string MiyukiTextEvent(MiyukiAffection? affection = null, bool isEvent = true)
 		{
-			bool textState = isDere ?? IsDere;
-			//if (isDere.HasValue) textState = isDere.Value;
+			bool textState = false;
+			if (affection.HasValue == IsDere) textState = true;
+
 			var line = GetRandomLine(textState);
 
 			if (line == null)

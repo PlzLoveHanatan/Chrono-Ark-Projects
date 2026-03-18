@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GameDataEditor;
 using MiyukiSone;
 using NLog.Targets;
+using UnityEngine;
 using static MiyukiSone.Utils;
 
 namespace MiyukiSone
@@ -191,6 +192,25 @@ namespace MiyukiSone
 			}
 
 			return result;
+		}
+
+		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, Skill skill, int recastNum = 1)
+		{
+			if (skill == null || target == null) yield break;
+
+			for (int i = 0; i < recastNum; i++)
+			{
+				yield return new WaitForSecondsRealtime(0.3f);
+				//Skill skill = Skill.TempSkill(skillKey, user, user.MyTeam);
+				if (skill != null) ParticleOut(target, user, skill);
+			}
+		}
+
+		private static void ParticleOut(BattleChar target, BattleChar user, Skill skill)
+		{
+			if (target == null) return;
+			var mainTarget = target.IsDead ? user.BattleInfo.EnemyList.Random(user.GetRandomClass().Target) : target;
+			user.ParticleOut(skill, mainTarget);
 		}
 	}
 }

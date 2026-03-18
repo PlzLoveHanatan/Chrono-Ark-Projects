@@ -8,18 +8,19 @@ using static MiyukiSone.Event;
 using static MiyukiSone.Utils;
 using static MiyukiSone.UtilsScripts;
 using static MiyukiSone.EventData;
+using static MiyukiSone.Affection;
 using GameDataEditor;
 
 namespace MiyukiSone
 {
 	public static class EventYandere
 	{
-		public static void YandereAction(bool? isDere = null)
+		public static void YandereAction()
 		{
 			List<int> availableIndexes = GetAvailableActions();
 			var lastAction = MiyukiData.LastYandereAction;
 			if (lastAction != -1 && availableIndexes.Count > 1) availableIndexes.Remove(lastAction);
-			int randomIndex = availableIndexes[RandomManager.RandomInt("MiyukiDereAction", 0, availableIndexes.Count)];
+			int randomIndex = availableIndexes[RandomManager.RandomInt("MiyukiYandereAction", 0, availableIndexes.Count)];
 			MiyukiData.LastYandereAction = randomIndex;
 
 			switch (randomIndex)
@@ -30,12 +31,12 @@ namespace MiyukiSone
 				case 4: ChangeSoulstones(1); break;
 				case 5: DamageAlly(); break;
 				case 6: DebuffAllies(); break;
-				case 7: KillRandomAlly(); break;
+				case 7: ChangeAllyHp(); break;
 				case 8: RemoveItems(); break;
 				case 9: BuffEnemies(); break;
 				default: break;
 			}
-			MiyukiTextEvent(isDere);
+			MiyukiTextEvent(CurrentAffection);
 		}
 
 		private static List<int> GetAvailableActions()
@@ -61,7 +62,7 @@ namespace MiyukiSone
 			if (allies.Count > 0) TakeNonLethalDamage(allies[RandomManager.RandomInt("MiyukiRandom", 0, allies.Count())], damage, isPainDamage);
 		}
 
-		private static void KillRandomAlly()
+		private static void ChangeAllyHp()
 		{
 			//AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("MiyukiRandom").Dead();
 			AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("MiyukiRandom").HP = -99;
@@ -81,12 +82,12 @@ namespace MiyukiSone
 
 		private static void DebuffAllies()
 		{
-			AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().ForEach(a => a.AddBuff(ModItemKeys.Buff_B_Miyuki_Debuff));
+			AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().ForEach(a => a.AddBuff(ModItemKeys.Buff_B_Miyuki_Debuff_Ally));
 		}
 
 		private static void BuffEnemies()
 		{
-			Bs.EnemyTeam.AliveChars_Vanish.ForEach(a => a.AddBuff(ModItemKeys.Buff_B_Miyuki_Buff));
+			Bs.EnemyTeam.AliveChars_Vanish.ForEach(a => a.AddBuff(ModItemKeys.Buff_B_Miyuki_Buff_Enemy));
 		}
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 
 namespace MiyukiSone
 {
@@ -31,11 +31,11 @@ namespace MiyukiSone
 			public bool useDefault;
 		}
 
-		private static Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>> _skillImages;
-		private static Dictionary<string, MiyukiAffectionState> _currentState = new Dictionary<string, MiyukiAffectionState>();
+		private static Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>> _skillImages;
+		private static Dictionary<string, MiyukiAffection> _currentState = new Dictionary<string, MiyukiAffection>();
 		private static Dictionary<string, int> _currentPoints = new Dictionary<string, int>();
 
-		public static Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>> SkillImages
+		public static Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>> SkillImages
 		{
 			get
 			{
@@ -51,44 +51,44 @@ namespace MiyukiSone
 			if (jsonContent == null)
 			{
 				Debug.LogError("[Miyuki] Failed to load ImgPaths.json");
-				_skillImages = new Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>>();
+				_skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
 				return;
 			}
 
 			try
 			{
-				_skillImages = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>>>(jsonContent);
-				if (_skillImages == null) _skillImages = new Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>>();
+				_skillImages = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>>(jsonContent);
+				if (_skillImages == null) _skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
 			}
 			catch (Exception e)
 			{
 				Debug.LogError($"[Miyuki] Error loading skill images: {e.Message}");
-				_skillImages = new Dictionary<string, Dictionary<MiyukiAffectionState, SkillImageSet>>();
+				_skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
 			}
 		}
 
-		private static SkillImageSet FindBestImageSet(Dictionary<MiyukiAffectionState, SkillImageSet> stateMap, MiyukiAffectionState targetState)
+		private static SkillImageSet FindBestImageSet(Dictionary<MiyukiAffection, SkillImageSet> stateMap, MiyukiAffection targetState)
 		{
 			if (stateMap.TryGetValue(targetState, out var exactSet)) return exactSet;
-			if (stateMap.TryGetValue(MiyukiAffectionState.Kuudere, out var kuudereSet)) return kuudereSet;
+			if (stateMap.TryGetValue(MiyukiAffection.Kuudere, out var kuudereSet)) return kuudereSet;
 			return stateMap.Values.FirstOrDefault();
 		}
 
-		public static void ChangeImg(this Skill skill)
+		public static void ChangeSkillImg(this Skill skill)
 		{
 			if (skill == null) return;
 
 			string skillID = skill.MySkill.KeyID;
-			MiyukiAffectionState newState = CurrentAffectionState;
+			MiyukiAffection newState = CurrentAffection;
 
 			if (!SkillImages.TryGetValue(skillID, out var stateMap) || stateMap == null || stateMap.Count == 0) return;
 
 			// Для скилов с thresholds в DereDere
-			if (newState == MiyukiAffectionState.DereDere && stateMap.TryGetValue(MiyukiAffectionState.DereDere, out var deredereSet)
+			if (newState == MiyukiAffection.DereDere && stateMap.TryGetValue(MiyukiAffection.DereDere, out var deredereSet)
 				&& deredereSet.pointsThresholds != null && deredereSet.pointsThresholds.Count > 0) 
 			{
-				int currentPoints = MiyukiPoints;
-				var threshold = deredereSet.pointsThresholds .Where(t => currentPoints >= t.minPoints).OrderByDescending(t => t.minPoints).FirstOrDefault();
+				int currentPoints = 0;
+				var threshold = deredereSet.pointsThresholds.Where(t => currentPoints >= t.minPoints).OrderByDescending(t => t.minPoints).FirstOrDefault();
 
 				if (threshold != null)
 				{

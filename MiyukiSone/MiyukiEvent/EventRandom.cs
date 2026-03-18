@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
 using UnityEngine;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using static MiyukiSone.Utils;
 
 namespace MiyukiSone
@@ -75,25 +75,15 @@ namespace MiyukiSone
 
 		private static void RecievingGift()
 		{
-			ChangeAffectionPoints(5);
+
 		}
 
 		private static void UsingConsumbales()
 		{
-			ChangeAffectionPoints(1);
+
 		}
 
 		private static void Using101()
-		{
-			ChangeAffectionPoints(2);
-		}
-
-		private static void AddUpgradeOnSkill()
-		{
-
-		}
-
-		private static void AddDowngradeOnSkill()
 		{
 
 		}

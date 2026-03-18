@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MiyukiSone
 {
-	public interface IP_MiyukiMoodChange
+	public interface IP_MiyukiCharImgChange
 	{
-		void MiyukiMoodChange();
+		void CharImgChange();
 	}
 }

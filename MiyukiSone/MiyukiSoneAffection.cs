@@ -16,93 +16,103 @@ using UnityEngine.U2D.SpriteShapeClipperLib;
 
 namespace MiyukiSone
 {
-	public enum MiyukiAffectionState
+	public enum MiyukiAffection
 	{
-		DereDere,     // 15+
-		Kuudere,       // -9 - 9
-		Yandere         // -15-
+		DereDere,
+		Kuudere,
+		Yandere
 	}
 
-	public static class MiyukiAffection
+	public static class Affection
 	{
-		private const string MiyukiRandomKey = "MiyukiRandom";
-		private const int MaxAffectionPoints = 100;
-		private const int MinAffectionPoints = -100;
-		public static int MiyukiPoints => MiyukiData.MiyukiAffectionPoints;
-
-		public static int MiyukiResult(int baseValue)
-		{
-			if (!MiyukiDecides) return 0;
-
-			if (IsKuudere)
-			{
-				return MiyukiPoints >= 0 ? baseValue : -baseValue;
-			}
-			else if (IsDere || IsYandere)
-			{
-				int result = IsDere ? baseValue : -baseValue;
-
-				if (MiyukiPoints == MaxAffectionPoints || MiyukiPoints == MinAffectionPoints)
-				{
-					int bonusChance = Mathf.Clamp(Math.Abs(MiyukiPoints) + 25, 0, 100);
-					bool isDouble = RandomManager.RandomPer(IsDere ? "MiyukiDere" : "MiyukiYandere", 100, bonusChance);
-					if (isDouble) return result * 2;
-				}
-
-				return result;
-			}
-			return 0;
-		}
-
-		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiBehaviour", 100, Mathf.Clamp(Math.Abs(MiyukiPoints) + 25, 0, 100));
-
-		public static bool MiyukiInMood => IsDere || (IsKuudere && MiyukiPoints >= 0);
-
-		public static bool IsDere => CurrentAffectionState == MiyukiAffectionState.DereDere;
-
-		public static bool IsKuudere => CurrentAffectionState == MiyukiAffectionState.Kuudere;
-
-		public static bool IsYandere => CurrentAffectionState == MiyukiAffectionState.Yandere;
-
-
-		public static MiyukiAffectionState CurrentAffectionState
+		private static MiyukiAffection? _currentAffection;
+		public static MiyukiAffection CurrentAffection
 		{
 			get
 			{
-				if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue)
+				if (_currentAffection == null)
 				{
-					return (MiyukiAffectionState)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
+					int savedValue = MiyukiSaveManager.Instance.CurrentData.Affection;
+					_currentAffection = (MiyukiAffection)savedValue;
 				}
+				return _currentAffection ?? MiyukiAffection.Kuudere;
+			}
 
-				int points = MiyukiPoints;
-
-				if (points >= 15) return MiyukiAffectionState.DereDere;
-				if (points <= -15) return MiyukiAffectionState.Yandere;
-
-				return MiyukiAffectionState.Kuudere;
+			set
+			{
+				if (_currentAffection != value)
+				{
+					_currentAffection = value;
+					CheckIp();
+					Debug.Log($"[Miyuki] Affection changed to: {value}");
+				}
 			}
 		}
 
-		public static void ChangeAffectionPoints()
+		public static int MiyukiResult(int baseValue)
 		{
-			ChangeAffectionPoints(1);
+			if (IsKuudere) return 0;
+			return IsDere ? baseValue : -baseValue;
 		}
 
-		public static void ChangeAffectionPointsRandom()
+		public static bool MiyukiResult() => IsDere;
+		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiDecision", 100, 50);
+		public static bool MiyukiActing => MiyukiDecides && !IsKuudere;
+		public static bool IsDere => CurrentAffection == MiyukiAffection.DereDere;
+		public static bool IsKuudere => CurrentAffection == MiyukiAffection.Kuudere;
+		public static bool IsYandere => CurrentAffection == MiyukiAffection.Yandere;
+
+		//private static MiyukiAffection GetRandomActionState()
+		//{ 
+		//	if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue) return (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
+		//	var values = Enum.GetValues(typeof(MiyukiAffection));
+		//	return (MiyukiAffection)values.GetValue(RandomManager.RandomInt("MiyukiRandom", 0, values.Length));
+		//}
+
+		public static void MiyukiTurn()
 		{
-			int amount = MiyukiSaveManager.Instance.CurrentData.GameUpdated ? 1 : RandomManager.RandomInt(MiyukiRandomKey, 0, 2);
-			ChangeAffectionPoints(-amount);				
+			//CreateDialogue(); return;
+
+			if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
+			{
+				CreateDialogue();
+				return;
+			}
+
+			if (MiyukiDecides)
+			{
+				_currentAffection = GetRandomAffection();
+				MiyukiSaveManager.Instance.CurrentData.Affection = (int)CurrentAffection;
+				if (CurrentAffection == MiyukiAffection.Kuudere) CreateDialogue();
+				else MiyukiAction();
+			}
+
+			CheckIp();
 		}
 
-		public static void ChangeAffectionPoints(int amount)
+		private static MiyukiAffection GetRandomAffection()
 		{
-			if (amount < 0 && MiyukiSaveManager.Instance.CurrentData.GameUpdated) amount *= 2;
-			MiyukiData.MiyukiAffectionPoints = Mathf.Clamp(MiyukiData.MiyukiAffectionPoints + amount, MinAffectionPoints, MaxAffectionPoints);
+			if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue) return (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
 
-			MiyukiSaveManager.Instance.CurrentData.AffectionPoints = MiyukiPoints;
-			MiyukiSaveManager.Instance.Save();
+			var values = Enum.GetValues(typeof(MiyukiAffection));
+			var availableIndices = new List<int>();
 
-			Debug.Log($"[Miyuki] Affection points changed by {amount}. Current: {MiyukiPoints}");
+			for (int i = 0; i < values.Length; i++)
+			{
+				availableIndices.Add(i);
+			}
+
+			int lastIndex = MiyukiData.LastAffection;
+			if (lastIndex != -1 && availableIndices.Count > 1) availableIndices.Remove(lastIndex);
+			int randomIndex = RandomManager.RandomInt("MiyukiRandom", 0, availableIndices.Count);
+			int selectedIndex = availableIndices[randomIndex];
+			MiyukiData.LastAffection = selectedIndex;
+			return (MiyukiAffection)values.GetValue(selectedIndex);
+		}
+
+		public static void CheckIp()
+		{
+			if (Bs == null) return;
 
 			foreach (var skill in AllyTeam.Skills.Concat(AllyTeam.Skills_Deck).Concat(AllyTeam.Skills_UsedDeck))
 			{
@@ -112,6 +122,8 @@ namespace MiyukiSone
 					{
 						handler.SkillImgChange(skill);
 					}
+
+					if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) ex.Init();
 				}
 			}
 
@@ -119,27 +131,10 @@ namespace MiyukiSone
 			{
 				Passive_Char passive = battleChar.Info.Passive;
 
-				if (passive != null && passive is IP_MiyukiMoodChange handler)
+				if (passive != null && passive is IP_MiyukiCharImgChange handler)
 				{
-					handler.MiyukiMoodChange();
+					handler.CharImgChange();
 				}
-			}
-		}
-
-		public static void MiyukiTurn()
-		{
-			CreateDialogue(); return;
-
-			if (MiyukiDecides)
-			{
-				MiyukiAction();
-			}
-			else
-			{
-				bool isKissTriggered = RandomManager.RandomPer(MiyukiRandomKey, 100, 30) && IsDere;
-				DialogueState? dialogueState = null;
-				if (isKissTriggered) dialogueState = DialogueState.kiss;
-				CreateDialogue(dialogueState);
 			}
 		}
 	}

@@ -13,7 +13,7 @@ using Spine;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
-using static MiyukiSone.MiyukiAffection;
+using static MiyukiSone.Affection;
 using static MiyukiSone.Skills.Class;
 using static MiyukiSone.UtilsUI;
 
@@ -69,24 +69,27 @@ namespace MiyukiSone
 			PlaySound(sound, false, volume);
 		}
 
+
 		public static void PlaySong()
 		{
+			MasterAudio.FadeBusToVolume("FieldBGM", 0f, 1f, null, false, false);
+			MasterAudio.FadeBusToVolume("BattleBGM", 0f, 1f, null, false, false);
+			MasterAudio.StopBus("BGM");
+			MasterAudio.StopBus("BGM");
+			MasterAudio.StopBus("StoryBGM");
+
 			List<string> songKeys = new List<string>()
 			{
 				"DreamLove",
-				"WayBack",
-				"WithHope",
-				"Forever",
-				"Heart",
-				"WithYOU",
+				"YouAndHer",
 				"Monochrome",
 				"MerryGoRound",
 			};
 
 			if (SaveManager.NowSaveSlot.SoundBGMVolume == 0)
 			{
-				ChangeBGMVolume(50);
 				MiyukiData.BGMVolumeIncreased = true;
+				ChangeBGMVolume(50);
 			}
 
 			var availableSongs = songKeys.ToList();
@@ -103,6 +106,7 @@ namespace MiyukiSone
 			SaveManager.savemanager.OptionApply(false, false);
 		}
 
+		// fix the audio volume
 		public static void PlaySoundFromAsset(string audioPath, bool isStopOldBus = true, int? volumePercent = null)
 		{
 			if (string.IsNullOrEmpty(audioPath)) return;

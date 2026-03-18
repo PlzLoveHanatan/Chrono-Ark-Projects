@@ -20,7 +20,7 @@ namespace MiyukiSone
 			return skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki;
 		}
 
-		public static void MiyukiInit(this Skill skill, MiyukiAffectionState? state = null)
+		public static void MiyukiInit(this Skill skill, MiyukiAffection? state = null)
 		{
 			if (Bs == null || UIManager.AllUI.Any(ui => ui.name.Contains("Collection"))) return;
 
@@ -33,7 +33,7 @@ namespace MiyukiSone
 			}
 
 		statecheck:;
-			if (state == MiyukiAffectionState.Yandere)
+			if (state == MiyukiAffection.Yandere)
 			{
 				var targetKey = skill.MySkill.Target.Key;
 

@@ -20,7 +20,7 @@ namespace MiyukiSone
 
 			public override void FixedUpdate()
 			{
-				if (glitchEffect == null)
+				if (glitchEffect == null && BattleSystem.instance != null)
 				{
 					var prefab = Resources.Load<GameObject>("StoryGlitch/GlitchSkillEffect");
 					glitchEffect = UnityEngine.Object.Instantiate(prefab, MySkill.MyButton.transform);

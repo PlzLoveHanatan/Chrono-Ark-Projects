@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone03132026145441</AssemblyName>
+    <AssemblyName>MiyukiSone03182026122522</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,12 +405,12 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                                                                    <!-- Compile ItemGroup Start-->
+                                                              <!-- Compile ItemGroup Start-->
   <ItemGroup>
-    <Compile Include="IP_MiyukiSoneMoodChange.cs" />
+    <Compile Include="IP_MiyukiSoneCharImgChange.cs" />
     <Compile Include="IP_MiyukiSoneSkillImgChange.cs" />
-    <Compile Include="MiyukiMood.cs" />
     <Compile Include="MiyukiSoneAffection.cs" />
+    <Compile Include="MiyukiSoneCharImg.cs" />
     <Compile Include="MiyukiSoneJsonReader.cs" />
     <Compile Include="MiyukiSonePatches.cs" />
     <Compile Include="MiyukiSonePatchesHelpers.cs" />

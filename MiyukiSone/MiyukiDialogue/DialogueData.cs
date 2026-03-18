@@ -212,7 +212,6 @@ namespace MiyukiSone
 			ShowText(text, isEvent);
 			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
 			PlaySoundFromAsset($"Assets/Dialogue/Love/{line.AudioFile}.ogg", true);
-			if (!isYes && MiyukiDecides) PawsPrank();
 		}
 
 		// ============= KISS =============

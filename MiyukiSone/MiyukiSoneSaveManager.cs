@@ -15,7 +15,7 @@ namespace MiyukiSone
 		[Serializable]
 		public class MiyukiSaveData
 		{
-			public int AffectionPoints;
+			public int Affection;
 			public int? LockedState; // Храним как int? для сериализации
 			public bool GameUpdated;
 			public bool GameRestarted;
