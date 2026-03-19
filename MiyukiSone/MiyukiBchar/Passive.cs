@@ -19,6 +19,7 @@ using DarkTonic.MasterAudio;
 using System.EnterpriseServices;
 using UnityEngine.UI;
 using System.ServiceModel.Channels;
+using static MiyukiSone.Buffs;
 
 namespace MiyukiSone
 {
@@ -27,7 +28,7 @@ namespace MiyukiSone
 		#region Data & Constructors
 		private MiyukiInputEvent chatInputField;
 
-		private bool LessDraw;
+		public bool CreateCharacterDraw = false;
 
 		// Fixed Ability Skill List
 		public List<string> MiyukiChoiceList = new List<string>();
@@ -64,11 +65,14 @@ namespace MiyukiSone
 
 		private readonly Dictionary<string, string> characterDrawList = new Dictionary<string, string>()
 		{
-			{ ModItemKeys.Skill_S_GracefulSwing, GDEItemKeys.Skill_S_Priest_7_LucyD },// Divine Revelation
-			{ ModItemKeys.Skill_S_WarningStrike, GDEItemKeys.Skill_S_Control_3_Draw }, // Insight 
-			{ ModItemKeys.Skill_S_EternalVow, GDEItemKeys.Skill_S_MissChain_12_LucyD }, // Burning Draw
+			{ ModItemKeys.Skill_S_Miyuki_GracefulSwing, GDEItemKeys.Skill_S_Priest_7_LucyD },// Divine Revelation
+			{ ModItemKeys.Skill_S_Miyuki_WarningStrike, GDEItemKeys.Skill_S_Control_3_Draw }, // Insight 
+			{ ModItemKeys.Skill_S_Miyuki_EternalVow, GDEItemKeys.Skill_S_MissChain_12_LucyD }, // Burning Draw
 			//{ ModItemKeys.Skill_S_HappyBirthday, GDEItemKeys.Skill_S_Lucy_24 }, // Change of Plans
-			{ ModItemKeys.Skill_S_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
+			{ ModItemKeys.Skill_S_Miyuki_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
+			//{ ModItemKeys.Skill_S_Miyuki_WarningStrike, ModItemKeys.Skill_S_Miyuki_Draw_MiyukiHelp }, // Miyuki, Help
+			{ ModItemKeys.Skill_S_Miyuki_Pandemonium, ModItemKeys.Skill_S_Miyuki_Draw_FracturedIllusion}, // Fractured Illusion
+			{ ModItemKeys.Skill_S_Miyuki_EternalPromise, GDEItemKeys.Skill_S_Leryn_Draw}, // Inspiration
 		};
 
 		// Keys for additional shuffled skills in the deck
@@ -116,30 +120,33 @@ namespace MiyukiSone
 			});
 
 			PawsWithDeck();
+			if (AvaliableCharacterDraw.Count > 0) BattleSystem.DelayInput(PawsWithDraw());
 		}
 
 		public void DrawNumChange(int DrawNum, out int OutNum)
 		{
-			int newDrawNum = MiyukiResult(1);
-			OutNum = newDrawNum != 0 ? DrawNum += newDrawNum : DrawNum;
-			if (newDrawNum != 0) MiyukiTextEvent(CurrentAffection);
-			Debug.Log($"Draw num = {newDrawNum}");
+			OutNum = CreateCharacterDraw ? DrawNum - 1 : DrawNum;
+
+			//int newDrawNum = MiyukiResult(1);
+			//OutNum = newDrawNum != 0 ? DrawNum += newDrawNum : DrawNum;
+			//if (newDrawNum != 0) MiyukiTextEvent(CurrentAffection);
+			//Debug.Log($"Draw num = {newDrawNum}");
 		}
 
 		public void Turn()
 		{
-			try
+			AllyTeam.AliveChars.Where(a => a != MiyukiBchar).ToList().ForEach(a => SecureBuff(a, DummyChar, ModItemKeys.Buff_B_Miyuki_Buff));
+			SecureBuff(BChar, DummyChar, ModItemKeys.Buff_B_Miyuki_Passive);
+			CreateCharacterLucyDraw();
+
+			if (Bs.TurnNum == 1)
+			{
+				CheckIp();
+			}
+			else
 			{
 				MiyukiTurn();
-				CreateCharacterLucyDraw();
 				MiyukiTurnPaw();
-				//PartyInventory.InvenM.ChangeMaxInventoryNum(2);
-				//PartyInventory.InvenM.CreateInven(PartyInventory.InvenM.InventoryItems.Count + 2);
-				//PartyInventory.InvenM.ItemUpdateFromInven();
-			}
-			catch (Exception e)
-			{
-				Debug.Log(e.ToString());
 			}
 		}
 
@@ -187,8 +194,6 @@ namespace MiyukiSone
 		#region Miyuki's Turn Paws
 		public void MiyukiTurnPaw()
 		{
-			AllyTeam.AliveChars.Where(a => a != BChar).ToList().ForEach(a => SecureBuff(a, BChar, ModItemKeys.Buff_B_Miyuki_Buff));
-
 			if (IsKuudere) return;
 
 			//if (Bs.TurnNum >= Bs.FogTurn && !IsYandere) goto MiyukiHelp;
@@ -196,10 +201,10 @@ namespace MiyukiSone
 			for (int i = 0; i < 2; i++)
 			{
 				var paw = MiyukiPaws.ToList();
-				if (MiyukiData.LastTurnAction != -1 && paw.Count > 1) paw.RemoveAt(MiyukiData.LastTurnAction);
+				if (MiyukiData.LastTurnPawAction != -1 && paw.Count > 1) paw.RemoveAt(MiyukiData.LastTurnPawAction);
 				int randomIndex = RandomManager.RandomInt("MiyukiPaw", 0, paw.Count);
 				paw[randomIndex].Invoke();
-				MiyukiData.LastTurnAction = randomIndex;
+				MiyukiData.LastTurnPawAction = randomIndex;
 			}
 
 
@@ -229,28 +234,22 @@ namespace MiyukiSone
 
 		private void PawsWithCost()
 		{
-			if (AllyTeam.Skills.Count == 0) return;
-			var skill = AllyTeam.Skills.Random("MiyukiCost");
-			skill.APChange = MiyukiResult(1);
+			var skill = AllyTeam.Skills.Where(s => s != null).ToList().Random("MiyukiCost");
+			if (skill != null) skill.APChange = MiyukiResult(1, false);
 		}
 
 		private void PawsWithSwift()
 		{
-			if (AllyTeam.Skills.Count == 0) return;
-			var skill = AllyTeam.Skills.FindAll(s => s.NotCount == !MiyukiResult()).ToList().Random("MiyukiSwift");
-			if (skill == null) return;
-			skill.NotCount = MiyukiResult();
+			var skill = AllyTeam.Skills.Where(s => s.NotCount == !MiyukiResult()).ToList().Random("MiyukiSwift");
+			if (skill != null) skill.NotCount = MiyukiResult();
 		}
 
 		private void PawsWithUpgrade()
 		{
-			if (AllyTeam.Skills.Count == 0) return;
-			Skill skill = AllyTeam.Skills.Where(s => s.MySkill.SkillExtended == null).ToList().Random("RandomSkill");
-			if (skill == null) return;
+			Skill skill = AllyTeam.Skills.Where(s => s != null && s.MySkill.SkillExtended == null).ToList().Random("RandomSkill");			
 			List<Skill_Extended> enforce = MiyukiResult() ? PlayData.GetEnforce(true, skill) : PlayData.GetEnforce(false, skill);
-			skill.ExtendedAdd_Battle(enforce.Random("RandomEx"));
+			skill?.ExtendedAdd_Battle(enforce.Random("RandomEx"));
 		}
-
 
 		private void PawsWithDeck()
 		{
@@ -266,12 +265,19 @@ namespace MiyukiSone
 				skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
 			}
 		}
+
+		private IEnumerator PawsWithDraw()
+		{
+			yield return null;
+			BChar.BuffAdd(ModItemKeys.Buff_B_Miyuki_Passive, DummyChar);
+			var buff = BChar.BuffReturn(ModItemKeys.Buff_B_Miyuki_Passive, false) as AffectionOverflow;
+			buff?.ChangeDraw();
+		}
 		#endregion
 
-		// Remove 1 draw and creating character draw instead every turn, or not remove
 		private void CreateCharacterLucyDraw()
 		{
-			if (AvaliableCharacterDraw.Count == 0 || /*Bs.TurnNum == 1*/ LessDraw) return;
+			if (AvaliableCharacterDraw.Count == 0 || !CreateCharacterDraw) return;
 
 			var skill = Skill.TempSkill(AvaliableCharacterDraw.Random("MiyukiCharacterDraw"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
 			AllyTeam.Add(skill, true);

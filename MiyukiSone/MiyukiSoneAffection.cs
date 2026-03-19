@@ -11,7 +11,7 @@ using static MiyukiSone.Utils;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.EventData;
 using static MiyukiSone.Dialogue;
-using static MiyukiSone.Event;
+using static MiyukiSone.EventTurn;
 using UnityEngine.U2D.SpriteShapeClipperLib;
 
 namespace MiyukiSone
@@ -32,10 +32,18 @@ namespace MiyukiSone
 			{
 				if (_currentAffection == null)
 				{
-					int savedValue = MiyukiSaveManager.Instance.CurrentData.Affection;
-					_currentAffection = (MiyukiAffection)savedValue;
+					if (MiyukiSaveManager.Instance.CurrentData.SaveExists)
+					{
+						int savedValue = MiyukiSaveManager.Instance.CurrentData.Affection;
+						_currentAffection = (MiyukiAffection)savedValue;
+					}
+					else
+					{
+						_currentAffection = MiyukiAffection.Kuudere;
+						MiyukiSaveManager.Instance.CurrentData.Affection = (int)MiyukiAffection.Kuudere;
+					}
 				}
-				return _currentAffection ?? MiyukiAffection.Kuudere;
+				return _currentAffection.Value;
 			}
 
 			set
@@ -43,21 +51,26 @@ namespace MiyukiSone
 				if (_currentAffection != value)
 				{
 					_currentAffection = value;
+					MiyukiSaveManager.Instance.CurrentData.Affection = (int)value;
+					MiyukiSaveManager.Instance.Save();
 					CheckIp();
 					Debug.Log($"[Miyuki] Affection changed to: {value}");
 				}
 			}
 		}
 
-		public static int MiyukiResult(int baseValue)
+		public static int MiyukiResult(int baseValue, bool isPositive = true)
 		{
 			if (IsKuudere) return 0;
-			return IsDere ? baseValue : -baseValue;
+
+			// Если isPositive = true: Dere = +value, Yandere = -value
+			// Если isPositive = false: Dere = -value, Yandere = +value (инвертировано)
+			bool shouldBePositive = isPositive ? IsDere : !IsDere;
+			return shouldBePositive ? baseValue : -baseValue;
 		}
 
 		public static bool MiyukiResult() => IsDere;
 		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiDecision", 100, 50);
-		public static bool MiyukiActing => MiyukiDecides && !IsKuudere;
 		public static bool IsDere => CurrentAffection == MiyukiAffection.DereDere;
 		public static bool IsKuudere => CurrentAffection == MiyukiAffection.Kuudere;
 		public static bool IsYandere => CurrentAffection == MiyukiAffection.Yandere;
@@ -83,10 +96,10 @@ namespace MiyukiSone
 			{
 				_currentAffection = GetRandomAffection();
 				MiyukiSaveManager.Instance.CurrentData.Affection = (int)CurrentAffection;
-				if (CurrentAffection == MiyukiAffection.Kuudere) CreateDialogue();
-				else MiyukiAction();
+				CreateDialogue();
 			}
 
+			if (!IsKuudere) MiyukiTurnAction();
 			CheckIp();
 		}
 
@@ -118,11 +131,7 @@ namespace MiyukiSone
 			{
 				foreach (var ex in skill.AllExtendeds)
 				{
-					if (ex is IP_MiyukiSkillImgChange handler)
-					{
-						handler.SkillImgChange(skill);
-					}
-
+					if (ex is IP_MiyukiSkillImgChange handler) handler.SkillImgChange(skill);
 					if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) ex.Init();
 				}
 			}
@@ -136,6 +145,12 @@ namespace MiyukiSone
 					handler.CharImgChange();
 				}
 			}
+
+
+			//var buff = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.Buffs).OfType<Buffs.MiyukiBuff>().ToList();
+			//buff.ForEach(b => b.Init());
+
+			AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff, false) is Buffs.AllyConstantStats b) b.Init(); });
 		}
 	}
 }

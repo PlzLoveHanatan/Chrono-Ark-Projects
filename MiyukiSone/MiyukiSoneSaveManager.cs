@@ -16,12 +16,11 @@ namespace MiyukiSone
 		public class MiyukiSaveData
 		{
 			public int Affection;
-			public int? LockedState; // Храним как int? для сериализации
+			public int? LockedState;
 			public bool GameUpdated;
 			public bool GameRestarted;
 			public bool EternalPromise;
-			//public Dictionary<string, bool> UnlockedSkills;
-			//public List<string> CompletedEvents;
+			public bool SaveExists;
 		}
 
 		public MiyukiSaveData CurrentData => _currentData;
@@ -77,11 +76,22 @@ namespace MiyukiSone
 			}
 		}
 
-		public void ResetSave()
+		public void ResetSave(bool resetAll = false)
 		{
-			_currentData = new MiyukiSaveData();
-			if (File.Exists(SavePath)) File.Delete(SavePath);
-			Debug.Log("[Miyuki] Save reset");
+			if (resetAll)
+			{
+				_currentData = new MiyukiSaveData();
+				if (File.Exists(SavePath)) File.Delete(SavePath);
+			}
+			else
+			{
+				_currentData.Affection = 0;
+				_currentData.LockedState = null;
+				_currentData.GameUpdated = false;
+				_currentData.EternalPromise = false;
+				_currentData.SaveExists = false;
+			}
+			Debug.Log($"[Miyuki] Save reset (resetAll: {resetAll})");
 		}
 	}
 }

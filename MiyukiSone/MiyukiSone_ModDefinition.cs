@@ -30,6 +30,9 @@ namespace MiyukiSone
 		{
 			public void BattleStart(BattleSystem Ins)
 			{
+				PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki && c.Equip != null)?.Equip.OfType<Item_Equip>()
+					.Where(e => e.IsCurse).Select(e => { e.Curse = new EquipCurse(); return e; }).ToList();
+				
 				if (Utils.MiyukiBchar == null)
 				{
 					// add % chance to show Miyuki dialogue

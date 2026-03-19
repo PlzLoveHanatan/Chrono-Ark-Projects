@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone03182026122522</AssemblyName>
+    <AssemblyName>MiyukiSone03202026011145</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,7 +405,7 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                              <!-- Compile ItemGroup Start-->
+                                <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="IP_MiyukiSoneCharImgChange.cs" />
     <Compile Include="IP_MiyukiSoneSkillImgChange.cs" />
@@ -429,14 +429,16 @@
     <Compile Include="MiyukiDialogue\Dialogue.cs" />
     <Compile Include="MiyukiDialogue\DialogueData.cs" />
     <Compile Include="MiyukiDialogue\DialogueDragHandler.cs" />
+    <Compile Include="MiyukiDialogue\DialoguePaws.cs" />
+    <Compile Include="MiyukiDialogue\DialoguePawsDere.cs" />
+    <Compile Include="MiyukiDialogue\DialoguePawsYandere.cs" />
     <Compile Include="MiyukiDialogue\DialogueWindow.cs" />
-    <Compile Include="MiyukiEvent\Event.cs" />
     <Compile Include="MiyukiEvent\EventData.cs" />
-    <Compile Include="MiyukiEvent\EventDere.cs" />
-    <Compile Include="MiyukiEvent\EventDialogue.cs" />
     <Compile Include="MiyukiEvent\EventHelp.cs" />
     <Compile Include="MiyukiEvent\EventRandom.cs" />
-    <Compile Include="MiyukiEvent\EventYandere.cs" />
+    <Compile Include="MiyukiEvent\EventTurn.cs" />
+    <Compile Include="MiyukiEvent\EventTurnDere.cs" />
+    <Compile Include="MiyukiEvent\EventTurnYandere.cs" />
     <Compile Include="MiyukiEvent\MiyukiInputEvent.cs" />
     <Compile Include="MiyukiUtils\Utils.cs" />
     <Compile Include="MiyukiUtils\UtilsScripts.cs" />

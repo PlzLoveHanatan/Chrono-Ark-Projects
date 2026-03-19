@@ -6,15 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
+using NLog.Targets;
 using UnityEngine;
 using static CharacterDocument;
-using static MiyukiSone.Skills.Class;
+using static MiyukiSone.Skills;
 using static MiyukiSone.Utils;
 
 namespace MiyukiSone
 {
 	public static class MiyukiSkillExtension
 	{
+
+		private static readonly Dictionary<string, string> RedirectMap = new Dictionary<string, string>
+		{
+			{ GDEItemKeys.s_targettype_enemy, GDEItemKeys.s_targettype_otherally },
+			{ GDEItemKeys.s_targettype_all_enemy, GDEItemKeys.s_targettype_all_ally },
+			{ GDEItemKeys.s_targettype_ally, GDEItemKeys.s_targettype_enemy },
+			{ GDEItemKeys.s_targettype_all_ally, GDEItemKeys.s_targettype_all_enemy },
+			{ GDEItemKeys.s_targettype_all_allyorenemy, GDEItemKeys.s_targettype_all_ally },
+			{ GDEItemKeys.s_targettype_otherally, GDEItemKeys.s_targettype_enemy },
+			{ GDEItemKeys.s_targettype_enemy_PlusRandom, GDEItemKeys.s_targettype_ally }
+		};
+
 		public static bool IsMiyukiOwner(this Skill skill)
 		{
 			return skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki;
@@ -24,25 +37,25 @@ namespace MiyukiSone
 		{
 			if (Bs == null || UIManager.AllUI.Any(ui => ui.name.Contains("Collection"))) return;
 
-			if (skill.IsMiyukiOwner()) goto statecheck;
+			if (!skill.IsMiyukiOwner())
+			{
+				Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_SacrificedKnowledge, skill.Master, skill.Master.MyTeam);
+				skill.SkillChange(newSkill, false, false, true);
+			}
 			else
 			{
-				Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_SacrificedKnowledge, skill.Master, skill.Master.MyTeam);
-				skill.SkillChange(newSkill, false, false, true);
 				return;
-			}
+				if (state == MiyukiAffection.Yandere)
+				{
+					var targetKey = skill.MySkill.Target.Key;
 
-		statecheck:;
-			if (state == MiyukiAffection.Yandere)
-			{
-				var targetKey = skill.MySkill.Target.Key;
-
-				if (targetKey == GDEItemKeys.s_targettype_enemy) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_otherally);
-				else if (targetKey == GDEItemKeys.s_targettype_all_enemy) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_ally);
-				else if (targetKey == GDEItemKeys.s_targettype_ally) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_enemy);
-				else if (targetKey == GDEItemKeys.s_targettype_all_ally) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_enemy);
-				else if (targetKey == GDEItemKeys.s_targettype_all_allyorenemy) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_ally);
-				else if (targetKey == GDEItemKeys.s_targettype_otherally) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_enemy);
+					if (targetKey == GDEItemKeys.s_targettype_enemy) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_otherally);
+					else if (targetKey == GDEItemKeys.s_targettype_all_enemy) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_ally);
+					else if (targetKey == GDEItemKeys.s_targettype_ally) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_enemy);
+					else if (targetKey == GDEItemKeys.s_targettype_all_ally) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_enemy);
+					else if (targetKey == GDEItemKeys.s_targettype_all_allyorenemy) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_all_ally);
+					else if (targetKey == GDEItemKeys.s_targettype_otherally) skill.MySkill.Target = new GDEs_targettypeData(GDEItemKeys.s_targettype_enemy);
+				}
 			}
 		}
 
@@ -70,10 +83,11 @@ namespace MiyukiSone
 			yield return new WaitForSecondsRealtime(0.2f);
 
 			if (owner.Info.KeyData != ModItemKeys.Character_Miyuki) yield break;
+			if (owner.Info.Passive is MiyukiPassive passive) passive.AvaliableCharacterDraw.Add(ModItemKeys.Skill_S_Miyuki_Draw_MiyukiHelp);
 			if (skill1.MyButton != null && !skill1.MyButton.AlreadyWasted) skill1.Except();
 			if (skill2.MyButton != null && !skill2.MyButton.AlreadyWasted) skill2.Except();
 
-			Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Special_EternalKiss, owner, owner.MyTeam);
+			Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, owner, owner.MyTeam);
 			if (newSkill != null) AllyTeam.Add(newSkill, true);
 			yield break;
 		}

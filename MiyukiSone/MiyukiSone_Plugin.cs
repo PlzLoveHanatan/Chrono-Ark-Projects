@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
@@ -54,6 +54,7 @@ namespace MiyukiSone
 			return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
 		}
 
+		// Reset custom save file
 		[HarmonyPatch(typeof(PlayData))]
 		[HarmonyPatch(nameof(PlayData.GameEndInit))]
 		public class Patch_Reset_Save
@@ -61,8 +62,34 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
-				MiyukiSaveManager.Instance.ResetSave();
-				Debug.Log("Miyuki save file reset coimplete");
+				//MiyukiSaveManager.Instance.ResetSave();
+				//Debug.Log("Miyuki save file reset coimplete");
+			}
+		}
+
+		// Redirect skills in Yandere mood
+		[HarmonyPatch(typeof(BattleAlly))]
+		[HarmonyPatch(nameof(BattleAlly.UseSkill), new Type[] { typeof(Skill), typeof(List<BattleChar>) })]
+		public class Skill_Redirect_Patch
+		{
+			[HarmonyPrefix]
+			public static void Prefix(BattleAlly __instance, Skill skill, ref List<BattleChar> Target)
+			{
+				if (!Affection.IsYandere || skill.Master.Info.KeyData != ModItemKeys.Character_Miyuki || !MiyukiInParty()) return;
+				if (RandomManager.RandomPer("MiyukiYandereRedirect", 100, 70)) return;
+
+				List<BattleChar> possibleTargets = new List<BattleChar>();
+
+				if (skill.IsDamage) possibleTargets = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList();
+				else if (skill.IsHeal) possibleTargets = Utils.EnemyTeam.AliveChars.Where(a => a != null).ToList();
+
+				if (possibleTargets.Count > 0)
+				{
+					BattleChar target = possibleTargets.Random("MiyukiRandomTarget");
+					Target.Clear();
+					Target.Add(target);
+					EventData.MiyukiTextEvent(Affection.CurrentAffection);
+				}
 			}
 		}
 
@@ -108,7 +135,7 @@ namespace MiyukiSone
 
 			private static IEnumerator WaitForSeconds()
 			{
-				yield return new WaitForSeconds(4f);
+				yield return new WaitForSeconds(2.5f);
 				yield return EventRandom.ExitGame();
 			}
 		}

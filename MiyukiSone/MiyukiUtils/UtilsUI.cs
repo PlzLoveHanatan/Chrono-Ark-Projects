@@ -39,10 +39,9 @@ namespace MiyukiSone
 			Debug.Log($"[Miyuki] Loading sprite: {spritePath}");
 			return ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<Sprite>("MiyukiSone", spritePath);
 		}
-
-		public static void GetSpriteByPath(this Image img, string path)
+		public static void GetSpriteByPath(this Image img, string path, bool isFromAsset = true)
 		{
-			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromAsset("MiyukiSone", path);
+			var address = isFromAsset ? ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromAsset("MiyukiSone", path) : ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(path);
 			img.GetSpriteByAddress(address);
 		}
 

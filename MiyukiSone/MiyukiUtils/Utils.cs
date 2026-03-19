@@ -14,7 +14,7 @@ using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
 using static MiyukiSone.Affection;
-using static MiyukiSone.Skills.Class;
+using static MiyukiSone.Skills;
 using static MiyukiSone.UtilsUI;
 
 namespace MiyukiSone
@@ -86,10 +86,10 @@ namespace MiyukiSone
 				"MerryGoRound",
 			};
 
-			if (SaveManager.NowSaveSlot.SoundBGMVolume == 0)
+			if (SaveManager.NowSaveSlot.SoundBGMVolume == 0 || SaveManager.NowSaveSlot.SoundMainVolume == 0)
 			{
 				MiyukiData.BGMVolumeIncreased = true;
-				ChangeBGMVolume(50);
+				ChangeSettingsVolume(40);
 			}
 
 			var availableSongs = songKeys.ToList();
@@ -99,8 +99,9 @@ namespace MiyukiSone
 			PlaySound(availableSongs[randomIndex], true);
 		}
 
-		public static void ChangeBGMVolume(int volume)
+		public static void ChangeSettingsVolume(int volume)
 		{
+			SaveManager.NowSaveSlot.SoundMainVolume = volume;
 			SaveManager.NowSaveSlot.SoundBGMVolume = volume;
 			SaveManager.NowSaveSlot.SaveSoundData();
 			SaveManager.savemanager.OptionApply(false, false);
@@ -128,10 +129,9 @@ namespace MiyukiSone
 			GameObject tempGO = new GameObject("TempAudio");
 			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
 
-			float finalVolume = volumePercent.HasValue ? Mathf.Clamp(volumePercent.Value / 100f, 0f, 2f) : MasterAudio.MasterVolumeLevel;
-
-			audioSource.volume = finalVolume;
-			audioSource.PlayOneShot(clip);
+			//float finalVolume = volumePercent.HasValue ? Mathf.Clamp(volumePercent.Value / 100f, 0f, 2f) : MasterAudio.MasterVolumeLevel;
+			float volume = SaveManager.NowSaveSlot.SoundEffectVolume == 0 ? 1f : SaveManager.NowSaveSlot.SoundEffectVolume / 100;
+			audioSource.PlayOneShot(clip, volume);
 
 			_currentTempGO = tempGO;
 			UnityEngine.Object.Destroy(tempGO, clip.length);
@@ -267,6 +267,38 @@ namespace MiyukiSone
 				UnityEngine.Object obj = UnityEngine.Object.Instantiate(Resources.Load("StoryGlitch/GlitchSkillEffect"), changeFrom.MyButton.transform);
 				UnityEngine.Object.Destroy(obj, time);
 			}
+		}
+
+		public static void CelestialUpgrade(this Skill skill)
+		{
+			if (skill?.Master == null || skill.CharinfoSkilldata?.SKillExtended != null) return;
+
+			List<string> allKeys = new List<string>();
+			GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.SkillExtended, out allKeys);
+
+			List<Skill_Extended> validForParty = new List<Skill_Extended>();
+
+			foreach (string key in allKeys)
+			{
+				GDESkillExtendedData data = new GDESkillExtendedData(key);
+
+				if (!data.Drop || data.Debuff) continue;
+				if (PlayData.TSavedata.Party.Find(c => c.KeyData == data.NeedCharacter) == null) continue;
+
+				Skill_Extended ex = Skill_Extended.DataToExtended(data);
+
+				if (PlayData.Battleallys.SelectMany(bc => bc.Skills).Any(s => ex.CanEnforce(s))) validForParty.Add(ex);
+			}
+
+			if (validForParty.Count == 0) return;
+
+			List<Skill_Extended> validForThisSkill = validForParty.Where(ex => ex.CanEnforce(skill)).ToList();
+
+			if (validForThisSkill.Count == 0) return;
+
+			Skill_Extended selected = validForThisSkill.Random("CelestialUpgrade");
+			skill.CharinfoSkilldata.SKillExtended = selected;
+			skill.ExtendedAdd_Battle(selected);
 		}
 	}
 }

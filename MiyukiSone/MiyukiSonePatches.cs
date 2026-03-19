@@ -66,11 +66,20 @@ namespace MiyukiSone
 		{
 			if (skills == null || skills.Count == 0 || MiyukiSone_Plugin.MiyukiInParty() && IsKuudere) return skills;
 
-			int skillIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, skills.Count);
 			int randomSkill = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? 100 : 10;
 			int randomEx = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? 100 : 25;
-			if (RandomManager.RandomPer("MiyukiReplaceSkill", 100, randomSkill)) ReplaceSkill(skills, skillIndex);
-			if (RandomManager.RandomPer("MiyukiAddExtended", 100, randomEx)) AddExtendedToSkill(skills, skillIndex);
+
+			if (RandomManager.RandomPer("MiyukiReplaceSkill", 100, randomSkill))
+			{
+				int replaceIndex = RandomManager.RandomInt("MiyukiSkillIndex", 0, skills.Count);
+				ReplaceSkill(skills, replaceIndex);
+			}
+
+			if (RandomManager.RandomPer("MiyukiAddExtended", 100, randomEx))
+			{
+				int extendIndex = RandomManager.RandomInt("MiyukiExIndex", 0, skills.Count);
+				AddExtendedToSkill(skills, extendIndex);
+			}
 			return skills;
 		}
 
@@ -83,10 +92,11 @@ namespace MiyukiSone
 				GDEItemKeys.Skill_S_DefultSkill_0,
 				GDEItemKeys.Skill_S_DefultSkill_1,
 				GDEItemKeys.Skill_S_DefultSkill_2,
-				ModItemKeys.Skill_S_SacrificedKnowledge
+				ModItemKeys.Skill_S_Miyuki_Special_SacrificedKnowledge
 			};
 
 			var targetSkill = skills[skillIndex];
+			if (targetSkill.Master.Info.KeyData == ModItemKeys.Character_Miyuki && IsYandere) return;
 			// keep random rare skills ?
 			var skillPoolKeys = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? negSkillKeys : PlayData.ALLRARESKILLLIST.Select(s => s.KeyID).ToList();
 			if (negSkillKeys.Count == 0) return;
@@ -98,17 +108,25 @@ namespace MiyukiSone
 		private static void AddExtendedToSkill(List<Skill> skills, int skillIndex)
 		{
 			var targetSkill = skills[skillIndex];
+			if (targetSkill.Master.Info.KeyData == ModItemKeys.Character_Miyuki && IsYandere) return;
+
 			var skillData = targetSkill?.CharinfoSkilldata;
 
 			if (skillData != null && skillData.SKillExtended == null)
 			{
-				List<Skill_Extended> enforce = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? PlayData.GetEnforce(true, targetSkill) : PlayData.GetEnforce(false, targetSkill);
-				targetSkill.ExtendedAdd_Battle(enforce.Random("Random"));
+				if (MiyukiDecides && !IsYandere)
+				{
+					targetSkill.CelestialUpgrade();
+				}
+				else
+				{
+					List<Skill_Extended> upgrades = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? PlayData.GetEnforce(true, targetSkill) : PlayData.GetEnforce(false, targetSkill);
+					if (upgrades != null && upgrades.Count > 0) targetSkill.ExtendedAdd_Battle(upgrades.Random("RandomUpgrade"));
+				}
 			}
 			else
 			{
-				UnityEngine.Debug.Log("[Miyuki] Cannot add extended: skillData null or already has extended");
-				ReplaceSkill(skills, skillIndex);
+				Debug.Log($"Can't add Extended to skill {targetSkill.MySkill.KeyID}");
 			}
 		}
 
@@ -118,73 +136,107 @@ namespace MiyukiSone
 			return character.SkillDatas?.Any(sd => sd.SkillInfo?.Rare == true) == true;
 		}
 
-		[HarmonyPatch(typeof(MainSceneScript))]
-		[HarmonyPatch("Start")]
-		class Patch_MainMenu_Overlay
-		{
-			[HarmonyPostfix]
-			public static void Postfix(MainSceneScript __instance)
-			{
-				return;
-				// Создаем канвас если нет
-				GameObject canvas = GameObject.Find("MiyukiOverlayCanvas");
-				if (canvas == null)
-				{
-					canvas = new GameObject("MiyukiOverlayCanvas");
-					Canvas cv = canvas.AddComponent<Canvas>();
-					cv.renderMode = RenderMode.ScreenSpaceOverlay;
-					cv.sortingOrder = 999; // поверх всего
+		// Change main BG art
+		//[HarmonyPatch(typeof(MainSceneScript))]
+		//[HarmonyPatch("Start")]
+		//class Patch_MainMenu_Overlay
+		//{
+		//	[HarmonyPostfix]
+		//	public static void Postfix(MainSceneScript __instance)
+		//	{
+		//		return;
+		//		// Создаем канвас если нет
+		//		GameObject canvas = GameObject.Find("MiyukiOverlayCanvas");
+		//		if (canvas == null)
+		//		{
+		//			canvas = new GameObject("MiyukiOverlayCanvas");
+		//			Canvas cv = canvas.AddComponent<Canvas>();
+		//			cv.renderMode = RenderMode.ScreenSpaceOverlay;
+		//			cv.sortingOrder = 999; // поверх всего
 
-					CanvasScaler scaler = canvas.AddComponent<CanvasScaler>();
-					scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+		//			CanvasScaler scaler = canvas.AddComponent<CanvasScaler>();
+		//			scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
-					canvas.AddComponent<GraphicRaycaster>();
-				}
+		//			canvas.AddComponent<GraphicRaycaster>();
+		//		}
 
-				// Создаем Image на весь экран
-				GameObject overlay = new GameObject("MiyukiBackground");
-				overlay.transform.SetParent(canvas.transform, false);
+		//		// Создаем Image на весь экран
+		//		GameObject overlay = new GameObject("MiyukiBackground");
+		//		overlay.transform.SetParent(canvas.transform, false);
 
-				Image img = overlay.AddComponent<Image>();
-				img.raycastTarget = false; // чтобы не блокировать клики
+		//		Image img = overlay.AddComponent<Image>();
+		//		img.raycastTarget = false; // чтобы не блокировать клики
 
-				// Растягиваем на весь экран
-				RectTransform rt = img.GetComponent<RectTransform>();
-				rt.anchorMin = Vector2.zero;
-				rt.anchorMax = Vector2.one;
-				rt.offsetMin = Vector2.zero;
-				rt.offsetMax = Vector2.zero;
+		//		// Растягиваем на весь экран
+		//		RectTransform rt = img.GetComponent<RectTransform>();
+		//		rt.anchorMin = Vector2.zero;
+		//		rt.anchorMax = Vector2.one;
+		//		rt.offsetMin = Vector2.zero;
+		//		rt.offsetMax = Vector2.zero;
 
-				// Загружаем арт
-				Sprite miyukiBg = UtilsUI.GetSprite("MiyukiVisual/Menu/.png");
-				if (miyukiBg != null)
-				{
-					img.sprite = miyukiBg;
-					img.color = Color.white;
-					Debug.Log("[Miyuki] Fullscreen background overlay added");
-				}
-				else
-				{
-					// Если нет арта, делаем розовый фон
-					//img.color = new Color(1f, 0.5f, 0.8f, 0.5f);
-				}
-			}
-		}
+		//		// Загружаем арт
+		//		Sprite miyukiBg = UtilsUI.GetSprite("MiyukiVisual/Menu/.png");
+		//		if (miyukiBg != null)
+		//		{
+		//			img.sprite = miyukiBg;
+		//			img.color = Color.white;
+		//			Debug.Log("[Miyuki] Fullscreen background overlay added");
+		//		}
+		//		else
+		//		{
+		//			// Если нет арта, делаем розовый фон
+		//			//img.color = new Color(1f, 0.5f, 0.8f, 0.5f);
+		//		}
+		//	}
+		//}
 
 		[HarmonyPatch(typeof(MainSceneScript))]
 		[HarmonyPatch("Start")]
 		public static class MainSceneScript_Start_Patch
 		{
+			[HarmonyPrefix]
 			public static bool Prefix(MainSceneScript __instance)
 			{
-				__instance.StartCoroutine(MiyukiStart(__instance));
-				return false;
-
 				if (MiyukiSaveManager.Instance.CurrentData.GameUpdated)
 				{
-
+					__instance.StartCoroutine(MiyukiStart(__instance));
+					return false;
 				}
 				return true;
+			}
+
+			[HarmonyPostfix]
+			public static void Postfix(MainSceneScript __instance)
+			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
+
+				GameObject canvas = GameObject.Find("Canvas");
+				GameObject canvas2 = GameObject.Find("Canvas (2)");
+
+				if (canvas == null) return;
+
+				SetSprite(canvas.transform, "Can/Logo", "MiyukiVisual/Menu/logo.png");
+				SetText(canvas.transform, "Can/PressAnyKey/Text", null, 0, true);
+
+				Transform mainMenu = canvas.transform.Find("MainMenu");
+				if (mainMenu != null)
+				{
+					SetMenuButton(mainMenu, "TextMeshPro Text", "Start Game");
+					SetMenuButton(mainMenu, "TextMeshPro Text (1)", "Options");
+					SetMenuButton(mainMenu, "TextMeshPro Text (4)", "Workshop");
+					SetMenuButton(mainMenu, "TextMeshPro Text (2)", "Credits");
+					SetMenuButton(mainMenu, "Text (TMP)", "Language");
+					SetMenuButton(mainMenu, "TextMeshPro Text (3)", "Exit");
+				}
+
+				if (canvas2 != null)
+				{
+					SetText(canvas2.transform, "TextMeshPro Text", null, 0, true);
+					SetImageColor(canvas2.transform, "SNSAlign/Twitter", new Color(1f, 0.5f, 0.8f));
+					SetImageColor(canvas2.transform, "SNSAlign/Discord", new Color(1f, 0.5f, 0.8f));
+				}
+
+				Debug.Log("[Miyuki] Main menu fully styled!");
 			}
 
 			private static IEnumerator MiyukiStart(MainSceneScript instance)
@@ -193,7 +245,15 @@ namespace MiyukiSone
 				instance.PadOptionObj.SetActive(false);
 				yield return new WaitForFixedUpdate();
 
-				UIManager.inst?.ForceFadeIn();
+				if (UIManager.inst != null)
+				{
+					UIManager.inst.ForceFadeIn();
+				}
+				else
+				{
+					Debug.Log("[Miyuki] UIManager.inst is null, skipping ForceFadeIn");
+				}
+
 
 				instance.SceneFirst.SetActive(false);
 				instance.SceneError.SetActive(false);
@@ -212,29 +272,10 @@ namespace MiyukiSone
 				// skip the song
 
 				instance.Version.text = Application.version;
-				instance.StartCoroutine(instance.StartDelay());
+				instance.StartCoroutine(StartMiyukiDelay(instance));
 				instance.WorkshopObj.SetActive(!GameObject.Find("StovePCSDKManager"));
 
 				yield break;
-			}
-		}
-
-		[HarmonyPatch(typeof(MainSceneScript))]
-		[HarmonyPatch("StartDelay")]
-		public static class MainSceneScript_StartDelay_Patch
-		{
-			public static bool Prefix(MainSceneScript __instance, ref IEnumerator __result)
-			{
-				__result = StartMiyukiDelay(__instance);
-				return false;
-
-				//if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated)
-				//{
-				//	__result = StartMiyukiDelay(__instance);
-				//	return false;
-				//}
-
-				return true;
 			}
 
 			private static IEnumerator StartMiyukiDelay(MainSceneScript instance)
@@ -278,45 +319,6 @@ namespace MiyukiSone
 			}
 		}
 
-		[HarmonyPatch(typeof(MainSceneScript))]
-		[HarmonyPatch("Start")]
-		class Patch_MainMenu
-		{
-			[HarmonyPostfix]
-			public static void Postfix(MainSceneScript __instance)
-			{
-				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
-
-				GameObject canvas = GameObject.Find("Canvas");
-				GameObject canvas2 = GameObject.Find("Canvas (2)");
-
-				if (canvas == null) return;
-
-				SetSprite(canvas.transform, "Can/Logo", "MiyukiVisual/Menu/logo.png");
-				SetText(canvas.transform, "Can/PressAnyKey/Text", null, 0, true);
-
-				Transform mainMenu = canvas.transform.Find("MainMenu");
-				if (mainMenu != null)
-				{
-					SetMenuButton(mainMenu, "TextMeshPro Text", "Start Game");
-					SetMenuButton(mainMenu, "TextMeshPro Text (1)", "Options");
-					SetMenuButton(mainMenu, "TextMeshPro Text (4)", "Workshop");
-					SetMenuButton(mainMenu, "TextMeshPro Text (2)", "Credits");
-					SetMenuButton(mainMenu, "Text (TMP)", "Language");
-					SetMenuButton(mainMenu, "TextMeshPro Text (3)", "Exit");
-				}
-
-				if (canvas2 != null)
-				{
-					SetText(canvas2.transform, "TextMeshPro Text", null, 0, true);
-					SetImageColor(canvas2.transform, "SNSAlign/Twitter", new Color(1f, 0.5f, 0.8f));
-					SetImageColor(canvas2.transform, "SNSAlign/Discord", new Color(1f, 0.5f, 0.8f));
-				}
-
-				Debug.Log("[Miyuki] Main menu fully styled!");
-			}
-		}
-
 		[HarmonyPatch(typeof(PauseWindow))]
 		[HarmonyPatch(nameof(PauseWindow.Start))]
 		class Patch_PauseWindow_Miyuki
@@ -324,9 +326,9 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
 			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				PlaySong();
 				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
-				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetSprite(root, "Back", "MiyukiVisual/Menu/pause.png");
 				SetSprite(root, "Main/Image", "MiyukiVisual/Menu/pause_window.png");
@@ -345,12 +347,13 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
 			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				MasterAudio.StopBus("BGM");
 				MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
 				MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
 				MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
 				MiyukiVisual.Instance.StopParticles();
-				if (MiyukiData.BGMVolumeIncreased) ChangeBGMVolume(0);
+				if (MiyukiData.BGMVolumeIncreased) ChangeSettingsVolume(0);
 			}
 		}
 
@@ -361,6 +364,7 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				PlaySong();
 			}
 		}
@@ -372,11 +376,12 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				MasterAudio.StopBus("BGM");
 				MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
 				MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
 				MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
-				if (MiyukiData.BGMVolumeIncreased) ChangeBGMVolume(0);
+				if (MiyukiData.BGMVolumeIncreased) ChangeSettingsVolume(0);
 
 			}
 		}

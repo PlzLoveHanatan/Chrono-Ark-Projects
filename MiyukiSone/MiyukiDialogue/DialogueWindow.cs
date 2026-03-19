@@ -6,7 +6,6 @@ using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
 using static MiyukiSone.EventData;
 using static MiyukiSone.EventHelp;
-using static MiyukiSone.EventDialogue;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using UnityEngine.EventSystems;
@@ -88,6 +87,7 @@ namespace MiyukiSone
 				if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 				{
 					MiyukiSaveManager.Instance.CurrentData.EternalPromise = true;
+					MiyukiSaveManager.Instance.CurrentData.SaveExists = true;
 					MiyukiSaveManager.Instance.Save();
 				}
 				btn_no = null;
@@ -140,9 +140,6 @@ namespace MiyukiSone
 
 				if (isClicked) return;
 
-				int points = currentDialogueState == DialogueState.kiss ? 5 : 1;
-				int finalPoints = isYesClick ? points : -points;
-
 				switch (currentDialogueState)
 				{
 					case DialogueState.love: ClickLove(isYesClick); break;
@@ -151,7 +148,7 @@ namespace MiyukiSone
 					default: break;
 				}
 
-				if (MiyukiDecides /*&& !isYesClick*/) PawsPrank();
+				DialoguePaws.ChoosePaws();
 
 				if (currentDialogueState == DialogueState.kiss && !isYesClick) return;
 

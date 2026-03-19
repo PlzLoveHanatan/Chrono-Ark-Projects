@@ -54,8 +54,9 @@ namespace MiyukiSone
 
 		private static IEnumerator RestartCurrentStageCo(int stageNum = 0)
 		{
-			BattleSystem.instance.BattleEnd(true, false);
-			FieldSystem.instance.ClearMap();
+			BattleSystem.instance?.BattleEnd(false, false);
+			FieldSystem.instance?.ClearMap();
+
 			string stageKey;
 			stageNum = stageNum == 0 ? Pd.StageNum : stageNum;
 			switch (stageNum)
@@ -68,9 +69,11 @@ namespace MiyukiSone
 				case 5: stageKey = GDEItemKeys.Stage_Stage4; break;
 				default: stageKey = GDEItemKeys.Stage_Stage1_1; break;
 			}
+
 			FieldSystem.instance.StageStart(stageKey);
 			yield return new WaitForSeconds(0.5f);
 			SaveManager.savemanager?.Save();
+
 		}
 
 		private static void RecievingGift()

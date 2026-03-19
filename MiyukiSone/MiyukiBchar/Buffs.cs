@@ -10,51 +10,119 @@ using UnityEngine;
 using static MiyukiSone.EventData;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Utils;
+using UnityEngine.UI;
+using UnityEngine.Experimental.UIElements.StyleEnums;
+using System.Security.Cryptography;
 
 
 namespace MiyukiSone
 {
 	public class Buffs
 	{
-		// Hidden buff
-		public class MiyukiBuff : Buff, IP_DamageChange, IP_DamageTakeChange
+
+		#region Miyuki class buffs
+		public class AffectionOverflow : Buff
 		{
-			// Сhange all taking damage for allies depends on Miyuki current affection
-			public int DamageTakeChange(BattleChar Hit, BattleChar User, int Dmg, bool Cri, bool NODEF = false, bool NOEFFECT = false, bool Preview = false)
+			private MiyukiPassive MiyukiPassive => BChar.Info.Passive as MiyukiPassive;
+
+			public override string DescExtended()
 			{
-				int multiplier = MiyukiResult(15);
-				if (multiplier == 0 || !Hit.Info.Ally) return Dmg;
-				float factor = 1f - (multiplier / 100f);
-				Dmg = (int)(Dmg * factor);
-				return Dmg;
+				string desc = MiyukiPassive.CreateCharacterDraw ? "At the start of turn, draw 1 less skill and create a random Lucy draw skill in hand." : "At the start of the turn, draw the normal amount of skills.";
+				string affection = "Current Affection is: ";
+
+				switch (CurrentAffection)
+				{
+					case MiyukiAffection.DereDere: affection += "DereDere"; break;
+					case MiyukiAffection.Kuudere: affection += "Kuudere"; break;
+					case MiyukiAffection.Yandere: affection += "Yandere"; break;
+					default: break;
+				}
+
+				string text = desc + "\n" + affection + ".";
+				return MiyukiPassive.AvaliableCharacterDraw.Count > 0 ? text + "\n" + base.DescExtended() : text;
 			}
 
-			// Сhange all deal damage for all enemies depends on Miyuki affection
-			public int DamageChange(Skill SkillD, BattleChar Target, int Damage, ref bool Cri, bool View)
+			public override void BuffOneAwake()
 			{
-				int multiplier = MiyukiResult(15);
-				if (multiplier == 0 || !Target.Info.Ally) return Damage;
-				float factor = 1f - (multiplier / 100f);
-				Damage = (int)(Damage * factor);
-				return Damage;
+				if (BuffIcon.GetComponent<Button>() == null)
+				{
+					Button button = BuffIcon.AddComponent<Button>();
+					button.onClick.AddListener(ChangeDrawOnClick);
+				}
+				BattleSystem.instance.StartCoroutine(SetBEDel());
+			}
+
+			private IEnumerator SetBEDel()
+			{
+				yield return new WaitUntil(() => BE != null);
+				BE.transform.localScale = new Vector3(40f, 40f, 1f);
+				BE.transform.localPosition = new Vector3(0f, 150f, 0f);
+				yield break;
+			}
+
+			private void ChangeDrawOnClick()
+			{
+				if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove || MiyukiPassive.AvaliableCharacterDraw.Count == 0) return;
+				ChangeDraw();
+			}
+
+			public void ChangeDraw()
+			{
+				List<Skill> skills = new List<Skill>()
+				{
+					Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Passive_0, BChar, BChar.MyTeam),
+					Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Passive_1, BChar, BChar.MyTeam),
+				};
+
+				BattleSystem.DelayInput(BattleSystem.I_OtherSkillSelect(skills, Selection, "", false, false, true, false, true));
+			}
+
+			private void Selection(SkillButton btn)
+			{
+				MiyukiPassive.CreateCharacterDraw = btn.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Passive_1;
+				ChangeIcon();
+			}
+
+			private void ChangeIcon()
+			{
+				if (!MiyukiPassive.CreateCharacterDraw)
+				{
+					Sprite.GetSpriteByAddress(BuffData.Icon_Path);
+					BE?.gameObject?.SetActive(true);
+				}
+				else
+				{
+					var path = "MiyukiVisual/Misc/OnePin.png";					
+					Sprite.GetSpriteByPath(path, false);
+					BE?.gameObject?.SetActive(false);
+				}
+			}						
+		}
+		#endregion
+
+
+		#region Miyuki misc buffs
+		public class AllyConstantStats : Buff
+		{
+			public override void Init()
+			{
+				PlusStat.DMGTaken = MiyukiResult(-10);
+				PlusPerStat.Damage = MiyukiResult(10);
+				PlusPerStat.Heal = MiyukiResult(10);
+				base.Init();
 			}
 		}
 
-		public class MiyukiBuffEnemy : Buff, IP_PlayerTurn
+		public class EnemyExtraAction : Buff
 		{
 			public override void Init()
 			{
 				BChar.Info.PlusActCount.Add(1);
 				base.Init();
 			}
-
-			public void Turn()
-			{
-				SelfDestroy();
-			}
 		}
 
-		public class MiyukiDebuffAlly : Buff
+		public class AllyDebuff : Buff
 		{
 			public override void Init()
 			{
@@ -62,8 +130,9 @@ namespace MiyukiSone
 				base.Init();
 			}
 		}
+		#endregion
 
-
+		#region Glitching phone buffs
 		public class FixedAbility : Buff, IP_SkillUse_BasicSkill, IP_PlayerTurn
 		{
 			// Pattern Matching
@@ -185,5 +254,6 @@ namespace MiyukiSone
 		{
 			public override bool RecoverySkill => true;
 		}
+		#endregion
 	}
 }
