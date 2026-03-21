@@ -15,7 +15,13 @@ namespace MiyukiSone
 		[Serializable]
 		public class MiyukiSaveData
 		{
-			public int Affection;
+			public int CurrentAffection;
+
+			public int TurnEndTryIndex;
+			public int TurnEndTryCallCount;
+
+			public int KissNoAnswerCount;
+
 			public int? LockedState;
 			public bool GameUpdated;
 			public bool GameRestarted;
@@ -85,7 +91,9 @@ namespace MiyukiSone
 			}
 			else
 			{
-				_currentData.Affection = 0;
+				_currentData.CurrentAffection = 0;
+				_currentData.TurnEndTryIndex = 0;
+				_currentData.TurnEndTryCallCount = 0;
 				_currentData.LockedState = null;
 				_currentData.GameUpdated = false;
 				_currentData.EternalPromise = false;

@@ -16,7 +16,6 @@ namespace MiyukiSone
 {
 	public static class MiyukiSkillExtension
 	{
-
 		private static readonly Dictionary<string, string> RedirectMap = new Dictionary<string, string>
 		{
 			{ GDEItemKeys.s_targettype_enemy, GDEItemKeys.s_targettype_otherally },

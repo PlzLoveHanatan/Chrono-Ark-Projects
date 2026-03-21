@@ -18,23 +18,17 @@ namespace MiyukiSone
 			GainRandomEquip,
 			GainRandomConsumable,
 			GainRandomBook,
-			GainRandomMisc
+			GainRandomMisc,
+			GainRandomScroll,
 		};
 
 		public static void DerePaws()
 		{
-			try
-			{
-				var paws = DereDialoguePawsAction.ToList();
-				if (MiyukiData.LastDereDialoguePaw != -1 && paws.Count > 1) paws.RemoveAt(MiyukiData.LastDereDialoguePaw);
-				int randomIndex = RandomManager.RandomInt("MiyukiDerePaw", 0, paws.Count);
-				paws[randomIndex].Invoke();
-				MiyukiData.LastDereDialoguePaw = randomIndex;
-			}
-			catch (Exception e)
-			{
-				Debug.Log(e.ToString());
-			}
+			var paws = DereDialoguePawsAction.ToList();
+			if (MiyukiData.LastDereDialoguePaw != -1 && paws.Count > 1) paws.RemoveAt(MiyukiData.LastDereDialoguePaw);
+			int randomIndex = RandomManager.RandomInt("MiyukiDerePaw", 0, paws.Count);
+			paws[randomIndex].Invoke();
+			MiyukiData.LastDereDialoguePaw = randomIndex;
 		}
 
 		#region Dere Paws Functions
@@ -84,6 +78,11 @@ namespace MiyukiSone
 		public static void GainRandomMisc()
 		{
 			AddItem(DereMiscKeys.Random("MiyukiRandomMisc"));
+		}
+
+		public static void GainRandomScroll()
+		{
+			AddItem(DereScrollKeys.Random("MiyukiRandomScroll"));
 		}
 		#endregion
 	}

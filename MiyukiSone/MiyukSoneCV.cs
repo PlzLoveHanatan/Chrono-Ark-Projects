@@ -21,11 +21,6 @@
 	public int LastSong = -1;
 	public int LastPose = -1;
 
-
-	// TurnEnd
-	public int CurrentTryType = 0; // 0 = FirstTry, 1 = SecondTry, etc.
-	public int CurrentTryCallCount = 0;
-
 	// Kiss no answer
 	public int CurrentKissNoType = 0;
 	public int KissNoCallCount = 0;

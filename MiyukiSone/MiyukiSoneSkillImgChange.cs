@@ -16,24 +16,12 @@ namespace MiyukiSone
 			public string buttonPath;
 			public string basicPath;
 			public bool useDefault;
-			public List<PointsThreshold> pointsThresholds;
 
 			public SkillImageSet() { }
 		}
 
-		[Serializable]
-		public class PointsThreshold
-		{
-			public int minPoints;
-			public string skillPath;
-			public string buttonPath;
-			public string basicPath;
-			public bool useDefault;
-		}
-
 		private static Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>> _skillImages;
 		private static Dictionary<string, MiyukiAffection> _currentState = new Dictionary<string, MiyukiAffection>();
-		private static Dictionary<string, int> _currentPoints = new Dictionary<string, int>();
 
 		public static Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>> SkillImages
 		{
@@ -83,43 +71,35 @@ namespace MiyukiSone
 
 			if (!SkillImages.TryGetValue(skillID, out var stateMap) || stateMap == null || stateMap.Count == 0) return;
 
-			// Для скилов с thresholds в DereDere
-			if (newState == MiyukiAffection.DereDere && stateMap.TryGetValue(MiyukiAffection.DereDere, out var deredereSet)
-				&& deredereSet.pointsThresholds != null && deredereSet.pointsThresholds.Count > 0) 
+			bool stateChanged;
+			if (_currentState.TryGetValue(skillID, out var oldState))
 			{
-				int currentPoints = 0;
-				var threshold = deredereSet.pointsThresholds.Where(t => currentPoints >= t.minPoints).OrderByDescending(t => t.minPoints).FirstOrDefault();
-
-				if (threshold != null)
-				{
-					// Проверяем изменился ли threshold
-					if (_currentPoints.TryGetValue(skillID, out var lastPoints) && lastPoints == threshold.minPoints) return;
-
-					_currentPoints[skillID] = threshold.minPoints;
-
-					if (threshold.useDefault) skill.ChangeSkillImage(isRestoreImg: true, defaultSkillKey: skillID);
-					else skill.ChangeSkillImage(threshold.skillPath, threshold.buttonPath, threshold.basicPath);
-					return;
-				}
+				stateChanged = oldState != newState;
 			}
-
-			// Для всех остальных случаев (включая DereDere без thresholds)
-			if (_currentState.TryGetValue(skillID, out var currentState) && currentState == newState) return;
+			else
+			{
+				stateChanged = true;
+			}
 
 			var imageSet = FindBestImageSet(stateMap, newState);
 			if (imageSet == null) return;
 
 			_currentState[skillID] = newState;
 
-			if (imageSet.useDefault) skill.ChangeSkillImage(isRestoreImg: true, defaultSkillKey: skillID);
-			else if (!string.IsNullOrEmpty(imageSet.skillPath)) skill.ChangeSkillImage(imageSet.skillPath, imageSet.buttonPath, imageSet.basicPath);
+			if (imageSet.useDefault)
+			{
+				skill.ChangeSkillImage(isRestoreImg: true, defaultSkillKey: skillID, isGlicthEffect: true);
+			}
+			else if (!string.IsNullOrEmpty(imageSet.skillPath))
+			{
+				skill.ChangeSkillImage(imageSet.skillPath, imageSet.buttonPath, imageSet.basicPath, isGlicthEffect: stateChanged);
+			}
 		}
 
 		public static void ReloadConfig()
 		{
 			_skillImages = null;
 			_currentState.Clear();
-			_currentPoints.Clear();
 		}
 	}
 }

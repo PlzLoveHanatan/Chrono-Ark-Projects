@@ -13,12 +13,15 @@ namespace MiyukiSone
 	{
 		private static readonly List<Action> DereTurnActions = new List<Action>()
 		{
-			ChangeGold,
-			ChangeSoulstones,
-			ChangeRelicBarNum,
+			() => ChangeGold(250),
+			() => ChangeSoulstones(1),
+			() => ChangeRelicBarNum(1),
+			() => ChangeInventoryNum(2),
 			ChangeEnemiesActions,
-			ChangeInventoryNum,
-			ChangeSkillUpgrade
+			ChangeSkillUpgrade,
+			ChangeAlliesHp,
+			//KillRandomEnemy,
+			ReviveAllies
 		};
 
 		public static void DereAction()
@@ -28,6 +31,16 @@ namespace MiyukiSone
 			int randomIndex = RandomManager.RandomInt("RandomDereAction", 0, actions.Count);
 			actions[randomIndex].Invoke();
 			MiyukiData.LastDereTurnAction = randomIndex;
+		}
+
+		private static void KillRandomEnemy()
+		{
+			Utils.EnemyTeam.AliveChars.Where(e => e != null && e is BattleEnemy enemy && !enemy.Boss).ToList().Random("RandomEnemy").Dead();
+		}
+
+		private static void ReviveAllies()
+		{
+			AllyTeam.AliveChars.FindAll(a => a.IsDead).Select(a => { a.IsDead = false; return a; }).ToList();
 		}
 	}
 }

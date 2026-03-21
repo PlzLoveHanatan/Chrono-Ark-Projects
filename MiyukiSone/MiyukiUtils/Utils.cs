@@ -13,6 +13,7 @@ using Spine;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
+using static CharacterDocument;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Skills;
 using static MiyukiSone.UtilsUI;
@@ -30,7 +31,7 @@ namespace MiyukiSone
 		public static BattleChar DummyChar => AllyTeam?.DummyChar;
 		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki);
 		public static MiyukCV MiyukiData => GetOrCreateMiyukiData();
-		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
+		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(c => c.KeyData == ModItemKeys.Character_Miyuki);
 		private static GameObject _currentTempGO;
 
 		public static MiyukCV GetOrCreateMiyukiData()
@@ -139,26 +140,63 @@ namespace MiyukiSone
 			Debug.Log($"🎯 Playing audio: {audioPath}");
 		}
 
-		public static void ShowText(string text, bool isEvent)
+		public static void StartMiyukiText(string text)
 		{
-			bool isSoftText = IsDere || IsKuudere;
-			if (string.IsNullOrEmpty(text) || MiyukiBchar.IsDead || MiyukiBchar == null) return;
-			var position = MiyukiBchar.GetTopPos();
-			if (isSoftText) MiyukiBchar.StartCoroutine(TextSoft(position, text));
-			else BattleSystem.DelayInput(TextHard(position, text, isEvent));
+			if (BattleSystem.instance != null) MiyukiTextBattle(text);
+			else if (FieldSystem.instance != null) MiyukiTextField(text);
 		}
 
-		private static IEnumerator TextSoft(Vector3 position, string text)
+		private static void MiyukiTextBattle(string text)
 		{
-			var topText = BattleText.CustomText(position, text);
-			yield return new WaitForSecondsRealtime(3.5f);
-			topText?.End();
+			if (string.IsNullOrEmpty(text) || !MiyukiInParty) return;
+			MiyukiBchar.StartCoroutine(MiyukiTextBattle(MiyukiBchar.GetTopPos(), text));
 		}
 
-		private static IEnumerator TextHard(Vector3 position, string text, bool isEvent)
+		private static IEnumerator MiyukiTextBattle(Vector3 position, string text)
 		{
-			yield return BattleText.InstBattleTextAlly_Co(position, text, isEvent);
-			yield break;
+			BattleText component = Misc.UIInst(UIManager.inst.BattleTalkTextUI, BattleSystem.instance.MainUICanvas.transform).GetComponent<BattleText>();
+			component.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+			component.transform.rotation = GetRandomRotation();
+			component.transform.position = position;
+			component.transform.GetComponent<RectTransform>().localPosition -= GetRandomTextPosition();
+			component.Ptext.TextInput(text);
+			if (MiyukiDecides && MiyukiResult()) BattleSystem.instance.BattleWaitList.Remove(component.gameObject);
+			yield return component.BattleTextOut();
+		}
+
+		private static Quaternion GetRandomRotation()
+		{
+			Quaternion baseRotation = Quaternion.identity;
+			if (MiyukiDecides && MiyukiResult()) return baseRotation;
+			float angle = RandomManager.RandomInt("MiyukiTextRotation", -30, 30);
+			return Quaternion.Euler(0, 0, angle);
+		}
+
+		private static Vector3 GetRandomTextPosition()
+		{
+			Vector3 basePos = new Vector3(150f, 0f, 0f);
+			if (MiyukiDecides && MiyukiResult()) return basePos;
+			float xOffset = RandomManager.RandomInt("MiyukiTextX", -100, 100);
+			float yOffset = RandomManager.RandomInt("MiyukiTextY", -100, 100);
+			return new Vector3(basePos.x + xOffset, basePos.y + yOffset, basePos.z);
+		}
+
+		public static void MiyukiTextField(string text)
+		{
+			if (string.IsNullOrEmpty(text) || !MiyukiInParty) return;
+			AllyWindow window = PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki).GetAllyWindow;
+			if (window != null) FieldSystem.instance.StartCoroutine(MiyukiTextField(window, text));
+			//if (window != null) BattleText.InstFieldText(window, text);
+		}
+
+		private static IEnumerator MiyukiTextField(AllyWindow window, string text)
+		{
+			BattleText component = Misc.UIInst(UIManager.inst.BattleTalkTextUI, window.TextPos).GetComponent<BattleText>();
+			component.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+			component.transform.rotation = GetRandomRotation();
+			component.transform.localPosition += GetRandomTextPosition();
+			component.Ptext.TextInput(text);
+			yield return component.BattleTextOut();
 		}
 
 		public static void ChangeSkillImage(this Skill skill, string skillSpritePath = null, string buttonSpritePath = null, string basicSpritePath = null, string defaultSkillKey = null, bool isRestoreImg = false, bool isGlicthEffect = false)
@@ -294,11 +332,39 @@ namespace MiyukiSone
 
 			List<Skill_Extended> validForThisSkill = validForParty.Where(ex => ex.CanEnforce(skill)).ToList();
 
-			if (validForThisSkill.Count == 0) return;
+			if (validForThisSkill.Count == 0)
+			{
+				skill.NormalUpgrade(true);
+				Debug.Log($"Celestial upgrade is unvaliable, adding the nornal upgrade.");
+			}
+			else
+			{
+				Skill_Extended selected = validForThisSkill.Random("MiyukiCelestialUpgrade");
 
-			Skill_Extended selected = validForThisSkill.Random("CelestialUpgrade");
-			skill.CharinfoSkilldata.SKillExtended = selected;
-			skill.ExtendedAdd_Battle(selected);
+				CharInfoSkillData skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
+				if (skillData != null && skillData.SKillExtended == null)
+				{
+					skillData.SKillExtended = Skill_Extended.DataToExtended(selected.Data.Key);
+					skill.ExtendedAdd_Battle(selected.Data.Key);
+				}
+				else
+				{
+					Debug.Log($"Cannot apply Celestial upgrade");
+				}
+			}
+		}
+
+		public static void NormalUpgrade(this Skill skill, bool posUpgrade)
+		{
+			List<Skill_Extended> upgradeList = PlayData.GetEnforce(posUpgrade, skill);
+			if (upgradeList.Count > 0) skill.ExtendedAdd_Battle(upgradeList.Random("MiyukiRandomUpgrade"));
+
+		}
+
+		public static T Let<T>(this T obj, Action<T> action)
+		{
+			if (obj != null) action(obj);
+			return obj;
 		}
 	}
 }

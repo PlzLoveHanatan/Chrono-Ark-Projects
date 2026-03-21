@@ -23,7 +23,7 @@ using static MiyukiSone.Buffs;
 
 namespace MiyukiSone
 {
-	public class MiyukiPassive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_DrawNumChange, IP_Targeted, IP_TurnEnd, IP_MiyukiCharImgChange
+	public class MiyukiPassive : Passive_Char, IP_PlayerTurn, IP_BattleStart_Ones, IP_DamageTake, IP_DrawNumChange, IP_Targeted, IP_MiyukiCharImgChange
 	{
 		#region Data & Constructors
 		private MiyukiInputEvent chatInputField;
@@ -44,8 +44,8 @@ namespace MiyukiSone
 				PawsWithStandBy,
 				PawsWithCost,
 				PawsWithSwift,
-				PawsWithUpgrade,
-				//PawsWithBlackFog
+				//PawsWithUpgrade,
+				PawsWithBlackFog
 			};
 		}
 
@@ -135,10 +135,9 @@ namespace MiyukiSone
 
 		public void Turn()
 		{
-			AllyTeam.AliveChars.Where(a => a != MiyukiBchar).ToList().ForEach(a => SecureBuff(a, DummyChar, ModItemKeys.Buff_B_Miyuki_Buff));
+			AllyTeam.AliveChars.Where(a => a != MiyukiBchar).ToList().ForEach(a => SecureBuff(a, DummyChar, ModItemKeys.Buff_B_Miyuki_Buff_Ally));
 			SecureBuff(BChar, DummyChar, ModItemKeys.Buff_B_Miyuki_Passive);
 			CreateCharacterLucyDraw();
-
 			if (Bs.TurnNum == 1)
 			{
 				CheckIp();
@@ -182,12 +181,7 @@ namespace MiyukiSone
 		private IEnumerator ShowMiyukiEventText()
 		{
 			yield return null;
-			MiyukiTextEvent(CurrentAffection);
-		}
-
-		public void TurnEnd()
-		{
-			UnlockNextTurnEndTry();
+			MiyukiTextEvent();
 		}
 		#endregion
 
@@ -207,7 +201,7 @@ namespace MiyukiSone
 				MiyukiData.LastTurnPawAction = randomIndex;
 			}
 
-
+			MiyukiTextEvent();
 			//MiyukiHelp:;
 			//CreateDialogue(DialogueState.help);
 		}
@@ -264,6 +258,8 @@ namespace MiyukiSone
 				skill.isExcept = true;
 				skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
 			}
+
+			MiyukiTextEvent();
 		}
 
 		private IEnumerator PawsWithDraw()

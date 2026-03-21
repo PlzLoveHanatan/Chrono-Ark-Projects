@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameDataEditor;
 using UnityEngine;
 
 namespace MiyukiSone
@@ -13,6 +15,8 @@ namespace MiyukiSone
 		{
 			public override void Init()
 			{
+				MySkill.NoExchange = true;
+				MySkill.MySkill.Name = "Glitching " + MySkill.MySkill.Name;
 				base.Init();
 			}
 

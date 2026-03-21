@@ -9,109 +9,159 @@ namespace MiyukiSone
 	{
 		love,
 		kiss,
-		help,
-		//help
 	}
 
 	public static class Dialogue
 	{
-		public static List<GameObject> dialogueWindows = new List<GameObject>();
-		private static string lastSpriteKey = null;
-
-		public static void CreateDialogue(DialogueState? state = null)
-		{
-			int windowCount = RandomManager.RandomPer("MiyukiRandomWindow", 100, 15) ? 2 : 1;
-
-			DialogueState currentState = state ?? DialogueState.love;
-			if (RandomManager.RandomPer("MiyukiRandomKiss", 100, 30)) state = DialogueState.kiss;
-			var sprites = DialogueSprites[currentState];
-			List<string> availableSprites = new List<string>(sprites);
-
-			if (!string.IsNullOrEmpty(lastSpriteKey) && availableSprites.Contains(lastSpriteKey) && availableSprites.Count > 1) availableSprites.Remove(lastSpriteKey);
-
-			int randomSpriteIndex = RandomManager.RandomInt("MiyukiRandomBox", 0, availableSprites.Count);
-			string randomSprite = availableSprites[randomSpriteIndex];
-			if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise) randomSprite = "dlg_eternal_01";
-			lastSpriteKey = randomSprite;
-
-			var transform = BattleSystem.instance.ActWindow.transform;
-			Sprite sprite = UtilsUI.GetSprite("MiyukiVisual/Dialogue/" + randomSprite + ".png");
-			Vector2 size = DialogueSize[currentState];
-			Vector3 position = GetRandomPosition(size, "MiyukiRandomPos");
-
-			GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", transform, sprite, size, position, true);
-			newWindow.AddComponent<DialogueWindow>();
-			newWindow.AddComponent<DialogueDragHandler>();
-			newWindow.GetComponent<DialogueWindow>().currentDialogueState = currentState;
-			newWindow.transform.SetAsLastSibling();
-			dialogueWindows.Add(newWindow);
-
-		}
-
-		public static void RemoveWindow(GameObject window)
-		{
-			Object.Destroy(window);
-			if (dialogueWindows.Contains(window))
-			{
-				dialogueWindows.Remove(window);
-				dialogueWindows.RemoveAll(w => w == null);
-			}
-		}
-
-		private static Vector3 GetRandomPosition(Vector2 size, string randomKey)
-		{
-			RectTransform actWindowRect = BattleSystem.instance.ActWindow.GetComponent<RectTransform>();
-
-			float leftRightPadding = 100f;
-			float topBottomPadding = 100f;
-
-			float minX = -actWindowRect.rect.width / 2 + size.x / 2 + leftRightPadding;
-			float maxX = actWindowRect.rect.width / 2 - size.x / 2 - leftRightPadding;
-			float minY = -actWindowRect.rect.height / 2 + size.y / 2 + topBottomPadding;
-			float maxY = actWindowRect.rect.height / 2 - size.y / 2 - topBottomPadding;
-
-			if (minX > maxX)
-			{
-				float centerX = (minX + maxX) / 2;
-				minX = centerX - 50;
-				maxX = centerX + 50;
-			}
-
-			if (minY > maxY)
-			{
-				float centerY = (minY + maxY) / 2;
-				minY = centerY - 30;
-				maxY = centerY + 30;
-			}
-
-			float randomX = RandomManager.RandomInt(randomKey + "_PosX", (int)minX, (int)maxX);
-			float randomY = RandomManager.RandomInt(randomKey + "_PosY", (int)minY, (int)maxY);
-
-			return new Vector3(randomX, randomY, 0);
-		}
-
+		#region Data & Constructors
 		public static readonly Dictionary<DialogueState, List<string>> DialogueSprites = new Dictionary<DialogueState, List<string>>()
 		{
 			{ DialogueState.love, new List<string> {"dlg_love_01", "dlg_love_02", "dlg_love_03", "dlg_love_04", "dlg_love_05", "dlg_love_06", "dlg_love_07", "dlg_love_08", "dlg_love_09", "dlg_love_010", "dlg_love_011" } },
 			{ DialogueState.kiss, new List<string> { "dlg_kiss_01", "dlg_kiss_02" } },
-			{ DialogueState.help, new List<string> { "dlg_kiss_01", "dlg_kiss_01" } },
 		};
-
 
 		public static readonly Dictionary<DialogueState, Vector2> DialogueSize = new Dictionary<DialogueState, Vector2>()
 		{
-			{ DialogueState.love, new Vector3(700, 168, 0) },
-			{ DialogueState.kiss, new Vector3(700, 168, 0) },
-			{ DialogueState.help, new Vector3(700, 168, 0) },
-			//{ DialogueState.help, new Vector3(0, 90, 0) }
+			{ DialogueState.love, new Vector2(700, 168) },
+			{ DialogueState.kiss, new Vector2(700, 168) },
 		};
 
-		public static readonly Dictionary<DialogueState, Vector3> Dialogueposition = new Dictionary<DialogueState, Vector3>()
+		public static readonly Dictionary<DialogueState, Vector3> DialoguePosition = new Dictionary<DialogueState, Vector3>()
 		{
 			{ DialogueState.love, new Vector3(170, 170, 0) },
 			{ DialogueState.kiss, new Vector3(170, 170, 0) },
-			//{ DialogueState.sex, new Vector3(0, 120, 0) },
-			//{ DialogueState.help, new Vector3(0, 90, 0) }
 		};
+
+		public static List<GameObject> DialogueWindows = new List<GameObject>();
+		private static string LastDialogueSpriteKey = null;
+		private static Canvas DialogueCanvas = null;
+		#endregion
+
+		public static void CreateDialogue()
+		{
+			CreateDialogue(null, 0);
+		}
+
+		public static void CreateDialogue(int amount)
+		{
+			CreateDialogue(null, amount);
+		}
+
+		public static void CreateDialogue(DialogueState? state = null, int amount = 0)
+		{
+			if (Affection.IsKuudere) return;
+
+			if (amount == 0) amount = RandomManager.RandomPer("MiyukiDialogueAmount", 100, 30) ? 2 : 1;
+
+			for (int i = 0; i < amount; i++)
+			{
+				DialogueState finalState = state ?? DialogueState.love;
+				if (RandomManager.RandomPer("MiyukiDialogueKiss", 100, 15)) finalState = DialogueState.kiss;
+
+				string randomSprite;
+				if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
+				{
+					randomSprite = "dlg_eternal_01";
+				}
+				else
+				{
+					List<string> availableSprites = new List<string>(DialogueSprites[finalState]);
+					if (!string.IsNullOrEmpty(LastDialogueSpriteKey) && availableSprites.Contains(LastDialogueSpriteKey) && availableSprites.Count > 1) availableSprites.Remove(LastDialogueSpriteKey);
+					int randomSpriteIndex = RandomManager.RandomInt("MiyukiRandomDialogue", 0, availableSprites.Count);
+					randomSprite = availableSprites[randomSpriteIndex];
+					LastDialogueSpriteKey = randomSprite;
+				}			
+
+				Canvas canvas = GetOrCreateDialogueCanvas();
+				Sprite sprite = UtilsUI.GetSprite("MiyukiVisual/Dialogue/" + randomSprite + ".png");
+				Vector2 size = DialogueSize[finalState];
+				Vector3 position = GetRandomPosition(size);
+				GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", canvas.transform, sprite, size, position, true);
+				newWindow.AddComponent<DialogueWindow>();
+				newWindow.AddComponent<DialogueDragHandler>();
+				newWindow.GetComponent<DialogueWindow>().CurrentDialogueState = finalState;
+				newWindow.transform.SetAsLastSibling();
+				DialogueWindows.Add(newWindow);
+			}
+		}
+
+		public static void RemoveWindow(GameObject window)
+		{
+			if (window != null) Object.Destroy(window);
+			if (DialogueWindows.Contains(window)) DialogueWindows.Remove(window);
+			DialogueWindows.RemoveAll(w => w == null);
+		}
+
+		private static Canvas GetOrCreateDialogueCanvas()
+		{
+			if (DialogueCanvas != null) return DialogueCanvas;
+
+			GameObject canvasObj = GameObject.Find("MiyukiDialogueCanvas");
+			if (canvasObj == null)
+			{
+				canvasObj = new GameObject("MiyukiDialogueCanvas");
+				Object.DontDestroyOnLoad(canvasObj);
+			}
+
+			DialogueCanvas = canvasObj.GetComponent<Canvas>();
+			if (DialogueCanvas == null)
+			{
+				DialogueCanvas = canvasObj.AddComponent<Canvas>();
+				DialogueCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+				DialogueCanvas.sortingOrder = 100;
+
+				canvasObj.AddComponent<UnityEngine.UI.CanvasScaler>();
+				canvasObj.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+			}
+
+			return DialogueCanvas;
+		}
+
+		private static Vector3 GetRandomPosition(Vector2 size)
+		{
+			if (BattleSystem.instance != null && BattleSystem.instance.ActWindow != null)
+			{
+				RectTransform actWindowRect = BattleSystem.instance.ActWindow.GetComponent<RectTransform>();
+
+				float leftRightPadding = 100f;
+				float topBottomPadding = 100f;
+
+				float minX = -actWindowRect.rect.width / 2 + size.x / 2 + leftRightPadding;
+				float maxX = actWindowRect.rect.width / 2 - size.x / 2 - leftRightPadding;
+				float minY = -actWindowRect.rect.height / 2 + size.y / 2 + topBottomPadding;
+				float maxY = actWindowRect.rect.height / 2 - size.y / 2 - topBottomPadding;
+
+				if (minX > maxX)
+				{
+					float centerX = (minX + maxX) / 2;
+					minX = centerX - 50;
+					maxX = centerX + 50;
+				}
+
+				if (minY > maxY)
+				{
+					float centerY = (minY + maxY) / 2;
+					minY = centerY - 30;
+					maxY = centerY + 30;
+				}
+
+				float randomX = RandomManager.RandomInt("MiyukiRandomPosX", (int)minX, (int)maxX);
+				float randomY = RandomManager.RandomInt("MiyukiRandomPosY", (int)minY, (int)maxY);
+
+				return new Vector3(randomX, randomY, 0);
+			}
+			else
+			{
+				float minX = size.x / 2 + 50f;
+				float maxX = Screen.width - size.x / 2 - 50f;
+				float minY = size.y / 2 + 50f;
+				float maxY = Screen.height - size.y / 2 - 50f;
+
+				float randomX = RandomManager.RandomInt("MiyukiRandomPosX", (int)minX, (int)maxX);
+				float randomY = RandomManager.RandomInt("MiyukiRandomPosY", (int)minY, (int)maxY);
+
+				return new Vector3(randomX, randomY, 0);
+			}
+		}
 	}
 }

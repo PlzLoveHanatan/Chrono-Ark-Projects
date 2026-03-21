@@ -12,26 +12,20 @@ using static MiyukiSone.Utils;
 
 namespace MiyukiSone
 {
-	public static class EventRandom
+	public static class EventSpecial
 	{
-		public static void PawWithGame()
+		public static void RestartRun()
 		{
-			Bs.StartCoroutine(PawWithGameCo());
+			Bs.StartCoroutine(RestartRunCo());
 		}
 
-		private static IEnumerator PawWithGameCo()
+		private static IEnumerator RestartRunCo()
 		{
 			yield return new WaitForSeconds(1.5f);
 			UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
-			if (UnityEngine.Random.Range(0, 2) == 1 && Pd.StageNum > 0)
-			{
-				UIManager.inst.StartCoroutine(PauseWindow.RestartCo());
-				PauseWindow.ReturnToMainDel();
-			}
-			else
-			{
-				PauseWindow.QuitGameDel();
-			}
+			UIManager.inst.StartCoroutine(PauseWindow.RestartCo());
+			PauseWindow.ReturnToMainDel();
+
 		}
 
 		public static IEnumerator ExitGame()
@@ -42,17 +36,12 @@ namespace MiyukiSone
 			PauseWindow.QuitGameDel();
 		}
 
-		public static void RestartCurrentRun()
+		public static void RestartStage(int stageNum = 0)
 		{
-			BattleSystem.instance.StartCoroutine(RestartCurrentStageCo(0));
+			BattleSystem.instance.StartCoroutine(RestartStageCo(stageNum));
 		}
 
-		public static void RestartCurrentStage(int stageNum = 0)
-		{
-			BattleSystem.instance.StartCoroutine(RestartCurrentStageCo(stageNum));
-		}
-
-		private static IEnumerator RestartCurrentStageCo(int stageNum = 0)
+		private static IEnumerator RestartStageCo(int stageNum = 0)
 		{
 			BattleSystem.instance?.BattleEnd(false, false);
 			FieldSystem.instance?.ClearMap();

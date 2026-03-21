@@ -13,7 +13,7 @@ namespace MiyukiSone
 	{
 		public static string GetFullPath(string fileName)
 		{
-			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ThisMod.DirectoryName, "Assets", fileName);
+			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ThisMod.DirectoryName, "Assets/JsonData", fileName);
 		}
 
 		public static string LoadJson(string fileName)

@@ -33,39 +33,30 @@ namespace MiyukiSone
 
 			[JsonProperty("Yandere")]
 			public List<EventLine> Yandere { get; set; }
+
+			[JsonProperty("Kuudere")]
+			public List<EventLine> Kuudere { get; set; }
 		}
 
-		private static EventLineData events;
-		private static readonly HashSet<string> usedDereKeys = new HashSet<string>();
-		private static readonly HashSet<string> usedYandereKeys = new HashSet<string>();
+		private static EventLineData Events;
+		private static readonly HashSet<string> UsedDereKeys = new HashSet<string>();
+		private static readonly HashSet<string> UsedYandereKeys = new HashSet<string>();
+		private static readonly HashSet<string> UsedKuudereKeys = new HashSet<string>();
 
-		// ============= МЕТОДЫ ЗАГРУЗКИ =============
 		public static void LoadEvents()
 		{
-			if (events != null)
-			{
-				Debug.Log("События уже загружены, повторная загрузка не нужна.");
-				return;
-			}
+			if (Events != null) return;
 
 			string jsonContent = MiyukiJsonReader.LoadJson("Event.json");
-
-			if (jsonContent == null)
-			{
-				Debug.LogError("Не удалось загрузить Event.json");
-				return;
-			}
+			if (jsonContent == null) return;
 
 			try
 			{
-				events = JsonConvert.DeserializeObject<EventLineData>(jsonContent);
-				int dereCount = events?.Dere?.Count ?? 0;
-				int yandereCount = events?.Yandere?.Count ?? 0;
-				Debug.Log($"События загружены. Dere: {dereCount}, Yandere: {yandereCount}");
+				Events = JsonConvert.DeserializeObject<EventLineData>(jsonContent);
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Ошибка десериализации Event.json: {ex.Message}");
+				Debug.LogError($"[Miyuki] LoadEvents: {ex.Message}");
 			}
 		}
 
@@ -83,23 +74,33 @@ namespace MiyukiSone
 			}
 		}
 
-		// ============= ПОЛУЧЕНИЕ СЛУЧАЙНОЙ СТРОКИ =============
-		private static EventLine GetRandomLine(bool isDere)
+		private static EventLine GetRandomLine(MiyukiAffection affection)
 		{
 			LoadEvents();
 
-			List<EventLine> allLines = isDere ? events?.Dere : events?.Yandere;
-			if (allLines == null || allLines.Count == 0)
+			List<EventLine> allLines = null;
+			HashSet<string> usedKeys = null;
+
+			switch (affection)
 			{
-				Debug.LogError($"Нет фраз для состояния: {(isDere ? "DERE" : "YANDERE")}");
-				return null;
+				case MiyukiAffection.DereDere:
+					allLines = Events?.Dere;
+					usedKeys = UsedDereKeys;
+					break;
+				case MiyukiAffection.Yandere:
+					allLines = Events?.Yandere;
+					usedKeys = UsedYandereKeys;
+					break;
+				case MiyukiAffection.Kuudere:
+					allLines = Events?.Kuudere;
+					usedKeys = UsedKuudereKeys;
+					break;
 			}
 
-			HashSet<string> usedKeys = isDere ? usedDereKeys : usedYandereKeys;
+			if (allLines == null || allLines.Count == 0) return null;
 
 			if (usedKeys.Count >= allLines.Count)
 			{
-				Debug.Log($"Все {(isDere ? "DERE" : "YANDERE")} фразы были показаны. Сбрасываем историю.");
 				usedKeys.Clear();
 			}
 
@@ -118,28 +119,19 @@ namespace MiyukiSone
 			return selectedLine;
 		}
 
-		// ============= ОСНОВНОЙ МЕТОД ДЛЯ ВЫЗОВА =============
-		public static string MiyukiTextEvent(MiyukiAffection? affection = null, bool isEvent = true)
+		public static string MiyukiTextEvent(MiyukiAffection? affection = null)
 		{
-			bool textState = false;
-			if (affection.HasValue == IsDere) textState = true;
+			MiyukiAffection affectionState = affection ?? CurrentAffection;
 
-			var line = GetRandomLine(textState);
+			var line = GetRandomLine(affectionState);
 
-			if (line == null)
-			{
-				Debug.LogError($"Не найдена строка для состояния: {(IsDere ? "DERE" : "YANDERE")}");
-				return null;
-			}
+			if (line == null) return null;
 
 			string text = GetLocalizedLine(line);
-			ShowText(text, isEvent);
+			StartMiyukiText(text);
 
-			Debug.Log($"Event dialog - State: {(IsDere ? "DERE" : "YANDERE")}, Audio: {line.AudioFile}, Key: {line.Key}");
-
-			// Путь к папке с аудио (предполагаю, что файлы лежат в Assets/Events/)
-			string folder = IsDere ? "Dere" : "Yandere";
-			PlaySoundFromAsset($"Assets/Events/{folder}/{line.AudioFile}.ogg", true);
+			string folder = affectionState.ToString();
+			PlaySoundFromAsset($"Assets/Audio/Events/{folder}/{line.AudioFile}.ogg", true);
 
 			return text;
 		}

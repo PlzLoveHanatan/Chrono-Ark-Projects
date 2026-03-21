@@ -62,8 +62,8 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
-				//MiyukiSaveManager.Instance.ResetSave();
-				//Debug.Log("Miyuki save file reset coimplete");
+				MiyukiSaveManager.Instance.ResetSave();
+				Debug.Log("Miyuki save file reset coimplete");
 			}
 		}
 
@@ -93,28 +93,30 @@ namespace MiyukiSone
 			}
 		}
 
-		//[HarmonyPatch(typeof(BattleSystem))]
-		//[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
-		//class Patch_BattleSystem_TurnEnd
-		//{
-		//	[HarmonyPrefix]
-		//	public static bool Prefix()
-		//	{
-		//		if (Dialogue.dialogueWindows.Count > 0)
-		//		{
-		//			foreach (var windowObj in Dialogue.dialogueWindows)
-		//			{
-		//				if (windowObj != null)
-		//				{
-		//					DialogueData.MiyukiTextBoxTurn();
-		//					ChangeAffectionPointsRandom();
-		//				}
-		//			}
-		//			return false;
-		//		}
-		//		return true;
-		//	}
-		//}
+		[HarmonyPatch(typeof(BattleSystem))]
+		[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
+		class Patch_BattleSystem_TurnEnd
+		{
+			[HarmonyPrefix]
+			public static bool Prefix()
+			{
+				if (Dialogue.DialogueWindows.Count > 0)
+				{
+					DialogueData.StartTurnEndDialogue();
+					if (Affection.MiyukiDecides) EventTurn.YandereActionCut();
+;
+					foreach (var windowObj in Dialogue.DialogueWindows)
+					{
+						if (windowObj != null)
+						{
+							
+						}
+					}
+					return false;
+				}
+				return true;
+			}
+		}
 
 		[HarmonyPatch(typeof(FieldSystem))]
 		[HarmonyPatch(nameof(FieldSystem.StageStart))]
@@ -136,7 +138,7 @@ namespace MiyukiSone
 			private static IEnumerator WaitForSeconds()
 			{
 				yield return new WaitForSeconds(2.5f);
-				yield return EventRandom.ExitGame();
+				yield return EventSpecial.ExitGame();
 			}
 		}
 	}

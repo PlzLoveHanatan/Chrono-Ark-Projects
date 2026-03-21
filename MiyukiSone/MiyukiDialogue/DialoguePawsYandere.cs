@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChronoArkMod.ModEditor;
 using GameDataEditor;
 using I2.Loc;
 using MiyukiSone;
@@ -20,24 +21,17 @@ namespace MiyukiSone
 			CreateSkill,
 			AppyEx,
 			ShuffleDeck,
-			CurseEquip,
-			ApplyBuff
+			ApplyBuffEnemy,
+			ApplyBuffAlly,
 		};
 
 		public static void YanderePaws()
 		{
-			try
-			{
-				List<Action> paws = YandereDialoguePawsAction.ToList();
-				if (MiyukiData.LastYandereDialoguePaw != -1 && paws.Count > 1) paws.RemoveAt(MiyukiData.LastYandereDialoguePaw);
-				int randomIndex = RandomManager.RandomInt("MiyukiYanderePaw", 0, paws.Count);
-				paws[randomIndex].Invoke();
-				MiyukiData.LastYandereDialoguePaw = randomIndex;
-			}
-			catch (Exception e)
-			{
-				Debug.Log(e.ToString());
-			}
+			List<Action> paws = YandereDialoguePawsAction.ToList();
+			if (MiyukiData.LastYandereDialoguePaw != -1 && paws.Count > 1) paws.RemoveAt(MiyukiData.LastYandereDialoguePaw);
+			int randomIndex = RandomManager.RandomInt("MiyukiYanderePaw", 0, paws.Count);
+			paws[randomIndex].Invoke();
+			MiyukiData.LastYandereDialoguePaw = randomIndex;
 		}
 
 		#region Yandere Paws Functions
@@ -53,16 +47,9 @@ namespace MiyukiSone
 		{
 			string exKey = YanderePawExKeys.Random("MiyukiRandomExKey");
 			if (string.IsNullOrEmpty(exKey) || AllyTeam.Skills.Count == 0) return;
-			var skill = AllyTeam.Skills.Where(s => s != null && s.ExtendedFind_DataName(exKey) == null).ToList().Random("MiyukiRandomEx");
-			if (skill != null) ApplyExtended(skill, exKey);
+			var skill = AllyTeam.Skills.Where(s => s != null && s.ExtendedFind_DataName(exKey) == null).ToList().Random("MiyukiRandomEx").Let(s => ApplyExtended(s, exKey));
+			//if (skill != null) ApplyExtended(skill, exKey);
 			//AllyTeam.Skills.Where(s => s.ExtendedFind_DataName(exKey) == null && s != null).Select(s => { ApplyExtended(s, exKey); return s; }).ToList();
-		}
-
-		private static void CurseEquip()
-		{
-			PartyInventory.InvenM.InventoryItems.Where(e => e != null).OfType<Item_Equip>().ToList().ForEach(e => e.Curse = EquipCurse.RandomCurse(e));
-			PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki && a.Equip != null)?.SelectMany(c => c.Equip).OfType<Item_Equip>().ToList().ForEach(e => e.Curse = EquipCurse.RandomCurse(e));
-			//PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).SelectMany(c => c.Equip).OfType<Item_Equip>().Select(e => { e.Curse = EquipCurse.RandomCurse(e); return e; }).ToList();
 		}
 
 		private static void ShuffleDeck()
@@ -70,12 +57,13 @@ namespace MiyukiSone
 			if (AllyTeam.Skills_Deck.Count > 0) BattleSystem.DelayInput(ShuffleCo());
 		}
 
-		// Shuffle draw pile into discard pile
+		// Shuffle draw pile into discard pile and apply negative Ex
 		private static IEnumerator ShuffleCo()
 		{
 			while (AllyTeam.Skills_Deck.Count > 0)
 			{
 				Skill skill = AllyTeam.Skills_Deck[0];
+				skill.ExtendedAdd_Battle(NegExtendedKeys.Random("RandomNegativeEx"));
 				yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
 			}
 
@@ -94,24 +82,23 @@ namespace MiyukiSone
 		}
 
 
-		private static void ApplyBuff()
+		public static void ApplyBuffEnemy()
 		{
-			string buffKey = YanderePawBuffKeys.Random("RandomBuff");
+			string buffKey = YanderePawBuffKeysEnemies.Random("RandomBuff");
 			if (string.IsNullOrEmpty(buffKey) || Bs.EnemyTeam.AliveChars.Count == 0) return;
-			Bs.EnemyTeam.AliveChars.Random("RandomEnemy").AddBuff(buffKey);
+			Bs.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().Random("RandomEnemy")?.AddBuff(buffKey);
+		}
+
+		private static void ApplyBuffAlly()
+		{
+			string buffKey = YanderePawBuffKeysAllies.Random("RandomBuff");
+			if (string.IsNullOrEmpty(buffKey) || Bs.EnemyTeam.AliveChars.Count == 0) return;
+			Bs.EnemyTeam.AliveChars.Where(e => e.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly")?.AddBuff(buffKey);
 		}
 
 		private static void ChangeHand()
 		{
 
-		}
-
-		private static void ApplyDebuffs()
-		{
-			HashSet<string> buffkeys = new HashSet<string>()
-			{
-
-			};
 		}
 
 		//private void PawsWithAllies(bool isPositive)
@@ -121,7 +108,7 @@ namespace MiyukiSone
 
 		//}
 
-		
+
 	}
 	#endregion
 }

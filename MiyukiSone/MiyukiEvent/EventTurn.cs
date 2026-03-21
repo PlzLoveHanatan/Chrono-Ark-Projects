@@ -12,6 +12,8 @@ using UnityEngine;
 using I2.Loc;
 using System.IO.Ports;
 using System.Windows.Forms;
+using System.Collections;
+using Spine;
 
 namespace MiyukiSone
 {
@@ -27,75 +29,87 @@ namespace MiyukiSone
 
 		public static void MiyukiTurnAction()
 		{
+			if (!MiyukiDecides) return;
 			(IsDere ? (Action)DereAction : YandereAction)();
 		}
 
 
 		#region Basic Miyuki Actions
-		private static void ChangeGold()
+		private static void ChangeGold(int amount)
 		{
-			Pd._Gold += MiyukiResult(250);
+			Pd._Gold += MiyukiResult(amount);
 		}
 
-		private static void ChangeSoulstones()
+		private static void ChangeSoulstones(int amount)
 		{
-			Pd._Soul += MiyukiResult(1);
+			Pd._Soul += MiyukiResult(amount);
 		}
 
-		private static void ChangeRelicBarNum()
+		private static void ChangeRelicBarNum(int amount)
 		{
 			//for (int i = PlayData.TSavedata.ArkPassivePlus; i < PlayData.TSavedata.ArkPassivePlus + num; i++)
 			//{
 			//	PlayData.TSavedata.Passive_Itembase.Add(null);
 			//}
-			PlayData.TSavedata.ArkPassivePlus += MiyukiResult(1);
+			PlayData.TSavedata.ArkPassivePlus += MiyukiResult(amount);
 			if (UIManager.NowActiveUI is ArkPartsUI) UIManager.NowActiveUI.Delete();
 		}
 
-		private static void ChangeEnemiesActions()
-		{
-			if (IsDere) UtilsScripts.RemoveActions(Utils.EnemyTeam.AliveChars_Vanish);
-			else Utils.EnemyTeam.AliveChars_Vanish.ForEach(e => e.BuffAdd("", DummyChar));
-		}
-
-		private static void ChangeInventoryNum()
+		private static void ChangeInventoryNum(int amount)
 		{
 			if (IsDere)
 			{
-				PartyInventory.InvenM.ChangeMaxInventoryNum(2);
+				PartyInventory.InvenM.ChangeMaxInventoryNum(amount);
 				PartyInventory.InvenM.CreateInven(PartyInventory.InvenM.InventoryItems.Count + 2);
 				PartyInventory.InvenM.ItemUpdateFromInven();
 			}
 			else
 			{
-				PartyInventory.InvenM.ChangeMaxInventoryNum(2);
+				PartyInventory.InvenM.ChangeMaxInventoryNum(amount);
 			}
 		}
 
-		private static void ChangeSkillUpgrade()
+		private static void ChangeEnemiesActions()
 		{
-			var skill = AllyTeam.Skills.Where(s => s.CharinfoSkilldata.SKillExtended == null).ToList().Random();
+			if (IsDere) UtilsScripts.RemoveActions(Utils.EnemyTeam.AliveChars_Vanish);
+			else Utils.EnemyTeam.AliveChars_Vanish.ForEach(e => e.BuffAdd(ModItemKeys.Buff_B_Miyuki_Enemy_ExtraAction, DummyChar));
+		}
+
+		public static void ChangeSkillUpgrade()
+		{
+			var skill = AllyTeam.Skills.Where(s => s != null && s.CharinfoSkilldata.SKillExtended == null && s.MySkill.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && !s.isExcept).ToList().Random();
 			string text = IsDere ? "Select skill to obtain special upgrade" : "Select skill to obtain downgrade";
 			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, ChangeUpgrade, text, false, true, true, false, true));
 		}
 
 		private static void ChangeUpgrade(SkillButton button)
 		{
+			if (IsDere) button.Myskill.CelestialUpgrade();
+			else button.Myskill.NormalUpgrade(true);
+			BattleSystem.DelayInputAfter(UpdateUI());
+		}
+
+		private static IEnumerator UpdateUI()
+		{
+			yield return null;
+			Bs.ActWindow.Draw(AllyTeam, false);
+		}
+
+		private static void ChangeAlliesHp()
+		{
+			int amount = PlayData.TSavedata.StageNum * 4;
 			if (IsDere)
 			{
-				button.Myskill.CelestialUpgrade();
+				AllyTeam.AliveChars.ForEach(a => a.Heal(DummyChar, amount, false));
 			}
 			else
 			{
-				var upgradeList = PlayData.GetEnforce(true, button.Myskill);
-				if (upgradeList.Count > 0)
-				{
-					var selected = upgradeList.Random("MiyukiRandomDowngrade");
-					button.Myskill.CharinfoSkilldata.SKillExtended = selected;
-					button.Myskill.ExtendedAdd_Battle(selected);
-				}
+				bool isPainDamage = AllyTeam.AliveChars.Any(a => a.BuffReturn(GDEItemKeys.Buff_B_Queen_10_T, false) == null);
+				AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().ForEach(a => UtilsScripts.TakeNonLethalDamage(a, amount, isPainDamage));
 			}
+			
 		}
-		#endregion
 	}
+
+	#endregion
 }

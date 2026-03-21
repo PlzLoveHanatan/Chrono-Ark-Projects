@@ -5,7 +5,6 @@ using static MiyukiSone.DialogueData;
 using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
 using static MiyukiSone.EventData;
-using static MiyukiSone.EventHelp;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using UnityEngine.EventSystems;
@@ -13,6 +12,7 @@ using System.Collections;
 using System.Linq;
 using Dialogical;
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace MiyukiSone
 {
@@ -36,9 +36,7 @@ namespace MiyukiSone
 		private const string Btn_No_Sprite = "MiyukiVisual/Dialogue/dlg_btn_no.png";
 		private const string Btn_Kiss_Sprite = "MiyukiVisual/Dialogue/dlg_btn_kiss.png";
 
-		private bool isClicked = false;
-		private int click;
-		public DialogueState currentDialogueState;
+		public DialogueState CurrentDialogueState;
 
 		private void Awake()
 		{
@@ -54,7 +52,7 @@ namespace MiyukiSone
 
 		private void Update()
 		{
-			if (BattleSystem.instance == null) RemoveWindow(gameObject);
+			if (BattleSystem.instance == null && FieldSystem.instance == null) RemoveWindow(gameObject);
 		}
 
 		private void InitializeWindow()
@@ -70,17 +68,15 @@ namespace MiyukiSone
 			Sprite spriteYes = yesButtonSprite ?? UtilsUI.GetSprite(Btn_Yes_Sprite);
 			Sprite spriteNo = noButtonSprite ?? UtilsUI.GetSprite(Btn_No_Sprite);
 
-			if (currentDialogueState == DialogueState.kiss) spriteYes = UtilsUI.GetSprite(Btn_Kiss_Sprite);
+			if (CurrentDialogueState == DialogueState.kiss) spriteYes = UtilsUI.GetSprite(Btn_Kiss_Sprite);
 
-			bool swapBtnPos = RandomManager.RandomPer("MiyukiRandomSwap", 100, 30);
-			bool twoYesButtons = RandomManager.RandomPer("MiyukiRandomDouble", 100, 15);
-
-			Vector2 yesPos = swapBtnPos ? noButtonPosition : yesButtonPosition;
-			Vector2 noPos = swapBtnPos ? yesButtonPosition : noButtonPosition;
+			bool swapButtonsPos = MiyukiDecides;
+			Vector2 yesPos = swapButtonsPos ? noButtonPosition : yesButtonPosition;
+			Vector2 noPos = swapButtonsPos ? yesButtonPosition : noButtonPosition;
 
 			btn_yes = CreateButton("btn_yes", spriteYes, yesPos, OnYesClicked);
 
-			if (twoYesButtons || !MiyukiSaveManager.Instance.CurrentData.EternalPromise)
+			if (RandomManager.RandomPer("MiyukiDoubleButton", 100, 30) || !MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 			{
 				CreateButton("btn_yes2", spriteYes, noPos, OnYesClicked);
 
@@ -122,65 +118,55 @@ namespace MiyukiSone
 		private void OnYesClicked()
 		{
 			ClickHandler(true);
-			Debug.Log("Btn yes clicked");
 		}
 
 		private void OnNoClicked()
 		{
 			ClickHandler(false);
-			Debug.Log("Btn no clicked");
 		}
+
 
 		private void ClickHandler(bool isYesClick)
 		{
-			try
+			if (FieldSystem.instance == null && BattleSystem.instance == null) return;
+
+			if (IsKuudere)
 			{
-				click++;
-				if (click >= 5) RemoveWindow(gameObject);
-
-				if (isClicked) return;
-
-				switch (currentDialogueState)
-				{
-					case DialogueState.love: ClickLove(isYesClick); break;
-					case DialogueState.kiss: ClickKiss(isYesClick); break;
-					case DialogueState.help: ClickHelp(isYesClick); break;
-					default: break;
-				}
-
-				DialoguePaws.ChoosePaws();
-
-				if (currentDialogueState == DialogueState.kiss && !isYesClick) return;
-
-				ClickBonusAction(isYesClick);
-			}
-			catch (Exception e)
-			{
-				Debug.Log(e.ToString());
+				MiyukiTextEvent();
 				RemoveWindow(gameObject);
 			}
+			else if (CurrentDialogueState == DialogueState.love)
+			{
+				DialoguePaws.ChoosePaws();
+				MiyukiTextBoxLove(isYesClick);
+				StartAnimationAndClose(isYesClick);
+			}
+			else if (CurrentDialogueState == DialogueState.kiss)
+			{
+				if (!isYesClick)
+				{
+					CurrentAffection = MiyukiAffection.Yandere;
+					if (MiyukiDecides)
+					{
+						if (BattleSystem.instance != null) (MiyukiDecides ? (Action)DialoguePaws.YanderePaws : EventTurn.YandereAction)();
+						else if (FieldSystem.instance != null/* && MiyukiDecides)*/) EventTurn.YandereActionCut();
+					}
+					StartKissDialogue(false);
+				}
+				else
+				{
+					CurrentAffection = MiyukiAffection.DereDere;
+					if (MiyukiDecides) EventTurn.DereAction();
+					ResetKissNoDialogue();
+					StartKissDialogue(true);
+					StartAnimationAndClose(true);
+				}
+			}
 		}
 
-		private void ClickLove(bool isYes)
+		private void StartAnimationAndClose(bool isYes)
 		{
-			MiyukiTextBoxLove(isYes);
-		}
-
-		private void ClickKiss(bool isYes)
-		{
-			if (isYes) ResetAllKissNo();
-			MiyukiTextBoxKiss(isYes);
-		}
-
-		private void ClickHelp(bool isYes)
-		{
-			MiyukiTextEvent(CurrentAffection); // change to help event
-			if (isYes) MiyukiHelpAction();
-		}
-
-		private void ClickBonusAction(bool isYes)
-		{
-			if (RandomManager.RandomPer("MiyukiRandomAnim", 100, 70))
+			if (RandomManager.RandomPer("MiyukiRandomAnimation", 100, 70))
 			{
 				if (isYes) PlayRandomYesAnimation();
 				else PlayRandomNoAnimation();
@@ -188,10 +174,10 @@ namespace MiyukiSone
 			else
 			{
 				RemoveWindow(gameObject);
-				isClicked = false;
-			}	
+			}
 		}
 
+		#region Animations
 		private void PlayRandomYesAnimation()
 		{
 			var animations = new List<System.Func<IEnumerator>>
@@ -227,7 +213,7 @@ namespace MiyukiSone
 			if (MiyukiData.LastNoBoxAnimation != -1 && available.Count > 1) available.Remove(animations[MiyukiData.LastNoBoxAnimation]);
 			int index = RandomManager.RandomInt("MiyukiNoAnim", 0, available.Count);
 			PlayAnimationAndDestroy(available[index].Invoke());
-			MiyukiData.LastNoBoxAnimation = animations.IndexOf(available[index]);		
+			MiyukiData.LastNoBoxAnimation = animations.IndexOf(available[index]);
 		}
 
 		private void PlayAnimationAndDestroy(IEnumerator animation)
@@ -239,7 +225,6 @@ namespace MiyukiSone
 		{
 			yield return StartCoroutine(animation);
 			RemoveWindow(gameObject);
-			isClicked = false;
 		}
 
 		private IEnumerator FloatUpAndFade(float duration)
@@ -401,5 +386,6 @@ namespace MiyukiSone
 				yield return null;
 			}
 		}
+		#endregion
 	}
 }

@@ -653,7 +653,9 @@ namespace MiyukiSone
 				mySkill.ChangeSkillImg();
 			}
 		}
+		#endregion
 
+		#region Miyuki's Rare Skills
 		public class JustforYOU : MiyukiSkill, IP_MiyukiSkillImgChange
 		{
 			public override bool Terms()
@@ -669,7 +671,7 @@ namespace MiyukiSone
 					if (debuffs.Any()) debuffs.Random("MiyukiRandomDebuff").SelfDestroy();
 				});
 				DialogueState state = DialogueState.love;
-				//Dialogue.CreateDialogue(state);
+				Dialogue.CreateDialogue(state);
 				base.SkillUseSingle(SkillD, Targets);
 			}
 
@@ -678,9 +680,7 @@ namespace MiyukiSone
 				mySkill.ChangeSkillImg();
 			}
 		}
-		#endregion
-
-		#region Miyuki's Rare Skills
+		
 		public class GameUpdate : MiyukiSkill, IP_MiyukiSkillImgChange
 		{
 			public override bool Terms()
@@ -698,10 +698,10 @@ namespace MiyukiSone
 			{
 				var skillData = MyChar.SkillDatas.FirstOrDefault(sd => sd == MySkill.CharinfoSkilldata);
 				if (skillData != null && skillData.SKillExtended == null) skillData.SKillExtended = DataToExtended(GDEItemKeys.SkillExtended_SkillWe_NoExchange);
-				MiyukiSaveManager.Instance.CurrentData.LockedState = (int)CurrentAffection;
+				//MiyukiSaveManager.Instance.CurrentData.LockedState = (int)CurrentAffection;
 				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
 				MiyukiSaveManager.Instance.Save();
-				EventRandom.RestartCurrentStage(PlayData.TSavedata.StageNum);
+				EventSpecial.RestartStage(PlayData.TSavedata.StageNum);
 				base.SkillUseSingle(SkillD, Targets);
 			}
 

@@ -46,113 +46,42 @@ namespace MiyukiSone
 			public bool? IsSpecial { get; set; }
 		}
 
-		private class LoveDialogueData
-		{
-			[JsonProperty("yes")]
-			public List<DialogueLine> Yes { get; set; }
-
-			[JsonProperty("no")]
-			public List<DialogueLine> No { get; set; }
-		}
-
-		private static LoveDialogueData loveDialogues;
-		private static readonly HashSet<string> usedLoveYesKeys = new HashSet<string>();
-		private static readonly HashSet<string> usedLoveNoKeys = new HashSet<string>();
-
-		// ============= KISS =============
-		private class KissDialogueData
-		{
-			[JsonProperty("yes")]
-			public List<DialogueLine> Yes { get; set; }
-
-			[JsonProperty("no")]
-			public Dictionary<string, List<DialogueLine>> No { get; set; }
-		}
-
-		private static KissDialogueData kissDialogues;
-
-		// ============= TURN END =============
-		private static Dictionary<string, List<DialogueLine>> turnDialogues;
-
-		// ============= МЕТОДЫ ЗАГРУЗКИ =============
+		#region Inizialization
 		public static void LoadDialogues()
 		{
-			if (loveDialogues != null && kissDialogues != null && turnDialogues != null)
-			{
-				Debug.Log("Диалоги уже загружены, повторная загрузка не нужна.");
-				return;
-			}
+			if (LoveDialogues != null && KissDialogues != null && TurnEndDialogues != null) return;
 
-			LoadLoveDialogues();
-			LoadKissDialogues();
-			LoadTurnDialogues();
+			try
+			{
+				LoadLoveDialogues();
+				LoadKissDialogues();
+				LoadTurnEndDialogues();
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"[Miyuki] LoadLoveDialogues: {ex.Message}");
+			}
 		}
 
 		private static void LoadLoveDialogues()
 		{
 			string jsonContent = MiyukiJsonReader.LoadJson("DialogueLove.json");
-
-			if (jsonContent == null)
-			{
-				Debug.LogError("Не удалось загрузить DialogueLove.json");
-				return;
-			}
-
-			try
-			{
-				loveDialogues = JsonConvert.DeserializeObject<LoveDialogueData>(jsonContent);
-				int yesCount = loveDialogues?.Yes?.Count ?? 0;
-				int noCount = loveDialogues?.No?.Count ?? 0;
-				Debug.Log($"Диалоги LOVE загружены. Yes: {yesCount}, No: {noCount}");
-			}
-			catch (Exception ex)
-			{
-				Debug.LogError($"Ошибка десериализации DialogueLove.json: {ex.Message}");
-			}
+			if (jsonContent == null) return;
+			LoveDialogues = JsonConvert.DeserializeObject<LoveDialogueData>(jsonContent);
 		}
 
 		private static void LoadKissDialogues()
 		{
 			string jsonContent = MiyukiJsonReader.LoadJson("DialogueKiss.json");
-
-			if (jsonContent == null)
-			{
-				Debug.LogError("Не удалось загрузить DialogueKiss.json");
-				return;
-			}
-
-			try
-			{
-				kissDialogues = JsonConvert.DeserializeObject<KissDialogueData>(jsonContent);
-				int yesCount = kissDialogues?.Yes?.Count ?? 0;
-				int noCategories = kissDialogues?.No?.Count ?? 0;
-				Debug.Log($"Kiss диалоги загружены. Yes: {yesCount}, No категорий: {noCategories}");
-			}
-			catch (Exception ex)
-			{
-				Debug.LogError($"Ошибка десериализации DialogueKiss.json: {ex.Message}");
-			}
+			if (jsonContent == null) return;
+			KissDialogues = JsonConvert.DeserializeObject<KissDialogueData>(jsonContent);
 		}
 
-		private static void LoadTurnDialogues()
+		private static void LoadTurnEndDialogues()
 		{
 			string jsonContent = MiyukiJsonReader.LoadJson("DialogueTurn.json");
-
-			if (jsonContent == null)
-			{
-				Debug.LogError("Не удалось загрузить DialogueTurn.json");
-				return;
-			}
-
-			try
-			{
-				turnDialogues = JsonConvert.DeserializeObject<Dictionary<string, List<DialogueLine>>>(jsonContent);
-				Debug.Log($"Turn диалоги загружены. Найдено типов: {turnDialogues?.Count ?? 0}");
-			}
-			catch (Exception ex)
-			{
-				Debug.LogError($"Ошибка десериализации DialogueTurn.json: {ex.Message}");
-			}
+			if (jsonContent == null) return;
+			TurnEndDialogues = JsonConvert.DeserializeObject<Dictionary<string, List<DialogueLine>>>(jsonContent);
 		}
 
 		private static string GetLocalizedLine(DialogueLine line)
@@ -168,14 +97,28 @@ namespace MiyukiSone
 				default: return line.English;
 			}
 		}
+		#endregion
 
-		// ============= LOVE =============
+		#region Dialogue Love
+		private class LoveDialogueData
+		{
+			[JsonProperty("yes")]
+			public List<DialogueLine> Yes { get; set; }
+
+			[JsonProperty("no")]
+			public List<DialogueLine> No { get; set; }
+		}
+
+		private static LoveDialogueData LoveDialogues;
+		private static readonly HashSet<string> UsedLoveYesKeys = new HashSet<string>();
+		private static readonly HashSet<string> UsedLoveNoKeys = new HashSet<string>();
+
 		private static DialogueLine GetRandomLoveLine(bool isYes)
 		{
-			List<DialogueLine> allLines = isYes ? loveDialogues?.Yes : loveDialogues?.No;
+			List<DialogueLine> allLines = isYes ? LoveDialogues?.Yes : LoveDialogues?.No;
 			if (allLines == null || allLines.Count == 0) return null;
 
-			HashSet<string> usedKeys = isYes ? usedLoveYesKeys : usedLoveNoKeys;
+			HashSet<string> usedKeys = isYes ? UsedLoveYesKeys : UsedLoveNoKeys;
 
 			if (usedKeys.Count >= allLines.Count)
 			{
@@ -198,7 +141,7 @@ namespace MiyukiSone
 			return selectedLine;
 		}
 
-		public static void MiyukiTextBoxLove(bool isYes, bool isEvent = true)
+		public static void MiyukiTextBoxLove(bool isYes)
 		{
 			var line = GetRandomLoveLine(isYes);
 			if (line == null)
@@ -208,13 +151,24 @@ namespace MiyukiSone
 			}
 
 			string text = GetLocalizedLine(line);
-			ShowText(text, isEvent);
+			StartMiyukiText(text);
 			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
-			PlaySoundFromAsset($"Assets/Dialogue/Love/{line.AudioFile}.ogg", true);
+			PlaySoundFromAsset($"Assets/Audio/Dialogue/Love/{line.AudioFile}.ogg", true);
+		}
+		#endregion
+
+		#region Dialogue Kiss
+		private class KissDialogueData
+		{
+			[JsonProperty("yes")]
+			public List<DialogueLine> Yes { get; set; }
+
+			[JsonProperty("no")]
+			public Dictionary<string, List<DialogueLine>> No { get; set; }
 		}
 
-		// ============= KISS =============
-		private static string GetKissNoKeyFromType(TryType tryType)
+		private static KissDialogueData KissDialogues;
+		private static string GetKissNoKey(TryType tryType)
 		{
 			switch (tryType)
 			{
@@ -233,25 +187,13 @@ namespace MiyukiSone
 			}
 		}
 
-		// Конвертеры для работы с int из MiyukiCV
-		private static TryType IntToTryType(int value)
+		private static TryType CurrentKissTry
 		{
-			return (TryType)value;
+			get => (TryType)MiyukiData.CurrentKissNoType;
+			set => MiyukiData.CurrentKissNoType = (int)value;
 		}
 
-		private static int TryTypeToInt(TryType type)
-		{
-			return (int)type;
-		}
-
-		// Свойства для работы с MiyukiCV
-		private static TryType CurrentKissNoType
-		{
-			get => IntToTryType(MiyukiData.CurrentKissNoType);
-			set => MiyukiData.CurrentKissNoType = TryTypeToInt(value);
-		}
-
-		private static int KissNoCallCount
+		private static int KissTryCount
 		{
 			get => MiyukiData.KissNoCallCount;
 			set => MiyukiData.KissNoCallCount = value;
@@ -259,118 +201,63 @@ namespace MiyukiSone
 
 		private static DialogueLine GetRandomKissYesLine()
 		{
-			if (kissDialogues?.Yes == null || kissDialogues.Yes.Count == 0)
-			{
-				Debug.LogError("Нет Yes фраз для Kiss диалогов");
-				return null;
-			}
-
-			int index = UnityEngine.Random.Range(0, kissDialogues.Yes.Count);
-			var selectedLine = kissDialogues.Yes[index];
-
-			if (selectedLine.IsSpecial == true)
-			{
-				Debug.Log($"Выбрана особенная Yes фраза: {selectedLine.Key}");
-			}
-
-			return selectedLine;
+			if (KissDialogues?.Yes == null || KissDialogues.Yes.Count == 0) return null;
+			int index = RandomManager.RandomInt("MiyukiKissAnswer", 0, KissDialogues.Yes.Count);
+			return KissDialogues.Yes[index];
 		}
 
 		private static DialogueLine GetCurrentKissNoLine()
 		{
-			if (kissDialogues?.No == null)
-			{
-				Debug.LogError("Kiss диалоги не загружены или нет No секции");
-				return null;
-			}
+			if (KissDialogues?.No == null) return null;
 
-			TryType currentType = CurrentKissNoType;
-			string tryKey = GetKissNoKeyFromType(currentType);
-
-			if (!kissDialogues.No.TryGetValue(tryKey, out List<DialogueLine> phrases) || phrases == null || phrases.Count == 0)
-			{
-				Debug.LogError($"Нет No фраз для типа {currentType} (ключ: {tryKey})");
-				return null;
-			}
-
-			KissNoCallCount++;
-
-			int phraseIndex = KissNoCallCount == 1 ? 0 : (phrases.Count > 1 ? 1 : 0);
-
-			if (phraseIndex >= phrases.Count)
-			{
-				Debug.LogError($"Для типа {currentType} нет фразы с индексом {phraseIndex}");
-				return null;
-			}
-
-			return phrases[phraseIndex];
+			string key = GetKissNoKey(CurrentKissTry);
+			if (!KissDialogues.No.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
+			int index = (KissTryCount == 0) ? 0 : (phrases.Count > 1 ? 1 : 0);
+			return index < phrases.Count ? phrases[index] : null;
 		}
 
-		public static void MiyukiTextBoxKiss(bool isYes, bool isEvent = true)
+		public static void StartKissDialogue(bool isYes)
 		{
-			DialogueLine line;
-			if (isYes)
-			{
-				line = GetRandomKissYesLine();
-				if (line == null)
-				{
-					Debug.LogError("Не найдена Yes фраза для Kiss диалога");
-					return;
-				}
-				Debug.Log($"Kiss Yes dialog - Audio: {line.AudioFile}, Key: {line.Key}, isSpecial: {line.IsSpecial}");
+			DialogueLine line = isYes ? GetRandomKissYesLine() : GetCurrentKissNoLine();
+			if (line == null) return;
 
-				PlaySoundFromAsset($"Assets/Dialogue/Kiss/{line.AudioFile}.ogg", true);
-			}
-			else
-			{
-				line = GetCurrentKissNoLine();
-				if (line == null)
-				{
-					Debug.LogError("Не найдена No фраза для Kiss диалога");
-					return;
-				}
-				Debug.Log($"Kiss No dialog - Type: {CurrentKissNoType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {KissNoCallCount}");
+			StartMiyukiText(GetLocalizedLine(line));
+			PlaySoundFromAsset($"Assets/Audio/Dialogue/Kiss/{line.AudioFile}.ogg", true);
 
-				PlaySoundFromAsset($"Assets/Dialogue/Kiss/{line.AudioFile}.ogg", true);
-
-				if (KissNoCallCount == 2)
-				{
-					UnlockNextKissNo();
-				}
-			}
-
-			string text = GetLocalizedLine(line);
-			ShowText(text, isEvent);
+			if (!isYes) AdvanceKissNoDialogue();
 		}
 
-		public static void UnlockNextKissNo()
+		public static void AdvanceKissNoDialogue()
 		{
-			if (CurrentKissNoType == TryType.EleventhTry && KissNoCallCount > 1)
+			KissTryCount++;
+
+			if (CurrentKissTry == TryType.EleventhTry && KissTryCount >= 2)
 			{
-				EventRandom.PawWithGame();
-				Debug.Log("Достигнут последний No тип для Kiss (EleventhTry). Нельзя разблокировать дальше");
-				return;
+				//MiyukiSaveManager.Instance.CurrentData.LockedState = RandomManager.RandomInt("MiyukiRandomAffection", 1, 3);
+				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
+				MiyukiSaveManager.Instance.Save();
+				EventSpecial.RestartRun();
+
+				if (DialogueWindows.Count > 0) DialogueWindows.Where(obj => obj != null).ToList().ForEach(RemoveWindow);
 			}
-
-			CurrentKissNoType = CurrentKissNoType + 1;
-			KissNoCallCount = 0;
-			Debug.Log($"Разблокирован новый No тип для Kiss: {CurrentKissNoType}");
+			else if (KissTryCount == 2)
+			{
+				CurrentKissTry++;
+				KissTryCount = 0;
+			}
 		}
 
-		public static TryType GetCurrentKissNoType()
+		public static void ResetKissNoDialogue()
 		{
-			return CurrentKissNoType;
+			CurrentKissTry = TryType.FirstTry;
+			KissTryCount = 0;
 		}
+		#endregion
 
-		public static void ResetAllKissNo()
-		{
-			CurrentKissNoType = TryType.FirstTry;
-			KissNoCallCount = 0;
-			Debug.Log("Все Kiss No диалоги сброшены. Начинаем с FirstTry");
-		}
+		#region Turn End Dialogue
+		private static Dictionary<string, List<DialogueLine>> TurnEndDialogues;
 
-		// ============= TURN END =============
-		private static string GetTurnKeyFromType(TryType tryType)
+		private static string GetTryKey(TryType tryType)
 		{
 			switch (tryType)
 			{
@@ -389,88 +276,57 @@ namespace MiyukiSone
 			}
 		}
 
-		// Свойства для Turn
-		private static TryType CurrentTryType
+		private static TryType CurrentTry
 		{
-			get => IntToTryType(MiyukiData.CurrentTryType);
-			set => MiyukiData.CurrentTryType = TryTypeToInt(value);
+			get => (TryType)MiyukiSaveManager.Instance.CurrentData.TurnEndTryIndex;
+			set => MiyukiSaveManager.Instance.CurrentData.TurnEndTryIndex = (int)value;
 		}
 
-		private static int CurrentTryCallCount
+		private static int TryCount
 		{
-			get => MiyukiData.CurrentTryCallCount;
-			set => MiyukiData.CurrentTryCallCount = value;
+			get => MiyukiSaveManager.Instance.CurrentData.TurnEndTryCallCount;
+			set => MiyukiSaveManager.Instance.CurrentData.TurnEndTryCallCount = value;
 		}
 
-		private static DialogueLine GetCurrentTurnLine()
+		private static DialogueLine GetCurrentTurnEndLine()
 		{
-			if (turnDialogues == null)
+			if (TurnEndDialogues == null) return null;
+			string key = GetTryKey(CurrentTry);
+			if (!TurnEndDialogues.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
+			int index = CurrentTry == TryType.EleventhTry ? 0 : TryCount;
+			return index < phrases.Count ? phrases[index] : null;
+		}
+
+		public static void StartTurnEndDialogue()
+		{
+			var line = GetCurrentTurnEndLine();
+			if (line == null) return;
+
+			StartMiyukiText(GetLocalizedLine(line));
+			PlaySoundFromAsset($"Assets/Audio/Dialogue/Turn/{line.AudioFile}.ogg", true);
+			AdvanceTurnEndDialogue();
+		}
+
+		public static void AdvanceTurnEndDialogue()
+		{
+			if (CurrentTry == TryType.EleventhTry) return;
+
+			TryCount++;
+
+			if (TryCount == 2)
 			{
-				Debug.LogError("Turn диалоги не загружены");
-				return null;
+				CurrentTry++;
+				TryCount = 0;
 			}
-
-			TryType currentType = CurrentTryType;
-			string tryKey = GetTurnKeyFromType(currentType);
-
-			if (!turnDialogues.TryGetValue(tryKey, out List<DialogueLine> phrases) || phrases == null || phrases.Count == 0)
-			{
-				Debug.LogError($"Нет фраз для типа {currentType} (ключ: {tryKey})");
-				return null;
-			}
-
-			CurrentTryCallCount++;
-
-			int phraseIndex = currentType == TryType.EleventhTry ? 0 : (CurrentTryCallCount == 1 ? 0 : 1);
-
-			if (phraseIndex >= phrases.Count)
-			{
-				Debug.LogError($"Для типа {currentType} нет фразы с индексом {phraseIndex}");
-				return null;
-			}
-
-			return phrases[phraseIndex];
+			MiyukiSaveManager.Instance.Save();
 		}
 
-		public static void MiyukiTextBoxTurn(bool isEvent = true)
+		public static void ResetTurnEnd()
 		{
-			var line = GetCurrentTurnLine();
-			if (line == null)
-			{
-				Debug.LogError($"Не найдена строка для текущего Turn диалога: {CurrentTryType}");
-				return;
-			}
-
-			string text = GetLocalizedLine(line);
-			ShowText(text, isEvent);
-			Debug.Log($"Turn dialog - Type: {CurrentTryType}, Audio: {line.AudioFile}, Key: {line.Key}, Call count: {CurrentTryCallCount}");
-
-			PlaySoundFromAsset($"Assets/Dialogue/Turn/{line.AudioFile}.ogg", true);
-		}
-
-		public static void UnlockNextTurnEndTry()
-		{
-			if (CurrentTryType == TryType.EleventhTry || CurrentTryCallCount == 1 || CurrentTryCallCount == 0)
-			{
-				Debug.Log("Достигнут последний тип (EleventhTry). Нельзя разблокировать дальше");
-				return;
-			}
-
-			CurrentTryType = CurrentTryType + 1;
-			CurrentTryCallCount = 0;
-			Debug.Log($"Разблокирован новый тип Turn: {CurrentTryType}");
-		}
-
-		public static TryType GetCurrentTryType()
-		{
-			return CurrentTryType;
-		}
-
-		public static void ResetAllTries()
-		{
-			CurrentTryType = TryType.FirstTry;
-			CurrentTryCallCount = 0;
-			Debug.Log("Все Try диалоги сброшены. Начинаем с FirstTry");
+			CurrentTry = 0;
+			TryCount = 0;
 		}
 	}
+
+	#endregion
 }

@@ -3,20 +3,16 @@ namespace MiyukiSone
 {
     public static class ModItemKeys
     {
-		/// <summary>
-		/// Miyuki Buff
-		/// </summary>
-        public static string Buff_B_Miyuki_Buff = "B_Miyuki_Buff";
-		/// <summary>
-		/// Buff Enemy
-		/// Gain 1 action count. Removed at the start of the next turn.
-		/// </summary>
-        public static string Buff_B_Miyuki_Buff_Enemy = "B_Miyuki_Buff_Enemy";
         public static string Buff_B_Miyuki_CloseRangeShot = "B_Miyuki_CloseRangeShot";
 		/// <summary>
 		/// Debuff Ally
 		/// </summary>
         public static string Buff_B_Miyuki_Debuff_Ally = "B_Miyuki_Debuff_Ally";
+		/// <summary>
+		/// Extra Action
+		/// Gain 1 action count.
+		/// </summary>
+        public static string Buff_B_Miyuki_Enemy_ExtraAction = "B_Miyuki_Enemy_ExtraAction";
 		/// <summary>
 		/// Miyuki's Might
 		/// </summary>
@@ -179,6 +175,10 @@ namespace MiyukiSone
 		/// If the target has 'Identified!' debuff, apply 'Receive 40% increased damage on the next attack' (130%<sprite=0>) debuff on the target.
 		/// </summary>
         public static string Skill_S_Miyuki_WarningStrike = "S_Miyuki_WarningStrike";
+		/// <summary>
+		/// Miyuki Buff
+		/// </summary>
+        public static string Buff_B_Miyuki_Buff_Ally = "B_Miyuki_Buff_Ally";
 
     }
 

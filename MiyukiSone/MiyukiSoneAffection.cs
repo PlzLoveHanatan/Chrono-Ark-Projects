@@ -18,8 +18,8 @@ namespace MiyukiSone
 {
 	public enum MiyukiAffection
 	{
-		DereDere,
 		Kuudere,
+		DereDere,
 		Yandere
 	}
 
@@ -30,17 +30,21 @@ namespace MiyukiSone
 		{
 			get
 			{
+				if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue)
+				{
+					return (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
+				}
+
 				if (_currentAffection == null)
 				{
 					if (MiyukiSaveManager.Instance.CurrentData.SaveExists)
 					{
-						int savedValue = MiyukiSaveManager.Instance.CurrentData.Affection;
+						int savedValue = MiyukiSaveManager.Instance.CurrentData.CurrentAffection;
 						_currentAffection = (MiyukiAffection)savedValue;
 					}
 					else
 					{
 						_currentAffection = MiyukiAffection.Kuudere;
-						MiyukiSaveManager.Instance.CurrentData.Affection = (int)MiyukiAffection.Kuudere;
 					}
 				}
 				return _currentAffection.Value;
@@ -51,7 +55,7 @@ namespace MiyukiSone
 				if (_currentAffection != value)
 				{
 					_currentAffection = value;
-					MiyukiSaveManager.Instance.CurrentData.Affection = (int)value;
+					MiyukiSaveManager.Instance.CurrentData.CurrentAffection = (int)value;
 					MiyukiSaveManager.Instance.Save();
 					CheckIp();
 					Debug.Log($"[Miyuki] Affection changed to: {value}");
@@ -84,22 +88,21 @@ namespace MiyukiSone
 
 		public static void MiyukiTurn()
 		{
-			//CreateDialogue(); return;
-
 			if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 			{
-				CreateDialogue();
+				CreateDialogue(DialogueState.love, 1);
 				return;
 			}
 
 			if (MiyukiDecides)
 			{
 				_currentAffection = GetRandomAffection();
-				MiyukiSaveManager.Instance.CurrentData.Affection = (int)CurrentAffection;
+				MiyukiSaveManager.Instance.CurrentData.CurrentAffection = (int)CurrentAffection;
 				CreateDialogue();
 			}
 
 			if (!IsKuudere) MiyukiTurnAction();
+
 			CheckIp();
 		}
 
@@ -117,7 +120,7 @@ namespace MiyukiSone
 
 			int lastIndex = MiyukiData.LastAffection;
 			if (lastIndex != -1 && availableIndices.Count > 1) availableIndices.Remove(lastIndex);
-			int randomIndex = RandomManager.RandomInt("MiyukiRandom", 0, availableIndices.Count);
+			int randomIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, availableIndices.Count);
 			int selectedIndex = availableIndices[randomIndex];
 			MiyukiData.LastAffection = selectedIndex;
 			return (MiyukiAffection)values.GetValue(selectedIndex);
@@ -139,18 +142,14 @@ namespace MiyukiSone
 			foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
 			{
 				Passive_Char passive = battleChar.Info.Passive;
-
-				if (passive != null && passive is IP_MiyukiCharImgChange handler)
-				{
-					handler.CharImgChange();
-				}
+				if (passive != null && passive is IP_MiyukiCharImgChange handler) handler.CharImgChange();
 			}
 
 
 			//var buff = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.Buffs).OfType<Buffs.MiyukiBuff>().ToList();
 			//buff.ForEach(b => b.Init());
 
-			AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff, false) is Buffs.AllyConstantStats b) b.Init(); });
+			AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff_Ally, false) is Buffs.AllyConstantStats b) b.Init(); });
 		}
 	}
 }
