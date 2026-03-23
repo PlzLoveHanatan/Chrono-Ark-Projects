@@ -87,11 +87,7 @@ namespace MiyukiSone
 				"MerryGoRound",
 			};
 
-			if (SaveManager.NowSaveSlot.SoundBGMVolume == 0 || SaveManager.NowSaveSlot.SoundMainVolume == 0)
-			{
-				MiyukiData.BGMVolumeIncreased = true;
-				ChangeSettingsVolume(40);
-			}
+			CheckSettingsVolume();
 
 			var availableSongs = songKeys.ToList();
 			if (MiyukiData.LastSong != -1 && availableSongs.Count > 1) availableSongs.RemoveAt(MiyukiData.LastSong);
@@ -100,13 +96,71 @@ namespace MiyukiSone
 			PlaySound(availableSongs[randomIndex], true);
 		}
 
-		public static void ChangeSettingsVolume(int volume)
+		public static void StopSong(bool ?isPauseBool = null)
 		{
-			SaveManager.NowSaveSlot.SoundMainVolume = volume;
-			SaveManager.NowSaveSlot.SoundBGMVolume = volume;
+			MasterAudio.StopBus("BGM");
+			MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
+			MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
+			MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
+			if (isPauseBool.HasValue) MiyukiData.PauseOpen = isPauseBool.Value;
+		}
+
+		public static void CheckSettingsVolume()
+		{
+			if (SaveManager.NowSaveSlot.SoundBGMVolume != 0 && SaveManager.NowSaveSlot.SoundMainVolume != 0) return;
+
+			if (!MiyukiData.BGMVolumeIncreased)
+			{
+				MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain = SaveManager.NowSaveSlot.SoundMainVolume;
+				MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM = SaveManager.NowSaveSlot.SoundBGMVolume;
+				MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect = SaveManager.NowSaveSlot.SoundEffectVolume;
+				MiyukiSaveManager.Instance.Save();
+				SaveManager.NowSaveSlot.SoundMainVolume = 40;
+				SaveManager.NowSaveSlot.SoundBGMVolume = 40;
+				SaveManager.NowSaveSlot.SoundEffectVolume = 40;
+				MiyukiData.BGMVolumeIncreased = true;
+			}
+			else
+			{
+				SaveManager.NowSaveSlot.SoundMainVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain;
+				SaveManager.NowSaveSlot.SoundBGMVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM;
+				SaveManager.NowSaveSlot.SoundEffectVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect;
+				MiyukiData.BGMVolumeIncreased = false;		
+			}
 			SaveManager.NowSaveSlot.SaveSoundData();
 			SaveManager.savemanager.OptionApply(false, false);
 		}
+
+		//public static void CheckSettingsVolume()
+		//{
+		//	if (!MiyukiData.BGMVolumeIncreased)
+		//	{
+		//		if (SaveManager.NowSaveSlot.SoundBGMVolume != 0 && SaveManager.NowSaveSlot.SoundMainVolume != 0) return;
+
+		//		MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain = SaveManager.NowSaveSlot.SoundMainVolume;
+		//		MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM = SaveManager.NowSaveSlot.SoundBGMVolume;
+		//		MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect = SaveManager.NowSaveSlot.SoundEffectVolume;
+		//		MiyukiSaveManager.Instance.Save();
+		//		SaveManager.NowSaveSlot.SoundMainVolume = 40;
+		//		SaveManager.NowSaveSlot.SoundBGMVolume = 40;
+		//		SaveManager.NowSaveSlot.SoundEffectVolume = 40;
+		//		MiyukiData.BGMVolumeIncreased = true;
+		//	}
+		//	else if (MiyukiData.BGMVolumeIncreased)
+		//	{
+		//		MasterAudio.StopBus("BGM");
+		//		MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
+		//		MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
+		//		MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
+		//		SaveManager.NowSaveSlot.SoundMainVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain;
+		//		SaveManager.NowSaveSlot.SoundBGMVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM;
+		//		SaveManager.NowSaveSlot.SoundEffectVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect;
+		//		MiyukiData.BGMVolumeIncreased = false;
+		//	}
+
+		//	SaveManager.NowSaveSlot.SaveSoundData();
+		//	SaveManager.savemanager.OptionApply(false, false);
+		//}
 
 		// fix the audio volume
 		public static void PlaySoundFromAsset(string audioPath, bool isStopOldBus = true, int? volumePercent = null)
@@ -131,7 +185,8 @@ namespace MiyukiSone
 			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
 
 			//float finalVolume = volumePercent.HasValue ? Mathf.Clamp(volumePercent.Value / 100f, 0f, 2f) : MasterAudio.MasterVolumeLevel;
-			float volume = SaveManager.NowSaveSlot.SoundEffectVolume == 0 ? 1f : SaveManager.NowSaveSlot.SoundEffectVolume / 100;
+
+			float volume = SaveManager.NowSaveSlot.SoundEffectVolume == 0 ? 1f : SaveManager.NowSaveSlot.SoundEffectVolume / 100f;
 			audioSource.PlayOneShot(clip, volume);
 
 			_currentTempGO = tempGO;
@@ -142,6 +197,12 @@ namespace MiyukiSone
 
 		public static void StartMiyukiText(string text)
 		{
+			//int randomAmount = MiyukiDecides ? RandomManager.RandomInt("MiyukiRandomText", 2, 4) : 1;
+			//for (int i = 0; i < randomAmount; i++)
+			//{dd
+				
+			//}
+
 			if (BattleSystem.instance != null) MiyukiTextBattle(text);
 			else if (FieldSystem.instance != null) MiyukiTextField(text);
 		}
@@ -150,35 +211,6 @@ namespace MiyukiSone
 		{
 			if (string.IsNullOrEmpty(text) || !MiyukiInParty) return;
 			MiyukiBchar.StartCoroutine(MiyukiTextBattle(MiyukiBchar.GetTopPos(), text));
-		}
-
-		private static IEnumerator MiyukiTextBattle(Vector3 position, string text)
-		{
-			BattleText component = Misc.UIInst(UIManager.inst.BattleTalkTextUI, BattleSystem.instance.MainUICanvas.transform).GetComponent<BattleText>();
-			component.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
-			component.transform.rotation = GetRandomRotation();
-			component.transform.position = position;
-			component.transform.GetComponent<RectTransform>().localPosition -= GetRandomTextPosition();
-			component.Ptext.TextInput(text);
-			if (MiyukiDecides && MiyukiResult()) BattleSystem.instance.BattleWaitList.Remove(component.gameObject);
-			yield return component.BattleTextOut();
-		}
-
-		private static Quaternion GetRandomRotation()
-		{
-			Quaternion baseRotation = Quaternion.identity;
-			if (MiyukiDecides && MiyukiResult()) return baseRotation;
-			float angle = RandomManager.RandomInt("MiyukiTextRotation", -30, 30);
-			return Quaternion.Euler(0, 0, angle);
-		}
-
-		private static Vector3 GetRandomTextPosition()
-		{
-			Vector3 basePos = new Vector3(150f, 0f, 0f);
-			if (MiyukiDecides && MiyukiResult()) return basePos;
-			float xOffset = RandomManager.RandomInt("MiyukiTextX", -100, 100);
-			float yOffset = RandomManager.RandomInt("MiyukiTextY", -100, 100);
-			return new Vector3(basePos.x + xOffset, basePos.y + yOffset, basePos.z);
 		}
 
 		public static void MiyukiTextField(string text)
@@ -197,6 +229,45 @@ namespace MiyukiSone
 			component.transform.localPosition += GetRandomTextPosition();
 			component.Ptext.TextInput(text);
 			yield return component.BattleTextOut();
+		}
+
+		private static IEnumerator MiyukiTextBattle(Vector3 position, string text)
+		{
+			BattleText component = Misc.UIInst(UIManager.inst.BattleTalkTextUI, BattleSystem.instance.MainUICanvas.transform).GetComponent<BattleText>();
+			component.transform.localScale = GetRandomScale();
+			component.transform.rotation = GetRandomRotation();
+			component.transform.position = position;
+			component.transform.GetComponent<RectTransform>().localPosition -= GetRandomTextPosition();
+			component.Ptext.TextInput(text);
+			if (MiyukiDecides) BattleSystem.instance.BattleWaitList.Remove(component.gameObject);
+			yield return component.BattleTextOut();
+		}
+
+		private static Quaternion GetRandomRotation()
+		{
+			Quaternion baseRotation = Quaternion.identity;
+			if (MiyukiDecides) return baseRotation;
+			float angle = RandomManager.RandomInt("MiyukiTextRotation", -30, 30);
+			return Quaternion.Euler(0, 0, angle);
+		}
+
+		private static Vector3 GetRandomTextPosition()
+		{
+			Vector3 basePos = new Vector3(150f, 0f, 0f);
+			if (MiyukiDecides) return basePos;
+			float xOffset = RandomManager.RandomInt("MiyukiTextX", -125, 125);
+			float yOffset = RandomManager.RandomInt("MiyukiTextY", -125, 125);
+			return new Vector3(basePos.x + xOffset, basePos.y + yOffset, basePos.z);
+		}
+
+		private static Vector3 GetRandomScale()
+		{
+			Vector3 baseScale = new Vector3(0.9f, 0.9f, 0.9f);
+			if (MiyukiDecides) return baseScale;
+			float xOffset = RandomManager.RandomFloat("MiyukiScaleX", 0.5f, 1.6f);
+			float yOffset = RandomManager.RandomFloat("MiyukiScaleY", 0.5f, 1.6f);
+			float zOffset = RandomManager.RandomFloat("MiyukiScaleZ", 0.5f, 1.6f);
+			return new Vector3(xOffset, yOffset, zOffset);
 		}
 
 		public static void ChangeSkillImage(this Skill skill, string skillSpritePath = null, string buttonSpritePath = null, string basicSpritePath = null, string defaultSkillKey = null, bool isRestoreImg = false, bool isGlicthEffect = false)
@@ -309,7 +380,7 @@ namespace MiyukiSone
 
 		public static void CelestialUpgrade(this Skill skill)
 		{
-			if (skill?.Master == null || skill.CharinfoSkilldata?.SKillExtended != null) return;
+			if (skill == null || skill?.Master == null || skill.CharinfoSkilldata?.SKillExtended != null) return;
 
 			List<string> allKeys = new List<string>();
 			GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.SkillExtended, out allKeys);
@@ -356,6 +427,7 @@ namespace MiyukiSone
 
 		public static void NormalUpgrade(this Skill skill, bool posUpgrade)
 		{
+			if (skill == null) return;
 			List<Skill_Extended> upgradeList = PlayData.GetEnforce(posUpgrade, skill);
 			if (upgradeList.Count > 0) skill.ExtendedAdd_Battle(upgradeList.Random("MiyukiRandomUpgrade"));
 

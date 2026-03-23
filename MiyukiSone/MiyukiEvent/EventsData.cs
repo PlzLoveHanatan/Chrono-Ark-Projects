@@ -13,7 +13,7 @@ using ChronoArkMod;
 
 namespace MiyukiSone
 {
-	public static class EventData
+	public static class EventsData
 	{
 		private class EventLine
 		{

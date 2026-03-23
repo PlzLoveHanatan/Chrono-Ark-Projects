@@ -15,13 +15,42 @@ using System.Drawing;
 using I2.Loc;
 using static MiyukiSone.Skills;
 using Spine;
+using ChronoArkMod;
+using System.Windows.Forms;
+using System.Web.UI.WebControls.WebParts;
 
 namespace MiyukiSone
 {
 	public class Skills
 	{
-		#region Misc Skills
+		#region Data
+		public class ArtData
+		{
+			public Vector3 Position;
+			public float Rotation;
 
+			public ArtData(Vector3 position, float rotation = 0f)
+			{
+				Position = position;
+				Rotation = rotation;
+			}
+		}
+
+		private static readonly Dictionary<int, ArtData[]> pauseArts = new Dictionary<int, ArtData[]>()
+		{
+			{ 0, new ArtData[] { new ArtData(new Vector3(-230, 35, 0), 15f), new ArtData(new Vector3(165, -360, 0), 345f) } },
+			{ 1, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
+			{ 2, new ArtData[] { new ArtData(new Vector3(-20, -400, 0)) } },
+			{ 3, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
+			{ 4, new ArtData[] { new ArtData(new Vector3(-150, 100, 0), 65f), new ArtData(new Vector3(560, -165, 0), 305f) } },
+			{ 5, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
+			{ 6, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
+			{ 7, new ArtData[] { new ArtData(new Vector3(-325, -230, 45), 60f), new ArtData(new Vector3(535, 275, 0), 345f) } },
+		};
+		#endregion
+
+
+		#region Misc Skills
 		public class SacrificedKnowledge : Skill_Extended
 		{
 			public override bool Terms()
@@ -416,6 +445,7 @@ namespace MiyukiSone
 			public override void Init()
 			{
 				base.Init();
+				OnePassive = true;
 				MySkill.MiyukiInit(CurrentAffection);
 			}
 
@@ -639,6 +669,7 @@ namespace MiyukiSone
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
+				Targets.Where(t => t.BuffReturn(GDEItemKeys.Buff_B_Control_P, false) != null).ToList().ForEach(t => BChar.AddBuff(t, GDEItemKeys.Buff_B_Momori_7_T));
 				var momoriPskill = GetMomoriPskill();
 				if (momoriPskill.Any())
 				{
@@ -670,8 +701,16 @@ namespace MiyukiSone
 					var debuffs = t.GetBuffs(BattleChar.GETBUFFTYPE.ALLDEBUFF, true, false).ToList();
 					if (debuffs.Any()) debuffs.Random("MiyukiRandomDebuff").SelfDestroy();
 				});
-				DialogueState state = DialogueState.love;
-				Dialogue.CreateDialogue(state);
+
+				CurrentAffection = MiyukiAffection.DereDere;
+				UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
+				MiyukiData.PauseOpen = true;
+				var availableIndexes = pauseArts.Keys.Where(i => MiyukiData.LastArtIndex == -1 || i != MiyukiData.LastArtIndex).ToList();
+				int randomIndex = availableIndexes.Random("MiyukiRandomArt");
+				MiyukiData.LastArtIndex = randomIndex;
+				ArtData[] arts = pauseArts[randomIndex];
+				arts.Where(v => v.Position != Vector3.zero).ToList().ForEach(art => Dialogue.CreateDialogue(DialogueState.love, art.Position, 1, true, art.Rotation));
+				MiyukiData.MiyukiArtIndex = randomIndex;
 				base.SkillUseSingle(SkillD, Targets);
 			}
 
@@ -680,7 +719,7 @@ namespace MiyukiSone
 				mySkill.ChangeSkillImg();
 			}
 		}
-		
+
 		public class GameUpdate : MiyukiSkill, IP_MiyukiSkillImgChange
 		{
 			public override bool Terms()
@@ -701,7 +740,7 @@ namespace MiyukiSone
 				//MiyukiSaveManager.Instance.CurrentData.LockedState = (int)CurrentAffection;
 				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
 				MiyukiSaveManager.Instance.Save();
-				EventSpecial.RestartStage(PlayData.TSavedata.StageNum);
+				Events.RestartStage(PlayData.TSavedata.StageNum);
 				base.SkillUseSingle(SkillD, Targets);
 			}
 

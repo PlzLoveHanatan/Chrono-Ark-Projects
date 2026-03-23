@@ -16,12 +16,12 @@ namespace MiyukiSone
 		public class MiyukiSaveData
 		{
 			public int CurrentAffection;
-
 			public int TurnEndTryIndex;
 			public int TurnEndTryCallCount;
-
 			public int KissNoAnswerCount;
-
+			public int SoundVolumeMain;
+			public int SoundVolumeBGM;
+			public int SoundVolumeEffect;
 			public int? LockedState;
 			public bool GameUpdated;
 			public bool GameRestarted;

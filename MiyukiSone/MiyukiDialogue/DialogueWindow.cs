@@ -4,7 +4,7 @@ using static MiyukiSone.Affection;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
-using static MiyukiSone.EventData;
+using static MiyukiSone.EventsData;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using UnityEngine.EventSystems;
@@ -37,6 +37,7 @@ namespace MiyukiSone
 		private const string Btn_Kiss_Sprite = "MiyukiVisual/Dialogue/dlg_btn_kiss.png";
 
 		public DialogueState CurrentDialogueState;
+		public bool IsDoubleButton;
 
 		private void Awake()
 		{
@@ -65,10 +66,10 @@ namespace MiyukiSone
 
 		private void CreateButtons()
 		{
-			Sprite spriteYes = yesButtonSprite ?? UtilsUI.GetSprite(Btn_Yes_Sprite);
-			Sprite spriteNo = noButtonSprite ?? UtilsUI.GetSprite(Btn_No_Sprite);
+			Sprite spriteYes = yesButtonSprite ?? UtilsUI.GetSpriteFromMod(Btn_Yes_Sprite);
+			Sprite spriteNo = noButtonSprite ?? UtilsUI.GetSpriteFromMod(Btn_No_Sprite);
 
-			if (CurrentDialogueState == DialogueState.kiss) spriteYes = UtilsUI.GetSprite(Btn_Kiss_Sprite);
+			if (CurrentDialogueState == DialogueState.kiss) spriteYes = UtilsUI.GetSpriteFromMod(Btn_Kiss_Sprite);
 
 			bool swapButtonsPos = MiyukiDecides;
 			Vector2 yesPos = swapButtonsPos ? noButtonPosition : yesButtonPosition;
@@ -76,9 +77,10 @@ namespace MiyukiSone
 
 			btn_yes = CreateButton("btn_yes", spriteYes, yesPos, OnYesClicked);
 
-			if (RandomManager.RandomPer("MiyukiDoubleButton", 100, 30) || !MiyukiSaveManager.Instance.CurrentData.EternalPromise)
+			if (MiyukiDecides || IsDoubleButton)
 			{
 				CreateButton("btn_yes2", spriteYes, noPos, OnYesClicked);
+				btn_no = null;
 
 				if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 				{
@@ -86,7 +88,6 @@ namespace MiyukiSone
 					MiyukiSaveManager.Instance.CurrentData.SaveExists = true;
 					MiyukiSaveManager.Instance.Save();
 				}
-				btn_no = null;
 			}
 			else
 			{
@@ -146,17 +147,14 @@ namespace MiyukiSone
 				if (!isYesClick)
 				{
 					CurrentAffection = MiyukiAffection.Yandere;
-					if (MiyukiDecides)
-					{
-						if (BattleSystem.instance != null) (MiyukiDecides ? (Action)DialoguePaws.YanderePaws : EventTurn.YandereAction)();
-						else if (FieldSystem.instance != null/* && MiyukiDecides)*/) EventTurn.YandereActionCut();
-					}
+					if (BattleSystem.instance != null) (MiyukiDecides ? (Action)DialoguePaws.YanderePaws : Events.YandereAction)();
+					else if (FieldSystem.instance != null/* && MiyukiDecides)*/) Events.YandereActionCut();
 					StartKissDialogue(false);
 				}
 				else
 				{
 					CurrentAffection = MiyukiAffection.DereDere;
-					if (MiyukiDecides) EventTurn.DereAction();
+					Events.DereAction();
 					ResetKissNoDialogue();
 					StartKissDialogue(true);
 					StartAnimationAndClose(true);
@@ -166,7 +164,7 @@ namespace MiyukiSone
 
 		private void StartAnimationAndClose(bool isYes)
 		{
-			if (RandomManager.RandomPer("MiyukiRandomAnimation", 100, 70))
+			if (MiyukiDecides)
 			{
 				if (isYes) PlayRandomYesAnimation();
 				else PlayRandomNoAnimation();
@@ -188,13 +186,13 @@ namespace MiyukiSone
 			Transform extraTarget = null;
 			var available = new List<System.Func<IEnumerator>>(animations);
 			if (MiyukiData.LastYesBoxAnimation != -1 && available.Count > 1) available.Remove(animations[MiyukiData.LastYesBoxAnimation]);
-			int index = RandomManager.RandomInt("MiyukiYesAnim", 0, available.Count);
+			int index = RandomManager.RandomInt("MiyukiRandomYesIndex", 0, available.Count);
 			PlayAnimationAndDestroy(available[index].Invoke());
 			MiyukiData.LastYesBoxAnimation = animations.IndexOf(available[index]);
-			if (RandomManager.RandomInt("MiyukiHeartsSpawn", 0, 2) == 1) return;
-			Transform mainTarget = RandomManager.RandomPer("MiyukiHeartPos", 100, 50) ? btn_yes.transform : MiyukiBchar.transform;
+			if (MiyukiDecides) return;
+			Transform mainTarget = MiyukiDecides ? btn_yes.transform : MiyukiBchar.transform;
 			MiyukiVisual.Instance.SpawnHearts(mainTarget);
-			if (RandomManager.RandomPer("MiyukiHeartExtra", 100, 25))
+			if (MiyukiDecides)
 			{
 				extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
 				MiyukiVisual.Instance.SpawnHearts(extraTarget);
@@ -211,7 +209,7 @@ namespace MiyukiSone
 
 			var available = new List<System.Func<IEnumerator>>(animations);
 			if (MiyukiData.LastNoBoxAnimation != -1 && available.Count > 1) available.Remove(animations[MiyukiData.LastNoBoxAnimation]);
-			int index = RandomManager.RandomInt("MiyukiNoAnim", 0, available.Count);
+			int index = RandomManager.RandomInt("MiyukiRandomNoIndex", 0, available.Count);
 			PlayAnimationAndDestroy(available[index].Invoke());
 			MiyukiData.LastNoBoxAnimation = animations.IndexOf(available[index]);
 		}

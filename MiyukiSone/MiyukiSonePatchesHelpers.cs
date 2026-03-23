@@ -16,7 +16,7 @@ namespace MiyukiSone
 		private static readonly Color MiyukiMaskBg = new Color(0.8f, 0.3f, 0.6f, 0.2f);
 
 		// Замена спрайта
-		public static bool SetSprite(Transform root, string path, string spriteName)
+		public static bool SetSprite(Transform root, string path, string spritePath)
 		{
 			Transform t = root.Find(path);
 			if (t == null) return false;
@@ -24,7 +24,7 @@ namespace MiyukiSone
 			Image img = t.GetComponent<Image>();
 			if (img == null) return false;
 
-			Sprite sprite = UtilsUI.GetSprite(spriteName);
+			Sprite sprite = UtilsUI.GetSpriteFromAsset(spritePath + ".png");
 			if (sprite == null) return false;
 
 			img.sprite = sprite;
@@ -163,7 +163,7 @@ namespace MiyukiSone
 		// Замена всех Back спрайтов
 		public static void ReplaceAllBackSprites(string spriteName)
 		{
-			Sprite sprite = UtilsUI.GetSprite(spriteName);
+			Sprite sprite = UtilsUI.GetSpriteFromAsset(spriteName + ".png");
 			if (sprite == null) return;
 
 			foreach (Image img in GameObject.FindObjectsOfType<Image>())

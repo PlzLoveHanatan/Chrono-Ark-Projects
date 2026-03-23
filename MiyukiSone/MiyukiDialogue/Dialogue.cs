@@ -20,18 +20,6 @@ namespace MiyukiSone
 			{ DialogueState.kiss, new List<string> { "dlg_kiss_01", "dlg_kiss_02" } },
 		};
 
-		public static readonly Dictionary<DialogueState, Vector2> DialogueSize = new Dictionary<DialogueState, Vector2>()
-		{
-			{ DialogueState.love, new Vector2(700, 168) },
-			{ DialogueState.kiss, new Vector2(700, 168) },
-		};
-
-		public static readonly Dictionary<DialogueState, Vector3> DialoguePosition = new Dictionary<DialogueState, Vector3>()
-		{
-			{ DialogueState.love, new Vector3(170, 170, 0) },
-			{ DialogueState.kiss, new Vector3(170, 170, 0) },
-		};
-
 		public static List<GameObject> DialogueWindows = new List<GameObject>();
 		private static string LastDialogueSpriteKey = null;
 		private static Canvas DialogueCanvas = null;
@@ -39,19 +27,17 @@ namespace MiyukiSone
 
 		public static void CreateDialogue()
 		{
-			CreateDialogue(null, 0);
+			CreateDialogue(null, null, 0);
 		}
 
 		public static void CreateDialogue(int amount)
 		{
-			CreateDialogue(null, amount);
+			CreateDialogue(null, null, amount);
 		}
 
-		public static void CreateDialogue(DialogueState? state = null, int amount = 0)
+		public static void CreateDialogue(DialogueState? state = null, Vector3 ?position = null, int amount = 0, bool? isDoubleButton = null, float? rotationZ = null)
 		{
-			if (Affection.IsKuudere) return;
-
-			if (amount == 0) amount = RandomManager.RandomPer("MiyukiDialogueAmount", 100, 30) ? 2 : 1;
+			if (amount == 0) amount = RandomManager.RandomPer("MiyukiDialogueAmount", 100, 30) ? Affection.MiyukiRandomResult(3) : 1;
 
 			for (int i = 0; i < amount; i++)
 			{
@@ -73,14 +59,18 @@ namespace MiyukiSone
 				}			
 
 				Canvas canvas = GetOrCreateDialogueCanvas();
-				Sprite sprite = UtilsUI.GetSprite("MiyukiVisual/Dialogue/" + randomSprite + ".png");
-				Vector2 size = DialogueSize[finalState];
-				Vector3 position = GetRandomPosition(size);
-				GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", canvas.transform, sprite, size, position, true);
+				Sprite sprite = UtilsUI.GetSpriteFromMod("MiyukiVisual/Dialogue/" + randomSprite + ".png");
+				Vector2 size = new Vector2(700, 168);
+				Vector3 finalPosition = position ?? GetRandomPosition(size);
+				GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", canvas.transform, sprite, size, finalPosition, true);
+
+				float angle = rotationZ ?? RandomManager.RandomInt("MiyukiDialogueRotation", -10, 10);
+				newWindow.transform.rotation = Quaternion.Euler(0, 0, angle);
 				newWindow.AddComponent<DialogueWindow>();
-				newWindow.AddComponent<DialogueDragHandler>();
+				newWindow.GetComponent<DialogueWindow>().IsDoubleButton = isDoubleButton ?? false;		
 				newWindow.GetComponent<DialogueWindow>().CurrentDialogueState = finalState;
-				newWindow.transform.SetAsLastSibling();
+				newWindow.AddComponent<DialogueDragHandler>();
+				newWindow.transform.SetAsLastSibling();		
 				DialogueWindows.Add(newWindow);
 			}
 		}
@@ -117,7 +107,7 @@ namespace MiyukiSone
 			return DialogueCanvas;
 		}
 
-		private static Vector3 GetRandomPosition(Vector2 size)
+		public static Vector3 GetRandomPosition(Vector2 size)
 		{
 			if (BattleSystem.instance != null && BattleSystem.instance.ActWindow != null)
 			{

@@ -10,21 +10,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using GameDataEditor;
 using static TMPro.SpriteAssetUtilities.TexturePacker;
+using Steamworks;
 
 namespace MiyukiSone
 {
 	public static class UtilsUI
 	{
-		public static void GetSprite(string pathAddress, Image img)
+		public static Sprite GetSpriteFromMod(string path)
 		{
-			string path = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(pathAddress);
-			AddressableLoadManager.LoadAsyncAction(path, AddressableLoadManager.ManageType.None, img);
+			var adress = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(path);
+			var sprite = AddressableLoadManager.LoadAsyncCompletion<Sprite>(adress, AddressableLoadManager.ManageType.None);
+			return sprite;
 		}
-
-		public static Sprite GetSprite(string pathAddress)
+		public static Sprite GetSpriteFromAsset(string path)
 		{
-			string path = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(pathAddress);
-			var sprite = AddressableLoadManager.LoadAsyncCompletion<Sprite>(path, AddressableLoadManager.ManageType.None);
+			var adress = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromAsset("MiyukiSone", path);
+			var sprite = AddressableLoadManager.LoadAsyncCompletion<Sprite>(adress, AddressableLoadManager.ManageType.None);
 			return sprite;
 		}
 
@@ -39,10 +40,17 @@ namespace MiyukiSone
 			Debug.Log($"[Miyuki] Loading sprite: {spritePath}");
 			return ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<Sprite>("MiyukiSone", spritePath);
 		}
-		public static void GetSpriteByPath(this Image img, string path, bool isFromAsset = true)
+
+		public static void GetSpriteByPathFromAsset(this Image img, string path)
 		{
-			var address = isFromAsset ? ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromAsset("MiyukiSone", path) : ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(path);
-			img.GetSpriteByAddress(address);
+			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromAsset("MiyukiSone", path);
+			img.LoadSpriteByAddress(address);
+		}
+
+		public static void GetSpriteByPathFromMod(this Image img, string path)
+		{
+			var address = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromFile(path);
+			img.LoadSpriteByAddress(address);
 		}
 
 		public static void GetSpriteAsync(string pathAddress, Action<AsyncOperationHandle> collback)
@@ -58,7 +66,7 @@ namespace MiyukiSone
 			return AddressableLoadManager.LoadAddressableAsset<T>(address);
 		}
 
-		public static void GetSpriteByAddress(this Image img, string address, AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage)
+		public static void LoadSpriteByAddress(this Image img, string address, AddressableLoadManager.ManageType type = AddressableLoadManager.ManageType.Stage)
 		{
 			AddressableLoadManager.LoadAsyncAction(address, type, img);
 		}
@@ -85,16 +93,9 @@ namespace MiyukiSone
 		public static GameObject GetChildByName(GameObject obj, string name)
 		{
 			Transform transform = obj.transform.Find(name);
-			bool flag = transform != null;
 			GameObject result;
-			if (flag)
-			{
-				result = transform.gameObject;
-			}
-			else
-			{
-				result = null;
-			}
+			if (transform != null) result = transform.gameObject;
+			else result = null;
 			return result;
 		}
 
@@ -131,7 +132,7 @@ namespace MiyukiSone
 			if (img == null) return go;
 
 			img.sprite = sprite;
-			img.preserveAspect = true;
+			img.preserveAspect = false;
 
 			RectTransform rt = go.GetComponent<RectTransform>();
 			if (rt != null) rt.sizeDelta = size;

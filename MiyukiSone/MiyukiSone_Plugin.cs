@@ -88,7 +88,7 @@ namespace MiyukiSone
 					BattleChar target = possibleTargets.Random("MiyukiRandomTarget");
 					Target.Clear();
 					Target.Add(target);
-					EventData.MiyukiTextEvent(Affection.CurrentAffection);
+					EventsData.MiyukiTextEvent(Affection.CurrentAffection);
 				}
 			}
 		}
@@ -103,8 +103,8 @@ namespace MiyukiSone
 				if (Dialogue.DialogueWindows.Count > 0)
 				{
 					DialogueData.StartTurnEndDialogue();
-					if (Affection.MiyukiDecides) EventTurn.YandereActionCut();
-;
+					if (Affection.MiyukiDecides) Affection.CurrentAffection = Yandere;
+					if (Affection.IsYandere) Events.YandereActionCut();
 					foreach (var windowObj in Dialogue.DialogueWindows)
 					{
 						if (windowObj != null)
@@ -138,7 +138,7 @@ namespace MiyukiSone
 			private static IEnumerator WaitForSeconds()
 			{
 				yield return new WaitForSeconds(2.5f);
-				yield return EventSpecial.ExitGame();
+				yield return Events.ExitGame();
 			}
 		}
 	}

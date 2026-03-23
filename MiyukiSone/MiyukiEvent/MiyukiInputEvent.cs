@@ -651,7 +651,7 @@ namespace MiyukiSone
 			{
 				string path = string.IsNullOrEmpty(spritePath) ? "MiyukiVisual/dlog_test.png" : spritePath;
 				if (parentWindow == null) parentWindow = BattleSystem.instance.ActWindow.transform;
-				Sprite sprite = UtilsUI.GetSprite(path);
+				Sprite sprite = UtilsUI.GetSpriteFromMod(path);
 				GameObject window = UtilsUI.CreateUIImage("ChatWindow", parentWindow, sprite, windowSize, windowPosition, true);
 				window.AddComponent<DialogueDragHandler>();
 

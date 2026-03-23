@@ -7,13 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using GameDataEditor;
 using UnityEngine;
-using static MiyukiSone.EventData;
+using static MiyukiSone.EventsData;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Utils;
 using UnityEngine.UI;
 using UnityEngine.Experimental.UIElements.StyleEnums;
 using System.Security.Cryptography;
-
 
 namespace MiyukiSone
 {
@@ -87,28 +86,28 @@ namespace MiyukiSone
 			{
 				if (!MiyukiPassive.CreateCharacterDraw)
 				{
-					Sprite.GetSpriteByAddress(BuffData.Icon_Path);
+					Sprite.GetSpriteByPathFromMod(BuffData.Icon_Path);
 					BE?.gameObject?.SetActive(true);
 				}
 				else
 				{
 					var path = "MiyukiVisual/Misc/OnePin.png";					
-					Sprite.GetSpriteByPath(path, false);
+					Sprite.GetSpriteByPathFromMod(path);
 					BE?.gameObject?.SetActive(false);
 				}
 			}						
 		}
 		#endregion
 
-
 		#region Miyuki misc buffs
 		public class AllyConstantStats : Buff
 		{
 			public override void Init()
 			{
-				PlusStat.DMGTaken = MiyukiResult(-10);
-				PlusPerStat.Damage = MiyukiResult(10);
-				PlusPerStat.Heal = MiyukiResult(10);
+				PlusStat.DMGTaken = MiyukiResult(5, false);
+				PlusPerStat.Damage = MiyukiResult(5);
+				PlusPerStat.Heal = MiyukiResult(5);
+				PlusStat.hit = MiyukiResult(5);
 				base.Init();
 			}
 		}

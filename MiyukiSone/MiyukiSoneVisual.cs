@@ -74,7 +74,7 @@ namespace MiyukiSone
 		{
 			spawnInterval = 0.8f,
 			minParticles = 2,
-			maxParticles = 6,
+			maxParticles = 10,
 			moveXRange = 400f,
 			moveYMin = 600f,
 			moveYMax = 1500f,
@@ -89,15 +89,15 @@ namespace MiyukiSone
 		{
 			spawnInterval = 0.1f,
 			minParticles = 8,
-			maxParticles = 15,
-			moveXRange = 150f,
+			maxParticles = 20,
+			moveXRange = 100f,
 			moveYMin = -100f,
 			moveYMax = -250f,
 			minDuration = 0.8f,
-			maxDuration = 1.5f,
+			maxDuration = 2.5f,
 			randomColors = true,
-			randomOffsetRange = new Vector2(50f, 0f),
-			spawnHeight = 25f
+			randomOffsetRange = new Vector2(25f, 0f),
+			spawnHeight = 50f
 		};
 
 		#endregion
@@ -118,7 +118,7 @@ namespace MiyukiSone
 
 		private void InitializeHeartPool()
 		{
-			Sprite sprite = UtilsUI.GetSprite(heartPath);
+			Sprite sprite = UtilsUI.GetSpriteFromMod(heartPath);
 			if (sprite == null)
 			{
 				Debug.LogError($"[MiyukiVisual] Failed to load heart sprite: {heartPath}");
@@ -137,7 +137,7 @@ namespace MiyukiSone
 
 		private void InitializePetalPool()
 		{
-			Sprite sprite = UtilsUI.GetSprite(petalPath);
+			Sprite sprite = UtilsUI.GetSpriteFromMod(petalPath);
 			if (sprite == null)
 			{
 				Debug.LogError($"[MiyukiVisual] Failed to load petal sprite: {petalPath}");
@@ -248,8 +248,7 @@ namespace MiyukiSone
 		{
 			if (target == null) return;
 
-			if (settings == null)
-				settings = ButtonSettings;
+			if (settings == null) settings = ButtonSettings;
 
 			RectTransform targetRT = target.GetComponent<RectTransform>();
 			if (targetRT == null)

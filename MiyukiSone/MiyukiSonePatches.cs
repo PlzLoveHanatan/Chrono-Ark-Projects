@@ -29,6 +29,8 @@ namespace MiyukiSone
 	[HarmonyPatch]
 	public static class MiyukiPatches
 	{
+		private static readonly string RelativePath = "Assets/Images/Ui/";
+
 		[HarmonyTranspiler]
 		[HarmonyPatch(typeof(CharFace), "GetRandomSkill")]
 		private static IEnumerable<CodeInstruction> CharacterUpgradeTranspiler(IEnumerable<CodeInstruction> instructions)
@@ -67,8 +69,8 @@ namespace MiyukiSone
 		{
 			if (skills == null || skills.Count == 0 || MiyukiSone_Plugin.MiyukiInParty() && IsKuudere) return skills;
 
-			int randomSkill = !MiyukiSone_Plugin.MiyukiInParty() ? 100 : 15;
-			int randomEx = !MiyukiSone_Plugin.MiyukiInParty() ? 100 : 30;
+			int randomSkill = !MiyukiSone_Plugin.MiyukiInParty() ? 100 : 10;
+			int randomEx = !MiyukiSone_Plugin.MiyukiInParty() ? 100 : 10;
 
 			if (RandomManager.RandomPer("MiyukiReplaceSkill", 100, randomSkill))
 			{
@@ -213,7 +215,8 @@ namespace MiyukiSone
 
 				if (canvas == null) return;
 
-				SetSprite(canvas.transform, "Can/Logo", "MiyukiVisual/Menu/logo.png");
+				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
+				SetSprite(canvas.transform, "Can/Logo", RelativePath + "Logo");
 				SetText(canvas.transform, "Can/PressAnyKey/Text", null, 0, true);
 
 				Transform mainMenu = canvas.transform.Find("MainMenu");
@@ -324,12 +327,15 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
 			{
-				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated && !MiyukiData.PauseOpen) return;
+
+				string pauseSprite = MiyukiData.PauseOpen ? $"Assets/Images/Skills/JustForYou/{MiyukiData.MiyukiArtIndex}" : RelativePath + "PauseBG";
 				PlaySong();
 				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
 				Transform root = __instance.transform;
-				SetSprite(root, "Back", "MiyukiVisual/Menu/pause.png");
-				SetSprite(root, "Main/Image", "MiyukiVisual/Menu/pause_window.png");
+				SetSprite(root, "Back", pauseSprite);
+				SetSprite(root, "Main/Image", RelativePath + "Pause_Window");
+				if (MiyukiData.PauseOpen) MakeTransparent(root, "Main/Image");
 				MakeTransparent(root, "Main/Image/Image (1)");
 				SetText(root, "Main/TextMeshPro Text", "Pause", 38);
 				ProcessButtons(root, "Main/Image/Layout");
@@ -345,13 +351,9 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
 			{
-				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
-				MasterAudio.StopBus("BGM");
-				MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
-				MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
-				MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
-				MiyukiVisual.Instance.StopParticles();
-				if (MiyukiData.BGMVolumeIncreased) ChangeSettingsVolume(0);
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated && !MiyukiData.PauseOpen) return;
+				CheckSettingsVolume();
+				StopSong(false);
 			}
 		}
 
@@ -375,12 +377,8 @@ namespace MiyukiSone
 			public static void Postfix()
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
-				MasterAudio.StopBus("BGM");
-				MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
-				MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
-				MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
-				if (MiyukiData.BGMVolumeIncreased) ChangeSettingsVolume(0);
-
+				CheckSettingsVolume();
+				StopSong();
 			}
 		}
 
@@ -393,8 +391,8 @@ namespace MiyukiSone
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
-				ReplaceAllBackSprites("MiyukiVisual/Menu/option.png");
-				SetSprite(root, "Image", "MiyukiVisual/Menu/option_window.png");
+				ReplaceAllBackSprites(RelativePath + "OptionBG");
+				SetSprite(root, "Image", RelativePath + "Option_Window");
 				MakeTransparent(root, "Image/Image (1)");
 				SetText(root, "TextMeshPro Text", "Options", 38);
 				ProcessButtons(root, "Image/Layout");
@@ -409,7 +407,7 @@ namespace MiyukiSone
 			public static void Postfix()
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
-				ReplaceAllBackSprites("MiyukiVisual/Menu/pause.png");
+				ReplaceAllBackSprites(RelativePath + "PauseBG");
 			}
 		}
 
@@ -423,10 +421,10 @@ namespace MiyukiSone
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Game Play", 38);
-				SetSprite(root, "Content", "MiyukiVisual/Menu/gameplay_window.png");
+				SetSprite(root, "Content", RelativePath + "Gameplay_Window");
 				MakeTransparent(root, "Content/Back");
 				ProcessToggleOptions(root, "Content/Layout");
-				SetSprite(root, "Image (1)", "MiyukiVisual/Menu/gameplay_window_apply.png");
+				SetSprite(root, "Image (1)", RelativePath + "Gameplay_Window_Apply");
 				MakeTransparent(root, "Image (1)/Image (1)");
 				ProcessButtons(root, "Image (1)/Layout");
 			}
@@ -442,10 +440,10 @@ namespace MiyukiSone
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Sound", 38);
-				SetSprite(root, "Content", "MiyukiVisual/Menu/sound_window.png");
+				SetSprite(root, "Content", RelativePath + "Sound_Window");
 				MakeTransparent(root, "Content/Back");
 				ProcessToggleOptions(root, "Content/Layout");
-				SetSprite(root, "Image (1)", "MiyukiVisual/Menu/sound_window_apply.png");
+				SetSprite(root, "Image (1)", RelativePath + "Sound_Window_Apply");
 				MakeTransparent(root, "Image (1)/Image (1)");
 				ProcessButtons(root, "Image (1)/Layout");
 			}
@@ -461,10 +459,10 @@ namespace MiyukiSone
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Graphic", 38);
-				SetSprite(root, "Content", "MiyukiVisual/Menu/graphic_window.png");
+				SetSprite(root, "Content", RelativePath + "Graphic_Window_Apply");
 				MakeTransparent(root, "Content/Back");
 				ProcessToggleOptions(root, "Content/Layout");
-				SetSprite(root, "Image (1)", "MiyukiVisual/Menu/graphic_window_apply.png");
+				SetSprite(root, "Image (1)",  RelativePath + "Graphic_Window");
 				MakeTransparent(root, "Image (1)/Image (1)");
 				ProcessButtons(root, "Image (1)/Layout");
 			}
@@ -480,7 +478,7 @@ namespace MiyukiSone
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "KeyObj/TextMeshPro Text", "Control", 38);
-				SetSprite(root, "KeyObj/Content", "MiyukiVisual/Menu/control_window.png");
+				SetSprite(root, "KeyObj/Content", RelativePath + "Control_Window");
 				MakeTransparent(root, "KeyObj/Content/Back");
 
 				// Настройки клавиш
@@ -491,12 +489,12 @@ namespace MiyukiSone
 					ProcessKeyGroup(layout.Find("SubKeyAlign"));
 				}
 
-				SetSprite(root, "KeyObj/Image (1)", "MiyukiVisual/Menu/control_window_apply.png");
+				SetSprite(root, "KeyObj/Image (1)", RelativePath + "Control_Window_Apply");
 				MakeTransparent(root, "KeyObj/Image (1)/Image (1)");
 				ProcessButtons(root, "KeyObj/Image (1)/Layout");
 
 				// Попап
-				SetSprite(root, "KeyObj/KeySetPopup", "MiyukiVisual/Menu/control_window_pop.png");
+				SetSprite(root, "KeyObj/KeySetPopup", RelativePath + "Control_Window_Pop");
 				MakeTransparent(root, "KeyObj/KeySetPopup/BG");
 				SetText(root, "KeyObj/KeySetPopup/BG/Desc1", null, 0, true);
 				SetText(root, "KeyObj/KeySetPopup/BG/Desc2", null, 0, true);

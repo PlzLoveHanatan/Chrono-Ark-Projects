@@ -11,7 +11,7 @@ using GameDataEditor;
 using I2.Loc;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
-using static MiyukiSone.EventData;
+using static MiyukiSone.EventsData;
 using static MiyukiSone.DialogueData;
 using static MiyukiSone.UtilsScripts;
 using static MiyukiSone.Dialogue;
@@ -58,6 +58,7 @@ namespace MiyukiSone
 			GDEItemKeys.Skill_S_ShadowPriest_3,
 			GDEItemKeys.Skill_S_Queen_7,
 			GDEItemKeys.Skill_S_Queen_13,
+			GDEItemKeys.Skill_S_MissChain_6,
 		};
 
 		// Main List
@@ -96,7 +97,7 @@ namespace MiyukiSone
 		};
 		#endregion
 
-		#region Character Passive IP
+		#region Miyuki's Passive IP
 		public override void Init()
 		{
 			base.Init();
@@ -154,6 +155,7 @@ namespace MiyukiSone
 			if (BChar.HP < 0 && AllyTeam.AliveChars.Count > 0)
 			{
 				resist = true;
+				MiyukiTextEvent(MiyukiAffection.Kuudere);
 			}
 		}
 
@@ -168,7 +170,7 @@ namespace MiyukiSone
 			int randomIndex = RandomManager.RandomInt("MiyukiTargetRedirect", 0, aliveAllies.Count);
 			BattleChar newTarget = null;
 
-			if (allyDamageSkills.Contains(SkillD.MySkill.KeyID)) newTarget = aliveAllies[randomIndex];
+			if (allyDamageSkills.Contains(SkillD.MySkill.KeyID) && BChar.HP <= BChar.GetStat.maxhp / 2) newTarget = aliveAllies[randomIndex];
 			else if (SkillD.IsDamage && BChar.HP <= 0) newTarget = aliveAllies[randomIndex];
 			else return;
 
@@ -181,7 +183,7 @@ namespace MiyukiSone
 		private IEnumerator ShowMiyukiEventText()
 		{
 			yield return null;
-			MiyukiTextEvent();
+			MiyukiTextEvent(MiyukiAffection.Kuudere);
 		}
 		#endregion
 
@@ -192,7 +194,7 @@ namespace MiyukiSone
 
 			//if (Bs.TurnNum >= Bs.FogTurn && !IsYandere) goto MiyukiHelp;
 
-			for (int i = 0; i < 2; i++)
+			for (int i = 0; i < MiyukiRandomResult(3); i++)
 			{
 				var paw = MiyukiPaws.ToList();
 				if (MiyukiData.LastTurnPawAction != -1 && paw.Count > 1) paw.RemoveAt(MiyukiData.LastTurnPawAction);
@@ -202,7 +204,7 @@ namespace MiyukiSone
 			}
 
 			MiyukiTextEvent();
-			//MiyukiHelp:;
+			//MiyukiHelp:;		
 			//CreateDialogue(DialogueState.help);
 		}
 
@@ -251,7 +253,7 @@ namespace MiyukiSone
 
 			List<string> selectedSkills = MiyukiResult() ? PosLucyDrawKeys : NegLucyDrawKeys;
 
-			for (int i = 0; i < 2; i++)
+			for (int i = 0; i < MiyukiRandomResult(3); i++)
 			{
 				var skill = Skill.TempSkill(selectedSkills.Random("MiyukiRandomSkill"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
 				if (skill != null) Bs.AllyTeam.Skills_Deck.InsertRandom("MiyukiRandomInsert", skill);

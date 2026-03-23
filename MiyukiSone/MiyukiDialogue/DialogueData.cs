@@ -143,6 +143,7 @@ namespace MiyukiSone
 
 		public static void MiyukiTextBoxLove(bool isYes)
 		{
+			if (isYes && IsYandere) isYes = false;
 			var line = GetRandomLoveLine(isYes);
 			if (line == null)
 			{
@@ -236,7 +237,7 @@ namespace MiyukiSone
 				//MiyukiSaveManager.Instance.CurrentData.LockedState = RandomManager.RandomInt("MiyukiRandomAffection", 1, 3);
 				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
 				MiyukiSaveManager.Instance.Save();
-				EventSpecial.RestartRun();
+				Events.RestartRun();
 
 				if (DialogueWindows.Count > 0) DialogueWindows.Where(obj => obj != null).ToList().ForEach(RemoveWindow);
 			}

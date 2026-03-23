@@ -9,10 +9,11 @@ using I2.Loc;
 using UnityEngine;
 using static MiyukiSone.Utils;
 using static MiyukiSone.DialogueData;
-using static MiyukiSone.EventData;
+using static MiyukiSone.EventsData;
 using static MiyukiSone.Dialogue;
-using static MiyukiSone.EventTurn;
+using static MiyukiSone.Events;
 using UnityEngine.U2D.SpriteShapeClipperLib;
+using UnityEngine.Internal;
 
 namespace MiyukiSone
 {
@@ -73,6 +74,17 @@ namespace MiyukiSone
 			return shouldBePositive ? baseValue : -baseValue;
 		}
 
+		public static int MiyukiRandomResult(int maxValue)
+		{
+			return MiyukiRandomResult(maxValue, null);
+		}
+
+		public static int MiyukiRandomResult(int maxValue, [DefaultValue("1")] int? minValue = null)
+		{
+			int safeMin = minValue ?? 1;
+			return RandomManager.RandomInt("MiyukiRandomInt", safeMin, maxValue + 1);
+		}
+
 		public static bool MiyukiResult() => IsDere;
 		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiDecision", 100, 50);
 		public static bool IsDere => CurrentAffection == MiyukiAffection.DereDere;
@@ -90,7 +102,7 @@ namespace MiyukiSone
 		{
 			if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 			{
-				CreateDialogue(DialogueState.love, 1);
+				CreateDialogue(DialogueState.love, amount: 1, isDoubleButton: true);
 				return;
 			}
 
@@ -99,9 +111,8 @@ namespace MiyukiSone
 				_currentAffection = GetRandomAffection();
 				MiyukiSaveManager.Instance.CurrentData.CurrentAffection = (int)CurrentAffection;
 				CreateDialogue();
+				MiyukiTurnAction();
 			}
-
-			if (!IsKuudere) MiyukiTurnAction();
 
 			CheckIp();
 		}

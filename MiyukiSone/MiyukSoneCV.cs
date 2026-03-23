@@ -15,7 +15,7 @@
 
 	public int LastTurnPawAction = -1;
 
-	public int LastHelpAction = -1;
+	public int LastArtIndex = -1;
 	
 	public int LastPhoneImage = -1;
 	public int LastSong = -1;
@@ -30,6 +30,9 @@
 	public int LastNoBoxAnimation = -1;
 
 	public bool BGMVolumeIncreased = false;
+
+	public bool PauseOpen = false;
+	public int MiyukiArtIndex = -1;
 
 	public string LastBuff;
 }
