@@ -32,7 +32,7 @@ namespace EnDub
 		{
 			try
 			{
-				Data.LoadAllCharacterAudio();
+				Data.LoadAllDialogues();
 				harmony.PatchAll();
 			}
 			catch (System.Exception e)
@@ -52,7 +52,7 @@ namespace EnDub
 
 				if (partyCharacters.Count == 0) return true;
 
-				if (Data.textToAudio.TryGetValue(inText, out var audioInfo))
+				if (Data.TextToAudio.TryGetValue(inText, out var audioInfo))
 				{
 					if (partyCharacters.TryGetValue(audioInfo.character, out string activeSkin))
 					{
@@ -60,7 +60,7 @@ namespace EnDub
 
 						if (targetSkin != null)
 						{
-							Utils.PlayCharacterAudio(audioInfo.character, targetSkin, audioInfo.audioFile, inText, 200);
+							Utils.PlayCharacterAudio(audioInfo.character, targetSkin, audioInfo.audioFile);
 						}
 					}
 				}
@@ -75,7 +75,7 @@ namespace EnDub
 				foreach (var character in PlayData.TSavedata.Party)
 				{
 					string charId = character.KeyData;
-					string characterName = Data.GetCharacterNameByGameId(charId);
+					string characterName = Data.GetCharacterName(charId);
 
 					if (!string.IsNullOrEmpty(characterName))
 					{
@@ -106,11 +106,11 @@ namespace EnDub
 				if (skill?.Master?.Info?.KeyData == null) return;
 
 				string charId = skill.Master.Info.KeyData;
-				string charName = Data.GetCharacterNameByGameId(charId);
+				string charName = Data.GetCharacterName(charId);
 				if (string.IsNullOrEmpty(charName)) return;
 
 				string path = $"Assets/{charName}/Skills/{skill.MySkill.KeyID}.wav";
-				Utils.PlaySoundFromAsset(path, volumePercent: 200);
+				Utils.PlaySoundFromAsset(path);
 			}
 		}
 	}

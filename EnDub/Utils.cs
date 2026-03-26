@@ -41,15 +41,14 @@ namespace EnDub
 			PlaySound(sound, false, volume);
 		}
 
-		public static T GetAssets<T>(string path, string assetBundlePatch = null) where T : UnityEngine.Object
+		public static T GetAssets<T>(string path) where T : UnityEngine.Object
 		{
-			if (string.IsNullOrEmpty(assetBundlePatch)) assetBundlePatch = "endub";
-			var address = ModManager.getModInfo("EnDub").assetInfo.ObjectFromAsset<T>(assetBundlePatch, path);
+			var address = ModManager.getModInfo("EnDub").assetInfo.ObjectFromAsset<T>("endub", path);
 			T asset = AddressableLoadManager.LoadAddressableAsset<T>(address);
 			return asset;
 		}
 
-		public static void PlaySoundFromAsset(string assetPath, bool isStopOldBus = true, int? volumePercent = null)
+		public static void PlaySoundFromAsset(string assetPath, bool isStopOldBus = true)
 		{
 			if (string.IsNullOrEmpty(assetPath)) return;
 
@@ -66,15 +65,15 @@ namespace EnDub
 			GameObject tempGO = new GameObject("TempAudio");
 			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
 
-			//float finalVolume = volumePercent.HasValue ? volumePercent.Value / 100f : 1f;
+			float finalVolume = Settings.AudioVolume > 0 ? Settings.AudioVolume : SaveManager.NowSaveSlot.SoundEffectVolume / 100f;
 
-			audioSource.PlayOneShot(clip, Settings.AudioVolume);
+			audioSource.PlayOneShot(clip, finalVolume);
 
 			_currentTempGO = tempGO;
 			UnityEngine.Object.Destroy(tempGO, clip.length);
 		}
 
-		public static void PlayCharacterAudio(string character, string skin, string audioFile, string text = "", int volumePercent = 100)
+		public static void PlayCharacterAudio(string character, string skin, string audioFile)
 		{
 			if (string.IsNullOrEmpty(character) || string.IsNullOrEmpty(audioFile)) return;
 
@@ -115,7 +114,7 @@ namespace EnDub
 				
 			}
 
-			PlaySoundFromAsset(audioPath, true, volumePercent);
+			PlaySoundFromAsset(audioPath, true);
 		}
 
 		public static void PlayCharacterAudioById(string characterId, string audioFile, string characterName = null, string text = "")
@@ -124,7 +123,7 @@ namespace EnDub
 
 			if (string.IsNullOrEmpty(characterName))
 			{
-				characterName = Data.GetCharacterNameByGameId(characterId);
+				characterName = Data.GetCharacterName(characterId);
 				if (string.IsNullOrEmpty(characterName))
 				{
 					Debug.LogWarning($"Unknown character ID: {characterId}");
@@ -133,7 +132,7 @@ namespace EnDub
 			}
 
 			string skin = GetCharacterSkin(characterId);
-			PlayCharacterAudio(characterName, skin, audioFile, text);
+			PlayCharacterAudio(characterName, skin, audioFile);
 		}
 
 		public static string GetCharacterSkin(string characterId)

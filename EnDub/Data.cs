@@ -13,6 +13,8 @@ namespace EnDub
 	public class DialogueLine
 	{
 		public string key;
+		public string character;
+		public string skin;
 		public string Korean;
 		public string English;
 		public string Japanese;
@@ -30,90 +32,72 @@ namespace EnDub
 
 	public static class Data
 	{
-		public static Dictionary<string, AudioInfo> textToAudio = new Dictionary<string, AudioInfo>();
-		public static Dictionary<string, Dictionary<string, DialogueLine[]>> characterSkinLines = new Dictionary<string, Dictionary<string, DialogueLine[]>>();
-		public static List<string> availableCharacters = new List<string>();
+		// character -> skin -> key -> DialogueLine
+		private static Dictionary<string, Dictionary<string, Dictionary<string, DialogueLine>>> AllLines = new Dictionary<string, Dictionary<string, Dictionary<string, DialogueLine>>>();
+		public static Dictionary<string, AudioInfo> TextToAudio = new Dictionary<string, AudioInfo>();
+		public static List<string> AvailableCharacters = new List<string>();
 
-		public static Dictionary<string, string> gameIdToCharacterName = new Dictionary<string, string>()
+		public static Dictionary<string, string> CharacterKey = new Dictionary<string, string>()
 		{
 			{ GDEItemKeys.Character_ShadowPriest, "Charon" },
 			{ GDEItemKeys.Character_Queen, "Huz" },
 			{ GDEItemKeys.Character_Lian, "Lian" },
 			{ GDEItemKeys.Character_SilverStein, "Silverstein" },
 			{ GDEItemKeys.Character_Sizz, "Sizz" },
+			{ GDEItemKeys.Character_Azar, "Azar" },
 		};
 
-		public static Dictionary<string, string> skinKeyToName = new Dictionary<string, string>()
+		public static Dictionary<string, string> SkinKey = new Dictionary<string, string>()
 		{
 			{ GDEItemKeys.Character_Skin_Charon_Swimsuit, "Swimsuit" },
 			{ GDEItemKeys.Character_Skin_Huz_Swimsuit, "Swimsuit" },
 			{ GDEItemKeys.Character_Skin_SilverStein_Casino, "Casino" },
 			{ GDEItemKeys.Character_Skin_Sizz_Swimsuit, "Swimsuit" },
+			{ GDEItemKeys.Character_Skin_Azar_Swimsuit, "Swimsuit" },
 		};
 
-		public static void LoadAllCharacterAudio()
+		public static void LoadAllDialogues()
 		{
 			string modPath = Utils.ThisMod.DirectoryName;
-			string audioDataPath = Path.Combine(modPath, "Assets");
+			string jsonPath = Path.Combine(modPath, "Assets", "Dialogues.json");
 
-			if (!Directory.Exists(audioDataPath))
+			if (!File.Exists(jsonPath))
 			{
-				Debug.LogError($"AudioData folder not found at: {audioDataPath}");
+				Debug.LogError($"Dialogues file not found: {jsonPath}");
 				return;
 			}
 
-			textToAudio.Clear();
-			characterSkinLines.Clear();
-			availableCharacters.Clear();
-
-			foreach (string characterDir in Directory.GetDirectories(audioDataPath))
-			{
-				string characterName = Path.GetFileName(characterDir);
-				availableCharacters.Add(characterName);
-
-				if (!characterSkinLines.ContainsKey(characterName))
-				{
-					characterSkinLines[characterName] = new Dictionary<string, DialogueLine[]>();
-				}
-
-				foreach (string jsonFile in Directory.GetFiles(characterDir, "*.json"))
-				{
-					string skinName = Path.GetFileNameWithoutExtension(jsonFile);
-					LoadCharacterSkin(characterName, skinName, jsonFile);
-				}
-			}
-
-			Debug.Log($"Loaded {availableCharacters.Count} characters with {textToAudio.Count} total text mappings");
-		}
-
-		private static void LoadCharacterSkin(string characterName, string skinName, string jsonPath)
-		{
 			try
 			{
 				string jsonContent = File.ReadAllText(jsonPath);
 				DialogueLine[] dialogueArray = JsonConvert.DeserializeObject<DialogueLine[]>(jsonContent);
 
-				if (skinName == characterName)
-				{
-					skinName = "Normal";
-				}
-				else
-				{
-					string prefix = characterName + "_";
-					if (skinName.StartsWith(prefix))
-					{
-						skinName = skinName.Substring(prefix.Length);
-					}
-				}
-
-				characterSkinLines[characterName][skinName] = dialogueArray;
+				AllLines.Clear();
+				TextToAudio.Clear();
+				AvailableCharacters.Clear();
 
 				foreach (var line in dialogueArray)
 				{
+					if (string.IsNullOrEmpty(line.character)) continue;
+
+					if (!AllLines.ContainsKey(line.character))
+					{
+						AllLines[line.character] = new Dictionary<string, Dictionary<string, DialogueLine>>();
+						AvailableCharacters.Add(line.character);
+					}
+
+					string skin = string.IsNullOrEmpty(line.skin) ? "Normal" : line.skin;
+					if (!AllLines[line.character].ContainsKey(skin))
+					{
+						AllLines[line.character][skin] = new Dictionary<string, DialogueLine>();
+					}
+
+					AllLines[line.character][skin][line.key] = line;
+
 					var audioInfo = new AudioInfo
 					{
-						character = characterName,
-						skin = skinName,
+						character = line.character,
+						skin = skin,
 						audioFile = line.AudioFile
 					};
 
@@ -123,26 +107,64 @@ namespace EnDub
 					AddIfNotEmpty(line.Chinese, audioInfo);
 					AddIfNotEmpty(line.Chinese_TW, audioInfo);
 				}
+
+				Debug.Log($"Loaded {dialogueArray.Length} lines for {AvailableCharacters.Count} characters");
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"Error loading {jsonPath}: {ex.Message}");
+				Debug.LogError($"Error loading dialogues: {ex.Message}");
 			}
 		}
 
 		private static bool AddIfNotEmpty(string text, AudioInfo info)
 		{
-			if (!string.IsNullOrEmpty(text) && !textToAudio.ContainsKey(text))
+			if (!string.IsNullOrEmpty(text) && !TextToAudio.ContainsKey(text))
 			{
-				textToAudio.Add(text, info);
+				TextToAudio.Add(text, info);
 				return true;
 			}
 			return false;
 		}
 
-		public static string GetCharacterNameByGameId(string gameId)
+		public static bool HasSkin(string characterName, string skinName)
 		{
-			if (gameIdToCharacterName.TryGetValue(gameId, out string characterName))
+			if (AllLines.TryGetValue(characterName, out var skins))
+			{
+				return skins.ContainsKey(skinName);
+			}
+			return false;
+		}
+
+		public static DialogueLine GetLine(string characterName, string skinName, string key)
+		{
+			if (AllLines.TryGetValue(characterName, out var skins))
+			{
+				if (skins.TryGetValue(skinName, out var lines))
+				{
+					if (lines.TryGetValue(key, out var line))
+					{
+						return line;
+					}
+				}
+				if (skins.TryGetValue("Normal", out var normalLines))
+				{
+					if (normalLines.TryGetValue(key, out var normalLine))
+					{
+						return normalLine;
+					}
+				}
+			}
+			return null;
+		}
+
+		public static DialogueLine GetLine(string characterName, string key)
+		{
+			return GetLine(characterName, "Normal", key);
+		}
+
+		public static string GetCharacterName(string gameId)
+		{
+			if (CharacterKey.TryGetValue(gameId, out string characterName))
 			{
 				return characterName;
 			}
@@ -153,7 +175,7 @@ namespace EnDub
 		{
 			if (string.IsNullOrEmpty(skinKey)) return "Normal";
 
-			if (skinKeyToName.TryGetValue(skinKey, out string mappedName))
+			if (SkinKey.TryGetValue(skinKey, out string mappedName))
 			{
 				return mappedName;
 			}
@@ -161,21 +183,6 @@ namespace EnDub
 			if (CharacterSkinData._swimSuitSkinKeys.Contains(skinKey)) return "Swimsuit";
 			if (CharacterSkinData._casinoSkinKeys.Contains(skinKey)) return "Casino";
 			return "Normal";
-		}
-
-		public static bool HasSkin(string characterName, string skinName)
-		{
-			if (characterSkinLines.TryGetValue(characterName, out var skins))
-			{
-				return skins.ContainsKey(skinName);
-			}
-			return false;
-		}
-
-		public static List<string> GetAvailableSkins(string characterName)
-		{
-			if (characterSkinLines.TryGetValue(characterName, out var skins)) return skins.Keys.ToList();
-			return new List<string>();
 		}
 	}
 }
