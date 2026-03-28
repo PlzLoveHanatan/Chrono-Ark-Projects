@@ -15,6 +15,7 @@ using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
 using static CharacterDocument;
 using static MiyukiSone.Affection;
+using static MiyukiSone.Buffs;
 using static MiyukiSone.Skills;
 using static MiyukiSone.UtilsUI;
 
@@ -29,9 +30,11 @@ namespace MiyukiSone
 		public static BattleTeam AllyTeam => Bs?.AllyTeam;
 		public static BattleTeam EnemyTeam => Bs?.EnemyTeam;
 		public static BattleChar DummyChar => AllyTeam?.DummyChar;
-		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki);
+		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki) ?? AllyTeam.AliveChars.Random();
 		public static MiyukCV MiyukiData => GetOrCreateMiyukiData();
 		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(c => c.KeyData == ModItemKeys.Character_Miyuki);
+		public static MiyukiPassive GetMiyukiPassive => MiyukiBchar.Info.Passive as MiyukiPassive;
+		public static AffectionOverflow MiyukiBuff => MiyukiBchar.BuffReturn(ModItemKeys.Buff_B_Miyuki_Passive, false) as AffectionOverflow;
 		private static GameObject _currentTempGO;
 
 		public static MiyukCV GetOrCreateMiyukiData()
@@ -131,38 +134,6 @@ namespace MiyukiSone
 			SaveManager.savemanager.OptionApply(false, false);
 		}
 
-		//public static void CheckSettingsVolume()
-		//{
-		//	if (!MiyukiData.BGMVolumeIncreased)
-		//	{
-		//		if (SaveManager.NowSaveSlot.SoundBGMVolume != 0 && SaveManager.NowSaveSlot.SoundMainVolume != 0) return;
-
-		//		MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain = SaveManager.NowSaveSlot.SoundMainVolume;
-		//		MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM = SaveManager.NowSaveSlot.SoundBGMVolume;
-		//		MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect = SaveManager.NowSaveSlot.SoundEffectVolume;
-		//		MiyukiSaveManager.Instance.Save();
-		//		SaveManager.NowSaveSlot.SoundMainVolume = 40;
-		//		SaveManager.NowSaveSlot.SoundBGMVolume = 40;
-		//		SaveManager.NowSaveSlot.SoundEffectVolume = 40;
-		//		MiyukiData.BGMVolumeIncreased = true;
-		//	}
-		//	else if (MiyukiData.BGMVolumeIncreased)
-		//	{
-		//		MasterAudio.StopBus("BGM");
-		//		MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
-		//		MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
-		//		MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
-		//		SaveManager.NowSaveSlot.SoundMainVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain;
-		//		SaveManager.NowSaveSlot.SoundBGMVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM;
-		//		SaveManager.NowSaveSlot.SoundEffectVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect;
-		//		MiyukiData.BGMVolumeIncreased = false;
-		//	}
-
-		//	SaveManager.NowSaveSlot.SaveSoundData();
-		//	SaveManager.savemanager.OptionApply(false, false);
-		//}
-
-		// fix the audio volume
 		public static void PlaySoundFromAsset(string audioPath, bool isStopOldBus = true, int? volumePercent = null)
 		{
 			if (string.IsNullOrEmpty(audioPath)) return;
@@ -209,14 +180,14 @@ namespace MiyukiSone
 
 		private static void MiyukiTextBattle(string text)
 		{
-			if (string.IsNullOrEmpty(text) || !MiyukiInParty) return;
+			if (string.IsNullOrEmpty(text) /*|| !MiyukiInParty*/) return;
 			MiyukiBchar.StartCoroutine(MiyukiTextBattle(MiyukiBchar.GetTopPos(), text));
 		}
 
 		public static void MiyukiTextField(string text)
 		{
-			if (string.IsNullOrEmpty(text) || !MiyukiInParty) return;
-			AllyWindow window = PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki).GetAllyWindow;
+			if (string.IsNullOrEmpty(text) /*|| !MiyukiInParty*/) return;
+			AllyWindow window = PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki).GetAllyWindow ?? PlayData.TSavedata.Party.Random().GetAllyWindow;
 			if (window != null) FieldSystem.instance.StartCoroutine(MiyukiTextField(window, text));
 			//if (window != null) BattleText.InstFieldText(window, text);
 		}
@@ -226,7 +197,7 @@ namespace MiyukiSone
 			BattleText component = Misc.UIInst(UIManager.inst.BattleTalkTextUI, window.TextPos).GetComponent<BattleText>();
 			component.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
 			component.transform.rotation = GetRandomRotation();
-			component.transform.localPosition += GetRandomTextPosition();
+			component.transform.localPosition -= GetRandomTextPosition();
 			component.Ptext.TextInput(text);
 			yield return component.BattleTextOut();
 		}
@@ -264,9 +235,9 @@ namespace MiyukiSone
 		{
 			Vector3 baseScale = new Vector3(0.9f, 0.9f, 0.9f);
 			if (MiyukiDecides) return baseScale;
-			float xOffset = RandomManager.RandomFloat("MiyukiScaleX", 0.5f, 1.6f);
-			float yOffset = RandomManager.RandomFloat("MiyukiScaleY", 0.5f, 1.6f);
-			float zOffset = RandomManager.RandomFloat("MiyukiScaleZ", 0.5f, 1.6f);
+			float xOffset = RandomManager.RandomFloat("MiyukiScaleX", 0.6f, 1.3f);
+			float yOffset = RandomManager.RandomFloat("MiyukiScaleY", 0.6f, 1.3f);
+			float zOffset = RandomManager.RandomFloat("MiyukiScaleZ", 0.6f, 1.3f);
 			return new Vector3(xOffset, yOffset, zOffset);
 		}
 
@@ -430,13 +401,19 @@ namespace MiyukiSone
 			if (skill == null) return;
 			List<Skill_Extended> upgradeList = PlayData.GetEnforce(posUpgrade, skill);
 			if (upgradeList.Count > 0) skill.ExtendedAdd_Battle(upgradeList.Random("MiyukiRandomUpgrade"));
-
 		}
 
 		public static T Let<T>(this T obj, Action<T> action)
 		{
 			if (obj != null) action(obj);
 			return obj;
+		}
+
+		public static IEnumerator CheckEternalVow()
+		{
+			yield return null;
+			var vow = AllyTeam.Skills.Concat(AllyTeam.Skills_Deck).Concat(AllyTeam.Skills_UsedDeck).Any(s => s.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_EternalVow);
+			if (!vow) GetMiyukiPassive.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_MissChain_12_LucyD);
 		}
 	}
 }

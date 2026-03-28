@@ -19,6 +19,7 @@ namespace MiyukiSone
 			public int TurnEndTryIndex;
 			public int TurnEndTryCallCount;
 			public int KissNoAnswerCount;
+			public int FinalViewPlays;
 			public int SoundVolumeMain;
 			public int SoundVolumeBGM;
 			public int SoundVolumeEffect;

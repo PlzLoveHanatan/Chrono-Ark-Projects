@@ -11,11 +11,14 @@ using UnityEngine;
 using static CharacterDocument;
 using static MiyukiSone.Skills;
 using static MiyukiSone.Utils;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace MiyukiSone
 {
 	public static class MiyukiSkillExtension
 	{
+
+
 		private static readonly Dictionary<string, string> RedirectMap = new Dictionary<string, string>
 		{
 			{ GDEItemKeys.s_targettype_enemy, GDEItemKeys.s_targettype_otherally },
@@ -82,13 +85,13 @@ namespace MiyukiSone
 			yield return new WaitForSecondsRealtime(0.2f);
 
 			if (owner.Info.KeyData != ModItemKeys.Character_Miyuki) yield break;
-			if (owner.Info.Passive is MiyukiPassive passive) passive.AvaliableCharacterDraw.Add(ModItemKeys.Skill_S_Miyuki_Draw_MiyukiHelp);
 			if (skill1.MyButton != null && !skill1.MyButton.AlreadyWasted) skill1.Except();
 			if (skill2.MyButton != null && !skill2.MyButton.AlreadyWasted) skill2.Except();
-
+			GetMiyukiPassive?.AvaliableCharacterDraw.Add(ModItemKeys.Skill_S_Miyuki_Draw_MiyukiHelp);
+			yield return CheckEternalVow();
 			Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, owner, owner.MyTeam);
 			if (newSkill != null) AllyTeam.Add(newSkill, true);
 			yield break;
-		}
+		}	
 	}
 }

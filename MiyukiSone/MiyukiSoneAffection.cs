@@ -87,6 +87,7 @@ namespace MiyukiSone
 
 		public static bool MiyukiResult() => IsDere;
 		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiDecision", 100, 50);
+		public static bool MiyukiForces => RandomManager.RandomPer("MiyukiForce", 100, 75);
 		public static bool IsDere => CurrentAffection == MiyukiAffection.DereDere;
 		public static bool IsKuudere => CurrentAffection == MiyukiAffection.Kuudere;
 		public static bool IsYandere => CurrentAffection == MiyukiAffection.Yandere;
@@ -106,9 +107,9 @@ namespace MiyukiSone
 				return;
 			}
 
-			if (MiyukiDecides)
+			if (MiyukiDecides || IsYandere && MiyukiForces)
 			{
-				_currentAffection = GetRandomAffection();
+				GetRandomAffection();
 				MiyukiSaveManager.Instance.CurrentData.CurrentAffection = (int)CurrentAffection;
 				CreateDialogue();
 				MiyukiTurnAction();
@@ -117,9 +118,9 @@ namespace MiyukiSone
 			CheckIp();
 		}
 
-		private static MiyukiAffection GetRandomAffection()
+		public static void GetRandomAffection()
 		{
-			if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue) return (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
+			if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue) _currentAffection = (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
 
 			var values = Enum.GetValues(typeof(MiyukiAffection));
 			var availableIndices = new List<int>();
@@ -134,12 +135,12 @@ namespace MiyukiSone
 			int randomIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, availableIndices.Count);
 			int selectedIndex = availableIndices[randomIndex];
 			MiyukiData.LastAffection = selectedIndex;
-			return (MiyukiAffection)values.GetValue(selectedIndex);
+			_currentAffection = (MiyukiAffection)values.GetValue(selectedIndex);
 		}
 
 		public static void CheckIp()
 		{
-			if (Bs == null) return;
+			if (BattleSystem.instance == null) return;
 
 			foreach (var skill in AllyTeam.Skills.Concat(AllyTeam.Skills_Deck).Concat(AllyTeam.Skills_UsedDeck))
 			{

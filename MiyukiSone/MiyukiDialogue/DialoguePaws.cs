@@ -114,7 +114,8 @@ namespace MiyukiSone
 		{
 			GDEItemKeys.Skill_S_Witch_P_0, // Crucifying Curse
 			GDEItemKeys.Skill_S_Witch_2, // Weakening Curse
-			GDEItemKeys.Skill_S_Joker_0, // Joker
+			//GDEItemKeys.Skill_S_Joker_0, // Joker
+			ModItemKeys.Skill_S_Miyuki_Special_Joker, // Joker
 			//GDEItemKeys.Skill_S_ProgramMaster_LucyUpdate_Main,
 			GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard, // Sentenced to Death
 			GDEItemKeys.Skill_S_BombClown_B_0, // Time Bomb
@@ -124,20 +125,24 @@ namespace MiyukiSone
 		{
 			GDEItemKeys.Buff_B_Outlaw_P_0,
 			GDEItemKeys.Buff_B_DuelistWill,
-			//GDEItemKeys.Buff_B_DuelistWill, shadow veil
+			GDEItemKeys.Buff_B_GuitarList_P_0, // Instrumentalist
+			GDEItemKeys.Buff_B_CamouflageCloak, // Shadow Veil
 			GDEItemKeys.Buff_B_LBossFirst_Phase3_Summon_T_HealStun_T,
 			GDEItemKeys.Buff_B_S3_Boss_Pope_P_0,
 			ModItemKeys.Buff_B_Miyuki_Enemy_ExtraAction,
 		};
 
-		private static readonly List<string> YanderePawBuffKeysAllies = new List<string>()
+		private static readonly List<string> YanderePawDebuffKeysAllies = new List<string>()
 		{
 			GDEItemKeys.Buff_B_S3_Pope_P_2, // Complete Obedience
 			GDEItemKeys.Buff_B_Enemy_Boss_Reaper_P_0, // Mark of Death
 			//GDEItemKeys.Buff_TheLight_P_0, // Sacred Brand
 			GDEItemKeys.Buff_B_S2_Mainboss_1_LeftDebuff, // Ruby Stigma
 			GDEItemKeys.Buff_B_S2_Mainboss_1_RightDebuf, // Saphire Stigma
-			//GDEItemKeys.Buff_B_S2_Mainboss_1_RightDebuf, // Deep Wound
+			GDEItemKeys.Buff_B_Gunner_1_T, // Weak Spot
+			GDEItemKeys.Buff_B_Gunman_3_T, // Blinded
+			GDEItemKeys.Buff_B_DeepWound, // Deep Wound
+			GDEItemKeys.Buff_B_Animatronics_1_T, // Deep Bleeding
 		};
 
 		private static readonly List<Action> DereDialoguePawsAction = new List<Action>
@@ -164,7 +169,6 @@ namespace MiyukiSone
 		public static void ChoosePaws()
 		{
 			if (BattleSystem.instance == null) return;
-
 			(Affection.IsDere ? (Action)DerePaws : YanderePaws)();
 		}
 
@@ -250,6 +254,11 @@ namespace MiyukiSone
 			if (skillKey == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard || skillKey == GDEItemKeys.Skill_S_BombClown_B_0)
 			{
 				skillMaster = AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly");
+
+				if (skillKey == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard)
+				{
+					AllyTeam.AliveChars.ForEach(a => a.AddBuff(GDEItemKeys.Buff_B_FanaticBoss_FireHide));
+				}
 			}
 
 			Skill skill = Skill.TempSkill(skillKey, skillMaster, skillMaster.MyTeam);
@@ -276,7 +285,7 @@ namespace MiyukiSone
 			while (AllyTeam.Skills_Deck.Count > 0)
 			{
 				Skill skill = AllyTeam.Skills_Deck[0];
-				skill.ExtendedAdd_Battle(NegExtendedKeys.Random("RandomNegativeEx"));
+				if (skill.AllExtendeds == null) skill.ExtendedAdd_Battle(PlayData.GetEnforce(true).Random("RandomNegativeEx"));
 				yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
 			}
 
@@ -294,19 +303,18 @@ namespace MiyukiSone
 			yield break;
 		}
 
-
 		public static void ApplyBuffEnemy()
 		{
-			string buffKey = YanderePawBuffKeysEnemies.Random("RandomBuff");
-			if (string.IsNullOrEmpty(buffKey) || Bs.EnemyTeam.AliveChars.Count == 0) return;
-			Bs.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().Random("RandomEnemy")?.AddBuff(buffKey);
+			string buffKey = YanderePawBuffKeysEnemies.Random("RandomEnemyBuff");
+			if (string.IsNullOrEmpty(buffKey) || BattleSystem.instance.EnemyTeam.AliveChars.Count == 0) return;
+			BattleSystem.instance.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().Random("RandomEnemy")?.AddBuff(buffKey);
 		}
 
 		private static void ApplyBuffAlly()
 		{
-			string buffKey = YanderePawBuffKeysAllies.Random("RandomBuff");
-			if (string.IsNullOrEmpty(buffKey) || Bs.EnemyTeam.AliveChars.Count == 0) return;
-			AllyTeam.AliveChars.Where(e => e.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly")?.AddBuff(buffKey);
+			string buffKey = YanderePawDebuffKeysAllies.Random("RandomAllyDebuff");
+			if (string.IsNullOrEmpty(buffKey) || BattleSystem.instance.AllyTeam.AliveChars.Count == 0) return;
+			BattleSystem.instance.AllyTeam.AliveChars.Where(e => e.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly")?.AddBuff(buffKey);
 		}
 
 		private static void ChangeAllyFixedAbility()

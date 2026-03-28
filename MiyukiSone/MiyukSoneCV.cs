@@ -21,6 +21,8 @@
 	public int LastSong = -1;
 	public int LastPose = -1;
 
+	public bool SlotsCheck = false;
+
 	// Kiss no answer
 	public int CurrentKissNoType = 0;
 	public int KissNoCallCount = 0;

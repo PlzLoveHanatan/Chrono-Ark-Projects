@@ -28,6 +28,7 @@ namespace MiyukiSone
 		#region Data & Constructors
 		private MiyukiInputEvent chatInputField;
 
+		
 		public bool CreateCharacterDraw = false;
 
 		// Fixed Ability Skill List
@@ -94,6 +95,7 @@ namespace MiyukiSone
 			GDEItemKeys.Skill_S_LucyCurse_Banana,
 			GDEItemKeys.Skill_S_LucyCurse_Late,
 			GDEItemKeys.Skill_S_LucyCurse_Heavy,
+			GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy,
 		};
 		#endregion
 
@@ -121,7 +123,7 @@ namespace MiyukiSone
 			});
 
 			PawsWithDeck();
-			if (AvaliableCharacterDraw.Count > 0) BattleSystem.DelayInput(PawsWithDraw());
+			if (AvaliableCharacterDraw.Count > 0) BattleSystem.DelayInput(PawsWithDraw());			
 		}
 
 		public void DrawNumChange(int DrawNum, out int OutNum)
@@ -152,8 +154,10 @@ namespace MiyukiSone
 
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 		{
-			if (BChar.HP < 0 && AllyTeam.AliveChars.Count > 0)
+			if (BChar.HP < 0 && AllyTeam.AliveChars.Where(a => a != BChar).Count() > 0)
 			{
+				var painSharing = AllyTeam.AliveChars.Where(a => a == AllyTeam.LucyAlly).SelectMany(b => b.Buffs).FirstOrDefault(b => b.BuffData.Key == GDEItemKeys.Buff_B_BloodyMist_ShareDamage || b.BuffData.Key == GDEItemKeys.Buff_B_ProgramMaster_LucyMain);
+				if (painSharing != null) return;
 				resist = true;
 				MiyukiTextEvent(MiyukiAffection.Kuudere);
 			}
@@ -268,14 +272,20 @@ namespace MiyukiSone
 		{
 			yield return null;
 			BChar.BuffAdd(ModItemKeys.Buff_B_Miyuki_Passive, DummyChar);
-			var buff = BChar.BuffReturn(ModItemKeys.Buff_B_Miyuki_Passive, false) as AffectionOverflow;
-			buff?.ChangeDraw();
+			MiyukiBuff?.ChangeDraw();
+
 		}
 		#endregion
 
 		private void CreateCharacterLucyDraw()
 		{
-			if (AvaliableCharacterDraw.Count == 0 || !CreateCharacterDraw) return;
+			if (AvaliableCharacterDraw.Count == 0)
+			{
+				CreateCharacterDraw = false;
+				MiyukiBuff?.ChangeIcon();
+			}
+
+			if (!CreateCharacterDraw) return;
 
 			var skill = Skill.TempSkill(AvaliableCharacterDraw.Random("MiyukiCharacterDraw"), AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
 			AllyTeam.Add(skill, true);

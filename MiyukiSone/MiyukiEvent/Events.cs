@@ -38,6 +38,7 @@ namespace MiyukiSone
 			DiscardSkill,
 			ChangeAlliesHp,
 			CurseRandomEquip,
+			KillRandomAlly,
 		};
 
 		private static readonly List<Action> DereTurnActions = new List<Action>()
@@ -49,8 +50,8 @@ namespace MiyukiSone
 			ChangeEnemiesActions,
 			ChangeSkillUpgrade,
 			ChangeAlliesHp,
-			//KillRandomEnemy,
-			ReviveAllies
+			KillRandomEnemy,
+			//ReviveAllies
 		};
 		#endregion
 
@@ -72,13 +73,16 @@ namespace MiyukiSone
 
 		private static void KillRandomEnemy()
 		{
-			Utils.EnemyTeam.AliveChars.Where(e => e != null && e is BattleEnemy enemy && !enemy.Boss).ToList().Random("RandomEnemy").Dead();
+			var finalEnemy = Utils.EnemyTeam.AliveChars.Where(e => e != null && e is BattleEnemy enemy && !enemy.Boss).ToList().Random();
+			if (finalEnemy == null) return;
+			Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_KillEnemy, MiyukiBchar, MiyukiBchar.MyTeam);
+			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(b => finalEnemy.Dead()), "I love YOU that much!", false, false, true, false, true));
 		}
 
-		private static void ReviveAllies()
-		{
-			AllyTeam.AliveChars.FindAll(a => a.IsDead).Select(a => { a.IsDead = false; return a; }).ToList();
-		}
+		//public static void ReviveAllies()
+		//{
+		//	BattleSystem.instance.AllyList.FindAll(a => a.Info.Incapacitated).Select(a => { a.Info.Incapacitated = false; a.Info.Hp = a.Info.get_stat.maxhp; return a; }).ToList();
+		//}
 		#endregion
 
 		#region Basic Miyuki Actions
@@ -94,10 +98,24 @@ namespace MiyukiSone
 
 		private static void ChangeRelicBarNum(int amount)
 		{
-			//for (int i = PlayData.TSavedata.ArkPassivePlus; i < PlayData.TSavedata.ArkPassivePlus + num; i++)
-			//{
-			//	PlayData.TSavedata.Passive_Itembase.Add(null);
-			//}
+			if (IsDere)
+			{
+				for (int i = PlayData.TSavedata.ArkPassivePlus; i < PlayData.TSavedata.ArkPassivePlus + amount; i++)
+				{
+					PlayData.TSavedata.Passive_Itembase.Add(null);
+				}
+			}
+			else
+			{
+				for (int i = 0; i < amount; i++)
+				{
+					if (PlayData.TSavedata.Passive_Itembase.Count > 0)
+					{
+						PlayData.TSavedata.Passive_Itembase.RemoveAt(PlayData.TSavedata.Passive_Itembase.Count - 1);
+					}
+				}
+			}
+
 			PlayData.TSavedata.ArkPassivePlus += amount;
 			if (UIManager.NowActiveUI is ArkPartsUI) UIManager.NowActiveUI.Delete();
 		}
@@ -126,7 +144,7 @@ namespace MiyukiSone
 			}
 			else
 			{
-				PartyInventory.InvenM.ChangeMaxInventoryNum(amount);
+				PartyInventory.InvenM.ChangeMaxInventoryNum(amount, new List<string>());
 			}
 		}
 
@@ -139,6 +157,7 @@ namespace MiyukiSone
 		public static void ChangeSkillUpgrade()
 		{
 			var skill = AllyTeam.Skills.Where(s => s != null && s.CharinfoSkilldata.SKillExtended == null && s.MySkill.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && !s.isExcept).ToList().Random();
+			if (skill == null) return;
 			string text = IsDere ? "Select skill to obtain special upgrade" : "Select skill to obtain downgrade";
 			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, ChangeUpgrade, text, false, true, true, false, true));
 		}
@@ -169,7 +188,12 @@ namespace MiyukiSone
 				bool isPainDamage = AllyTeam.AliveChars.Any(a => a.BuffReturn(GDEItemKeys.Buff_B_Queen_10_T, false) == null);
 				AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().ForEach(a => UtilsScripts.TakeNonLethalDamage(a, amount, isPainDamage));
 			}
-			
+
+		}
+
+		private static void AddSkillIntoData()
+		{
+
 		}
 		#endregion
 
@@ -202,7 +226,7 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void DiscardSkill()
+		private static void DiscardSkill()
 		{
 			var skill = AllyTeam.Skills.Where(s => s.Master.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomSkill");
 			if (skill == null) return;
@@ -210,12 +234,20 @@ namespace MiyukiSone
 			BattleSystem.DelayInputAfter(UpdateUI());
 		}
 
-		private static void CurseRandomEquip()
+		public static void CurseRandomEquip()
 		{
-			PartyInventory.InvenM.InventoryItems.Where(e => e != null).OfType<Item_Equip>().ToList().Random("MiyukiRandomEquip")?.Let(e => EquipCurse.RandomCurse(e));
+			PartyInventory.InvenM.InventoryItems.Where(e => e != null).OfType<Item_Equip>().ToList().Random("MiyukiRandomEquipCurse")?.Let(e => EquipCurse.RandomCurse(e));
 			//PartyInventory.InvenM.InventoryItems.Where(e => e != null).OfType<Item_Equip>().ToList().ForEach(e => e.Curse = EquipCurse.RandomCurse(e));
 			//PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki && a.Equip != null)?.SelectMany(c => c.Equip).OfType<Item_Equip>().ToList().ForEach(e => e.Curse = EquipCurse.RandomCurse(e));
-			//PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).SelectMany(c => c.Equip).OfType<Item_Equip>().Select(e => { e.Curse = EquipCurse.RandomCurse(e); return e; }).ToList();
+			PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).SelectMany(c => c.Equip).OfType<Item_Equip>().ToList().Random("MiyukiRandomEquipCurse")?.Let(e => e.Curse = EquipCurse.RandomCurse(e));
+		}
+
+		public static void KillRandomAlly()
+		{
+			var ally = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random();
+			if (ally == null) return;
+			Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_KillAlly, MiyukiBchar, MiyukiBchar.MyTeam);
+			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(b => ally.Dead()), "Why YOU hate Me so much?", false, false, true, false, true));
 		}
 
 		private static void DebuffAlly()
@@ -227,14 +259,15 @@ namespace MiyukiSone
 		#region Event Special
 		public static void RestartRun()
 		{
-			Bs.StartCoroutine(RestartRunCo());
+			if (BattleSystem.instance != null) BattleSystem.instance.StartCoroutine(RestartRunCo());
+			else FieldSystem.instance?.StartCoroutine(RestartRunCo());
 		}
 
 		private static IEnumerator RestartRunCo()
 		{
 			yield return new WaitForSeconds(1.5f);
 			UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
-			UIManager.inst.StartCoroutine(PauseWindow.RestartCo());
+			yield return UIManager.inst.StartCoroutine(PauseWindow.RestartCo());
 			//PauseWindow.ReturnToMainDel();
 		}
 
@@ -244,6 +277,8 @@ namespace MiyukiSone
 			yield return new WaitForSeconds(2f);
 			UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
 			PauseWindow.QuitGameDel();
+			yield return new WaitForSeconds(1.5f);
+			if (UIManager.inst.ArkPartUI == null) UnityEngine.Application.Quit();
 		}
 
 		public static void RestartStage(int stageNum = 0)

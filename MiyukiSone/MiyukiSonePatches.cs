@@ -67,10 +67,10 @@ namespace MiyukiSone
 
 		public static List<Skill> MiyukiModifySkills(List<Skill> skills)
 		{
-			if (skills == null || skills.Count == 0 || MiyukiSone_Plugin.MiyukiInParty() && IsKuudere) return skills;
+			if (skills == null || skills.Count == 0 || MiyukiInParty && IsKuudere) return skills;
 
-			int randomSkill = !MiyukiSone_Plugin.MiyukiInParty() ? 100 : 10;
-			int randomEx = !MiyukiSone_Plugin.MiyukiInParty() ? 100 : 10;
+			int randomSkill = !MiyukiInParty ? 100 : 15;
+			int randomEx = !MiyukiInParty ? 100 : 15;
 
 			if (RandomManager.RandomPer("MiyukiReplaceSkill", 100, randomSkill))
 			{
@@ -105,7 +105,7 @@ namespace MiyukiSone
 			// keep random rare skills ?
 			var randomRareSkills = PlayData.ALLRARESKILLLIST.Select(s => s.KeyID).ToList();
 			var skillList = MiyukiDecides ? randomSkills : randomRareSkills;
-			var skillPoolKeys = !MiyukiSone_Plugin.MiyukiInParty() || IsYandere ? negSkillKeys : skillList;
+			var skillPoolKeys = !MiyukiInParty || IsYandere ? negSkillKeys : skillList;
 			if (skillPoolKeys.Count == 0) return;
 			var newSkillKey = skillPoolKeys.Random("MiyukiRandomRareSkill");
 			UnityEngine.Debug.Log($"[Miyuki] Replacing slot {skillIndex} | {targetSkill?.MySkill?.KeyID} -> {newSkillKey}");
@@ -122,7 +122,7 @@ namespace MiyukiSone
 			if (skillData != null && skillData.SKillExtended == null)
 			{
 				if (MiyukiDecides && !IsYandere) targetSkill.CelestialUpgrade();
-				else targetSkill.NormalUpgrade(!MiyukiSone_Plugin.MiyukiInParty() || IsYandere);
+				else targetSkill.NormalUpgrade(!MiyukiInParty || IsYandere);
 			}
 			else
 			{

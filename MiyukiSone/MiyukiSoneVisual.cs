@@ -39,11 +39,11 @@ namespace MiyukiSone
 
 		[Header("Heart Settings")]
 		public string heartPath = "MiyukiVisual/Effects/heart.png";
-		public int initialHeartPoolSize = 20;
+		public int initialHeartPoolSize = 30;
 
 		[Header("Petal Settings")]
 		public string petalPath = "MiyukiVisual/Effects/petal.png";
-		public int initialPetalPoolSize = 20;
+		public int initialPetalPoolSize = 30;
 
 		public float pulseStrength = 0.3f;
 		public float heartChance = 0.3f;
@@ -74,7 +74,7 @@ namespace MiyukiSone
 		{
 			spawnInterval = 0.8f,
 			minParticles = 2,
-			maxParticles = 10,
+			maxParticles = 6,
 			moveXRange = 400f,
 			moveYMin = 600f,
 			moveYMax = 1500f,

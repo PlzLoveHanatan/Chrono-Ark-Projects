@@ -232,7 +232,7 @@ namespace MiyukiSone
 		{
 			KissTryCount++;
 
-			if (CurrentKissTry == TryType.EleventhTry && KissTryCount >= 2)
+			if (CurrentKissTry == TryType.EleventhTry && KissTryCount >= 1)
 			{
 				//MiyukiSaveManager.Instance.CurrentData.LockedState = RandomManager.RandomInt("MiyukiRandomAffection", 1, 3);
 				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;

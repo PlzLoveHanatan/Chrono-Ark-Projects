@@ -15,8 +15,8 @@ using ChronoArkMod.ModData;
 using HarmonyLib;
 using UseItem;
 using System.Reflection.Emit;
-using static MiyukiSone.MiyukiAffection;
 using static MiyukiSone.Utils;
+using static MiyukiSone.Affection;
 namespace MiyukiSone
 {
 	public class MiyukiSone_Plugin : ChronoArkPlugin
@@ -49,11 +49,6 @@ namespace MiyukiSone
 			}
 		}
 
-		public static bool MiyukiInParty()
-		{
-			return PlayData.TSavedata.Party.Any(x => x.KeyData == ModItemKeys.Character_Miyuki);
-		}
-
 		// Reset custom save file
 		[HarmonyPatch(typeof(PlayData))]
 		[HarmonyPatch(nameof(PlayData.GameEndInit))]
@@ -62,8 +57,8 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void Postfix()
 			{
-				MiyukiSaveManager.Instance.ResetSave();
-				Debug.Log("Miyuki save file reset coimplete");
+				//MiyukiSaveManager.Instance.ResetSave();
+				//Debug.Log("Miyuki save file reset coimplete");
 			}
 		}
 
@@ -75,20 +70,22 @@ namespace MiyukiSone
 			[HarmonyPrefix]
 			public static void Prefix(BattleAlly __instance, Skill skill, ref List<BattleChar> Target)
 			{
-				if (!Affection.IsYandere || skill.Master.Info.KeyData != ModItemKeys.Character_Miyuki || !MiyukiInParty()) return;
-				if (RandomManager.RandomPer("MiyukiYandereRedirect", 100, 70)) return;
+				if (!Affection.IsYandere || skill.Master.Info.KeyData != ModItemKeys.Character_Miyuki /*|| skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Rare_FinalView*/ || !MiyukiInParty) return;
 
-				List<BattleChar> possibleTargets = new List<BattleChar>();
-
-				if (skill.IsDamage) possibleTargets = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList();
-				else if (skill.IsHeal) possibleTargets = Utils.EnemyTeam.AliveChars.Where(a => a != null).ToList();
-
-				if (possibleTargets.Count > 0)
+				if (RandomManager.RandomPer("MiyukiYandereRedirect", 100, 15))
 				{
-					BattleChar target = possibleTargets.Random("MiyukiRandomTarget");
-					Target.Clear();
-					Target.Add(target);
-					EventsData.MiyukiTextEvent(Affection.CurrentAffection);
+					List<BattleChar> possibleTargets = new List<BattleChar>();
+
+					if (skill.IsDamage) possibleTargets = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList();
+					else if (skill.IsHeal) possibleTargets = Utils.EnemyTeam.AliveChars.Where(a => a != null).ToList();
+
+					if (possibleTargets.Count > 0)
+					{
+						BattleChar target = possibleTargets.Random("MiyukiRandomTarget");
+						Target.Clear();
+						Target.Add(target);
+						EventsData.MiyukiTextEvent(Affection.CurrentAffection);
+					}
 				}
 			}
 		}
@@ -103,13 +100,18 @@ namespace MiyukiSone
 				if (Dialogue.DialogueWindows.Count > 0)
 				{
 					DialogueData.StartTurnEndDialogue();
-					if (Affection.MiyukiDecides) Affection.CurrentAffection = Yandere;
-					if (Affection.IsYandere) Events.YandereActionCut();
+
+					if (Affection.MiyukiDecides)
+					{
+						//Affection.CurrentAffection = Yandere;
+						Events.YandereActionCut();
+					}
+
 					foreach (var windowObj in Dialogue.DialogueWindows)
 					{
 						if (windowObj != null)
 						{
-							
+
 						}
 					}
 					return false;
@@ -125,20 +127,85 @@ namespace MiyukiSone
 			[HarmonyPostfix]
 			public static void StageStartPostfix()
 			{
-				var data = MiyukiSaveManager.Instance.CurrentData;
-				if (!data.GameRestarted && data.GameUpdated)
-				{
-					data.GameRestarted = true;
-					MiyukiSaveManager.Instance.Save();
-					Fs?.StartCoroutine(WaitForSeconds());
-				}
+				CheckSlots();
 
+				if (!MiyukiSaveManager.Instance.CurrentData.GameRestarted && MiyukiSaveManager.Instance.CurrentData.GameUpdated)
+				{
+					MiyukiSaveManager.Instance.CurrentData.GameRestarted = true;
+					MiyukiSaveManager.Instance.Save();
+					FieldSystem.instance.StartCoroutine(WaitForSeconds());
+				}
+			}
+
+			private static void CheckSlots()
+			{
+				if (!MiyukiData.SlotsCheck)
+				{
+					if (PlayData.TSavedata.Inventory.Count > 18)
+					{
+						int excess = PlayData.TSavedata.Inventory.Count - 18;
+
+						for (int i = 0; i < excess; i++)
+						{
+							PlayData.TSavedata.Inventory.RemoveAt(PlayData.TSavedata.Inventory.Count - 1);
+						}
+
+						PlayData.MaxInventory = 18;
+						PlayData.TSavedata.MaxinventoryNumPlus -= excess;
+						PartyInventory.Ins?.UpdateInvenUI();
+					}
+
+					//if (PlayData.TSavedata.ArkPassivePlus > 4)
+					//{
+					//	int excess = PlayData.TSavedata.ArkPassivePlus - 4;
+					//	for (int i = 0; i < excess; i++)
+					//	{
+					//		if (PlayData.TSavedata.Passive_Itembase.Count > 0)
+					//		{
+					//			PlayData.TSavedata.Passive_Itembase.RemoveAt(PlayData.TSavedata.Passive_Itembase.Count - 1);
+					//		}
+					//	}
+					//	PlayData.TSavedata.ArkPassivePlus = 4;
+					//}
+				}
+				MiyukiData.SlotsCheck = true;
 			}
 
 			private static IEnumerator WaitForSeconds()
 			{
 				yield return new WaitForSeconds(2.5f);
 				yield return Events.ExitGame();
+			}
+		}
+
+		[HarmonyPatch(typeof(FieldSystem))]
+		[HarmonyPatch("BattleEnd")]
+		public static class FieldSystem_BattleEnd_Patch
+		{
+			[HarmonyPostfix]
+			public static void Postfix(FieldSystem __instance, bool NoSaveAfterEnd, bool isDefeat)
+			{
+				if (!MiyukiInParty || isDefeat) return;
+
+				if (MiyukiForces) PlayData.TSavedata.Party.FindAll(c => c.Incapacitated).ForEach(c => { c.Incapacitated = false; c.Hp = c.get_stat.maxhp / 2; });
+
+				GetRandomAffection();
+				SaveManager.savemanager.ProgressOneSave();
+			}
+		}
+
+		[HarmonyPatch(typeof(StageChest))]
+		[HarmonyPatch("Init")]
+		public static class StageChest_Init_Patch
+		{
+			[HarmonyPostfix]
+			public static void Postfix(StageChest __instance)
+			{
+				if (!IsKuudere || !MiyukiDecides) return;
+
+				__instance.ClassNum += (MiyukiInParty && MiyukiResult()) ? 1 : -1;
+				if (__instance.ClassNum < 0) __instance.ClassNum = 0;
+				if (__instance.ClassNum > 4) __instance.ClassNum = 4;
 			}
 		}
 	}

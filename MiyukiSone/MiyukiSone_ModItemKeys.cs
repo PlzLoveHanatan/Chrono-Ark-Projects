@@ -31,6 +31,10 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Recover = "B_Miyuki_Recover";
 		/// <summary>
+		/// When played from hand, view 3 random <color=#F9D62FFF>Legendary</color> Equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
+		/// </summary>
+        public static string SkillExtended_Ex_Miyuki_Ex_0 = "Ex_Miyuki_Ex_0";
+		/// <summary>
 		/// Glitch
 		/// </summary>
         public static string SkillExtended_Ex_Miyuki_Glitch = "Ex_Miyuki_Glitch";
@@ -40,6 +44,8 @@ namespace MiyukiSone
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Miyuki = "Miyuki";
+        public static string SkillEffect_SE_S_S_Miyuki_Rare_FinalView = "SE_S_S_Miyuki_Rare_FinalView";
+        public static string SkillEffect_SE_S_S_Miyuki_Rare_FinalView_Particle = "SE_S_S_Miyuki_Rare_FinalView_Particle";
         public static string SkillEffect_SE_S_S_Special_EternalKiss = "SE_S_S_Special_EternalKiss";
         public static string SkillEffect_SE_T_S_EternalPromise = "SE_T_S_EternalPromise";
         public static string SkillEffect_SE_T_S_EternalVow = "SE_T_S_EternalVow";
@@ -47,6 +53,8 @@ namespace MiyukiSone
         public static string SkillEffect_SE_T_S_HappyBirthday = "SE_T_S_HappyBirthday";
         public static string SkillEffect_SE_T_S_Heal = "SE_T_S_Heal";
         public static string SkillEffect_SE_T_S_MeasuredLove = "SE_T_S_MeasuredLove";
+        public static string SkillEffect_SE_T_S_Miyuki_Rare_FinalView = "SE_T_S_Miyuki_Rare_FinalView";
+        public static string SkillEffect_SE_T_S_Miyuki_Rare_FinalView_Particle = "SE_T_S_Miyuki_Rare_FinalView_Particle";
         public static string SkillEffect_SE_T_S_Pandemonium = "SE_T_S_Pandemonium";
         public static string SkillEffect_SE_T_S_QueenBee = "SE_T_S_QueenBee";
         public static string SkillEffect_SE_T_S_Rare_JustforYOU = "SE_T_S_Rare_JustforYOU";
@@ -101,7 +109,12 @@ namespace MiyukiSone
 		/// Helping Hand
 		/// View allies' unique draw skills and select one to create in hand. The created skill gains Exclude.
 		/// </summary>
-        public static string Skill_S_Miyuki_LucyDraw = "S_Miyuki_LucyDraw";
+        public static string Skill_S_Miyuki_LucyDraw_HelpingHand = "S_Miyuki_LucyDraw_HelpingHand";
+		/// <summary>
+		/// Miyuki's Phone
+		/// Create random Lucy rare skills until your hand is full. These skills gain Exclude.
+		/// </summary>
+        public static string Skill_S_Miyuki_LucyDraw_MiyukiPhone = "S_Miyuki_LucyDraw_MiyukiPhone";
 		/// <summary>
 		/// Measured Love
 		/// Select an ally.
@@ -133,6 +146,17 @@ namespace MiyukiSone
 		/// </summary>
         public static string Skill_S_Miyuki_QueenBee = "S_Miyuki_QueenBee";
 		/// <summary>
+		/// Final View
+		/// Ignores Armor.
+		/// Recast this skill 2 times.
+		/// </summary>
+        public static string Skill_S_Miyuki_Rare_FinalView = "S_Miyuki_Rare_FinalView";
+		/// <summary>
+		/// Final View
+		/// Ignores Armor.
+		/// </summary>
+        public static string Skill_S_Miyuki_Rare_FinalView_Particle = "S_Miyuki_Rare_FinalView_Particle";
+		/// <summary>
 		/// Game Update
 		/// Cost is increased by 1 per stage cleared.
 		/// Restart current stage.
@@ -151,6 +175,15 @@ namespace MiyukiSone
 		/// </summary>
         public static string Skill_S_Miyuki_Special_EternalKiss = "S_Miyuki_Special_EternalKiss";
 		/// <summary>
+		/// Miyuki's Joker
+		/// Draw a skill from the deck.
+		/// When this skill is cast or discarded, all allies with <b>Bleeding or Stunned</b> take 15 damage.
+		/// <color=#919191>How did this get here...</color>
+		/// </summary>
+        public static string Skill_S_Miyuki_Special_Joker = "S_Miyuki_Special_Joker";
+        public static string Skill_S_Miyuki_Special_KillAlly = "S_Miyuki_Special_KillAlly";
+        public static string Skill_S_Miyuki_Special_KillEnemy = "S_Miyuki_Special_KillEnemy";
+		/// <summary>
 		/// Miyuki's Might
 		/// Choose one of Phoenix's abilities to cast.
 		/// List of usable abilities a&
@@ -162,8 +195,13 @@ namespace MiyukiSone
 		/// </summary>
         public static string Skill_S_Miyuki_Special_SacrificedKnowledge = "S_Miyuki_Special_SacrificedKnowledge";
 		/// <summary>
+		/// Yabeley's Tomato Juice
+		/// Move this skill to the top of the deck when a battle starts. Cannot be used.
+		/// </summary>
+        public static string Skill_S_Miyuki_Special_Yabeley = "S_Miyuki_Special_Yabeley";
+		/// <summary>
 		/// A Step Toward YOU
-		/// Healing is increased by &a <color=#FF7C34>(18% Attack Power)</color> for each skill in hand not including this skill.
+		/// Healing is increased by &a <color=#FF7C34>(18% Healing Power)</color> for each skill in hand not including this skill.
 		/// Skills above and below this skill gain an Illusion Sword buff.
 		/// </summary>
         public static string Skill_S_Miyuki_StepToward = "S_Miyuki_StepToward";

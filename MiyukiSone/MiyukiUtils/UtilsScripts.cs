@@ -124,7 +124,7 @@ namespace MiyukiSone
 			window.SetCountSkillVL((window.CastingGroup.GetComponentsInChildren<SkillButton>().Length >= 13) ? 30 : 45);
 		}
 
-		public static void AddBuff(this BattleChar user, BattleChar target, string buffKey, int buffNum = 1)
+		public static void AddBuff(this BattleChar target, BattleChar user, string buffKey, int buffNum = 1)
 		{
 			if (user == null || string.IsNullOrEmpty(buffKey)) return;
 
@@ -138,13 +138,13 @@ namespace MiyukiSone
 		{
 			foreach (var target in targets)
 			{
-				AddBuff(user, target, buffKey, buffNum);
+				target.AddBuff(user, buffKey, buffNum);
 			}
 		}
 
 		public static void AddBuff(this BattleChar target, string buffKey, int buffNum = 1)
 		{
-			AddBuff(DummyChar, target, buffKey, buffNum);
+			target.AddBuff(MiyukiBchar ?? DummyChar, buffKey, buffNum);
 		}
 
 		public static Buff SecureBuff(BattleChar target, BattleChar user, string buffKey, int percentage = 0)
@@ -194,7 +194,12 @@ namespace MiyukiSone
 			return result;
 		}
 
-		public static IEnumerator RecastSkill(BattleChar target, BattleChar user, Skill skill, int recastNum = 1)
+		public static void RecastSkill(BattleChar target, BattleChar user, Skill skill, int recastNum = 1)
+		{
+			BattleSystem.DelayInput(RecastSkillCo(target, user, skill, recastNum));
+		}
+
+		public static IEnumerator RecastSkillCo(BattleChar target, BattleChar user, Skill skill, int recastNum = 1)
 		{
 			if (skill == null || target == null) yield break;
 

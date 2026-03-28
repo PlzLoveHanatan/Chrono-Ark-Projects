@@ -12,6 +12,7 @@ using ChronoArkMod.Plugin;
 using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
+using static MiyukiSone.Utils;
 namespace MiyukiSone
 {
 	public class MiyukiSone_ModDefinition : ModDefinition
@@ -28,18 +29,30 @@ namespace MiyukiSone
 
 		public class MiyukiDistortion : IP_BattleStart_Ones
 		{
+
+			//public void BattleEnd()
+			//{
+			//	if (MiyukiInParty)
+			//	{
+			//		PlayData.TSavedata.Party.FindAll(c => c.Incapacitated).ForEach(c => { c.Incapacitated = false; c.Hp = c.get_stat.maxhp / 2; });
+			//		Affection.GetRandomAffection();
+			//	}
+			//}
+
 			public void BattleStart(BattleSystem Ins)
 			{
-				PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki && c.Equip != null)?.Equip.OfType<Item_Equip>()
-					.Where(e => e.IsCurse).Select(e => { e.Curse = new EquipCurse(); return e; }).ToList();
-				
-				if (Utils.MiyukiBchar == null)
+				if (MiyukiInParty)
 				{
-					// add % chance to show Miyuki dialogue
-					// Create Miyuki Image + add text + any nasty behaviour -> remove soulstones/gold or curse equips
+					//PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki && c.Equip != null)?.Equip.OfType<Item_Equip>().Where(e => e.IsCurse).Select(e => { e.Curse = new EquipCurse(); return e; }).ToList();
+					PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki && c.Equip != null)?.Equip.OfType<Item_Equip>().Where(e => e.IsCurse)
+						.ToList().ForEach(e => { e.Curse = new EquipCurse(); Events.CurseRandomEquip(); });
 				}
-
-				// uncurse Miyuki equip
+				else if (Affection.MiyukiDecides)
+				{
+					Events.YandereActionCut();
+					EventsData.MiyukiTextEvent(MiyukiAffection.Yandere);
+					if (Affection.MiyukiDecides) UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
+				}
 			}
 		}
 	}

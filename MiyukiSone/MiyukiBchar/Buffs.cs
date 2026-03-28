@@ -22,11 +22,9 @@ namespace MiyukiSone
 		#region Miyuki class buffs
 		public class AffectionOverflow : Buff
 		{
-			private MiyukiPassive MiyukiPassive => BChar.Info.Passive as MiyukiPassive;
-
 			public override string DescExtended()
 			{
-				string desc = MiyukiPassive.CreateCharacterDraw ? "At the start of turn, draw 1 less skill and create a random Lucy draw skill in hand." : "At the start of the turn, draw the normal amount of skills.";
+				string desc = GetMiyukiPassive.CreateCharacterDraw ? "At the start of turn, draw 1 less skill and create a random Lucy draw skill in hand." : "At the start of the turn, draw the normal amount of skills.";
 				string affection = "Current Affection is: ";
 
 				switch (CurrentAffection)
@@ -38,7 +36,7 @@ namespace MiyukiSone
 				}
 
 				string text = desc + "\n" + affection + ".";
-				return MiyukiPassive.AvaliableCharacterDraw.Count > 0 ? text + "\n" + base.DescExtended() : text;
+				return GetMiyukiPassive.AvaliableCharacterDraw.Count > 0 ? text + "\n" + base.DescExtended() : text;
 			}
 
 			public override void BuffOneAwake()
@@ -61,7 +59,7 @@ namespace MiyukiSone
 
 			private void ChangeDrawOnClick()
 			{
-				if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove || MiyukiPassive.AvaliableCharacterDraw.Count == 0) return;
+				if (BChar.GetStat.Stun || !BattleSystem.instance.ActWindow.CanAnyMove || GetMiyukiPassive.AvaliableCharacterDraw.Count == 0) return;
 				ChangeDraw();
 			}
 
@@ -78,15 +76,15 @@ namespace MiyukiSone
 
 			private void Selection(SkillButton btn)
 			{
-				MiyukiPassive.CreateCharacterDraw = btn.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Passive_1;
+				GetMiyukiPassive.CreateCharacterDraw = btn.Myskill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Passive_1;
 				ChangeIcon();
 			}
 
-			private void ChangeIcon()
+			public void ChangeIcon()
 			{
-				if (!MiyukiPassive.CreateCharacterDraw)
+				if (!GetMiyukiPassive.CreateCharacterDraw)
 				{
-					Sprite.GetSpriteByPathFromMod(BuffData.Icon_Path);
+					Sprite.LoadSpriteByAddress(BuffData.Icon_Path);
 					BE?.gameObject?.SetActive(true);
 				}
 				else
@@ -95,7 +93,7 @@ namespace MiyukiSone
 					Sprite.GetSpriteByPathFromMod(path);
 					BE?.gameObject?.SetActive(false);
 				}
-			}						
+			}
 		}
 		#endregion
 
@@ -135,8 +133,7 @@ namespace MiyukiSone
 		public class FixedAbility : Buff, IP_SkillUse_BasicSkill, IP_PlayerTurn
 		{
 			// Pattern Matching
-			//public MiyukiPassive MiyukiPassive => BChar.Info.Passive is MiyukiPassive mp ? mp : null;
-			public MiyukiPassive MiyukiPassive => BChar.Info.Passive as MiyukiPassive;
+			//public GetMiyukiPassive GetMiyukiPassive => BChar.Info.Passive is GetMiyukiPassive mp ? mp : null;
 			public virtual bool RecoverySkill => false;
 			private bool usedThisTurn = false;
 
@@ -184,12 +181,12 @@ namespace MiyukiSone
 					}
 				}
 
-				MiyukiPassive?.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Mement_LucyDraw);
+				GetMiyukiPassive?.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Mement_LucyDraw);
 			}
 
 			public override void SelfdestroyPlus()
 			{
-				MiyukiPassive?.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_Mement_LucyDraw);
+				GetMiyukiPassive?.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_Mement_LucyDraw);
 				base.SelfdestroyPlus();
 			}
 
@@ -235,16 +232,16 @@ namespace MiyukiSone
 			public override void BuffOneAwake()
 			{
 				base.BuffOneAwake();
-				if (MiyukiPassive == null) return;
-				MiyukiPassive.MiyukiChoiceList = MiyukiPassive.MiyukiChoiceList ?? new List<string>();
-				MiyukiPassive.MiyukiChoiceList.Clear();
-				MiyukiPassive.MiyukiChoiceList.AddRange(PhoenixChoices);
-				MiyukiPassive.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Phoenix_Draw);
+				if (GetMiyukiPassive == null) return;
+				GetMiyukiPassive.MiyukiChoiceList = GetMiyukiPassive.MiyukiChoiceList ?? new List<string>();
+				GetMiyukiPassive.MiyukiChoiceList.Clear();
+				GetMiyukiPassive.MiyukiChoiceList.AddRange(PhoenixChoices);
+				GetMiyukiPassive.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Phoenix_Draw);
 			}
 
 			public override void SelfdestroyPlus()
 			{
-				MiyukiPassive?.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_Phoenix_Draw);
+				GetMiyukiPassive?.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_Phoenix_Draw);
 				base.SelfdestroyPlus();
 			}
 		}

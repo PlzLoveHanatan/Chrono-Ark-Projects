@@ -148,7 +148,7 @@ namespace MiyukiSone
 				{
 					CurrentAffection = MiyukiAffection.Yandere;
 					if (BattleSystem.instance != null) (MiyukiDecides ? (Action)DialoguePaws.YanderePaws : Events.YandereAction)();
-					else if (FieldSystem.instance != null/* && MiyukiDecides)*/) Events.YandereActionCut();
+					else if (FieldSystem.instance != null && MiyukiDecides) Events.YandereActionCut();
 					StartKissDialogue(false);
 				}
 				else

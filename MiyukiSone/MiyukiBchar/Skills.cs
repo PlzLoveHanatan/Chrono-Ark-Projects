@@ -18,6 +18,7 @@ using Spine;
 using ChronoArkMod;
 using System.Windows.Forms;
 using System.Web.UI.WebControls.WebParts;
+using DarkTonic.MasterAudio;
 
 namespace MiyukiSone
 {
@@ -49,28 +50,7 @@ namespace MiyukiSone
 		};
 		#endregion
 
-
-		#region Misc Skills
-		public class SacrificedKnowledge : Skill_Extended
-		{
-			public override bool Terms()
-			{
-				return false;
-			}
-		}
-
-		public class FracturedIllusion : Skill_Extended
-		{
-			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
-			{
-				base.SkillUseSingle(SkillD, Targets);
-				for (int i = 0; i < 2; i++)
-				{
-					BattleSystem.instance.AllyTeam.Draw(new BattleTeam.DrawInput(s => Azar_Ex_0.Add(s, MiyukiBchar)));
-				}
-			}
-		}
-
+		#region Misc Skills	
 		public class EternalKiss : Extended_Prime_S_1
 		{
 			private int Heal => (int)(BChar.GetStat.reg * 0.99f);
@@ -88,8 +68,108 @@ namespace MiyukiSone
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
+				CurrentAffection = MiyukiAffection.DereDere;
 				AllyTeam.AliveChars.Concat(Utils.EnemyTeam.AliveChars).Where(a => a != BChar && a != Targets[0]).ToList().ForEach(t => t.Heal(BChar, Heal, false, false));
 				base.SkillUseSingle(SkillD, Targets);
+			}
+		}
+
+		public class FracturedIllusion : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				base.SkillUseSingle(SkillD, Targets);
+				for (int i = 0; i < 2; i++)
+				{
+					BattleSystem.instance.AllyTeam.Draw(new BattleTeam.DrawInput(s => Azar_Ex_0.Add(s, MiyukiBchar)));
+				}
+			}
+		}
+
+		public class Joker : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				base.SkillUseSingle(SkillD, Targets);
+				DiscardSingle(false);
+				BattleSystem.instance.AllyTeam.Draw();
+			}
+
+			public override void DiscardSingle(bool Click)
+			{
+				base.DiscardSingle(Click);
+				BattleSystem.DelayInput(HitEffect());
+			}
+
+			public IEnumerator HitEffect()
+			{
+				foreach (BattleAlly ally in BattleSystem.instance.AllyList)
+				{
+					if (ally.GetBuffs(BattleChar.GETBUFFTYPE.DOT, false).Count > 0 || ally.GetBuffs(BattleChar.GETBUFFTYPE.CC, false).Count > 0)
+					{
+						Skill skill = Skill.TempSkill(GDEItemKeys.Skill_S_JokerCard_Effect, AllyTeam.LucyChar, AllyTeam.LucyAlly.MyTeam);
+						skill.PlusHit = true;
+						skill.FreeUse = true;
+						BattleSystem.instance.AllyTeam.DummyChar.ParticleOut(MySkill, skill, ally);
+					}
+				}
+
+				yield return new WaitForSecondsRealtime(1f);
+				string sound = MiyukiDecides ? "Laugh_02" : "Laugh_04";
+				MasterAudio.PlaySound(sound, 1f, null, 0f, null, null, false, false);
+			}
+		}
+
+		public class HelpingHand : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				var allSkills = new List<GDESkillData>();
+
+				foreach (var ally in AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki))
+				{
+					var allySkills = PlayData.ALLSKILLLIST.Where(s => s.User == "LucyDraw" && s.LucyPartyDraw == ally.Info.KeyData && s.KeyID != SkillD.MySkill.KeyID && !s.NoDrop).ToList();
+
+					if (allySkills.Count > 0)
+					{
+						var randomSkill = allySkills.Random("MiyukiRandomLucyDraw");
+						allSkills.Add(randomSkill);
+					}
+
+					// Add all skills
+					//list.AddRange(allySkills);
+				}
+
+				var skillList = allSkills.Select(s => { var skill = Skill.TempSkill(s.Key, BChar, BChar.MyTeam); skill.isExcept = true; return skill; }).ToList();
+				//var skillList = allSkills.Select(s => Skill.TempSkill(s.Key, BChar, BChar.MyTeam)).ToList();
+				//skillList.ForEach(s => s.isExcept = true);
+
+				if (skillList.Count == 0) return;
+
+				BattleSystem.instance.EffectDelays.Enqueue(BattleSystem.I_OtherSkillSelect(skillList,
+					new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.Add(b.Myskill, true)), ScriptLocalization.System_SkillSelect.CreateSkill, false, true, true, false, true));
+				base.SkillUseSingle(SkillD, Targets);
+			}
+		}
+
+		public class MiyukiPhone : Skill_Extended
+		{
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					Skill randomRare = PlayData.GetLucySkill(false).Random("RandomLucyRare");
+					Skill skill = Skill.TempSkill(randomRare.MySkill.KeyID, AllyTeam.LucyAlly, AllyTeam.LucyAlly.MyTeam);
+					skill.isExcept = true;
+					BattleSystem.instance.EffectDelaysAfter.Enqueue(CreateSkills(skill));
+				}
+				base.SkillUseSingle(SkillD, Targets);
+			}
+
+			private IEnumerator CreateSkills(Skill skill)
+			{
+				if (skill == null) yield break;
+				if (BattleSystem.instance.AllyTeam.Skills.Count < 10) BattleSystem.instance.AllyTeam.Add(skill, true);
 			}
 		}
 
@@ -131,41 +211,30 @@ namespace MiyukiSone
 			}
 		}
 
-		public class HelpingHand : Skill_Extended
+		public class SacrificedKnowledge : Skill_Extended
 		{
-			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			public override bool Terms()
 			{
-				var allSkills = new List<GDESkillData>();
+				return false;
+			}
+		}
 
-				foreach (var ally in AllyTeam.AliveChars.Where(a => a != BChar))
-				{
-					var allySkills = PlayData.ALLSKILLLIST.Where(s => s.User == "LucyDraw" && s.LucyPartyDraw == ally.Info.KeyData && s.KeyID != SkillD.MySkill.KeyID && !s.NoDrop).ToList();
+		public class YabeleyTomatoJuice : Skill_Extended
+		{
+			public override void BattleStartDeck(List<Skill> Skills_Deck)
+			{
+				Skills_Deck.Remove(MySkill);
+				Skills_Deck.Insert(0, MySkill);
+			}
 
-					if (allySkills.Count > 0)
-					{
-						var randomSkill = allySkills.Random("MiyukiRandomLucyDraw");
-						allSkills.Add(randomSkill);
-					}
-
-					// Add all skills
-					//list.AddRange(allySkills);
-				}
-
-				var skillList = allSkills.Select(s => { var skill = Skill.TempSkill(s.Key, BChar, BChar.MyTeam); skill.isExcept = true; return skill; }).ToList();
-				//var skillList = allSkills.Select(s => Skill.TempSkill(s.Key, BChar, BChar.MyTeam)).ToList();
-				//skillList.ForEach(s => s.isExcept = true);
-
-				if (skillList.Count == 0) return;
-
-				BattleSystem.instance.EffectDelays.Enqueue(BattleSystem.I_OtherSkillSelect(skillList,
-					new SkillButton.SkillClickDel(b => b.Myskill.Master.MyTeam.Add(b.Myskill, true)), ScriptLocalization.System_SkillSelect.CreateSkill, false, true, true, false, true));
-				base.SkillUseSingle(SkillD, Targets);
+			public override bool Terms()
+			{
+				return false;
 			}
 		}
 		#endregion
 
 		#region Miyuki's class Skills
-
 		public class MiyukiSkill : Skill_Extended
 		{
 			public override void Init()
@@ -302,13 +371,12 @@ namespace MiyukiSone
 			{
 				base.SkillUseSingle(SkillD, Targets);
 				if (Fire) BattleSystem.DelayInput(IncreaseDebuffs());
+				BattleSystem.DelayInputAfter(CheckEternalVow());
 			}
 
 			public IEnumerator IncreaseDebuffs()
 			{
-				var debuffs = BattleSystem.instance.EnemyList
-					.SelectMany(enemy => enemy.GetBuffs(BattleChar.GETBUFFTYPE.DOT, false, false)
-					.Concat(enemy.GetBuffs(BattleChar.GETBUFFTYPE.DEBUFF, false, false)));
+				var debuffs = BattleSystem.instance.EnemyList.SelectMany(enemy => enemy.GetBuffs(BattleChar.GETBUFFTYPE.DOT, false, false).Concat(enemy.GetBuffs(BattleChar.GETBUFFTYPE.DEBUFF, false, false)));
 
 				foreach (var debuff in debuffs)
 				{
@@ -329,11 +397,11 @@ namespace MiyukiSone
 			private readonly float interval = 3f;
 
 			private readonly Dictionary<string, string> FixedKeys = new Dictionary<string, string>()
-				{
-					{ ModItemKeys.Skill_S_Miyuki_Special_Might, ModItemKeys.Buff_B_Miyuki_Might},
-					{ GDEItemKeys.Skill_S_Mement_P, ModItemKeys.Buff_B_Miyuki_CloseRangeShot},
-					{ GDEItemKeys.Skill_S_AllyDoll_0, ModItemKeys.Buff_B_Miyuki_Recover},
-				};
+			{
+				{ ModItemKeys.Skill_S_Miyuki_Special_Might, ModItemKeys.Buff_B_Miyuki_Might},
+				{ GDEItemKeys.Skill_S_Mement_P, ModItemKeys.Buff_B_Miyuki_CloseRangeShot},
+				{ GDEItemKeys.Skill_S_AllyDoll_0, ModItemKeys.Buff_B_Miyuki_Recover},
+			};
 
 			private static readonly List<string> NormalMessages = new List<string>()
 				{
@@ -580,8 +648,7 @@ namespace MiyukiSone
 			public override void Init()
 			{
 				base.Init();
-				if (BChar?.Info?.Passive is MiyukiPassive miyukiPassive) ChoiceSkillList = miyukiPassive.MiyukiChoiceList ?? new List<string>();
-				else ChoiceSkillList = new List<string>();
+				ChoiceSkillList = GetMiyukiPassive.MiyukiChoiceList ?? new List<string>();
 			}
 
 			public override string DescExtended(string desc)
@@ -607,7 +674,7 @@ namespace MiyukiSone
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
 				if (Targets.Any(t => t.BuffFind(GDEItemKeys.Buff_B_SilverStein_P_1, false))) MySkill.MySkill.NODOD = true;
-				if (MySkill.ExtendedFind_DataName(GDEItemKeys.SkillExtended_Azar_Ex_0) != null) BattleSystem.DelayInput(RecastSkill(Targets[0], BChar, MySkill));
+				if (MySkill.ExtendedFind_DataName(GDEItemKeys.SkillExtended_Azar_Ex_0) != null) RecastSkill(Targets[0], BChar, MySkill);
 				base.SkillUseSingle(SkillD, Targets);
 			}
 		}
@@ -623,7 +690,7 @@ namespace MiyukiSone
 
 		public class StepToward : Extended_Azar_0
 		{
-			private int Heal => (int)(BChar.GetStat.atk * 0.18f);
+			private int Heal => (int)(BChar.GetStat.reg * 0.18f);
 
 			public override string DescExtended(string desc)
 			{
@@ -669,7 +736,7 @@ namespace MiyukiSone
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				Targets.Where(t => t.BuffReturn(GDEItemKeys.Buff_B_Control_P, false) != null).ToList().ForEach(t => BChar.AddBuff(t, GDEItemKeys.Buff_B_Momori_7_T));
+				Targets.Where(t => t.BuffReturn(GDEItemKeys.Buff_B_Control_P, false) != null).ToList().ForEach(t => t.AddBuff(GDEItemKeys.Buff_B_Momori_7_T));
 				var momoriPskill = GetMomoriPskill();
 				if (momoriPskill.Any())
 				{
@@ -702,7 +769,7 @@ namespace MiyukiSone
 					if (debuffs.Any()) debuffs.Random("MiyukiRandomDebuff").SelfDestroy();
 				});
 
-				CurrentAffection = MiyukiAffection.DereDere;
+				if (MiyukiDecides) CurrentAffection = MiyukiAffection.DereDere;
 				UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
 				MiyukiData.PauseOpen = true;
 				var availableIndexes = pauseArts.Keys.Where(i => MiyukiData.LastArtIndex == -1 || i != MiyukiData.LastArtIndex).ToList();
@@ -717,6 +784,64 @@ namespace MiyukiSone
 			public void SkillImgChange(Skill mySkill)
 			{
 				mySkill.ChangeSkillImg();
+			}
+		}
+
+		public class FinalView : MiyukiSkill
+		{
+
+			public override void Init()
+			{
+				PlusSkillStat.Penetration = 100f;
+				base.Init();
+			}
+
+			public override string DescExtended(string desc)
+			{
+				return base.DescExtended(desc).Replace("&a", MiyukiSaveManager.Instance.CurrentData.FinalViewPlays.ToString());
+			}
+
+			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+			{
+				if (MiyukiDecides) CurrentAffection = MiyukiAffection.Yandere;
+
+				for (int i = 0; i < 2; i++)
+				{
+					BattleSystem.DelayInput(RecastSkill(Targets[0]));
+				}
+
+				//if (RandomManager.RandomPer("MiyukiFinalView", 100, MiyukiSaveManager.Instance.CurrentData.FinalViewPlays))
+				//{
+				//	AllyTeam.AliveChars.FindAll(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random().Dead();
+				//	//if (ally == null) return;
+				//	//Targets.Clear();
+				//	//Targets.Add(ally);
+				//	//ally.Dead();
+				//}
+				//else
+				//{
+				//	Targets.OfType<BattleEnemy>().Where(e => e.Boss ? e.HP <= e.GetStat.maxhp * 0.4f : e.HP <= e.GetStat.maxhp * 0.9f).ToList().ForEach(e => e.Dead());
+				//}
+
+				//MiyukiSaveManager.Instance.CurrentData.FinalViewPlays++;
+				//MiyukiSaveManager.Instance.Save();
+				//AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly").Let(a => a.Damage(DummyChar, a.GetStat.maxhp / 5, false, true));
+				base.SkillUseSingle(SkillD, Targets);
+			}
+
+			private IEnumerator RecastSkill(BattleChar target)
+			{
+				Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Rare_FinalView_Particle, BChar, BChar.MyTeam);
+				Skill_Extended ex = new Skill_Extended
+				{
+					IsDamage = true,
+					PlusSkillStat = new Stat { Penetration = 100f },
+				};
+				
+				skill.ExtendedAdd(ex);
+				target = (target.IsDead || target == null || target.Info.Ally) && BattleSystem.instance.EnemyTeam.AliveChars.Count > 0 ? BattleSystem.instance.EnemyTeam.AliveChars.Random("RandomEnemy") : target;
+				if (target == null) yield break;
+				yield return BattleSystem.instance.StartCoroutine(BattleSystem.instance.ForceAction(skill, target, false, false, false, null));
 			}
 		}
 
