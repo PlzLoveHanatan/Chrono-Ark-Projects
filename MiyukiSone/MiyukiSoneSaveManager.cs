@@ -15,11 +15,9 @@ namespace MiyukiSone
 		[Serializable]
 		public class MiyukiSaveData
 		{
-			public int CurrentAffection;
 			public int TurnEndTryIndex;
 			public int TurnEndTryCallCount;
 			public int KissNoAnswerCount;
-			public int FinalViewPlays;
 			public int SoundVolumeMain;
 			public int SoundVolumeBGM;
 			public int SoundVolumeEffect;
@@ -92,15 +90,9 @@ namespace MiyukiSone
 			}
 			else
 			{
-				_currentData.CurrentAffection = 0;
-				_currentData.TurnEndTryIndex = 0;
-				_currentData.TurnEndTryCallCount = 0;
-				_currentData.LockedState = null;
 				_currentData.GameUpdated = false;
-				_currentData.EternalPromise = false;
-				_currentData.SaveExists = false;
+				//_currentData.GameRestarted = false;
 			}
-			Debug.Log($"[Miyuki] Save reset (resetAll: {resetAll})");
 		}
 	}
 }

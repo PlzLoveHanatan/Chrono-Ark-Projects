@@ -18,25 +18,42 @@ namespace MiyukiSone
 {
 	public class Buffs
 	{
-
 		#region Miyuki class buffs
 		public class AffectionOverflow : Buff
 		{
 			public override string DescExtended()
 			{
-				string desc = GetMiyukiPassive.CreateCharacterDraw ? "At the start of turn, draw 1 less skill and create a random Lucy draw skill in hand." : "At the start of the turn, draw the normal amount of skills.";
-				string affection = "Current Affection is: ";
+				string desc = GetMiyukiPassive.CreateCharacterDraw ? ModLocalization.AffectionOverflow_0 : ModLocalization.AffectionOverflow_1;
 
-				switch (CurrentAffection)
+				string affection = "Current Affection: " + CurrentAffection.ToString() + ".";
+				string text = desc + "\n" + affection;
+
+				string baseDesc = base.DescExtended();
+				int index = baseDesc.IndexOf("\n");
+
+				if (GetMiyukiPassive.AvaliableCharacterDraw.Count > 0)
 				{
-					case MiyukiAffection.DereDere: affection += "DereDere"; break;
-					case MiyukiAffection.Kuudere: affection += "Kuudere"; break;
-					case MiyukiAffection.Yandere: affection += "Yandere"; break;
-					default: break;
+					if (GetMiyukiPassive.CreateCharacterDraw)
+					{
+						string skillList = "";
+						foreach (string key in GetMiyukiPassive.AvaliableCharacterDraw)
+						{
+							skillList += "\n - " + new GDESkillData(key).Name;
+						}
+
+						text += "\n" + baseDesc.Substring(0, index) + skillList + baseDesc.Substring(index);
+					}
+					else
+					{
+						text += "\n" + baseDesc.Substring(index + 1);
+					}
+				}
+				else
+				{
+					return text;
 				}
 
-				string text = desc + "\n" + affection + ".";
-				return GetMiyukiPassive.AvaliableCharacterDraw.Count > 0 ? text + "\n" + base.DescExtended() : text;
+				return text;
 			}
 
 			public override void BuffOneAwake()
@@ -173,7 +190,7 @@ namespace MiyukiSone
 			public override void BuffOneAwake()
 			{
 				base.BuffOneAwake();
-				foreach (var skill in AllyTeam.Skills)
+				foreach (var skill in BattleSystem.instance.AllyTeam.Skills.Where(s => s.Master.Info.KeyData != GDEItemKeys.Character_Mement && s.Master.Info.KeyData != ModItemKeys.Character_Miyuki && !s.Master.IsLucy))
 				{
 					if (skill.IsCreatedInBattle && skill.ExtendedFind("Mement_Ex_0", true) == null)
 					{
@@ -182,6 +199,7 @@ namespace MiyukiSone
 				}
 
 				GetMiyukiPassive?.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Mement_LucyDraw);
+				CheckMiyukiDraw(true);
 			}
 
 			public override void SelfdestroyPlus()
@@ -206,7 +224,8 @@ namespace MiyukiSone
 
 			public IEnumerator Draw(Skill Drawskill, bool NotDraw)
 			{
-				if (Drawskill.IsCreatedInBattle && Drawskill.AP >= 1 && Drawskill.ExtendedFind("Mement_Ex_0", true) == null && Drawskill.Master.Info.KeyData != ModItemKeys.Character_Miyuki)
+				if (Drawskill.IsCreatedInBattle && Drawskill.AP >= 1 && Drawskill.ExtendedFind("Mement_Ex_0", true) == null
+					&& Drawskill.Master.Info.KeyData != GDEItemKeys.Character_Mement && Drawskill.Master.Info.KeyData != ModItemKeys.Character_Miyuki && !Drawskill.Master.IsLucy)
 				{
 					Drawskill.ExtendedAdd(Skill_Extended.DataToExtended(GDEItemKeys.SkillExtended_Mement_Ex_0));
 				}
@@ -237,6 +256,7 @@ namespace MiyukiSone
 				GetMiyukiPassive.MiyukiChoiceList.Clear();
 				GetMiyukiPassive.MiyukiChoiceList.AddRange(PhoenixChoices);
 				GetMiyukiPassive.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Phoenix_Draw);
+				CheckMiyukiDraw(true);
 			}
 
 			public override void SelfdestroyPlus()

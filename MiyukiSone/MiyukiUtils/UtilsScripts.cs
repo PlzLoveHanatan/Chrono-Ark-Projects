@@ -30,10 +30,10 @@ namespace MiyukiSone
 
 		private static IEnumerator RemoveSkillCo(Skill skill)
 		{
-			DeckList(AllyTeam.Skills, skill);
-			DeckList(AllyTeam.Skills_Deck, skill);
-			DeckList(AllyTeam.Skills_UsedDeck, skill);
-			BattleSystem.instance?.ActWindow.Draw(AllyTeam, false);
+			DeckList(BattleSystem.instance.AllyTeam.Skills, skill);
+			DeckList(BattleSystem.instance.AllyTeam.Skills_Deck, skill);
+			DeckList(BattleSystem.instance.AllyTeam.Skills_UsedDeck, skill);
+			BattleSystem.instance?.ActWindow.Draw(BattleSystem.instance.AllyTeam, false);
 			yield break;
 		}
 
@@ -67,7 +67,7 @@ namespace MiyukiSone
 
 			if (isHealLowestAlly)
 			{
-				healTarget = AllyTeam.AliveChars.Where(x => x != null && x.HP < x.GetStat.maxhp).OrderBy(x => x.HP).FirstOrDefault() ?? AllyTeam.FindChar_LowHP();
+				healTarget = BattleSystem.instance.AllyTeam.AliveChars.Where(x => x != null && x.HP < x.GetStat.maxhp).OrderBy(x => x.HP).FirstOrDefault() ?? BattleSystem.instance.AllyTeam.FindChar_LowHP();
 			}
 
 			healTarget?.Heal(user, healingNum, false, isOverHeal, null);
@@ -147,10 +147,10 @@ namespace MiyukiSone
 			target.AddBuff(MiyukiBchar ?? DummyChar, buffKey, buffNum);
 		}
 
-		public static Buff SecureBuff(BattleChar target, BattleChar user, string buffKey, int percentage = 0)
+		public static Buff SecureBuff(this BattleChar target, string buffKey, int percentage = 0)
 		{
 			if (string.IsNullOrEmpty(buffKey)) return null;
-			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, user, false, percentage, false, -1, false);
+			var buff = target.BuffReturn(buffKey, false) ?? target.BuffAdd(buffKey, MiyukiBchar ?? DummyChar, false, percentage, false, -1, false);
 			return buff;
 		}
 

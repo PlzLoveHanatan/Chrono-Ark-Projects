@@ -4,7 +4,7 @@ namespace MiyukiSone
     public static class ModItemKeys
     {
 		/// <summary>
-		/// Miyuki Buff
+		/// Miyuki's Suffocation
 		/// </summary>
         public static string Buff_B_Miyuki_Buff_Ally = "B_Miyuki_Buff_Ally";
         public static string Buff_B_Miyuki_CloseRangeShot = "B_Miyuki_CloseRangeShot";
@@ -13,7 +13,7 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Debuff_Ally = "B_Miyuki_Debuff_Ally";
 		/// <summary>
-		/// Extra Action
+		/// Miyuki's Extra Action
 		/// Gain 1 action count.
 		/// </summary>
         public static string Buff_B_Miyuki_Enemy_ExtraAction = "B_Miyuki_Enemy_ExtraAction";
@@ -22,8 +22,9 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Might = "B_Miyuki_Might";
 		/// <summary>
-		/// =^_^=
-		/// Click on buff for funny.
+		/// Overflowing Affection
+		/// Avaliable Lucy draw skills:
+		/// You can click on this it to toggle draw.
 		/// </summary>
         public static string Buff_B_Miyuki_Passive = "B_Miyuki_Passive";
 		/// <summary>
@@ -31,7 +32,7 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Recover = "B_Miyuki_Recover";
 		/// <summary>
-		/// When played from hand, view 3 random <color=#F9D62FFF>Legendary</color> Equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
+		/// When played from hand, view 3 random <color=#F9D62FFF>Legendary</color> equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
 		/// </summary>
         public static string SkillExtended_Ex_Miyuki_Ex_0 = "Ex_Miyuki_Ex_0";
 		/// <summary>
@@ -39,11 +40,25 @@ namespace MiyukiSone
 		/// </summary>
         public static string SkillExtended_Ex_Miyuki_Glitch = "Ex_Miyuki_Glitch";
 		/// <summary>
+		/// Fourth Wall Breaker
+		/// At the start of the turn, remove all curses from the deck.
+		/// If the wearer  is Miyuki, the created Lucy draw skill cost 1 less and gain 'Swiftness'.
+		/// </summary>
+        public static string Item_Equip_E_Miyuki_WallBreaker = "E_Miyuki_WallBreaker";
+		/// <summary>
 		/// Miyuki
 		/// Passive:
 		/// <color=#919191>- This passive is applied from level 1.</color>
 		/// </summary>
         public static string Character_Miyuki = "Miyuki";
+		/// <summary>
+		/// Scenario Editor
+		/// Expand your Relic inventory by 1.
+		/// At the start of turn, draw 2 more skills.
+		/// Investigators can only have up to &a of the same skills. &b minimum skills on allies.
+		/// Obtain 2 'Infinite Skill Book'. Remove deck shuffle, rare skills limit and mana upgrade restrictions.
+		/// </summary>
+        public static string Item_Passive_Re_Miyuki_ScenarioEditor = "Re_Miyuki_ScenarioEditor";
         public static string SkillEffect_SE_S_S_Miyuki_Rare_FinalView = "SE_S_S_Miyuki_Rare_FinalView";
         public static string SkillEffect_SE_S_S_Miyuki_Rare_FinalView_Particle = "SE_S_S_Miyuki_Rare_FinalView_Particle";
         public static string SkillEffect_SE_S_S_Special_EternalKiss = "SE_S_S_Special_EternalKiss";
@@ -90,6 +105,7 @@ namespace MiyukiSone
         public static string Skill_S_Miyuki_EternalVow = "S_Miyuki_EternalVow";
 		/// <summary>
 		/// Glitching Phone
+		/// Refresh and gain a random fixed ability.
 		/// </summary>
         public static string Skill_S_Miyuki_GlitchingPhone = "S_Miyuki_GlitchingPhone";
 		/// <summary>
@@ -113,6 +129,7 @@ namespace MiyukiSone
 		/// <summary>
 		/// Miyuki's Phone
 		/// Create random Lucy rare skills until your hand is full. These skills gain Exclude.
+		/// Cost is reduced by 1 at the end of the turn.
 		/// </summary>
         public static string Skill_S_Miyuki_LucyDraw_MiyukiPhone = "S_Miyuki_LucyDraw_MiyukiPhone";
 		/// <summary>
@@ -147,10 +164,14 @@ namespace MiyukiSone
         public static string Skill_S_Miyuki_QueenBee = "S_Miyuki_QueenBee";
 		/// <summary>
 		/// Final View
-		/// Ignores Armor.
+		/// Ignores armor.
 		/// Recast this skill 2 times.
+		/// Can be used outside of battle.
+		/// This effect cannot be reactivated until you clear 2 stages.
+		/// Current Status: &a.
 		/// </summary>
         public static string Skill_S_Miyuki_Rare_FinalView = "S_Miyuki_Rare_FinalView";
+        public static string Skill_S_Miyuki_Rare_FinalView_0 = "S_Miyuki_Rare_FinalView_0";
 		/// <summary>
 		/// Final View
 		/// Ignores Armor.
@@ -158,10 +179,14 @@ namespace MiyukiSone
         public static string Skill_S_Miyuki_Rare_FinalView_Particle = "S_Miyuki_Rare_FinalView_Particle";
 		/// <summary>
 		/// Game Update
-		/// Cost is increased by 1 per stage cleared.
+		/// Can only be used once per run.
+		/// Can be used outside of battle.
+		/// Cost is decreased by 1 per stage cleared.
 		/// Restart current stage.
 		/// </summary>
         public static string Skill_S_Miyuki_Rare_GameUpdate = "S_Miyuki_Rare_GameUpdate";
+        public static string Skill_S_Miyuki_Rare_GameUpdate_0 = "S_Miyuki_Rare_GameUpdate_0";
+        public static string Skill_S_Miyuki_Rare_GameUpdate_1 = "S_Miyuki_Rare_GameUpdate_1";
 		/// <summary>
 		/// Just for YOU
 		/// Remove one random debuff.
@@ -196,7 +221,7 @@ namespace MiyukiSone
         public static string Skill_S_Miyuki_Special_SacrificedKnowledge = "S_Miyuki_Special_SacrificedKnowledge";
 		/// <summary>
 		/// Yabeley's Tomato Juice
-		/// Move this skill to the top of the deck when a battle starts. Cannot be used.
+		/// Cannot be used.
 		/// </summary>
         public static string Skill_S_Miyuki_Special_Yabeley = "S_Miyuki_Special_Yabeley";
 		/// <summary>
@@ -222,6 +247,42 @@ namespace MiyukiSone
 
     public static class ModLocalization
     {
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// At the start of turn, draw 1 less skill and create a random Lucy draw skill in hand.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string AffectionOverflow_0 => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("AffectionOverflow_0");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// At the start of the turn, draw the normal amount of skills.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string AffectionOverflow_1 => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("AffectionOverflow_1");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I want it to be just the two of us. Random investigators will die, then YOU can view 3 random <color=#F53172FF>Heroic</color> equipment and select 1 to obtain.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string FinalView => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("FinalView");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Do YOU want restart the stage ?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string GameUpdate => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("GameUpdate");
 
     }
 }

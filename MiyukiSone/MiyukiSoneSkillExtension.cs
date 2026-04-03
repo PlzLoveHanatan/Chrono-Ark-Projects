@@ -37,7 +37,7 @@ namespace MiyukiSone
 
 		public static void MiyukiInit(this Skill skill, MiyukiAffection? state = null)
 		{
-			if (Bs == null || UIManager.AllUI.Any(ui => ui.name.Contains("Collection"))) return;
+			if (BattleSystem.instance == null || UIManager.AllUI.Any(ui => ui.name.Contains("Collection"))) return;
 
 			if (!skill.IsMiyukiOwner())
 			{
@@ -63,16 +63,16 @@ namespace MiyukiSone
 
 		public static int AdjacentSkillIndex(this Skill skill, string targetSkillID)
 		{
-			int myIndex = AllyTeam.Skills.FindIndex(s => s == skill);
+			int myIndex = BattleSystem.instance.AllyTeam.Skills.FindIndex(s => s == skill);
 			if (myIndex == -1) return -1;
 
 			int[] adjacentPositions = new int[] { myIndex - 1, myIndex + 1 };
 
 			foreach (int pos in adjacentPositions)
 			{
-				if (pos >= 0 && pos < AllyTeam.Skills.Count)
+				if (pos >= 0 && pos < BattleSystem.instance.AllyTeam.Skills.Count)
 				{
-					if (AllyTeam.Skills[pos].MySkill.KeyID == targetSkillID) return pos;
+					if (BattleSystem.instance.AllyTeam.Skills[pos].MySkill.KeyID == targetSkillID) return pos;
 				}
 			}
 			return -1;
@@ -88,9 +88,8 @@ namespace MiyukiSone
 			if (skill1.MyButton != null && !skill1.MyButton.AlreadyWasted) skill1.Except();
 			if (skill2.MyButton != null && !skill2.MyButton.AlreadyWasted) skill2.Except();
 			GetMiyukiPassive?.AvaliableCharacterDraw.Add(ModItemKeys.Skill_S_Miyuki_Draw_MiyukiHelp);
-			yield return CheckEternalVow();
 			Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, owner, owner.MyTeam);
-			if (newSkill != null) AllyTeam.Add(newSkill, true);
+			if (newSkill != null) BattleSystem.instance.AllyTeam.Add(newSkill, true);
 			yield break;
 		}	
 	}

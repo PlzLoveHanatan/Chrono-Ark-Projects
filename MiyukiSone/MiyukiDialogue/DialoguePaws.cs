@@ -175,11 +175,7 @@ namespace MiyukiSone
 		#region Paws Dere
 		public static void DerePaws()
 		{
-			var paws = DereDialoguePawsAction.ToList();
-			if (MiyukiData.LastDereDialoguePaw != -1 && paws.Count > 1) paws.RemoveAt(MiyukiData.LastDereDialoguePaw);
-			int randomIndex = RandomManager.RandomInt("MiyukiDerePaw", 0, paws.Count);
-			paws[randomIndex].Invoke();
-			MiyukiData.LastDereDialoguePaw = randomIndex;
+			DereDialoguePawsAction.RandomElement()?.Invoke();
 		}
 
 		private static void AddItem(string itemKey)
@@ -239,66 +235,62 @@ namespace MiyukiSone
 		#region Paws Yandere
 		public static void YanderePaws()
 		{
-			List<Action> paws = YandereDialoguePawsAction.ToList();
-			if (MiyukiData.LastYandereDialoguePaw != -1 && paws.Count > 1) paws.RemoveAt(MiyukiData.LastYandereDialoguePaw);
-			int randomIndex = RandomManager.RandomInt("MiyukiYanderePaw", 0, paws.Count);
-			paws[randomIndex].Invoke();
-			MiyukiData.LastYandereDialoguePaw = randomIndex;
+			YandereDialoguePawsAction.RandomElement()?.Invoke();
 		}
 
 		private static void CreateSkill()
 		{
 			string skillKey = YanderePawSkillKeys.Random("MiyukiRandomSkill");
 			if (string.IsNullOrEmpty(skillKey)) return;
-			BattleChar skillMaster = AllyTeam.LucyAlly;
+			BattleChar skillMaster = BattleSystem.instance.AllyTeam.LucyAlly;
 			if (skillKey == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard || skillKey == GDEItemKeys.Skill_S_BombClown_B_0)
 			{
-				skillMaster = AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly");
+				skillMaster = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly");
 
 				if (skillKey == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard)
 				{
-					AllyTeam.AliveChars.ForEach(a => a.AddBuff(GDEItemKeys.Buff_B_FanaticBoss_FireHide));
+					BattleSystem.instance.AllyTeam.AliveChars.ForEach(a => a.AddBuff(GDEItemKeys.Buff_B_FanaticBoss_FireHide));
 				}
 			}
 
 			Skill skill = Skill.TempSkill(skillKey, skillMaster, skillMaster.MyTeam);
-			if (skill != null) AllyTeam.Add(skill, false);
+			if (skill != null) BattleSystem.instance.AllyTeam.Add(skill, false);
 		}
 
 		private static void AppyEx()
 		{
 			string exKey = YanderePawExKeys.Random("MiyukiRandomExKey");
-			if (string.IsNullOrEmpty(exKey) || AllyTeam.Skills.Count == 0) return;
-			var skill = AllyTeam.Skills.Where(s => s != null && s.ExtendedFind_DataName(exKey) == null).ToList().Random("MiyukiRandomEx").Let(s => ApplyExtended(s, exKey));
+			if (string.IsNullOrEmpty(exKey) || BattleSystem.instance.AllyTeam.Skills.Count == 0) return;
+			var skill = BattleSystem.instance.AllyTeam.Skills.Where(s => s != null && s.ExtendedFind_DataName(exKey) == null).ToList().Random("MiyukiRandomEx").Let(s => ApplyExtended(s, exKey));
 			//if (skill != null) ApplyExtended(skill, exKey);
-			//AllyTeam.Skills.Where(s => s.ExtendedFind_DataName(exKey) == null && s != null).Select(s => { ApplyExtended(s, exKey); return s; }).ToList();
+			//BattleSystem.instance.AllyTeam.Skills.Where(s => s.ExtendedFind_DataName(exKey) == null && s != null).Select(s => { ApplyExtended(s, exKey); return s; }).ToList();
 		}
 
 		private static void ShuffleDeck()
 		{
-			if (AllyTeam.Skills_Deck.Count > 0) BattleSystem.DelayInput(ShuffleCo());
+			if (BattleSystem.instance.AllyTeam.Skills_Deck.Count > 0) BattleSystem.DelayInput(ShuffleCo());
 		}
 
 		// Shuffle draw pile into discard pile and apply negative Ex
 		private static IEnumerator ShuffleCo()
 		{
-			while (AllyTeam.Skills_Deck.Count > 0)
+			while (BattleSystem.instance.AllyTeam.Skills_Deck.Count > 0)
 			{
-				Skill skill = AllyTeam.Skills_Deck[0];
-				if (skill.AllExtendeds == null) skill.ExtendedAdd_Battle(PlayData.GetEnforce(true).Random("RandomNegativeEx"));
+				Skill skill = BattleSystem.instance.AllyTeam.Skills_Deck[0];
+				if (skill.CharinfoSkilldata.SKillExtended == null) skill.ExtendedAdd_Battle(NegExtendedKeys.Random("RandomNegativeEx"));
 				yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
 			}
 
 			BattleSystem.instance.AllyTeam.ShuffleDeck();
-			BattleSystem.instance.AllyTeam.Draw();
+			BattleSystem.instance.ActWindow.Draw(BattleSystem.instance.AllyTeam, false);
 			yield break;
 		}
 
 		private static IEnumerator SkillShuffleCo(Skill ToSkill)
 		{
-			AllyTeam.Skills_Deck.Remove(ToSkill);
-			AllyTeam.Skills_UsedDeck.Add(ToSkill);
-			AllyTeam.DeckInputAni(ToSkill);
+			BattleSystem.instance.AllyTeam.Skills_Deck.Remove(ToSkill);
+			BattleSystem.instance.AllyTeam.Skills_UsedDeck.Add(ToSkill);
+			BattleSystem.instance.AllyTeam.DeckInputAni(ToSkill);
 			yield return new WaitForSeconds(0.04f);
 			yield break;
 		}
@@ -307,7 +299,8 @@ namespace MiyukiSone
 		{
 			string buffKey = YanderePawBuffKeysEnemies.Random("RandomEnemyBuff");
 			if (string.IsNullOrEmpty(buffKey) || BattleSystem.instance.EnemyTeam.AliveChars.Count == 0) return;
-			BattleSystem.instance.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().Random("RandomEnemy")?.AddBuff(buffKey);
+			var enemy = BattleSystem.instance.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().Random("RandomEnemy").Let(e => e.AddBuff(buffKey));
+			if (enemy.BuffReturn(buffKey, false) is Buffs.EnemyExtraAction b && b != null) b.Init();
 		}
 
 		private static void ApplyBuffAlly()
@@ -325,7 +318,7 @@ namespace MiyukiSone
 		//private void PawsWithAllies(bool isPositive)
 		//{
 		//	if (isPositive) HealLowestAlly(BChar, (int)BChar.GetStat.reg);
-		//	else AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("MiyukiRandom").Damage(MiyukiBchar, PlayData.TSavedata.StageNum * 10, false, true);
+		//	else BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("MiyukiRandom").Damage(MiyukiBchar, PlayData.TSavedata.StageNum * 10, false, true);
 
 		//}
 

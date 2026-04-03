@@ -13,6 +13,7 @@ using ChronoArkMod.Template;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using static MiyukiSone.Utils;
+using static MiyukiSone.Affection;
 namespace MiyukiSone
 {
 	public class MiyukiSone_ModDefinition : ModDefinition
@@ -27,17 +28,33 @@ namespace MiyukiSone
 			return list;
 		}
 
-		public class MiyukiDistortion : IP_BattleStart_Ones
+		public class MiyukiDistortion : IP_BattleStart_Ones, IP_BattleEndRewardChange
 		{
+			public void BattleEndRewardChange()
+			{
+				List<ItemBase> rewardList = BattleSystem.instance.Reward;
 
-			//public void BattleEnd()
-			//{
-			//	if (MiyukiInParty)
-			//	{
-			//		PlayData.TSavedata.Party.FindAll(c => c.Incapacitated).ForEach(c => { c.Incapacitated = false; c.Hp = c.get_stat.maxhp / 2; });
-			//		Affection.GetRandomAffection();
-			//	}
-			//}
+				if (MiyukiDecides && rewardList.Count > 0)
+				{
+					var item = rewardList.RandomElement();
+					MiyukiAffection state = MiyukiAffection.Kuudere;
+					if (item != null)
+					{
+						if (IsYandere)
+						{
+							rewardList.Remove(item);
+							state = MiyukiAffection.Yandere;
+						}
+						else if (IsDere)
+						{
+							rewardList.Add(item);
+							state = MiyukiAffection.DereDere;
+						}
+						EventsData.MiyukiTextEvent(state);
+						Debug.Log($"Random item is {item.itemkey} the amount is {item.StackCount}");
+					}
+				}
+			}
 
 			public void BattleStart(BattleSystem Ins)
 			{
@@ -47,11 +64,15 @@ namespace MiyukiSone
 					PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki && c.Equip != null)?.Equip.OfType<Item_Equip>().Where(e => e.IsCurse)
 						.ToList().ForEach(e => { e.Curse = new EquipCurse(); Events.CurseRandomEquip(); });
 				}
-				else if (Affection.MiyukiDecides)
+
+
+				if (!MiyukiInParty)
 				{
-					Events.YandereActionCut();
+					if (MiyukiDecides)
+					{
+						(MiyukiDecides ? (Action)MiyukiPassive.PawsWithDeck : Events.YandereActionCut)();						
+					}
 					EventsData.MiyukiTextEvent(MiyukiAffection.Yandere);
-					if (Affection.MiyukiDecides) UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
 				}
 			}
 		}

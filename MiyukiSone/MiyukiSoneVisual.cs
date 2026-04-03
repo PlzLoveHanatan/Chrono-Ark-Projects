@@ -8,27 +8,45 @@ namespace MiyukiSone
 	public class MiyukiVisual : MonoBehaviour
 	{
 		private static MiyukiVisual _instance;
+		private static bool _isDestroying = false;
 
 		public static MiyukiVisual Instance
 		{
 			get
 			{
+				if (_isDestroying) return null;
+
 				if (_instance == null)
 				{
-					GameObject go = new GameObject("MiyukiVisualManager");
-					_instance = go.AddComponent<MiyukiVisual>();
-
-					Canvas canvas = GameObject.FindObjectOfType<Canvas>();
-					if (canvas != null)
+					GameObject go = GameObject.Find("MiyukiVisualManager");
+					if (go == null)
 					{
-						go.transform.SetParent(canvas.transform, false);
+						go = new GameObject("MiyukiVisualManager");
+						_instance = go.AddComponent<MiyukiVisual>();
+
+						Canvas canvas = GameObject.FindObjectOfType<Canvas>();
+						if (canvas != null)
+						{
+							go.transform.SetParent(canvas.transform, false);
+						}
+
+						RectTransform rt = go.GetComponent<RectTransform>();
+						if (rt == null) rt = go.AddComponent<RectTransform>();
+						rt.anchorMin = Vector2.zero;
+						rt.anchorMax = Vector2.one;
+						rt.offsetMin = Vector2.zero;
+						rt.offsetMax = Vector2.zero;
+					}
+					else
+					{
+						_instance = go.GetComponent<MiyukiVisual>();
+						if (_instance == null)
+						{
+							_instance = go.AddComponent<MiyukiVisual>();
+						}
 					}
 
-					RectTransform rt = go.AddComponent<RectTransform>();
-					rt.anchorMin = Vector2.zero;
-					rt.anchorMax = Vector2.one;
-					rt.offsetMin = Vector2.zero;
-					rt.offsetMax = Vector2.zero;
+					DontDestroyOnLoad(_instance.gameObject);
 				}
 				return _instance;
 			}
@@ -69,6 +87,23 @@ namespace MiyukiSone
 			public Vector2 randomOffsetRange = Vector2.zero;
 			public float spawnHeight = 0f;
 		}
+
+		public static ParticleSettings DefaultSettings = new ParticleSettings();
+
+		public static ParticleSettings CharStatSettings = new ParticleSettings
+		{
+			spawnInterval = 0.8f,
+			minParticles = 2,
+			maxParticles = 6,
+			moveXRange = 400f,
+			moveYMin = 600f,
+			moveYMax = 1500f,
+			minDuration = 4f,
+			maxDuration = 10f,
+			randomColors = false,
+			randomOffsetRange = new Vector2(300f, 50f),
+			spawnHeight = 600f
+		};
 
 		public static ParticleSettings PauseSettings = new ParticleSettings
 		{
@@ -131,8 +166,6 @@ namespace MiyukiSone
 				obj.SetActive(false);
 				heartPool.Enqueue(obj);
 			}
-
-			Debug.Log($"[MiyukiVisual] Heart pool initialized with {initialHeartPoolSize} objects");
 		}
 
 		private void InitializePetalPool()
@@ -150,8 +183,6 @@ namespace MiyukiSone
 				obj.SetActive(false);
 				petalPool.Enqueue(obj);
 			}
-
-			Debug.Log($"[MiyukiVisual] Petal pool initialized with {initialPetalPoolSize} objects");
 		}
 
 		private GameObject CreateVisualObject(Sprite sprite, string name)
@@ -190,7 +221,7 @@ namespace MiyukiSone
 		{
 			StopParticles();
 
-			if (settings == null) settings = PauseSettings;
+			if (settings == null) settings = DefaultSettings;
 
 			particlesObject = new GameObject("MiyukiParticles");
 			particlesObject.transform.SetParent(parent, false);
@@ -233,12 +264,16 @@ namespace MiyukiSone
 
 		private IEnumerator ParticleRoutine(bool isPetal, ParticleSettings settings)
 		{
-			while (particlesObject != null)
+			// Получаем родителя один раз в начале корутины
+			Transform parentTransform = particlesObject.transform;
+			RectTransform parentRT = parentTransform.GetComponent<RectTransform>();
+
+			while (particlesObject != null && parentTransform != null)
 			{
 				if (isPetal)
-					SpawnPetals(particlesObject.transform, settings);
+					SpawnPetals(parentTransform, settings);
 				else
-					SpawnHearts(particlesObject.transform, settings);
+					SpawnHearts(parentTransform, settings);
 
 				yield return new WaitForSeconds(Random.Range(settings.spawnInterval * 0.7f, settings.spawnInterval * 1.3f));
 			}
@@ -287,17 +322,27 @@ namespace MiyukiSone
 		{
 			if (targetRT == null) yield break;
 
+			// Сохраняем ссылку на родительский RectTransform
+			RectTransform parentRT = targetRT;
+
 			int count = Random.Range(settings.minParticles, settings.maxParticles);
 
 			for (int i = 0; i < count; i++)
 			{
+				// Проверяем что родитель все еще существует
+				if (parentRT == null || parentRT.gameObject == null)
+				{
+					Debug.LogWarning("[MiyukiVisual] Parent was destroyed during spawn");
+					yield break;
+				}
+
 				GameObject obj = GetFromPool(pool);
 				if (obj == null) yield break;
 
 				RectTransform rt = obj.GetComponent<RectTransform>();
 				Image img = obj.GetComponent<Image>();
 
-				Vector2 spawnPos = targetRT.anchoredPosition + settings.spawnOffset;
+				Vector2 spawnPos = parentRT.anchoredPosition + settings.spawnOffset;
 				spawnPos.x += Random.Range(-settings.randomOffsetRange.x, settings.randomOffsetRange.x);
 				spawnPos.y += settings.spawnHeight + Random.Range(-settings.randomOffsetRange.y, settings.randomOffsetRange.y);
 
@@ -412,7 +457,7 @@ namespace MiyukiSone
 			if (pool.Count > 0)
 			{
 				GameObject obj = pool.Dequeue();
-				obj.SetActive(true);
+				if (obj != null) obj.SetActive(true);
 				return obj;
 			}
 			return null;
@@ -449,9 +494,15 @@ namespace MiyukiSone
 		{
 			if (_instance == this)
 			{
+				_isDestroying = true;
 				StopParticles();
 				_instance = null;
 			}
+		}
+
+		private void OnApplicationQuit()
+		{
+			_isDestroying = true;
 		}
 	}
 }

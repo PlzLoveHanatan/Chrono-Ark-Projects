@@ -236,7 +236,6 @@ namespace MiyukiSone
 			{
 				//MiyukiSaveManager.Instance.CurrentData.LockedState = RandomManager.RandomInt("MiyukiRandomAffection", 1, 3);
 				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
-				MiyukiSaveManager.Instance.Save();
 				Events.RestartRun();
 
 				if (DialogueWindows.Count > 0) DialogueWindows.Where(obj => obj != null).ToList().ForEach(RemoveWindow);

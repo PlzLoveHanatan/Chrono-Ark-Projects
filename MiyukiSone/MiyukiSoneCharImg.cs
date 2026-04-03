@@ -23,24 +23,7 @@ namespace MiyukiSone
 
 		public static void ChangeCharacterImage()
 		{
-			var availablePose = FolderName.ToList();
-			if (MiyukiData.LastPose != -1 && availablePose.Count > 1) availablePose.RemoveAt(MiyukiData.LastPose);
-			int randomIndex = RandomManager.RandomInt("MiyukiPose", 0, availablePose.Count);
-			string poseFolder = availablePose[randomIndex];
-			MiyukiData.LastPose = randomIndex;
-
-			string affectionFolder = null;
-			switch (CurrentAffection)
-			{
-				case MiyukiAffection.DereDere: affectionFolder = "DereDere"; break;
-				case MiyukiAffection.Kuudere: affectionFolder = "Kuudere"; break;
-				case MiyukiAffection.Yandere: affectionFolder = "Yandere"; break;
-				default: break;
-			}
-
-			if (string.IsNullOrEmpty(affectionFolder)) return;
-
-			string relativePath = $"Assets/Images/MiyukiPose/{poseFolder}/{affectionFolder}/";
+			string relativePath = $"Assets/Images/MiyukiPose/{FolderName.RandomElement()}/{CurrentAffection}/";
 			string battleCharPath = relativePath + "Dress.prefab";
 			string faceSmallPath = relativePath + "Portrait.prefab";
 			string skillFacePath = relativePath + "SkillFace.png";

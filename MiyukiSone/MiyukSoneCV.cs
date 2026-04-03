@@ -1,40 +1,26 @@
-﻿public class MiyukCV : CustomValue
+﻿using System.Collections.Generic;
+
+public class MiyukCV : CustomValue
 {
-	public int MiyukiAffectionPoints = 0;
+	// Character Starting Equip
 	public bool Equip = false;
 
-	// Indexes
-
-	public int LastAffection = -1;
-
-	public int LastDereDialoguePaw = -1;
-	public int LastYandereDialoguePaw = -1;
-
-	public int LastDereTurnAction = -1;
-	public int LastYandereTurnAction = -1;
-
-	public int LastTurnPawAction = -1;
-
-	public int LastArtIndex = -1;
-	
-	public int LastPhoneImage = -1;
-	public int LastSong = -1;
-	public int LastPose = -1;
-
-	public bool SlotsCheck = false;
-
-	// Kiss no answer
+	// Miyuki Special Interaction
 	public int CurrentKissNoType = 0;
 	public int KissNoCallCount = 0;
-
-	// Dialogue Box animation
-	public int LastYesBoxAnimation = -1;
-	public int LastNoBoxAnimation = -1;
-
+	public int FinalViewCharge = 2;
 	public bool BGMVolumeIncreased = false;
-
 	public bool PauseOpen = false;
+	public bool SlotsCheck = false;
+	public bool GameUpdated = false;
+	
+	// Indexes
+	public int LastAffection = -1;
+	public int LastArtIndex = -1;	
+	public int LastPhoneImage = -1;
 	public int MiyukiArtIndex = -1;
+	public int Affection;
 
-	public string LastBuff;
+	// Saving Buff Key for Skill
+	public string LastGlitchedPhoneBuff;
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using static MiyukiSone.DialogueData;
+using static MiyukiSone.Affection;
 
 namespace MiyukiSone
 {
@@ -37,7 +38,7 @@ namespace MiyukiSone
 
 		public static void CreateDialogue(DialogueState? state = null, Vector3 ?position = null, int amount = 0, bool? isDoubleButton = null, float? rotationZ = null)
 		{
-			if (amount == 0) amount = RandomManager.RandomPer("MiyukiDialogueAmount", 100, 30) ? Affection.MiyukiRandomResult(3) : 1;
+			if (amount == 0) amount = MiyukiDecides ? MiyukiRandomResult(3) : 1;
 
 			for (int i = 0; i < amount; i++)
 			{

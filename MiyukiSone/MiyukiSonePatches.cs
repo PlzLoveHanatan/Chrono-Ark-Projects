@@ -23,25 +23,62 @@ using System;
 using Random = UnityEngine.Random;
 using Spine;
 using static ItemCollection;
+using static Gamepad_HoldKey;
 
 namespace MiyukiSone
 {
 	[HarmonyPatch]
 	public static class MiyukiPatches
 	{
+		#region Data & Constructor
 		private static readonly string RelativePath = "Assets/Images/Ui/";
 
-		[HarmonyTranspiler]
-		[HarmonyPatch(typeof(CharFace), "GetRandomSkill")]
-		private static IEnumerable<CodeInstruction> CharacterUpgradeTranspiler(IEnumerable<CodeInstruction> instructions)
+		private static List<Skill> _lucyCurseSkills;
+		private static List<Skill> LucyCurseSkills
 		{
-			List<CodeInstruction> list = instructions.ToList<CodeInstruction>();
-			int num = list.FindLastIndex((CodeInstruction code) => code.opcode == OpCodes.Ldloc_0);
-			list.InsertRange(num + 1, new List<CodeInstruction>
+			get
 			{
-				new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatches), nameof(MiyukiModifySkills)))
-			});
-			return list.AsEnumerable<CodeInstruction>();
+				if (_lucyCurseSkills == null)
+				{
+					_lucyCurseSkills = new List<Skill>()
+					{
+						Skill.TempSkill(GDEItemKeys.Skill_S_LucyCurse_Banana, PlayData.TempBattleTeam.DummyChar, PlayData.TempBattleTeam),
+						Skill.TempSkill(GDEItemKeys.Skill_S_LucyCurse_CursedClock, PlayData.TempBattleTeam.DummyChar, PlayData.TempBattleTeam),
+						Skill.TempSkill(GDEItemKeys.Skill_S_LucyCurse_Heavy, PlayData.TempBattleTeam.DummyChar, PlayData.TempBattleTeam),
+						Skill.TempSkill(GDEItemKeys.Skill_S_LucyCurse_Late, PlayData.TempBattleTeam.DummyChar, PlayData.TempBattleTeam),
+					};
+				}
+				return _lucyCurseSkills;
+			}
+		}
+
+		private static readonly List<string> CharacterBadSkillKeys = new List<string>
+		{
+			GDEItemKeys.Skill_S_DefultSkill_0,
+			GDEItemKeys.Skill_S_DefultSkill_1,
+			GDEItemKeys.Skill_S_DefultSkill_2,
+			ModItemKeys.Skill_S_Miyuki_Special_SacrificedKnowledge,
+			ModItemKeys.Skill_S_Miyuki_Special_Yabeley
+		};
+		#endregion
+
+		[HarmonyTranspiler]
+		[HarmonyPatch(typeof(CharFace), nameof(CharFace.GetRandomSkill))]
+		[HarmonyPatch(typeof(CharStatV4), nameof(CharStatV4.ReturnLucyDrawCard))]
+		private static IEnumerable<CodeInstruction> CharacterUpgradeTranspiler(IEnumerable<CodeInstruction> instructions, MethodBase original)
+		{
+			var codes = instructions.ToList();
+			int index = codes.FindLastIndex(c => c.opcode == OpCodes.Ldloc_0);
+
+			if (index != -1)
+			{
+				MethodInfo targetMethod;
+				if (original.DeclaringType == typeof(CharFace)) targetMethod = AccessTools.Method(typeof(MiyukiPatches), nameof(ReplaceCharacterSkill));
+				else targetMethod = AccessTools.Method(typeof(MiyukiPatches), nameof(ReplaceLucySkill));
+				codes.Insert(index + 1, new CodeInstruction(OpCodes.Call, targetMethod));
+			}
+
+			return codes;
 		}
 
 		[HarmonyTranspiler]
@@ -52,82 +89,60 @@ namespace MiyukiSone
 		private static IEnumerable<CodeInstruction> SkillBookUseTranspiler(IEnumerable<CodeInstruction> instructions)
 		{
 			var codes = instructions.ToList();
-
-			// Ищем последний ldloc.0 — это обычно наш список скиллов
 			int insertIndex = codes.FindLastIndex(c => c.opcode == OpCodes.Ldloc_0);
-
-			if (insertIndex >= 0)
-			{
-				// Вставляем вызов MiyukiModifySkills
-				codes.InsertRange(insertIndex + 1, new List<CodeInstruction>
-				{ new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatches), nameof(MiyukiModifySkills))) });
-			}
+			if (insertIndex >= 0) codes.Insert(insertIndex + 1, new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatches), nameof(ReplaceCharacterSkill))));
 			return codes.AsEnumerable();
 		}
 
-		public static List<Skill> MiyukiModifySkills(List<Skill> skills)
+		public static List<Skill> ReplaceCharacterSkill(List<Skill> skills)
 		{
-			if (skills == null || skills.Count == 0 || MiyukiInParty && IsKuudere) return skills;
+			return ReplaceSkills(skills, true);
+		}
 
-			int randomSkill = !MiyukiInParty ? 100 : 15;
-			int randomEx = !MiyukiInParty ? 100 : 15;
+		public static List<Skill> ReplaceLucySkill(List<Skill> skills)
+		{
+			return ReplaceSkills(skills);
+		}
 
-			if (RandomManager.RandomPer("MiyukiReplaceSkill", 100, randomSkill))
+		public static List<Skill> ReplaceSkills(List<Skill> skills, bool? isCharacterDraw = null)
+		{
+			if (IsKuudere) return skills;
+
+			if (isCharacterDraw.HasValue)
 			{
-				int replaceIndex = RandomManager.RandomInt("MiyukiSkillIndex", 0, skills.Count);
-				ReplaceSkill(skills, replaceIndex);
+				if (MiyukiDecides) CharacterSkill(skills, RandomManager.RandomInt("SkillIndex", 0, skills.Count));
+				if (MiyukiDecides) ApplyUpgrade(skills, RandomManager.RandomInt("ExIndex", 0, skills.Count));
 			}
-
-			if (RandomManager.RandomPer("MiyukiAddExtended", 100, randomEx))
+			else
 			{
-				int extendIndex = RandomManager.RandomInt("MiyukiExIndex", 0, skills.Count);
-				AddExtendedToSkill(skills, extendIndex);
+				if (MiyukiDecides) LucySkill(skills, RandomManager.RandomInt("LucySkillIndex", 0, skills.Count));
+				//if (MiyukiDecides) ApplyUpgrade(skills, RandomManager.RandomInt("LucyExIndex", 0, skills.Count));
 			}
 			return skills;
 		}
 
-		private static void ReplaceSkill(List<Skill> skills, int skillIndex)
+		private static void LucySkill(List<Skill> skills, int skillIndex)
 		{
-			//if (skills.Any(s => s?.Master?.Info?.HasRareSkill() == true) && MiyukiActing && MiyukiSone_Plugin.MiyukiInParty()) return;
-
-			var targetSkill = skills[skillIndex];
-			if (targetSkill.Master.Info.KeyData == ModItemKeys.Character_Miyuki && IsYandere) return;
-
-			var negSkillKeys = new List<string>
-			{
-				GDEItemKeys.Skill_S_DefultSkill_0,
-				GDEItemKeys.Skill_S_DefultSkill_1,
-				GDEItemKeys.Skill_S_DefultSkill_2,
-				ModItemKeys.Skill_S_Miyuki_Special_SacrificedKnowledge
-			};
-
-			var randomSkills = PlayData.ALLSKILLLIST.Where(s => s.Key != GDEItemKeys.SkillCategory_DefultSkill && s.User != "").Select(s => s.KeyID).ToList();
-			// keep random rare skills ?
-			var randomRareSkills = PlayData.ALLRARESKILLLIST.Select(s => s.KeyID).ToList();
-			var skillList = MiyukiDecides ? randomSkills : randomRareSkills;
-			var skillPoolKeys = !MiyukiInParty || IsYandere ? negSkillKeys : skillList;
-			if (skillPoolKeys.Count == 0) return;
-			var newSkillKey = skillPoolKeys.Random("MiyukiRandomRareSkill");
-			UnityEngine.Debug.Log($"[Miyuki] Replacing slot {skillIndex} | {targetSkill?.MySkill?.KeyID} -> {newSkillKey}");
-			skills[skillIndex] = Skill.TempSkill(newSkillKey, targetSkill?.Master, targetSkill?.MyTeam);
+			var skill = (IsYandere ? LucyCurseSkills : PlayData.GetLucySkill(false)).RandomElement("RandomLucySkill");
+			skills[skillIndex] = skill;
 		}
 
-		private static void AddExtendedToSkill(List<Skill> skills, int skillIndex)
+		private static void CharacterSkill(List<Skill> skills, int skillIndex)
 		{
 			var targetSkill = skills[skillIndex];
-			if (targetSkill.Master.Info.KeyData == ModItemKeys.Character_Miyuki && IsYandere) return;
+			if (targetSkill?.Master?.Info?.KeyData == ModItemKeys.Character_Miyuki /*&& IsYandere*/) return;
+			var normalSkills = PlayData.ALLSKILLLIST.Where(s => s.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && s.User != "" && s.Category.Key != GDEItemKeys.SkillCategory_LucySkill).Select(s => s.KeyID);
+			var rareSkills = PlayData.ALLRARESKILLLIST.Where(s => s.User != ModItemKeys.Character_Miyuki).Select(s => s.KeyID);
+			var skillList = (IsYandere) ? CharacterBadSkillKeys : (MiyukiDecides ? normalSkills : rareSkills).ToList();
+			if (skillList.Count > 0) skills[skillIndex] = Skill.TempSkill(skillList.RandomElement("RandomCharacterSkill"), targetSkill.Master, targetSkill.MyTeam);
+		}
 
-			var skillData = targetSkill?.CharinfoSkilldata;
-
-			if (skillData != null && skillData.SKillExtended == null)
-			{
-				if (MiyukiDecides && !IsYandere) targetSkill.CelestialUpgrade();
-				else targetSkill.NormalUpgrade(!MiyukiInParty || IsYandere);
-			}
-			else
-			{
-				Debug.Log($"Can't add Extended to skill {targetSkill.MySkill.KeyID}");
-			}
+		private static void ApplyUpgrade(List<Skill> skills, int skillIndex)
+		{
+			var targetSkill = skills[skillIndex];
+			if (targetSkill?.Master?.Info?.KeyData == ModItemKeys.Character_Miyuki && IsYandere) return;
+			if (targetSkill?.CharinfoSkilldata?.SKillExtended != null) return;
+			(MiyukiDecides && MiyukiInParty ? (Action)(() => targetSkill.CelestialUpgrade()) : () => targetSkill.NormalUpgrade())();
 		}
 
 		private static bool HasRareSkill(this Character character)
@@ -189,6 +204,32 @@ namespace MiyukiSone
 		//		}
 		//	}
 		//}
+		[HarmonyPatch(typeof(CharStatV4))]
+		[HarmonyPatch("OnEnable")]
+		public static class CharStatV4_OnEnable_Patch
+		{
+			[HarmonyPostfix]
+			public static void Postfix(CharStatV4 __instance)
+			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
+				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
+				MakeTransparent(__instance.transform, "BG");
+				PlaySong();
+			}
+		}
+
+		[HarmonyPatch(typeof(CharStatV4))]
+		[HarmonyPatch("OnDisable")]
+		public static class CharStatV4_OnDisable_Patch
+		{
+			[HarmonyPostfix]
+			public static void Postfix()
+			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
+				MiyukiVisual.Instance.StopParticles();
+				StopSong();
+			}
+		}
 
 		[HarmonyPatch(typeof(MainSceneScript))]
 		[HarmonyPatch("Start")]
@@ -322,7 +363,7 @@ namespace MiyukiSone
 
 		[HarmonyPatch(typeof(PauseWindow))]
 		[HarmonyPatch(nameof(PauseWindow.Start))]
-		class Patch_PauseWindow_Miyuki
+		public static class Patch_PauseWindow_Miyuki
 		{
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
@@ -352,7 +393,7 @@ namespace MiyukiSone
 			public static void Postfix(PauseWindow __instance)
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated && !MiyukiData.PauseOpen) return;
-				CheckSettingsVolume();
+				MiyukiVisual.Instance.StopParticles();
 				StopSong(false);
 			}
 		}
@@ -377,7 +418,6 @@ namespace MiyukiSone
 			public static void Postfix()
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
-				CheckSettingsVolume();
 				StopSong();
 			}
 		}
@@ -459,10 +499,10 @@ namespace MiyukiSone
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
 				Transform root = __instance.transform;
 				SetText(root, "TextMeshPro Text", "Graphic", 38);
-				SetSprite(root, "Content", RelativePath + "Graphic_Window_Apply");
+				SetSprite(root, "Content", RelativePath + "Graphic_Window");
 				MakeTransparent(root, "Content/Back");
 				ProcessToggleOptions(root, "Content/Layout");
-				SetSprite(root, "Image (1)",  RelativePath + "Graphic_Window");
+				SetSprite(root, "Image (1)", RelativePath + "Graphic_Window_Apply");
 				MakeTransparent(root, "Image (1)/Image (1)");
 				ProcessButtons(root, "Image (1)/Layout");
 			}
@@ -501,6 +541,26 @@ namespace MiyukiSone
 
 				// Геймпад окно
 				MakeTransparent(root, "PadObj/Window");
+			}
+		}
+
+		[HarmonyPatch(typeof(PauseCautionWindow))]
+		[HarmonyPatch("Start")]
+		public static class Patch_PauseCautionWindow_Miyuki
+		{
+			[HarmonyPostfix]
+			public static void Postfix(PauseCautionWindow __instance)
+			{
+				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
+
+				Transform root = __instance.transform;
+
+				//SetImageColor(root, "Back (1)", new Color(0f, 0f, 0f, 0.7f));
+				SetSprite(root, "Back (1)", RelativePath + "PauseBG");
+				SetSprite(root, "Image (1)", RelativePath + "Option_Window");
+				MakeTransparent(root, "Image (1)/Image (1)");
+				SetText(root, "Image (1)/Layout/TextMeshPro Text", null, 38, true);
+				ProcessButtons(root, "Image (1)/Layout");
 			}
 		}
 	}

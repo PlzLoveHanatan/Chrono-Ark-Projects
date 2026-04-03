@@ -74,11 +74,7 @@ namespace MiyukiSone
 
 		private static void KillRandomAlly()
 		{
-			var allies = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki);
-			if (allies.Count() > 0)
-			{
-				allies.First().Dead(true);
-			}
+			BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement()?.Dead(true);
 		}
 
 		void Awake()

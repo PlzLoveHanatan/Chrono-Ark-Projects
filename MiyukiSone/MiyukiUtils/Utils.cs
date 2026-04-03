@@ -13,6 +13,7 @@ using Spine;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static CharacterDocument;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Buffs;
@@ -24,18 +25,65 @@ namespace MiyukiSone
 	public static class Utils
 	{
 		public static ModInfo ThisMod => ModManager.getModInfo("MiyukiSone");
+		public static int SameSkillNum => SaveManager.Difficalty == 2 ? 4 : 3;
+		public static int MinSkillNum => SaveManager.Difficalty == 2 ? 7 : 6;
 		public static TempSaveData Pd => PlayData.TSavedata;
-		public static FieldSystem Fs => FieldSystem.instance;
-		public static BattleSystem Bs => BattleSystem.instance;
-		public static BattleTeam AllyTeam => Bs?.AllyTeam;
-		public static BattleTeam EnemyTeam => Bs?.EnemyTeam;
-		public static BattleChar DummyChar => AllyTeam?.DummyChar;
-		public static BattleChar MiyukiBchar => AllyTeam.AliveChars?.FirstOrDefault(c => c.Info.KeyData == ModItemKeys.Character_Miyuki) ?? AllyTeam.AliveChars.Random();
+		public static BattleChar DummyChar => BattleSystem.instance?.DummyChar;
+
+		public static BattleChar MiyukiBchar
+		{
+			get
+			{
+				if (BattleSystem.instance.AllyTeam.AliveChars == null) return null;
+				return BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c.Info?.KeyData == ModItemKeys.Character_Miyuki);
+			}
+		}
+
+		public static BattleAlly MiyukiChar
+		{
+			get
+			{
+				if (PlayData.TSavedata?.Party == null) return null;
+				return PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki)?.GetBattleChar as BattleAlly;
+			}
+		}
+
 		public static MiyukCV MiyukiData => GetOrCreateMiyukiData();
-		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(c => c.KeyData == ModItemKeys.Character_Miyuki);
-		public static MiyukiPassive GetMiyukiPassive => MiyukiBchar.Info.Passive as MiyukiPassive;
-		public static AffectionOverflow MiyukiBuff => MiyukiBchar.BuffReturn(ModItemKeys.Buff_B_Miyuki_Passive, false) as AffectionOverflow;
-		private static GameObject _currentTempGO;
+
+		public static bool MiyukiInParty
+		{
+			get
+			{
+				if (PlayData.TSavedata?.Party == null) return false;
+				return PlayData.TSavedata.Party.Any(c => c.KeyData == ModItemKeys.Character_Miyuki);
+			}
+		}
+
+		public static MiyukiPassive GetMiyukiPassive
+		{
+			get
+			{
+				var miyuki = MiyukiBchar;
+				if (miyuki == null) return null;
+				return miyuki.Info?.Passive as MiyukiPassive;
+			}
+		}
+
+		public static AffectionOverflow MiyukiBuff
+		{
+			get
+			{
+				if (MiyukiBchar == null) return null;
+				return MiyukiBchar.BuffReturn(ModItemKeys.Buff_B_Miyuki_Passive, false) as AffectionOverflow;
+			}
+		}
+
+		public static void CheckMiyukiDraw(bool? value)
+		{
+			if (value.HasValue) GetMiyukiPassive.CreateCharacterDraw = value.Value;
+			MiyukiBuff?.Init();
+			MiyukiBuff?.ChangeIcon();
+		}
 
 		public static MiyukCV GetOrCreateMiyukiData()
 		{
@@ -47,6 +95,7 @@ namespace MiyukiSone
 			}
 			return data;
 		}
+		private static GameObject _currentTempGO;
 
 		public static void PlaySound(string sound, bool isStopOldBus = false, float? volume = null)
 		{
@@ -88,48 +137,48 @@ namespace MiyukiSone
 				"YouAndHer",
 				"Monochrome",
 				"MerryGoRound",
+				"AboutYou",
 			};
 
-			CheckSettingsVolume();
-
-			var availableSongs = songKeys.ToList();
-			if (MiyukiData.LastSong != -1 && availableSongs.Count > 1) availableSongs.RemoveAt(MiyukiData.LastSong);
-			int randomIndex = RandomManager.RandomInt("MiyukiRandomSong", 0, availableSongs.Count);
-			MiyukiData.LastSong = randomIndex;
-			PlaySound(availableSongs[randomIndex], true);
+			SetVolumeSettings();
+			songKeys.RandomElement()?.Let(s => PlaySound(s, true));			
 		}
 
-		public static void StopSong(bool ?isPauseBool = null)
+		public static void StopSong(bool? isPauseBool = null)
 		{
 			MasterAudio.StopBus("BGM");
 			MasterAudio.FadeBusToVolume("BattleBGM", 1f, 0.5f);
 			MasterAudio.FadeBusToVolume("BGM", 1f, 0.5f);
 			MasterAudio.FadeBusToVolume("FieldBGM", 1f, 0.5f);
+			RestoreVolumeSettings();
 			if (isPauseBool.HasValue) MiyukiData.PauseOpen = isPauseBool.Value;
 		}
 
-		public static void CheckSettingsVolume()
+		public static void SetVolumeSettings()
 		{
 			if (SaveManager.NowSaveSlot.SoundBGMVolume != 0 && SaveManager.NowSaveSlot.SoundMainVolume != 0) return;
 
-			if (!MiyukiData.BGMVolumeIncreased)
-			{
-				MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain = SaveManager.NowSaveSlot.SoundMainVolume;
-				MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM = SaveManager.NowSaveSlot.SoundBGMVolume;
-				MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect = SaveManager.NowSaveSlot.SoundEffectVolume;
-				MiyukiSaveManager.Instance.Save();
-				SaveManager.NowSaveSlot.SoundMainVolume = 40;
-				SaveManager.NowSaveSlot.SoundBGMVolume = 40;
-				SaveManager.NowSaveSlot.SoundEffectVolume = 40;
-				MiyukiData.BGMVolumeIncreased = true;
-			}
-			else
-			{
-				SaveManager.NowSaveSlot.SoundMainVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain;
-				SaveManager.NowSaveSlot.SoundBGMVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM;
-				SaveManager.NowSaveSlot.SoundEffectVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect;
-				MiyukiData.BGMVolumeIncreased = false;		
-			}
+			if (MiyukiData.BGMVolumeIncreased) return;
+
+			MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain = SaveManager.NowSaveSlot.SoundMainVolume;
+			MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM = SaveManager.NowSaveSlot.SoundBGMVolume;
+			MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect = SaveManager.NowSaveSlot.SoundEffectVolume;
+			SaveManager.NowSaveSlot.SoundMainVolume = 40;
+			SaveManager.NowSaveSlot.SoundBGMVolume = 40;
+			SaveManager.NowSaveSlot.SoundEffectVolume = 40;
+			MiyukiData.BGMVolumeIncreased = true;
+			SaveManager.NowSaveSlot.SaveSoundData();
+			SaveManager.savemanager.OptionApply(false, false);
+		}
+
+		public static void RestoreVolumeSettings()
+		{
+			if (!MiyukiData.BGMVolumeIncreased) return;
+
+			SaveManager.NowSaveSlot.SoundMainVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain;
+			SaveManager.NowSaveSlot.SoundBGMVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM;
+			SaveManager.NowSaveSlot.SoundEffectVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect;
+			MiyukiData.BGMVolumeIncreased = false;
 			SaveManager.NowSaveSlot.SaveSoundData();
 			SaveManager.savemanager.OptionApply(false, false);
 		}
@@ -168,12 +217,6 @@ namespace MiyukiSone
 
 		public static void StartMiyukiText(string text)
 		{
-			//int randomAmount = MiyukiDecides ? RandomManager.RandomInt("MiyukiRandomText", 2, 4) : 1;
-			//for (int i = 0; i < randomAmount; i++)
-			//{dd
-				
-			//}
-
 			if (BattleSystem.instance != null) MiyukiTextBattle(text);
 			else if (FieldSystem.instance != null) MiyukiTextField(text);
 		}
@@ -181,19 +224,19 @@ namespace MiyukiSone
 		private static void MiyukiTextBattle(string text)
 		{
 			if (string.IsNullOrEmpty(text) /*|| !MiyukiInParty*/) return;
-			MiyukiBchar.StartCoroutine(MiyukiTextBattle(MiyukiBchar.GetTopPos(), text));
+			DummyChar.StartCoroutine(MiyukiTextBattle(Position(), text));
 		}
 
 		public static void MiyukiTextField(string text)
 		{
 			if (string.IsNullOrEmpty(text) /*|| !MiyukiInParty*/) return;
-			AllyWindow window = PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki).GetAllyWindow ?? PlayData.TSavedata.Party.Random().GetAllyWindow;
-			if (window != null) FieldSystem.instance.StartCoroutine(MiyukiTextField(window, text));
+			FieldSystem.instance.StartCoroutine(MiyukiTextField(AllyWindow(), text));
 			//if (window != null) BattleText.InstFieldText(window, text);
 		}
 
 		private static IEnumerator MiyukiTextField(AllyWindow window, string text)
 		{
+			if (string.IsNullOrEmpty(text) || window == null) yield break;
 			BattleText component = Misc.UIInst(UIManager.inst.BattleTalkTextUI, window.TextPos).GetComponent<BattleText>();
 			component.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
 			component.transform.rotation = GetRandomRotation();
@@ -204,6 +247,7 @@ namespace MiyukiSone
 
 		private static IEnumerator MiyukiTextBattle(Vector3 position, string text)
 		{
+			if (string.IsNullOrEmpty(text) || position == null) yield break;
 			BattleText component = Misc.UIInst(UIManager.inst.BattleTalkTextUI, BattleSystem.instance.MainUICanvas.transform).GetComponent<BattleText>();
 			component.transform.localScale = GetRandomScale();
 			component.transform.rotation = GetRandomRotation();
@@ -212,6 +256,16 @@ namespace MiyukiSone
 			component.Ptext.TextInput(text);
 			if (MiyukiDecides) BattleSystem.instance.BattleWaitList.Remove(component.gameObject);
 			yield return component.BattleTextOut();
+		}
+
+		private static Vector3 Position()
+		{
+			return MiyukiBchar != null ? MiyukiBchar.GetTopPos() : BattleSystem.instance.AllyTeam.AliveChars.Random().GetPos();
+		}
+
+		private static AllyWindow AllyWindow()
+		{
+			return PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki).GetAllyWindow ?? PlayData.TSavedata.Party.Random().GetAllyWindow;
 		}
 
 		private static Quaternion GetRandomRotation()
@@ -270,7 +324,7 @@ namespace MiyukiSone
 					skill.Image_Basic = address;
 				}
 
-				if (Bs != null)
+				if (BattleSystem.instance != null)
 				{
 					BattleSystem.instance.StartCoroutine(BattleSystem.instance.ActWindow.Window.SkillInstantiate(BattleSystem.instance.AllyTeam, true));
 					if (isGlicthEffect) GlitchEffect(skill);
@@ -376,31 +430,51 @@ namespace MiyukiSone
 
 			if (validForThisSkill.Count == 0)
 			{
-				skill.NormalUpgrade(true);
-				Debug.Log($"Celestial upgrade is unvaliable, adding the nornal upgrade.");
+				skill.NormalUpgrade();
+				Debug.Log($"Celestial upgrade is unavailable, adding normal upgrade.");
 			}
 			else
 			{
 				Skill_Extended selected = validForThisSkill.Random("MiyukiCelestialUpgrade");
+				skill.ExtendedAdd_Battle(selected);
 
-				CharInfoSkillData skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
-				if (skillData != null && skillData.SKillExtended == null)
+				if (skill.Master?.Info?.SkillDatas != null)
 				{
-					skillData.SKillExtended = Skill_Extended.DataToExtended(selected.Data.Key);
-					skill.ExtendedAdd_Battle(selected.Data.Key);
+					var skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
+					if (skillData != null && skillData.SKillExtended == null)
+					{
+						skillData.SKillExtended = selected;
+						Debug.Log($"Saved Celestial upgrade to SkillData: {selected.Data.Key}");
+					}
 				}
-				else
-				{
-					Debug.Log($"Cannot apply Celestial upgrade");
-				}
+
+				Debug.Log($"Applied Celestial upgrade: {selected.Data.Key}");
 			}
 		}
 
-		public static void NormalUpgrade(this Skill skill, bool posUpgrade)
+		public static void NormalUpgrade(this Skill skill)
 		{
 			if (skill == null) return;
-			List<Skill_Extended> upgradeList = PlayData.GetEnforce(posUpgrade, skill);
-			if (upgradeList.Count > 0) skill.ExtendedAdd_Battle(upgradeList.Random("MiyukiRandomUpgrade"));
+
+			var upgradeList = PlayData.GetEnforce(!MiyukiResult(), skill);
+			if (upgradeList == null || upgradeList.Count == 0) return;
+
+			var upgrade = upgradeList.Random("MiyukiRandomUpgrade");
+			if (upgrade == null) return;
+
+			skill.ExtendedAdd_Battle(upgrade);
+
+			if (skill.Master?.Info?.SkillDatas != null)
+			{
+				var skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
+				if (skillData != null && skillData.SKillExtended == null)
+				{
+					skillData.SKillExtended = upgrade;
+					Debug.Log($"Saved Normal upgrade to SkillData: {upgrade.Data.Key}");
+				}
+			}
+
+			Debug.Log($"Applied Normal upgrade: {upgrade.Data.Key}");
 		}
 
 		public static T Let<T>(this T obj, Action<T> action)
@@ -409,11 +483,19 @@ namespace MiyukiSone
 			return obj;
 		}
 
-		public static IEnumerator CheckEternalVow()
+		public static T RandomElement<T>(this IEnumerable<T> source, string key = null)
 		{
-			yield return null;
-			var vow = AllyTeam.Skills.Concat(AllyTeam.Skills_Deck).Concat(AllyTeam.Skills_UsedDeck).Any(s => s.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_EternalVow);
-			if (!vow) GetMiyukiPassive.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_MissChain_12_LucyD);
+			var list = source.ToList();
+			if (string.IsNullOrEmpty(key)) key = "MiyukiRandom";
+			return list.Count == 0 ? default : list.Random(key);
+		}
+
+		public static void GainEquip(int rarity)
+		{
+			rarity = Math.Max(0, Math.Min(4, rarity));
+			List<ItemBase> Equip = Enumerable.Range(0, 3).Select(_ => ItemBase.GetItem(PlayData.GetEquipRandom(rarity, false, null))).ToList();
+			UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(Equip,
+				new RandomItemBtn.SelectItemClickDel(i => { PlayData.TSavedata.EquipList_Legendary.Add(i.itemkey); InventoryManager.Reward(i); }));
 		}
 	}
 }

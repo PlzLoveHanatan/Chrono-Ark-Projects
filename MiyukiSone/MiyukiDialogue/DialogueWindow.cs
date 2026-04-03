@@ -38,6 +38,8 @@ namespace MiyukiSone
 
 		public DialogueState CurrentDialogueState;
 		public bool IsDoubleButton;
+		public bool IsClicked = false;
+		private int click;
 
 		private void Awake()
 		{
@@ -127,9 +129,15 @@ namespace MiyukiSone
 		}
 
 
-		private void ClickHandler(bool isYesClick)
+		private void ClickHandler(bool isYesClickClick)
 		{
-			if (FieldSystem.instance == null && BattleSystem.instance == null) return;
+			click++;
+
+			if (click >= 20) RemoveWindow(gameObject);
+
+			if (FieldSystem.instance == null && BattleSystem.instance == null || IsClicked) return;
+
+			IsClicked = CurrentDialogueState != DialogueState.kiss;
 
 			if (IsKuudere)
 			{
@@ -139,12 +147,12 @@ namespace MiyukiSone
 			else if (CurrentDialogueState == DialogueState.love)
 			{
 				DialoguePaws.ChoosePaws();
-				MiyukiTextBoxLove(isYesClick);
-				StartAnimationAndClose(isYesClick);
+				MiyukiTextBoxLove(isYesClickClick);
+				StartAnimationAndClose(isYesClickClick);
 			}
 			else if (CurrentDialogueState == DialogueState.kiss)
 			{
-				if (!isYesClick)
+				if (!isYesClickClick)
 				{
 					CurrentAffection = MiyukiAffection.Yandere;
 					if (BattleSystem.instance != null) (MiyukiDecides ? (Action)DialoguePaws.YanderePaws : Events.YandereAction)();
@@ -162,17 +170,10 @@ namespace MiyukiSone
 			}
 		}
 
-		private void StartAnimationAndClose(bool isYes)
+		private void StartAnimationAndClose(bool isYesClick)
 		{
-			if (MiyukiDecides)
-			{
-				if (isYes) PlayRandomYesAnimation();
-				else PlayRandomNoAnimation();
-			}
-			else
-			{
-				RemoveWindow(gameObject);
-			}
+			if (MiyukiDecides) (isYesClick ? (Action)PlayRandomYesAnimation : PlayRandomNoAnimation)();
+			else RemoveWindow(gameObject);
 		}
 
 		#region Animations
@@ -184,18 +185,18 @@ namespace MiyukiSone
 				() => LoveBurst(2f),
 			};
 			Transform extraTarget = null;
-			var available = new List<System.Func<IEnumerator>>(animations);
-			if (MiyukiData.LastYesBoxAnimation != -1 && available.Count > 1) available.Remove(animations[MiyukiData.LastYesBoxAnimation]);
-			int index = RandomManager.RandomInt("MiyukiRandomYesIndex", 0, available.Count);
-			PlayAnimationAndDestroy(available[index].Invoke());
-			MiyukiData.LastYesBoxAnimation = animations.IndexOf(available[index]);
-			if (MiyukiDecides) return;
-			Transform mainTarget = MiyukiDecides ? btn_yes.transform : MiyukiBchar.transform;
-			MiyukiVisual.Instance.SpawnHearts(mainTarget);
+			animations.RandomElement()?.Invoke();
+
 			if (MiyukiDecides)
 			{
-				extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
-				MiyukiVisual.Instance.SpawnHearts(extraTarget);
+				Transform mainTarget = MiyukiDecides ? btn_yes.transform : MiyukiBchar.transform;
+				MiyukiVisual.Instance.SpawnHearts(mainTarget);
+
+				if (MiyukiDecides)
+				{
+					extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
+					MiyukiVisual.Instance.SpawnHearts(extraTarget);
+				}
 			}
 		}
 
@@ -207,11 +208,7 @@ namespace MiyukiSone
 				() => ShatterDrop(2f),
 			};
 
-			var available = new List<System.Func<IEnumerator>>(animations);
-			if (MiyukiData.LastNoBoxAnimation != -1 && available.Count > 1) available.Remove(animations[MiyukiData.LastNoBoxAnimation]);
-			int index = RandomManager.RandomInt("MiyukiRandomNoIndex", 0, available.Count);
-			PlayAnimationAndDestroy(available[index].Invoke());
-			MiyukiData.LastNoBoxAnimation = animations.IndexOf(available[index]);
+			animations.RandomElement()?.Invoke();
 		}
 
 		private void PlayAnimationAndDestroy(IEnumerator animation)

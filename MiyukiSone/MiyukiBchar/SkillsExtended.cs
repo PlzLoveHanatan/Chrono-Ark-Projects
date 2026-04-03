@@ -61,7 +61,7 @@ namespace MiyukiSone
 					Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_Yabeley, BChar, BChar.MyTeam);
 					MySkill.SkillChange(newSkill, false, false, true);
 					newSkill.ExtendedAdd_Battle(GDEItemKeys.SkillExtended_SkillWe_NoExchange);
-					GainEquip();
+					Utils.GainEquip(4);
 				}
 				else
 				{
@@ -77,13 +77,6 @@ namespace MiyukiSone
 					//	PlayData.TSavedata.SpRule.GameSetting();
 					//}
 				}
-			}
-
-			private void GainEquip()
-			{
-				List<ItemBase> Equip = Enumerable.Range(0, 3).Select(_ => ItemBase.GetItem(PlayData.GetEquipRandom(4, false, null))).ToList();
-				UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(Equip,
-					new RandomItemBtn.SelectItemClickDel(i => { PlayData.TSavedata.EquipList_Legendary.Add(i.itemkey); InventoryManager.Reward(i); } ));
 			}
 		}
 

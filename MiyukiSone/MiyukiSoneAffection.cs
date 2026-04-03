@@ -38,15 +38,8 @@ namespace MiyukiSone
 
 				if (_currentAffection == null)
 				{
-					if (MiyukiSaveManager.Instance.CurrentData.SaveExists)
-					{
-						int savedValue = MiyukiSaveManager.Instance.CurrentData.CurrentAffection;
-						_currentAffection = (MiyukiAffection)savedValue;
-					}
-					else
-					{
-						_currentAffection = MiyukiAffection.Kuudere;
-					}
+					if (MiyukiData.Affection != -1) _currentAffection = (MiyukiAffection)MiyukiData.Affection;
+					else _currentAffection = MiyukiAffection.Kuudere;
 				}
 				return _currentAffection.Value;
 			}
@@ -56,8 +49,7 @@ namespace MiyukiSone
 				if (_currentAffection != value)
 				{
 					_currentAffection = value;
-					MiyukiSaveManager.Instance.CurrentData.CurrentAffection = (int)value;
-					MiyukiSaveManager.Instance.Save();
+					MiyukiData.Affection = (int)value;
 					CheckIp();
 					Debug.Log($"[Miyuki] Affection changed to: {value}");
 				}
@@ -81,6 +73,7 @@ namespace MiyukiSone
 
 		public static int MiyukiRandomResult(int maxValue, [DefaultValue("1")] int? minValue = null)
 		{
+			if (IsKuudere) return 0;
 			int safeMin = minValue ?? 1;
 			return RandomManager.RandomInt("MiyukiRandomInt", safeMin, maxValue + 1);
 		}
@@ -88,9 +81,9 @@ namespace MiyukiSone
 		public static bool MiyukiResult() => IsDere;
 		public static bool MiyukiDecides => RandomManager.RandomPer("MiyukiDecision", 100, 50);
 		public static bool MiyukiForces => RandomManager.RandomPer("MiyukiForce", 100, 75);
-		public static bool IsDere => CurrentAffection == MiyukiAffection.DereDere;
-		public static bool IsKuudere => CurrentAffection == MiyukiAffection.Kuudere;
-		public static bool IsYandere => CurrentAffection == MiyukiAffection.Yandere;
+		public static bool IsDere => MiyukiInParty && CurrentAffection == MiyukiAffection.DereDere;
+		public static bool IsKuudere => MiyukiInParty && CurrentAffection == MiyukiAffection.Kuudere;
+		public static bool IsYandere => !MiyukiInParty || CurrentAffection == MiyukiAffection.Yandere;
 
 		//private static MiyukiAffection GetRandomActionState()
 		//{ 
@@ -107,10 +100,10 @@ namespace MiyukiSone
 				return;
 			}
 
-			if (MiyukiDecides || IsYandere && MiyukiForces)
+			if (MiyukiDecides) GetRandomAffection();
+
+			if (MiyukiForces)
 			{
-				GetRandomAffection();
-				MiyukiSaveManager.Instance.CurrentData.CurrentAffection = (int)CurrentAffection;
 				CreateDialogue();
 				MiyukiTurnAction();
 			}
@@ -142,7 +135,7 @@ namespace MiyukiSone
 		{
 			if (BattleSystem.instance == null) return;
 
-			foreach (var skill in AllyTeam.Skills.Concat(AllyTeam.Skills_Deck).Concat(AllyTeam.Skills_UsedDeck))
+			foreach (var skill in BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck))
 			{
 				foreach (var ex in skill.AllExtendeds)
 				{
@@ -161,7 +154,7 @@ namespace MiyukiSone
 			//var buff = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.Buffs).OfType<Buffs.MiyukiBuff>().ToList();
 			//buff.ForEach(b => b.Init());
 
-			AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff_Ally, false) is Buffs.AllyConstantStats b) b.Init(); });
+			BattleSystem.instance.AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff_Ally, false) is Buffs.AllyConstantStats b) b.Init(); });
 		}
 	}
 }
