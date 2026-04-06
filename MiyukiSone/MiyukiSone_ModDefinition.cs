@@ -37,20 +37,11 @@ namespace MiyukiSone
 				if (MiyukiDecides && rewardList.Count > 0)
 				{
 					var item = rewardList.RandomElement();
-					MiyukiAffection state = MiyukiAffection.Kuudere;
-					if (item != null)
+					if (item != null && !IsKuudere)
 					{
-						if (IsYandere)
-						{
-							rewardList.Remove(item);
-							state = MiyukiAffection.Yandere;
-						}
-						else if (IsDere)
-						{
-							rewardList.Add(item);
-							state = MiyukiAffection.DereDere;
-						}
-						EventsData.MiyukiTextEvent(state);
+						if (IsYandere) rewardList.Remove(item);
+						else if (IsDere) rewardList.Add(item);
+						if (MiyukiInParty) EventsData.MiyukiTextEvent();
 						Debug.Log($"Random item is {item.itemkey} the amount is {item.StackCount}");
 					}
 				}
@@ -72,7 +63,7 @@ namespace MiyukiSone
 					{
 						(MiyukiDecides ? (Action)MiyukiPassive.PawsWithDeck : Events.YandereActionCut)();						
 					}
-					EventsData.MiyukiTextEvent(MiyukiAffection.Yandere);
+					//EventsData.MiyukiTextEvent(MiyukiAffection.Yandere);
 				}
 			}
 		}

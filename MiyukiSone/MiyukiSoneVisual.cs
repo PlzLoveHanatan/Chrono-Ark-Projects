@@ -270,10 +270,8 @@ namespace MiyukiSone
 
 			while (particlesObject != null && parentTransform != null)
 			{
-				if (isPetal)
-					SpawnPetals(parentTransform, settings);
-				else
-					SpawnHearts(parentTransform, settings);
+				if (isPetal) SpawnPetals(parentTransform, settings);
+				else SpawnHearts(parentTransform, settings);
 
 				yield return new WaitForSeconds(Random.Range(settings.spawnInterval * 0.7f, settings.spawnInterval * 1.3f));
 			}

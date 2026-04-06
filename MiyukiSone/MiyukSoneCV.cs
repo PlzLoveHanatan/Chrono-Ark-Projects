@@ -8,12 +8,13 @@ public class MiyukCV : CustomValue
 	// Miyuki Special Interaction
 	public int CurrentKissNoType = 0;
 	public int KissNoCallCount = 0;
-	public int FinalViewCharge = 2;
+	public int FinalViewCharge = 1;
+	public int FinalViewDamage = 0;
 	public bool BGMVolumeIncreased = false;
 	public bool PauseOpen = false;
 	public bool SlotsCheck = false;
 	public bool GameUpdated = false;
-	
+
 	// Indexes
 	public int LastAffection = -1;
 	public int LastArtIndex = -1;	

@@ -22,7 +22,7 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Might = "B_Miyuki_Might";
 		/// <summary>
-		/// Overflowing Affection
+		/// Miyuki's Affection
 		/// Avaliable Lucy draw skills:
 		/// You can click on this it to toggle draw.
 		/// </summary>
@@ -32,7 +32,7 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Recover = "B_Miyuki_Recover";
 		/// <summary>
-		/// When played from hand, view 3 random <color=#F9D62FFF>Legendary</color> equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
+		/// When played from hand, view 5 random  <color=#F53172FF>Heroic</color> equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
 		/// </summary>
         public static string SkillExtended_Ex_Miyuki_Ex_0 = "Ex_Miyuki_Ex_0";
 		/// <summary>
@@ -41,10 +41,15 @@ namespace MiyukiSone
         public static string SkillExtended_Ex_Miyuki_Glitch = "Ex_Miyuki_Glitch";
 		/// <summary>
 		/// Fourth Wall Breaker
+		/// Remove stats cap.
 		/// At the start of the turn, remove all curses from the deck.
-		/// If the wearer  is Miyuki, the created Lucy draw skill cost 1 less and gain 'Swiftness'.
+		/// If the wearer  is Miyuki, the 'Miyuki's Affection' Lucy draw skill cost 1 less and gain 'Swiftness'.
 		/// </summary>
         public static string Item_Equip_E_Miyuki_WallBreaker = "E_Miyuki_WallBreaker";
+		/// <summary>
+		/// Reality Warping
+		/// </summary>
+        public static string SkillKeyword_KeyWord_RealityWarping = "KeyWord_RealityWarping";
 		/// <summary>
 		/// Miyuki
 		/// Passive:
@@ -78,18 +83,6 @@ namespace MiyukiSone
         public static string SkillEffect_SE_T_S_SweetRestraint = "SE_T_S_SweetRestraint";
         public static string SkillEffect_SE_T_S_WarningStrike = "SE_T_S_WarningStrike";
 		/// <summary>
-		/// Fractured Illusion
-		/// Draw 2 skills and apply Illusion Sword buff onto them.
-		/// </summary>
-        public static string Skill_S_Miyuki_Draw_FracturedIllusion = "S_Miyuki_Draw_FracturedIllusion";
-		/// <summary>
-		/// Miyuki, Help
-		/// Choose One -
-		/// Reduce 'Inner Desire' damage by 15 and draw 2 skills.
-		/// Or increase 'Inner Desire' damage by 12 and draw 3 skills.
-		/// </summary>
-        public static string Skill_S_Miyuki_Draw_MiyukiHelp = "S_Miyuki_Draw_MiyukiHelp";
-		/// <summary>
 		/// Eternal Promise
 		/// This skill costs 4 more while it is in the deck.
 		/// If cast on an ally at Death's Door, do not apply Healing Circle and immediately heal for &a <color=#FF7C34>(180% Healing Power)</color>.
@@ -122,6 +115,11 @@ namespace MiyukiSone
 		/// </summary>
         public static string Skill_S_Miyuki_HappyBirthday = "S_Miyuki_HappyBirthday";
 		/// <summary>
+		/// Fractured Illusion
+		/// Draw 2 skills and apply Illusion Sword buff onto them.
+		/// </summary>
+        public static string Skill_S_Miyuki_LucyDraw_FracturedIllusion = "S_Miyuki_LucyDraw_FracturedIllusion";
+		/// <summary>
 		/// Helping Hand
 		/// View allies' unique draw skills and select one to create in hand. The created skill gains Exclude.
 		/// </summary>
@@ -132,6 +130,13 @@ namespace MiyukiSone
 		/// Cost is reduced by 1 at the end of the turn.
 		/// </summary>
         public static string Skill_S_Miyuki_LucyDraw_MiyukiPhone = "S_Miyuki_LucyDraw_MiyukiPhone";
+		/// <summary>
+		/// Momori, Help
+		/// Choose One -
+		/// Reduce 'Inner Desire' damage by 15 and draw 2 skills.
+		/// Or increase 'Inner Desire' damage by 12 and draw 3 skills.
+		/// </summary>
+        public static string Skill_S_Miyuki_LucyDraw_MomoriHelp = "S_Miyuki_LucyDraw_MomoriHelp";
 		/// <summary>
 		/// Measured Love
 		/// Select an ally.
@@ -166,9 +171,11 @@ namespace MiyukiSone
 		/// Final View
 		/// Ignores armor.
 		/// Recast this skill 2 times.
+		/// Current Striking Ability is &a.
+		/// Whenever this skill is killing ally, permanently increase additional damage by &b for <b>this run</b>.
 		/// Can be used outside of battle.
-		/// This effect cannot be reactivated until you clear 2 stages.
-		/// Current Status: &a.
+		/// This effect cannot be reactivated until you clear 1 stage.
+		/// Current Status: &c.
 		/// </summary>
         public static string Skill_S_Miyuki_Rare_FinalView = "S_Miyuki_Rare_FinalView";
         public static string Skill_S_Miyuki_Rare_FinalView_0 = "S_Miyuki_Rare_FinalView_0";
@@ -268,7 +275,7 @@ namespace MiyukiSone
 		/// <summary>
 		/// Korean:
 		/// English:
-		/// I want it to be just the two of us. Random investigators will die, then YOU can view 3 random <color=#F53172FF>Heroic</color> equipment and select 1 to obtain.
+		/// I want it to be just the two of us.
 		/// Japanese:
 		/// Chinese:
 		/// Chinese-TW:
@@ -283,6 +290,24 @@ namespace MiyukiSone
 		/// Chinese-TW:
 		/// </summary>
         public static string GameUpdate => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("GameUpdate");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Current Affection: &a.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiyukiAffection => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiAffection");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// When this skill in the deck, add &a Lucy draw skill to Miyuki's Affection.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string RealityWarpingDesc => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RealityWarpingDesc");
 
     }
 }

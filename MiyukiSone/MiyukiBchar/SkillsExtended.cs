@@ -34,14 +34,19 @@ namespace MiyukiSone
 			}
 		}
 
-		public class Miyuki_Ex_0 : Skill_Extended
+		public class Miyuki_Ex_0 : Skill_Extended, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
 			{
 				OnePassive = true;
 				Disposable = true;
 				base.Init();
-			}			
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview(ModItemKeys.Skill_S_Miyuki_Special_Yabeley);
+			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
@@ -57,11 +62,11 @@ namespace MiyukiSone
 				if (skillData != null)
 				{
 					MyChar.SkillDatas.Remove(MySkill.CharinfoSkilldata);
-					MyChar.SkillAdd(new GDESkillData(ModItemKeys.Skill_S_Miyuki_Special_Yabeley), DataToExtended(GDEItemKeys.SkillExtended_SkillWe_NoExchange));
+					MyChar.SkillAdd(new GDESkillData(ModItemKeys.Skill_S_Miyuki_Special_Yabeley) /*DataToExtended(GDEItemKeys.SkillExtended_SkillWe_AutoWaste)*/);
 					Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_Yabeley, BChar, BChar.MyTeam);
 					MySkill.SkillChange(newSkill, false, false, true);
-					newSkill.ExtendedAdd_Battle(GDEItemKeys.SkillExtended_SkillWe_NoExchange);
-					Utils.GainEquip(4);
+					newSkill.ExtendedAdd_Battle(GDEItemKeys.SkillExtended_SkillWe_AutoWaste);
+					Utils.GainEquip(3, 5);
 				}
 				else
 				{

@@ -133,7 +133,7 @@ namespace MiyukiSone
 		{
 			click++;
 
-			if (click >= 20) RemoveWindow(gameObject);
+			if (click >= 2 || CurrentDialogueState == DialogueState.kiss && click >= 25) RemoveWindow(gameObject);
 
 			if (FieldSystem.instance == null && BattleSystem.instance == null || IsClicked) return;
 
@@ -185,7 +185,7 @@ namespace MiyukiSone
 				() => LoveBurst(2f),
 			};
 			Transform extraTarget = null;
-			animations.RandomElement()?.Invoke();
+			PlayAnimationAndDestroy(animations.RandomElement()?.Invoke());
 
 			if (MiyukiDecides)
 			{
@@ -208,12 +208,13 @@ namespace MiyukiSone
 				() => ShatterDrop(2f),
 			};
 
-			animations.RandomElement()?.Invoke();
+			PlayAnimationAndDestroy(animations.RandomElement()?.Invoke());
 		}
 
 		private void PlayAnimationAndDestroy(IEnumerator animation)
 		{
-			StartCoroutine(AnimateAndDestroy(animation));
+			if (animation == null) RemoveWindow(gameObject);
+			else StartCoroutine(AnimateAndDestroy(animation));
 		}
 
 		private IEnumerator AnimateAndDestroy(IEnumerator animation)
@@ -298,10 +299,7 @@ namespace MiyukiSone
 		private IEnumerator LoveBurst(float duration)
 		{
 			Transform t = transform;
-			CanvasGroup cg = GetComponent<CanvasGroup>();
-			if (cg == null)
-				cg = gameObject.AddComponent<CanvasGroup>();
-
+			CanvasGroup cg = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
 			Vector3 startScale = t.localScale;
 			Quaternion startRot = t.rotation;
 

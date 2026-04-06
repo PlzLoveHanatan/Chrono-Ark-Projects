@@ -30,7 +30,7 @@ namespace MiyukiSone
 		#region Data & Constructors
 		private MiyukiInputEvent chatInputField;
 
-		public bool CreateCharacterDraw = false;
+		public static bool CreateCharacterDraw = false;
 		public bool WallBreakerEquipped = false;
 
 		// Fixed Ability Skill List
@@ -52,8 +52,8 @@ namespace MiyukiSone
 			};
 		}
 
-		// Ally damage skills
-		private readonly HashSet<string> allyDamageSkills = new HashSet<string>()
+		// Skills to redirect skills
+		private readonly HashSet<string> edgeCaseSkills = new HashSet<string>()
 		{
 			GDEItemKeys.Skill_S_Witch_P_0,
 			GDEItemKeys.Skill_S_Witch_2,
@@ -65,19 +65,25 @@ namespace MiyukiSone
 		};
 
 		// Main List
-		public readonly List<string> AvaliableCharacterDraw = new List<string>();
+		public static readonly List<string> AvaliableCharacterDraw = new List<string>();
 
-		private readonly Dictionary<string, string> CharacterDrawList = new Dictionary<string, string>()
+		public static readonly Dictionary<string, string> CharacterDrawList = new Dictionary<string, string>()
 		{
-			{ ModItemKeys.Skill_S_Miyuki_GracefulSwing, GDEItemKeys.Skill_S_Priest_7_LucyD },// Divine Revelation
-			{ ModItemKeys.Skill_S_Miyuki_WarningStrike, GDEItemKeys.Skill_S_Control_3_Draw }, // Insight 
-			{ ModItemKeys.Skill_S_Miyuki_EternalVow, GDEItemKeys.Skill_S_MissChain_12_LucyD }, // Burning Draw
-			//{ ModItemKeys.Skill_S_HappyBirthday, GDEItemKeys.Skill_S_Lucy_24 }, // Change of Plans
-			{ ModItemKeys.Skill_S_Miyuki_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
-			{ ModItemKeys.Skill_S_Miyuki_Pandemonium, ModItemKeys.Skill_S_Miyuki_Draw_FracturedIllusion}, // Fractured Illusion
 			{ ModItemKeys.Skill_S_Miyuki_EternalPromise, GDEItemKeys.Skill_S_Leryn_Draw}, // Inspiration
-			{ ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, ModItemKeys.Skill_S_Miyuki_Draw_MiyukiHelp}, // Miyuki, Help
+			{ ModItemKeys.Skill_S_Miyuki_EternalVow, GDEItemKeys.Skill_S_MissChain_12_LucyD }, // Burning Draw
+			{ ModItemKeys.Skill_S_Miyuki_GlitchingPhone, "???" },
+			{ ModItemKeys.Skill_S_Miyuki_GracefulSwing, GDEItemKeys.Skill_S_Priest_7_LucyD },// Divine Revelation
+			{ ModItemKeys.Skill_S_Miyuki_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
+			{ ModItemKeys.Skill_S_Miyuki_MeasuredLove, GDEItemKeys.Skill_S_Lian_Draw }, // Begone!
+			{ ModItemKeys.Skill_S_Miyuki_Pandemonium, ModItemKeys.Skill_S_Miyuki_LucyDraw_FracturedIllusion}, // Fractured Illusion
+			{ ModItemKeys.Skill_S_Miyuki_QueenBee, GDEItemKeys.Skill_S_Joey_9_LucyD}, // Strawberry-flawored Tablet
+			//{ ModItemKeys.Skill_S_Miyuki_Rare_FinalView, "???"},
+			//{ ModItemKeys.Skill_S_Miyuki_Rare_GameUpdate, "???"},
+			//{ ModItemKeys.Skill_S_Miyuki_Rare_JustforYOU, "???"},
+			{ ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, ModItemKeys.Skill_S_Miyuki_LucyDraw_MomoriHelp}, // Miyuki, Help
+			{ ModItemKeys.Skill_S_Miyuki_StepToward, GDEItemKeys.Skill_S_TW_Blue_Draw0}, // Observation
 			{ ModItemKeys.Skill_S_Miyuki_SweetRestraint, GDEItemKeys.Skill_S_Queen_5_Draw}, // Uncontrollable Doll
+			{ ModItemKeys.Skill_S_Miyuki_WarningStrike, GDEItemKeys.Skill_S_Control_3_Draw }, // Insight 
 		};
 
 		// Keys for additional shuffled skills in the deck
@@ -91,7 +97,7 @@ namespace MiyukiSone
 			GDEItemKeys.Skill_S_Lucy_CasinoDLC_7, // All in
 		};
 
-		private static readonly List<string> NegLucyDrawKeys = new List<string>()
+		public static readonly List<string> NegLucyDrawKeys = new List<string>()
 		{
 			GDEItemKeys.Skill_S_Transcendence_Main, // Bloodmist
 			GDEItemKeys.Skill_S_LucyCurse_CursedClock,
@@ -119,13 +125,13 @@ namespace MiyukiSone
 			AvaliableCharacterDraw.Clear();
 			BattleSystem.instance.AllyTeam.Skills_Deck.ForEach(s =>
 			{
-				if (CharacterDrawList.TryGetValue(s.MySkill.KeyID, out string drawKey))
-				{ 
+				if (s.MySkill.KeyID != ModItemKeys.Skill_S_Miyuki_GlitchingPhone && CharacterDrawList.TryGetValue(s.MySkill.KeyID, out string drawKey))
+				{
 					if (!AvaliableCharacterDraw.Contains(drawKey)) AvaliableCharacterDraw.Add(drawKey);
 				}
 			});
 
-			PawsWithDeck();
+			if (!IsKuudere) PawsWithDeck();
 			if (AvaliableCharacterDraw.Count > 0) BattleSystem.DelayInput(PawsWithDraw());
 		}
 
@@ -138,15 +144,15 @@ namespace MiyukiSone
 		{
 			BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != MiyukiBchar).ToList().ForEach(a => a.SecureBuff(ModItemKeys.Buff_B_Miyuki_Buff_Ally));
 			BChar.SecureBuff(ModItemKeys.Buff_B_Miyuki_Passive);
-			CreateCharacterLucyDraw();
-			MiyukiTurn();
+			CreateCharacterLucyDraw();		
+			if (BattleSystem.instance.TurnNum > 1) MiyukiTurn();
+			else CheckIp();
 			MiyukiTurnPaw();
 		}
 
 		public void TurnEnd()
 		{
 			RefreshMiyukiCharacterDraw();
-			if (AvaliableCharacterDraw.Count == 0) CheckMiyukiDraw(false);
 		}
 
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
@@ -162,13 +168,13 @@ namespace MiyukiSone
 
 		public void Targeted(Skill SkillD, List<BattleChar> Targets)
 		{
-			if (!SkillD.Master.Info.Ally || BChar.HP <= BChar.GetStat.maxhp / 2) return;
+			if (!SkillD.Master.Info.Ally || BChar.HP >= BChar.GetStat.maxhp / 2 && MiyukiDecides) return;
 
 			BattleChar target = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
 
 			if (target == null) return;
 
-			if (allyDamageSkills.Contains(SkillD.MySkill.KeyID) || SkillD.IsDamage)
+			if (edgeCaseSkills.Contains(SkillD.MySkill.KeyID) || SkillD.IsDamage)
 			{
 				Targets.Clear();
 				Targets.Add(target);
@@ -176,12 +182,6 @@ namespace MiyukiSone
 				//BChar.StartCoroutine(ShowMiyukiEventText());
 				MiyukiTextEvent(MiyukiAffection.Yandere);
 			}
-		}
-
-		private IEnumerator ShowMiyukiEventText()
-		{
-			yield return null;
-			MiyukiTextEvent(MiyukiAffection.Kuudere);
 		}
 		#endregion
 
@@ -228,15 +228,16 @@ namespace MiyukiSone
 
 		public static void PawsWithDeck()
 		{
-			List<string> selectedSkills =  MiyukiResult() ? PosLucyDrawKeys : NegLucyDrawKeys;
+			List<string> selectedSkills = MiyukiResult() ? PosLucyDrawKeys : NegLucyDrawKeys;
 
 			for (int i = 0; i < MiyukiRandomResult(3); i++)
 			{
 				var skill = Skill.TempSkill(selectedSkills.RandomElement(), BattleSystem.instance.AllyTeam.LucyAlly, BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
-				if (skill != null) BattleSystem.instance?.AllyTeam.Skills_Deck.InsertRandom("MiyukiRandomInsert", skill);	
+				if (skill != null) BattleSystem.instance?.AllyTeam.Skills_Deck.InsertRandom("MiyukiRandomInsert", skill);
 				skill.isExcept = true;
 				skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
 			}
+			MiyukiTextEvent();
 		}
 
 		private IEnumerator PawsWithDraw()
@@ -259,14 +260,6 @@ namespace MiyukiSone
 			skill.APChange = WallBreakerEquipped ? 0 : 1;
 			skill.AutoDelete = 1;
 			skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
-		}
-
-		private void RefreshMiyukiCharacterDraw()
-		{
-			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck).Where(s => s.Master == BChar).Select(s => s.MySkill.KeyID).ToList();
-			var shouldHaveDraws = miyukiSkills.Where(CharacterDrawList.ContainsKey).Select(s => CharacterDrawList[s]).Distinct().ToList();
-			AvaliableCharacterDraw.RemoveAll(draw => !shouldHaveDraws.Contains(draw));
-			shouldHaveDraws.ForEach(s => { if (!AvaliableCharacterDraw.Contains(s)) AvaliableCharacterDraw.Add(s); });
 		}
 
 		private void CreateChatWindow()

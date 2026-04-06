@@ -17,6 +17,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static CharacterDocument;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Buffs;
+using static MiyukiSone.EventsData;
 using static MiyukiSone.Skills;
 using static MiyukiSone.UtilsUI;
 
@@ -78,11 +79,20 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void CheckMiyukiDraw(bool? value)
+		public static void CheckMiyukiDraw(bool createCharDraw = false, bool changeIcon = false)
 		{
-			if (value.HasValue) GetMiyukiPassive.CreateCharacterDraw = value.Value;
+			if (createCharDraw) MiyukiPassive.CreateCharacterDraw = createCharDraw;
 			MiyukiBuff?.Init();
-			MiyukiBuff?.ChangeIcon();
+			if (changeIcon) MiyukiBuff?.ChangeIcon();
+		}
+
+		public static void RefreshMiyukiCharacterDraw()
+		{
+			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck).Where(s => s.Master == MiyukiBchar)?.Select(s => s.MySkill.KeyID).ToList();
+			var shouldHaveDraws = miyukiSkills.Where(MiyukiPassive.CharacterDrawList.ContainsKey).Select(s => MiyukiPassive.CharacterDrawList[s]).Distinct().ToList();
+			MiyukiPassive.AvaliableCharacterDraw.RemoveAll(draw => !shouldHaveDraws.Contains(draw));
+			shouldHaveDraws.ForEach(s => { if (!MiyukiPassive.AvaliableCharacterDraw.Contains(s)) MiyukiPassive.AvaliableCharacterDraw.Add(s); });
+			if (MiyukiPassive.AvaliableCharacterDraw.Count == 0) CheckMiyukiDraw(false, true);
 		}
 
 		public static MiyukCV GetOrCreateMiyukiData()
@@ -95,6 +105,7 @@ namespace MiyukiSone
 			}
 			return data;
 		}
+
 		private static GameObject _currentTempGO;
 
 		public static void PlaySound(string sound, bool isStopOldBus = false, float? volume = null)
@@ -121,7 +132,6 @@ namespace MiyukiSone
 		{
 			PlaySound(sound, false, volume);
 		}
-
 
 		public static void PlaySong()
 		{
@@ -457,24 +467,19 @@ namespace MiyukiSone
 			if (skill == null) return;
 
 			var upgradeList = PlayData.GetEnforce(!MiyukiResult(), skill);
-			if (upgradeList == null || upgradeList.Count == 0) return;
+			var ex = upgradeList?.RandomElement()?.Let(ext => skill.ExtendedAdd_Battle(ext));
 
-			var upgrade = upgradeList.Random("MiyukiRandomUpgrade");
-			if (upgrade == null) return;
-
-			skill.ExtendedAdd_Battle(upgrade);
-
-			if (skill.Master?.Info?.SkillDatas != null)
+			var skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
+			if (skillData != null && skillData.SKillExtended == null)
 			{
-				var skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
-				if (skillData != null && skillData.SKillExtended == null)
-				{
-					skillData.SKillExtended = upgrade;
-					Debug.Log($"Saved Normal upgrade to SkillData: {upgrade.Data.Key}");
-				}
+				skillData.SKillExtended = ex;
+				Debug.Log($"Saved Normal upgrade to SkillData: {ex.Data.Key}");
 			}
-
-			Debug.Log($"Applied Normal upgrade: {upgrade.Data.Key}");
+			else
+			{
+				Debug.Log($"Cannot apply Normal upgrade: to {skill.MySkill.KeyID}");
+			}
+			Debug.Log($"Applied Normal upgrade: {ex.Data.Key}");
 		}
 
 		public static T Let<T>(this T obj, Action<T> action)
@@ -490,12 +495,12 @@ namespace MiyukiSone
 			return list.Count == 0 ? default : list.Random(key);
 		}
 
-		public static void GainEquip(int rarity)
+		public static void GainEquip(int rarity, int? selectFrom = null)
 		{
 			rarity = Math.Max(0, Math.Min(4, rarity));
-			List<ItemBase> Equip = Enumerable.Range(0, 3).Select(_ => ItemBase.GetItem(PlayData.GetEquipRandom(rarity, false, null))).ToList();
-			UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(Equip,
-				new RandomItemBtn.SelectItemClickDel(i => { PlayData.TSavedata.EquipList_Legendary.Add(i.itemkey); InventoryManager.Reward(i); }));
+			List<string> equipList = rarity == 4 ? PlayData.TSavedata.EquipList_Legendary : rarity == 3 ? PlayData.TSavedata.EquipList_Unique : null;
+			List<ItemBase> Equip = Enumerable.Range(0, selectFrom ?? 3).Select(_ => ItemBase.GetItem(PlayData.GetEquipRandom(rarity, false, null))).ToList();
+			UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(Equip, new RandomItemBtn.SelectItemClickDel(i => { equipList?.Add(i.itemkey); InventoryManager.Reward(i); }));
 		}
 	}
 }

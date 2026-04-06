@@ -11,11 +11,11 @@ namespace MiyukiSone
 {
 	public static class MiyukiPatchesHelpers
 	{
+		private static readonly string RelativePath = "Assets/Images/Ui/";
 		private static readonly Color MiyukiPink = new Color(1f, 0.5f, 0.8f);
 		private static readonly Color MiyukiButtonBg = new Color(0.8f, 0.3f, 0.6f, 0.3f);
 		private static readonly Color MiyukiMaskBg = new Color(0.8f, 0.3f, 0.6f, 0.2f);
 
-		// Замена спрайта
 		public static bool SetSprite(Transform root, string path, string spritePath)
 		{
 			Transform t = root.Find(path);
@@ -24,7 +24,7 @@ namespace MiyukiSone
 			Image img = t.GetComponent<Image>();
 			if (img == null) return false;
 
-			Sprite sprite = UtilsUI.GetSpriteFromAsset(spritePath + ".png");
+			Sprite sprite = UtilsUI.GetSpriteFromAsset(RelativePath + spritePath + ".png");
 			if (sprite == null) return false;
 
 			img.sprite = sprite;

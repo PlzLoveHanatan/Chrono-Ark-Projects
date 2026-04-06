@@ -25,12 +25,17 @@ namespace MiyukiSone
 	public class Skills
 	{
 		#region Data
-		public class MiyukiSkill : Skill_Extended
+		public class MiyukiSkill : Skill_Extended, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
 			{
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				base.Init();
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -65,7 +70,7 @@ namespace MiyukiSone
 		#endregion
 
 		#region Misc Skills	
-		public class EternalKiss : Extended_Prime_S_1
+		public class EternalKiss : Extended_Prime_S_1, IP_MiyukiSkillPreviewChange
 		{
 			private int Heal => (int)(BChar.GetStat.reg * 0.99f);
 
@@ -76,8 +81,13 @@ namespace MiyukiSone
 
 			public override void Init()
 			{
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				base.Init();
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -275,6 +285,12 @@ namespace MiyukiSone
 				//Skills_Deck.Insert(0, MySkill);
 			}
 
+			public override IEnumerator DrawAction()
+			{
+				//BattleSystem.instance.AllyTeam.Draw();
+				return base.DrawAction();
+			}
+
 			public override bool Terms()
 			{
 				return false;
@@ -283,7 +299,7 @@ namespace MiyukiSone
 		#endregion
 
 		#region Miyuki's class Skills
-		public class EternalPromise : SkillExtended_LerynShield, IP_MiyukiSkillImgChange
+		public class EternalPromise : SkillExtended_LerynShield, IP_MiyukiSkillImgChange, IP_MiyukiSkillPreviewChange
 		{
 			private int Heal => (int)Misc.PerToNum(BChar.GetStat.reg, 180f);
 			private bool effectTriggered = false;
@@ -292,8 +308,23 @@ namespace MiyukiSone
 			public override void Init()
 			{
 				base.Init();
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				effectTriggered = false;
+			}
+
+			public override string DescExtended(string desc)
+			{
+				return base.DescExtended(desc).Replace("&a", Heal.ToString());
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
+			}
+
+			public void SkillImgChange(Skill mySkill)
+			{
+				mySkill.ChangeSkillImg();
 			}
 
 			public override void SkillUseHand(BattleChar Target)
@@ -317,11 +348,6 @@ namespace MiyukiSone
 						BattleSystem.DelayInput(MiyukiSkillExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
 					}
 				}
-			}
-
-			public override string DescExtended(string desc)
-			{
-				return base.DescExtended(desc).Replace("&a", Heal.ToString());
 			}
 
 			public override void AddShieldPersent()
@@ -351,14 +377,9 @@ namespace MiyukiSone
 				}
 				base.SkillUseSingle(SkillD, Targets);
 			}
-
-			public void SkillImgChange(Skill mySkill)
-			{
-				mySkill.ChangeSkillImg();
-			}
 		}
 
-		public class EternalVow : MissChainPBase
+		public class EternalVow : MissChainPBase, IP_MiyukiSkillPreviewChange
 		{
 			private bool effectTriggered = false;
 			private readonly string EternalPromise = ModItemKeys.Skill_S_Miyuki_EternalPromise;
@@ -366,9 +387,14 @@ namespace MiyukiSone
 			public override void Init()
 			{
 				base.Init();
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_MissChain_Ex_P).Particle_Path;
 				effectTriggered = false;
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 
 			public override void SkillUseHand(BattleChar Target)
@@ -526,20 +552,30 @@ namespace MiyukiSone
 			}
 		}
 
-		public class GracefulSwing : PriestPBase, IP_DamageChange
+		public class GracefulSwing : PriestPBase, IP_DamageChange, IP_MiyukiSkillPreviewChange
 		{
 			private int Damage => (int)(BChar.GetStat.atk * 1.5f);
 			private bool _lastPassiveDraw;
 
-			private bool Conditions(BattleChar target)
-			{
-				return target.GetBuffs(BattleChar.GETBUFFTYPE.DEBUFF, false, false).Count != 0 || BChar.HP <= BChar.GetStat.maxhp / 2;
-			}
-
-
 			public override string DescExtended(string desc)
 			{
 				return base.DescExtended(desc).Replace("&a", Damage.ToString());
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
+			}
+			public override void Init()
+			{
+				base.Init();
+				OnePassive = true;
+				MySkill.MiyukiInit();
+			}
+
+			private bool Conditions(BattleChar target)
+			{
+				return target.GetBuffs(BattleChar.GETBUFFTYPE.DEBUFF, false, false).Count != 0 || BChar.HP <= BChar.GetStat.maxhp / 2;
 			}
 
 			public override bool CanIgnoreTauntTarget(BattleChar IgnoreTauntTarget)
@@ -551,13 +587,6 @@ namespace MiyukiSone
 			{
 				if (Conditions(Target)) Cri = true;
 				return Damage;
-			}
-
-			public override void Init()
-			{
-				base.Init();
-				OnePassive = true;
-				MySkill.MiyukiInit(CurrentAffection);
 			}
 
 			public override void FixedUpdate()
@@ -584,7 +613,7 @@ namespace MiyukiSone
 			}
 		}
 
-		public class HappyBirthday : SkillExtedned_IlyaP, IP_MiyukiSkillImgChange
+		public class HappyBirthday : SkillExtedned_IlyaP, IP_MiyukiSkillImgChange, IP_MiyukiSkillPreviewChange
 		{
 			private int BonusDamage => (int)(BChar.GetStat.atk * 1.4f);
 			private bool AllyStunned => BChar.MyTeam.AliveChars.Any(a => a.GetStat.Stun);
@@ -594,16 +623,26 @@ namespace MiyukiSone
 				return base.DescExtended(desc).Replace("&a", BonusDamage.ToString());
 			}
 
-			private bool HasCC(BattleChar target)
-			{
-				return target.GetBuffs(BattleChar.GETBUFFTYPE.CC, false, false).Any();
-			}
-
 			public override void Init()
 			{
 				base.Init();
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				SkillParticleObject = new GDESkillExtendedData(GDEItemKeys.SkillExtended_Public_1_Ex).Particle_Path;
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
+			}
+
+			public void SkillImgChange(Skill mySkill)
+			{
+				mySkill.ChangeSkillImg();
+			}
+
+			private bool HasCC(BattleChar target)
+			{
+				return target.GetBuffs(BattleChar.GETBUFFTYPE.CC, false, false).Any();
 			}
 
 			public override void IlyaWaste()
@@ -659,19 +698,19 @@ namespace MiyukiSone
 					TargetBuff.Add(buffTag);
 				}
 			}
-
-			public void SkillImgChange(Skill mySkill)
-			{
-				mySkill.ChangeSkillImg();
-			}
 		}
 
-		public class MeasuredLove : S_Lian_12, IP_MiyukiSkillImgChange
+		public class MeasuredLove : S_Lian_12, IP_MiyukiSkillImgChange, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
 			{
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				base.Init();
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 
 			public void SkillImgChange(Skill mySkill)
@@ -686,13 +725,18 @@ namespace MiyukiSone
 			}
 		}
 
-		public class Pandemonium : S_Queen_11
+		public class Pandemonium : S_Queen_11, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
 			{
 				base.Init();
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				if (!MySkill.MySkill.Name.Contains("!")) MySkill.MySkill.Name += new string('!', RandomManager.RandomInt("MiyukiRandomExclamation", 1, 4));
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -703,16 +747,21 @@ namespace MiyukiSone
 			}
 		}
 
-		public class QueenBee : S_Sizz_9
+		public class QueenBee : S_Sizz_9, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
 			{
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				base.Init();
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 		}
 
-		public class StepToward : Extended_Azar_0
+		public class StepToward : Extended_Azar_0, IP_MiyukiSkillPreviewChange
 		{
 			private int Heal => (int)(BChar.GetStat.reg * 0.18f);
 
@@ -724,7 +773,12 @@ namespace MiyukiSone
 			public override void Init()
 			{
 				base.Init();
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -734,16 +788,21 @@ namespace MiyukiSone
 			}
 		}
 
-		public class SweetRestraint : S_Queen_13
+		public class SweetRestraint : S_Queen_13, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
 			{
-				MySkill.MiyukiInit(CurrentAffection);
+				MySkill.MiyukiInit();
 				base.Init();
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
 			}
 		}
 
-		public class WarningStrike : Skill_Momori, IP_MiyukiSkillImgChange
+		public class WarningStrike : Skill_Momori, IP_MiyukiSkillImgChange, IP_MiyukiSkillPreviewChange
 		{
 			private int Heal => (int)BChar.GetStat.reg;
 
@@ -758,9 +817,19 @@ namespace MiyukiSone
 				base.Init();
 			}
 
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview();
+			}
+
+			public void SkillImgChange(Skill mySkill)
+			{
+				mySkill.ChangeSkillImg();
+			}
+
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
-				Targets.Where(t => t.BuffReturn(GDEItemKeys.Buff_B_Control_P, false) != null).ToList().ForEach(t => t.AddBuff(GDEItemKeys.Buff_B_Momori_7_T));
+				Targets.Where(t => t.BuffReturn(GDEItemKeys.Buff_B_Control_P, false) != null).ToList().ForEach(t => t.AddBuff(GDEItemKeys.Buff_B_Momori_0));
 				var momoriPskill = GetMomoriPskill();
 				if (momoriPskill.Any())
 				{
@@ -768,11 +837,6 @@ namespace MiyukiSone
 					p.SaveDMG = Math.Max(0, p.SaveDMG - Heal);
 				}
 				base.SkillUseSingle(SkillD, Targets);
-			}
-
-			public void SkillImgChange(Skill mySkill)
-			{
-				mySkill.ChangeSkillImg();
 			}
 		}
 		#endregion
@@ -783,6 +847,11 @@ namespace MiyukiSone
 			public override bool Terms()
 			{
 				return !IsYandere;
+			}
+
+			public void SkillImgChange(Skill mySkill)
+			{
+				mySkill.ChangeSkillImg();
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -804,30 +873,32 @@ namespace MiyukiSone
 				MiyukiData.MiyukiArtIndex = randomIndex;
 				base.SkillUseSingle(SkillD, Targets);
 			}
-
-			public void SkillImgChange(Skill mySkill)
-			{
-				mySkill.ChangeSkillImg();
-			}
 		}
 
 		public class FinalView : MiyukiSkill
 		{
-			public override string DescExtended(string desc)
-			{
-				return base.DescExtended(desc).Replace("&a", MiyukiData.FinalViewCharge >= 2 ? "Active" : "Inactive".ToString());
-			}
-
 			public override void Init()
 			{
 				PlusSkillStat.Penetration = 100f;
 				base.Init();
 			}
 
+			public override string DescExtended(string desc)
+			{
+				return base.DescExtended(desc).Replace("&a", (MiyukiData.FinalViewDamage * 6).ToString()).Replace("&b", "6").Replace("&c", MiyukiData.FinalViewCharge >= 1 ? "Active" : "Inactive".ToString());
+			}
+
+			public override void FixedUpdate()
+			{
+				base.FixedUpdate();
+				if (BattleSystem.instance != null) SkillBasePlus.Target_BaseDMG = MiyukiData.FinalViewDamage * 6;
+			}
+
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
 				if (MiyukiForces) CurrentAffection = MiyukiAffection.Yandere;
-
+				SkillBasePlus.Target_BaseDMG = MiyukiData.FinalViewDamage;
+				BattleSystem.DelayInput(TargetCheck(Targets[0]));
 				for (int i = 0; i < 2; i++)
 				{
 					BattleSystem.DelayInput(RecastSkill(Targets[0]));
@@ -838,16 +909,23 @@ namespace MiyukiSone
 			private IEnumerator RecastSkill(BattleChar target)
 			{
 				Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Rare_FinalView_Particle, BChar, BChar.MyTeam);
-				Skill_Extended ex = new Skill_Extended
+				Skill_Extended ex = new Skill_Extended()
 				{
 					IsDamage = true,
-					PlusSkillStat = new Stat { Penetration = 100f },
+					PlusSkillStat = new Stat() { Penetration = 100f },
+					SkillBasePlus = new SkillBasestat() { Target_BaseDMG = MiyukiData.FinalViewDamage * 6 }
 				};
-
 				skill.ExtendedAdd(ex);
 				target = (target.IsDead || target == null || target.Info.Ally) && BattleSystem.instance.EnemyTeam.AliveChars.Count > 0 ? BattleSystem.instance.EnemyTeam.AliveChars.Random("RandomEnemy") : target;
+				BattleSystem.DelayInput(TargetCheck(target));
 				if (target == null) yield break;
 				yield return BattleSystem.instance.StartCoroutine(BattleSystem.instance.ForceAction(skill, target, false, false, false, null));
+			}
+
+			private IEnumerator TargetCheck(BattleChar target)
+			{
+				yield return null;
+				if (target.Info.Ally && target.IsDead) MiyukiData.FinalViewDamage++;
 			}
 		}
 
@@ -864,6 +942,11 @@ namespace MiyukiSone
 				base.Init();
 			}
 
+			public void SkillImgChange(Skill mySkill)
+			{
+				MySkill.ChangeSkillImg();
+			}
+
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 			{
 				var skillData = MyChar.SkillDatas.FirstOrDefault(sd => sd == MySkill.CharinfoSkilldata);
@@ -877,14 +960,9 @@ namespace MiyukiSone
 
 				MiyukiData.GameUpdated = true;
 				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
-				MiyukiSaveManager.Instance.Save();			
+				MiyukiSaveManager.Instance.Save();
 				Events.RestartStage();
 				base.SkillUseSingle(SkillD, Targets);
-			}
-
-			public void SkillImgChange(Skill mySkill)
-			{
-				MySkill.ChangeSkillImg();
 			}
 		}
 		#endregion

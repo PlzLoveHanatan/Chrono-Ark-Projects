@@ -1,23 +1,20 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 using I2.Loc;
-using static MiyukiSone.Dialogue;
-using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
-using DarkTonic.MasterAudio;
-using ChronoArkMod;
+using static MiyukiSone.Utils;
 
 namespace MiyukiSone
 {
 	public static class EventsData
 	{
-		private class EventLine
+		public class EventLine
 		{
 			public string Key { get; set; }
+			public string Type { get; set; }
 			public string English { get; set; }
 			public string Korean { get; set; }
 			public string Japanese { get; set; }
@@ -26,33 +23,37 @@ namespace MiyukiSone
 			public string AudioFile { get; set; }
 		}
 
-		private class EventLineData
-		{
-			[JsonProperty("Dere")]
-			public List<EventLine> Dere { get; set; }
-
-			[JsonProperty("Yandere")]
-			public List<EventLine> Yandere { get; set; }
-
-			[JsonProperty("Kuudere")]
-			public List<EventLine> Kuudere { get; set; }
-		}
-
-		private static EventLineData Events;
-		private static readonly HashSet<string> UsedDereKeys = new HashSet<string>();
-		private static readonly HashSet<string> UsedYandereKeys = new HashSet<string>();
-		private static readonly HashSet<string> UsedKuudereKeys = new HashSet<string>();
+		private static List<EventLine> allEvents;
+		private static List<EventLine> customEvents;
+		private static Dictionary<string, EventLine> eventByKey;
+		private static Dictionary<string, HashSet<string>> usedKeys;
 
 		public static void LoadEvents()
 		{
-			if (Events != null) return;
+			if (allEvents != null) return;
 
-			string jsonContent = MiyukiJsonReader.LoadJson("Event.json");
+			string jsonContent = MiyukiJsonReader.LoadJson("EventsData.json");
 			if (jsonContent == null) return;
 
 			try
 			{
-				Events = JsonConvert.DeserializeObject<EventLineData>(jsonContent);
+				allEvents = JsonConvert.DeserializeObject<List<EventLine>>(jsonContent);
+				customEvents = allEvents?.Where(e => e.Type == "Custom").ToList() ?? new List<EventLine>();
+
+				eventByKey = new Dictionary<string, EventLine>();
+				foreach (var line in allEvents)
+				{
+					if (!string.IsNullOrEmpty(line.Key))
+					{
+						eventByKey[line.Key] = line;
+					}
+				}
+
+				usedKeys = new Dictionary<string, HashSet<string>>();
+				foreach (var type in allEvents.Select(e => e.Type).Distinct())
+				{
+					usedKeys[type] = new HashSet<string>();
+				}
 			}
 			catch (Exception ex)
 			{
@@ -62,6 +63,8 @@ namespace MiyukiSone
 
 		private static string GetLocalizedLine(EventLine line)
 		{
+			if (line == null) return null;
+
 			string currentLanguage = LocalizationManager.CurrentLanguage;
 
 			switch (currentLanguage)
@@ -74,66 +77,102 @@ namespace MiyukiSone
 			}
 		}
 
-		private static EventLine GetRandomLine(MiyukiAffection affection)
+		public static EventLine GetLineByKey(string key)
+		{
+			LoadEvents();
+			return eventByKey?.GetValueOrDefault(key);
+		}
+
+		public static string GetAudioFileByKey(string key)
+		{
+			return GetLineByKey(key)?.AudioFile;
+		}
+
+		public static string GetTextByKey(string key)
+		{
+			var line = GetLineByKey(key);
+			return line != null ? GetLocalizedLine(line) : null;
+		}
+
+		public static List<EventLine> GetLinesByType(string type)
+		{
+			LoadEvents();
+			return allEvents?.Where(e => e.Type == type).ToList();
+		}
+
+		public static EventLine GetRandomLine(string type)
 		{
 			LoadEvents();
 
-			List<EventLine> allLines = null;
-			HashSet<string> usedKeys = null;
-
-			switch (affection)
-			{
-				case MiyukiAffection.DereDere:
-					allLines = Events?.Dere;
-					usedKeys = UsedDereKeys;
-					break;
-				case MiyukiAffection.Yandere:
-					allLines = Events?.Yandere;
-					usedKeys = UsedYandereKeys;
-					break;
-				case MiyukiAffection.Kuudere:
-					allLines = Events?.Kuudere;
-					usedKeys = UsedKuudereKeys;
-					break;
-			}
-
+			var allLines = GetLinesByType(type);
 			if (allLines == null || allLines.Count == 0) return null;
 
-			if (usedKeys.Count >= allLines.Count)
+			var used = usedKeys[type];
+
+			if (used.Count >= allLines.Count)
 			{
-				usedKeys.Clear();
+				used.Clear();
 			}
 
-			var availableLines = allLines.Where(line => !usedKeys.Contains(line.Key)).ToList();
+			var availableLines = allLines.Where(line => !used.Contains(line.Key)).ToList();
 
 			if (availableLines.Count == 0)
 			{
-				usedKeys.Clear();
+				used.Clear();
 				availableLines = allLines;
 			}
 
 			int index = UnityEngine.Random.Range(0, availableLines.Count);
 			var selectedLine = availableLines[index];
 
-			usedKeys.Add(selectedLine.Key);
+			used.Add(selectedLine.Key);
 			return selectedLine;
 		}
 
 		public static string MiyukiTextEvent(MiyukiAffection? affection = null)
 		{
 			MiyukiAffection affectionState = affection ?? CurrentAffection;
+			string typeKey = affectionState == MiyukiAffection.DereDere ? "DereDere" : affectionState.ToString();
 
-			var line = GetRandomLine(affectionState);
-
+			var line = GetRandomLine(typeKey);
 			if (line == null) return null;
 
 			string text = GetLocalizedLine(line);
 			StartMiyukiText(text);
 
-			string folder = affectionState.ToString();
+			string folder = typeKey;
 			PlaySoundFromAsset($"Assets/Audio/Events/{folder}/{line.AudioFile}.ogg", true);
 
 			return text;
+		}
+
+		public static string GetAudioFileByText(string text)
+		{
+			LoadEvents();
+			if (customEvents == null) return null;
+
+			string language = LocalizationManager.CurrentLanguage;
+
+			switch (language)
+			{
+				case "Korean": return customEvents.FirstOrDefault(e => e.Korean == text)?.AudioFile;
+				case "Japanese": return customEvents.FirstOrDefault(e => e.Japanese == text)?.AudioFile;
+				case "Chinese": return customEvents.FirstOrDefault(e => e.Chinese == text)?.AudioFile;
+				case "Chinese_TW": return customEvents.FirstOrDefault(e => e.Chinese_TW == text)?.AudioFile;
+				default: return customEvents.FirstOrDefault(e => e.English == text)?.AudioFile;
+			}
+		}
+
+		public static List<EventLine> GetCustomEvents()
+		{
+			LoadEvents();
+			return customEvents;
+		}
+
+		public static EventLine GetRandomCustomEvent()
+		{
+			LoadEvents();
+			return GetRandomLine("Custom");
 		}
 	}
 }

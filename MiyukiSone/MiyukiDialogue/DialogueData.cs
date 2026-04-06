@@ -5,16 +5,12 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 using I2.Loc;
-using static MiyukiSone.Dialogue;
 using static MiyukiSone.Utils;
 using static MiyukiSone.Affection;
-using System.Collections;
-using GameDataEditor;
-using DarkTonic.MasterAudio;
-using ChronoArkMod;
 
 namespace MiyukiSone
 {
+	#region Data & Constructor
 	public enum TryType
 	{
 		FirstTry,
@@ -41,51 +37,52 @@ namespace MiyukiSone
 			public string Chinese { get; set; }
 			public string Chinese_TW { get; set; }
 			public string AudioFile { get; set; }
-
-			[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 			public bool? IsSpecial { get; set; }
 		}
 
-		#region Inizialization
+		private class LoveDialogueData
+		{
+			public List<DialogueLine> Yes { get; set; }
+			public List<DialogueLine> No { get; set; }
+		}
+
+		private class KissDialogueData
+		{
+			public List<DialogueLine> Yes { get; set; }
+			public Dictionary<string, List<DialogueLine>> no { get; set; }
+		}
+
+		private class RootDialogueData
+		{
+			public LoveDialogueData Love { get; set; }
+			public KissDialogueData Kiss { get; set; }
+			public Dictionary<string, List<DialogueLine>> Turn { get; set; }
+		}
+
+		private static RootDialogueData _dialogues;
+		#endregion
+
+		#region Initialization
 		public static void LoadDialogues()
 		{
-			if (LoveDialogues != null && KissDialogues != null && TurnEndDialogues != null) return;
+			if (_dialogues != null) return;
 
 			try
 			{
-				LoadLoveDialogues();
-				LoadKissDialogues();
-				LoadTurnEndDialogues();
+				string jsonContent = MiyukiJsonReader.LoadJson("DialogueData.json");
+				if (jsonContent == null) return;
+				_dialogues = JsonConvert.DeserializeObject<RootDialogueData>(jsonContent);
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"[Miyuki] LoadLoveDialogues: {ex.Message}");
+				Debug.LogError($"[Miyuki] LoadDialogues: {ex.Message}");
 			}
-		}
-
-		private static void LoadLoveDialogues()
-		{
-			string jsonContent = MiyukiJsonReader.LoadJson("DialogueLove.json");
-			if (jsonContent == null) return;
-			LoveDialogues = JsonConvert.DeserializeObject<LoveDialogueData>(jsonContent);
-		}
-
-		private static void LoadKissDialogues()
-		{
-			string jsonContent = MiyukiJsonReader.LoadJson("DialogueKiss.json");
-			if (jsonContent == null) return;
-			KissDialogues = JsonConvert.DeserializeObject<KissDialogueData>(jsonContent);
-		}
-
-		private static void LoadTurnEndDialogues()
-		{
-			string jsonContent = MiyukiJsonReader.LoadJson("DialogueTurn.json");
-			if (jsonContent == null) return;
-			TurnEndDialogues = JsonConvert.DeserializeObject<Dictionary<string, List<DialogueLine>>>(jsonContent);
 		}
 
 		private static string GetLocalizedLine(DialogueLine line)
 		{
+			if (line == null) return null;
+
 			string currentLanguage = LocalizationManager.CurrentLanguage;
 
 			switch (currentLanguage)
@@ -100,22 +97,14 @@ namespace MiyukiSone
 		#endregion
 
 		#region Dialogue Love
-		private class LoveDialogueData
-		{
-			[JsonProperty("yes")]
-			public List<DialogueLine> Yes { get; set; }
-
-			[JsonProperty("no")]
-			public List<DialogueLine> No { get; set; }
-		}
-
-		private static LoveDialogueData LoveDialogues;
 		private static readonly HashSet<string> UsedLoveYesKeys = new HashSet<string>();
 		private static readonly HashSet<string> UsedLoveNoKeys = new HashSet<string>();
 
 		private static DialogueLine GetRandomLoveLine(bool isYes)
 		{
-			List<DialogueLine> allLines = isYes ? LoveDialogues?.Yes : LoveDialogues?.No;
+			if (_dialogues?.Love == null) return null;
+
+			List<DialogueLine> allLines = isYes ? _dialogues.Love.Yes : _dialogues.Love.No;
 			if (allLines == null || allLines.Count == 0) return null;
 
 			HashSet<string> usedKeys = isYes ? UsedLoveYesKeys : UsedLoveNoKeys;
@@ -159,16 +148,6 @@ namespace MiyukiSone
 		#endregion
 
 		#region Dialogue Kiss
-		private class KissDialogueData
-		{
-			[JsonProperty("yes")]
-			public List<DialogueLine> Yes { get; set; }
-
-			[JsonProperty("no")]
-			public Dictionary<string, List<DialogueLine>> No { get; set; }
-		}
-
-		private static KissDialogueData KissDialogues;
 		private static string GetKissNoKey(TryType tryType)
 		{
 			switch (tryType)
@@ -202,17 +181,17 @@ namespace MiyukiSone
 
 		private static DialogueLine GetRandomKissYesLine()
 		{
-			if (KissDialogues?.Yes == null || KissDialogues.Yes.Count == 0) return null;
-			int index = RandomManager.RandomInt("MiyukiKissAnswer", 0, KissDialogues.Yes.Count);
-			return KissDialogues.Yes[index];
+			if (_dialogues?.Kiss?.Yes == null || _dialogues.Kiss.Yes.Count == 0) return null;
+			int index = RandomManager.RandomInt("MiyukiKissAnswer", 0, _dialogues.Kiss.Yes.Count);
+			return _dialogues.Kiss.Yes[index];
 		}
 
 		private static DialogueLine GetCurrentKissNoLine()
 		{
-			if (KissDialogues?.No == null) return null;
+			if (_dialogues?.Kiss?.no == null) return null;
 
 			string key = GetKissNoKey(CurrentKissTry);
-			if (!KissDialogues.No.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
+			if (!_dialogues.Kiss.no.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
 			int index = (KissTryCount == 0) ? 0 : (phrases.Count > 1 ? 1 : 0);
 			return index < phrases.Count ? phrases[index] : null;
 		}
@@ -234,11 +213,10 @@ namespace MiyukiSone
 
 			if (CurrentKissTry == TryType.EleventhTry && KissTryCount >= 1)
 			{
-				//MiyukiSaveManager.Instance.CurrentData.LockedState = RandomManager.RandomInt("MiyukiRandomAffection", 1, 3);
 				MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
 				Events.RestartRun();
 
-				if (DialogueWindows.Count > 0) DialogueWindows.Where(obj => obj != null).ToList().ForEach(RemoveWindow);
+				if (Dialogue.DialogueWindows.Count > 0) Dialogue.DialogueWindows.Where(obj => obj != null).ToList().ForEach(Dialogue.RemoveWindow);
 			}
 			else if (KissTryCount == 2)
 			{
@@ -255,8 +233,6 @@ namespace MiyukiSone
 		#endregion
 
 		#region Turn End Dialogue
-		private static Dictionary<string, List<DialogueLine>> TurnEndDialogues;
-
 		private static string GetTryKey(TryType tryType)
 		{
 			switch (tryType)
@@ -290,9 +266,9 @@ namespace MiyukiSone
 
 		private static DialogueLine GetCurrentTurnEndLine()
 		{
-			if (TurnEndDialogues == null) return null;
+			if (_dialogues?.Turn == null) return null;
 			string key = GetTryKey(CurrentTry);
-			if (!TurnEndDialogues.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
+			if (!_dialogues.Turn.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
 			int index = CurrentTry == TryType.EleventhTry ? 0 : TryCount;
 			return index < phrases.Count ? phrases[index] : null;
 		}
@@ -326,7 +302,6 @@ namespace MiyukiSone
 			CurrentTry = 0;
 			TryCount = 0;
 		}
+		#endregion
 	}
-
-	#endregion
 }
