@@ -49,7 +49,7 @@ namespace MiyukiSone
 			}
 		}
 
-		public static MiyukCV MiyukiData => GetOrCreateMiyukiData();
+		public static MiyukiCV MiyukiData => PlayData.TSavedata.GetOrAddCustomValue<MiyukiCV>();
 
 		public static bool MiyukiInParty
 		{
@@ -79,6 +79,8 @@ namespace MiyukiSone
 			}
 		}
 
+		private static GameObject _currentTempGO;
+
 		public static void CheckMiyukiDraw(bool createCharDraw = false, bool changeIcon = false)
 		{
 			if (createCharDraw) MiyukiPassive.CreateCharacterDraw = createCharDraw;
@@ -94,19 +96,6 @@ namespace MiyukiSone
 			shouldHaveDraws.ForEach(s => { if (!MiyukiPassive.AvaliableCharacterDraw.Contains(s)) MiyukiPassive.AvaliableCharacterDraw.Add(s); });
 			if (MiyukiPassive.AvaliableCharacterDraw.Count == 0) CheckMiyukiDraw(false, true);
 		}
-
-		public static MiyukCV GetOrCreateMiyukiData()
-		{
-			var data = PlayData.TSavedata.GetCustomValue<MiyukCV>();
-			if (data == null)
-			{
-				data = new MiyukCV();
-				PlayData.TSavedata.AddCustomValue(data);
-			}
-			return data;
-		}
-
-		private static GameObject _currentTempGO;
 
 		public static void PlaySound(string sound, bool isStopOldBus = false, float? volume = null)
 		{
@@ -413,75 +402,6 @@ namespace MiyukiSone
 			}
 		}
 
-		public static void CelestialUpgrade(this Skill skill)
-		{
-			if (skill == null || skill?.Master == null || skill.CharinfoSkilldata?.SKillExtended != null) return;
-
-			List<string> allKeys = new List<string>();
-			GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.SkillExtended, out allKeys);
-
-			List<Skill_Extended> validForParty = new List<Skill_Extended>();
-
-			foreach (string key in allKeys)
-			{
-				GDESkillExtendedData data = new GDESkillExtendedData(key);
-
-				if (!data.Drop || data.Debuff) continue;
-				if (PlayData.TSavedata.Party.Find(c => c.KeyData == data.NeedCharacter) == null) continue;
-
-				Skill_Extended ex = Skill_Extended.DataToExtended(data);
-
-				if (PlayData.Battleallys.SelectMany(bc => bc.Skills).Any(s => ex.CanEnforce(s))) validForParty.Add(ex);
-			}
-
-			if (validForParty.Count == 0) return;
-
-			List<Skill_Extended> validForThisSkill = validForParty.Where(ex => ex.CanEnforce(skill)).ToList();
-
-			if (validForThisSkill.Count == 0)
-			{
-				skill.NormalUpgrade();
-				Debug.Log($"Celestial upgrade is unavailable, adding normal upgrade.");
-			}
-			else
-			{
-				Skill_Extended selected = validForThisSkill.Random("MiyukiCelestialUpgrade");
-				skill.ExtendedAdd_Battle(selected);
-
-				if (skill.Master?.Info?.SkillDatas != null)
-				{
-					var skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
-					if (skillData != null && skillData.SKillExtended == null)
-					{
-						skillData.SKillExtended = selected;
-						Debug.Log($"Saved Celestial upgrade to SkillData: {selected.Data.Key}");
-					}
-				}
-
-				Debug.Log($"Applied Celestial upgrade: {selected.Data.Key}");
-			}
-		}
-
-		public static void NormalUpgrade(this Skill skill)
-		{
-			if (skill == null) return;
-
-			var upgradeList = PlayData.GetEnforce(!MiyukiResult(), skill);
-			var ex = upgradeList?.RandomElement()?.Let(ext => skill.ExtendedAdd_Battle(ext));
-
-			var skillData = skill.Master.Info.SkillDatas.FirstOrDefault(sd => sd == skill.CharinfoSkilldata);
-			if (skillData != null && skillData.SKillExtended == null)
-			{
-				skillData.SKillExtended = ex;
-				Debug.Log($"Saved Normal upgrade to SkillData: {ex.Data.Key}");
-			}
-			else
-			{
-				Debug.Log($"Cannot apply Normal upgrade: to {skill.MySkill.KeyID}");
-			}
-			Debug.Log($"Applied Normal upgrade: {ex.Data.Key}");
-		}
-
 		public static T Let<T>(this T obj, Action<T> action)
 		{
 			if (obj != null) action(obj);
@@ -493,6 +413,17 @@ namespace MiyukiSone
 			var list = source.ToList();
 			if (string.IsNullOrEmpty(key)) key = "MiyukiRandom";
 			return list.Count == 0 ? default : list.Random(key);
+		}
+
+		public static T GetOrAddCustomValue<T>(this TempSaveData save) where T : CustomValue
+		{
+			var result = save.GetCustomValue<T>();
+			if (result == null)
+			{
+				result = (T)Activator.CreateInstance(typeof(T));
+				save.AddCustomValue(result);
+			}
+			return result;
 		}
 
 		public static void GainEquip(int rarity, int? selectFrom = null)

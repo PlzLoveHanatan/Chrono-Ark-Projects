@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Utils;
 using static MiyukiSone.UtilsUI;
@@ -12,7 +13,7 @@ namespace MiyukiSone
 {
 	public static class MiyukiCharImg
 	{
-		// I didnt create this names myself, I just take it from the files data
+		// Old assets
 		private static readonly List<string> FolderName = new List<string>()
 		{
 			"Arm Crossed",
@@ -23,7 +24,7 @@ namespace MiyukiSone
 
 		public static void ChangeCharacterImage()
 		{
-			string relativePath = $"Assets/Images/MiyukiPose/{FolderName.RandomElement()}/{CurrentAffection}/";
+			string relativePath = $"Assets/Images/MiyukiAffection/{CurrentAffection}/";
 			string battleCharPath = relativePath + "Dress.prefab";
 			string faceSmallPath = relativePath + "Portrait.prefab";
 			string skillFacePath = relativePath + "SkillFace.png";
@@ -38,8 +39,8 @@ namespace MiyukiSone
 			MiyukiBchar.Info.GetData.Face_SmallButton_Path = GetSpriteAddress(skillFacePath); // 58 x 42 -> Sprite
 
 
-			string spriteAddress = ThisMod.assetInfo.ImageFromFile("Assets/Images/Face/Smile/Uniform.png");
-			//AddressableLoadManager.LoadAsyncAction(spriteAddress, AddressableLoadManager.ManageType.Character, MiyukiBchar.UI.CharImage.GetComponent<Image>());
+			string spriteAddress = GetSpriteAddress($"{relativePath}MiyukiBattleFace.png"); // 405 x 118 -> Sprite
+			AddressableLoadManager.LoadAsyncAction(spriteAddress, AddressableLoadManager.ManageType.Character, MiyukiBchar.UI.CharImage.GetComponent<Image>());
 
 			foreach (Skill skill in MiyukiBchar.MyTeam.Skills)
 			{

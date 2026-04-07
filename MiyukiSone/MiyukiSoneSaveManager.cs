@@ -62,22 +62,23 @@ namespace MiyukiSone
 
 		public void Load()
 		{
-			if (!File.Exists(SavePath))
+			if (File.Exists(SavePath))
+			{
+				try
+				{
+					string json = File.ReadAllText(SavePath);
+					_currentData = JsonConvert.DeserializeObject<MiyukiSaveData>(json) ?? new MiyukiSaveData();
+					Debug.Log("[Miyuki] Game loaded successfully!");
+				}
+				catch (Exception e)
+				{
+					Debug.LogError($"[Miyuki] Error loading save: {e.Message}");
+					_currentData = new MiyukiSaveData();
+				}
+			}
+			else
 			{
 				Debug.Log("[Miyuki] No save file found, using defaults");
-				return;
-			}
-
-			try
-			{
-				string json = File.ReadAllText(SavePath);
-				_currentData = JsonConvert.DeserializeObject<MiyukiSaveData>(json) ?? new MiyukiSaveData();
-				Debug.Log("[Miyuki] Game loaded successfully!");
-			}
-			catch (Exception e)
-			{
-				Debug.LogError($"[Miyuki] Error loading save: {e.Message}");
-				_currentData = new MiyukiSaveData();
 			}
 		}
 

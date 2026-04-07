@@ -94,13 +94,10 @@ namespace MiyukiSone
 
 							__instance.PlusSkillView = preview;
 
-							if (string.IsNullOrEmpty(Skill.MySkill.PlusSkillView))
+							if (!string.IsNullOrEmpty(preview.MySkill.KeyID))
 							{
-								if (!string.IsNullOrEmpty(preview.MySkill.KeyID))
-								{
-									string previewName = new GDESkillData(preview.MySkill.KeyID).Name;
-									__instance.PlusTooltipsView("<b>" + previewName + "</b>", ControlTooltip.InitText(6, ScriptLocalization.Battle_Keyword.PlusSkillView, "XBOX_LSTICK_KEY"));
-								}
+								string previewName = new GDESkillData(preview.MySkill.KeyID).Name;
+								__instance.PlusTooltipsView("<b>" + previewName + "</b>", ControlTooltip.InitText(6, ScriptLocalization.Battle_Keyword.PlusSkillView, "XBOX_LSTICK_KEY"));
 							}
 
 							return;

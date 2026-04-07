@@ -32,7 +32,6 @@ namespace MiyukiSone
 			return true;
 		}
 
-		// Установка цвета Image
 		public static bool SetImageColor(Transform root, string path, Color color)
 		{
 			Transform t = root.Find(path);
@@ -45,13 +44,11 @@ namespace MiyukiSone
 			return true;
 		}
 
-		// Сделать прозрачным
 		public static bool MakeTransparent(Transform root, string path)
 		{
 			return SetImageColor(root, path, new Color(0, 0, 0, 0));
 		}
 
-		// Установка текста
 		public static bool SetText(Transform root, string path, string text = null, float fontSize = 0, bool onlyColor = false)
 		{
 			Transform t = root.Find(path);
@@ -66,7 +63,6 @@ namespace MiyukiSone
 			return true;
 		}
 
-		// Обработка кнопок
 		public static void ProcessButtons(Transform root, string layoutPath)
 		{
 			Transform layout = root.Find(layoutPath);
@@ -82,7 +78,6 @@ namespace MiyukiSone
 			}
 		}
 
-		// Обработка ToggleOption
 		public static void ProcessToggleOptions(Transform root, string layoutPath)
 		{
 			Transform layout = root.Find(layoutPath);
@@ -117,7 +112,6 @@ namespace MiyukiSone
 			}
 		}
 
-		// Обработка группы клавиш в ControlOption
 		public static void ProcessKeyGroup(Transform group)
 		{
 			if (group == null) return;
@@ -142,7 +136,6 @@ namespace MiyukiSone
 			}
 		}
 
-		// Обработка области шансов в PauseWindow
 		public static void ProcessRemainArea(Transform root)
 		{
 			Transform remain = root.Find("Main/Remain");
@@ -152,15 +145,18 @@ namespace MiyukiSone
 			SetText(remain, "RemainDesc", null, 0, true);
 
 			foreach (Transform line in FindAll(remain, "Line"))
+			{
 				SetImageColor(line, "", MiyukiPink);
+			}	
 
 			SetImageColor(remain, "Grid", new Color(1f, 0.5f, 0.8f, 0.3f));
 
 			foreach (string name in new[] { "Chance1", "Chance2", "Chance3" })
+			{
 				SetImageColor(remain, name, MiyukiPink);
+			}	
 		}
 
-		// Замена всех Back спрайтов
 		public static void ReplaceAllBackSprites(string spriteName)
 		{
 			Sprite sprite = UtilsUI.GetSpriteFromAsset(spriteName + ".png");
@@ -189,8 +185,7 @@ namespace MiyukiSone
 			foreach (Transform child in current) FindAllRecursive(child, name, results);
 		}
 
-		public
-		static void SetMenuButton(Transform parent, string childName, string buttonText)
+		public static void SetMenuButton(Transform parent, string childName, string buttonText)
 		{
 			Transform t = parent.Find(childName);
 			if (t == null) return;
@@ -210,10 +205,8 @@ namespace MiyukiSone
 			string indent = new string(' ', depth * 2);
 			string path = GetPath(transform);
 
-			// Основная информация об объекте
 			Debug.Log($"{indent}[{transform.name}] Path: {path}");
 
-			// Компоненты
 			Image img = transform.GetComponent<Image>();
 			if (img != null)
 			{
@@ -236,7 +229,6 @@ namespace MiyukiSone
 				Debug.Log($"{indent}  └─ TOGGLE: state={toggle.NowState}");
 			}
 
-			// Рекурсивно обходим детей
 			foreach (Transform child in transform)
 			{
 				DumpTransform(child, depth + 1);

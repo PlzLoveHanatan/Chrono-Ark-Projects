@@ -51,7 +51,11 @@ namespace MiyukiSone
 					_currentAffection = value;
 					MiyukiData.Affection = (int)value;
 					CheckIp();
-					Debug.Log($"[Miyuki] Affection changed to: {value}");
+					Debug.Log($"Miyuki Affection now {value}");
+				}
+				else
+				{
+					Debug.Log($"Miyuki Affection still {value}");
 				}
 			}
 		}
@@ -74,8 +78,7 @@ namespace MiyukiSone
 		public static int MiyukiRandomResult(int maxValue, [DefaultValue("1")] int? minValue = null)
 		{
 			if (IsKuudere) return 0;
-			int safeMin = minValue ?? 1;
-			return RandomManager.RandomInt("MiyukiRandomInt", safeMin, maxValue + 1);
+			return RandomManager.RandomInt("MiyukiRandomInt", minValue ?? 1, maxValue + 1);
 		}
 
 		public static bool MiyukiResult() => IsDere;
@@ -107,13 +110,11 @@ namespace MiyukiSone
 				CreateDialogue();
 				MiyukiTurnAction();
 			}
-
-			CheckIp();
 		}
 
 		public static void GetRandomAffection()
 		{
-			if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue) _currentAffection = (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
+			if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue) CurrentAffection = (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
 
 			var values = Enum.GetValues(typeof(MiyukiAffection));
 			var availableIndices = new List<int>();
@@ -128,28 +129,31 @@ namespace MiyukiSone
 			int randomIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, availableIndices.Count);
 			int selectedIndex = availableIndices[randomIndex];
 			MiyukiData.LastAffection = selectedIndex;
-			_currentAffection = (MiyukiAffection)values.GetValue(selectedIndex);
+			CurrentAffection = (MiyukiAffection)values.GetValue(selectedIndex);
 		}
 
 		public static void CheckIp()
 		{
-			if (BattleSystem.instance == null) return;
-
-			foreach (var skill in BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck))
+			if (BattleSystem.instance != null)
 			{
-				foreach (var ex in skill.AllExtendeds)
+				foreach (var skill in BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck))
 				{
-					if (ex is IP_MiyukiSkillImgChange handler) handler.SkillImgChange(skill);
-					if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) ex.Init();
+					foreach (var ex in skill.AllExtendeds)
+					{
+						if (ex is IP_MiyukiSkillImgChange handler) handler.SkillImgChange(skill);
+						if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) ex.Init();
+					}
 				}
 			}
 
-			foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
+			if (BattleSystem.instance != null || FieldSystem.instance != null)
 			{
-				Passive_Char passive = battleChar.Info.Passive;
-				if (passive != null && passive is IP_MiyukiCharImgChange handler) handler.CharImgChange();
+				foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
+				{
+					Passive_Char passive = battleChar.Info.Passive;
+					if (passive != null && passive is IP_MiyukiCharImgChange handler) handler.CharImgChange();
+				}
 			}
-
 
 			//var buff = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.Buffs).OfType<Buffs.MiyukiBuff>().ToList();
 			//buff.ForEach(b => b.Init());

@@ -36,21 +36,21 @@ namespace MiyukiSone
 		{
 			string jsonContent = MiyukiJsonReader.LoadJson("ImgPaths.json");
 
-			if (jsonContent == null)
+			if (jsonContent != null)
 			{
-				Debug.LogError("[Miyuki] Failed to load ImgPaths.json");
-				_skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
-				return;
+				try
+				{
+					_skillImages = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>>(jsonContent);
+					if (_skillImages == null) _skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
+				}
+				catch (Exception e)
+				{
+					Debug.LogError($"[Miyuki] Error loading skill images: {e.Message}");
+					_skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
+				}
 			}
-
-			try
+			else
 			{
-				_skillImages = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>>(jsonContent);
-				if (_skillImages == null) _skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
-			}
-			catch (Exception e)
-			{
-				Debug.LogError($"[Miyuki] Error loading skill images: {e.Message}");
 				_skillImages = new Dictionary<string, Dictionary<MiyukiAffection, SkillImageSet>>();
 			}
 		}
