@@ -25,6 +25,19 @@ namespace MiyukiSone
 		private const string Licenced = "MiyukiSone";
 
 		#region Data & Constructor
+		private static List<string> _allGameSkills;
+		private static List<string> AllGameSkills
+		{
+			get
+			{
+				if (_allGameSkills == null)
+				{
+					_allGameSkills = PlayData.ALLSKILLLIST.Where(s => s.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && s.User != "" && s.Category.Key != GDEItemKeys.SkillCategory_LucySkill && s.User != ModItemKeys.Character_Miyuki).Select(s => s.KeyID).ToList();
+				}
+				return _allGameSkills;
+			}
+		}
+
 		private static List<Skill> _lucyCurseSkills;
 		private static List<Skill> LucyCurseSkills
 		{
@@ -78,7 +91,7 @@ namespace MiyukiSone
 				new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(PlayData), nameof(PlayData.BattleDummy))), // PlayData.BattleDummy
 				new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(PlayData), nameof(PlayData.TempBattleTeam))), // PlayData.TempBattleTeam
 				new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatchesSkillsHelpers), nameof(MiyukiPatchesSkillsHelpers.GetLucySkillEx))),
-				new CodeInstruction(OpCodes.Stloc_S, skillsLocal) // skills = MiyukiUtils.GetChimeraLucySkill(PlayData.BattleDummy, PlayData.TempBattleTeam)
+				new CodeInstruction(OpCodes.Stloc_S, skillsLocal) // skills = MiyukiPatchesSkillsHelpers.GetLucySkillEx(PlayData.BattleDummy, PlayData.TempBattleTeam)
 			).MatchStartForward(new CodeMatch(code => code.opcode == OpCodes.Br || code.opcode == OpCodes.Br_S));
 
 			// inside loop
@@ -239,7 +252,7 @@ namespace MiyukiSone
 			try
 			{
 				var codeMatcher = new CodeMatcher(instructions).End();
-				var result = MatchAndReplaceSkills(codeMatcher,new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatchesSkills), nameof(ReplaceLucySkills))));
+				var result = MatchAndReplaceSkills(codeMatcher, new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MiyukiPatchesSkills), nameof(ReplaceLucySkills))));
 				return result.InstructionEnumeration();
 			}
 			catch
@@ -344,7 +357,7 @@ namespace MiyukiSone
 
 		private static Skill ChangeLucySkill(Skill skill)
 		{
-			if (skill == null || MiyukiDecides) return skill;
+			if (skill == null || MiyukiForces) return skill;
 			var newSkill = (IsYandere ? LucyCurseSkills : PlayData.GetLucySkill(false)).RandomElement();
 			if (newSkill == null) return skill;
 			return newSkill;
@@ -352,10 +365,9 @@ namespace MiyukiSone
 
 		private static Skill ChangeCharacterSkill(Skill skill)
 		{
-			if (skill == null || MiyukiDecides) return skill;
-			var allSkills = PlayData.ALLSKILLLIST.Where(s => s.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && s.User != "" && s.Category.Key != GDEItemKeys.SkillCategory_LucySkill && s.User != ModItemKeys.Character_Miyuki).Select(s => s.KeyID);
+			if (skill == null || MiyukiForces) return skill;
 			var allRareSkills = PlayData.ALLRARESKILLLIST.Where(s => s.User != ModItemKeys.Character_Miyuki).Select(s => s.KeyID);
-			var list = IsYandere ? CharacterBadSkillKeys : (MiyukiDecides /*&& !HasRareSkill(skill.Master.Info)*/ ? allRareSkills.ToList() : allSkills.ToList());
+			var list = IsYandere ? CharacterBadSkillKeys : Utils.RandomPer(10) /*&& !HasRareSkill(skill.Master.Info)*/ ? allRareSkills.ToList() : null /*allSkills.ToList()*/ ;
 			if (list == null || list.Count == 0) return skill;
 			return Skill.TempSkill(list.RandomElement(), skill.Master, skill.MyTeam);
 		}
@@ -363,8 +375,8 @@ namespace MiyukiSone
 		private static Skill ChangeUpgrade(Skill skill)
 		{
 			if (skill?.Master?.Info?.KeyData == ModItemKeys.Character_Miyuki && IsYandere) return skill;
-			if (skill == null || MiyukiDecides) return skill;
-			if (IsDere) skill.CelestialUpgrade();
+			if (skill == null || MiyukiForces) return skill;
+			if (IsDere && Utils.RandomPer(10)) skill.CelestialUpgrade();
 			else skill.NormalUpgrade();
 			return skill;
 		}

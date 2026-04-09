@@ -56,6 +56,7 @@ namespace MiyukiSone
 		{
 			if (!IsKuudere) return;
 			(IsDere ? (Action)DereAction : YandereAction)();
+			SaveManager.savemanager.Save();
 		}
 
 		#region Event Dere
@@ -76,12 +77,12 @@ namespace MiyukiSone
 		#region Basic Miyuki Actions
 		private static void ChangeGold(int amount)
 		{
-			Pd._Gold += amount;
+			PlayData.TSavedata._Gold += amount;
 		}
 
 		private static void ChangeSoulstones(int amount)
 		{
-			Pd._Soul += amount;
+			PlayData.TSavedata._Soul += amount;
 		}
 
 		private static void ChangeRelicBarNum(int amount)
@@ -146,9 +147,9 @@ namespace MiyukiSone
 
 		public static void ChangeSkillUpgrade()
 		{
-			var skill = BattleSystem.instance.AllyTeam.Skills.Where(s => s != null && s.CharinfoSkilldata.SKillExtended == null && s.MySkill.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && !s.isExcept && !s.Master.IsLucy).RandomElement();
+			var skill = BattleSystem.instance.AllyTeam.Skills.Where(s => s != null && s.CharinfoSkilldata.SKillExtended == null && s.MySkill.Category.Key != GDEItemKeys.SkillCategory_DefultSkill && !s.isExcept && !s.Master.IsLucy && s.Master.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
 			if (skill == null) return;
-			string text = IsDere ? "Select skill to obtain special upgrade" : "Select skill to obtain downgrade";
+			string text = IsDere ? ModLocalization.MiyukiUpgrade : ModLocalization.MiyukiDowngrade;
 			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, ChangeUpgrade, text, false, true, true, false, true));
 		}
 

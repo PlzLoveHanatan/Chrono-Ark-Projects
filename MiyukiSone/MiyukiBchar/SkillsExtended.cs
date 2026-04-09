@@ -43,6 +43,11 @@ namespace MiyukiSone
 				base.Init();
 			}
 
+			public override bool CanSkillEnforce(Skill MainSkill)
+			{
+				return !MainSkill.Master.IsLucy && MainSkill.AP >= 1;
+			}
+
 			public Skill SkillPreviewChange()
 			{
 				return MySkill.MiyukiSkillPreview(ModItemKeys.Skill_S_Miyuki_Special_Yabeley);

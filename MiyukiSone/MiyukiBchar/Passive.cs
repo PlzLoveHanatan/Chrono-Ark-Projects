@@ -73,14 +73,15 @@ namespace MiyukiSone
 			{ ModItemKeys.Skill_S_Miyuki_EternalVow, GDEItemKeys.Skill_S_MissChain_12_LucyD }, // Burning Draw
 			{ ModItemKeys.Skill_S_Miyuki_GlitchingPhone, "???" },
 			{ ModItemKeys.Skill_S_Miyuki_GracefulSwing, GDEItemKeys.Skill_S_Priest_7_LucyD },// Divine Revelation
-			{ ModItemKeys.Skill_S_Miyuki_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
+			{ ModItemKeys.Skill_S_Miyuki_HappyBirthday, GDEItemKeys.Skill_S_LucyD_4 }, // Hasty Counter
+			//{ ModItemKeys.Skill_S_Miyuki_HappyBirthday, GDEItemKeys.Skill_S_LucyD_7 }, // Renovate
 			{ ModItemKeys.Skill_S_Miyuki_MeasuredLove, GDEItemKeys.Skill_S_Lian_Draw }, // Begone!
 			{ ModItemKeys.Skill_S_Miyuki_Pandemonium, ModItemKeys.Skill_S_Miyuki_LucyDraw_FracturedIllusion}, // Fractured Illusion
 			{ ModItemKeys.Skill_S_Miyuki_QueenBee, GDEItemKeys.Skill_S_Joey_9_LucyD}, // Strawberry-flawored Tablet
 			//{ ModItemKeys.Skill_S_Miyuki_Rare_FinalView, "???"},
 			//{ ModItemKeys.Skill_S_Miyuki_Rare_GameUpdate, "???"},
 			//{ ModItemKeys.Skill_S_Miyuki_Rare_JustforYOU, "???"},
-			{ ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, ModItemKeys.Skill_S_Miyuki_LucyDraw_MomoriHelp}, // Miyuki, Help
+			{ ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, ModItemKeys.Skill_S_Miyuki_LucyDraw_MiyukiHelp}, // Miyuki, Help
 			{ ModItemKeys.Skill_S_Miyuki_StepToward, GDEItemKeys.Skill_S_TW_Blue_Draw0}, // Observation
 			{ ModItemKeys.Skill_S_Miyuki_SweetRestraint, GDEItemKeys.Skill_S_Queen_5_Draw}, // Uncontrollable Doll
 			{ ModItemKeys.Skill_S_Miyuki_WarningStrike, GDEItemKeys.Skill_S_Control_3_Draw }, // Insight 
@@ -125,12 +126,13 @@ namespace MiyukiSone
 			AvaliableCharacterDraw.Clear();
 			BattleSystem.instance.AllyTeam.Skills_Deck.ForEach(s =>
 			{
-				if (s.MySkill.KeyID != ModItemKeys.Skill_S_Miyuki_GlitchingPhone && CharacterDrawList.TryGetValue(s.MySkill.KeyID, out string drawKey))
+				if (CharacterDrawList.TryGetValue(s.MySkill.KeyID, out string drawKey) && s.MySkill.KeyID != ModItemKeys.Skill_S_Miyuki_GlitchingPhone && drawKey != "???")
 				{
 					if (!AvaliableCharacterDraw.Contains(drawKey)) AvaliableCharacterDraw.Add(drawKey);
 				}
-			});
 
+			});
+			MiyukiCharImg.ChangeCharacterImage();
 			if (!IsKuudere) PawsWithDeck();
 			if (AvaliableCharacterDraw.Count > 0) BattleSystem.DelayInput(PawsWithDraw());
 		}
@@ -144,9 +146,8 @@ namespace MiyukiSone
 		{
 			BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != MiyukiBchar).ToList().ForEach(a => a.SecureBuff(ModItemKeys.Buff_B_Miyuki_Buff_Ally));
 			BChar.SecureBuff(ModItemKeys.Buff_B_Miyuki_Passive);
-			CreateCharacterLucyDraw();		
+			CreateCharacterLucyDraw();
 			if (BattleSystem.instance.TurnNum > 1) MiyukiTurn();
-			else CheckIp();
 			MiyukiTurnPaw();
 		}
 
@@ -251,10 +252,26 @@ namespace MiyukiSone
 
 		private void CreateCharacterLucyDraw()
 		{
-			if (!CreateCharacterDraw) return;
+			if (!CreateCharacterDraw || AvaliableCharacterDraw.Count == 0) return;
 
-			var skill = Skill.TempSkill(AvaliableCharacterDraw.Random("MiyukiCharacterDraw"), BattleSystem.instance.AllyTeam.LucyAlly, BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
-			BattleSystem.instance.AllyTeam.Add(skill, true);
+			var key = AvaliableCharacterDraw.RandomElement();
+
+			Skill skill = null;
+
+			try
+			{
+				skill = Skill.TempSkill(key, BattleSystem.instance.AllyTeam.LucyAlly , BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
+			}
+			catch (Exception e)
+			{
+				Debug.LogError($"[MiyukiDebug] FAILED TO CREATE SKILL: {key}\n{e}");
+				return;
+			}
+
+			if (skill == null) return;
+
+			//var skill = Skill.TempSkill(AvaliableCharacterDraw?.RandomElement(), BattleSystem.instance.AllyTeam.LucyAlly, BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
+			if (skill != null) BattleSystem.instance.AllyTeam.Add(skill, true);
 			skill.isExcept = true;
 			skill.NotCount = WallBreakerEquipped;
 			skill.APChange = WallBreakerEquipped ? 0 : 1;

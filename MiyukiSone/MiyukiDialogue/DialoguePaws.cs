@@ -268,7 +268,7 @@ namespace MiyukiSone
 
 		private static void ShuffleDeck()
 		{
-			if (BattleSystem.instance.AllyTeam.Skills_Deck.Count > 0) BattleSystem.DelayInput(ShuffleCo());
+			BattleSystem.DelayInput(ShuffleCo());
 		}
 
 		// Shuffle draw pile into discard pile and apply negative Ex
@@ -277,7 +277,7 @@ namespace MiyukiSone
 			while (BattleSystem.instance.AllyTeam.Skills_Deck.Count > 0)
 			{
 				Skill skill = BattleSystem.instance.AllyTeam.Skills_Deck[0];
-				if (skill.CharinfoSkilldata.SKillExtended == null) skill.ExtendedAdd_Battle(NegExtendedKeys.Random("RandomNegativeEx"));
+				skill.ExtendedAdd_Battle(NegExtendedKeys.RandomElement());
 				yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
 			}
 

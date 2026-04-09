@@ -85,14 +85,17 @@ namespace MiyukiSone
 					if (ex is IP_MiyukiSkillPreviewChange previewChange)
 					{
 						var preview = previewChange.SkillPreviewChange();
+
 						if (preview != null && preview.MySkill != null)
 						{
-							if (!string.IsNullOrEmpty(Skill.MySkill.PlusSkillView))
-							{
-								preview.MySkill.PlusSkillView = Skill.MySkill.PlusSkillView;
-							}
+							__instance.PlusSkillView = previewChange.SkillPreviewChange();
 
-							__instance.PlusSkillView = preview;
+							//if (!string.IsNullOrEmpty(Skill.MySkill.PlusSkillView))
+							//{
+							//	preview.MySkill.PlusSkillView = Skill.MySkill.PlusSkillView;
+							//}
+
+							//__instance.PlusSkillView = preview;
 
 							if (!string.IsNullOrEmpty(preview.MySkill.KeyID))
 							{
@@ -234,7 +237,7 @@ namespace MiyukiSone
 
 			public static bool IsCamp()
 			{
-				string[] campKeys = 
+				string[] campKeys =
 					{
 					GDEItemKeys.Stage_Stage_Camp,
 					GDEItemKeys.Stage_Stage2_Camp,
@@ -256,7 +259,7 @@ namespace MiyukiSone
 
 				//if (MiyukiDecides) PlayData.TSavedata.Party.FindAll(c => c.Incapacitated).ForEach(c => { c.Incapacitated = false; c.Hp = c.get_stat.maxhp / 4; });
 
-				GetRandomAffection();
+				if (MiyukiDecides) GetRandomAffection();
 				SaveManager.savemanager.ProgressOneSave();
 			}
 		}
@@ -272,6 +275,8 @@ namespace MiyukiSone
 
 				if (skillKey == ModItemKeys.Skill_S_Miyuki_Rare_GameUpdate)
 				{
+					GetRandomAffection();
+
 					if (FieldSystem.instance != null && PlayData.AP >= __instance.Myskill.AP)
 					{
 						var skillList = GameUpdateSelectionList();
@@ -582,7 +587,7 @@ namespace MiyukiSone
 			public static void Postfix(CharStatV4 __instance)
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
-				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
+				MiyukiVisual.Instance?.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
 				MakeTransparent(__instance.transform, "BG");
 				PlaySong();
 			}
@@ -596,7 +601,7 @@ namespace MiyukiSone
 			public static void Postfix()
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated) return;
-				MiyukiVisual.Instance.StopParticles();
+				MiyukiVisual.Instance?.StopParticles();
 				StopSong();
 			}
 		}
@@ -626,7 +631,7 @@ namespace MiyukiSone
 
 				if (canvas == null) return;
 
-				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
+				MiyukiVisual.Instance?.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
 				SetSprite(canvas.transform, "Can/Logo", "Logo");
 				SetText(canvas.transform, "Can/PressAnyKey/Text", null, 0, true);
 
@@ -733,18 +738,18 @@ namespace MiyukiSone
 
 		[HarmonyPatch(typeof(PauseWindow))]
 		[HarmonyPatch(nameof(PauseWindow.Start))]
-		public static class Patch_PauseWindow_Miyuki
+		public static class Patch_PauseWindowStart_Miyuki
 		{
 			[HarmonyPostfix]
 			public static void Postfix(PauseWindow __instance)
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated && !MiyukiData.PauseOpen) return;
-
-				string pauseSprite = MiyukiData.PauseOpen ? $"Assets/Images/Skills/JustForYou/{MiyukiData.MiyukiArtIndex}" : "PauseBG";
+				string pauseSprite = MiyukiData.PauseOpen ? $"Assets/Images/Skills/JustForYou/{MiyukiData.MiyukiArtIndex}.png" : "PauseBG";
 				PlaySong();
 				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
 				Transform root = __instance.transform;
-				SetSprite(root, "Back", pauseSprite);
+				if (MiyukiData.PauseOpen) SetSprite(root, "Back", null, pauseSprite);
+				else SetSprite(root, "Back", pauseSprite);
 				SetSprite(root, "Main/Image", "Pause_Window");
 				if (MiyukiData.PauseOpen) MakeTransparent(root, "Main/Image");
 				MakeTransparent(root, "Main/Image/Image (1)");
@@ -763,7 +768,8 @@ namespace MiyukiSone
 			public static void Postfix(PauseWindow __instance)
 			{
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated && !MiyukiData.PauseOpen) return;
-				MiyukiVisual.Instance.StopParticles();
+				if (MiyukiData.PauseOpen) MiyukiData.PauseOpen = false;
+				//MiyukiVisual.Instance?.StopParticles();
 				StopSong(false);
 			}
 		}

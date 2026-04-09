@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using GameDataEditor;
 using UnityEngine;
 using static MiyukiSone.Affection;
@@ -33,38 +34,49 @@ namespace MiyukiSone
 			List<string> allKeys = new List<string>();
 			GDEDataManager.GetAllDataKeysBySchema(GDESchemaKeys.SkillExtended, out allKeys);
 
-			List<Skill_Extended> validPartyUpgrades = new List<Skill_Extended>();
+			List<Skill_Extended> validUpgrades = new List<Skill_Extended>();
+			Skill_Extended upgrade;
 
 			foreach (string key in allKeys)
 			{
+				// All Special Character Upgrades
+				//if (MiyukiDecides)
+				//{
+				//	GDESkillExtendedData data = new GDESkillExtendedData(key);
+
+				//	if (!data.Drop || data.Debuff || string.IsNullOrEmpty(data.NeedCharacter)) continue;
+
+				//	GDECharacterData characterData = new GDECharacterData(data.NeedCharacter);
+				//	if (characterData == null || string.IsNullOrEmpty(characterData.Key)) continue;
+
+				//	upgrade = Skill_Extended.DataToExtended(data);
+				//}
+
 				GDESkillExtendedData data = new GDESkillExtendedData(key);
 				if (!data.Drop || data.Debuff) continue;
 				if (PlayData.TSavedata.Party.Find(c => c.KeyData == data.NeedCharacter) == null) continue;
 
-				Skill_Extended upgrade = Skill_Extended.DataToExtended(data);
-				if (PlayData.Battleallys.SelectMany(bc => bc.Skills).Any(s => upgrade.CanEnforce(s))) validPartyUpgrades.Add(upgrade);
+				upgrade = Skill_Extended.DataToExtended(data);
+				if (PlayData.Battleallys.SelectMany(bc => bc.Skills).Any(s => upgrade.CanEnforce(s))) validUpgrades.Add(upgrade);
+
+
+				if (upgrade.CanEnforce(skill))
+				{
+					validUpgrades.Add(upgrade);
+				}
 			}
 
 
-			if (validPartyUpgrades.Count > 0)
+			if (validUpgrades.Count > 0)
 			{
-				List<Skill_Extended> validSkillUpgrades = validPartyUpgrades.Where(upgrade => upgrade.CanEnforce(skill)).ToList();
-
-				if (validSkillUpgrades.Count > 0)
-				{
-					Skill_Extended selectedUpgrade = validSkillUpgrades.RandomElement();
-					skill.ExtendedAdd_Battle(selectedUpgrade);
-					skill.SaveLucyUpgrade(selectedUpgrade);
-				}
-				else
-				{
-					skill.NormalUpgrade();
-				}
+				Skill_Extended selectedUpgrade = validUpgrades.RandomElement();
+				skill.ExtendedAdd_Battle(selectedUpgrade);
+				skill.SaveLucyUpgrade(selectedUpgrade);
 			}
 			else
 			{
 				skill.NormalUpgrade();
-			}		
+			}
 		}
 
 		public static void NormalUpgrade(this Skill skill)

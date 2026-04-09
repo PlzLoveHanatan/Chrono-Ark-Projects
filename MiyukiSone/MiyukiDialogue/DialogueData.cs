@@ -28,9 +28,10 @@ namespace MiyukiSone
 
 	public static class DialogueData
 	{
-		private class DialogueLine
+		private class DialogueLine : IP_MiyukiLocalizable
 		{
 			public string Key { get; set; }
+			public string Type { get; set; }
 			public string English { get; set; }
 			public string Korean { get; set; }
 			public string Japanese { get; set; }
@@ -79,21 +80,21 @@ namespace MiyukiSone
 			}
 		}
 
-		private static string GetLocalizedLine(DialogueLine line)
-		{
-			if (line == null) return null;
+		//private static string GetLocalizedLine(DialogueLine line)
+		//{
+		//	if (line == null) return null;
 
-			string currentLanguage = LocalizationManager.CurrentLanguage;
+		//	string currentLanguage = LocalizationManager.CurrentLanguage;
 
-			switch (currentLanguage)
-			{
-				case "Korean": return !string.IsNullOrEmpty(line.Korean) ? line.Korean : line.English;
-				case "Japanese": return !string.IsNullOrEmpty(line.Japanese) ? line.Japanese : line.English;
-				case "Chinese": return !string.IsNullOrEmpty(line.Chinese) ? line.Chinese : line.English;
-				case "Chinese_TW": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
-				default: return line.English;
-			}
-		}
+		//	switch (currentLanguage)
+		//	{
+		//		case "Korean": return !string.IsNullOrEmpty(line.Korean) ? line.Korean : line.English;
+		//		case "Japanese": return !string.IsNullOrEmpty(line.Japanese) ? line.Japanese : line.English;
+		//		case "Chinese": return !string.IsNullOrEmpty(line.Chinese) ? line.Chinese : line.English;
+		//		case "Chinese_TW": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
+		//		default: return line.English;
+		//	}
+		//}
 		#endregion
 
 		#region Dialogue Love
@@ -140,7 +141,7 @@ namespace MiyukiSone
 				return;
 			}
 
-			string text = GetLocalizedLine(line);
+			string text = GetLocalizedText(line);
 			StartMiyukiText(text);
 			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
 			PlaySoundFromAsset($"Assets/Audio/Dialogue/Love/{line.AudioFile}.ogg", true);
@@ -201,7 +202,7 @@ namespace MiyukiSone
 			DialogueLine line = isYes ? GetRandomKissYesLine() : GetCurrentKissNoLine();
 			if (line == null) return;
 
-			StartMiyukiText(GetLocalizedLine(line));
+			StartMiyukiText(GetLocalizedText(line));
 			PlaySoundFromAsset($"Assets/Audio/Dialogue/Kiss/{line.AudioFile}.ogg", true);
 
 			if (!isYes) AdvanceKissNoDialogue();
@@ -278,7 +279,7 @@ namespace MiyukiSone
 			var line = GetCurrentTurnEndLine();
 			if (line == null) return;
 
-			StartMiyukiText(GetLocalizedLine(line));
+			StartMiyukiText(GetLocalizedText(line));
 			PlaySoundFromAsset($"Assets/Audio/Dialogue/Turn/{line.AudioFile}.ogg", true);
 			AdvanceTurnEndDialogue();
 		}

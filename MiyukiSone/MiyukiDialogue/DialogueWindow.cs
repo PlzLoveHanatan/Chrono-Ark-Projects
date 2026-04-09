@@ -190,12 +190,12 @@ namespace MiyukiSone
 			if (MiyukiDecides)
 			{
 				Transform mainTarget = MiyukiDecides ? btn_yes.transform : MiyukiBchar.transform;
-				MiyukiVisual.Instance.SpawnHearts(mainTarget);
+				MiyukiVisual.Instance?.SpawnHearts(mainTarget);
 
 				if (MiyukiDecides)
 				{
 					extraTarget = mainTarget == btn_yes.transform ? MiyukiBchar.transform : btn_yes.transform;
-					MiyukiVisual.Instance.SpawnHearts(extraTarget);
+					MiyukiVisual.Instance?.SpawnHearts(extraTarget);
 				}
 			}
 		}

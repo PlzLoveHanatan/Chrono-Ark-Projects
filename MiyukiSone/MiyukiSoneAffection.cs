@@ -60,12 +60,11 @@ namespace MiyukiSone
 			}
 		}
 
+		// isPositive = true: Dere = +value, Yandere = -value
+		// isPositive = false: Dere = -value, Yandere = +value
 		public static int MiyukiResult(int baseValue, bool isPositive = true)
 		{
 			if (IsKuudere) return 0;
-
-			// Если isPositive = true: Dere = +value, Yandere = -value
-			// Если isPositive = false: Dere = -value, Yandere = +value (инвертировано)
 			bool shouldBePositive = isPositive ? IsDere : !IsDere;
 			return shouldBePositive ? baseValue : -baseValue;
 		}
@@ -144,10 +143,7 @@ namespace MiyukiSone
 						if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) ex.Init();
 					}
 				}
-			}
 
-			if (BattleSystem.instance != null || FieldSystem.instance != null)
-			{
 				foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
 				{
 					Passive_Char passive = battleChar.Info.Passive;

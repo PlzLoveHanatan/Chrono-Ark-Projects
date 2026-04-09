@@ -11,7 +11,7 @@ namespace MiyukiSone
 {
 	public static class EventsData
 	{
-		public class EventLine
+		public class EventLine : IP_MiyukiLocalizable
 		{
 			public string Key { get; set; }
 			public string Type { get; set; }
@@ -61,21 +61,21 @@ namespace MiyukiSone
 			}
 		}
 
-		private static string GetLocalizedLine(EventLine line)
-		{
-			if (line == null) return null;
+		//private static string GetLocalizedLine(EventLine line)
+		//{
+		//	if (line == null) return null;
 
-			string currentLanguage = LocalizationManager.CurrentLanguage;
+		//	string currentLanguage = LocalizationManager.CurrentLanguage;
 
-			switch (currentLanguage)
-			{
-				case "Korean": return !string.IsNullOrEmpty(line.Korean) ? line.Korean : line.English;
-				case "Japanese": return !string.IsNullOrEmpty(line.Japanese) ? line.Japanese : line.English;
-				case "Chinese": return !string.IsNullOrEmpty(line.Chinese) ? line.Chinese : line.English;
-				case "Chinese_TW": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
-				default: return line.English;
-			}
-		}
+		//	switch (currentLanguage)
+		//	{
+		//		case "Korean": return !string.IsNullOrEmpty(line.Korean) ? line.Korean : line.English;
+		//		case "Japanese": return !string.IsNullOrEmpty(line.Japanese) ? line.Japanese : line.English;
+		//		case "Chinese": return !string.IsNullOrEmpty(line.Chinese) ? line.Chinese : line.English;
+		//		case "Chinese_TW": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
+		//		default: return line.English;
+		//	}
+		//}
 
 		public static EventLine GetLineByKey(string key)
 		{
@@ -91,7 +91,7 @@ namespace MiyukiSone
 		public static string GetTextByKey(string key)
 		{
 			var line = GetLineByKey(key);
-			return line != null ? GetLocalizedLine(line) : null;
+			return line != null ? GetLocalizedText(line) : null;
 		}
 
 		public static List<EventLine> GetLinesByType(string type)
@@ -137,7 +137,7 @@ namespace MiyukiSone
 			var line = GetRandomLine(typeKey);
 			if (line == null) return null;
 
-			string text = GetLocalizedLine(line);
+			string text = GetLocalizedText(line);
 			StartMiyukiText(text);
 
 			string folder = typeKey;

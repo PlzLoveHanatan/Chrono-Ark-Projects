@@ -28,56 +28,18 @@ namespace MiyukiSone
 		public static ModInfo ThisMod => ModManager.getModInfo("MiyukiSone");
 		public static int SameSkillNum => SaveManager.Difficalty == 2 ? 4 : 3;
 		public static int MinSkillNum => SaveManager.Difficalty == 2 ? 7 : 6;
-		public static TempSaveData Pd => PlayData.TSavedata;
 		public static BattleChar DummyChar => BattleSystem.instance?.DummyChar;
 
-		public static BattleChar MiyukiBchar
-		{
-			get
-			{
-				if (BattleSystem.instance.AllyTeam.AliveChars == null) return null;
-				return BattleSystem.instance.AllyTeam.AliveChars.FirstOrDefault(c => c.Info?.KeyData == ModItemKeys.Character_Miyuki);
-			}
-		}
+		public static BattleChar MiyukiBchar => BattleSystem.instance?.AllyTeam?.AliveChars.FirstOrDefault(c => c.Info?.KeyData == ModItemKeys.Character_Miyuki);
 
-		public static BattleAlly MiyukiChar
-		{
-			get
-			{
-				if (PlayData.TSavedata?.Party == null) return null;
-				return PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki)?.GetBattleChar as BattleAlly;
-			}
-		}
+		public static BattleAlly MiyukiChar => PlayData.TSavedata?.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki)?.GetBattleChar as BattleAlly;
 
-		public static MiyukiCV MiyukiData => PlayData.TSavedata.GetOrAddCustomValue<MiyukiCV>();
+		public static MiyukiCV MiyukiData => PlayData.TSavedata?.GetOrAddCustomValue<MiyukiCV>();
 
-		public static bool MiyukiInParty
-		{
-			get
-			{
-				if (PlayData.TSavedata?.Party == null) return false;
-				return PlayData.TSavedata.Party.Any(c => c.KeyData == ModItemKeys.Character_Miyuki);
-			}
-		}
+		public static bool MiyukiInParty => PlayData.TSavedata.Party.Any(c => c.KeyData == ModItemKeys.Character_Miyuki);
 
-		public static MiyukiPassive GetMiyukiPassive
-		{
-			get
-			{
-				var miyuki = MiyukiBchar;
-				if (miyuki == null) return null;
-				return miyuki.Info?.Passive as MiyukiPassive;
-			}
-		}
-
-		public static AffectionOverflow MiyukiBuff
-		{
-			get
-			{
-				if (MiyukiBchar == null) return null;
-				return MiyukiBchar.BuffReturn(ModItemKeys.Buff_B_Miyuki_Passive, false) as AffectionOverflow;
-			}
-		}
+		public static MiyukiPassive GetMiyukiPassive => MiyukiBchar?.Info?.Passive as MiyukiPassive;
+		public static AffectionOverflow MiyukiBuff => MiyukiBchar?.BuffReturn(ModItemKeys.Buff_B_Miyuki_Passive, false) as AffectionOverflow;
 
 		private static GameObject _currentTempGO;
 
@@ -90,8 +52,8 @@ namespace MiyukiSone
 
 		public static void RefreshMiyukiCharacterDraw()
 		{
-			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck).Where(s => s.Master == MiyukiBchar)?.Select(s => s.MySkill.KeyID).ToList();
-			var shouldHaveDraws = miyukiSkills.Where(MiyukiPassive.CharacterDrawList.ContainsKey).Select(s => MiyukiPassive.CharacterDrawList[s]).Distinct().ToList();
+			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck).Where(s => s.Master == MiyukiBchar && s.MySkill.KeyID != ModItemKeys.Skill_S_Miyuki_GlitchingPhone)?.Select(s => s.MySkill.KeyID).ToList();
+			var shouldHaveDraws = miyukiSkills.Where(MiyukiPassive.CharacterDrawList.ContainsKey).Select(s => MiyukiPassive.CharacterDrawList[s]).Where(s => s != "???").Distinct().ToList();
 			MiyukiPassive.AvaliableCharacterDraw.RemoveAll(draw => !shouldHaveDraws.Contains(draw));
 			shouldHaveDraws.ForEach(s => { if (!MiyukiPassive.AvaliableCharacterDraw.Contains(s)) MiyukiPassive.AvaliableCharacterDraw.Add(s); });
 			if (MiyukiPassive.AvaliableCharacterDraw.Count == 0) CheckMiyukiDraw(false, true);
@@ -140,7 +102,9 @@ namespace MiyukiSone
 			};
 
 			SetVolumeSettings();
-			songKeys.RandomElement()?.Let(s => PlaySound(s, true));			
+
+			string selectedSong = songKeys.RandomElement();
+			selectedSong?.Let(s => PlaySound(s, true));
 		}
 
 		public static void StopSong(bool? isPauseBool = null)
@@ -156,16 +120,18 @@ namespace MiyukiSone
 		public static void SetVolumeSettings()
 		{
 			if (SaveManager.NowSaveSlot.SoundBGMVolume != 0 && SaveManager.NowSaveSlot.SoundMainVolume != 0) return;
-
 			if (MiyukiData.BGMVolumeIncreased) return;
 
 			MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain = SaveManager.NowSaveSlot.SoundMainVolume;
 			MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM = SaveManager.NowSaveSlot.SoundBGMVolume;
 			MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect = SaveManager.NowSaveSlot.SoundEffectVolume;
+			MiyukiSaveManager.Instance.Save();
+
 			SaveManager.NowSaveSlot.SoundMainVolume = 40;
 			SaveManager.NowSaveSlot.SoundBGMVolume = 40;
 			SaveManager.NowSaveSlot.SoundEffectVolume = 40;
 			MiyukiData.BGMVolumeIncreased = true;
+
 			SaveManager.NowSaveSlot.SaveSoundData();
 			SaveManager.savemanager.OptionApply(false, false);
 		}
@@ -173,7 +139,6 @@ namespace MiyukiSone
 		public static void RestoreVolumeSettings()
 		{
 			if (!MiyukiData.BGMVolumeIncreased) return;
-
 			SaveManager.NowSaveSlot.SoundMainVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeMain;
 			SaveManager.NowSaveSlot.SoundBGMVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeBGM;
 			SaveManager.NowSaveSlot.SoundEffectVolume = MiyukiSaveManager.Instance.CurrentData.SoundVolumeEffect;
@@ -424,6 +389,27 @@ namespace MiyukiSone
 				save.AddCustomValue(result);
 			}
 			return result;
+		}
+
+		public static string GetLocalizedText<T>(T item) where T : IP_MiyukiLocalizable
+		{
+			if (item == null) return null;
+
+			string currentLanguage = LocalizationManager.CurrentLanguage;
+
+			switch (currentLanguage)
+			{
+				case "Korean": return !string.IsNullOrEmpty(item.Korean) ? item.Korean : item.English;
+				case "Japanese": return !string.IsNullOrEmpty(item.Japanese) ? item.Japanese : item.English;
+				case "Chinese": return !string.IsNullOrEmpty(item.Chinese) ? item.Chinese : item.English;
+				case "Chinese_TW": return !string.IsNullOrEmpty(item.Chinese_TW) ? item.Chinese_TW : item.English;
+				default: return item.English;
+			}
+		}
+
+		public static bool RandomPer(this int chance)
+		{
+			return RandomManager.RandomPer("MiyukiRandom", 100, chance);
 		}
 
 		public static void GainEquip(int rarity, int? selectFrom = null)

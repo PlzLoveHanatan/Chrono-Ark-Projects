@@ -117,10 +117,17 @@ namespace MiyukiSone
 		{
 			public override void Init()
 			{
-				PlusStat.DMGTaken = MiyukiResult(8, false);
-				PlusPerStat.Damage = MiyukiResult(8);
-				PlusPerStat.Heal = MiyukiResult(8);
-				PlusStat.hit = MiyukiResult(8);
+				PlusStat.DMGTaken = MiyukiResult(10, false);
+				PlusPerStat.Damage = MiyukiResult(10);
+				PlusPerStat.Heal = MiyukiResult(10);
+				PlusStat.hit = MiyukiResult(10);
+				PlusStat.dod = MiyukiResult(10);
+				PlusStat.RES_CC = MiyukiResult(10);
+				PlusStat.RES_DOT = MiyukiResult(10);
+				PlusStat.RES_DEBUFF = MiyukiResult(10);
+				PlusStat.HIT_CC = MiyukiResult(10);
+				PlusStat.HIT_DOT = MiyukiResult(10);
+				PlusStat.HIT_DEBUFF = MiyukiResult(10);
 				base.Init();
 			}
 		}

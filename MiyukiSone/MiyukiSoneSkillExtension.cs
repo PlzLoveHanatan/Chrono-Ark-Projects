@@ -26,16 +26,12 @@ namespace MiyukiSone
 			ModItemKeys.Skill_S_Miyuki_Rare_JustforYOU,
 		};
 
-		public static bool IsMiyukiOwner(this Skill skill)
-		{
-			return skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki;
-		}
-
 		public static void MiyukiInit(this Skill skill)
 		{
+			var miyukiMaster = skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki;
 			bool isInCollection = UIManager.AllUI.Any(ui => ui.name.Contains("Collection"));
 
-			if (skill.IsMiyukiOwner() && BattleSystem.instance != null || isInCollection || FieldSystem.instance != null || skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Special_EternalKiss)
+			if (miyukiMaster || skill.Master.Dummy /*&& BattleSystem.instance != null || isInCollection || FieldSystem.instance != null || skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Special_EternalKiss*/)
 			{
 				if (ExceptSkillKeys.Contains(skill.MySkill.KeyID)) return;
 
@@ -56,7 +52,7 @@ namespace MiyukiSone
 
 				if (BattleSystem.instance != null) RefreshMiyukiCharacterDraw();
 			}
-			else if (!skill.IsMiyukiOwner() && !isInCollection)
+			else if (!miyukiMaster && !isInCollection)
 			{
 				Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_SacrificedKnowledge, skill.Master, skill.Master.MyTeam);
 				skill.SkillChange(newSkill, false, false, true);
@@ -116,7 +112,7 @@ namespace MiyukiSone
 			if (skill2.MyButton != null && !skill2.MyButton.AlreadyWasted) skill2.Except();
 			Skill newSkill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_EternalKiss, owner, owner.MyTeam);
 			if (newSkill != null) BattleSystem.instance.AllyTeam.Add(newSkill, true);
-			MiyukiPassive.AvaliableCharacterDraw.Add(ModItemKeys.Skill_S_Miyuki_LucyDraw_MomoriHelp);
+			MiyukiPassive.AvaliableCharacterDraw.Add(ModItemKeys.Skill_S_Miyuki_LucyDraw_MiyukiHelp);
 			CheckMiyukiDraw(true, true);
 			yield break;
 		}

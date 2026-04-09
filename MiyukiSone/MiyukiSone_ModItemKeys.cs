@@ -33,6 +33,7 @@ namespace MiyukiSone
         public static string Buff_B_Miyuki_Recover = "B_Miyuki_Recover";
 		/// <summary>
 		/// When played from hand, view 5 random  <color=#F53172FF>Heroic</color> equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
+		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Miyuki_Ex_0 = "Ex_Miyuki_Ex_0";
 		/// <summary>
@@ -75,6 +76,7 @@ namespace MiyukiSone
         public static string SkillEffect_SE_T_S_MeasuredLove = "SE_T_S_MeasuredLove";
         public static string SkillEffect_SE_T_S_Miyuki_Rare_FinalView = "SE_T_S_Miyuki_Rare_FinalView";
         public static string SkillEffect_SE_T_S_Miyuki_Rare_FinalView_Particle = "SE_T_S_Miyuki_Rare_FinalView_Particle";
+        public static string SkillEffect_SE_T_S_Miyuki_Special_Close = "SE_T_S_Miyuki_Special_Close";
         public static string SkillEffect_SE_T_S_Pandemonium = "SE_T_S_Pandemonium";
         public static string SkillEffect_SE_T_S_QueenBee = "SE_T_S_QueenBee";
         public static string SkillEffect_SE_T_S_Rare_JustforYOU = "SE_T_S_Rare_JustforYOU";
@@ -125,18 +127,18 @@ namespace MiyukiSone
 		/// </summary>
         public static string Skill_S_Miyuki_LucyDraw_HelpingHand = "S_Miyuki_LucyDraw_HelpingHand";
 		/// <summary>
+		/// Miyuki, Help
+		/// Choose One -
+		/// Reduce 'Inner Desire' damage by 15 and draw 2 skills.
+		/// Or increase 'Inner Desire' damage by 12 and draw 3 skills.
+		/// </summary>
+        public static string Skill_S_Miyuki_LucyDraw_MiyukiHelp = "S_Miyuki_LucyDraw_MiyukiHelp";
+		/// <summary>
 		/// Miyuki's Phone
 		/// Create random Lucy rare skills until your hand is full. These skills gain Exclude.
 		/// Cost is reduced by 1 at the end of the turn.
 		/// </summary>
         public static string Skill_S_Miyuki_LucyDraw_MiyukiPhone = "S_Miyuki_LucyDraw_MiyukiPhone";
-		/// <summary>
-		/// Momori, Help
-		/// Choose One -
-		/// Reduce 'Inner Desire' damage by 15 and draw 2 skills.
-		/// Or increase 'Inner Desire' damage by 12 and draw 3 skills.
-		/// </summary>
-        public static string Skill_S_Miyuki_LucyDraw_MomoriHelp = "S_Miyuki_LucyDraw_MomoriHelp";
 		/// <summary>
 		/// Measured Love
 		/// Select an ally.
@@ -199,6 +201,13 @@ namespace MiyukiSone
 		/// Remove one random debuff.
 		/// </summary>
         public static string Skill_S_Miyuki_Rare_JustforYOU = "S_Miyuki_Rare_JustforYOU";
+		/// <summary>
+		/// Miyuki's Close-Range Shot
+		/// You can recast this skill whenever you play a skill that costs 1 or more.
+		/// <b>(Except skills created by other characters)</b>
+		/// This skill does not stack Supply Arrows buff if it is used for free.
+		/// </summary>
+        public static string Skill_S_Miyuki_Special_Close = "S_Miyuki_Special_Close";
 		/// <summary>
 		/// Eternal Kiss
 		/// Heal all characters except yourself and the target for &a <color=#FF7C34>(99% Healing Power)</color>.
@@ -299,6 +308,24 @@ namespace MiyukiSone
 		/// Chinese-TW:
 		/// </summary>
         public static string MiyukiAffection => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiAffection");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Select a downgrade effect.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiyukiDowngrade => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiDowngrade");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Select an upgrade effect.
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string MiyukiUpgrade => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiUpgrade");
 		/// <summary>
 		/// Korean:
 		/// English:

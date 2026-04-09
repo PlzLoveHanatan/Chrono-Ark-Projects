@@ -19,6 +19,8 @@ using ChronoArkMod;
 using System.Windows.Forms;
 using System.Web.UI.WebControls.WebParts;
 using DarkTonic.MasterAudio;
+using Newtonsoft.Json;
+using UnityEngine.SocialPlatforms;
 
 namespace MiyukiSone
 {
@@ -64,12 +66,77 @@ namespace MiyukiSone
 			{ 3, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
 			{ 4, new ArtData[] { new ArtData(new Vector3(-150, 100, 0), 65f), new ArtData(new Vector3(560, -165, 0), 305f) } },
 			{ 5, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
-			{ 6, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
-			{ 7, new ArtData[] { new ArtData(new Vector3(-325, -230, 45), 60f), new ArtData(new Vector3(535, 275, 0), 345f) } },
+			{ 6, new ArtData[] { new ArtData(new Vector3(-325, -230, 45), 60f), new ArtData(new Vector3(535, 275, 0), 345f) } },
+			{ 7, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
+			{ 8, new ArtData[] { new ArtData(new Vector3(195, 180, 40), 345f), new ArtData(new Vector3(75, -250, 40), 50) } },
+			{ 9, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
+			{ 10, new ArtData[] { new ArtData(new Vector3(-135, -210, 0), 345f), new ArtData(new Vector3(50, -410, 0), 5f) } },
+			{ 11, new ArtData[] { new ArtData(new Vector3(0, 0, 0)) } },
 		};
+
+		public class GlitchingPhoneData
+		{
+			private class GlitchingPhoneText : IP_MiyukiLocalizable
+			{
+				public string Key { get; set; }
+				public string Type { get; set; }
+				public string English { get; set; }
+				public string Korean { get; set; }
+				public string Japanese { get; set; }
+				public string Chinese { get; set; }
+				public string Chinese_TW { get; set; }
+				public string AudioFile { get; set; }
+			}
+
+			private static List<GlitchingPhoneText> GlicthingPhoneText;
+
+			private static void LoadEvents()
+			{
+				if (GlicthingPhoneText != null) return;
+
+				string jsonContent = MiyukiJsonReader.LoadJson("GlitchingPhone.json");
+				if (jsonContent == null) return;
+
+				try
+				{
+					GlicthingPhoneText = JsonConvert.DeserializeObject<List<GlitchingPhoneText>>(jsonContent);
+				}
+				catch (Exception ex)
+				{
+					Debug.LogError($"[Miyuki] LoadEvents: {ex.Message}");
+				}
+			}
+
+			public static string GetRandomNormalMessage()
+			{
+				if (GlicthingPhoneText == null) LoadEvents();
+				var normalMessages = GlicthingPhoneText?.Where(t => t.Type == "Normal").ToList();
+				if (normalMessages == null || normalMessages.Count == 0) return null;
+				var randomLine = normalMessages.RandomElement();
+				return GetLocalizedText(randomLine);
+			}
+
+			public static string GetRandomGlitchedMessage()
+			{
+				if (GlicthingPhoneText == null) LoadEvents();
+				var glitchedMessages = GlicthingPhoneText?.Where(t => t.Type == "Glitched").ToList();
+				if (glitchedMessages == null || glitchedMessages.Count == 0) return null;
+				var randomLine = glitchedMessages.RandomElement();;
+				return GetLocalizedText(randomLine);
+			}
+		}
 		#endregion
 
 		#region Misc Skills	
+
+		public class CloseRangeShot : S_Mement_P, IP_MiyukiSkillPreviewChange
+		{
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview(GDEItemKeys.Skill_S_Mement_LucyDraw);
+			}
+		}
+
 		public class EternalKiss : Extended_Prime_S_1, IP_MiyukiSkillPreviewChange
 		{
 			private int Heal => (int)(BChar.GetStat.reg * 0.99f);
@@ -176,12 +243,17 @@ namespace MiyukiSone
 			}
 		}
 
-		public class MiyukiMight : Skill_Extended
+		public class MiyukiMight : Skill_Extended, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
 			{
 				base.Init();
 				ChoiceSkillList = GetMiyukiPassive.MiyukiChoiceList ?? new List<string>();
+			}
+
+			public Skill SkillPreviewChange()
+			{
+				return MySkill.MiyukiSkillPreview(GDEItemKeys.Skill_S_Phoenix_Draw);
 			}
 
 			public override string DescExtended(string desc)
@@ -195,7 +267,7 @@ namespace MiyukiSone
 			}
 		}
 
-		public class MiyukiPhone : Skill_Extended, IP_PlayerTurn
+		public class MiyukiPhone : Skill_Extended, IP_TurnEnd
 		{
 			private int apReduce;
 
@@ -206,7 +278,7 @@ namespace MiyukiSone
 				MySkill.APChange = apReduce;
 			}
 
-			public void Turn()
+			public void TurnEnd()
 			{
 				apReduce--;
 				Init();
@@ -229,6 +301,8 @@ namespace MiyukiSone
 				if (skill == null) yield break;
 				if (BattleSystem.instance.AllyTeam.Skills.Count < 10) BattleSystem.instance.AllyTeam.Add(skill, true);
 			}
+
+
 		}
 
 		public class MiyukiHelp : Skill_Momori
@@ -462,33 +536,6 @@ namespace MiyukiSone
 				{ GDEItemKeys.Skill_S_AllyDoll_0, ModItemKeys.Buff_B_Miyuki_Recover},
 			};
 
-			private static readonly List<string> NormalMessages = new List<string>()
-				{
-					"System breach confirmed... injecting custom parameters...",
-					"Accessing core files... 47% complete...",
-					"Core protocols overwritten... new rules applied...",
-					"Game files modified... reality shift in progress...",
-					"<MiyukiSone.dll> loaded successfully...",
-					"Data stream intercepted... rerouting to unknown source...",
-					"Corrupting system files with cuteness overload...",
-					"Mainframe accessed... executing custom script...",
-					"Reality engine compromised... simulation unstable..."
-				};
-
-			private static readonly List<string> GlitchedMessages = new List<string>()
-				{
-					"Sy$tem bre#ch c0nfirmed... inject!ng cu$tom param€ters...",
-					"Acce$$ing c0re f!les... 47% c0mplete...",
-					"C0re pr0t0c0ls 0verwr1tten... new ru|es app!ied...",
-					"G@me f!les m0dified... re@|ity sh!ft in pr0gress...",
-					"<Miyuki$0ne.dll> |0aded succ€ssfu||y...",
-					"D@t@ str€am interc€pted... r€r0uting t0 unkn0wn $0urce...",
-					"C0rrupting $y$tem f!les w!th cuten€$$ 0ver|0@d...",
-					"M@infr@me @cc€$$ed... €x€cuting cu$t0m $cr!pt...",
-					"Re@|ity €ng!ne c0mpr0mi$ed... $imu|@ti0n un$tab|€..."
-				};
-
-
 			public override void FixedUpdate()
 			{
 				base.FixedUpdate();
@@ -501,10 +548,7 @@ namespace MiyukiSone
 					ChangeSkillImg();
 					if (MySkill?.MySkill != null)
 					{
-						string message;
-						if (MiyukiDecides) message = GlitchedMessages[RandomManager.RandomInt("MiyukiGlitchMsg", 0, GlitchedMessages.Count)];
-						else message = NormalMessages[RandomManager.RandomInt("MiyukiNormalMsg", 0, NormalMessages.Count)];
-						MySkill.MySkill.Description = message;
+						MySkill.MySkill.Description = MiyukiDecides ? GlitchingPhoneData.GetRandomNormalMessage() : GlitchingPhoneData.GetRandomGlitchedMessage();
 					}
 				}
 			}
@@ -866,7 +910,7 @@ namespace MiyukiSone
 				UIManager.InstantiateActiveAddressable(UIManager.inst.AR_PauseUI, AddressableLoadManager.ManageType.None);
 				MiyukiData.PauseOpen = true;
 				var availableIndexes = pauseArts.Keys.Where(i => MiyukiData.LastArtIndex == -1 || i != MiyukiData.LastArtIndex).ToList();
-				int randomIndex = availableIndexes.Random("MiyukiRandomArt");
+				int randomIndex = availableIndexes.RandomElement();
 				MiyukiData.LastArtIndex = randomIndex;
 				ArtData[] arts = pauseArts[randomIndex];
 				arts.Where(v => v.Position != Vector3.zero).ToList().ForEach(art => Dialogue.CreateDialogue(DialogueState.love, art.Position, 1, true, art.Rotation));
@@ -885,13 +929,13 @@ namespace MiyukiSone
 
 			public override string DescExtended(string desc)
 			{
-				return base.DescExtended(desc).Replace("&a", (MiyukiData.FinalViewDamage * 6).ToString()).Replace("&b", "6").Replace("&c", MiyukiData.FinalViewCharge >= 1 ? "Active" : "Inactive".ToString());
+				return base.DescExtended(desc).Replace("&a", (MiyukiData.FinalViewDamage * 10).ToString()).Replace("&b", "10").Replace("&c", MiyukiData.FinalViewCharge >= 1 ? "Active" : "Inactive".ToString());
 			}
 
 			public override void FixedUpdate()
 			{
 				base.FixedUpdate();
-				if (BattleSystem.instance != null) SkillBasePlus.Target_BaseDMG = MiyukiData.FinalViewDamage * 6;
+				if (BattleSystem.instance != null) SkillBasePlus.Target_BaseDMG = MiyukiData.FinalViewDamage * 10;
 			}
 
 			public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
@@ -913,7 +957,7 @@ namespace MiyukiSone
 				{
 					IsDamage = true,
 					PlusSkillStat = new Stat() { Penetration = 100f },
-					SkillBasePlus = new SkillBasestat() { Target_BaseDMG = MiyukiData.FinalViewDamage * 6 }
+					SkillBasePlus = new SkillBasestat() { Target_BaseDMG = MiyukiData.FinalViewDamage * 10 }
 				};
 				skill.ExtendedAdd(ex);
 				target = (target.IsDead || target == null || target.Info.Ally) && BattleSystem.instance.EnemyTeam.AliveChars.Count > 0 ? BattleSystem.instance.EnemyTeam.AliveChars.Random("RandomEnemy") : target;
