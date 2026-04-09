@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +67,14 @@ namespace EnDub
 			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
 
 			float finalVolume = Settings.AudioVolume > 0 ? Settings.AudioVolume : SaveManager.NowSaveSlot.SoundEffectVolume / 100f;
+
+			//string path = Path.Combine(ThisMod.DirectoryName, "Assets", "AudioVolume.txt");
+			//string content = File.ReadAllText(path).Trim();
+
+			//if (!float.TryParse(content, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float finalVolume))
+			//{
+			//	finalVolume = 1f;
+			//}
 
 			audioSource.PlayOneShot(clip, finalVolume);
 

@@ -45,6 +45,7 @@ namespace EnDub
 			{ GDEItemKeys.Character_SilverStein, "Silverstein" },
 			{ GDEItemKeys.Character_Sizz, "Sizz" },
 			{ GDEItemKeys.Character_Azar, "Azar" },
+			{ GDEItemKeys.Character_Control, "Narhan" },
 		};
 
 		public static Dictionary<string, string> SkinKey = new Dictionary<string, string>()
@@ -54,7 +55,8 @@ namespace EnDub
 			{ GDEItemKeys.Character_Skin_SilverStein_Casino, "Casino" },
 			{ GDEItemKeys.Character_Skin_Sizz_Swimsuit, "Swimsuit" },
 			{ GDEItemKeys.Character_Skin_Azar_Swimsuit, "Swimsuit" },
-		};
+			{ GDEItemKeys.Character_Skin_Narhan_Casino, "Casino" },
+		};	
 
 		public static void LoadAllDialogues()
 		{
