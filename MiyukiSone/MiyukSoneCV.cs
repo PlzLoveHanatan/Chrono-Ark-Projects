@@ -51,6 +51,7 @@ namespace MiyukiSone
 
 		public class MiyukiLucySave : MiyukiSerializableDictionary<string, List<string>>
 		{
+
 			public void LoadLucySkills(List<Skill> skills)
 			{
 				foreach (var skill in skills)

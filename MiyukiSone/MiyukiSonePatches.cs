@@ -185,13 +185,17 @@ namespace MiyukiSone
 			{
 				CheckSlots();
 
-				if (!IsCamp()) MiyukiData.FinalViewCharge++;
-
-				if (!MiyukiSaveManager.Instance.CurrentData.GameRestarted && MiyukiSaveManager.Instance.CurrentData.GameUpdated)
+				if (MiyukiInParty)
 				{
-					MiyukiSaveManager.Instance.CurrentData.GameRestarted = true;
-					MiyukiSaveManager.Instance.Save();
-					FieldSystem.instance.StartCoroutine(WaitForSeconds());
+					if (!IsCamp()) MiyukiData.FinalViewCharge++;
+					MiyukiCharImg.UpdateCharacterImage();
+					
+					if (!MiyukiSaveManager.Instance.CurrentData.GameRestarted && MiyukiSaveManager.Instance.CurrentData.GameUpdated)
+					{
+						MiyukiSaveManager.Instance.CurrentData.GameRestarted = true;
+						MiyukiSaveManager.Instance.Save();
+						FieldSystem.instance.StartCoroutine(WaitForSeconds());
+					}
 				}
 			}
 
@@ -275,8 +279,6 @@ namespace MiyukiSone
 
 				if (skillKey == ModItemKeys.Skill_S_Miyuki_Rare_GameUpdate)
 				{
-					GetRandomAffection();
-
 					if (FieldSystem.instance != null && PlayData.AP >= __instance.Myskill.AP)
 					{
 						var skillList = GameUpdateSelectionList();
@@ -430,6 +432,16 @@ namespace MiyukiSone
 				}
 
 				return true;
+			}
+		}
+
+		[HarmonyPatch(typeof(FriendShipUI), nameof(FriendShipUI.Gift))]
+		class FriendShipUI_GiftPatch
+		{
+			[HarmonyPrefix]
+			public static void Prefix(FriendShipUI __instance, string CharId)
+			{
+				if (CharId == ModItemKeys.Character_Miyuki) CurrentAffection = MiyukiAffection.DereDere;
 			}
 		}
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Utils;
@@ -13,74 +14,57 @@ namespace MiyukiSone
 {
 	public static class MiyukiCharImg
 	{
-		public static void ChangeCharacterImage()
+		public static void UpdateCharacterImage()
 		{
-			string relativePath = $"Assets/Images/MiyukiAffection/{CurrentAffection}/";
-			string battleCharPath = relativePath + "Dress.prefab";
-			string faceSmallPath = relativePath + "Portrait.prefab";
-			string skillFacePath = relativePath + "SkillFace.png";
-			string faceOrigin = relativePath + "BattleFace.prefab";
-			string faceBattle = relativePath + "BattleFace.png"; // 405 x 118 -> Sprite
+			string affection = CurrentAffection.ToString();
+			string basePath = $"Assets/Images/MiyukiAffection/{affection}/";
 
-			//MiyukiBchar.Info.GetData.face_Path -> Sprite
-			//MiyukiBchar.Info.GetData.Face_BigButton_Path -> Sprite
-			//MiyukiBchar.Info.GetData.Face_SmallButton_Path -> Sprite
-			//MiyukiBchar.Info.GetData.FaceOriginChar_Path -> Prefab
+			if (FieldSystem.instance != null && MiyukiChar != null)
+			{
+				UpdateCharUI(MiyukiChar, basePath);
+				FieldSystem.instance.PartyWindowInit();
+				EventsData.MiyukiTextEvent();
+			}
 
 			if (BattleSystem.instance != null && MiyukiBchar != null)
 			{
-				MiyukiBchar.Info.GetData.BattleChar_Path = GetPrefabAdress(battleCharPath); // Full standing pose -> Prefab
-				MiyukiBchar.Info.GetData.FaceSmallChar_Path = GetPrefabAdress(faceSmallPath); // 197 x 352 -> Prefab
-				MiyukiBchar.Info.GetData.Face_SmallButton_Path = GetSpriteAddress(skillFacePath); // 58 x 42 -> Sprite
-				MiyukiBchar.Info.GetData.FaceOriginChar_Path = GetPrefabAdress(faceOrigin);
-
-				AddressableLoadManager.LoadAsyncAction(GetSpriteAddress(faceBattle), AddressableLoadManager.ManageType.Character, MiyukiBchar.UI.CharImage.GetComponent<Image>());
-
-				foreach (Skill skill in MiyukiBchar.MyTeam.Skills)
-				{
-					if (skill.Master == MiyukiBchar)
-					{
-						skill.MyButton?.ChangeFace();
-					}
-				}
-
-				foreach (CastingSkill castingSkill in MiyukiBchar.BattleInfo.CastSkills)
-				{
-					if (castingSkill.skill.Master == MiyukiBchar)
-					{
-						castingSkill.skill.MyButton?.ChangeFace();
-					}
-				}
-
-				foreach (CastingSkill castingSkill in MiyukiBchar.BattleInfo.SaveSkill)
-				{
-					if (castingSkill.skill.Master == MiyukiBchar)
-					{
-						castingSkill.skill.MyButton?.ChangeFace();
-					}
-				}
+				UpdateCharUI(MiyukiBchar, basePath);
+				UpdateSkillFaces();
 			}
-			
+		}
 
-			//if (FieldSystem.instance != null)
-			//{
-			//	foreach (AllyWindow window in FieldSystem.instance.PartyWindow)
-			//	{
-			//		if (window.Info.KeyData == ModItemKeys.Character_Miyuki)
-			//		{
-			//			Image targetImage = window.CharFace.GetComponentInChildren<Image>();
-			//			if (targetImage != null)
-			//			{
-			//				AddressableLoadManager.LoadAsyncAction(spriteAddress, AddressableLoadManager.ManageType.Character, targetImage);
-			//				Debug.Log($"[Miyuki] Field image changed to: {spriteAddress}");
-			//			}
-			//		}
-			//		else
-			//		{
-			//			Debug.LogWarning("[Miyuki] Miyuki window not found");
-			//		}					
-			//	}
-			//}	
+		private static void UpdateCharUI(BattleChar character, string basePath)
+		{
+			if (character == null) return;
+
+			character.Info.GetData.BattleChar_Path = GetPrefabAdress(basePath + "Dress.prefab"); // Full standing pose -> Prefab
+			character.Info.GetData.FaceSmallChar_Path = GetPrefabAdress(basePath + "Portrait.prefab"); // 197 x 352 -> Prefab
+			character.Info.GetData.Face_SmallButton_Path = GetSpriteAddress(basePath + "SkillFace.png"); // 58 x 42 -> Sprite
+			character.Info.GetData.FaceOriginChar_Path = GetPrefabAdress(basePath + "BattleFace.prefab"); // Full standing pose which is cut to small window ??? -> Prefab
+
+			if (BattleSystem.instance != null && character == MiyukiBchar)
+			{
+				string faceBattle = basePath + "BattleFace.png"; // 405 x 118 -> Sprite
+				AddressableLoadManager.LoadAsyncAction(GetSpriteAddress(faceBattle), AddressableLoadManager.ManageType.Character, MiyukiBchar.UI.CharImage.GetComponent<Image>());
+			}
+		}
+
+		private static void UpdateSkillFaces()
+		{
+			foreach (Skill skill in MiyukiBchar.MyTeam.Skills)
+			{
+				if (skill.Master == MiyukiBchar) skill.MyButton?.ChangeFace();
+			}
+
+			foreach (CastingSkill castingSkill in MiyukiBchar.BattleInfo.CastSkills)
+			{
+				if (castingSkill.skill.Master == MiyukiBchar) castingSkill.skill.MyButton?.ChangeFace();
+			}
+
+			foreach (CastingSkill castingSkill in MiyukiBchar.BattleInfo.SaveSkill)
+			{
+				if (castingSkill.skill.Master == MiyukiBchar) castingSkill.skill.MyButton?.ChangeFace();
+			}
 		}
 	}
 }

@@ -26,7 +26,7 @@ namespace MiyukiSone
 			() => ChangeGold(250),
 			() => ChangeSoulstones(1),
 			() => ChangeRelicBarNum(1),
-			() => ChangeInventoryNum(2),
+			() => ChangeInventoryNum(1),
 			ChangeEquipSlots,
 			ChangeEnemiesActions,
 			ChangeSkillUpgrade,
@@ -40,7 +40,7 @@ namespace MiyukiSone
 			() => ChangeGold(-250),
 			() => ChangeSoulstones(-1),
 			() => ChangeRelicBarNum(-1),
-			() => ChangeInventoryNum(-2),
+			() => ChangeInventoryNum(-1),
 			ChangeEquipSlots,
 			ChangeEnemiesActions,
 			ChangeSkillUpgrade,
@@ -49,6 +49,14 @@ namespace MiyukiSone
 			ChangeAlliesHp,
 			CurseRandomEquip,
 			KillRandomAlly,
+		};
+
+		private static readonly List<string> LucyNecklace = new List<string>
+		{
+			GDEItemKeys.Item_Active_LucysNecklace,
+			GDEItemKeys.Item_Active_LucysNecklace2,
+			GDEItemKeys.Item_Active_LucysNecklace3,
+			GDEItemKeys.Item_Active_LucysNecklace4
 		};
 		#endregion
 
@@ -169,7 +177,7 @@ namespace MiyukiSone
 
 		private static void ChangeAlliesHp()
 		{
-			int amount = PlayData.TSavedata.StageNum * 4;
+			int amount = PlayData.TSavedata.StageNum * 5;
 			if (IsDere)
 			{
 				BattleSystem.instance.AllyTeam.AliveChars.ForEach(a => a.Heal(DummyChar, amount, false));
@@ -206,11 +214,15 @@ namespace MiyukiSone
 
 		private static void RemoveItems()
 		{
-			var item = PlayData.TSavedata.Inventory?.RandomElement();
+			if (PlayData.TSavedata?.Inventory == null) return;
+
+			var item = PlayData.TSavedata.Inventory.Where(i => i != null && !LucyNecklace.Contains(i.itemkey)).RandomElement();
+
 			if (item != null)
 			{
 				PartyInventory.InvenM?.DelItem(item);
 				PartyInventory.Ins?.UpdateInvenUI();
+				Debug.Log($"Miyuki removed item {item.itemkey} from inventory.");
 			}
 		}
 

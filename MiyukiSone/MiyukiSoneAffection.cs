@@ -49,14 +49,14 @@ namespace MiyukiSone
 				if (_currentAffection != value)
 				{
 					_currentAffection = value;
-					MiyukiData.Affection = (int)value;
-					CheckIp();
+					MiyukiData.Affection = (int)value;			
 					Debug.Log($"Miyuki Affection now {value}");
 				}
 				else
 				{
 					Debug.Log($"Miyuki Affection still {value}");
 				}
+				CheckIp();
 			}
 		}
 
@@ -144,17 +144,19 @@ namespace MiyukiSone
 					}
 				}
 
-				foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
-				{
-					Passive_Char passive = battleChar.Info.Passive;
-					if (passive != null && passive is IP_MiyukiCharImgChange handler) handler.CharImgChange();
-				}
+				//foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
+				//{
+				//	Passive_Char passive = battleChar.Info.Passive;
+				//	if (passive != null && passive is IP_MiyukiCharImgChange handler) handler.CharImgChange();
+				//}
+
+				BattleSystem.instance.AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff_Ally, false) is Buffs.AllyConstantStats b) b.Init(); });
 			}
+
+			MiyukiCharImg.UpdateCharacterImage();
 
 			//var buff = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.Buffs).OfType<Buffs.MiyukiBuff>().ToList();
 			//buff.ForEach(b => b.Init());
-
-			BattleSystem.instance.AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff_Ally, false) is Buffs.AllyConstantStats b) b.Init(); });
 		}
 	}
 }

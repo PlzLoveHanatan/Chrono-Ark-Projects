@@ -26,7 +26,7 @@ namespace MiyukiSone
 {
 	public class Skills
 	{
-		#region Data
+		#region Miyuki Main Data
 		public class MiyukiSkill : Skill_Extended, IP_MiyukiSkillPreviewChange
 		{
 			public override void Init()
@@ -301,8 +301,6 @@ namespace MiyukiSone
 				if (skill == null) yield break;
 				if (BattleSystem.instance.AllyTeam.Skills.Count < 10) BattleSystem.instance.AllyTeam.Add(skill, true);
 			}
-
-
 		}
 
 		public class MiyukiHelp : Skill_Momori
@@ -419,7 +417,7 @@ namespace MiyukiSone
 					{
 						effectTriggered = true;
 						Skill otherSkill = BattleSystem.instance.AllyTeam.Skills[adjIndex];
-						BattleSystem.DelayInput(MiyukiSkillExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
+						BattleSystem.DelayInput(MiyukiExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
 					}
 				}
 			}
@@ -490,7 +488,7 @@ namespace MiyukiSone
 					{
 						effectTriggered = true;
 						Skill otherSkill = BattleSystem.instance.AllyTeam.Skills[adjIndex];
-						BattleSystem.DelayInput(MiyukiSkillExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
+						BattleSystem.DelayInput(MiyukiExtension.CreateEternalKiss(MySkill, otherSkill, BChar));
 					}
 				}
 			}
@@ -532,7 +530,7 @@ namespace MiyukiSone
 			private static readonly Dictionary<string, string> FixedKeys = new Dictionary<string, string>()
 			{
 				{ ModItemKeys.Skill_S_Miyuki_Special_Might, ModItemKeys.Buff_B_Miyuki_Might},
-				{ GDEItemKeys.Skill_S_Mement_P, ModItemKeys.Buff_B_Miyuki_CloseRangeShot},
+				{ ModItemKeys.Skill_S_Miyuki_Special_Close, ModItemKeys.Buff_B_Miyuki_CloseRangeShot},
 				{ GDEItemKeys.Skill_S_AllyDoll_0, ModItemKeys.Buff_B_Miyuki_Recover},
 			};
 
@@ -586,10 +584,20 @@ namespace MiyukiSone
 					MiyukiData.LastGlitchedPhoneBuff = buffKey;
 				}
 
-				if (buffKey == GDEItemKeys.Skill_S_Mement_P)
+				if (buffKey == ModItemKeys.Buff_B_Miyuki_CloseRangeShot)
 				{
 					string skillKey = MiyukiDecides ? GDEItemKeys.Skill_S_Mement_5 : GDEItemKeys.Skill_S_Mement_0;
-					BattleSystem.instance.AllyTeam.Add(Skill.TempSkill(skillKey, BChar, BChar.MyTeam), true);
+					var skill = Skill.TempSkill(skillKey, BChar, BChar.MyTeam);
+					if (skill != null) BattleSystem.instance.AllyTeam.Add(skill, true);
+					skill.isExcept = true;
+					skill.NotCount = true;
+					skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
+				}
+
+				if (buffKey == ModItemKeys.Buff_B_Miyuki_Might)
+				{
+					string rewardKey = Utils.RandomPer(5) ? GDEItemKeys.Item_Consume_GoldenBread : GDEItemKeys.Item_Consume_Bread;
+					InventoryManager.Reward(ItemBase.GetItem(rewardKey));
 				}
 
 				base.SkillUseSingle(SkillD, Targets);
@@ -727,8 +735,7 @@ namespace MiyukiSone
 			{
 				base.SkillUseSingle(SkillD, Targets);
 				SkillBasePlus.Target_BaseDMG = 0;
-				if (AllyStunned) SkillBasePlus.Target_BaseDMG = BonusDamage;
-				else if (HasCC(Targets[0])) SkillBasePlus.Target_BaseDMG = BonusDamage;
+				if (AllyStunned || HasCC(Targets[0])) SkillBasePlus.Target_BaseDMG = BonusDamage;
 
 				if (!BattleSystem.instance.AllyTeam.AliveChars.Any(a => a.Info.KeyData == GDEItemKeys.Character_SilverStein))
 				{

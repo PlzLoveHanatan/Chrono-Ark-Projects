@@ -107,7 +107,7 @@ namespace MiyukiSone
 			GDEItemKeys.SkillExtended_Golem_Ex_0,
 			//GDEItemKeys.SkillExtended_Golem_Ex_1,
 			//GDEItemKeys.SkillExtended_LBossFirst_Sword,
-			GDEItemKeys.SkillExtended_Pope_Ex_0,
+			//GDEItemKeys.SkillExtended_Pope_Ex_0,
 		};
 
 		private static readonly List<string> YanderePawSkillKeys = new List<string>()
@@ -123,7 +123,7 @@ namespace MiyukiSone
 
 		private static readonly List<string> YanderePawBuffKeysEnemies = new List<string>()
 		{
-			GDEItemKeys.Buff_B_Outlaw_P_0,
+			//GDEItemKeys.Buff_B_Outlaw_P_0,
 			GDEItemKeys.Buff_B_DuelistWill,
 			GDEItemKeys.Buff_B_GuitarList_P_0, // Instrumentalist
 			GDEItemKeys.Buff_B_CamouflageCloak, // Shadow Veil
@@ -141,7 +141,8 @@ namespace MiyukiSone
 			GDEItemKeys.Buff_B_S2_Mainboss_1_RightDebuf, // Saphire Stigma
 			GDEItemKeys.Buff_B_Gunner_1_T, // Weak Spot
 			GDEItemKeys.Buff_B_Gunman_3_T, // Blinded
-			GDEItemKeys.Buff_B_DeepWound, // Deep Wound
+			GDEItemKeys.Buff_B_Pierrot_Axe_0_T, // Broken
+			GDEItemKeys.Buff_B_LBossFirst_DotDebuff, // Deep Cut
 			GDEItemKeys.Buff_B_Animatronics_1_T, // Deep Bleeding
 		};
 
@@ -245,7 +246,7 @@ namespace MiyukiSone
 			BattleChar skillMaster = BattleSystem.instance.AllyTeam.LucyAlly;
 			if (skillKey == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard || skillKey == GDEItemKeys.Skill_S_BombClown_B_0)
 			{
-				skillMaster = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly");
+				skillMaster = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
 
 				if (skillKey == GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard)
 				{
@@ -261,7 +262,7 @@ namespace MiyukiSone
 		{
 			string exKey = YanderePawExKeys.Random("MiyukiRandomExKey");
 			if (string.IsNullOrEmpty(exKey) || BattleSystem.instance.AllyTeam.Skills.Count == 0) return;
-			var skill = BattleSystem.instance.AllyTeam.Skills.Where(s => s != null && s.ExtendedFind_DataName(exKey) == null).ToList().Random("MiyukiRandomEx").Let(s => ApplyExtended(s, exKey));
+			var skill = BattleSystem.instance.AllyTeam.Skills.Where(s => s != null && s.ExtendedFind_DataName(exKey) == null).ToList().RandomElement().Let(s => ApplyExtended(s, exKey));
 			//if (skill != null) ApplyExtended(skill, exKey);
 			//BattleSystem.instance.AllyTeam.Skills.Where(s => s.ExtendedFind_DataName(exKey) == null && s != null).Select(s => { ApplyExtended(s, exKey); return s; }).ToList();
 		}
@@ -297,17 +298,17 @@ namespace MiyukiSone
 
 		public static void ApplyBuffEnemy()
 		{
-			string buffKey = YanderePawBuffKeysEnemies.Random("RandomEnemyBuff");
+			string buffKey = YanderePawBuffKeysEnemies.RandomElement();
 			if (string.IsNullOrEmpty(buffKey) || BattleSystem.instance.EnemyTeam.AliveChars.Count == 0) return;
-			var enemy = BattleSystem.instance.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().Random("RandomEnemy").Let(e => e.AddBuff(buffKey));
+			var enemy = BattleSystem.instance.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().RandomElement()?.Let(e => e.AddBuff(buffKey));
 			if (enemy.BuffReturn(buffKey, false) is Buffs.EnemyExtraAction b && b != null) b.Init();
 		}
 
 		private static void ApplyBuffAlly()
 		{
-			string buffKey = YanderePawDebuffKeysAllies.Random("RandomAllyDebuff");
+			string buffKey = YanderePawDebuffKeysAllies.RandomElement();
 			if (string.IsNullOrEmpty(buffKey) || BattleSystem.instance.AllyTeam.AliveChars.Count == 0) return;
-			BattleSystem.instance.AllyTeam.AliveChars.Where(e => e.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().Random("RandomAlly")?.AddBuff(buffKey);
+			BattleSystem.instance.AllyTeam.AliveChars.Where(e => e.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement()?.AddBuff(buffKey);
 		}
 
 		private static void ChangeAllyFixedAbility()

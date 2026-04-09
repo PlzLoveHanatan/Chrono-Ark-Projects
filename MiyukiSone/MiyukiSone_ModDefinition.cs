@@ -36,13 +36,14 @@ namespace MiyukiSone
 
 				if (MiyukiDecides && rewardList.Count > 0)
 				{
-					var item = rewardList.RandomElement();
+					var item = rewardList.ToList().Where(i => i.itemkey != GDEItemKeys.Item_Misc_Soul).RandomElement();
 					if (item != null && !IsKuudere)
 					{
 						if (IsYandere) rewardList.Remove(item);
 						else if (IsDere) rewardList.Add(item);
 						if (MiyukiInParty) EventsData.MiyukiTextEvent();
-						Debug.Log($"Random item is {item.itemkey} the amount is {item.StackCount}");
+						string text = IsDere ? "added" : "removed";
+						Debug.Log($"Random item is {item.itemkey} the amount is {item.StackCount}, the item was {text}.");
 					}
 				}
 			}

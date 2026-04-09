@@ -17,7 +17,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 
 namespace MiyukiSone
 {
-	public static class MiyukiSkillExtension
+	public static class MiyukiExtension
 	{
 		private static readonly List<string> ExceptSkillKeys = new List<string>()
 		{
@@ -49,8 +49,7 @@ namespace MiyukiSone
 					string quotes = LocalizationManager.CurrentLanguage == "English" ? "'" : "";
 					keyWord.Desc = ModLocalization.RealityWarpingDesc.Replace("&a", quotes + skillName + quotes);
 				}
-
-				if (BattleSystem.instance != null) RefreshMiyukiCharacterDraw();
+				RefreshMiyukiCharacterDraw();
 			}
 			else if (!miyukiMaster && !isInCollection)
 			{
@@ -82,6 +81,36 @@ namespace MiyukiSone
 				Debug.LogError($"[Miyuki] Failed to create preview for {skillKey}: {e.Message}");
 				return null;
 			}
+		}
+
+		public static void CheckMiyukiDraw(bool createCharDraw = false, bool changeIcon = false)
+		{
+			MiyukiPassive.CreateCharacterDraw = createCharDraw;
+			MiyukiBuff?.Init();
+			if (changeIcon) MiyukiBuff?.ChangeIcon();
+		}
+
+		public static void RefreshMiyukiCharacterDraw()
+		{
+			if (BattleSystem.instance == null || MiyukiBchar == null || MiyukiChar == null) return;
+
+			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck).Where(s => s.Master == MiyukiBchar && s.MySkill.KeyID != ModItemKeys.Skill_S_Miyuki_GlitchingPhone)?.Select(s => s.MySkill.KeyID).ToList();
+			var shouldHaveDraws = miyukiSkills.Where(MiyukiPassive.CharacterDrawList.ContainsKey).Select(s => MiyukiPassive.CharacterDrawList[s]).Where(s => s != "???").Distinct().ToList();
+			MiyukiPassive.AvaliableCharacterDraw.RemoveAll(draw => !shouldHaveDraws.Contains(draw));
+			shouldHaveDraws.ForEach(s => { if (!MiyukiPassive.AvaliableCharacterDraw.Contains(s)) MiyukiPassive.AvaliableCharacterDraw.Add(s); });
+
+			Dictionary<string, string> dic = new Dictionary<string, string>()
+			{
+				{ ModItemKeys.Skill_S_Miyuki_Special_Close, GDEItemKeys.Skill_S_Mement_LucyDraw },
+				{ ModItemKeys.Skill_S_Miyuki_Special_Might, GDEItemKeys.Skill_S_Phoenix_Draw }
+			};
+
+			Skill basicSkill = MiyukiChar?.MyTeam.Skills_Basic[MiyukiBchar.MyTeam.Chars.IndexOf(MiyukiBchar)];
+			if (basicSkill != null && dic.TryGetValue(basicSkill.MySkill.KeyID, out string drawKey))
+			{
+				if (!MiyukiPassive.AvaliableCharacterDraw.Contains(drawKey)) MiyukiPassive.AvaliableCharacterDraw.Add(drawKey);
+			}
+			if (MiyukiPassive.AvaliableCharacterDraw.Count == 0) CheckMiyukiDraw(false, true);
 		}
 
 		public static int AdjacentSkillIndex(this Skill skill, string targetSkillID)

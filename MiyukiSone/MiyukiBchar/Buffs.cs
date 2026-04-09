@@ -137,7 +137,6 @@ namespace MiyukiSone
 			public override void Init()
 			{
 				BChar.Info.PlusActCount.Add(1);
-				base.Init();
 			}
 		}
 
@@ -157,7 +156,7 @@ namespace MiyukiSone
 			// Pattern Matching
 			//public GetMiyukiPassive GetMiyukiPassive => BChar.Info.Passive is GetMiyukiPassive mp ? mp : null;
 			public virtual bool RecoverySkill => false;
-			private bool usedThisTurn = false;
+			public virtual bool UsedThisTurn { get; set; } = false;
 
 			public override void Init()
 			{
@@ -174,11 +173,11 @@ namespace MiyukiSone
 			{
 				yield return new WaitForEndOfFrame();
 
-				if (RecoverySkill && !usedThisTurn)
+				if (RecoverySkill && !UsedThisTurn)
 				{
 					BChar.MyTeam.BasicSkillRefill(BChar, BChar.BattleBasicskillRefill);
 					if (BChar is BattleAlly ally && ally.MyBasicSkill?.buttonData != null) ally.MyBasicSkill.buttonData.APChange++;
-					usedThisTurn = true;
+					UsedThisTurn = true;
 				}
 				else (BChar as BattleAlly)?.MyBasicSkill.SkillInput(BChar.BattleBasicskillRefill);
 				yield break;
@@ -186,7 +185,7 @@ namespace MiyukiSone
 
 			public void Turn()
 			{
-				usedThisTurn = false;
+				UsedThisTurn = false;
 			}
 		}
 
@@ -203,8 +202,7 @@ namespace MiyukiSone
 					}
 				}
 
-				MiyukiPassive.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Mement_LucyDraw);
-				CheckMiyukiDraw(true, true);
+				MiyukiExtension.RefreshMiyukiCharacterDraw();
 			}
 
 			public override void SelfdestroyPlus()
@@ -261,19 +259,14 @@ namespace MiyukiSone
 				GetMiyukiPassive.MiyukiChoiceList.Clear();
 				GetMiyukiPassive.MiyukiChoiceList.AddRange(PhoenixChoices);
 				MiyukiPassive.AvaliableCharacterDraw.Add(GDEItemKeys.Skill_S_Phoenix_Draw);
-				CheckMiyukiDraw(true, true);
-			}
-
-			public override void SelfdestroyPlus()
-			{
-				MiyukiPassive.AvaliableCharacterDraw.Remove(GDEItemKeys.Skill_S_Phoenix_Draw);
-				base.SelfdestroyPlus();
+				MiyukiExtension.RefreshMiyukiCharacterDraw();
 			}
 		}
 
 		public class Recovery : FixedAbility
 		{
 			public override bool RecoverySkill => true;
+			public override bool UsedThisTurn { get; set; } = false;
 		}
 		#endregion
 	}

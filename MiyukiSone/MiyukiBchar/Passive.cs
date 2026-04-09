@@ -25,7 +25,7 @@ using Newtonsoft.Json.Linq;
 
 namespace MiyukiSone
 {
-	public class MiyukiPassive : Passive_Char, IP_PlayerTurn_1, IP_BattleStart_Ones, IP_DamageTake, IP_DrawNumChange, IP_Targeted, IP_MiyukiCharImgChange, IP_TurnEnd
+	public class MiyukiPassive : Passive_Char, IP_PlayerTurn_1, IP_BattleStart_Ones, IP_DamageTake, IP_DrawNumChange, IP_Targeted, IP_TurnEnd, IP_LevelUp
 	{
 		#region Data & Constructors
 		private MiyukiInputEvent chatInputField;
@@ -116,13 +116,19 @@ namespace MiyukiSone
 			OnePassive = true;
 		}
 
-		public void CharImgChange()
+		public void LevelUp()
 		{
-			MiyukiCharImg.ChangeCharacterImage();
+			if (MiyukiForces) CurrentAffection = MiyukiAffection.DereDere;
 		}
+
+		//public void CharImgChange()
+		//{
+		//	MiyukiCharImg.ChangeCharacterImage();
+		//}
 
 		public void BattleStart(BattleSystem Ins)
 		{
+			MiyukiCharImg.UpdateCharacterImage();
 			AvaliableCharacterDraw.Clear();
 			BattleSystem.instance.AllyTeam.Skills_Deck.ForEach(s =>
 			{
@@ -131,8 +137,7 @@ namespace MiyukiSone
 					if (!AvaliableCharacterDraw.Contains(drawKey)) AvaliableCharacterDraw.Add(drawKey);
 				}
 
-			});
-			MiyukiCharImg.ChangeCharacterImage();
+			});		
 			if (!IsKuudere) PawsWithDeck();
 			if (AvaliableCharacterDraw.Count > 0) BattleSystem.DelayInput(PawsWithDraw());
 		}
@@ -153,7 +158,7 @@ namespace MiyukiSone
 
 		public void TurnEnd()
 		{
-			RefreshMiyukiCharacterDraw();
+			MiyukiExtension.RefreshMiyukiCharacterDraw();
 		}
 
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
@@ -254,23 +259,7 @@ namespace MiyukiSone
 		{
 			if (!CreateCharacterDraw || AvaliableCharacterDraw.Count == 0) return;
 
-			var key = AvaliableCharacterDraw.RandomElement();
-
-			Skill skill = null;
-
-			try
-			{
-				skill = Skill.TempSkill(key, BattleSystem.instance.AllyTeam.LucyAlly , BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
-			}
-			catch (Exception e)
-			{
-				Debug.LogError($"[MiyukiDebug] FAILED TO CREATE SKILL: {key}\n{e}");
-				return;
-			}
-
-			if (skill == null) return;
-
-			//var skill = Skill.TempSkill(AvaliableCharacterDraw?.RandomElement(), BattleSystem.instance.AllyTeam.LucyAlly, BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
+			var skill = Skill.TempSkill(AvaliableCharacterDraw?.RandomElement(), BattleSystem.instance.AllyTeam.LucyAlly, BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
 			if (skill != null) BattleSystem.instance.AllyTeam.Add(skill, true);
 			skill.isExcept = true;
 			skill.NotCount = WallBreakerEquipped;

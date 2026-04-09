@@ -9,9 +9,12 @@ using System.Threading.Tasks;
 using System.Web;
 using GameDataEditor;
 using HarmonyLib;
+using I2.Loc;
 using PItem;
 using Spine;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UseItem;
 using static MiyukiSone.Affection;
 
@@ -178,7 +181,7 @@ namespace MiyukiSone
 			//	new CodeMatch(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(GDESkillData), nameof(GDESkillData.KeyID))) // to be removed
 			//).RemoveInstructionsWithOffsets(1, 2);
 
-			// Fix character skill name
+			//Fix character skill name
 			//codeMatcher.MatchStartForward(
 			//	new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Skill), nameof(Skill.MySkill))),
 			//	new CodeMatch(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(GDESkillData), nameof(GDESkillData.Name)))
@@ -225,6 +228,46 @@ namespace MiyukiSone
 				new CodeInstruction(OpCodes.Stloc_S, iLocal) // i++
 			);
 			return codeMatcher.InstructionEnumeration();
+		}
+
+		// Changing Lucy skills colour in the ResultUI
+		[HarmonyPatch(typeof(ResultUI), nameof(ResultUI.Init))]
+		public static class ResultUI_LucyEnforcePatch
+		{
+			[HarmonyPostfix]
+			public static void Postfix(ResultUI __instance)
+			{
+				var allCharInfos = __instance.GetComponentsInChildren<Result_CharInfoV2>();
+				Result_CharInfoV2 lucyCharInfo = null;
+
+				foreach (var info in allCharInfos)
+				{
+					if (info.NameText.text == ScriptLocalization.Name_Character.Lucy)
+					{
+						lucyCharInfo = info;
+						break;
+					}
+				}
+
+				if (lucyCharInfo == null) return;
+
+				foreach (var skillPrefab in lucyCharInfo.SkillAlign.GetComponentsInChildren<Result_SkillPrefab>())
+				{
+					var skill = skillPrefab.MySkill;
+					if (skill == null) continue;
+
+					if (skill.Enforce)
+					{
+						skillPrefab.SkillName.text = skill.MySkill.Name + "+";
+						skillPrefab.SkillName.color = SkillButton.EnforceColor;
+						skillPrefab.SkillName.fontSharedMaterial = __instance.EnforceMaterial;
+					}
+					else if (skill.Enforce_Weak)
+					{
+						skillPrefab.SkillName.color = SkillButton.EnforceWeakColor;
+					}
+				}
+			}
 		}
 		#endregion
 

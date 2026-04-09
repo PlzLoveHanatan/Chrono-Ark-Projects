@@ -43,22 +43,6 @@ namespace MiyukiSone
 
 		private static GameObject _currentTempGO;
 
-		public static void CheckMiyukiDraw(bool createCharDraw = false, bool changeIcon = false)
-		{
-			if (createCharDraw) MiyukiPassive.CreateCharacterDraw = createCharDraw;
-			MiyukiBuff?.Init();
-			if (changeIcon) MiyukiBuff?.ChangeIcon();
-		}
-
-		public static void RefreshMiyukiCharacterDraw()
-		{
-			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Concat(BattleSystem.instance.AllyTeam.Skills_UsedDeck).Where(s => s.Master == MiyukiBchar && s.MySkill.KeyID != ModItemKeys.Skill_S_Miyuki_GlitchingPhone)?.Select(s => s.MySkill.KeyID).ToList();
-			var shouldHaveDraws = miyukiSkills.Where(MiyukiPassive.CharacterDrawList.ContainsKey).Select(s => MiyukiPassive.CharacterDrawList[s]).Where(s => s != "???").Distinct().ToList();
-			MiyukiPassive.AvaliableCharacterDraw.RemoveAll(draw => !shouldHaveDraws.Contains(draw));
-			shouldHaveDraws.ForEach(s => { if (!MiyukiPassive.AvaliableCharacterDraw.Contains(s)) MiyukiPassive.AvaliableCharacterDraw.Add(s); });
-			if (MiyukiPassive.AvaliableCharacterDraw.Count == 0) CheckMiyukiDraw(false, true);
-		}
-
 		public static void PlaySound(string sound, bool isStopOldBus = false, float? volume = null)
 		{
 			if (string.IsNullOrEmpty(sound)) return;
