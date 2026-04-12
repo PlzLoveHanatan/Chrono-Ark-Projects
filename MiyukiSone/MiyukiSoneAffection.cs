@@ -49,7 +49,8 @@ namespace MiyukiSone
 				if (_currentAffection != value)
 				{
 					_currentAffection = value;
-					MiyukiData.Affection = (int)value;			
+					MiyukiData.Affection = (int)value;
+					MiyukiData.LastAffection = (int)value;
 					Debug.Log($"Miyuki Affection now {value}");
 				}
 				else
@@ -113,22 +114,27 @@ namespace MiyukiSone
 
 		public static void GetRandomAffection()
 		{
-			if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue) CurrentAffection = (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
-
-			var values = Enum.GetValues(typeof(MiyukiAffection));
-			var availableIndices = new List<int>();
-
-			for (int i = 0; i < values.Length; i++)
+			if (MiyukiSaveManager.Instance.CurrentData.LockedState.HasValue)
 			{
-				availableIndices.Add(i);
+				CurrentAffection = (MiyukiAffection)MiyukiSaveManager.Instance.CurrentData.LockedState.Value;
 			}
+			else
+			{
+				var values = Enum.GetValues(typeof(MiyukiAffection));
+				var availableIndices = new List<int>();
 
-			int lastIndex = MiyukiData.LastAffection;
-			if (lastIndex != -1 && availableIndices.Count > 1) availableIndices.Remove(lastIndex);
-			int randomIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, availableIndices.Count);
-			int selectedIndex = availableIndices[randomIndex];
-			MiyukiData.LastAffection = selectedIndex;
-			CurrentAffection = (MiyukiAffection)values.GetValue(selectedIndex);
+				for (int i = 0; i < values.Length; i++)
+				{
+					availableIndices.Add(i);
+				}
+
+				int lastIndex = MiyukiData.LastAffection;
+				if (lastIndex != -1 && availableIndices.Count > 1) availableIndices.Remove(lastIndex);
+				int randomIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, availableIndices.Count);
+				int selectedIndex = availableIndices[randomIndex];
+				CurrentAffection = (MiyukiAffection)values.GetValue(selectedIndex);
+				// LastAffection обновится в сеттере CurrentAffection
+			}
 		}
 
 		public static void CheckIp()
@@ -144,16 +150,15 @@ namespace MiyukiSone
 					}
 				}
 
-				//foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
-				//{
-				//	Passive_Char passive = battleChar.Info.Passive;
-				//	if (passive != null && passive is IP_MiyukiCharImgChange handler) handler.CharImgChange();
-				//}
+				foreach (var battleChar in BattleSystem.instance.AllyTeam.AliveChars)
+				{
+					if (battleChar.Info.Passive != null && battleChar.Info.Passive is IP_MiyukiCharImgChange handler) handler.CharImgChange();
+				}
 
 				BattleSystem.instance.AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff_Ally, false) is Buffs.AllyConstantStats b) b.Init(); });
 			}
 
-			MiyukiCharImg.UpdateCharacterImage();
+			if (FieldSystem.instance != null) MiyukiCharImg.UpdateCharacterImage();
 
 			//var buff = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.Buffs).OfType<Buffs.MiyukiBuff>().ToList();
 			//buff.ForEach(b => b.Init());

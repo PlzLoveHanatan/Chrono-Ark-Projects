@@ -38,7 +38,12 @@ namespace MiyukiSone
 				{
 					GDEItemKeys.Skill_S_S1_LittleMaid_0_Lucy,
 					GDEItemKeys.Skill_S_Transcendence_Main,
-					ModItemKeys.Skill_S_Miyuki_Special_Yabeley
+					ModItemKeys.Skill_S_Miyuki_Special_Yabeley,
+					GDEItemKeys.Skill_S_Witch_P_0,
+					GDEItemKeys.Skill_S_Witch_2,
+					GDEItemKeys.Skill_S_Joker_0,
+					GDEItemKeys.Skill_S_FanaticBoss_Phase1AllyCard,
+					GDEItemKeys.Skill_S_BombClown_B_0,
 				};
 
 				BattleSystem.instance.AllyTeam.Skills_Deck.RemoveAll(s => s.MySkill.User == "LucyCurse" || cursedKeys.Contains(s.MySkill.KeyID));

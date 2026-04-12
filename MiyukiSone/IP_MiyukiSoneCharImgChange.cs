@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace MiyukiSone
 {
-	// Old Interface
 	public interface IP_MiyukiCharImgChange
 	{
 		void CharImgChange();

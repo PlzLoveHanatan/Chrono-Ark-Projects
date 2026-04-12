@@ -268,6 +268,23 @@ namespace MiyukiSone
 			}
 		}
 
+		[HarmonyPatch(typeof(B_BloodyMist_ShareDamage))]
+		[HarmonyPatch(nameof(B_BloodyMist_ShareDamage.BuffOneAwake))]
+		public static class BloodyMist_ShareDamage_Patch
+		{
+			[HarmonyPrefix]
+			public static bool Prefix()
+			{
+				string[] except = new string[] { GDEItemKeys.Character_Phoenix, ModItemKeys.Character_Miyuki };
+				if (MiyukiInParty)
+				{
+					BattleSystem.instance.AllyTeam.AliveChars.Where(a => !except.Contains(a.Info.KeyData)).ToList().ForEach(a => a.AddBuff(BattleSystem.instance.AllyTeam.LucyAlly, GDEItemKeys.Buff_B_BloodyMist_ShareDamage_Ally));
+					return false;
+				}
+				return true;
+			}
+		}
+
 		[HarmonyPatch(typeof(SkillButton), "Click")]
 		public static class SkillButton_Click_Patch
 		{
@@ -289,7 +306,7 @@ namespace MiyukiSone
 						}
 					}
 				}
-				else if (skillKey == ModItemKeys.Skill_S_Miyuki_Rare_FinalView && MiyukiData.FinalViewCharge >= 2)
+				else if (skillKey == ModItemKeys.Skill_S_Miyuki_Rare_FinalView && MiyukiData.FinalViewCharge >= 1)
 				{
 					//List<Skill> list = PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.GetBattleChar).Where(b => b != null)
 					//	.Select(b => Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Rare_FinalView_0, b, PlayData.TempBattleTeam)).ToList();

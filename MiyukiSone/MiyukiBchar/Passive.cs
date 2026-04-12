@@ -121,10 +121,10 @@ namespace MiyukiSone
 			if (MiyukiForces) CurrentAffection = MiyukiAffection.DereDere;
 		}
 
-		//public void CharImgChange()
-		//{
-		//	MiyukiCharImg.ChangeCharacterImage();
-		//}
+		public void CharImgChange()
+		{
+			MiyukiCharImg.UpdateCharacterImage();
+		}
 
 		public void BattleStart(BattleSystem Ins)
 		{
@@ -163,10 +163,10 @@ namespace MiyukiSone
 
 		public void DamageTake(BattleChar User, int Dmg, bool Cri, ref bool resist, bool NODEF = false, bool NOEFFECT = false, BattleChar Target = null)
 		{
-			if (BChar.HP < 0 && BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != BChar).Count() > 0)
+			if (BChar.HP <= 0 && BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != BChar).Count() > 0)
 			{
-				var painSharing = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a == BattleSystem.instance.AllyTeam.LucyAlly).SelectMany(b => b.Buffs).FirstOrDefault(b => b.BuffData.Key == GDEItemKeys.Buff_B_BloodyMist_ShareDamage || b.BuffData.Key == GDEItemKeys.Buff_B_ProgramMaster_LucyMain);
-				if (painSharing != null) return;
+				//var painSharing = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a == BattleSystem.instance.AllyTeam.LucyAlly).SelectMany(b => b.Buffs).FirstOrDefault(b => b.BuffData.Key == GDEItemKeys.Buff_B_BloodyMist_ShareDamage || b.BuffData.Key == GDEItemKeys.Buff_B_ProgramMaster_LucyMain);
+				//if (painSharing != null) return;
 				resist = true;
 				MiyukiTextEvent(MiyukiAffection.Kuudere);
 			}
@@ -174,7 +174,7 @@ namespace MiyukiSone
 
 		public void Targeted(Skill SkillD, List<BattleChar> Targets)
 		{
-			if (!SkillD.Master.Info.Ally || BChar.HP >= BChar.GetStat.maxhp / 2 && MiyukiDecides) return;
+			if ((!SkillD.Master.Info.Ally && BChar.HP <= 0 || BChar.HP >= BChar.GetStat.maxhp / 2) && MiyukiDecides) return;
 
 			BattleChar target = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
 

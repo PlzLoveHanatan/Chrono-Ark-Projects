@@ -144,7 +144,7 @@ namespace MiyukiSone
 		private static void ChangeEquipSlots()
 		{
 			if (IsDere) PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).RandomElement()?.Equip?.Add(null);
-			else PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).RandomElement()?.Equip?.Remove(null);		
+			else PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).RandomElement()?.Equip?.Remove(null);
 		}
 
 		private static void ChangeEnemiesActions()
@@ -283,21 +283,23 @@ namespace MiyukiSone
 
 		public static void RestartStage(int stageNum = 0)
 		{
-			if (BattleSystem.instance != null) BattleSystem.instance.StartCoroutine(RestartStageCo(stageNum));
-			else FieldSystem.instance?.StartCoroutine(RestartStageCo(stageNum));
+			Debug.Log($"[Miyuki] RestartStage called with stageNum={stageNum}, BattleSystem.instance={BattleSystem.instance != null}");
+
+			if (BattleSystem.instance != null)
+				BattleSystem.instance.StartCoroutine(RestartStageCo(stageNum));
+			else
+				FieldSystem.instance?.StartCoroutine(RestartStageCo(stageNum));
 		}
 
-		private static IEnumerator RestartStageCo(int stageNum = 0)
+		private static IEnumerator RestartStageCo(int? stageNum = null)
 		{
 			MiyukiTextEvent();
-			BattleSystem.instance?.BattleEnd(false, false);
-			FieldSystem.instance?.ClearMap();
+			SaveManager.savemanager?.Save();
 
-			string stageKey;
-
-			if (stageNum != 0)
+			if (BattleSystem.instance != null && PlayData.TSavedata.NowStageMapKey != null)
 			{
-				switch (stageNum)
+				string stageKey;
+				switch (stageNum ?? PlayData.TSavedata.StageNum)
 				{
 					case 1: stageKey = GDEItemKeys.Stage_Stage1_1; break;
 					case 2: stageKey = GDEItemKeys.Stage_Stage1_2; break;
@@ -307,62 +309,64 @@ namespace MiyukiSone
 					case 6: stageKey = GDEItemKeys.Stage_Stage4; break;
 					default: stageKey = GDEItemKeys.Stage_Stage1_1; break;
 				}
-				PlayData.TSavedata.NowStageMapKey = stageKey;			
-				SaveManager.savemanager?.Save();
-				yield return new WaitForSeconds(0.5f);
-				FieldSystem.instance.StageStart(stageKey);
+
+				Debug.Log($"[Miyuki] Battle restart, stageKey={stageKey}");
+
+				BattleSystem.instance?.BattleEnd(false, false);
+				FieldSystem.instance?.ClearMap();
+				FieldSystem.instance?.StageStart(stageKey);
+				yield return new WaitForSeconds(0.3f);
 			}
-			else
+			else if (FieldSystem.instance != null)
 			{
-				SaveManager.savemanager?.Save();
-				yield return new WaitForSeconds(0.5f);
+				Debug.Log($"[Miyuki] Field restart");
+
+				yield return new WaitForSeconds(0.3f);
+
+				if (FieldSystem.instance == null) yield break;
+
 				string currentKey = PlayData.TSavedata.NowStageMapKey;
 
 				if (string.IsNullOrEmpty(currentKey))
 				{
 					FieldSystem.instance.StageStart("");
+					yield break;
 				}
-				if (currentKey == "MasterMap")
+
+				switch (currentKey)
 				{
-					FieldSystem.instance.GoMasterSDMap();
-				}
-				else if (currentKey == "MasterMap2")
-				{
-					FieldSystem.instance.GoMasterSDMap2();
-				}
-				else if (currentKey == "MasterMap3")
-				{
-					FieldSystem.instance.GoMasterSDMap3();
-				}
-				else if (currentKey == "MasterMapEnding")
-				{
-					FieldSystem.instance.GoMasterFinal3DMap_3();
-				}
-				else if (currentKey == "MasterMap_LastBattleAfter1")
-				{
-					FieldSystem.instance.GoMasterFinal3DMap_LastBattleAfter(1);
-				}
-				else if (currentKey == "MasterMap_PMFirstSee")
-				{
-					FieldSystem.instance.StartCoroutine(FieldSystem.instance.GoMasterFinal3DMap_1());
-				}
-				else if (currentKey == "ClockTower")
-				{
-					FieldSystem.instance.StartCoroutine(FieldSystem.instance.GoClockTower());
-				}
-				else if (currentKey == "MonoMap1")
-				{
-					FieldSystem.instance.GoMonoMap1();
-				}
-				else if (PlayData.GetIsCampKey(currentKey))
-				{
-					FieldSystem.instance.CampfireMap();
-				}
-				else
-				{
-					FieldSystem.instance.StageStart(currentKey);
+					case "MasterMap":
+						FieldSystem.instance.GoMasterSDMap();
+						break;
+					case "MasterMap2":
+						FieldSystem.instance.GoMasterSDMap2();
+						break;
+					case "MasterMap3":
+						FieldSystem.instance.GoMasterSDMap3();
+						break;
+					case "MasterMapEnding":
+						FieldSystem.instance.GoMasterFinal3DMap_3();
+						break;
+					case "MasterMap_LastBattleAfter1":
+						FieldSystem.instance.GoMasterFinal3DMap_LastBattleAfter(1);
+						break;
+					case "MasterMap_PMFirstSee":
+						FieldSystem.instance.StartCoroutine(FieldSystem.instance.GoMasterFinal3DMap_1());
+						break;
+					case "ClockTower":
+						FieldSystem.instance.StartCoroutine(FieldSystem.instance.GoClockTower());
+						break;
+					case "MonoMap1":
+						FieldSystem.instance.GoMonoMap1();
+						break;
+					default:
+						if (PlayData.GetIsCampKey(currentKey)) FieldSystem.instance.CampfireMap();
+						else FieldSystem.instance.StageStart(currentKey);
+						break;
 				}
 			}
+			SaveManager.savemanager?.Save();
+			Debug.Log($"[Miyuki] RestartStageCo END");
 		}
 
 		private static void RecievingGift()

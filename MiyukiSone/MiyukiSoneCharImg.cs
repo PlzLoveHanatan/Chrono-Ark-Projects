@@ -16,6 +16,8 @@ namespace MiyukiSone
 	{
 		public static void UpdateCharacterImage()
 		{
+			if (MiyukiData.LastAffection == (int)CurrentAffection) return;
+
 			string affection = CurrentAffection.ToString();
 			string basePath = $"Assets/Images/MiyukiAffection/{affection}/";
 

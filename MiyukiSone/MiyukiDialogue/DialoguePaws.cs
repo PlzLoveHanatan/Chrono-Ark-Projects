@@ -275,12 +275,21 @@ namespace MiyukiSone
 		// Shuffle draw pile into discard pile and apply negative Ex
 		private static IEnumerator ShuffleCo()
 		{
-			while (BattleSystem.instance.AllyTeam.Skills_Deck.Count > 0)
+			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills_Deck.Where(s => s.Master.Info.KeyData == ModItemKeys.Character_Miyuki).ToList();
+
+			foreach (var skill in miyukiSkills)
 			{
-				Skill skill = BattleSystem.instance.AllyTeam.Skills_Deck[0];
 				skill.ExtendedAdd_Battle(NegExtendedKeys.RandomElement());
 				yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
 			}
+
+			//while (BattleSystem.instance.AllyTeam.Skills_Deck.Count > 0)
+			//{
+			//	Skill skill = BattleSystem.instance.AllyTeam.Skills_Deck[0];
+			//	if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) continue;
+			//	skill.ExtendedAdd_Battle(NegExtendedKeys.RandomElement());
+			//	yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
+			//}
 
 			BattleSystem.instance.AllyTeam.ShuffleDeck();
 			BattleSystem.instance.ActWindow.Draw(BattleSystem.instance.AllyTeam, false);
