@@ -8,6 +8,7 @@ using HarmonyLib;
 using Debug = UnityEngine.Debug;
 using ChronoArkMod.ModData;
 using NLog.Config;
+using System.Windows.Markup;
 
 namespace EnDub
 {
@@ -22,17 +23,16 @@ namespace EnDub
 
 		public override void Dispose()
 		{
-			if (harmony != null)
-			{
-				harmony.UnpatchSelf();
-			}
+			harmony?.UnpatchSelf();
 		}
 
 		public override void Initialize()
 		{
 			try
 			{
-				Data.LoadAllDialogues();
+				EnDubDialogueData.LoadDialogue();
+				var console = EnDubConsole.Instance;
+				console.ShowConsole();
 				harmony.PatchAll();
 			}
 			catch (System.Exception e)
@@ -48,51 +48,8 @@ namespace EnDub
 			[HarmonyPrefix]
 			public static bool Prefix(PrintText __instance, string inText)
 			{
-				var partyCharacters = GetPartyCharacters();
-
-				if (partyCharacters.Count == 0) return true;
-
-				if (Data.TextToAudio.TryGetValue(inText, out var audioInfo))
-				{
-					if (partyCharacters.TryGetValue(audioInfo.character, out string activeSkin))
-					{
-						string targetSkin = (audioInfo.skin == activeSkin) ? activeSkin : (audioInfo.skin == "Normal") ? "Normal" : null;
-
-						if (targetSkin != null)
-						{
-							Utils.PlayCharacterAudio(audioInfo.character, targetSkin, audioInfo.audioFile);
-						}
-					}
-				}
-
+				EnDubDialogueData.GetLineByText(inText)?.Let(line => EnDubUtils.PlayCharacterAudio(line.character, line.skin, line.AudioFile));
 				return true;
-			}
-
-			private static Dictionary<string, string> GetPartyCharacters()
-			{
-				var partyCharacters = new Dictionary<string, string>();
-
-				foreach (var character in PlayData.TSavedata.Party)
-				{
-					string charId = character.KeyData;
-					string characterName = Data.GetCharacterName(charId);
-
-					if (!string.IsNullOrEmpty(characterName))
-					{
-						string skinName = Utils.GetCharacterSkin(charId);
-
-						if (Data.HasSkin(characterName, skinName))
-						{
-							partyCharacters[characterName] = skinName;
-						}
-						else
-						{
-							partyCharacters[characterName] = "Normal";
-						}
-					}
-				}
-
-				return partyCharacters;
 			}
 		}
 
@@ -104,13 +61,9 @@ namespace EnDub
 			{
 				var skill = __instance.SelectedSkill;
 				if (skill?.Master?.Info?.KeyData == null) return;
-
-				string charId = skill.Master.Info.KeyData;
-				string charName = Data.GetCharacterName(charId);
-				if (string.IsNullOrEmpty(charName)) return;
-
+				string charName = EnDubDialogueData.GetCharacterName(skill.Master.Info.KeyData);
 				string path = $"Assets/{charName}/Skills/{skill.MySkill.KeyID}.wav";
-				Utils.PlaySoundFromAsset(path);
+				EnDubUtils.PlayAudio(path, charName);
 			}
 		}
 	}
