@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+using Newtonsoft.Json;
+using GameDataEditor;
+using ChronoArkMod;
+
+namespace EnDub
+{
+	[Serializable]
+	public class DialogueLine
+	{
+		public string key;
+		public string character;
+		public string skin;
+		public string Korean;
+		public string English;
+		public string Japanese;
+		public string Chinese;
+		public string Chinese_TW;
+		public string AudioFile;
+	}
+
+	public static class EnDubDialogueData
+	{
+		private static List<DialogueLine> allLines;
+		private static Dictionary<string, DialogueLine> textIndex;
+
+		public static void LoadDialogue()
+		{
+			string jsonPath = Path.Combine(EnDubUtils.ThisMod.DirectoryName, "Assets", "Dialogues.json");
+
+			if (File.Exists(jsonPath))
+			{
+				try
+				{
+					string jsonContent = File.ReadAllText(jsonPath);
+					allLines = JsonConvert.DeserializeObject<List<DialogueLine>>(jsonContent);
+					textIndex = new Dictionary<string, DialogueLine>();
+					allLines.ForEach(line => AddTextIndex(line));
+					Debug.Log($"Loaded {allLines.Count} dialogue lines");
+				}
+				catch (Exception ex)
+				{
+					Debug.LogError($"Error loading dialogues: {ex.Message}");
+				}
+			}
+			else
+			{
+				Debug.LogError($"Json file is not found in the {jsonPath} path");
+			}
+		}
+
+		private static void AddTextIndex(DialogueLine line)
+		{
+			string[] texts = { line.English, line.Korean, line.Japanese, line.Chinese, line.Chinese_TW };
+
+			foreach (string text in texts)
+			{
+				if (!string.IsNullOrEmpty(text) && !textIndex.ContainsKey(text))
+				{
+					textIndex.Add(text, line);
+				}
+			}
+		}
+
+		public static DialogueLine GetLineByText(string text)
+		{
+			return textIndex != null && textIndex.TryGetValue(text, out var line) ? line : null;
+		}
+
+		public static List<DialogueLine> GetLineByCharacter(string character)
+		{
+			return allLines?.Where(l => l.character == character).ToList() ?? new List<DialogueLine>();
+		}
+
+		public static List<DialogueLine> GetLineByCharacterAndSkin(string character, string skin)
+		{
+			return allLines?.Where(l => l.character == character && l.skin == skin).ToList() ?? new List<DialogueLine>();
+		}
+
+		public static string GetCharacterName(string gameKey)
+		{
+			var dict = new Dictionary<string, string>()
+			{
+				{ GDEItemKeys.Character_ShadowPriest, "Charon" },
+				{ GDEItemKeys.Character_Queen, "Huz" },
+				{ GDEItemKeys.Character_Lian, "Lian" },
+				{ GDEItemKeys.Character_SilverStein, "Silverstein" },
+				{ GDEItemKeys.Character_Sizz, "Sizz" },
+				{ GDEItemKeys.Character_Azar, "Azar" },
+				{ GDEItemKeys.Character_Control, "Narhan" },
+			};
+			return dict.TryGetValue(gameKey, out string name) ? name : "";
+		}
+	}
+}
