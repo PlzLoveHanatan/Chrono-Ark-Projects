@@ -20,6 +20,7 @@ namespace EnDub
 			public float MainAudioVolume;
 			public float Azar;
 			public float Charon;
+			public float Johan;
 			public float Huz;
 			public float Lian;
 			public float Narhan;
@@ -55,6 +56,7 @@ namespace EnDub
 		{
 			{ "Azar", data => data.Azar },
 			{ "Charon", data => data.Charon },
+			{ "Johan", data => data.Johan},
 			{ "Huz", data => data.Huz },
 			{ "Lian", data => data.Lian },
 			{ "Narhan", data => data.Narhan },
@@ -89,19 +91,19 @@ namespace EnDub
 			}
 		}
 
-		public float? GetCharacterVolume(string character)
+		public float GetCharacterVolume(string character)
 		{
 			if (CharacterVolumeMap.TryGetValue(character, out var getter))
 			{
 				return getter(_currentData);
 			}
-			return null;
+			return 0;
 		}
 
 		public float FinalVolume(string character)
 		{
-			float? charVolume = GetCharacterVolume(character);
-			return (charVolume.HasValue && charVolume.Value > 0) ? charVolume.Value : CurrentData.MainAudioVolume;
+			float charVolume = GetCharacterVolume(character);
+			return charVolume > 0 ? charVolume : CurrentData.MainAudioVolume;
 		}
 	}
 }

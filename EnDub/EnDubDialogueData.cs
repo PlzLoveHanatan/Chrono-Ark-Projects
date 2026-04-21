@@ -12,9 +12,9 @@ namespace EnDub
 	[Serializable]
 	public class DialogueLine
 	{
-		public string key;
-		public string character;
-		public string skin;
+		public string Key;
+		public string Character;
+		public string Skin;
 		public string Korean;
 		public string English;
 		public string Japanese;
@@ -73,25 +73,26 @@ namespace EnDub
 
 		public static List<DialogueLine> GetLineByCharacter(string character)
 		{
-			return allLines?.Where(l => l.character == character).ToList() ?? new List<DialogueLine>();
+			return allLines?.Where(l => l.Character == character).ToList() ?? new List<DialogueLine>();
 		}
 
 		public static List<DialogueLine> GetLineByCharacterAndSkin(string character, string skin)
 		{
-			return allLines?.Where(l => l.character == character && l.skin == skin).ToList() ?? new List<DialogueLine>();
+			return allLines?.Where(l => l.Character == character && l.Skin == skin).ToList() ?? new List<DialogueLine>();
 		}
 
 		public static string GetCharacterName(string gameKey)
 		{
 			var dict = new Dictionary<string, string>()
 			{
-				{ GDEItemKeys.Character_ShadowPriest, "Charon" },
-				{ GDEItemKeys.Character_Queen, "Huz" },
-				{ GDEItemKeys.Character_Lian, "Lian" },
-				{ GDEItemKeys.Character_SilverStein, "Silverstein" },
-				{ GDEItemKeys.Character_Sizz, "Sizz" },
 				{ GDEItemKeys.Character_Azar, "Azar" },
 				{ GDEItemKeys.Character_Control, "Narhan" },
+				{ GDEItemKeys.Character_Lian, "Lian" },
+				{ GDEItemKeys.Character_Mement, "Johan" },
+				{ GDEItemKeys.Character_Queen, "Huz" },
+				{ GDEItemKeys.Character_ShadowPriest, "Charon" },
+				{ GDEItemKeys.Character_SilverStein, "Silverstein" },
+				{ GDEItemKeys.Character_Sizz, "Sizz" },
 			};
 			return dict.TryGetValue(gameKey, out string name) ? name : "";
 		}

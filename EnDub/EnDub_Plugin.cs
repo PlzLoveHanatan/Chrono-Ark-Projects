@@ -15,7 +15,7 @@ namespace EnDub
 	public class EnDub_Plugin : ChronoArkPlugin
 	{
 		public const string modname = "EnDub";
-		public const string version = "1.0";
+		public const string version = "1.08";
 		public const string author = "Midana";
 
 		public static ModInfo ThisMod => ModManager.getModInfo(modname);
@@ -48,7 +48,7 @@ namespace EnDub
 			[HarmonyPrefix]
 			public static bool Prefix(PrintText __instance, string inText)
 			{
-				EnDubDialogueData.GetLineByText(inText)?.Let(line => EnDubUtils.PlayCharacterAudio(line.character, line.skin, line.AudioFile));
+				EnDubDialogueData.GetLineByText(inText)?.Let(line => EnDubUtils.PlayCharacterAudio(line.Character, line.Skin, line.AudioFile));
 				return true;
 			}
 		}
@@ -62,7 +62,7 @@ namespace EnDub
 				var skill = __instance.SelectedSkill;
 				if (skill?.Master?.Info?.KeyData == null) return;
 				string charName = EnDubDialogueData.GetCharacterName(skill.Master.Info.KeyData);
-				string path = $"Assets/{charName}/Skills/{skill.MySkill.KeyID}.wav";
+				string path = $"Assets/{charName}/Skills/{skill.MySkill.KeyID}";
 				EnDubUtils.PlayAudio(path, charName);
 			}
 		}

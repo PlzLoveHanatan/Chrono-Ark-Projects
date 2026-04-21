@@ -48,13 +48,15 @@ namespace EnDub
 			if (_instance != null && _instance != this)
 			{
 				Destroy(gameObject);
-				return;
 			}
-			_instance = this;
-			DontDestroyOnLoad(gameObject);
-			_backgroundTexture = EnDubUtils.GetSpriteFromMod("watermark.png")?.texture;
-			InitCommands();
-			ShowHelp();
+			else
+			{
+				_instance = this;
+				DontDestroyOnLoad(gameObject);
+				_backgroundTexture = EnDubUtils.GetSpriteFromMod("watermark.png")?.texture;
+				InitCommands();
+				ShowHelp();
+			}			
 		}
 
 		void Update()
@@ -234,12 +236,14 @@ namespace EnDub
 				}
 			};
 
+			AddCharacter("azar", v => saveData.Azar = v);
 			AddCharacter("charon", v => saveData.Charon = v);
 			AddCharacter("huz", v => saveData.Huz = v);
+			AddCharacter("johan", v => saveData.Johan = v);
 			AddCharacter("lian", v => saveData.Lian = v);
-			AddCharacter("silverstein", v => saveData.Silverstein = v);
-			AddCharacter("azar", v => saveData.Azar = v);
 			AddCharacter("narhan", v => saveData.Narhan = v);
+			AddCharacter("silverstein", v => saveData.Silverstein = v);
+			AddCharacter("sizz", v => saveData.Sizz = v);
 
 			_commands["clear"] = (args) =>
 			{
@@ -283,21 +287,22 @@ namespace EnDub
 			Log("======================================");
 			Log("");
 
-			Log("MAIN VOLUME");
+			Log("MAIN AUDIO VOLUME");
 			Log("  main [0-6]            - Set global voice volume (float, e.g. 2.5)");
-			Log("                         Used as fallback for characters");
+			Log("                         Used as fallback for all characters");
 			Log("");
 
-			Log("CHARACTER VOLUME");
+			Log("INDIVIDUAL CHARACTER VOLUME");
+			Log("  azar [0-6]            - Azar voice volume");
 			Log("  charon [0-6]          - Charon voice volume");
 			Log("  huz [0-6]             - Huz voice volume");
+			Log("  johan [0-6]           - Johan voice volume");
 			Log("  lian [0-6]            - Lian voice volume");
-			Log("  silverstein [0-6]     - Silverstein voice volume)");
-			Log("  azar [0-6]            - Azar voice volume");
 			Log("  narhan [0-6]          - Narhan voice volume");
+			Log("  silverstein [0-6]     - Silverstein voice volume");
 			Log("");
-			Log("  NOTE: If character volume = 0, MAIN volume is used instead");
-			Log("  NOTE: You can use flaot values (e.g. 2.5, 3.7, 4.2)");
+			Log("  NOTE: If character volume = 0, Main Audio volume will be used instead");
+			Log("  NOTE: You can use float values (e.g. 2.5, 3.7, 4.2)");
 			Log("");
 
 			Log("SYSTEM");
