@@ -132,9 +132,7 @@ namespace MiyukiSone
 
 		public static IEnumerator CreateEternalKiss(Skill skill1, Skill skill2, BattleChar owner)
 		{
-			yield return null;
 			yield return new WaitForFixedUpdate();
-			yield return new WaitForSecondsRealtime(0.2f);
 
 			if (owner.Info.KeyData != ModItemKeys.Character_Miyuki) yield break;
 			if (skill1.MyButton != null && !skill1.MyButton.AlreadyWasted) skill1.Except();

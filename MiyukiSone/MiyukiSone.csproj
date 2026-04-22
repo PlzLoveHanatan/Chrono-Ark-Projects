@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>MiyukiSone04122026112010</AssemblyName>
+    <AssemblyName>MiyukiSone04222026175908</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -403,18 +403,22 @@
     <Reference Include="MonoMod.Utils">
       <HintPath>..\..\MiyukiSone\Assemblies\MonoMod.Utils.dll</HintPath>
     </Reference>
-<!-- Extra Reference End-->
+    <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                            <!-- Compile ItemGroup Start-->
+  <!-- Compile ItemGroup Start-->
   <ItemGroup>
     <Compile Include="IP_MiyukiSoneCharImgChange.cs" />
     <Compile Include="IP_MiyukiSoneLocalizable.cs" />
     <Compile Include="IP_MiyukiSoneSkillImgChange.cs" />
     <Compile Include="IP_MiyukiSoneSkillPreviewChange.cs" />
+    <Compile Include="MiyukiSoneGiftNode.cs" />
     <Compile Include="MiyukiSoneAffection.cs" />
     <Compile Include="MiyukiSoneCharImg.cs" />
     <Compile Include="MiyukiSoneExtension.cs" />
+    <Compile Include="MiyukiSoneGiftDialogueDef.cs" />
+    <Compile Include="MiyukiSoneGifts.cs" />
     <Compile Include="MiyukiSoneJsonReader.cs" />
+    <Compile Include="MiyukiSoneModSettingss.cs" />
     <Compile Include="MiyukiSonePatches.cs" />
     <Compile Include="MiyukiSonePatchesHelpers.cs" />
     <Compile Include="MiyukiSonePatchesSkills.cs" />
@@ -442,7 +446,6 @@
     <Compile Include="MiyukiDialogue\DialogueWindow.cs" />
     <Compile Include="MiyukiEvent\Events.cs" />
     <Compile Include="MiyukiEvent\EventsData.cs" />
-    <Compile Include="MiyukiEvent\MiyukiInputEvent.cs" />
     <Compile Include="MiyukiUtils\Utils.cs" />
     <Compile Include="MiyukiUtils\UtilsScripts.cs" />
     <Compile Include="MiyukiUtils\UtilsUI.cs" />

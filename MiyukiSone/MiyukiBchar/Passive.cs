@@ -22,13 +22,13 @@ using System.ServiceModel.Channels;
 using static MiyukiSone.Buffs;
 using Spine;
 using Newtonsoft.Json.Linq;
+using TMPro;
 
 namespace MiyukiSone
 {
-	public class MiyukiPassive : Passive_Char, IP_PlayerTurn_1, IP_BattleStart_Ones, IP_DamageTake, IP_DrawNumChange, IP_Targeted, IP_TurnEnd, IP_LevelUp
+	public class MiyukiPassive : Passive_Char, IP_PlayerTurn_1, IP_BattleStart_Ones, IP_DamageTake, IP_DrawNumChange, IP_Targeted, IP_TurnEnd, IP_LevelUp, IP_MiyukiCharImgChange
 	{
 		#region Data & Constructors
-		private MiyukiInputEvent chatInputField;
 
 		public static bool CreateCharacterDraw = false;
 		public bool WallBreakerEquipped = false;
@@ -137,7 +137,8 @@ namespace MiyukiSone
 					if (!AvaliableCharacterDraw.Contains(drawKey)) AvaliableCharacterDraw.Add(drawKey);
 				}
 
-			});		
+			});
+
 			if (!IsKuudere) PawsWithDeck();
 			if (AvaliableCharacterDraw.Count > 0) BattleSystem.DelayInput(PawsWithDraw());
 		}
@@ -174,13 +175,13 @@ namespace MiyukiSone
 
 		public void Targeted(Skill SkillD, List<BattleChar> Targets)
 		{
-			if ((!SkillD.Master.Info.Ally && BChar.HP <= 0 || BChar.HP >= BChar.GetStat.maxhp / 2) && MiyukiDecides) return;
+			if (!SkillD.Master.Info.Ally && BChar.HP > 0 || SkillD.Master.Info.Ally && SkillD.IsDamage && BChar.HP >= BChar.GetStat.maxhp / 4) return;
 
 			BattleChar target = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
 
 			if (target == null) return;
 
-			if (edgeCaseSkills.Contains(SkillD.MySkill.KeyID) || SkillD.IsDamage)
+			if (edgeCaseSkills.Contains(SkillD.MySkill.KeyID) && BChar.HP <= BChar.GetStat.maxhp / 4 || SkillD.IsDamage)
 			{
 				Targets.Clear();
 				Targets.Add(target);
@@ -199,7 +200,7 @@ namespace MiyukiSone
 				MiyukiPaws.RandomElement()?.Invoke();
 			}
 
-			MiyukiTextEvent();
+			//MiyukiTextEvent();
 		}
 
 		private void PawsWithMana()
@@ -266,18 +267,6 @@ namespace MiyukiSone
 			skill.APChange = WallBreakerEquipped ? 0 : 1;
 			skill.AutoDelete = 1;
 			skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
-		}
-
-		private void CreateChatWindow()
-		{
-			chatInputField = MiyukiInputEvent.CreateChatInput(
-				spritePath: "MiyukiVisual/dlog_test.png",
-				parentWindow: BattleSystem.instance.ActWindow.transform,
-				windowSize: new Vector2(700, 130),
-				windowPosition: new Vector3(170, 170, 0),
-				placeholder: "",
-				inputPosition: new Vector2(0, -20),
-				inputSize: new Vector2(400, 35));
 		}
 	}
 }

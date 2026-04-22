@@ -83,12 +83,11 @@ namespace MiyukiSone
 				"Monochrome",
 				"MerryGoRound",
 				"AboutYou",
+				"Nocturne",
 			};
 
 			SetVolumeSettings();
-
-			string selectedSong = songKeys.RandomElement();
-			selectedSong?.Let(s => PlaySound(s, true));
+			songKeys.RandomElement()?.Let(s => PlaySound(s, true));
 		}
 
 		public static void StopSong(bool? isPauseBool = null)
@@ -256,19 +255,19 @@ namespace MiyukiSone
 			{
 				if (!string.IsNullOrEmpty(skillSpritePath))
 				{
-					string address = GetSpriteAddress(skillSpritePath + ".png");
+					string address = GetSpriteAddressFromAsset(skillSpritePath + ".png");
 					skill.Image_Skill = address;
 				}
 
 				if (!string.IsNullOrEmpty(buttonSpritePath))
 				{
-					string address = GetSpriteAddress(buttonSpritePath + ".png");
+					string address = GetSpriteAddressFromAsset(buttonSpritePath + ".png");
 					skill.Image_Button = address;
 				}
 
 				if (!string.IsNullOrEmpty(basicSpritePath))
 				{
-					string address = GetSpriteAddress(basicSpritePath + ".png");
+					string address = GetSpriteAddressFromAsset(basicSpritePath + ".png");
 					skill.Image_Basic = address;
 				}
 

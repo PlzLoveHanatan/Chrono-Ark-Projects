@@ -24,6 +24,7 @@ using Random = UnityEngine.Random;
 using Spine;
 using static ItemCollection;
 using static Gamepad_HoldKey;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace MiyukiSone
 {
@@ -43,22 +44,48 @@ namespace MiyukiSone
 				if (!string.IsNullOrEmpty(audioFile))
 				{
 					PlaySoundFromAsset($"Assets/Audio/Events/BattleChar/{audioFile}.ogg", true);
-					Debug.Log($"[VoiceOn] Playing: {audioFile} from text: {inText}");
+					Debug.Log($"Playing: {audioFile} from text: {inText}");
 				}
 			}
 		}
 
-		// Reset custom save file
-		[HarmonyPatch(typeof(PlayData))]
-		[HarmonyPatch(nameof(PlayData.GameEndInit))]
-		public class Patch_Reset_Save
+		// Fixing skill Mana cost in the draw/discard pile
+		// Based on Alezis patch
+		[HarmonyPatch(typeof(Skill), nameof(Skill.AP), MethodType.Getter)]
+		[HarmonyPatch(typeof(Skill), nameof(Skill.AP_OverloadViewOnly), MethodType.Getter)]
+		public class SkillManaCostFix
 		{
 			[HarmonyPostfix]
-			public static void Postfix()
+			public static void Postfix(Skill __instance, ref int __result)
 			{
-				//MiyukiSaveManager.Instance.ResetSave();
+				if (__instance.GetIsSkillinDeck)
+				{
+					__result += GetSkillAP(__instance.AllExtendeds);
+				}
+				if (__instance.GetIsSkillinUsedDeck)
+				{
+					__result += GetSkillAP(__instance.AllExtendeds, false);
+				}
 			}
 		}
+
+		public static int GetSkillAP(List<Skill_Extended> extended, bool isInDeck = true)
+		{
+			if (extended == null) return 0;
+			return extended.Sum(ex => isInDeck ? ex.PlusSkillStat.PlusMPUse.PlusMP_Deck : ex.PlusSkillStat.PlusMPUse.PlusMP_UsedDeck);
+		}
+
+		//// Reset custom save file
+		//[HarmonyPatch(typeof(PlayData))]
+		//[HarmonyPatch(nameof(PlayData.GameEndInit))]
+		//public class Patch_Reset_Save
+		//{
+		//	[HarmonyPostfix]
+		//	public static void Postfix()
+		//	{
+		//		//MiyukiSaveManager.Instance.ResetSave();
+		//	}
+		//}
 
 		// Reset custom save file
 		[HarmonyPatch(typeof(Credits))]
@@ -117,34 +144,71 @@ namespace MiyukiSone
 		{
 			[HarmonyPrefix]
 			[HarmonyPriority(Priority.First)]
-			public static void Prefix(BattleAlly __instance, Skill skill, ref List<BattleChar> Target)
+			public static bool Prefix(BattleAlly __instance, Skill skill, ref List<BattleChar> Target)
 			{
-				if (!IsYandere || skill.Master.Info.KeyData != ModItemKeys.Character_Miyuki) return;
-
-				if (RandomManager.RandomPer("MiyukiYandereRedirect", 100, 20))
+				if (IsYandere && skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki && Utils.RandomPer(20))
 				{
-					BattleChar target;
+					if (MiyukiDecides)
+					{
+						BattleChar target = null;
 
-					if (skill.IsDamage)
-					{
-						target = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
-					}
-					else if (skill.IsHeal)
-					{
-						target = BattleSystem.instance.EnemyTeam.AliveChars.RandomElement();
+						if (skill.IsDamage)
+						{
+							target = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
+						}
+						else if (skill.IsHeal)
+						{
+							target = BattleSystem.instance.EnemyTeam.AliveChars.RandomElement();
+						}
+
+						if (target != null)
+						{
+							Target.Clear();
+							Target.Add(target);
+							if (skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Rare_FinalView || skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Rare_FinalView_0) BattleSystem.DelayInput(TargetCheck(target));
+							EventsData.MiyukiTextEvent(CurrentAffection);
+							return true;
+						}
 					}
 					else
 					{
-						return;
+						EventsData.MiyukiTextEvent(CurrentAffection);
+						return false;
 					}
-
-					if (target == null) return;
-					Target.Clear();
-					Target.Add(target);
-					EventsData.MiyukiTextEvent(CurrentAffection);
 				}
+				return true;
+			}
+
+			private static IEnumerator TargetCheck(BattleChar target)
+			{
+				yield return null;
+				if (target == null) yield break;
+				if (target.Info.Ally && (target.IsDead || target.HP <= 0)) MiyukiData.FinalViewDamage++;
 			}
 		}
+
+		//[HarmonyPatch(typeof(BattleSystem), nameof(BattleSystem.SkillRandomUseIenum))]
+		//public class SkillRandomUsePatch
+		//{
+		//	[HarmonyPrefix]
+		//	public static bool Prefix(BattleChar BChar, Skill skill, bool Debuff, bool Quick, bool UseButton)
+		//	{
+		//		if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki)
+		//		{
+		//			if (skill.MySkill.Target.Key == GDEItemKeys.s_targettype_Misc)
+		//			{
+
+		//				Debug.Log($"SKill is Misc type");
+		//				return false;
+		//			}
+		//			else
+		//			{
+		//				Debug.Log($"SKill is NOT Misc type");
+		//			}
+		//		}
+		//		return true;
+		//	}
+		//}
 
 		[HarmonyPatch(typeof(BattleSystem))]
 		[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
@@ -189,7 +253,7 @@ namespace MiyukiSone
 				{
 					if (!IsCamp()) MiyukiData.FinalViewCharge++;
 					MiyukiCharImg.UpdateCharacterImage();
-					
+
 					if (!MiyukiSaveManager.Instance.CurrentData.GameRestarted && MiyukiSaveManager.Instance.CurrentData.GameUpdated)
 					{
 						MiyukiSaveManager.Instance.CurrentData.GameRestarted = true;
@@ -207,6 +271,8 @@ namespace MiyukiSone
 
 			private static void CheckSlots()
 			{
+				MiyukiCV.Instance.LoadEquipSlots(PlayData.TSavedata.Party);
+
 				if (!MiyukiData.SlotsCheck)
 				{
 					if (PlayData.TSavedata.Inventory.Count > 18)
@@ -290,7 +356,7 @@ namespace MiyukiSone
 		{
 			public static bool Prefix(SkillButton __instance)
 			{
-				if (__instance == null || !__instance.CharStatView || !MiyukiInParty || MiyukiData.GameUpdated) return true;
+				if (__instance == null || !__instance.CharStatView || !MiyukiInParty || MiyukiData.GameUpdated || BattleSystem.instance != null) return true;
 
 				string skillKey = __instance?.Myskill?.MySkill?.KeyID;
 
@@ -314,9 +380,9 @@ namespace MiyukiSone
 					var ally = PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki && !a.Incapacitated).Select(a => a.GetBattleChar).RandomElement();
 					Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Rare_FinalView_0, ally, PlayData.TempBattleTeam);
 
-					if (skill != null)
+					if (skill != null && ally != null)
 					{
-						FieldSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(FinalViewSelection), ModLocalization.FinalView, false, false, true, false, false));
+						FieldSystem.DelayInput(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(FinalViewSelection), ModLocalization.FinalView, false, false, true, false, true));
 						return false;
 					}
 				}
@@ -354,7 +420,7 @@ namespace MiyukiSone
 
 			private static void FinalViewSelection(SkillButton button)
 			{
-				PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).RandomElement().Let(a => { a.Hp = 0; a.Incapacitated = true; MiyukiData.FinalViewDamage++; });
+				PlayData.TSavedata.Party.FirstOrDefault(a => a == button.Myskill.Master.Info)?.Let(a => { a.Hp = 0; a.Incapacitated = true; MiyukiData.FinalViewDamage++; });
 				MiyukiData.FinalViewCharge = 0;
 				CurrentAffection = MiyukiAffection.Yandere;
 				EventsData.MiyukiTextEvent();
@@ -700,7 +766,6 @@ namespace MiyukiSone
 					Debug.Log("[Miyuki] UIManager.inst is null, skipping ForceFadeIn");
 				}
 
-
 				instance.SceneFirst.SetActive(false);
 				instance.SceneError.SetActive(false);
 				instance.SceneFirst_Error.SetActive(false);
@@ -969,5 +1034,5 @@ namespace MiyukiSone
 			}
 		}
 	}
-	#endregion
 }
+#endregion

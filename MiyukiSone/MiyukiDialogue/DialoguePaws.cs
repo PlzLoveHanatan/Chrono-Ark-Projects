@@ -11,6 +11,7 @@ using MiyukiSone;
 using UnityEngine;
 using static MiyukiSone.Utils;
 using static MiyukiSone.UtilsScripts;
+using static MiyukiSone.Affection;
 
 namespace MiyukiSone
 {
@@ -128,7 +129,7 @@ namespace MiyukiSone
 			GDEItemKeys.Buff_B_GuitarList_P_0, // Instrumentalist
 			GDEItemKeys.Buff_B_CamouflageCloak, // Shadow Veil
 			GDEItemKeys.Buff_B_LBossFirst_Phase3_Summon_T_HealStun_T,
-			GDEItemKeys.Buff_B_S3_Boss_Pope_P_0,
+			//GDEItemKeys.Buff_B_S3_Boss_Pope_P_0,
 			ModItemKeys.Buff_B_Miyuki_Enemy_ExtraAction,
 		};
 
@@ -169,8 +170,8 @@ namespace MiyukiSone
 
 		public static void ChoosePaws()
 		{
-			if (BattleSystem.instance == null) return;
-			(Affection.IsDere ? (Action)DerePaws : YanderePaws)();
+			if (BattleSystem.instance == null || IsKuudere) return;
+			(IsDere ? (Action)DerePaws : YanderePaws)();
 		}
 
 		#region Paws Dere
@@ -275,9 +276,9 @@ namespace MiyukiSone
 		// Shuffle draw pile into discard pile and apply negative Ex
 		private static IEnumerator ShuffleCo()
 		{
-			var miyukiSkills = BattleSystem.instance.AllyTeam.Skills_Deck.Where(s => s.Master.Info.KeyData == ModItemKeys.Character_Miyuki).ToList();
+			var skills = BattleSystem.instance.AllyTeam.Skills_Deck.Where(s => s.Master.Info.KeyData != ModItemKeys.Character_Miyuki).ToList();
 
-			foreach (var skill in miyukiSkills)
+			foreach (var skill in skills)
 			{
 				skill.ExtendedAdd_Battle(NegExtendedKeys.RandomElement());
 				yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
@@ -286,8 +287,7 @@ namespace MiyukiSone
 			//while (BattleSystem.instance.AllyTeam.Skills_Deck.Count > 0)
 			//{
 			//	Skill skill = BattleSystem.instance.AllyTeam.Skills_Deck[0];
-			//	if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) continue;
-			//	skill.ExtendedAdd_Battle(NegExtendedKeys.RandomElement());
+			//	if (skill.Master.Info.KeyData != ModItemKeys.Character_Miyuki) skill.ExtendedAdd_Battle(NegExtendedKeys.RandomElement());
 			//	yield return BattleSystem.instance.StartCoroutine(SkillShuffleCo(skill));
 			//}
 

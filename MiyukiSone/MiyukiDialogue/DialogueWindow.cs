@@ -133,7 +133,7 @@ namespace MiyukiSone
 		{
 			click++;
 
-			if (click >= 2 || CurrentDialogueState == DialogueState.kiss && click >= 25) RemoveWindow(gameObject);
+			if (click >= 2 && CurrentDialogueState != DialogueState.kiss) RemoveWindow(gameObject);
 
 			if (FieldSystem.instance == null && BattleSystem.instance == null || IsClicked) return;
 

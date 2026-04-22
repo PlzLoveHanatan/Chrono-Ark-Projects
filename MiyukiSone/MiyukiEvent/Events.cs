@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Collections;
 using Spine;
 using ChronoArkMod;
+using System.Runtime.CompilerServices;
 
 namespace MiyukiSone
 {
@@ -31,7 +32,7 @@ namespace MiyukiSone
 			ChangeEnemiesActions,
 			ChangeSkillUpgrade,
 			ChangeAlliesHp,
-			KillRandomEnemy,
+			ChangeRandomEnemyHp,
 			//ReviveAllies
 		};
 
@@ -48,7 +49,7 @@ namespace MiyukiSone
 			DiscardSkill,
 			ChangeAlliesHp,
 			CurseRandomEquip,
-			KillRandomAlly,
+			ChangeRandomAllyHp,
 		};
 
 		private static readonly List<string> LucyNecklace = new List<string>
@@ -62,7 +63,7 @@ namespace MiyukiSone
 
 		public static void MiyukiTurnAction()
 		{
-			if (!IsKuudere) return;
+			if (IsKuudere) return;
 			(IsDere ? (Action)DereAction : YandereAction)();
 			SaveManager.savemanager.Save();
 		}
@@ -73,12 +74,12 @@ namespace MiyukiSone
 			DereTurnActions.RandomElement()?.Invoke();
 		}
 
-		private static void KillRandomEnemy()
+		private static void ChangeRandomEnemyHp()
 		{
 			var finalEnemy = BattleSystem.instance.EnemyTeam.AliveChars.Where(e => e != null && e is BattleEnemy enemy && !enemy.Boss).RandomElement();
 			if (finalEnemy == null) return;
 			Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_KillEnemy, MiyukiBchar, MiyukiBchar.MyTeam);
-			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(b => finalEnemy.Dead()), "I love YOU that much!", false, false, true, false, true));
+			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(b => finalEnemy.HP = 1), ModLocalization.RandomEnemyKill, false, false, true, false, true));
 		}
 		#endregion
 
@@ -143,8 +144,10 @@ namespace MiyukiSone
 
 		private static void ChangeEquipSlots()
 		{
-			if (IsDere) PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).RandomElement()?.Equip?.Add(null);
-			else PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).RandomElement()?.Equip?.Remove(null);
+			var ally = PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
+			if (IsDere) ally.Let(a => a.Equip?.Add(null));
+			else ally.Let(a => a.Equip?.Remove(null));
+			MiyukiCV.Instance.SaveEquipSlots(ally);
 		}
 
 		private static void ChangeEnemiesActions()
@@ -187,7 +190,6 @@ namespace MiyukiSone
 				bool isPainDamage = BattleSystem.instance.AllyTeam.AliveChars.Any(a => a.BuffReturn(GDEItemKeys.Buff_B_Queen_10_T, false) == null);
 				BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).ToList().ForEach(a => UtilsScripts.TakeNonLethalDamage(a, amount, isPainDamage));
 			}
-
 		}
 		#endregion
 
@@ -242,12 +244,12 @@ namespace MiyukiSone
 			PlayData.TSavedata.Party.Where(a => a.KeyData != ModItemKeys.Character_Miyuki).SelectMany(c => c.Equip).OfType<Item_Equip>().RandomElement()?.Let(e => e.Curse = EquipCurse.RandomCurse(e));
 		}
 
-		public static void KillRandomAlly()
+		public static void ChangeRandomAllyHp()
 		{
 			var ally = BattleSystem.instance.AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).RandomElement();
 			if (ally == null) return;
 			Skill skill = Skill.TempSkill(ModItemKeys.Skill_S_Miyuki_Special_KillAlly, MiyukiBchar, MiyukiBchar.MyTeam);
-			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(b => ally.Dead()), "Why YOU hate Me so much?", false, false, true, false, true));
+			BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(new List<Skill> { skill }, new SkillButton.SkillClickDel(b => ally.HP = 1), ModLocalization.RandomAllyKill, false, false, true, false, true));
 		}
 
 		private static void DebuffAlly()

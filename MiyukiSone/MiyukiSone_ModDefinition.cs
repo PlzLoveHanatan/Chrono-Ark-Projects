@@ -54,7 +54,8 @@ namespace MiyukiSone
 				{
 					//PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki && c.Equip != null)?.Equip.OfType<Item_Equip>().Where(e => e.IsCurse).Select(e => { e.Curse = new EquipCurse(); return e; }).ToList();
 					PlayData.TSavedata.Party.FirstOrDefault(c => c.KeyData == ModItemKeys.Character_Miyuki && c.Equip != null)?.Equip.OfType<Item_Equip>().Where(e => e.IsCurse)
-						.ToList().ForEach(e => { e.Curse = new EquipCurse(); Events.CurseRandomEquip(); });
+						.ToList()
+						.ForEach(e => { e.Curse = new EquipCurse(); Events.CurseRandomEquip(); });
 				}
 
 

@@ -22,6 +22,7 @@ namespace MiyukiSone
 			var sprite = AddressableLoadManager.LoadAsyncCompletion<Sprite>(adress, AddressableLoadManager.ManageType.None);
 			return sprite;
 		}
+
 		public static Sprite GetSpriteFromAsset(string path)
 		{
 			var adress = ModManager.getModInfo("MiyukiSone").assetInfo.ImageFromAsset("MiyukiSone", path);
@@ -29,15 +30,13 @@ namespace MiyukiSone
 			return sprite;
 		}
 
-		public static string GetPrefabAdress(string prefabPath)
+		public static string GetPrefabAdressFromAsset(string prefabPath)
 		{
-			Debug.Log($"[Miyuki] Loading prefab: {prefabPath}");
 			return ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<GameObject>("MiyukiSone", prefabPath);
 		}
 
-		public static string GetSpriteAddress(string spritePath)
+		public static string GetSpriteAddressFromAsset(string spritePath)
 		{
-			Debug.Log($"[Miyuki] Loading sprite: {spritePath}");
 			return ModManager.getModInfo("MiyukiSone").assetInfo.ObjectFromAsset<Sprite>("MiyukiSone", spritePath);
 		}
 

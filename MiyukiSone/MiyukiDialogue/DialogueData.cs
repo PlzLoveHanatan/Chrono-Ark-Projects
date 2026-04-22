@@ -79,22 +79,6 @@ namespace MiyukiSone
 				Debug.LogError($"[Miyuki] LoadDialogues: {ex.Message}");
 			}
 		}
-
-		//private static string GetLocalizedLine(DialogueLine line)
-		//{
-		//	if (line == null) return null;
-
-		//	string currentLanguage = LocalizationManager.CurrentLanguage;
-
-		//	switch (currentLanguage)
-		//	{
-		//		case "Korean": return !string.IsNullOrEmpty(line.Korean) ? line.Korean : line.English;
-		//		case "Japanese": return !string.IsNullOrEmpty(line.Japanese) ? line.Japanese : line.English;
-		//		case "Chinese": return !string.IsNullOrEmpty(line.Chinese) ? line.Chinese : line.English;
-		//		case "Chinese_TW": return !string.IsNullOrEmpty(line.Chinese_TW) ? line.Chinese_TW : line.English;
-		//		default: return line.English;
-		//	}
-		//}
 		#endregion
 
 		#region Dialogue Love

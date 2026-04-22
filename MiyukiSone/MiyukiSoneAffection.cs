@@ -100,15 +100,19 @@ namespace MiyukiSone
 			if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
 			{
 				CreateDialogue(DialogueState.love, amount: 1, isDoubleButton: true);
-				return;
 			}
-
-			if (MiyukiDecides) GetRandomAffection();
-
-			if (MiyukiForces)
+			else
 			{
-				CreateDialogue();
-				MiyukiTurnAction();
+				if (MiyukiDecides)
+				{
+					GetRandomAffection();
+				}
+
+				if (MiyukiForces)
+				{
+					CreateDialogue();
+					MiyukiTurnAction();
+				}
 			}
 		}
 
@@ -133,7 +137,6 @@ namespace MiyukiSone
 				int randomIndex = RandomManager.RandomInt("MiyukiRandomIndex", 0, availableIndices.Count);
 				int selectedIndex = availableIndices[randomIndex];
 				CurrentAffection = (MiyukiAffection)values.GetValue(selectedIndex);
-				// LastAffection обновится в сеттере CurrentAffection
 			}
 		}
 
@@ -145,7 +148,7 @@ namespace MiyukiSone
 				{
 					foreach (var ex in skill.AllExtendeds)
 					{
-						if (ex is IP_MiyukiSkillImgChange handler) handler.SkillImgChange(skill);
+						if (ex is IP_MiyukiSkillImgChange handler) handler.SkillImgChange();
 						if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki) ex.Init();
 					}
 				}
@@ -157,7 +160,6 @@ namespace MiyukiSone
 
 				BattleSystem.instance.AllyTeam.AliveChars.ForEach(a => { if (a.BuffReturn(ModItemKeys.Buff_B_Miyuki_Buff_Ally, false) is Buffs.AllyConstantStats b) b.Init(); });
 			}
-
 			if (FieldSystem.instance != null) MiyukiCharImg.UpdateCharacterImage();
 
 			//var buff = AllyTeam.AliveChars.Where(a => a != null && a.Info.KeyData != ModItemKeys.Character_Miyuki).Select(a => a.Buffs).OfType<Buffs.MiyukiBuff>().ToList();

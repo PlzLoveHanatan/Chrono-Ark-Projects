@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameDataEditor;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
@@ -16,16 +17,17 @@ namespace MiyukiSone
 	{
 		public static void UpdateCharacterImage()
 		{
-			if (MiyukiData.LastAffection == (int)CurrentAffection) return;
+			//if (MiyukiData.LastAffection == (int)CurrentAffection) return;
 
 			string affection = CurrentAffection.ToString();
-			string basePath = $"Assets/Images/MiyukiAffection/{affection}/";
+			string skin = ModSettingss.SwimsuitSkin ? "Swimsuit" : "Normal";
+			string basePath = $"Assets/Images/MiyukiAffection/{skin}/{affection}/";
 
 			if (FieldSystem.instance != null && MiyukiChar != null)
 			{
 				UpdateCharUI(MiyukiChar, basePath);
 				FieldSystem.instance.PartyWindowInit();
-				EventsData.MiyukiTextEvent();
+				//EventsData.MiyukiTextEvent();
 			}
 
 			if (BattleSystem.instance != null && MiyukiBchar != null)
@@ -34,22 +36,39 @@ namespace MiyukiSone
 				UpdateSkillFaces();
 			}
 		}
-
 		private static void UpdateCharUI(BattleChar character, string basePath)
 		{
 			if (character == null) return;
 
-			character.Info.GetData.BattleChar_Path = GetPrefabAdress(basePath + "Dress.prefab"); // Full standing pose -> Prefab
-			character.Info.GetData.FaceSmallChar_Path = GetPrefabAdress(basePath + "Portrait.prefab"); // 197 x 352 -> Prefab
-			character.Info.GetData.Face_SmallButton_Path = GetSpriteAddress(basePath + "SkillFace.png"); // 58 x 42 -> Sprite
-			character.Info.GetData.FaceOriginChar_Path = GetPrefabAdress(basePath + "BattleFace.prefab"); // Full standing pose which is cut to small window ??? -> Prefab
+			character.Info.GetData.BattleChar_Path = GetPrefabAdressFromAsset(basePath + "Dress.prefab");
+			character.Info.GetData.FaceSmallChar_Path = GetPrefabAdressFromAsset(basePath + "Portrait.prefab");
+			character.Info.GetData.Face_SmallButton_Path = GetSpriteAddressFromAsset(basePath + "SkillFace.png");
+			character.Info.GetData.FaceOriginChar_Path = GetPrefabAdressFromAsset(basePath + "BattleFace.prefab");
 
 			if (BattleSystem.instance != null && character == MiyukiBchar)
 			{
-				string faceBattle = basePath + "BattleFace.png"; // 405 x 118 -> Sprite
-				AddressableLoadManager.LoadAsyncAction(GetSpriteAddress(faceBattle), AddressableLoadManager.ManageType.Character, MiyukiBchar.UI.CharImage.GetComponent<Image>());
+				string faceBattle = basePath + "BattleFace.png";
+				AddressableLoadManager.LoadAsyncAction(GetSpriteAddressFromAsset(faceBattle), AddressableLoadManager.ManageType.Character, MiyukiBchar.UI.CharImage.GetComponent<Image>());
 			}
 		}
+
+		
+
+		//private static void UpdateCharUI(BattleChar character, string basePath)
+		//{
+		//	if (character == null) return;
+
+		//	character.Info.GetData.BattleChar_Path = GetPrefabAdress(basePath + "Dress.prefab"); // Full standing pose -> Prefab
+		//	character.Info.GetData.FaceSmallChar_Path = GetPrefabAdress(basePath + "Portrait.prefab"); // 197 x 352 -> Prefab
+		//	character.Info.GetData.Face_SmallButton_Path = GetSpriteAddress(basePath + "SkillFace.png"); // 58 x 42 -> Sprite
+		//	character.Info.GetData.FaceOriginChar_Path = GetPrefabAdress(basePath + "BattleFace.prefab"); // Full standing pose which is cut to small window ??? -> Prefab
+
+		//	if (BattleSystem.instance != null && character == MiyukiBchar)
+		//	{
+		//		string faceBattle = basePath + "BattleFace.png"; // 405 x 118 -> Sprite
+		//		AddressableLoadManager.LoadAsyncAction(GetSpriteAddress(faceBattle), AddressableLoadManager.ManageType.Character, MiyukiBchar.UI.CharImage.GetComponent<Image>());
+		//	}
+		//}
 
 		private static void UpdateSkillFaces()
 		{

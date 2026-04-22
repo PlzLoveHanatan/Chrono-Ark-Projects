@@ -8,6 +8,6 @@ namespace MiyukiSone
 {
 	public interface IP_MiyukiSkillImgChange
 	{
-		void SkillImgChange(Skill mySkill);
+		void SkillImgChange();
 	}
 }

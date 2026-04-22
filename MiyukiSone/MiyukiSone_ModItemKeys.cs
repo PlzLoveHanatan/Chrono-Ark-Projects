@@ -32,7 +32,7 @@ namespace MiyukiSone
 		/// </summary>
         public static string Buff_B_Miyuki_Recover = "B_Miyuki_Recover";
 		/// <summary>
-		/// When played from hand, view 5 random  <color=#F53172FF>Heroic</color> equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
+		/// When played from hand, view 5 random <color=#F53172FF>Heroic</color> equipment and select 1 to obtain. Then replace this skill with <color=red>Yabeley's Tomato Juice</color>.
 		/// <sprite name="비용1"><sprite name="이상">
 		/// </summary>
         public static string SkillExtended_Ex_Miyuki_Ex_0 = "Ex_Miyuki_Ex_0";
@@ -174,7 +174,7 @@ namespace MiyukiSone
 		/// Ignores armor.
 		/// Recast this skill 2 times.
 		/// Current Striking Ability is &a.
-		/// Whenever this skill is killing ally, permanently increase additional damage by &b for <b>this run</b>.
+		/// Whenever this skill kills an ally or brings an ally to Death's Door, permanently increase skill's damage by &b for <b>this run</b>.
 		/// Can be used outside of battle.
 		/// This effect cannot be reactivated until you clear 1 stage.
 		/// Current Status: &c.
@@ -326,6 +326,24 @@ namespace MiyukiSone
 		/// Chinese-TW:
 		/// </summary>
         public static string MiyukiUpgrade => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiUpgrade");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// Why YOU hate Me so much?
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string RandomAllyKill => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RandomAllyKill");
+		/// <summary>
+		/// Korean:
+		/// English:
+		/// I love YOU that much!
+		/// Japanese:
+		/// Chinese:
+		/// Chinese-TW:
+		/// </summary>
+        public static string RandomEnemyKill => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RandomEnemyKill");
 		/// <summary>
 		/// Korean:
 		/// English:

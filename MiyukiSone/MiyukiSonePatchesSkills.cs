@@ -408,6 +408,7 @@ namespace MiyukiSone
 
 		private static Skill ChangeCharacterSkill(Skill skill)
 		{
+			if (skill?.Master?.Info?.KeyData == ModItemKeys.Character_Miyuki && IsYandere) return skill;
 			if (skill == null || MiyukiForces) return skill;
 			var allRareSkills = PlayData.ALLRARESKILLLIST.Where(s => s.User != ModItemKeys.Character_Miyuki).Select(s => s.KeyID);
 			var list = IsYandere ? CharacterBadSkillKeys : Utils.RandomPer(10) /*&& !HasRareSkill(skill.Master.Info)*/ ? allRareSkills.ToList() : null /*allSkills.ToList()*/ ;

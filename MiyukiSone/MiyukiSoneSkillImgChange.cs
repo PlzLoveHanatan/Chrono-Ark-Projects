@@ -20,7 +20,7 @@ namespace MiyukiSone
 
 		public static void ChangeSkillImg(this Skill skill)
 		{
-			if (skill == null || Utils.MiyukiData.LastAffection == (int)CurrentAffection) return;
+			if (skill == null /* Utils.MiyukiData.LastAffection == (int)CurrentAffection*/) return;
 
 			string key = $"{skill.MySkill.KeyID}_{CurrentAffection}";
 
