@@ -269,7 +269,9 @@ namespace MiyukiSone
 		/// At the start of turn, draw 1 less skill and create a random Lucy draw skill in hand.
 		/// Japanese:
 		/// Chinese:
+		/// 回合开始时，少抽1张技能，并将1张随机的「露西抽牌技能」置入手牌。
 		/// Chinese-TW:
+		/// 回合開始時，少抽1張技能，並將1張隨機的「露西抽牌技能」置入手牌。
 		/// </summary>
         public static string AffectionOverflow_0 => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("AffectionOverflow_0");
 		/// <summary>
@@ -278,7 +280,9 @@ namespace MiyukiSone
 		/// At the start of the turn, draw the normal amount of skills.
 		/// Japanese:
 		/// Chinese:
+		/// 回合开始时，正常抽取技能。
 		/// Chinese-TW:
+		/// 回合開始時，正常抽取技能。
 		/// </summary>
         public static string AffectionOverflow_1 => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("AffectionOverflow_1");
 		/// <summary>
@@ -287,7 +291,9 @@ namespace MiyukiSone
 		/// I want it to be just the two of us.
 		/// Japanese:
 		/// Chinese:
+		/// 我只想我们两个人独处。
 		/// Chinese-TW:
+		/// 我只想我們兩個人獨處。
 		/// </summary>
         public static string FinalView => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("FinalView");
 		/// <summary>
@@ -296,7 +302,9 @@ namespace MiyukiSone
 		/// Do YOU want restart the stage ?
 		/// Japanese:
 		/// Chinese:
+		/// 你想重新开始这一关吗？
 		/// Chinese-TW:
+		/// 你想重新開始這一關嗎？
 		/// </summary>
         public static string GameUpdate => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("GameUpdate");
 		/// <summary>
@@ -305,7 +313,9 @@ namespace MiyukiSone
 		/// Current Affection: &a.
 		/// Japanese:
 		/// Chinese:
+		/// 当前好感度：&a
 		/// Chinese-TW:
+		/// 目前好感度：&a
 		/// </summary>
         public static string MiyukiAffection => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiAffection");
 		/// <summary>
@@ -314,7 +324,9 @@ namespace MiyukiSone
 		/// Select a downgrade effect.
 		/// Japanese:
 		/// Chinese:
+		/// 选择一个负面效果。
 		/// Chinese-TW:
+		/// 選擇一個負面效果。
 		/// </summary>
         public static string MiyukiDowngrade => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiDowngrade");
 		/// <summary>
@@ -323,7 +335,9 @@ namespace MiyukiSone
 		/// Select an upgrade effect.
 		/// Japanese:
 		/// Chinese:
+		/// 选择一个升级效果。
 		/// Chinese-TW:
+		/// 選擇一個升級效果。
 		/// </summary>
         public static string MiyukiUpgrade => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiUpgrade");
 		/// <summary>
@@ -332,7 +346,9 @@ namespace MiyukiSone
 		/// Why YOU hate Me so much?
 		/// Japanese:
 		/// Chinese:
+		/// 你为什么就这么讨厌我呢？
 		/// Chinese-TW:
+		/// 你為什麼就這麼討厭我呢？
 		/// </summary>
         public static string RandomAllyKill => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RandomAllyKill");
 		/// <summary>
@@ -341,7 +357,9 @@ namespace MiyukiSone
 		/// I love YOU that much!
 		/// Japanese:
 		/// Chinese:
+		/// 我就有这么爱你！
 		/// Chinese-TW:
+		/// 我就有這麼愛你！
 		/// </summary>
         public static string RandomEnemyKill => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RandomEnemyKill");
 		/// <summary>
@@ -350,7 +368,9 @@ namespace MiyukiSone
 		/// When this skill in the deck, add &a Lucy draw skill to Miyuki's Affection.
 		/// Japanese:
 		/// Chinese:
+		/// 当此技能在牌库中时，为美雪的好感度增加 &a 张「露西抽牌技能」。
 		/// Chinese-TW:
+		/// 當此技能在牌組中時，為美雪的好感度增加 &a 張「露西抽牌技能」。
 		/// </summary>
         public static string RealityWarpingDesc => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RealityWarpingDesc");
 

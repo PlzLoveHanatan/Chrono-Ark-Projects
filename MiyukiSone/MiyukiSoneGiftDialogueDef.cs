@@ -6,7 +6,8 @@ using ChronoArkMod.Template;
 
 namespace MiyukiSone
 {
-	public class RaphiCharacter : CustomCharacterGDE<MiyukiSone_ModDefinition>
+	// Based on Feiyap code
+	public class GiftDialogueDef : CustomCharacterGDE<MiyukiSone_ModDefinition>
 	{
 		public override ModGDEInfo.LoadingType GetLoadingType()
 		{
@@ -17,23 +18,25 @@ namespace MiyukiSone
 		{
 			Dialogue_NomalGiftTalk = Gifts.Normal.DialogueTree_Normal;
 
-			//Dialogue_GoodGiftTalks = new List<string>
-			//{
-			//	GiftDoll.DialogueTreePath_Doll,
-			//	GiftDogcollar.DialogueTreePath_Dogcollar,
-			//	GiftDVD.DialogueTreePath_DVD,
-			//	GiftMagazine.DialogueTreePath_Magazine
-			//};
+			Dialogue_GoodGiftTalks = new List<string>
+			{
+				Gifts.Preferable.DialogueTree_Collar,
+				Gifts.Preferable.DialogueTree_DVD,
+				Gifts.Preferable.DialogueTree_Knife,
+				Gifts.Preferable.DialogueTree_SF_Novel,
+			};
 
 			Dialogue_FriendShipLVTalks = new List<string>
 			{
 				Gifts.FriendShip.DialogueTree_FriendShip_Lv_1,
+				Gifts.FriendShip.DialogueTree_FriendShip_Lv_2,
+				Gifts.FriendShip.DialogueTree_FriendShip_Lv_3,
 			};
 		}
 
 		public override string Key()
 		{
-			return "Miyuki";
+			return ModItemKeys.Character_Miyuki;
 		}
 	}
 }

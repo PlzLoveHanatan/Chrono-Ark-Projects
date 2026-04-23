@@ -9,21 +9,32 @@ using UnityEngine;
 
 namespace MiyukiSone
 {
-	public class GiftNode
+	public class GiftNodeParameter
 	{
 		public abstract class BaseGiftNode : DialogueNodeCreator
 		{
+			private static string DressPath
+			{
+				get
+				{
+					string dressType = Affection.MiyukiDecides ? "Dress" : "Swimsuit";
+					var affections = new[] { "Dere", "Kuudere", "Yandere" };
+					string affection = affections.RandomElement();
+					return $"Assets/Images/DialoguePose/{dressType}{affection}.png";
+				}
+			}
+
 			protected abstract string NodePath();
 			protected abstract string CharacterPosePath();
 
 			public override DialogueNodeParameter SetDialogueNodeParameter()
 			{
-				string posePath = CharacterPosePath();
+				string posePath = string.IsNullOrEmpty(CharacterPosePath()) ? DressPath : CharacterPosePath();
 				string spriteAddress = UtilsUI.GetSpriteAddressFromAsset(posePath);
 
 				return new DialogueNodeParameter
 				{
-					Text = Utils.ThisMod.localizationInfo.DialogueLocalizeUpdate(NodePath()),
+					Text = Utils.ThisMod.localizationInfo.DialogueLocalizeUpdate("Dialogue/Miyuki_" + NodePath()),
 					Standing_Path = spriteAddress,
 				};
 			}
@@ -33,7 +44,12 @@ namespace MiyukiSone
 		{
 			public override DialogueParameter SetDialogueParameter(GameObject gameObject)
 			{
-				return SetDialogueParameter(gameObject);
+				return new DialogueParameter
+				{
+					AutoPlay = true,
+					UIOffDialogue = true,
+					StoryDialogue = true
+				};
 			}
 		}
 	}
