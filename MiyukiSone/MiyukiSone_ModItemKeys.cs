@@ -265,9 +265,11 @@ namespace MiyukiSone
     {
 		/// <summary>
 		/// Korean:
+		/// 턴 시작 시, 스킬 1장 덜 드로우하고 무작위 루시 드로우 스킬을 손에 생성합니다.
 		/// English:
 		/// At the start of turn, draw 1 less skill and create a random Lucy draw skill in hand.
 		/// Japanese:
+		/// ターン開始時、スキルを1枚少なくドローし、ランダムなルーシードロースキルを手札に生成します。
 		/// Chinese:
 		/// 回合开始时，少抽1张技能，并将1张随机的「露西抽牌技能」置入手牌。
 		/// Chinese-TW:
@@ -276,9 +278,11 @@ namespace MiyukiSone
         public static string AffectionOverflow_0 => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("AffectionOverflow_0");
 		/// <summary>
 		/// Korean:
+		/// 턴 시작 시, 일반적인 양의 스킬을 드로우합니다.
 		/// English:
 		/// At the start of the turn, draw the normal amount of skills.
 		/// Japanese:
+		/// ターン開始時、通常の枚数のスキルをドローします。
 		/// Chinese:
 		/// 回合开始时，正常抽取技能。
 		/// Chinese-TW:
@@ -287,9 +291,11 @@ namespace MiyukiSone
         public static string AffectionOverflow_1 => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("AffectionOverflow_1");
 		/// <summary>
 		/// Korean:
+		/// 둘이만 있었으면 좋겠어.
 		/// English:
 		/// I want it to be just the two of us.
 		/// Japanese:
+		/// 二人きりになりたいな。
 		/// Chinese:
 		/// 我只想我们两个人独处。
 		/// Chinese-TW:
@@ -298,9 +304,11 @@ namespace MiyukiSone
         public static string FinalView => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("FinalView");
 		/// <summary>
 		/// Korean:
+		/// 이 스테이지를 다시 시작할래?
 		/// English:
 		/// Do YOU want restart the stage ?
 		/// Japanese:
+		/// このステージを再開する？
 		/// Chinese:
 		/// 你想重新开始这一关吗？
 		/// Chinese-TW:
@@ -309,9 +317,11 @@ namespace MiyukiSone
         public static string GameUpdate => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("GameUpdate");
 		/// <summary>
 		/// Korean:
+		/// 현재 애정 상태: &a.
 		/// English:
 		/// Current Affection: &a.
 		/// Japanese:
+		/// 現在の愛情状態: &a。
 		/// Chinese:
 		/// 当前好感度：&a
 		/// Chinese-TW:
@@ -320,9 +330,11 @@ namespace MiyukiSone
         public static string MiyukiAffection => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiAffection");
 		/// <summary>
 		/// Korean:
+		/// 약화 효과를 선택하세요.
 		/// English:
 		/// Select a downgrade effect.
 		/// Japanese:
+		/// 弱体化効果を選択してください。
 		/// Chinese:
 		/// 选择一个负面效果。
 		/// Chinese-TW:
@@ -331,9 +343,24 @@ namespace MiyukiSone
         public static string MiyukiDowngrade => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiDowngrade");
 		/// <summary>
 		/// Korean:
+		/// 미유키의
+		/// English:
+		/// Miyuki's
+		/// Japanese:
+		/// ミユキの
+		/// Chinese:
+		/// 美雪的
+		/// Chinese-TW:
+		/// 美雪的
+		/// </summary>
+        public static string MiyukiName => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiName");
+		/// <summary>
+		/// Korean:
+		/// 강화 효과를 선택하세요.
 		/// English:
 		/// Select an upgrade effect.
 		/// Japanese:
+		/// 強化効果を選択してください。
 		/// Chinese:
 		/// 选择一个升级效果。
 		/// Chinese-TW:
@@ -342,9 +369,11 @@ namespace MiyukiSone
         public static string MiyukiUpgrade => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("MiyukiUpgrade");
 		/// <summary>
 		/// Korean:
+		/// 왜 나를 그렇게 싫어하는 거야?
 		/// English:
 		/// Why YOU hate Me so much?
 		/// Japanese:
+		/// どうしてそんなに私を嫌うの？
 		/// Chinese:
 		/// 你为什么就这么讨厌我呢？
 		/// Chinese-TW:
@@ -353,9 +382,11 @@ namespace MiyukiSone
         public static string RandomAllyKill => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RandomAllyKill");
 		/// <summary>
 		/// Korean:
+		/// 내가 당신을 그렇게 사랑한단 말이야!
 		/// English:
 		/// I love YOU that much!
 		/// Japanese:
+		/// 私はあなたをこんなに愛しているのに！
 		/// Chinese:
 		/// 我就有这么爱你！
 		/// Chinese-TW:
@@ -364,9 +395,11 @@ namespace MiyukiSone
         public static string RandomEnemyKill => ModManager.getModInfo("MiyukiSone").localizationInfo.SystemLocalizationUpdate("RandomEnemyKill");
 		/// <summary>
 		/// Korean:
+		/// 이 스킬이 덱에 있을 때, 미유키의 애정에 &a개의 루시 드로우 스킬을 추가합니다.
 		/// English:
 		/// When this skill in the deck, add &a Lucy draw skill to Miyuki's Affection.
 		/// Japanese:
+		/// このスキルがデッキにある時、ミユキの愛情に&a個のルーシードロースキルを追加します。
 		/// Chinese:
 		/// 当此技能在牌库中时，为美雪的好感度增加 &a 张「露西抽牌技能」。
 		/// Chinese-TW:

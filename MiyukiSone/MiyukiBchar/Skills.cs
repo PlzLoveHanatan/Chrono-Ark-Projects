@@ -547,7 +547,7 @@ namespace MiyukiSone
 					if (skill != null) BattleSystem.instance.AllyTeam.Add(skill, true);
 					skill.isExcept = true;
 					skill.NotCount = true;
-					skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
+					skill.MySkill.Name = ModLocalization.MiyukiName + Separator + skill.MySkill.Name;
 				}
 
 				if (buffKey == ModItemKeys.Buff_B_Miyuki_Might)

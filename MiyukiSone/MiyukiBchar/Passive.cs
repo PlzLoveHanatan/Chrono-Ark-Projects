@@ -136,7 +136,6 @@ namespace MiyukiSone
 				{
 					if (!AvaliableCharacterDraw.Contains(drawKey)) AvaliableCharacterDraw.Add(drawKey);
 				}
-
 			});
 
 			if (!IsKuudere) PawsWithDeck();
@@ -242,7 +241,7 @@ namespace MiyukiSone
 				var skill = Skill.TempSkill(selectedSkills.RandomElement(), BattleSystem.instance.AllyTeam.LucyAlly, BattleSystem.instance.AllyTeam.LucyAlly.MyTeam);
 				if (skill != null) BattleSystem.instance?.AllyTeam.Skills_Deck.InsertRandom("MiyukiRandomInsert", skill);
 				skill.isExcept = true;
-				skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
+				skill.MySkill.Name = ModLocalization.MiyukiName + Separator + skill.MySkill.Name;
 			}
 			MiyukiTextEvent();
 		}
@@ -265,8 +264,7 @@ namespace MiyukiSone
 			skill.isExcept = true;
 			skill.NotCount = WallBreakerEquipped;
 			skill.APChange = WallBreakerEquipped ? 0 : 1;
-			skill.AutoDelete = 1;
-			skill.MySkill.Name = "Miyuki's " + skill.MySkill.Name;
+			skill.MySkill.Name = ModLocalization.MiyukiName + Separator + skill.MySkill.Name;
 		}
 	}
 }

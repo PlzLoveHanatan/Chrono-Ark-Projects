@@ -40,12 +40,7 @@ namespace MiyukiSone
 			public static void Prefix(PrintText __instance, string inText)
 			{
 				string audioFile = EventsData.GetAudioFileByText(inText);
-
-				if (!string.IsNullOrEmpty(audioFile))
-				{
-					PlaySoundFromAsset($"Assets/Audio/Events/BattleChar/{audioFile}.ogg", true);
-					Debug.Log($"Playing: {audioFile} from text: {inText}");
-				}
+				if (!string.IsNullOrEmpty(audioFile)) PlaySoundFromAsset($"Assets/Audio/Events/BattleChar/{audioFile}.ogg", true);
 			}
 		}
 
@@ -99,6 +94,7 @@ namespace MiyukiSone
 			}
 		}
 
+		// Based on surprise4u code
 		[HarmonyPatch(typeof(SkillToolTip), nameof(SkillToolTip.Input))]
 		class SkillToolTipPatch
 		{
@@ -116,13 +112,6 @@ namespace MiyukiSone
 						if (preview != null && preview.MySkill != null)
 						{
 							__instance.PlusSkillView = previewChange.SkillPreviewChange();
-
-							//if (!string.IsNullOrEmpty(Skill.MySkill.PlusSkillView))
-							//{
-							//	preview.MySkill.PlusSkillView = Skill.MySkill.PlusSkillView;
-							//}
-
-							//__instance.PlusSkillView = preview;
 
 							if (!string.IsNullOrEmpty(preview.MySkill.KeyID))
 							{
@@ -186,29 +175,6 @@ namespace MiyukiSone
 				if (target.Info.Ally && (target.IsDead || target.HP <= 0)) MiyukiData.FinalViewDamage++;
 			}
 		}
-
-		//[HarmonyPatch(typeof(BattleSystem), nameof(BattleSystem.SkillRandomUseIenum))]
-		//public class SkillRandomUsePatch
-		//{
-		//	[HarmonyPrefix]
-		//	public static bool Prefix(BattleChar BChar, Skill skill, bool Debuff, bool Quick, bool UseButton)
-		//	{
-		//		if (skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki)
-		//		{
-		//			if (skill.MySkill.Target.Key == GDEItemKeys.s_targettype_Misc)
-		//			{
-
-		//				Debug.Log($"SKill is Misc type");
-		//				return false;
-		//			}
-		//			else
-		//			{
-		//				Debug.Log($"SKill is NOT Misc type");
-		//			}
-		//		}
-		//		return true;
-		//	}
-		//}
 
 		[HarmonyPatch(typeof(BattleSystem))]
 		[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
@@ -620,60 +586,6 @@ namespace MiyukiSone
 		#endregion
 
 		#region Miyuki Game Update Visual
-		// Change main BG art
-		//[HarmonyPatch(typeof(MainSceneScript))]
-		//[HarmonyPatch("Start")]
-		//class Patch_MainMenu_Overlay
-		//{
-		//	[HarmonyPostfix]
-		//	public static void Postfix(MainSceneScript __instance)
-		//	{
-		//		return;
-		//		// Создаем канвас если нет
-		//		GameObject canvas = GameObject.Find("MiyukiOverlayCanvas");
-		//		if (canvas == null)
-		//		{
-		//			canvas = new GameObject("MiyukiOverlayCanvas");
-		//			Canvas cv = canvas.AddComponent<Canvas>();
-		//			cv.renderMode = RenderMode.ScreenSpaceOverlay;
-		//			cv.sortingOrder = 999; // поверх всего
-
-		//			CanvasScaler scaler = canvas.AddComponent<CanvasScaler>();
-		//			scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-
-		//			canvas.AddComponent<GraphicRaycaster>();
-		//		}
-
-		//		// Создаем Image на весь экран
-		//		GameObject overlay = new GameObject("MiyukiBackground");
-		//		overlay.transform.SetParent(canvas.transform, false);
-
-		//		Image img = overlay.AddComponent<Image>();
-		//		img.raycastTarget = false; // чтобы не блокировать клики
-
-		//		// Растягиваем на весь экран
-		//		RectTransform rt = img.GetComponent<RectTransform>();
-		//		rt.anchorMin = Vector2.zero;
-		//		rt.anchorMax = Vector2.one;
-		//		rt.offsetMin = Vector2.zero;
-		//		rt.offsetMax = Vector2.zero;
-
-		//		// Загружаем арт
-		//		Sprite miyukiBg = UtilsUI.GetSprite("MiyukiVisual/Menu/.png");
-		//		if (miyukiBg != null)
-		//		{
-		//			img.sprite = miyukiBg;
-		//			img.color = Color.white;
-		//			Debug.Log("[Miyuki] Fullscreen background overlay added");
-		//		}
-		//		else
-		//		{
-		//			// Если нет арта, делаем розовый фон
-		//			//img.color = new Color(1f, 0.5f, 0.8f, 0.5f);
-		//		}
-		//	}
-		//}
-
 		[HarmonyPatch(typeof(CharStatV4))]
 		[HarmonyPatch("OnEnable")]
 		public static class CharStatV4_OnEnable_Patch
@@ -747,8 +659,6 @@ namespace MiyukiSone
 					SetImageColor(canvas2.transform, "SNSAlign/Twitter", new Color(1f, 0.5f, 0.8f));
 					SetImageColor(canvas2.transform, "SNSAlign/Discord", new Color(1f, 0.5f, 0.8f));
 				}
-
-				Debug.Log("[Miyuki] Main menu fully styled!");
 			}
 
 			private static IEnumerator MiyukiStart(MainSceneScript instance)
@@ -840,7 +750,7 @@ namespace MiyukiSone
 				if (!MiyukiSaveManager.Instance.CurrentData.GameUpdated && !MiyukiData.PauseOpen) return;
 				string pauseSprite = MiyukiData.PauseOpen ? $"Assets/Images/Skills/JustForYou/{MiyukiData.MiyukiArtIndex}.png" : "PauseBG";
 				PlaySong();
-				MiyukiVisual.Instance.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
+				MiyukiVisual.Instance?.StartParticlesOnTransform(__instance.transform, true, MiyukiVisual.PauseSettings);
 				Transform root = __instance.transform;
 				if (MiyukiData.PauseOpen) SetSprite(root, "Back", null, pauseSprite);
 				else SetSprite(root, "Back", pauseSprite);
@@ -991,25 +901,19 @@ namespace MiyukiSone
 				SetSprite(root, "KeyObj/Content", "Control_Window");
 				MakeTransparent(root, "KeyObj/Content/Back");
 
-				// Настройки клавиш
 				Transform layout = root.Find("KeyObj/Content/Scroll View/Viewport/Content/ToggleOptions");
 				if (layout != null)
 				{
 					ProcessKeyGroup(layout.Find("MainKeyAlign"));
 					ProcessKeyGroup(layout.Find("SubKeyAlign"));
 				}
-
 				SetSprite(root, "KeyObj/Image (1)", "Control_Window_Apply");
 				MakeTransparent(root, "KeyObj/Image (1)/Image (1)");
 				ProcessButtons(root, "KeyObj/Image (1)/Layout");
-
-				// Попап
 				SetSprite(root, "KeyObj/KeySetPopup", "Control_Window_Pop");
 				MakeTransparent(root, "KeyObj/KeySetPopup/BG");
 				SetText(root, "KeyObj/KeySetPopup/BG/Desc1", null, 0, true);
 				SetText(root, "KeyObj/KeySetPopup/BG/Desc2", null, 0, true);
-
-				// Геймпад окно
 				MakeTransparent(root, "PadObj/Window");
 			}
 		}

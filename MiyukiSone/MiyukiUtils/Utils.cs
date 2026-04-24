@@ -374,6 +374,8 @@ namespace MiyukiSone
 			return result;
 		}
 
+		public static string Separator = LocalizationManager.CurrentLanguage == "English" || LocalizationManager.CurrentLanguage == "Korean" ? " " : "";
+
 		public static string GetLocalizedText<T>(T item) where T : IP_MiyukiLocalizable
 		{
 			if (item == null) return null;

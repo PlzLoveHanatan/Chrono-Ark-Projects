@@ -13,6 +13,7 @@ using System.Linq;
 using Dialogical;
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Newtonsoft.Json.Serialization;
 
 namespace MiyukiSone
 {
@@ -32,9 +33,10 @@ namespace MiyukiSone
 		private GameObject btn_yes;
 		private GameObject btn_no;
 
-		private const string Btn_Yes_Sprite = "MiyukiVisual/Dialogue/dlg_btn_yes.png";
-		private const string Btn_No_Sprite = "MiyukiVisual/Dialogue/dlg_btn_no.png";
-		private const string Btn_Kiss_Sprite = "MiyukiVisual/Dialogue/dlg_btn_kiss.png";
+		private const string relativePath = "Assets/Images/Dialogue/";
+		private const string Btn_Yes_Sprite = relativePath + "dlg_btn_yes.png";
+		private const string Btn_No_Sprite = relativePath + "dlg_btn_no.png";
+		private const string Btn_Kiss_Sprite = relativePath + "dlg_btn_kiss.png";
 
 		public DialogueState CurrentDialogueState;
 		public bool IsDoubleButton;
@@ -68,10 +70,10 @@ namespace MiyukiSone
 
 		private void CreateButtons()
 		{
-			Sprite spriteYes = yesButtonSprite ?? UtilsUI.GetSpriteFromMod(Btn_Yes_Sprite);
-			Sprite spriteNo = noButtonSprite ?? UtilsUI.GetSpriteFromMod(Btn_No_Sprite);
+			Sprite spriteYes = yesButtonSprite ?? UtilsUI.GetSpriteFromAsset(Btn_Yes_Sprite);
+			Sprite spriteNo = noButtonSprite ?? UtilsUI.GetSpriteFromAsset(Btn_No_Sprite);
 
-			if (CurrentDialogueState == DialogueState.kiss) spriteYes = UtilsUI.GetSpriteFromMod(Btn_Kiss_Sprite);
+			if (CurrentDialogueState == DialogueState.kiss) spriteYes = UtilsUI.GetSpriteFromAsset(Btn_Kiss_Sprite);
 
 			bool swapButtonsPos = MiyukiDecides;
 			Vector2 yesPos = swapButtonsPos ? noButtonPosition : yesButtonPosition;
@@ -241,13 +243,10 @@ namespace MiyukiSone
 				elapsed += Time.deltaTime;
 				float progress = elapsed / duration;
 
-				// движение вверх с рандомным X
 				t.localPosition = Vector3.Lerp(startPos, endPos, progress);
 
-				// легкий fade
 				canvasGroup.alpha = Mathf.Lerp(1f, 0f, progress);
 
-				// пульс / сердцебиение
 				float pulse = Mathf.Sin(progress * Mathf.PI * 2f) * 0.03f; // частота и амплитуда
 				t.localScale = startScale * (1f + pulse);
 
@@ -274,7 +273,7 @@ namespace MiyukiSone
 			Vector3 endPos = startPos + new Vector3(0, -200f, 0);
 
 			Vector3 startScale = t.localScale;
-			Vector3 endScale = startScale * 0.9f; // лёгкое "сжатие" перед смертью
+			Vector3 endScale = startScale * 0.9f;
 
 			float elapsed = 0f;
 
@@ -283,7 +282,6 @@ namespace MiyukiSone
 				elapsed += Time.deltaTime;
 				float p = elapsed / duration;
 
-				// Плавность аниме-стиля (ease-in)
 				float eased = p * p;
 
 				t.rotation = Quaternion.Lerp(startRot, endRot, eased);
@@ -306,7 +304,6 @@ namespace MiyukiSone
 			float maxScaleMultiplier = 1.16f;
 			float maxTilt = 4f;
 
-			// случайный наклон вправо или влево
 			float tiltDirection = UnityEngine.Random.value < 0.5f ? 1f : -1f;
 
 			float elapsed = 0f;
@@ -322,7 +319,6 @@ namespace MiyukiSone
 
 				t.localScale = startScale * scale;
 
-				// наклон вправо или влево
 				float tilt = Mathf.Sin(p * Mathf.PI) * maxTilt * tiltDirection;
 				t.rotation = Quaternion.Euler(0, 0, tilt);
 
@@ -350,7 +346,7 @@ namespace MiyukiSone
 
 			float elapsed = 0f;
 			float shakeDuration = duration * 0.3f;
-			float maxShake = 4f; // ← регулируй тут
+			float maxShake = 4f;
 
 			while (elapsed < duration)
 			{
@@ -359,7 +355,7 @@ namespace MiyukiSone
 
 				if (elapsed < shakeDuration)
 				{
-					float shakeProgress = 1f - (elapsed / shakeDuration); // затухание
+					float shakeProgress = 1f - (elapsed / shakeDuration);
 					float currentShake = maxShake * shakeProgress;
 
 					t.localPosition = originalPos + new Vector3(
@@ -370,7 +366,7 @@ namespace MiyukiSone
 				else
 				{
 					float fallProgress = (elapsed - shakeDuration) / (duration - shakeDuration);
-					float easedFall = fallProgress * fallProgress; // ускорение падения
+					float easedFall = fallProgress * fallProgress;
 
 					t.localPosition = Vector3.Lerp(originalPos, fallPos, easedFall);
 					cg.alpha = 1f - p;

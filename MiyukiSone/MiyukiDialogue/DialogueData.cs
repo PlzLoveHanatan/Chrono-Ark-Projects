@@ -50,7 +50,7 @@ namespace MiyukiSone
 		private class KissDialogueData
 		{
 			public List<DialogueLine> Yes { get; set; }
-			public Dictionary<string, List<DialogueLine>> no { get; set; }
+			public Dictionary<string, List<DialogueLine>> No { get; set; }
 		}
 
 		private class RootDialogueData
@@ -94,11 +94,7 @@ namespace MiyukiSone
 
 			HashSet<string> usedKeys = isYes ? UsedLoveYesKeys : UsedLoveNoKeys;
 
-			if (usedKeys.Count >= allLines.Count)
-			{
-				Debug.Log($"Все love фразы (yes:{isYes}) были показаны. Сбрасываем историю.");
-				usedKeys.Clear();
-			}
+			if (usedKeys.Count >= allLines.Count) usedKeys.Clear();
 
 			var availableLines = allLines.Where(line => !usedKeys.Contains(line.Key)).ToList();
 
@@ -119,15 +115,9 @@ namespace MiyukiSone
 		{
 			if (isYes && IsYandere) isYes = false;
 			var line = GetRandomLoveLine(isYes);
-			if (line == null)
-			{
-				Debug.LogError($"Не найдена строка для love диалога, isYes: {isYes}");
-				return;
-			}
-
+			if (line == null) return;
 			string text = GetLocalizedText(line);
 			StartMiyukiText(text);
-			Debug.Log($"Love dialog - Audio: {line.AudioFile}, Key: {line.Key}");
 			PlaySoundFromAsset($"Assets/Audio/Dialogue/Love/{line.AudioFile}.ogg", true);
 		}
 		#endregion
@@ -173,10 +163,10 @@ namespace MiyukiSone
 
 		private static DialogueLine GetCurrentKissNoLine()
 		{
-			if (_dialogues?.Kiss?.no == null) return null;
+			if (_dialogues?.Kiss?.No == null) return null;
 
 			string key = GetKissNoKey(CurrentKissTry);
-			if (!_dialogues.Kiss.no.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
+			if (!_dialogues.Kiss.No.TryGetValue(key, out var phrases) || phrases == null || phrases.Count == 0) return null;
 			int index = (KissTryCount == 0) ? 0 : (phrases.Count > 1 ? 1 : 0);
 			return index < phrases.Count ? phrases[index] : null;
 		}

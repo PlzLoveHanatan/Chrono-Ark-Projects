@@ -29,7 +29,7 @@ namespace MiyukiSone
 	{
 		public const string modname = "MiyukiSone";
 
-		public const string version = "0.9";
+		public const string version = "0.9a";
 
 		public const string author = "MiyukiSone";
 

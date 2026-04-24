@@ -17,7 +17,7 @@ namespace MiyukiSone
 		#region Data & Constructors
 		public static readonly Dictionary<DialogueState, List<string>> DialogueSprites = new Dictionary<DialogueState, List<string>>()
 		{
-			{ DialogueState.love, new List<string> {"dlg_love_01", "dlg_love_02", "dlg_love_03", "dlg_love_04", "dlg_love_05", "dlg_love_06", "dlg_love_07", "dlg_love_08", "dlg_love_09", "dlg_love_010", "dlg_love_011" } },
+			{ DialogueState.love, new List<string> {"dlg_love_01", "dlg_love_02", "dlg_love_03", "dlg_love_04", "dlg_love_05", "dlg_love_06", "dlg_love_07", "dlg_love_08", "dlg_love_09", "dlg_love_10", "dlg_love_11" } },
 			{ DialogueState.kiss, new List<string> { "dlg_kiss_01", "dlg_kiss_02" } },
 		};
 
@@ -43,7 +43,7 @@ namespace MiyukiSone
 			for (int i = 0; i < amount; i++)
 			{
 				DialogueState finalState = state ?? DialogueState.love;
-				if (RandomManager.RandomPer("MiyukiDialogueKiss", 100, 15)) finalState = DialogueState.kiss;
+				if (Utils.RandomPer(10)) finalState = DialogueState.kiss;
 
 				string randomSprite;
 				if (!MiyukiSaveManager.Instance.CurrentData.EternalPromise)
@@ -60,7 +60,7 @@ namespace MiyukiSone
 				}			
 
 				Canvas canvas = GetOrCreateDialogueCanvas();
-				Sprite sprite = UtilsUI.GetSpriteFromMod("MiyukiVisual/Dialogue/" + randomSprite + ".png");
+				Sprite sprite = UtilsUI.GetSpriteFromAsset("Assets/Images/Dialogue/" + randomSprite + ".png");
 				Vector2 size = new Vector2(700, 168);
 				Vector3 finalPosition = position ?? GetRandomPosition(size);
 				GameObject newWindow = UtilsUI.CreateUIImage($"Dialogue_{randomSprite}", canvas.transform, sprite, size, finalPosition, true);
