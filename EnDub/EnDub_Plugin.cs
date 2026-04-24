@@ -15,7 +15,7 @@ namespace EnDub
 	public class EnDub_Plugin : ChronoArkPlugin
 	{
 		public const string modname = "EnDub";
-		public const string version = "1.08";
+		public const string version = "1.10";
 		public const string author = "Midana";
 
 		public static ModInfo ThisMod => ModManager.getModInfo(modname);
@@ -31,8 +31,8 @@ namespace EnDub
 			try
 			{
 				EnDubDialogueData.LoadDialogue();
-				var console = EnDubConsole.Instance;
-				console.ShowConsole();
+				EnDubConsole.Instance?.ShowConsole();
+				EnDubSaveManager.Instance?.Save();
 				harmony.PatchAll();
 			}
 			catch (System.Exception e)

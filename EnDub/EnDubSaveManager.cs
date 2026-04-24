@@ -17,7 +17,7 @@ namespace EnDub
 		[Serializable]
 		public class EnDubSaveData
 		{
-			public float MainAudioVolume;
+			public float MainAudioVolume = 3;
 			public float Azar;
 			public float Charon;
 			public float Johan;
@@ -87,6 +87,7 @@ namespace EnDub
 			}
 			else
 			{
+				Save();
 				Debug.Log($"Json file is not found in the {SavePath} path");
 			}
 		}
