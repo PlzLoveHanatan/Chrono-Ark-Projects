@@ -84,6 +84,8 @@ namespace MiyukiSone
 				"MerryGoRound",
 				"AboutYou",
 				"Nocturne",
+				"Nocturne2",
+				"ToBecomeOne",
 			};
 
 			SetVolumeSettings();

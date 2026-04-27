@@ -218,6 +218,13 @@ namespace MiyukiSone
 				if (MiyukiInParty)
 				{
 					if (!IsCamp()) MiyukiData.FinalViewCharge++;
+
+					if (MiyukiDecides)
+					{
+						MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
+						MiyukiSaveManager.Instance.Save();
+					}
+
 					MiyukiCharImg.UpdateCharacterImage();
 
 					if (!MiyukiSaveManager.Instance.CurrentData.GameRestarted && MiyukiSaveManager.Instance.CurrentData.GameUpdated)

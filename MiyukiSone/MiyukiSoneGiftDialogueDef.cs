@@ -7,7 +7,7 @@ using ChronoArkMod.Template;
 namespace MiyukiSone
 {
 	// Based on Feiyap code
-	public class GiftDialogueDef : CustomCharacterGDE<ModDefinition>
+	public class GiftDialogueDef : CustomCharacterGDE<MiyukiSone_ModDefinition>
 	{
 		public override ModGDEInfo.LoadingType GetLoadingType()
 		{
