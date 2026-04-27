@@ -7,7 +7,7 @@ using ChronoArkMod.Template;
 namespace MiyukiSone
 {
 	// Based on Feiyap code
-	public class GiftDialogueDef : CustomCharacterGDE<MiyukiSone_ModDefinition>
+	public class GiftDialogueDef : CustomCharacterGDE<ModDefinition>
 	{
 		public override ModGDEInfo.LoadingType GetLoadingType()
 		{
@@ -31,6 +31,11 @@ namespace MiyukiSone
 				Gifts.FriendShip.DialogueTree_FriendShip_Lv_1,
 				Gifts.FriendShip.DialogueTree_FriendShip_Lv_2,
 				Gifts.FriendShip.DialogueTree_FriendShip_Lv_3,
+			};
+
+			Dialogue_TrueEnd = new List<string>()
+			{
+
 			};
 		}
 

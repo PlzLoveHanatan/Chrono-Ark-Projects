@@ -34,21 +34,21 @@ namespace MiyukiSone
 
 			public class FriendShip_Lv_1_Node_1 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_1/01";
+				protected override string NodePath() => "Gift_Normal/01";
 				protected override string CharacterPosePath() => "";
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_1_Node_2);
 			}
 
 			public class FriendShip_Lv_1_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_1/02";
+				protected override string NodePath() => "Gift_Normal/02";
 				protected override string CharacterPosePath() => "";
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_1_Node_3);
 			}
 
 			public class FriendShip_Lv_1_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_1/03";
+				protected override string NodePath() => "Gift_Normal/03";
 				protected override string CharacterPosePath() => "";
 				public override Type NextDialogueNodeCreatorType => null;
 			}
