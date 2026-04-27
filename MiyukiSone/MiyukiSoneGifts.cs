@@ -19,14 +19,8 @@ namespace MiyukiSone
 	{
 		public class FriendShip
 		{
-			public static string DialogueTree_FriendShip_Lv_1
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<FriendShip_Lv_1>());
-				}
-			}
-
+			private static string _DialogueTree_FriendShip_Lv_1;
+			public static string DialogueTree_FriendShip_Lv_1 => _DialogueTree_FriendShip_Lv_1 ?? (_DialogueTree_FriendShip_Lv_1 = Utils.CreateNode<FriendShip_Lv_1>());
 			public class FriendShip_Lv_1 : BaseGiftDialogue
 			{
 				public override Type FirstNodeCreatorType => typeof(FriendShip_Lv_1_Node_1);
@@ -35,31 +29,23 @@ namespace MiyukiSone
 			public class FriendShip_Lv_1_Node_1 : BaseGiftNode
 			{
 				protected override string NodePath() => "Gift_Normal/01";
-				protected override string CharacterPosePath() => "";
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_1_Node_2);
 			}
 
 			public class FriendShip_Lv_1_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_Normal/02";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_Normal/02";			
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_1_Node_3);
 			}
 
 			public class FriendShip_Lv_1_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_Normal/03";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_Normal/03";				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 
-			public static string DialogueTree_FriendShip_Lv_2
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<FriendShip_Lv_2>());
-				}
-			}
+			private static string _DialogueTree_FriendShip_Lv_2;
+			public static string DialogueTree_FriendShip_Lv_2 => _DialogueTree_FriendShip_Lv_2 ?? (_DialogueTree_FriendShip_Lv_2 = Utils.CreateNode<FriendShip_Lv_2>());
 
 			public class FriendShip_Lv_2 : BaseGiftDialogue
 			{
@@ -68,32 +54,24 @@ namespace MiyukiSone
 
 			public class FriendShip_Lv_2_Node_1 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_2/01";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "FriendShip_Lv_2/01";				
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_2_Node_2);
 			}
 
 			public class FriendShip_Lv_2_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_2/02";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "FriendShip_Lv_2/02";				
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_2_Node_3);
 			}
 
 			public class FriendShip_Lv_2_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_2/03";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "FriendShip_Lv_2/03";				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 
-			public static string DialogueTree_FriendShip_Lv_3
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<FriendShip_Lv_3>());
-				}
-			}
+			private static string _DialogueTree_FriendShip_Lv_3;
+			public static string DialogueTree_FriendShip_Lv_3 => _DialogueTree_FriendShip_Lv_3 ?? (_DialogueTree_FriendShip_Lv_3 = Utils.CreateNode<FriendShip_Lv_3>());
 
 			public class FriendShip_Lv_3 : BaseGiftDialogue
 			{
@@ -102,35 +80,27 @@ namespace MiyukiSone
 
 			public class FriendShip_Lv_3_Node_1 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_3/01";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "FriendShip_Lv_3/01";			
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_3_Node_2);
 			}
 
 			public class FriendShip_Lv_3_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_3/02";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "FriendShip_Lv_3/02";				
 				public override Type NextDialogueNodeCreatorType => typeof(FriendShip_Lv_3_Node_3);
 			}
 
 			public class FriendShip_Lv_3_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "FriendShip_Lv_3/03";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "FriendShip_Lv_3/03";				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 		}
 
 		public class Normal
 		{
-			public static string DialogueTree_Normal
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<Gift_Normal>());
-				}
-			}
+			private static string _DialogueTree_Normal;
+			public static string DialogueTree_Normal => _DialogueTree_Normal ?? (_DialogueTree_Normal = Utils.CreateNode<Gift_Normal>());
 
 			public class Gift_Normal : BaseGiftDialogue
 			{
@@ -139,22 +109,15 @@ namespace MiyukiSone
 
 			public class Gift_Normal_Node_1 : BaseGiftNode
 			{
-				
-				protected override string NodePath() => $"Gift_Normal/0{RandomManager.RandomInt("RandomInt", 1, 7)}"; // Enumerable.Range(1, 6)?.RandomElement()
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => $"Gift_Normal/0{RandomManager.RandomInt("RandomInt", 1, 7)}"; // Enumerable.Range(1, 6)?.RandomElement()				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 		}
 
 		public class Preferable
 		{
-			public static string DialogueTree_Collar
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<Gift_Collar>());
-				}
-			}
+			private static string _DialogueTree_Collar;
+			public static string DialogueTree_Collar => _DialogueTree_Collar ?? (_DialogueTree_Collar = Utils.CreateNode<Gift_Collar>());
 
 			public class Gift_Collar : BaseGiftDialogue
 			{
@@ -164,31 +127,23 @@ namespace MiyukiSone
 			public class Gift_Collar_Node_1 : BaseGiftNode
 			{
 				protected override string NodePath() => "Gift_Collar/01";
-				protected override string CharacterPosePath() => "";
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_Collar_Node_2);
 			}
 
 			public class Gift_Collar_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_Collar/02";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_Collar/02";				
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_Collar_Node_3);
 			}
 
 			public class Gift_Collar_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_Collar/03";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_Collar/03";				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 
-			public static string DialogueTree_DVD
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<Gift_DVD>());
-				}
-			}
+			private static string _DialogueTree_DVD;
+			public static string DialogueTree_DVD => _DialogueTree_DVD ?? (_DialogueTree_DVD = Utils.CreateNode<Gift_DVD>());
 
 			public class Gift_DVD : BaseGiftDialogue
 			{
@@ -197,32 +152,24 @@ namespace MiyukiSone
 
 			public class Gift_DVD_Node_1 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_DVD/01";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_DVD/01";				
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_DVD_Node_2);
 			}
 
 			public class Gift_DVD_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_DVD/02";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_DVD/02";				
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_DVD_Node_3);
 			}
 
 			public class Gift_DVD_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_DVD/03";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_DVD/03";				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 
-			public static string DialogueTree_Knife
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<Gift_Knife>());
-				}
-			}
+			private static string _DialogueTree_Knife;
+			public static string DialogueTree_Knife => _DialogueTree_Knife ?? (_DialogueTree_Knife = Utils.CreateNode<Gift_Knife>());
 
 			public class Gift_Knife : BaseGiftDialogue
 			{
@@ -231,32 +178,24 @@ namespace MiyukiSone
 
 			public class Gift_Knife_Node_1 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_Knife/01";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_Knife/01";				
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_Knife_Node_2);
 			}
 
 			public class Gift_Knife_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_Knife/02";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_Knife/02";				
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_Knife_Node_3);
 			}
 
 			public class Gift_Knife_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_Knife/03";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_Knife/03";				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 
-			public static string DialogueTree_SF_Novel
-			{
-				get
-				{
-					return Utils.ThisMod.assetInfo.ConstructObjectByCode(DialogueCreator.CreateDialogueTree<Gift_SF_Novel>());
-				}
-			}
+			private static string _DialogueTree_SF_Novel;
+			public static string DialogueTree_SF_Novel => _DialogueTree_SF_Novel ?? (_DialogueTree_SF_Novel = Utils.CreateNode<Gift_SF_Novel>());
 
 			public class Gift_SF_Novel : BaseGiftDialogue
 			{
@@ -265,22 +204,19 @@ namespace MiyukiSone
 
 			public class Gift_SF_Novel_Node_1 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_SF_Novel/01";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_SF_Novel/01";				
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_SF_Novel_Node_2);
 			}
 
 			public class Gift_SF_Novel_Node_2 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_SF_Novel/02";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_SF_Novel/02";				
 				public override Type NextDialogueNodeCreatorType => typeof(Gift_SF_Novel_Node_3);
 			}
 
 			public class Gift_SF_Novel_Node_3 : BaseGiftNode
 			{
-				protected override string NodePath() => "Gift_SF_Novel/03";
-				protected override string CharacterPosePath() => "";
+				protected override string NodePath() => "Gift_SF_Novel/03";				
 				public override Type NextDialogueNodeCreatorType => null;
 			}
 		}

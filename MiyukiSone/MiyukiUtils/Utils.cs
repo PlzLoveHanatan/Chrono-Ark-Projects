@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChronoArkMod;
+using ChronoArkMod.DialogueCreate;
 using ChronoArkMod.ModData;
 using DarkTonic.MasterAudio;
+using Dialogical;
 using GameDataEditor;
 using I2.Loc;
 using Spine;
@@ -18,6 +20,7 @@ using static CharacterDocument;
 using static MiyukiSone.Affection;
 using static MiyukiSone.Buffs;
 using static MiyukiSone.EventsData;
+using static MiyukiSone.Gifts.Preferable;
 using static MiyukiSone.Skills;
 using static MiyukiSone.UtilsUI;
 
@@ -405,6 +408,12 @@ namespace MiyukiSone
 			List<string> equipList = rarity == 4 ? PlayData.TSavedata.EquipList_Legendary : rarity == 3 ? PlayData.TSavedata.EquipList_Unique : null;
 			List<ItemBase> Equip = Enumerable.Range(0, selectFrom ?? 3).Select(_ => ItemBase.GetItem(PlayData.GetEquipRandom(rarity, false, null))).ToList();
 			UIManager.InstantiateActive(UIManager.inst.SelectItemUI).GetComponent<SelectItemUI>().Init(Equip, new RandomItemBtn.SelectItemClickDel(i => { equipList?.Add(i.itemkey); InventoryManager.Reward(i); }));
+		}
+
+		public static string CreateNode<T>() where T : DialogueCreator, new()
+		{
+			DialogueTree tree = DialogueCreator.CreateDialogueTree<T>();
+			return ThisMod.assetInfo.ConstructObjectByCode(tree);
 		}
 	}
 }

@@ -25,7 +25,7 @@ namespace MiyukiSone
 			}
 
 			protected abstract string NodePath();
-			protected abstract string CharacterPosePath();
+			protected virtual string CharacterPosePath() => "";
 
 			public override DialogueNodeParameter SetDialogueNodeParameter()
 			{
