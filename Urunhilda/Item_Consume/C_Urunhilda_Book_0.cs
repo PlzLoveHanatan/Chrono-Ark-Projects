@@ -55,8 +55,8 @@ namespace Urunhilda
                     SaveManager.NowData.unlockList.SkillPreView.Add(skill.MySkill.KeyID);
                 }
             }
-
-            FieldSystem.DelayInput(BattleSystem.I_OtherSkillSelect(list, new SkillButton.SkillClickDel(this.SkillAdd), ScriptLocalization.System_Item.SkillAdd, false, true, true, true, false));
+			//PlayData.TSavedata.UseItemKeys.Add(ModItemKeys.Item_Consume_C_Urunhilda_Book_0);
+			FieldSystem.DelayInput(BattleSystem.I_OtherSkillSelect(list, new SkillButton.SkillClickDel(this.SkillAdd), ScriptLocalization.System_Item.SkillAdd, false, true, true, true, false));
             MasterAudio.PlaySound("BookFlip", 1f);
 
             return true;

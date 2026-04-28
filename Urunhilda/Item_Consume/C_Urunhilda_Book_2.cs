@@ -28,7 +28,7 @@ namespace Urunhilda
                 return false;
             }
 
-            PlayData.TSavedata.UseItemKeys.Add(GDEItemKeys.Item_Consume_SkillBookLucy);
+            PlayData.TSavedata.UseItemKeys.Add(ModItemKeys.Item_Consume_C_Urunhilda_Book_2);
 
             FieldSystem.DelayInput(BattleSystem.I_OtherSkillSelect(
                 list2,

@@ -24,8 +24,8 @@ namespace Urunhilda
             Utils.ForceMPUpgrade();
             MasterAudio.PlaySound("Potion", 1f);
             CharInfo.OriginStat.atk += 1f;
-
-            return true;
+			//PlayData.TSavedata.UseItemKeys.Add(ModItemKeys.Item_Consume_C_Urunhilda_RecoverinRed);
+			return true;
         }
     }
 }
