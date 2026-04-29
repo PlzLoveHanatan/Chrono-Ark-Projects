@@ -310,7 +310,7 @@ namespace MiyukiSone
 			string buffKey = YanderePawBuffKeysEnemies.RandomElement();
 			if (string.IsNullOrEmpty(buffKey) || BattleSystem.instance.EnemyTeam.AliveChars.Count == 0) return;
 			var enemy = BattleSystem.instance.EnemyTeam.AliveChars.Where(e => e.BuffReturn(buffKey, false) == null).ToList().RandomElement()?.Let(e => e.AddBuff(buffKey));
-			if (enemy.BuffReturn(buffKey, false) is Buffs.EnemyExtraAction b && b != null) b.Init();
+			//if (enemy.BuffReturn(buffKey, false) is Buffs.EnemyExtraAction b && b != null) b.Init();
 		}
 
 		private static void ApplyBuffAlly()

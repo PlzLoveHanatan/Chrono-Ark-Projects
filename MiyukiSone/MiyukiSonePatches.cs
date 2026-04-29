@@ -25,6 +25,7 @@ using Spine;
 using static ItemCollection;
 using static Gamepad_HoldKey;
 using System.Runtime.InteropServices.WindowsRuntime;
+using AItem;
 
 namespace MiyukiSone
 {
@@ -126,7 +127,7 @@ namespace MiyukiSone
 			}
 		}
 
-		//Redirect skills in Yandere mood
+		//Redirect skills in Yandere mood + pity system to change the mood from Yandere
 		[HarmonyPatch(typeof(BattleAlly))]
 		[HarmonyPatch(nameof(BattleAlly.UseSkill), new Type[] { typeof(Skill), typeof(List<BattleChar>) })]
 		public class Skill_Redirect_Patch
@@ -135,6 +136,28 @@ namespace MiyukiSone
 			[HarmonyPriority(Priority.First)]
 			public static bool Prefix(BattleAlly __instance, Skill skill, ref List<BattleChar> Target)
 			{
+				var list = new HashSet<string>()
+				{
+					GDEItemKeys.Skill_S_HPPotion, // Healing Potion
+					GDEItemKeys.Skill_S_Potion_Shield, // Potion of Tough Skin
+					GDEItemKeys.Skill_S_Potion_MP, // Mana Potion
+					GDEItemKeys.Skill_S_Potion_Purification, // Purifying Potion
+					GDEItemKeys.Skill_S_Potion_Healer,
+					GDEItemKeys.Skill_S_GoldenApple, // Golden Apple
+					GDEItemKeys.Skill_S_GoldenBread, // Golden Bread
+					GDEItemKeys.Skill_S_Bread,
+					GDEItemKeys.Skill_S_Herb,
+					GDEItemKeys.Skill_S_Sparkling, // Tablet
+					GDEItemKeys.Skill_S_RedHerb, // Glowing Crimson Herb
+					GDEItemKeys.Skill_S_RedWing, // Smokescreen
+				};
+
+				if (Target.Contains(MiyukiBchar) && list.Contains(skill.MySkill.KeyID) && MiyukiForces)
+				{
+					CurrentAffection = MiyukiAffection.DereDere;
+					EventsData.MiyukiTextEvent();
+				}
+
 				if (IsYandere && skill.Master.Info.KeyData == ModItemKeys.Character_Miyuki && Utils.RandomPer(20))
 				{
 					if (MiyukiDecides)
@@ -154,14 +177,14 @@ namespace MiyukiSone
 						{
 							Target.Clear();
 							Target.Add(target);
-							if (skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Rare_FinalView || skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Rare_FinalView_0) BattleSystem.DelayInput(TargetCheck(target));
-							EventsData.MiyukiTextEvent(CurrentAffection);
+							if (skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Rare_FinalView || skill.MySkill.KeyID == ModItemKeys.Skill_S_Miyuki_Rare_FinalView_Particle) BattleSystem.DelayInput(TargetCheck(target));
+							EventsData.MiyukiTextEvent();
 							return true;
 						}
 					}
 					else
 					{
-						EventsData.MiyukiTextEvent(CurrentAffection);
+						EventsData.MiyukiTextEvent();
 						return false;
 					}
 				}
@@ -178,7 +201,7 @@ namespace MiyukiSone
 
 		[HarmonyPatch(typeof(BattleSystem))]
 		[HarmonyPatch(nameof(BattleSystem.TurnEnd))]
-		class Patch_BattleSystem_TurnEnd
+		public class Patch_BattleSystem_TurnEnd
 		{
 			[HarmonyPrefix]
 			public static bool Prefix()
@@ -219,7 +242,7 @@ namespace MiyukiSone
 				{
 					if (!IsCamp()) MiyukiData.FinalViewCharge++;
 
-					if (MiyukiDecides)
+					if (Utils.RandomPer(10) && !MiyukiSaveManager.Instance.CurrentData.GameUpdated)
 					{
 						MiyukiSaveManager.Instance.CurrentData.GameUpdated = true;
 						MiyukiSaveManager.Instance.Save();
@@ -233,6 +256,10 @@ namespace MiyukiSone
 						MiyukiSaveManager.Instance.Save();
 						FieldSystem.instance.StartCoroutine(WaitForSeconds());
 					}
+				}
+				else
+				{
+					if (MiyukiDecides) EventsData.MiyukiTextEvent(MiyukiAffection.Yandere);
 				}
 			}
 
