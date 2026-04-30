@@ -12,10 +12,10 @@ using UnityEngine;
 
 namespace EnDub
 {
-	public class EnDubSaveManager
+	public class SaveManager
 	{
 		[Serializable]
-		public class EnDubSaveData
+		public class SaveData
 		{
 			public float MainAudioVolume = 3;
 			public float Azar;
@@ -28,31 +28,32 @@ namespace EnDub
 			public float Sizz;
 		}
 
-		private EnDubSaveManager()
+		private SaveManager()
 		{
-			_currentData = new EnDubSaveData();
+			_currentData = new SaveData();
 		}
 
-		public EnDubSaveData CurrentData => _currentData;
-		private EnDubSaveData _currentData;
+		public SaveData CurrentData => _currentData;
+		private SaveData _currentData;
 
-		private static EnDubSaveManager _instance;
+		private static SaveManager _instance;
 
-		public static EnDubSaveManager Instance
+		public static SaveManager Instance
 		{
 			get
 			{
 				if (_instance == null)
 				{
-					_instance = new EnDubSaveManager();
+					_instance = new SaveManager();
 					_instance.Load();
 				}
 				return _instance;
 			}
 		}
+
 		private static string SavePath => Path.Combine(Application.persistentDataPath, "Endub", "Settings.json");
 
-		private static readonly Dictionary<string, Func<EnDubSaveData, float>> CharacterVolumeMap = new Dictionary<string, Func<EnDubSaveData, float>>
+		private static readonly Dictionary<string, Func<SaveData, float>> CharacterVolumeMap = new Dictionary<string, Func<SaveData, float>>
 		{
 			{ "Azar", data => data.Azar },
 			{ "Charon", data => data.Charon },
@@ -78,7 +79,7 @@ namespace EnDub
 				try
 				{
 					string json = File.ReadAllText(SavePath);
-					_currentData = JsonConvert.DeserializeObject<EnDubSaveData>(json) ?? new EnDubSaveData();
+					_currentData = JsonConvert.DeserializeObject<SaveData>(json) ?? new SaveData();
 				}
 				catch (Exception e)
 				{

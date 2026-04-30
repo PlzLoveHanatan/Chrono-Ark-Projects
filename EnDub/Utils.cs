@@ -12,9 +12,11 @@ using Debug = UnityEngine.Debug;
 
 namespace EnDub
 {
-	public static class EnDubUtils
+	public static class Utils
 	{
 		public static ModInfo ThisMod => ModManager.getModInfo("EnDub");
+		public static string Path_CSV = Path.Combine(Application.dataPath, "StreamingAssets", "LangDataDB.csv");
+		public static string Path_Json = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ThisMod.DirectoryName, "Assets/Dialogues.json");
 		private static GameObject _currentTempGO;
 
 		public static Sprite GetSpriteFromMod(string path)
@@ -68,7 +70,7 @@ namespace EnDub
 			AudioSource audioSource = tempGO.AddComponent<AudioSource>();
 
 			//float finalVolume = Settings.AudioVolume > 0 ? Settings.AudioVolume : SaveManager.NowSaveSlot.SoundEffectVolume / 100f;
-			audioSource.PlayOneShot(clip, Mathf.Clamp(EnDubSaveManager.Instance.FinalVolume(character), 0f, 6f));
+			audioSource.PlayOneShot(clip, Mathf.Clamp(SaveManager.Instance.FinalVolume(character), 0f, 6f));
 
 			_currentTempGO = tempGO;
 			UnityEngine.Object.Destroy(tempGO, clip.length);

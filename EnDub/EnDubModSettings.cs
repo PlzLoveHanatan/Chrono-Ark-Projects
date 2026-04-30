@@ -15,7 +15,7 @@ namespace EnDub
 
 		public static T GetOption<T>(string key) where T : SettingEntry
 		{
-			return EnDubUtils.ThisMod.GetSetting<T>(key);
+			return Utils.ThisMod.GetSetting<T>(key);
 		}
 	}
 }

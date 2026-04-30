@@ -5,17 +5,17 @@ using ChronoArkMod;
 
 namespace EnDub
 {
-	public class EnDubConsole : MonoBehaviour
+	public class Console : MonoBehaviour
 	{
-		private static EnDubConsole _instance;
-		public static EnDubConsole Instance
+		private static Console _instance;
+		public static Console Instance
 		{
 			get
 			{
 				if (_instance == null)
 				{
-					GameObject go = new GameObject("EnDubConsole");
-					_instance = go.AddComponent<EnDubConsole>();
+					GameObject go = new GameObject("Console");
+					_instance = go.AddComponent<Console>();
 					DontDestroyOnLoad(go);
 				}
 				return _instance;
@@ -53,7 +53,7 @@ namespace EnDub
 			{
 				_instance = this;
 				DontDestroyOnLoad(gameObject);
-				_backgroundTexture = EnDubUtils.GetSpriteFromMod("watermark.png")?.texture;
+				_backgroundTexture = Utils.GetSpriteFromMod("watermark.png")?.texture;
 				InitCommands();
 				ShowHelp();
 			}			
@@ -70,7 +70,7 @@ namespace EnDub
 
 			if (_backgroundTexture == null && !EnDubModSettings.SimpleBackground)
 			{
-				var sprite = EnDubUtils.GetSpriteFromMod("watermark.png");
+				var sprite = Utils.GetSpriteFromMod("watermark.png");
 				_backgroundTexture = sprite.texture;
 				Log("Background loaded successfully");
 			}
@@ -210,7 +210,7 @@ namespace EnDub
 
 		private void InitCommands()
 		{
-			var saveData = EnDubSaveManager.Instance.CurrentData;
+			var saveData = SaveManager.Instance.CurrentData;
 
 			_commands = new Dictionary<string, System.Action<string[]>>
 			{
@@ -226,12 +226,40 @@ namespace EnDub
 					{
 						vol = Mathf.Clamp(vol, 0f, 6f);
 						saveData.MainAudioVolume = vol;
-						EnDubSaveManager.Instance.Save();
+						SaveManager.Instance.Save();
 						Log($"Main set to {vol}");
 					}
 					else
 					{
 						Log($"Invalid number: {args[0]}");
+					}
+				},
+
+				["restore"] = (args) =>
+				{
+					Log("Restoring original dialogue texts...");
+					try
+					{
+						DialogueFixer.Restore();
+						Log("Restore complete!");
+					}
+					catch (System.Exception ex)
+					{
+						Log($"Restore failed: {ex.Message}");
+					}
+				},
+
+				["loadfixes"] = (args) =>
+				{
+					Log("Applying dialogue fixes...");
+					try
+					{
+						DialogueFixer.Initialize();
+						Log("Fixes applied successfully!");
+					}
+					catch (System.Exception ex)
+					{
+						Log($"Failed to apply fixes: {ex.Message}");
 					}
 				}
 			};
@@ -259,10 +287,10 @@ namespace EnDub
 		{
 			_commands[name] = (args) =>
 			{
-				var saveData = EnDubSaveManager.Instance.CurrentData;
+				var saveData = SaveManager.Instance.CurrentData;
 
 				string key = name.Substring(0, 1).ToUpper() + name.Substring(1);
-				float? current = EnDubSaveManager.Instance.GetCharacterVolume(key);
+				float? current = SaveManager.Instance.GetCharacterVolume(key);
 
 				if (args.Length == 0)
 				{
@@ -274,7 +302,7 @@ namespace EnDub
 				{
 					float vol = Mathf.Clamp(volF, 0f, 6f);
 					setter(vol);
-					EnDubSaveManager.Instance.Save();
+					SaveManager.Instance.Save();
 					Log($"{key} set to {vol}");
 				}
 			};
@@ -300,6 +328,7 @@ namespace EnDub
 			Log("  lian [0-6]            - Lian voice volume");
 			Log("  narhan [0-6]          - Narhan voice volume");
 			Log("  silverstein [0-6]     - Silverstein voice volume");
+			Log("  sizz [0-6]            - Sizz voice volume");
 			Log("");
 			Log("  NOTE: If character volume = 0, Main Audio volume will be used instead");
 			Log("  NOTE: You can use float values (e.g. 2.5, 3.7, 4.2)");
@@ -308,6 +337,8 @@ namespace EnDub
 			Log("SYSTEM");
 			Log("  help                  - Show this help");
 			Log("  clear                 - Clear console output");
+			Log("  restore               - Restore original dialogue texts (CSV + JSON)");
+			Log("  loadfixes             - Load changed dialogue texts (CSV + JSON) for Mod compability");
 			Log("");
 
 			Log("======================================");

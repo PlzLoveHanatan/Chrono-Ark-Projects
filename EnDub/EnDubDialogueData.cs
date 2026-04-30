@@ -6,6 +6,10 @@ using UnityEngine;
 using Newtonsoft.Json;
 using GameDataEditor;
 using ChronoArkMod;
+using System.Text.RegularExpressions;
+using System.Text;
+using Microsoft.VisualBasic.FileIO;
+using System.ServiceModel.Configuration;
 
 namespace EnDub
 {
@@ -23,14 +27,14 @@ namespace EnDub
 		public string AudioFile;
 	}
 
-	public static class EnDubDialogueData
+	public static class DialogueData
 	{
 		private static List<DialogueLine> allLines;
 		private static Dictionary<string, DialogueLine> textIndex;
 
 		public static void LoadDialogue()
 		{
-			string jsonPath = Path.Combine(EnDubUtils.ThisMod.DirectoryName, "Assets", "Dialogues.json");
+			string jsonPath = Path.Combine(Utils.ThisMod.DirectoryName, "Assets", "Dialogues.json");
 
 			if (File.Exists(jsonPath))
 			{
@@ -41,6 +45,7 @@ namespace EnDub
 					textIndex = new Dictionary<string, DialogueLine>();
 					allLines.ForEach(line => AddTextIndex(line));
 					Debug.Log($"Loaded {allLines.Count} dialogue lines");
+					DialogueFixer.Initialize();
 				}
 				catch (Exception ex)
 				{
@@ -81,9 +86,9 @@ namespace EnDub
 			return allLines?.Where(l => l.Character == character && l.Skin == skin).ToList() ?? new List<DialogueLine>();
 		}
 
-		public static string GetCharacterName(string gameKey)
+		public static string GetCharacterName(string gameKey, bool isGameKey = true)
 		{
-			var dict = new Dictionary<string, string>()
+			var dicGameKey = new Dictionary<string, string>()
 			{
 				{ GDEItemKeys.Character_Azar, "Azar" },
 				{ GDEItemKeys.Character_Control, "Narhan" },
@@ -94,6 +99,21 @@ namespace EnDub
 				{ GDEItemKeys.Character_SilverStein, "Silverstein" },
 				{ GDEItemKeys.Character_Sizz, "Sizz" },
 			};
+
+			var dicString = new Dictionary<string, string>()
+			{
+				{ "Azar", "Azar" },
+				{ "Control", "Narhan" },
+				{ "Lian", "Lian" },
+				{ "Mement", "Johan" },
+				{ "Queen", "Huz" },
+				{ "ShadowPriest", "Charon" },
+				{ "SilverStein", "Silverstein" },
+				{ "Sizz", "Sizz" },
+			};
+
+			var dict = isGameKey ? dicGameKey : dicString;
+
 			return dict.TryGetValue(gameKey, out string name) ? name : "";
 		}
 	}
