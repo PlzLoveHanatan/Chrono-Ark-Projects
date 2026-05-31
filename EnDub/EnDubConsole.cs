@@ -240,7 +240,7 @@ namespace EnDub
 					Log("Restoring original dialogue texts...");
 					try
 					{
-						DialogueFixer.Restore();
+						//DialogueFixer.Restore();
 						Log("Restore complete!");
 					}
 					catch (System.Exception ex)
@@ -254,7 +254,7 @@ namespace EnDub
 					Log("Applying dialogue fixes...");
 					try
 					{
-						DialogueFixer.Initialize();
+						//DialogueFixer.Initialize();
 						Log("Fixes applied successfully!");
 					}
 					catch (System.Exception ex)
@@ -267,6 +267,8 @@ namespace EnDub
 			AddCharacter("azar", v => saveData.Azar = v);
 			AddCharacter("charon", v => saveData.Charon = v);
 			AddCharacter("huz", v => saveData.Huz = v);
+			AddCharacter("ilya", v => saveData.Ilya = v);
+			AddCharacter("joey", v => saveData.Joey = v);
 			AddCharacter("johan", v => saveData.Johan = v);
 			AddCharacter("lian", v => saveData.Lian = v);
 			AddCharacter("narhan", v => saveData.Narhan = v);
@@ -323,6 +325,7 @@ namespace EnDub
 			Log("INDIVIDUAL CHARACTER VOLUME");
 			Log("  azar [0-6]            - Azar voice volume");
 			Log("  charon [0-6]          - Charon voice volume");
+			Log("  joey [0-6]            - Joey voice volume");
 			Log("  huz [0-6]             - Huz voice volume");
 			Log("  johan [0-6]           - Johan voice volume");
 			Log("  lian [0-6]            - Lian voice volume");
@@ -337,8 +340,8 @@ namespace EnDub
 			Log("SYSTEM");
 			Log("  help                  - Show this help");
 			Log("  clear                 - Clear console output");
-			Log("  restore               - Restore original dialogue texts (CSV + JSON)");
-			Log("  loadfixes             - Load changed dialogue texts (CSV + JSON) for Mod compability");
+			//Log("  restore               - Restore original dialogue texts (CSV + JSON)");
+			//Log("  loadfixes             - Load changed dialogue texts (CSV + JSON) for Mod compability");
 			Log("");
 
 			Log("======================================");

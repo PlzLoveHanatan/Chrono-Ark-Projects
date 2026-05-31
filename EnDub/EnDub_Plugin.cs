@@ -23,7 +23,7 @@ namespace EnDub
 	public class EnDub_Plugin : ChronoArkPlugin
 	{
 		public const string modname = "EnDub";
-		public const string version = "1.11";
+		public const string version = "1.14";
 		public const string author = "Midana";
 
 		public static ModInfo ThisMod => ModManager.getModInfo(modname);
@@ -57,13 +57,7 @@ namespace EnDub
 			[HarmonyPrefix]
 			public static bool Prefix(PrintText __instance, string inText)
 			{
-				string character = null;
-				//if (inText.Contains("Not bad."))
-				//{
-				//	character = PlayData.TSavedata.Party.Any(a => a.KeyData == GDEItemKeys.Character_Mement) ? "Johan" : "Charon";
-				//}
-
-				DialogueData.GetLineByText(inText)?.Let(line => Utils.PlayCharacterAudio(character ?? line.Character, line.Skin, line.AudioFile));
+				DialogueData.GetLineByText(inText)?.Let(line => Utils.PlayCharacterAudio(line.Character, line.Skin, line.AudioFile));
 				return true;
 			}
 		}

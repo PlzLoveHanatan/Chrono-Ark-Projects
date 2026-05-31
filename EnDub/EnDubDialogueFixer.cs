@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -50,6 +49,74 @@ namespace EnDub
 			}
 		}
 
+		/// <summary>
+		/// Парсит CSV строку, сохраняя оригинальную структуру
+		/// </summary>
+		private static string[] ParseCsvLine(string line)
+		{
+			var result = new List<string>();
+			var current = new StringBuilder();
+			bool inQuotes = false;
+			int i = 0;
+
+			while (i < line.Length)
+			{
+				char c = line[i];
+
+				if (c == '"')
+				{
+					// Начало или конец кавычек
+					if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
+					{
+						// Экранированная кавычка внутри поля
+						current.Append('"');
+						i += 2;
+						continue;
+					}
+					inQuotes = !inQuotes;
+					i++;
+				}
+				else if (c == ',' && !inQuotes)
+				{
+					// Конец поля
+					result.Add(current.ToString());
+					current.Clear();
+					i++;
+				}
+				else
+				{
+					current.Append(c);
+					i++;
+				}
+			}
+
+			// Последнее поле
+			result.Add(current.ToString());
+
+			return result.ToArray();
+		}
+
+		/// <summary>
+		/// Форматирует поле для записи в CSV (только если действительно нужно)
+		/// </summary>
+		private static string FormatCsvField(string field)
+		{
+			if (string.IsNullOrEmpty(field)) return field;
+
+			// Экранируем только если есть спецсимволы
+			bool needsQuotes = field.Contains(",") || field.Contains("\"") || field.Contains("\n") || field.Contains("\r");
+
+			if (needsQuotes)
+			{
+				// Экранируем кавычки
+				field = field.Replace("\"", "\"\"");
+				// Оборачиваем в кавычки
+				return "\"" + field + "\"";
+			}
+
+			return field;
+		}
+
 		private static void ScanAndCreateFixes()
 		{
 			if (!File.Exists(Utils.Path_CSV)) return;
@@ -58,23 +125,25 @@ namespace EnDub
 			TextFixes.Clear();
 
 			var idToText = new List<(string id, string text)>();
+			var lines = File.ReadAllLines(Utils.Path_CSV, Encoding.UTF8);
+			var parsedLines = new List<string[]>();
 
-			using (var parser = new TextFieldParser(Utils.Path_CSV, Encoding.UTF8))
+			for (int idx = 0; idx < lines.Length; idx++)
 			{
-				parser.TextFieldType = FieldType.Delimited;
-				parser.SetDelimiters(",");
-				parser.HasFieldsEnclosedInQuotes = true;
+				string line = lines[idx];
+				if (string.IsNullOrWhiteSpace(line)) continue;
 
-				while (!parser.EndOfData)
+				string[] fields = ParseCsvLine(line);
+				parsedLines.Add(fields);
+
+				if (fields.Length < 5) continue;
+
+				string id = fields[0];
+				string enText = fields[4];
+
+				if (id.Contains("Text") && !string.IsNullOrEmpty(enText))
 				{
-					string[] fields = parser.ReadFields();
-					if (fields.Length < 5) continue;
-					string id = fields[0];
-					string enText = fields[4];
-					if (id.Contains("Text") && !string.IsNullOrEmpty(enText))
-					{
-						idToText.Add((id, enText));
-					}
+					idToText.Add((id, enText));
 				}
 			}
 
@@ -115,43 +184,36 @@ namespace EnDub
 		{
 			if (replacements == null || replacements.Count == 0) return;
 
-			var allRows = new List<string[]>();
+			var lines = File.ReadAllLines(Utils.Path_CSV, Encoding.UTF8);
+			var outputLines = new List<string>();
 
-			using (var parser = new TextFieldParser(Utils.Path_CSV, Encoding.UTF8))
+			foreach (string line in lines)
 			{
-				parser.TextFieldType = FieldType.Delimited;
-				parser.SetDelimiters(",");
-				parser.HasFieldsEnclosedInQuotes = true;
-
-				while (!parser.EndOfData)
+				if (string.IsNullOrWhiteSpace(line))
 				{
-					string[] fields = parser.ReadFields();
-					if (fields.Length >= 5 && replacements.TryGetValue(fields[0], out string newText))
-					{
-						fields[4] = newText;
-					}
-					allRows.Add(fields);
+					outputLines.Add(line);
+					continue;
 				}
+
+				string[] fields = ParseCsvLine(line);
+
+				if (fields.Length >= 5 && replacements.TryGetValue(fields[0], out string newText))
+				{
+					fields[4] = newText;
+				}
+
+				// Собираем строку обратно, форматируя только нужные поля
+				var formattedFields = new string[fields.Length];
+				for (int i = 0; i < fields.Length; i++)
+				{
+					formattedFields[i] = FormatCsvField(fields[i]);
+				}
+
+				outputLines.Add(string.Join(",", formattedFields));
 			}
 
-			using (var writer = new StreamWriter(Utils.Path_CSV, false, Encoding.UTF8))
-			{
-				foreach (var row in allRows)
-				{
-					for (int i = 0; i < row.Length; i++)
-					{
-						string field = row[i] ?? "";
-						bool needsQuotes = field.Contains(",") || field.Contains("\"") || field.Contains("\n") || field.Contains("\r") || field.Contains("\t");
-						if (needsQuotes)
-						{
-							field = field.Replace("\"", "\"\"");
-							field = "\"" + field + "\"";
-						}
-						row[i] = field;
-					}
-					writer.WriteLine(string.Join(",", row));
-				}
-			}
+			File.WriteAllLines(Utils.Path_CSV, outputLines, Encoding.UTF8);
+			Debug.Log($"CSV updated: {replacements.Count} replacements applied");
 		}
 
 		private static void FixTextJSON(Dictionary<string, string> replacements)
@@ -196,6 +258,7 @@ namespace EnDub
 			if (modified > 0)
 			{
 				File.WriteAllText(Utils.Path_Json, JsonConvert.SerializeObject(dialogues, Formatting.Indented), Encoding.UTF8);
+				Debug.Log($"JSON updated: {modified} entries changed");
 			}
 		}
 
@@ -204,6 +267,7 @@ namespace EnDub
 			Directory.CreateDirectory(Path.GetDirectoryName(FixesPath));
 			var data = new FixesData { OriginalText = OriginalText, TextFixes = TextFixes };
 			File.WriteAllText(FixesPath, JsonConvert.SerializeObject(data, Formatting.Indented), Encoding.UTF8);
+			Debug.Log($"Fixes saved to: {FixesPath}");
 		}
 
 		private static void LoadFixesFromFile()
@@ -214,6 +278,7 @@ namespace EnDub
 			{
 				OriginalText = data.OriginalText ?? new Dictionary<string, List<string>>();
 				TextFixes = data.TextFixes ?? new Dictionary<string, string>();
+				Debug.Log($"Fixes loaded from: {FixesPath}");
 			}
 		}
 
@@ -224,9 +289,7 @@ namespace EnDub
 			if (restoreMap.Count == 0) return;
 			FixTextCSV(restoreMap);
 			FixTextJSON(restoreMap);
-			//TextFixes.Clear();
-			//OriginalText.Clear();
-			SaveFixesToFile();
+			Debug.Log($"Restored {restoreMap.Count} entries");
 		}
 	}
 }

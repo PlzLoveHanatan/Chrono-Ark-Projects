@@ -20,8 +20,10 @@ namespace EnDub
 			public float MainAudioVolume = 3;
 			public float Azar;
 			public float Charon;
+			public float Joey;
 			public float Johan;
 			public float Huz;
+			public float Ilya;
 			public float Lian;
 			public float Narhan;
 			public float Silverstein;
@@ -57,9 +59,11 @@ namespace EnDub
 		{
 			{ "Azar", data => data.Azar },
 			{ "Charon", data => data.Charon },
+			{ "Joey", data => data.Joey},
 			{ "Johan", data => data.Johan},
 			{ "Huz", data => data.Huz },
 			{ "Lian", data => data.Lian },
+			{ "Ilya", data => data.Ilya},
 			{ "Narhan", data => data.Narhan },
 			{ "Silverstein", data => data.Silverstein },
 			{ "Sizz", data => data.Sizz }

@@ -8,7 +8,6 @@ using GameDataEditor;
 using ChronoArkMod;
 using System.Text.RegularExpressions;
 using System.Text;
-using Microsoft.VisualBasic.FileIO;
 using System.ServiceModel.Configuration;
 
 namespace EnDub
@@ -45,7 +44,7 @@ namespace EnDub
 					textIndex = new Dictionary<string, DialogueLine>();
 					allLines.ForEach(line => AddTextIndex(line));
 					Debug.Log($"Loaded {allLines.Count} dialogue lines");
-					DialogueFixer.Initialize();
+					//DialogueFixer.Initialize();
 				}
 				catch (Exception ex)
 				{
@@ -92,9 +91,11 @@ namespace EnDub
 			{
 				{ GDEItemKeys.Character_Azar, "Azar" },
 				{ GDEItemKeys.Character_Control, "Narhan" },
+				{ GDEItemKeys.Character_Joey, "Joey" },
 				{ GDEItemKeys.Character_Lian, "Lian" },
 				{ GDEItemKeys.Character_Mement, "Johan" },
 				{ GDEItemKeys.Character_Queen, "Huz" },
+				{ GDEItemKeys.Character_Ilya, "Ilya" },
 				{ GDEItemKeys.Character_ShadowPriest, "Charon" },
 				{ GDEItemKeys.Character_SilverStein, "Silverstein" },
 				{ GDEItemKeys.Character_Sizz, "Sizz" },
@@ -105,8 +106,10 @@ namespace EnDub
 				{ "Azar", "Azar" },
 				{ "Control", "Narhan" },
 				{ "Lian", "Lian" },
+				{ "Joey", "Joey" },
 				{ "Mement", "Johan" },
 				{ "Queen", "Huz" },
+				{ "Ilya", "Ilya" },
 				{ "ShadowPriest", "Charon" },
 				{ "SilverStein", "Silverstein" },
 				{ "Sizz", "Sizz" },
