@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChronoArkMod;
+using GameDataEditor;
 using UnityEngine;
 
 namespace Meeyu
@@ -99,9 +101,9 @@ namespace Meeyu
 				public void Dead()
 				{
 					BattleSystem.DelayInput(this.Start2());
-					BattleSystem.instance.Reward.Add(ItemBase.GetItem("PrismStick"));
-					BattleSystem.instance.Reward.Add(ItemBase.GetItem("PyonHammer"));
-					BattleSystem.instance.Reward.Add(ItemBase.GetItem("SkillBookCharacter_Rare"));
+					BattleSystem.instance.Reward.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_PrismStick));
+					BattleSystem.instance.Reward.Add(ItemBase.GetItem(GDEItemKeys.Item_Equip_PyonHammer));
+					BattleSystem.instance.Reward.Add(ItemBase.GetItem(GDEItemKeys.Item_Consume_SkillBookCharacter_Rare));
 				}
 
 				public IEnumerator Start2()
