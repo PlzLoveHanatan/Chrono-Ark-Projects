@@ -70,6 +70,11 @@ namespace Ethica
 		/// </summary>
         public static string Buff_B_Ethica_Common_Rare_Calamity = "B_Ethica_Common_Rare_Calamity";
 		/// <summary>
+		/// Entropy
+		/// At the start of the turn Transform 1 skill in hand.
+		/// </summary>
+        public static string Buff_B_Ethica_Common_Rare_Entropy = "B_Ethica_Common_Rare_Entropy";
+		/// <summary>
 		/// Stratagem
 		/// At the start of each turn, during the skill draw phase, replace 2 draws with the following effect:
 		/// - View all skills in the deck and choose 1 to add to your hand.
@@ -107,10 +112,21 @@ namespace Ethica
 		/// </summary>
         public static string Character_Ethica = "Ethica";
 		/// <summary>
+		/// Entropy
+		/// Transform card become a random card of any rarity, unless specified.
+		/// </summary>
+        public static string SkillKeyword_Ethica_Entropy = "Ethica_Entropy";
+		/// <summary>
+		/// Rare Skill
+		/// This skill counts as a Rare skill while in deck.
+		/// </summary>
+        public static string SkillKeyword_Ethica_Rare_Skill = "Ethica_Rare_Skill";
+		/// <summary>
 		/// Vigor
-		/// Your next Attack deals X additional damage.
+		/// Your next Attack deals X * 10% additional damage.
 		/// </summary>
         public static string SkillKeyword_Ethica_Vigor = "Ethica_Vigor";
+        public static string SkillExtended_Ex_Common_Rare_Bolas = "Ex_Common_Rare_Bolas";
         public static string SkillEffect_SE_S_S_Ethica_Common_Automation = "SE_S_S_Ethica_Common_Automation";
         public static string SkillEffect_SE_S_S_Ethica_Common_Calamity = "SE_S_S_Ethica_Common_Calamity";
         public static string SkillEffect_SE_S_S_Ethica_Common_Equilibrium = "SE_S_S_Ethica_Common_Equilibrium";
@@ -122,6 +138,7 @@ namespace Ethica
         public static string SkillEffect_SE_S_S_Ethica_Common_PrepTime = "SE_S_S_Ethica_Common_PrepTime";
         public static string SkillEffect_SE_S_S_Ethica_Common_Prowess = "SE_S_S_Ethica_Common_Prowess";
         public static string SkillEffect_SE_S_S_Ethica_Common_Rare_Calamity = "SE_S_S_Ethica_Common_Rare_Calamity";
+        public static string SkillEffect_SE_S_S_Ethica_Common_Rare_Entropy = "SE_S_S_Ethica_Common_Rare_Entropy";
         public static string SkillEffect_SE_S_S_Ethica_Common_Stratagem = "SE_S_S_Ethica_Common_Stratagem";
         public static string SkillEffect_SE_S_S_Ethica_Common_TheBomb = "SE_S_S_Ethica_Common_TheBomb";
         public static string SkillEffect_SE_T_S_Ethica_Common_BelieveinYou = "SE_T_S_Ethica_Common_BelieveinYou";
@@ -289,13 +306,17 @@ namespace Ethica
         public static string Skill_S_Ethica_Common_Rare_BeatDown = "S_Ethica_Common_Rare_BeatDown";
 		/// <summary>
 		/// Bolas
-		/// When played from hand, at the start of the turn draw skill.
+		/// When played from hand, at the start of the turn add this skill into hand.
 		/// </summary>
         public static string Skill_S_Ethica_Common_Rare_Bolas = "S_Ethica_Common_Rare_Bolas";
 		/// <summary>
 		/// Calamity
 		/// </summary>
         public static string Skill_S_Ethica_Common_Rare_Calamity = "S_Ethica_Common_Rare_Calamity";
+		/// <summary>
+		/// Entropy
+		/// </summary>
+        public static string Skill_S_Ethica_Common_Rare_Entropy = "S_Ethica_Common_Rare_Entropy";
 		/// <summary>
 		/// Restlessness
 		/// Draw 3 skills and Restore 3 Mana if you don't have <b>any</b> skills in hand.
@@ -330,7 +351,7 @@ namespace Ethica
         public static string Skill_S_Ethica_Common_ThinkingAhead = "S_Ethica_Common_ThinkingAhead";
 		/// <summary>
 		/// Thrumming Hatchet
-		/// When played from hand, at the start of the turn draw this skill from discard pile.
+		/// When played from hand, at the start of the turn add this skill from discard pile into hand.
 		/// </summary>
         public static string Skill_S_Ethica_Common_ThrummingHatchet = "S_Ethica_Common_ThrummingHatchet";
 		/// <summary>
@@ -346,21 +367,33 @@ namespace Ethica
 		/// Recast this skill equal current Mana.
 		/// </summary>
         public static string Skill_S_Ethica_Common_Volley = "S_Ethica_Common_Volley";
+        public static string SkillExtended_Ex_Common_ThrummingHatchet = "Ex_Common_ThrummingHatchet";
 		/// <summary>
-		/// Entropy
+		/// Eternal Armor
 		/// </summary>
-        public static string Skill_S_Ethica_Common_Rare_Entropy = "S_Ethica_Common_Rare_Entropy";
+        public static string Skill_S_Ethica_Common_Rare_EternalArmor = "S_Ethica_Common_Rare_EternalArmor";
 		/// <summary>
-		/// Entropy
-		/// At the start of the turn Transform 1 skill in hand.
+		/// Eternal Armor
+		/// At the start of the turn, gain 15 Barrier that lasts until the end of the turn.
 		/// </summary>
-        public static string Buff_B_Ethica_Common_Rare_Entropy = "B_Ethica_Common_Rare_Entropy";
+        public static string Buff_B_Ethica_Common_Rare_EternalArmor = "B_Ethica_Common_Rare_EternalArmor";
 		/// <summary>
-		/// Entropy
-		/// Transform card become a random card of any rarity, unless specified.
+		/// Barrier
 		/// </summary>
-        public static string SkillKeyword_Ethica_Entropy = "Ethica_Entropy";
-        public static string SkillEffect_SE_S_S_Ethica_Common_Rare_Entropy = "SE_S_S_Ethica_Common_Rare_Entropy";
+        public static string Buff_B_Ethica_Common_Rare_EternalArmor_0 = "B_Ethica_Common_Rare_EternalArmor_0";
+        public static string SkillEffect_SE_S_S_Ethica_Common_Rare_EternalArmor = "SE_S_S_Ethica_Common_Rare_EternalArmor";
+		/// <summary>
+		/// Gold Axe
+		/// Deal additonal &a damage equal to the number of skills played this battle.
+		/// </summary>
+        public static string Skill_S_Ethica_Common_Rare_GoldAxe = "S_Ethica_Common_Rare_GoldAxe";
+        public static string SkillEffect_SE_T_S_Ethica_Common_Rare_GoldAxe = "SE_T_S_Ethica_Common_Rare_GoldAxe";
+		/// <summary>
+		/// Hand of Greed
+		/// Gain 250 gold on a kill.
+		/// </summary>
+        public static string Skill_S_Ethica_Common_Rare_HandofGreed = "S_Ethica_Common_Rare_HandofGreed";
+        public static string SkillEffect_SE_T_S_Ethica_Common_Rare_HandofGreed = "SE_T_S_Ethica_Common_Rare_HandofGreed";
 
     }
 

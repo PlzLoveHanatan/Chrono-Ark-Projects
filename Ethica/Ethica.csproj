@@ -3,7 +3,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <AssemblyName>Ethica07062026142839</AssemblyName>
+    <AssemblyName>Ethica07072026161637</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -405,8 +405,11 @@
     </Reference>
 <!-- Extra Reference End-->
   </ItemGroup>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <!-- Compile ItemGroup Start-->
+                          <!-- Compile ItemGroup Start-->
   <ItemGroup>
+    <Compile Include="Ethica_BV.cs" />
+    <Compile Include="Ethica_CV.cs" />
+    <Compile Include="Ethica_Extensions.cs" />
     <Compile Include="Ethica_ModDefinition.cs" />
     <Compile Include="Ethica_ModItemKeys.cs" />
     <Compile Include="Ethica_Patches.cs" />
@@ -418,6 +421,7 @@
     <Compile Include="Common\Ex_Common.cs" />
     <Compile Include="Common\Skills_Common.cs" />
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="SkillExtended\Ex_Common_Rare_Bolas.cs" />
   </ItemGroup>
   <!-- Compile ItemGroup End-->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -92,11 +92,12 @@ namespace Ethica
 					}
 				}
 
-				public class Fisticuffs : Skill_Extended, IP_DealDamage
+				public class Fisticuffs : Skill_Extended
 				{
-					public void DealDamage(BattleChar Take, int Damage, bool IsCri, bool IsDot)
+					public override void AttackEffectSingle(BattleChar hit, SkillParticle SP, int DMG, int Heal)
 					{
-						BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_Block, BattleSystem.instance.AllyTeam.DummyChar).BarrierHP += Damage;
+						base.AttackEffectSingle(hit, SP, DMG, Heal);
+						BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_Block, BattleSystem.instance.AllyTeam.DummyChar).BarrierHP += DMG;
 					}
 				}
 
@@ -449,11 +450,27 @@ namespace Ethica
 
 				public class ThrummingHatchet : Skill_Extended
 				{
+					public override IEnumerator DrawAction()
+					{
+						if (MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Common_ThrummingHatchet) == null) MySkill.ExtendedAdd_Battle(ModItemKeys.SkillExtended_Ex_Common_ThrummingHatchet);
+						return base.DrawAction();
+					}
+
 					public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 					{
 						base.SkillUseSingle(SkillD, Targets);
-						if (!MySkill.BasicSkill) BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_ThrummingHatchet, BattleSystem.instance.AllyTeam.DummyChar);
+						if (!MySkill.BasicSkill && !MySkill.FreeUse)
+						{
+							BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_ThrummingHatchet, BattleSystem.instance.AllyTeam.DummyChar);
+							if (MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Common_ThrummingHatchet) is Ex.ThrummingHatchet hatchet && hatchet != null) hatchet.SkillPLayed = true;
+						}
 					}
+
+					//public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+					//{
+					//	base.SkillUseSingle(SkillD, Targets);
+					//	if (!MySkill.BasicSkill) BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_ThrummingHatchet, BattleSystem.instance.AllyTeam.DummyChar);
+					//}
 				}
 
 				public class Volley : Skill_Extended
@@ -487,7 +504,17 @@ namespace Ethica
 
 			public class Rare
 			{
-				public class Alchemize : Skill_Extended
+
+				public class RareBase : Skill_Extended
+				{
+					public override void Init()
+					{
+						base.Init();
+						MySkill.ToolTip();
+					}
+				}
+
+				public class Alchemize : RareBase
 				{
 					public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 					{
@@ -497,7 +524,7 @@ namespace Ethica
 					}
 				}
 
-				public class Anointed : Skill_Extended
+				public class Anointed : RareBase
 				{
 					public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 					{
@@ -521,7 +548,7 @@ namespace Ethica
 					}
 				}
 
-				public class BeatDown : Skill_Extended
+				public class BeatDown : RareBase
 				{
 					public override void SkillUseSingle(Skill skill, List<BattleChar> targets)
 					{
@@ -550,96 +577,133 @@ namespace Ethica
 					}
 				}
 
-				public class Bolas : Skill_Extended
+				public class Bolas : RareBase
+				{
+					public override IEnumerator DrawAction()
+					{
+						if (MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Common_Rare_Bolas) == null) MySkill.ExtendedAdd_Battle(ModItemKeys.SkillExtended_Ex_Common_Rare_Bolas);
+						return base.DrawAction();
+					}
+
+					public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+					{
+						base.SkillUseSingle(SkillD, Targets);
+						if (!MySkill.BasicSkill && !MySkill.FreeUse)
+						{
+							BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_Rare_Bolas, BattleSystem.instance.AllyTeam.DummyChar);
+							if (MySkill.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Common_Rare_Bolas) is Ex.Bolas bolas && bolas != null) bolas.SkillPLayed = true;
+						}
+					}
+				}
+
+				public class Calamity : RareBase
+				{
+
+				}
+
+				public class Entropy : RareBase
+				{
+
+				}
+
+				public class EternalArmor : RareBase
+				{
+
+				}
+
+				public class GoldAxe : RareBase
+				{
+
+					public override string DescExtended(string desc)
+					{
+						return base.DescExtended(desc).Replace("&a", Utils.EthicaBV.GoldAxeDamage.ToString());
+					}
+					public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
+					{
+						base.SkillUseSingle(SkillD, Targets);
+						SkillBasePlus.Target_BaseDMG = Utils.EthicaBV.GoldAxeDamage;
+					}
+
+					public override void Special_PointerEnter(BattleChar Char)
+					{
+						base.Special_PointerEnter(Char);
+						SkillBasePlusPreview.Target_BaseDMG = Utils.EthicaBV.GoldAxeDamage;
+					}
+				}
+
+				public class HandofGreed : RareBase
 				{
 					public override void SkillUseSingle(Skill SkillD, List<BattleChar> Targets)
 					{
 						base.SkillUseSingle(SkillD, Targets);
-						if (!MySkill.BasicSkill) BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_Rare_Bolas, BattleSystem.instance.AllyTeam.DummyChar);
+						BattleSystem.DelayInputAfter(MoneyCo(Targets));
+					}
+
+					private IEnumerator MoneyCo(List<BattleChar> targets)
+					{
+						yield return null;
+						List<ItemBase> list = new List<ItemBase>();
+						targets.Where(t => t.IsDead).ToList().ForEach(_ => list.Add(ItemBase.GetItem(GDEItemKeys.Item_Misc_Gold, 250)));
+						if (targets.Any(t => t.IsDead)) InventoryManager.Reward(list);
 					}
 				}
 
-				public class Calamity : Skill_Extended
+				public class HiddenGem : RareBase
 				{
 
 				}
 
-				public class Entropy : Skill_Extended
+				public class Jackpot : RareBase
 				{
 
 				}
 
-				public class EternalArmor : Skill_Extended
+				public class MasterofStrategy : RareBase
 				{
 
 				}
 
-				public class GoldAxe : Skill_Extended
+				public class Mayhem : RareBase
 				{
 
 				}
 
-				public class HandofGreed : Skill_Extended
+				public class Nostalgia : RareBase
 				{
 
 				}
 
-				public class HiddenGem : Skill_Extended
+				public class Rend : RareBase
 				{
 
 				}
 
-				public class Jackpot : Skill_Extended
+				public class RollingBoulder : RareBase
 				{
 
 				}
 
-				public class MasterofStrategy : Skill_Extended
+				public class Salvo : RareBase
 				{
 
 				}
 
-				public class Mayhem : Skill_Extended
+				public class Scrawl : RareBase
 				{
 
 				}
 
-				public class Nostalgia : Skill_Extended
+				public class SecretTechnique : RareBase
 				{
 
 				}
 
-				public class Rend : Skill_Extended
+				public class SecretWeapon : RareBase
 				{
 
 				}
 
-				public class RollingBoulder : Skill_Extended
-				{
-
-				}
-
-				public class Salvo : Skill_Extended
-				{
-
-				}
-
-				public class Scrawl : Skill_Extended
-				{
-
-				}
-
-				public class SecretTechnique : Skill_Extended
-				{
-
-				}
-
-				public class SecretWeapon : Skill_Extended
-				{
-
-				}
-
-				public class TheGambit : Skill_Extended
+				public class TheGambit : RareBase
 				{
 
 				}

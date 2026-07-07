@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GameDataEditor;
 using I2.Loc;
 using UnityEngine;
+using static Ethica.CommonSkills;
 
 namespace Ethica
 {
@@ -255,11 +256,10 @@ namespace Ethica
 				{
 					public void Turn()
 					{
-						var skill = BattleSystem.instance.AllyTeam.Skills_UsedDeck.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).FirstOrDefault(s => s.Master == BChar && s.MySkill.KeyID == ModItemKeys.Skill_S_Ethica_Common_ThrummingHatchet);
-						if (skill != null && BattleSystem.instance.AllyTeam.Skills_UsedDeck.Contains(skill)) BattleSystem.instance.StartCoroutine(BattleSystem.instance.AllyTeam._ForceDraw(skill));
+						BattleSystem.instance.AllyTeam.Skills_UsedDeck.Where(s => s.Master == BChar && s.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Common_ThrummingHatchet) is Ex.ThrummingHatchet hatchet && hatchet.SkillPLayed).ToList().ForEach(s => Utils.ForceDraw(s, fromDeck: false));
 						SelfDestroy();
 					}
-				}
+				} 
 
 				public class UltimateDefend : Buff
 				{
@@ -292,8 +292,7 @@ namespace Ethica
 				{
 					public void Turn()
 					{
-						var skill = BattleSystem.instance.AllyTeam.Skills_UsedDeck.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).FirstOrDefault(s => s.Master == BChar && s.MySkill.KeyID == ModItemKeys.Skill_S_Ethica_Common_Rare_Bolas);
-						if (skill != null && BattleSystem.instance.AllyTeam.Skills_UsedDeck.Contains(skill) || BattleSystem.instance.AllyTeam.Skills_Deck.Contains(skill)) BattleSystem.instance.StartCoroutine(BattleSystem.instance.AllyTeam._ForceDraw(skill));
+						BattleSystem.instance.AllyTeam.Skills_UsedDeck.Concat(BattleSystem.instance.AllyTeam.Skills_Deck).Where(s => s.Master == BChar && s.ExtendedFind_DataName(ModItemKeys.SkillExtended_Ex_Common_Rare_Bolas) is Ex.Bolas bolas && bolas.SkillPLayed).ToList().ForEach(s => Utils.ForceDraw(s));
 						SelfDestroy();
 					}
 				}
@@ -325,19 +324,43 @@ namespace Ethica
 					}
 				}
 
-				public class Entropy : Buff
+				public class Entropy : Buff, IP_PlayerTurn_1
 				{
+					public void Turn1()
+					{
+						BattleSystem.DelayInputAfter(BattleSystem.I_OtherSkillSelect(BattleSystem.instance.AllyTeam.Skills, OnSelect, "", false));
+					}
 
+					private void OnSelect(SkillButton button)
+					{
+						int index = BattleSystem.instance.AllyTeam.Skills.IndexOf(button.Myskill);
+						//var master = string.IsNullOrEmpty(button.Myskill.MySkill.User) ? button.Myskill.Master.Info.KeyData : button.Myskill.MySkill.User; // randomize skill by original skill user
+						var master = button.Myskill.Master.Info.KeyData ?? button.Myskill.MySkill.User; // randomize skill by original skill owner
+						var skill = Skill.TempSkill(Utils.AllGameSkills.Where(s => s.User == master && s.User != "" && !s.Lock && !s.NoDrop).RandomElement().KeyID, button.Myskill.Master, button.Myskill.Master.MyTeam);
+						//skill.isExcept = button.Myskill.isExcept;
+						button.Myskill.Except();
+						BattleSystem.instance.ActWindow.Draw(BattleSystem.instance.AllyTeam, false);
+						BattleSystem.instance.AllyTeam.Skills.Insert(index, skill);
+						//BattleSystem.instance.AllyTeam.Add(skill, false);
+					}
 				}
 
-				public class EternalArmor : Buff
+				public class EternalArmor : Buff, IP_PlayerTurn
 				{
-
+					public void Turn()
+					{
+						BChar.BuffAdd(ModItemKeys.Buff_B_Ethica_Common_Rare_EternalArmor_0, BattleSystem.instance.AllyTeam.DummyChar);
+					}
 				}
 
-				public class GoldAxe : Buff
+				public class EternalArmor_0 : Buff
 				{
-
+					public override void Init()
+					{
+						base.Init();
+						PlusStat.Strength = true;
+						BarrierHP = 15;
+					}
 				}
 
 				public class HandofGreed : Buff

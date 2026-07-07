@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,12 @@ using GameDataEditor;
 
 namespace Ethica
 {
-	public static  class Utils
+	public static class Utils
 	{
 		public static BattleChar Ethica => BattleSystem.instance.AllyTeam?.AliveChars.FirstOrDefault(c => c.Info?.KeyData == ModItemKeys.Character_Ethica);
 		public static bool EthicaInParty => PlayData.TSavedata.Party.Any(c => c?.KeyData == ModItemKeys.Character_Ethica);
+		public static EthicaCustomValue EthicaCV => PlayData.TSavedata?.GetOrAddCustomValue<EthicaCustomValue>();
+		public static EthicaBattleValue EthicaBV => BattleSystem.instance.GetOrAddBattleValue<EthicaBattleValue>();
 
 		private static readonly Lazy<List<GDESkillData>> _allGameSkills = new Lazy<List<GDESkillData>>(() =>
 		{
@@ -38,6 +41,42 @@ namespace Ethica
 			var list = source.ToList();
 			if (string.IsNullOrEmpty(key)) key = "EthicaRandom";
 			return list.Count == 0 ? default : list.Random(key);
+		}
+
+		public static T GetOrAddCustomValue<T>(this TempSaveData save) where T : CustomValue
+		{
+			var result = save.GetCustomValue<T>();
+			if (result == null)
+			{
+				result = (T)Activator.CreateInstance(typeof(T));
+				save.AddCustomValue(result);
+			}
+			return result;
+		}
+
+		public static T GetOrAddBattleValue<T>(this BattleSystem battle) where T : class, new()
+		{
+			var result = battle.GetBattleValue<T>();
+			if (result == null)
+			{
+				result = new T();
+				battle.BattleValues.Add(result);
+			}
+			return result;
+		}
+
+		public static void ForceDraw(Skill skill, bool? fromDeck = null, bool? fromDiscard = null, bool notDraw = true)
+		{
+			if (notDraw) BattleSystem.DelayInputAfter(AddWithoutDraw(skill, fromDeck ?? true, fromDiscard ?? true));
+			else BattleSystem.instance.AllyTeam.ForceDraw(skill);
+		}
+
+		private static IEnumerator AddWithoutDraw(Skill skill, bool fromDeck, bool fromDiscard)
+		{
+			bool removed = false;
+			if (fromDeck) removed = BattleSystem.instance.AllyTeam.Skills_Deck.Remove(skill);
+			if (fromDiscard) removed = BattleSystem.instance.AllyTeam.Skills_UsedDeck.Remove(skill) || removed;
+			if (removed) yield return BattleSystem.instance.AllyTeam._Add(skill, true);
 		}
 	}
 }
