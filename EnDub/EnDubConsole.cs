@@ -266,12 +266,14 @@ namespace EnDub
 
 			AddCharacter("azar", v => saveData.Azar = v);
 			AddCharacter("charon", v => saveData.Charon = v);
+			AddCharacter("helia", v => saveData.Helia = v);
 			AddCharacter("huz", v => saveData.Huz = v);
 			AddCharacter("ilya", v => saveData.Ilya = v);
 			AddCharacter("joey", v => saveData.Joey = v);
 			AddCharacter("johan", v => saveData.Johan = v);
 			AddCharacter("lian", v => saveData.Lian = v);
 			AddCharacter("narhan", v => saveData.Narhan = v);
+			AddCharacter("selena", v => saveData.Selena = v);
 			AddCharacter("silverstein", v => saveData.Silverstein = v);
 			AddCharacter("sizz", v => saveData.Sizz = v);
 
@@ -325,11 +327,14 @@ namespace EnDub
 			Log("INDIVIDUAL CHARACTER VOLUME");
 			Log("  azar [0-6]            - Azar voice volume");
 			Log("  charon [0-6]          - Charon voice volume");
-			Log("  joey [0-6]            - Joey voice volume");
+			Log("  helia [0-6]           - Helia voice volume");
 			Log("  huz [0-6]             - Huz voice volume");
+			Log("  ilya [0-6]            - Ilya voice volume");
+			Log("  joey [0-6]            - Joey voice volume");
 			Log("  johan [0-6]           - Johan voice volume");
 			Log("  lian [0-6]            - Lian voice volume");
 			Log("  narhan [0-6]          - Narhan voice volume");
+			Log("  selena [0-6]          - Selena voice volume");
 			Log("  silverstein [0-6]     - Silverstein voice volume");
 			Log("  sizz [0-6]            - Sizz voice volume");
 			Log("");

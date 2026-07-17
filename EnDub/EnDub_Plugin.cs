@@ -31,7 +31,7 @@ namespace EnDub
 
 		public override void Dispose()
 		{
-			//DialogueFixer.Restore();
+			DialogueFixer.Restore();
 			harmony?.UnpatchSelf();			
 		}
 
@@ -40,6 +40,7 @@ namespace EnDub
 			try
 			{
 				DialogueData.LoadDialogue();
+				DialogueFixer.Initialize();
 				Console.Instance?.ShowConsole();
 				SaveManager.Instance?.Save();
 				harmony.PatchAll();

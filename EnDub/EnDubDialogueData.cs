@@ -31,6 +31,38 @@ namespace EnDub
 		private static List<DialogueLine> allLines;
 		private static Dictionary<string, DialogueLine> textIndex;
 
+		private static readonly Dictionary <string, string> DicGameKey = new Dictionary<string, string>()
+		{
+			{ GDEItemKeys.Character_Azar, "Azar" },
+			{ GDEItemKeys.Character_Control, "Narhan" },
+			{ GDEItemKeys.Character_Ilya, "Ilya" },
+			{ GDEItemKeys.Character_Joey, "Joey" },
+			{ GDEItemKeys.Character_Lian, "Lian" },
+			{ GDEItemKeys.Character_Mement, "Johan" },
+			{ GDEItemKeys.Character_Queen, "Huz" },
+			{ GDEItemKeys.Character_ShadowPriest, "Charon" },
+			{ GDEItemKeys.Character_SilverStein, "Silverstein" },
+			{ GDEItemKeys.Character_Sizz, "Sizz" },
+			{ GDEItemKeys.Character_TW_Blue, "Selena" },
+			{ GDEItemKeys.Character_TW_Red, "Helia" },
+		};
+
+		private static readonly Dictionary<string, string> DicString = new Dictionary<string, string>()
+		{
+			{ "Azar", "Azar" },
+			{ "Control", "Narhan" },
+			{ "Helia", "Helia" },
+			{ "Ilya", "Ilya" },
+			{ "Joey", "Joey" },
+			{ "Lian", "Lian" },
+			{ "Mement", "Johan" },
+			{ "Queen", "Huz" },
+			{ "Selena", "Selena" },
+			{ "ShadowPriest", "Charon" },
+			{ "SilverStein", "Silverstein" },
+			{ "Sizz", "Sizz" },
+		};
+
 		public static void LoadDialogue()
 		{
 			string jsonPath = Path.Combine(Utils.ThisMod.DirectoryName, "Assets", "Dialogues.json");
@@ -87,36 +119,7 @@ namespace EnDub
 
 		public static string GetCharacterName(string gameKey, bool isGameKey = true)
 		{
-			var dicGameKey = new Dictionary<string, string>()
-			{
-				{ GDEItemKeys.Character_Azar, "Azar" },
-				{ GDEItemKeys.Character_Control, "Narhan" },
-				{ GDEItemKeys.Character_Joey, "Joey" },
-				{ GDEItemKeys.Character_Lian, "Lian" },
-				{ GDEItemKeys.Character_Mement, "Johan" },
-				{ GDEItemKeys.Character_Queen, "Huz" },
-				{ GDEItemKeys.Character_Ilya, "Ilya" },
-				{ GDEItemKeys.Character_ShadowPriest, "Charon" },
-				{ GDEItemKeys.Character_SilverStein, "Silverstein" },
-				{ GDEItemKeys.Character_Sizz, "Sizz" },
-			};
-
-			var dicString = new Dictionary<string, string>()
-			{
-				{ "Azar", "Azar" },
-				{ "Control", "Narhan" },
-				{ "Lian", "Lian" },
-				{ "Joey", "Joey" },
-				{ "Mement", "Johan" },
-				{ "Queen", "Huz" },
-				{ "Ilya", "Ilya" },
-				{ "ShadowPriest", "Charon" },
-				{ "SilverStein", "Silverstein" },
-				{ "Sizz", "Sizz" },
-			};
-
-			var dict = isGameKey ? dicGameKey : dicString;
-
+			var dict = isGameKey ? DicGameKey : DicString;
 			return dict.TryGetValue(gameKey, out string name) ? name : "";
 		}
 	}

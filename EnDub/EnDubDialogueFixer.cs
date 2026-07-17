@@ -52,7 +52,7 @@ namespace EnDub
 		/// <summary>
 		/// Парсит CSV строку, сохраняя оригинальную структуру
 		/// </summary>
-		private static string[] ParseCsvLine(string line)
+		private static List<string> ParseCsvLine(string line)
 		{
 			var result = new List<string>();
 			var current = new StringBuilder();
@@ -65,14 +65,15 @@ namespace EnDub
 
 				if (c == '"')
 				{
-					// Начало или конец кавычек
+					// Проверяем на экранированную кавычку ("" внутри поля)
 					if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
 					{
-						// Экранированная кавычка внутри поля
 						current.Append('"');
 						i += 2;
 						continue;
 					}
+
+					// Переключаем режим кавычек
 					inQuotes = !inQuotes;
 					i++;
 				}
@@ -90,27 +91,110 @@ namespace EnDub
 				}
 			}
 
-			// Последнее поле
+			// Добавляем последнее поле
 			result.Add(current.ToString());
 
-			return result.ToArray();
+			return result;
 		}
 
 		/// <summary>
-		/// Форматирует поле для записи в CSV (только если действительно нужно)
+		/// Парсит весь CSV файл с учетом многострочных полей
+		/// </summary>
+		private static List<List<string>> ParseCsvFile(string filePath)
+		{
+			var allLines = File.ReadAllLines(filePath, Encoding.UTF8);
+			var records = new List<List<string>>();
+			var currentRecord = new List<string>();
+			var currentField = new StringBuilder();
+			bool inQuotes = false;
+			bool firstField = true;
+
+			foreach (string line in allLines)
+			{
+				if (string.IsNullOrEmpty(line) && !inQuotes)
+				{
+					if (currentRecord.Count > 0)
+					{
+						records.Add(new List<string>(currentRecord));
+						currentRecord.Clear();
+					}
+					continue;
+				}
+
+				int i = 0;
+				while (i < line.Length)
+				{
+					char c = line[i];
+
+					if (c == '"')
+					{
+						if (inQuotes && i + 1 < line.Length && line[i + 1] == '"')
+						{
+							currentField.Append('"');
+							i += 2;
+							continue;
+						}
+						inQuotes = !inQuotes;
+						i++;
+					}
+					else if (c == ',' && !inQuotes)
+					{
+						currentRecord.Add(currentField.ToString());
+						currentField.Clear();
+						i++;
+					}
+					else
+					{
+						currentField.Append(c);
+						i++;
+					}
+				}
+
+				// Если мы внутри кавычек, строка продолжается
+				if (inQuotes)
+				{
+					currentField.Append('\n');
+				}
+				else
+				{
+					// Конец записи
+					currentRecord.Add(currentField.ToString());
+					currentField.Clear();
+
+					if (currentRecord.Count > 0)
+					{
+						records.Add(new List<string>(currentRecord));
+						currentRecord.Clear();
+					}
+				}
+			}
+
+			// Добавляем последнюю запись если есть
+			if (currentField.Length > 0 || currentRecord.Count > 0)
+			{
+				if (currentField.Length > 0)
+					currentRecord.Add(currentField.ToString());
+				if (currentRecord.Count > 0)
+					records.Add(new List<string>(currentRecord));
+			}
+
+			return records;
+		}
+
+		/// <summary>
+		/// Форматирует поле для записи в CSV
 		/// </summary>
 		private static string FormatCsvField(string field)
 		{
 			if (string.IsNullOrEmpty(field)) return field;
 
-			// Экранируем только если есть спецсимволы
-			bool needsQuotes = field.Contains(",") || field.Contains("\"") || field.Contains("\n") || field.Contains("\r");
+			// Всегда оборачиваем в кавычки, если есть спецсимволы
+			bool needsQuotes = field.Contains(",") || field.Contains("\"") ||
+							  field.Contains("\n") || field.Contains("\r");
 
 			if (needsQuotes)
 			{
-				// Экранируем кавычки
 				field = field.Replace("\"", "\"\"");
-				// Оборачиваем в кавычки
 				return "\"" + field + "\"";
 			}
 
@@ -125,52 +209,50 @@ namespace EnDub
 			TextFixes.Clear();
 
 			var idToText = new List<(string id, string text)>();
-			var lines = File.ReadAllLines(Utils.Path_CSV, Encoding.UTF8);
-			var parsedLines = new List<string[]>();
+			var records = ParseCsvFile(Utils.Path_CSV);
 
-			for (int idx = 0; idx < lines.Length; idx++)
+			foreach (var fields in records)
 			{
-				string line = lines[idx];
-				if (string.IsNullOrWhiteSpace(line)) continue;
+				if (fields.Count < 5) continue;
 
-				string[] fields = ParseCsvLine(line);
-				parsedLines.Add(fields);
+				string id = fields[0].Trim();
+				string enText = fields[4].Trim();
 
-				if (fields.Length < 5) continue;
+				if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(enText)) continue;
+				if (!id.Contains("Text")) continue;
 
-				string id = fields[0];
-				string enText = fields[4];
-
-				if (id.Contains("Text") && !string.IsNullOrEmpty(enText))
-				{
-					idToText.Add((id, enText));
-				}
+				idToText.Add((id, enText));
 			}
 
+			// Ищем дубликаты
 			var groups = new Dictionary<string, List<string>>();
 			foreach (var (id, text) in idToText)
 			{
-				if (!groups.ContainsKey(text)) groups[text] = new List<string>();
+				if (!groups.ContainsKey(text))
+					groups[text] = new List<string>();
 				groups[text].Add(id);
 			}
 
+			// Создаем фиксы для дубликатов
 			foreach (var kv in groups)
 			{
 				if (kv.Value.Count > 1)
 				{
 					string originalText = kv.Key;
 					OriginalText[originalText] = new List<string>(kv.Value);
+					kv.Value.Sort();
 
 					string currentText = originalText;
 					for (int i = 1; i < kv.Value.Count; i++)
 					{
-						char lastChar = currentText[currentText.Length - 1];
-						string newText = currentText + lastChar;
+						string newText = currentText + (currentText.Length > 0 ? currentText.Last().ToString() : ".");
 						TextFixes[kv.Value[i]] = newText;
 						currentText = newText;
 					}
 				}
 			}
+
+			Debug.Log($"Found {TextFixes.Count} duplicate entries across {groups.Count(g => g.Value.Count > 1)} groups");
 		}
 
 		private static void ApplyFixes()
@@ -184,109 +266,167 @@ namespace EnDub
 		{
 			if (replacements == null || replacements.Count == 0) return;
 
-			var lines = File.ReadAllLines(Utils.Path_CSV, Encoding.UTF8);
-			var outputLines = new List<string>();
+			var records = ParseCsvFile(Utils.Path_CSV);
+			int modified = 0;
 
-			foreach (string line in lines)
+			foreach (var fields in records)
 			{
-				if (string.IsNullOrWhiteSpace(line))
-				{
-					outputLines.Add(line);
-					continue;
-				}
+				if (fields.Count < 5) continue;
 
-				string[] fields = ParseCsvLine(line);
-
-				if (fields.Length >= 5 && replacements.TryGetValue(fields[0], out string newText))
+				string id = fields[0].Trim();
+				if (replacements.TryGetValue(id, out string newText))
 				{
 					fields[4] = newText;
+					modified++;
 				}
+			}
 
-				// Собираем строку обратно, форматируя только нужные поля
-				var formattedFields = new string[fields.Length];
-				for (int i = 0; i < fields.Length; i++)
+			// Записываем обратно
+			var outputLines = new List<string>();
+			foreach (var fields in records)
+			{
+				var formattedFields = new string[fields.Count];
+				for (int i = 0; i < fields.Count; i++)
 				{
 					formattedFields[i] = FormatCsvField(fields[i]);
 				}
-
 				outputLines.Add(string.Join(",", formattedFields));
 			}
 
 			File.WriteAllLines(Utils.Path_CSV, outputLines, Encoding.UTF8);
-			Debug.Log($"CSV updated: {replacements.Count} replacements applied");
+			Debug.Log($"CSV updated: {modified} replacements applied");
 		}
 
 		private static void FixTextJSON(Dictionary<string, string> replacements)
 		{
 			if (!File.Exists(Utils.Path_Json) || replacements == null || replacements.Count == 0) return;
 
-			var jsonText = File.ReadAllText(Utils.Path_Json, Encoding.UTF8);
-			var dialogues = JsonConvert.DeserializeObject<List<DialogueLine>>(jsonText);
-			if (dialogues == null) return;
-
-			int modified = 0;
-			foreach (var kv in replacements)
+			try
 			{
-				var matchNormal = Regex.Match(kv.Key, @"Character/([^_]+)_Text_(.+)");
-				var matchSkin = Regex.Match(kv.Key, @"Character_Skin/([^_]+)_([^_]+)_Text_(.+)");
+				var jsonText = File.ReadAllText(Utils.Path_Json, Encoding.UTF8);
+				var dialogues = JsonConvert.DeserializeObject<List<DialogueLine>>(jsonText);
 
-				string character = "", key = "", skin = "Normal";
-
-				if (matchNormal.Success)
+				if (dialogues == null || dialogues.Count == 0)
 				{
-					character = matchNormal.Groups[1].Value;
-					key = matchNormal.Groups[2].Value;
+					Debug.LogWarning("JSON file is empty or invalid");
+					return;
 				}
-				else if (matchSkin.Success)
+
+				int modified = 0;
+				int notFound = 0;
+
+				foreach (var kv in replacements)
 				{
-					character = matchSkin.Groups[1].Value;
-					skin = matchSkin.Groups[2].Value;
-					key = matchSkin.Groups[3].Value;
+					var matchNormal = Regex.Match(kv.Key, @"Character/([^_]+)_Text_(.+)");
+					var matchSkin = Regex.Match(kv.Key, @"Character_Skin/([^_]+)_([^_]+)_Text_(.+)");
+
+					string character = "", key = "", skin = "Normal";
+
+					if (matchNormal.Success)
+					{
+						character = matchNormal.Groups[1].Value;
+						key = matchNormal.Groups[2].Value;
+					}
+					else if (matchSkin.Success)
+					{
+						character = matchSkin.Groups[1].Value;
+						skin = matchSkin.Groups[2].Value;
+						key = matchSkin.Groups[3].Value;
+					}
+					else
+					{
+						notFound++;
+						continue;
+					}
+
+					string jsonCharacter = DialogueData.GetCharacterName(character, false);
+
+					var dialogue = dialogues.Find(d =>
+						d.Character == jsonCharacter &&
+						d.Skin == skin &&
+						d.Key == key);
+
+					if (dialogue != null && dialogue.English != kv.Value)
+					{
+						dialogue.English = kv.Value;
+						modified++;
+					}
+					else if (dialogue == null)
+					{
+						notFound++;
+					}
 				}
-				else continue;
 
-				string jsonCharacter = DialogueData.GetCharacterName(character, false);
-				var dialogue = dialogues.Find(d => d.Character == jsonCharacter && d.Skin == skin && d.Key == key);
-
-				if (dialogue != null && dialogue.English != kv.Value)
+				if (modified > 0)
 				{
-					dialogue.English = kv.Value;
-					modified++;
+					File.WriteAllText(Utils.Path_Json,
+						JsonConvert.SerializeObject(dialogues, Formatting.Indented),
+						Encoding.UTF8);
+					Debug.Log($"JSON updated: {modified} entries changed, {notFound} not found");
 				}
 			}
-
-			if (modified > 0)
+			catch (Exception ex)
 			{
-				File.WriteAllText(Utils.Path_Json, JsonConvert.SerializeObject(dialogues, Formatting.Indented), Encoding.UTF8);
-				Debug.Log($"JSON updated: {modified} entries changed");
+				Debug.LogError($"Error fixing JSON: {ex.Message}");
 			}
 		}
 
 		private static void SaveFixesToFile()
 		{
-			Directory.CreateDirectory(Path.GetDirectoryName(FixesPath));
-			var data = new FixesData { OriginalText = OriginalText, TextFixes = TextFixes };
-			File.WriteAllText(FixesPath, JsonConvert.SerializeObject(data, Formatting.Indented), Encoding.UTF8);
-			Debug.Log($"Fixes saved to: {FixesPath}");
+			try
+			{
+				Directory.CreateDirectory(Path.GetDirectoryName(FixesPath));
+				var data = new FixesData
+				{
+					OriginalText = OriginalText,
+					TextFixes = TextFixes
+				};
+				File.WriteAllText(FixesPath,
+					JsonConvert.SerializeObject(data, Formatting.Indented),
+					Encoding.UTF8);
+				Debug.Log($"Fixes saved to: {FixesPath}");
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"Error saving fixes: {ex.Message}");
+			}
 		}
 
 		private static void LoadFixesFromFile()
 		{
 			if (!File.Exists(FixesPath)) return;
-			var data = JsonConvert.DeserializeObject<FixesData>(File.ReadAllText(FixesPath, Encoding.UTF8));
-			if (data != null)
+
+			try
 			{
-				OriginalText = data.OriginalText ?? new Dictionary<string, List<string>>();
-				TextFixes = data.TextFixes ?? new Dictionary<string, string>();
-				Debug.Log($"Fixes loaded from: {FixesPath}");
+				var data = JsonConvert.DeserializeObject<FixesData>(
+					File.ReadAllText(FixesPath, Encoding.UTF8));
+
+				if (data != null)
+				{
+					OriginalText = data.OriginalText ?? new Dictionary<string, List<string>>();
+					TextFixes = data.TextFixes ?? new Dictionary<string, string>();
+					Debug.Log($"Fixes loaded from: {FixesPath} ({TextFixes.Count} entries)");
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"Error loading fixes: {ex.Message}");
 			}
 		}
 
 		public static void Restore()
 		{
 			LoadFixesFromFile();
-			var restoreMap = OriginalText.SelectMany(kv => kv.Value, (kv, id) => new { id, text = kv.Key }).ToDictionary(x => x.id, x => x.text);
-			if (restoreMap.Count == 0) return;
+			var restoreMap = OriginalText
+				.SelectMany(kv => kv.Value, (kv, id) => new { id, text = kv.Key })
+				.ToDictionary(x => x.id, x => x.text);
+
+			if (restoreMap.Count == 0)
+			{
+				Debug.Log("No entries to restore");
+				return;
+			}
+
 			FixTextCSV(restoreMap);
 			FixTextJSON(restoreMap);
 			Debug.Log($"Restored {restoreMap.Count} entries");
