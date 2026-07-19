@@ -23,7 +23,7 @@ namespace EnDub
 	public class EnDub_Plugin : ChronoArkPlugin
 	{
 		public const string modname = "EnDub";
-		public const string version = "1.14";
+		public const string version = "1.16";
 		public const string author = "Midana";
 
 		public static ModInfo ThisMod => ModManager.getModInfo(modname);
